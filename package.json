@@ -1,0 +1,62 @@
+{
+  "name": "js-xxx",
+  "version": "1.0.1",
+  "description": "JavaScript 常用函数库",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "unpkg": "dist/index.js",
+  "main-source": "lib/index.source.js",
+  "module-source": "es/index.source.js",
+  "unpkg-source": "dist/index.source.js",
+  "iife": "iife/index.js",
+  "iife-source": "iife/index.source.js",
+  "scripts": {
+    "build": "rollup -c",
+    "doc": "typedoc --options ./typedoc.json",
+    "pub": "npm install && npm run build && npm run doc && npm publish",
+    "push:before": "npm run build && npm run doc"
+  },
+  "files": [
+    "/lib",
+    "/es",
+    "/dist",
+    "/iife",
+    "/docs",
+    "/README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pandaoh/js-xxx.git"
+  },
+  "keywords": [
+    "javascript",
+    "typescript",
+    "functions",
+    "function",
+    "method",
+    "methods",
+    "xfunction",
+    "xfunctions",
+    "xmethod",
+    "xmethods",
+    "rollup"
+  ],
+  "author": "leohe",
+  "publisher": "hxbpandaoh@163.com",
+  "blog": "http://a.biugle.cn",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pandaoh/js-xxx/issues"
+  },
+  "homepage": "https://github.com/pandaoh/js-xxx/blob/main/docs/README.md",
+  "devDependencies": {
+    "typescript": "^4.5.5",
+    "@rollup/plugin-commonjs": "^21.0.1",
+    "@rollup/plugin-node-resolve": "^13.1.3",
+    "rollup": "^2.67.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-typescript2": "^0.31.2",
+    "typedoc": "^0.22.11",
+    "typedoc-plugin-markdown": "^3.11.13"
+  }
+}

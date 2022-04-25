@@ -1,0 +1,30 @@
+# JavaScript 常用函数库
+
+> 封装常用函数，支持按需引入；无依赖和第三方库，无冗余代码，无需改动原代码结构；拆箱即用，简单便捷。
+
+## Install
+
+```bash
+npm i js-xxx
+```
+
+## Use
+
+```javascript
+import { xFunctionName } from 'js-xxx';
+const { xFunctionName } = require('js-xxx');
+
+xFunctionName();
+```
+
+## Docs
+
+* [Docs List](https://github.com/pandaoh/js-xxx/blob/main/docs/README.md)
+
+## Others
+
+* [Issue](https://github.com/pandaoh/js-xxx/issues)
+* [Pull Request](https://github.com/pandaoh/js-xxx/pulls)
+* [hxbpandaoh@163.com](mailto:hxbpandaoh@163.com)
+* [Blog](http://a.biugle.cn)
+* Leo He
