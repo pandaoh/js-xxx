@@ -2,8 +2,8 @@
  * @Author: HxB
  * @Date: 2022-04-26 11:33:53
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-04-27 11:05:37
- * @Description: 主项目文件汇总
+ * @LastEditTime: 2022-04-27 11:27:42
+ * @Description: 主项目文件汇总(请勿使用路径别名)
  * @FilePath: \js-xxx\src\index.ts
  */
 // import * as Array from './Array';
