@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 11:33:01
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-04-27 10:02:27
+ * @LastEditTime: 2022-04-27 11:05:19
  * @Description: rollup 配置文件
  * @FilePath: \js-xxx\rollup.config.js
  */
@@ -11,6 +11,7 @@ import { terser } from 'rollup-plugin-terser';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import typescript from 'rollup-plugin-typescript2';
+import alias from '@rollup/plugin-alias';
 import pkg from './package.json';
 
 const getPath = (_path) => path.resolve(__dirname, _path);
@@ -66,7 +67,14 @@ const options = {
       format: 'umd' // dist
     }
   ],
-  plugins: [resolve(extensions), commonjs(), typescript({ tsconfig: getPath('tsconfig.json'), extensions })]
+  plugins: [
+    resolve(extensions),
+    commonjs(),
+    typescript({ tsconfig: getPath('tsconfig.json'), extensions }),
+    alias({
+      entries: [{ find: '@', replacement: getPath('src') }]
+    })
+  ]
 };
 
 export default options;
