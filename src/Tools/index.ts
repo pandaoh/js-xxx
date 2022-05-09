@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-04-26 18:09:34
+ * @LastEditTime: 2022-05-09 14:26:58
  * @Description: 工具方法
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
@@ -67,21 +67,51 @@ export function get1Var(data: any): any {
 
 /**
  * 深拷贝
+ * https://juejin.cn/post/7075351322014253064
  * Example: `deepClone({a: 1, b: {c: 2}}) => 新的 {a: 1, b: {c: 2}}`
  * @param data 源数据
+ * @param hash hash 存储，避免循环引用。
  * @returns
  */
-export function deepClone(data: any): any {
-  // JSON.parse(JSON.stringify(data))
-  if (getType(data) !== 'object' || !Array.isArray(data)) {
+export function deepClone(data: any, hash = new WeakMap()): any {
+  if (hash.has(data)) {
     return data;
   }
-  let result: any = Array.isArray(data) ? [] : {};
-  for (let i in data) {
-    result[i] = deepClone(data[i]);
+  let result: any = null;
+
+  const reference = [Date, RegExp, Set, WeakSet, Map, WeakMap, Error];
+
+  if (reference.includes(data?.constructor)) {
+    result = new data.constructor(data);
+  } else if (Array.isArray(data)) {
+    result = [];
+    data.forEach((item, i) => {
+      result[i] = deepClone(item);
+    });
+  } else if (typeof data === 'object' && data !== null) {
+    hash.set(data, 'exist');
+    result = {};
+    for (const key in data) {
+      if (Object.hasOwnProperty.call(data, key)) {
+        result[key] = deepClone(data[key], hash);
+      }
+    }
+  } else {
+    result = data;
   }
   return result;
 }
+// export function deepClone(data: any): any {
+//   // JSON.parse(JSON.stringify(data))
+//   if (getType(data) !== 'object' || !Array.isArray(data)) {
+//     return data;
+//   }
+//   let result: any = Array.isArray(data) ? [] : {};
+//   for (let i in data) {
+//     result[i] = deepClone(data[i]);
+//   }
+//   return result;
+// }
 
 /**
  * 获取随机数字
