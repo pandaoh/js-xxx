@@ -309,13 +309,33 @@ function get1Var(data) {
         return result;
     }
 }
-function deepClone(data) {
-    if (getType(data) !== 'object' || !Array.isArray(data)) {
+function deepClone(data, hash) {
+    if (hash === void 0) { hash = new WeakMap(); }
+    if (hash.has(data)) {
         return data;
     }
-    var result = Array.isArray(data) ? [] : {};
-    for (var i in data) {
-        result[i] = deepClone(data[i]);
+    var result = null;
+    var reference = [Date, RegExp, Set, WeakSet, Map, WeakMap, Error];
+    if (reference.includes(data === null || data === void 0 ? void 0 : data.constructor)) {
+        result = new data.constructor(data);
+    }
+    else if (Array.isArray(data)) {
+        result = [];
+        data.forEach(function (item, i) {
+            result[i] = deepClone(item);
+        });
+    }
+    else if (typeof data === 'object' && data !== null) {
+        hash.set(data, 'exist');
+        result = {};
+        for (var key in data) {
+            if (Object.hasOwnProperty.call(data, key)) {
+                result[key] = deepClone(data[key], hash);
+            }
+        }
+    }
+    else {
+        result = data;
     }
     return result;
 }
@@ -592,11 +612,14 @@ function retry(promise, count, delay) {
         }); });
     });
 }
-function all(promises) {
-    return Promise.all(promises).catch(function (err) { });
+function all(promises, errorHandler) {
+    return Promise.all(promises).catch(function (e) { return errorHandler && errorHandler(e); });
 }
-function any(promises) {
-    return Promise.any(promises).catch(function (err) { });
+function any(promises, errorHandler) {
+    return Promise.any(promises).catch(function (e) { return errorHandler && errorHandler(e); });
+}
+function catchPromise(promiseHandler, errorHandler) {
+    return new Promise(promiseHandler).catch(function (e) { return errorHandler && errorHandler(e); });
 }
 
 function qsStringify(obj, options) {
@@ -697,4 +720,4 @@ function base64Decode(str) {
     return Buffer.from(str, 'base64').toString('utf8');
 }
 
-export { add, all, any, arraySet, base64Decode, base64Encode, copyContent, copyToClipboard, data2Arr, data2Obj, debounce, deepClone, div, empty, formatBytes, formatDate, formatFormData, get1Var, getBaseURL, getCookie, getMonthDays, getRandColor, getRandNum, getRandStr, getTimeAndStr, getTimeCode, getType, getUUID, getV, globalError, html2str, insertAfter, isAppleDevice, isBrowser, isDarkMode, isNode, isValidJSON, isWeekday, mergeObj, offDefaultEvent, qsParse, qsStringify, removeCookie, retry, round, scrollTo, setCookie, setIcon, shuffleArray, sleep, sortCallBack, str2html, str2unicode, sub, throttle, timeSince, times, to, trim, unicode2str };
+export { add, all, any, arraySet, base64Decode, base64Encode, catchPromise, copyContent, copyToClipboard, data2Arr, data2Obj, debounce, deepClone, div, empty, formatBytes, formatDate, formatFormData, get1Var, getBaseURL, getCookie, getMonthDays, getRandColor, getRandNum, getRandStr, getTimeAndStr, getTimeCode, getType, getUUID, getV, globalError, html2str, insertAfter, isAppleDevice, isBrowser, isDarkMode, isNode, isValidJSON, isWeekday, mergeObj, offDefaultEvent, qsParse, qsStringify, removeCookie, retry, round, scrollTo, setCookie, setIcon, shuffleArray, sleep, sortCallBack, str2html, str2unicode, sub, throttle, timeSince, times, to, trim, unicode2str };

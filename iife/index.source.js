@@ -312,13 +312,33 @@ var xxx = (function (exports) {
             return result;
         }
     }
-    function deepClone(data) {
-        if (getType(data) !== 'object' || !Array.isArray(data)) {
+    function deepClone(data, hash) {
+        if (hash === void 0) { hash = new WeakMap(); }
+        if (hash.has(data)) {
             return data;
         }
-        var result = Array.isArray(data) ? [] : {};
-        for (var i in data) {
-            result[i] = deepClone(data[i]);
+        var result = null;
+        var reference = [Date, RegExp, Set, WeakSet, Map, WeakMap, Error];
+        if (reference.includes(data === null || data === void 0 ? void 0 : data.constructor)) {
+            result = new data.constructor(data);
+        }
+        else if (Array.isArray(data)) {
+            result = [];
+            data.forEach(function (item, i) {
+                result[i] = deepClone(item);
+            });
+        }
+        else if (typeof data === 'object' && data !== null) {
+            hash.set(data, 'exist');
+            result = {};
+            for (var key in data) {
+                if (Object.hasOwnProperty.call(data, key)) {
+                    result[key] = deepClone(data[key], hash);
+                }
+            }
+        }
+        else {
+            result = data;
         }
         return result;
     }
@@ -595,11 +615,14 @@ var xxx = (function (exports) {
             }); });
         });
     }
-    function all(promises) {
-        return Promise.all(promises).catch(function (err) { });
+    function all(promises, errorHandler) {
+        return Promise.all(promises).catch(function (e) { return errorHandler && errorHandler(e); });
     }
-    function any(promises) {
-        return Promise.any(promises).catch(function (err) { });
+    function any(promises, errorHandler) {
+        return Promise.any(promises).catch(function (e) { return errorHandler && errorHandler(e); });
+    }
+    function catchPromise(promiseHandler, errorHandler) {
+        return new Promise(promiseHandler).catch(function (e) { return errorHandler && errorHandler(e); });
     }
 
     function qsStringify(obj, options) {
@@ -706,6 +729,7 @@ var xxx = (function (exports) {
     exports.arraySet = arraySet;
     exports.base64Decode = base64Decode;
     exports.base64Encode = base64Encode;
+    exports.catchPromise = catchPromise;
     exports.copyContent = copyContent;
     exports.copyToClipboard = copyToClipboard;
     exports.data2Arr = data2Arr;

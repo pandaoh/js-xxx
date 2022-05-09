@@ -1,7 +1,7 @@
 export declare function getType(variable: any): string;
 export declare function empty(variable: any): boolean;
 export declare function get1Var(data: any): any;
-export declare function deepClone(data: any): any;
+export declare function deepClone(data: any, hash?: WeakMap<object, any>): any;
 export declare function getRandNum(min?: number, max?: number): number;
 export declare function getRandColor(): string;
 export declare function getRandStr(len?: number): string;

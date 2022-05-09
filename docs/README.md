@@ -1,6 +1,6 @@
-js-xxx - v1.1.1
+js-xxx - v1.1.3
 
-# js-xxx - v1.1.1
+# js-xxx - v1.1.3
 
 ## Table of contents
 
@@ -12,6 +12,7 @@ js-xxx - v1.1.1
 - [arraySet](README.md#arrayset)
 - [base64Decode](README.md#base64decode)
 - [base64Encode](README.md#base64encode)
+- [catchPromise](README.md#catchpromise)
 - [copyContent](README.md#copycontent)
 - [copyToClipboard](README.md#copytoclipboard)
 - [data2Arr](README.md#data2arr)
@@ -91,7 +92,7 @@ ___
 
 ### all
 
-▸ **all**(`promises`): `Promise`<`any`\>
+▸ **all**(`promises`, `errorHandler?`): `Promise`<`any`\>
 
 同步执行 promise，已做错误处理。
 Example: `await all(...promise array) => [...result array]`
@@ -101,6 +102,7 @@ Example: `await all(...promise array) => [...result array]`
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `promises` | `Promise`<`any`\>[] | promises |
+| `errorHandler?` | `Function` | errorHandler |
 
 #### Returns
 
@@ -110,7 +112,7 @@ ___
 
 ### any
 
-▸ **any**(`promises`): `Promise`<`any`\>
+▸ **any**(`promises`, `errorHandler?`): `Promise`<`any`\>
 
 同步执行多个 promise，返回最先成功的结果，已做错误处理。
 Example: `await any(...promise array) => success result`
@@ -120,6 +122,7 @@ Example: `await any(...promise array) => success result`
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `promises` | `Promise`<`any`\>[] | promises |
+| `errorHandler?` | `Function` | errorHandler |
 
 #### Returns
 
@@ -184,6 +187,26 @@ Example: `base64Encode('我是 leo') => '5oiR5pivIGxlbw=='`
 #### Returns
 
 `string`
+
+___
+
+### catchPromise
+
+▸ **catchPromise**(`promiseHandler`, `errorHandler?`): `Promise`<`any`\>
+
+New 一个自带错误处理的 Promise，适用于只处理成功情况，不关注失败的 Promise，省去写 catch 的时间与空间。
+Example: `new catchPromise(resolve, reject, rejectHandler) => Promise`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `promiseHandler` | `any` | promiseHandler |
+| `errorHandler?` | `Function` | errorHandler |
+
+#### Returns
+
+`Promise`<`any`\>
 
 ___
 
@@ -297,9 +320,10 @@ ___
 
 ### deepClone
 
-▸ **deepClone**(`data`): `any`
+▸ **deepClone**(`data`, `hash?`): `any`
 
 深拷贝
+https://juejin.cn/post/7075351322014253064
 Example: `deepClone({a: 1, b: {c: 2}}) => 新的 {a: 1, b: {c: 2}}`
 
 #### Parameters
@@ -307,6 +331,7 @@ Example: `deepClone({a: 1, b: {c: 2}}) => 新的 {a: 1, b: {c: 2}}`
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `data` | `any` | 源数据 |
+| `hash` | `WeakMap`<`object`, `any`\> | hash 存储，避免循环引用。 |
 
 #### Returns
 
