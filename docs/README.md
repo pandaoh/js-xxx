@@ -1,6 +1,6 @@
-js-xxx - v1.1.3
+js-xxx - v1.1.4
 
-# js-xxx - v1.1.3
+# js-xxx - v1.1.4
 
 ## Table of contents
 
@@ -15,15 +15,19 @@ js-xxx - v1.1.3
 - [catchPromise](README.md#catchpromise)
 - [copyContent](README.md#copycontent)
 - [copyToClipboard](README.md#copytoclipboard)
+- [curryIt](README.md#curryit)
 - [data2Arr](README.md#data2arr)
 - [data2Obj](README.md#data2obj)
 - [debounce](README.md#debounce)
 - [deepClone](README.md#deepclone)
 - [div](README.md#div)
 - [empty](README.md#empty)
+- [findChildren](README.md#findchildren)
+- [findParents](README.md#findparents)
 - [formatBytes](README.md#formatbytes)
 - [formatDate](README.md#formatdate)
 - [formatFormData](README.md#formatformdata)
+- [formatURLSearchParams](README.md#formaturlsearchparams)
 - [get1Var](README.md#get1var)
 - [getBaseURL](README.md#getbaseurl)
 - [getCookie](README.md#getcookie)
@@ -31,11 +35,13 @@ js-xxx - v1.1.3
 - [getRandColor](README.md#getrandcolor)
 - [getRandNum](README.md#getrandnum)
 - [getRandStr](README.md#getrandstr)
+- [getStyleByName](README.md#getstylebyname)
 - [getTimeAndStr](README.md#gettimeandstr)
 - [getTimeCode](README.md#gettimecode)
 - [getType](README.md#gettype)
 - [getUUID](README.md#getuuid)
 - [getV](README.md#getv)
+- [getViewportSize](README.md#getviewportsize)
 - [globalError](README.md#globalerror)
 - [html2str](README.md#html2str)
 - [insertAfter](README.md#insertafter)
@@ -249,6 +255,38 @@ Example: `copyToClipboard('hello world')`
 
 ___
 
+### curryIt
+
+▸ **curryIt**(`fn`): (`arg`: `any`) => `any`
+
+函数柯里化
+是把接受多个参数的函数变换成接受一个单一参数(最初函数的第一个参数)的函数，并且返回接受余下的参数且返回结果的新函数的技术。
+Example: `curryIt(function (a, b, c) {return a + b + c})(1)(2)(3) => 6`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fn` | `Function` |
+
+#### Returns
+
+`fn`
+
+▸ (`arg`): `any`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `arg` | `any` |
+
+##### Returns
+
+`any`
+
+___
+
 ### data2Arr
 
 ▸ **data2Arr**(`sourceData`, `key`): `any`[]
@@ -378,6 +416,45 @@ Example: `empty('') => true`
 
 ___
 
+### findChildren
+
+▸ **findChildren**(`element`): `any`[]
+
+找元素的所有子元素，解决浏览器兼容问题。
+Example: `findChildren(document.getElementById('test')) => #test 的所有子元素数组`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `element` | `any` | 指定元素 |
+
+#### Returns
+
+`any`[]
+
+___
+
+### findParents
+
+▸ **findParents**(`element`, `n`): `any`
+
+找元素的第 n 级父元素
+Example: `findParents(document.getElementById('test'), 3) => #test 的第三个父元素`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `element` | `any` | 指定元素 |
+| `n` | `number` | 第几个 |
+
+#### Returns
+
+`any`
+
+___
+
 ### formatBytes
 
 ▸ **formatBytes**(`bytes`, `precision?`): `string`
@@ -422,20 +499,45 @@ ___
 
 ### formatFormData
 
-▸ **formatFormData**(`obj`): `FormData`
+▸ **formatFormData**(`obj`, `hasBrackets?`, `hasIndex?`): `FormData`
 
 对象转 FormData
 Example: `formatFormData({a: 1, b: 2}) => FormData`
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `obj` | `any` | 源数据 |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `obj` | `any` | `undefined` | 源数据 |
+| `hasBrackets` | `boolean` | `false` | 是否带括号 |
+| `hasIndex` | `boolean` | `false` | 是否带 index |
 
 #### Returns
 
 `FormData`
+
+___
+
+### formatURLSearchParams
+
+▸ **formatURLSearchParams**(`obj`, `hasBrackets?`, `hasIndex?`): `URLSearchParams`
+
+对象转 URLSearchParams
+Example: `formatURLSearchParams({a: 1, b: 2, c: [1, 2]}) => a=1&b=2&c=1&c=2`
+Example: `formatURLSearchParams({a: 1, b: 2, c: [1, 2]}, true) => a=1&b=2&c[]=1&c[]=2`
+Example: `formatURLSearchParams({a: 1, b: 2, c: [1, 2]}, true, true) => a=1&b=2&c[0]=1&c[1]=2`
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `obj` | `any` | `undefined` | 源数据 |
+| `hasBrackets` | `boolean` | `false` | 是否带括号 |
+| `hasIndex` | `boolean` | `false` | 是否带 index |
+
+#### Returns
+
+`URLSearchParams`
 
 ___
 
@@ -569,6 +671,25 @@ Example: `getRandStr(6) => 'xxxxxx'`
 
 ___
 
+### getStyleByName
+
+▸ **getStyleByName**(`element`, `name`): `any`
+
+获取任一元素的 style 任意属性
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `element` | `any` | 指定元素 |
+| `name` | `any` | 属性名称 |
+
+#### Returns
+
+`any`
+
+___
+
 ### getTimeAndStr
 
 ▸ **getTimeAndStr**(`len?`, `radix?`): `string`
@@ -658,6 +779,24 @@ Example: `getV('', {name: {children: 123}}, 'name', 'children') => 123`
 #### Returns
 
 `any`
+
+___
+
+### getViewportSize
+
+▸ **getViewportSize**(): `Object`
+
+获取窗口尺寸
+Example: `getViewportSize() => { width: 1280, height: 649 }`
+
+#### Returns
+
+`Object`
+
+| Name | Type |
+| :------ | :------ |
+| `h` | `number` |
+| `w` | `number` |
 
 ___
 

@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 16:29:18
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-04-26 18:05:16
+ * @LastEditTime: 2022-05-17 17:50:44
  * @Description: Cookies 常用方法
  * @FilePath: \js-xxx\src\Cookies\index.ts
  */
@@ -29,7 +29,7 @@ export function getCookie(key: string): any {
  */
 export function setCookie(key: string, value: any, expires: number) {
   expires = expires || 30; // 没有设置有效期，默认有效期是 30 天。
-  var exp = new Date(); // 获取当前日期
+  let exp = new Date(); // 获取当前日期
   exp.setTime(exp.getTime() + expires * 24 * 60 * 60 * 1000); // 设置过期日期
   document.cookie = key + '=' + escape(value) + ';expires=' + exp.toUTCString() + ';path=/';
 }
@@ -41,10 +41,10 @@ export function setCookie(key: string, value: any, expires: number) {
  * @returns
  */
 export function removeCookie(key: string) {
-  var exp = new Date();
+  let exp = new Date();
   exp.setTime(exp.getTime() - 1);
-  var cval = getCookie(key);
-  if (cval !== null) {
-    document.cookie = key + '=' + cval + ';expires=' + exp.toUTCString() + ';path=/';
+  let cVal = getCookie(key);
+  if (cVal !== null) {
+    document.cookie = key + '=' + cVal + ';expires=' + exp.toUTCString() + ';path=/';
   }
 }

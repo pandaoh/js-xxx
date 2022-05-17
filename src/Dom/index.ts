@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-04-26 18:06:13
+ * @LastEditTime: 2022-05-17 17:50:38
  * @Description: 利用 dom 的一些方法
  * @FilePath: \js-xxx\src\Dom\index.ts
  */
@@ -56,7 +56,7 @@ export function insertAfter(newElement: any, targetElement: any) {
  * @returns
  */
 export function offDefaultEvent(event: any) {
-  var e = event || window.event;
+  let e = event || window.event;
   if (e) {
     e.preventDefault();
     e.stopPropagation();
@@ -99,4 +99,75 @@ export function copyContent(targetDom: any, addMsg: any = null) {
  */
 export function scrollTo(element: any, to: 'start' | 'end' = 'start') {
   element.scrollIntoView({ behavior: 'smooth', block: to });
+}
+
+/**
+ * 找元素的第 n 级父元素
+ * Example: `findParents(document.getElementById('test'), 3) => #test 的第三个父元素`
+ * @param element 指定元素
+ * @param n 第几个
+ */
+export function findParents(element: any, n: number) {
+  while (element && n) {
+    element = element.parentElement ? element.parentElement : element.parentNode;
+    n--;
+  }
+  return element;
+}
+
+/**
+ * 找元素的所有子元素，解决浏览器兼容问题。
+ * Example: `findChildren(document.getElementById('test')) => #test 的所有子元素数组`
+ * @param element 指定元素
+ * @returns
+ */
+export function findChildren(element: any) {
+  let children: any[] = element.childNodes,
+    result: any[] = [],
+    len = children.length;
+  for (let i = 0; i < len; i++) {
+    if (children[i].nodeType === 1) {
+      result.push(children[i]);
+    }
+  }
+  return result;
+}
+
+/**
+ * 获取窗口尺寸
+ * Example: `getViewportSize() => { width: 1280, height: 649 }`
+ * @returns
+ */
+export function getViewportSize() {
+  if (window.innerWidth) {
+    return {
+      w: window.innerWidth,
+      h: window.innerHeight
+    };
+  } else {
+    // ie8 及其以下
+    if (document.compatMode === 'BackCompat') {
+      // 怪异模式
+      return {
+        w: document.body.clientWidth,
+        h: document.body.clientHeight
+      };
+    } else {
+      // 标准模式
+      return {
+        w: document.documentElement.clientWidth,
+        h: document.documentElement.clientHeight
+      };
+    }
+  }
+}
+
+/**
+ * 获取任一元素的 style 任意属性
+ * @param element 指定元素
+ * @param name 属性名称
+ * @returns
+ */
+export function getStyleByName(element: any, name: any) {
+  return window.getComputedStyle ? window.getComputedStyle(element, null)[name] : element.currentStyle[name];
 }

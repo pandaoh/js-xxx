@@ -15,4 +15,5 @@ export declare function isNode(): boolean;
 export declare function isBrowser(): boolean;
 export declare function isDarkMode(): boolean;
 export declare function isAppleDevice(): boolean;
+export declare function curryIt(fn: Function): (arg: any) => any;
 //# sourceMappingURL=index.d.ts.map

@@ -135,9 +135,9 @@
     function removeCookie(key) {
         var exp = new Date();
         exp.setTime(exp.getTime() - 1);
-        var cval = getCookie(key);
-        if (cval !== null) {
-            document.cookie = key + '=' + cval + ';expires=' + exp.toUTCString() + ';path=/';
+        var cVal = getCookie(key);
+        if (cVal !== null) {
+            document.cookie = key + '=' + cVal + ';expires=' + exp.toUTCString() + ';path=/';
         }
     }
 
@@ -281,6 +281,47 @@
         if (to === void 0) { to = 'start'; }
         element.scrollIntoView({ behavior: 'smooth', block: to });
     }
+    function findParents(element, n) {
+        while (element && n) {
+            element = element.parentElement ? element.parentElement : element.parentNode;
+            n--;
+        }
+        return element;
+    }
+    function findChildren(element) {
+        var children = element.childNodes, result = [], len = children.length;
+        for (var i = 0; i < len; i++) {
+            if (children[i].nodeType === 1) {
+                result.push(children[i]);
+            }
+        }
+        return result;
+    }
+    function getViewportSize() {
+        if (window.innerWidth) {
+            return {
+                w: window.innerWidth,
+                h: window.innerHeight
+            };
+        }
+        else {
+            if (document.compatMode === 'BackCompat') {
+                return {
+                    w: document.body.clientWidth,
+                    h: document.body.clientHeight
+                };
+            }
+            else {
+                return {
+                    w: document.documentElement.clientWidth,
+                    h: document.documentElement.clientHeight
+                };
+            }
+        }
+    }
+    function getStyleByName(element, name) {
+        return window.getComputedStyle ? window.getComputedStyle(element, null)[name] : element.currentStyle[name];
+    }
 
     function getType(variable) {
         return Object.prototype.toString.call(variable).slice(8, -1).toLowerCase();
@@ -420,13 +461,56 @@
     function isAppleDevice() {
         return /Mac|iPod|iPhone|iPad/.test(navigator.platform);
     }
+    function curryIt(fn) {
+        var length = fn.length;
+        var args = [];
+        return function (arg) {
+            args.push(arg);
+            length--;
+            if (length <= 0) {
+                return fn.apply(this, args);
+            }
+            else {
+                return arguments.callee;
+            }
+        };
+    }
 
-    function formatFormData(obj) {
+    function formatFormData(obj, hasBrackets, hasIndex) {
+        if (hasBrackets === void 0) { hasBrackets = false; }
+        if (hasIndex === void 0) { hasIndex = false; }
         var formData = new FormData();
-        for (var key in obj) {
-            formData.append(key, getType(obj[key]) == 'object' ? JSON.stringify(obj[key]) : obj[key]);
-        }
+        Object.keys(obj).forEach(function (key) {
+            if (Array.isArray(obj[key])) {
+                for (var arrIndex in obj[key]) {
+                    hasBrackets
+                        ? formData.append(hasIndex ? "".concat(key, "[]") : "".concat(key, "[").concat(arrIndex, "]"), obj[key][arrIndex])
+                        : formData.append(key, obj[key][arrIndex]);
+                }
+            }
+            else {
+                formData.append(key, getType(obj[key]) == 'object' ? JSON.stringify(obj[key]) : obj[key]);
+            }
+        });
         return formData;
+    }
+    function formatURLSearchParams(obj, hasBrackets, hasIndex) {
+        if (hasBrackets === void 0) { hasBrackets = false; }
+        if (hasIndex === void 0) { hasIndex = false; }
+        var queryString = new URLSearchParams();
+        Object.keys(obj).forEach(function (key) {
+            if (Array.isArray(obj[key])) {
+                for (var arrIndex in obj[key]) {
+                    hasBrackets
+                        ? queryString.append(hasIndex ? "".concat(key, "[]") : "".concat(key, "[").concat(arrIndex, "]"), obj[key][arrIndex])
+                        : queryString.append(key, obj[key][arrIndex]);
+                }
+            }
+            else {
+                queryString.append(key, getType(obj[key]) == 'object' ? JSON.stringify(obj[key]) : obj[key]);
+            }
+        });
+        return queryString;
     }
 
     function div(div1, div2) {
@@ -735,15 +819,19 @@
     exports.catchPromise = catchPromise;
     exports.copyContent = copyContent;
     exports.copyToClipboard = copyToClipboard;
+    exports.curryIt = curryIt;
     exports.data2Arr = data2Arr;
     exports.data2Obj = data2Obj;
     exports.debounce = debounce;
     exports.deepClone = deepClone;
     exports.div = div;
     exports.empty = empty;
+    exports.findChildren = findChildren;
+    exports.findParents = findParents;
     exports.formatBytes = formatBytes;
     exports.formatDate = formatDate;
     exports.formatFormData = formatFormData;
+    exports.formatURLSearchParams = formatURLSearchParams;
     exports.get1Var = get1Var;
     exports.getBaseURL = getBaseURL;
     exports.getCookie = getCookie;
@@ -751,11 +839,13 @@
     exports.getRandColor = getRandColor;
     exports.getRandNum = getRandNum;
     exports.getRandStr = getRandStr;
+    exports.getStyleByName = getStyleByName;
     exports.getTimeAndStr = getTimeAndStr;
     exports.getTimeCode = getTimeCode;
     exports.getType = getType;
     exports.getUUID = getUUID;
     exports.getV = getV;
+    exports.getViewportSize = getViewportSize;
     exports.globalError = globalError;
     exports.html2str = html2str;
     exports.insertAfter = insertAfter;

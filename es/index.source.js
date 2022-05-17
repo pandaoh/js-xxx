@@ -129,9 +129,9 @@ function setCookie(key, value, expires) {
 function removeCookie(key) {
     var exp = new Date();
     exp.setTime(exp.getTime() - 1);
-    var cval = getCookie(key);
-    if (cval !== null) {
-        document.cookie = key + '=' + cval + ';expires=' + exp.toUTCString() + ';path=/';
+    var cVal = getCookie(key);
+    if (cVal !== null) {
+        document.cookie = key + '=' + cVal + ';expires=' + exp.toUTCString() + ';path=/';
     }
 }
 
@@ -275,6 +275,47 @@ function scrollTo(element, to) {
     if (to === void 0) { to = 'start'; }
     element.scrollIntoView({ behavior: 'smooth', block: to });
 }
+function findParents(element, n) {
+    while (element && n) {
+        element = element.parentElement ? element.parentElement : element.parentNode;
+        n--;
+    }
+    return element;
+}
+function findChildren(element) {
+    var children = element.childNodes, result = [], len = children.length;
+    for (var i = 0; i < len; i++) {
+        if (children[i].nodeType === 1) {
+            result.push(children[i]);
+        }
+    }
+    return result;
+}
+function getViewportSize() {
+    if (window.innerWidth) {
+        return {
+            w: window.innerWidth,
+            h: window.innerHeight
+        };
+    }
+    else {
+        if (document.compatMode === 'BackCompat') {
+            return {
+                w: document.body.clientWidth,
+                h: document.body.clientHeight
+            };
+        }
+        else {
+            return {
+                w: document.documentElement.clientWidth,
+                h: document.documentElement.clientHeight
+            };
+        }
+    }
+}
+function getStyleByName(element, name) {
+    return window.getComputedStyle ? window.getComputedStyle(element, null)[name] : element.currentStyle[name];
+}
 
 function getType(variable) {
     return Object.prototype.toString.call(variable).slice(8, -1).toLowerCase();
@@ -414,13 +455,56 @@ function isDarkMode() {
 function isAppleDevice() {
     return /Mac|iPod|iPhone|iPad/.test(navigator.platform);
 }
+function curryIt(fn) {
+    var length = fn.length;
+    var args = [];
+    return function (arg) {
+        args.push(arg);
+        length--;
+        if (length <= 0) {
+            return fn.apply(this, args);
+        }
+        else {
+            return arguments.callee;
+        }
+    };
+}
 
-function formatFormData(obj) {
+function formatFormData(obj, hasBrackets, hasIndex) {
+    if (hasBrackets === void 0) { hasBrackets = false; }
+    if (hasIndex === void 0) { hasIndex = false; }
     var formData = new FormData();
-    for (var key in obj) {
-        formData.append(key, getType(obj[key]) == 'object' ? JSON.stringify(obj[key]) : obj[key]);
-    }
+    Object.keys(obj).forEach(function (key) {
+        if (Array.isArray(obj[key])) {
+            for (var arrIndex in obj[key]) {
+                hasBrackets
+                    ? formData.append(hasIndex ? "".concat(key, "[]") : "".concat(key, "[").concat(arrIndex, "]"), obj[key][arrIndex])
+                    : formData.append(key, obj[key][arrIndex]);
+            }
+        }
+        else {
+            formData.append(key, getType(obj[key]) == 'object' ? JSON.stringify(obj[key]) : obj[key]);
+        }
+    });
     return formData;
+}
+function formatURLSearchParams(obj, hasBrackets, hasIndex) {
+    if (hasBrackets === void 0) { hasBrackets = false; }
+    if (hasIndex === void 0) { hasIndex = false; }
+    var queryString = new URLSearchParams();
+    Object.keys(obj).forEach(function (key) {
+        if (Array.isArray(obj[key])) {
+            for (var arrIndex in obj[key]) {
+                hasBrackets
+                    ? queryString.append(hasIndex ? "".concat(key, "[]") : "".concat(key, "[").concat(arrIndex, "]"), obj[key][arrIndex])
+                    : queryString.append(key, obj[key][arrIndex]);
+            }
+        }
+        else {
+            queryString.append(key, getType(obj[key]) == 'object' ? JSON.stringify(obj[key]) : obj[key]);
+        }
+    });
+    return queryString;
 }
 
 function div(div1, div2) {
@@ -720,4 +804,4 @@ function base64Decode(str) {
     return Buffer.from(str, 'base64').toString('utf8');
 }
 
-export { add, all, any, arraySet, base64Decode, base64Encode, catchPromise, copyContent, copyToClipboard, data2Arr, data2Obj, debounce, deepClone, div, empty, formatBytes, formatDate, formatFormData, get1Var, getBaseURL, getCookie, getMonthDays, getRandColor, getRandNum, getRandStr, getTimeAndStr, getTimeCode, getType, getUUID, getV, globalError, html2str, insertAfter, isAppleDevice, isBrowser, isDarkMode, isNode, isValidJSON, isWeekday, mergeObj, offDefaultEvent, qsParse, qsStringify, removeCookie, retry, round, scrollTo, setCookie, setIcon, shuffleArray, sleep, sortCallBack, str2html, str2unicode, sub, throttle, timeSince, times, to, trim, unicode2str };
+export { add, all, any, arraySet, base64Decode, base64Encode, catchPromise, copyContent, copyToClipboard, curryIt, data2Arr, data2Obj, debounce, deepClone, div, empty, findChildren, findParents, formatBytes, formatDate, formatFormData, formatURLSearchParams, get1Var, getBaseURL, getCookie, getMonthDays, getRandColor, getRandNum, getRandStr, getStyleByName, getTimeAndStr, getTimeCode, getType, getUUID, getV, getViewportSize, globalError, html2str, insertAfter, isAppleDevice, isBrowser, isDarkMode, isNode, isValidJSON, isWeekday, mergeObj, offDefaultEvent, qsParse, qsStringify, removeCookie, retry, round, scrollTo, setCookie, setIcon, shuffleArray, sleep, sortCallBack, str2html, str2unicode, sub, throttle, timeSince, times, to, trim, unicode2str };
