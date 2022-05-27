@@ -688,7 +688,7 @@ var xxx = (function (exports) {
                         case 1:
                             _a.sent();
                             --count;
-                            resolve(retry(promise, count, count * delay));
+                            resolve(retry(promise, count, delay));
                             return [3, 3];
                         case 2:
                             reject('重试结束');

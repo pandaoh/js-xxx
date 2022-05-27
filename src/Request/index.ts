@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:15:37
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-04-26 18:07:39
+ * @LastEditTime: 2022-05-25 17:15:19
  * @Description: 请求相关方法
  * @FilePath: \js-xxx\src\Request\index.ts
  */
@@ -19,7 +19,7 @@ import { getType } from '@/Tools';
  */
 export function qsStringify(
   obj: any,
-  options: { arr2str?: boolean; hasIndex?: boolean; urlEncode?: boolean; hasBrackets: boolean }
+  options?: { arr2str?: boolean; hasIndex?: boolean; urlEncode?: boolean; hasBrackets?: boolean }
 ): string {
   if (!obj) {
     return '';

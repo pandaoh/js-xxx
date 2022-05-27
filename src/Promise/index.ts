@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:18:13
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-05-09 11:30:10
+ * @LastEditTime: 2022-05-26 17:45:01
  * @Description: Promise 常用方法，或者扩展方法。
  * @FilePath: \js-xxx\src\Promise\index.ts
  */
@@ -57,7 +57,7 @@ export function retry(promise: Promise<any>, count: number = 0, delay: number = 
           // 此处也可使用 setTimeout 实现
           await sleep(delay);
           --count;
-          resolve(retry(promise, count, count * delay));
+          resolve(retry(promise, count, delay));
         } else {
           reject('重试结束');
         }

@@ -1,6 +1,6 @@
-js-xxx - v1.1.4
+js-xxx - v1.1.5
 
-# js-xxx - v1.1.4
+# js-xxx - v1.1.5
 
 ## Table of contents
 
@@ -1018,7 +1018,7 @@ ___
 
 ### qsStringify
 
-▸ **qsStringify**(`obj`, `options`): `string`
+▸ **qsStringify**(`obj`, `options?`): `string`
 
 对象转 querystring 暂时只支持两层数据，第二层对象与与数组值不能为引用类型。
 Example:
@@ -1031,9 +1031,9 @@ Example:
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `obj` | `any` | 源数据 |
-| `options` | `Object` | - |
+| `options?` | `Object` | - |
 | `options.arr2str?` | `boolean` | - |
-| `options.hasBrackets` | `boolean` | - |
+| `options.hasBrackets?` | `boolean` | - |
 | `options.hasIndex?` | `boolean` | - |
 | `options.urlEncode?` | `boolean` | - |
 
