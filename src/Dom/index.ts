@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-05-17 17:50:38
+ * @LastEditTime: 2022-06-04 16:26:31
  * @Description: 利用 dom 的一些方法
  * @FilePath: \js-xxx\src\Dom\index.ts
  */
@@ -93,12 +93,30 @@ export function copyContent(targetDom: any, addMsg: any = null) {
 }
 
 /**
- * 滚动到顶部/底部
- * Example: `scrollTo(element) => 滚动到顶部`
- * @param element 指定元素
+ * 滚动到顶部
+ * 平滑滚动 css：`scroll-behavior: smooth;`
+ * Example: `scrollToTop('body') => 滚动到顶部`
+ * @param elementSelector 指定元素选择器
+ * @param to ('start'|'end')[default: 'start']
  */
-export function scrollTo(element: any, to: 'start' | 'end' = 'start') {
-  element.scrollIntoView({ behavior: 'smooth', block: to });
+export function scrollToTop(elementSelector: string, to: 'start' | 'end' = 'start') {
+  const element = document.querySelector(elementSelector);
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth', block: to });
+  }
+}
+
+/**
+ * 滚动到底部
+ * 平滑滚动 css：`scroll-behavior: smooth;`
+ * Example: `scrollToBottom('body') => 滚动到底部`
+ * @param elementSelector 指定元素选择器
+ */
+export function scrollToBottom(elementSelector: string) {
+  const element = document.querySelector(elementSelector);
+  if (element) {
+    element.scrollTop = element.scrollHeight;
+  }
 }
 
 /**

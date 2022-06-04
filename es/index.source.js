@@ -13,6 +13,17 @@ OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 PERFORMANCE OF THIS SOFTWARE.
 ***************************************************************************** */
 
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+
 function __awaiter(thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -271,9 +282,18 @@ function copyContent(targetDom, addMsg) {
     console.log(info);
     return Msg;
 }
-function scrollTo(element, to) {
+function scrollToTop(elementSelector, to) {
     if (to === void 0) { to = 'start'; }
-    element.scrollIntoView({ behavior: 'smooth', block: to });
+    var element = document.querySelector(elementSelector);
+    if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: to });
+    }
+}
+function scrollToBottom(elementSelector) {
+    var element = document.querySelector(elementSelector);
+    if (element) {
+        element.scrollTop = element.scrollHeight;
+    }
 }
 function findParents(element, n) {
     while (element && n) {
@@ -450,7 +470,9 @@ function isBrowser() {
     return typeof window !== 'undefined' && typeof document !== 'undefined';
 }
 function isDarkMode() {
-    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    return (window.matchMedia &&
+        (window.matchMedia('(prefers-color-scheme:dark)').matches ||
+            window.matchMedia('(prefers-color-scheme: dark)').matches));
 }
 function isAppleDevice() {
     return /Mac|iPod|iPhone|iPad/.test(navigator.platform);
@@ -558,6 +580,49 @@ function sub(sub1, sub2) {
     return parseFloat("".concat((sub1 * multiple - sub2 * multiple) / multiple));
 }
 
+function initNotification() {
+    var NOTIFICATION = window.Notification || (window === null || window === void 0 ? void 0 : window.mozNotification) || (window === null || window === void 0 ? void 0 : window.webkitNotification);
+    if (!NOTIFICATION) {
+        return false;
+    }
+    if (NOTIFICATION.permission === 'default' ||
+        NOTIFICATION.permission === 'denied' ||
+        NOTIFICATION.permission === 'undefined') {
+        Notification.requestPermission().then(function (permission) {
+            if (permission === 'denied') {
+                return false;
+            }
+            if (permission === 'granted') {
+                return true;
+            }
+        });
+    }
+    return true;
+}
+function sendNotification(msg, title, options) {
+    var _a, _b, _c, _d, _e, _f;
+    var NOTIFICATION = window.Notification || (window === null || window === void 0 ? void 0 : window.mozNotification) || (window === null || window === void 0 ? void 0 : window.webkitNotification);
+    if (!NOTIFICATION) {
+        console.log('系统不支持 Notification API');
+        return;
+    }
+    var notify = new Notification(title !== null && title !== void 0 ? title : 'js-xxx Notification', __assign(__assign({}, options), { dir: (_a = options === null || options === void 0 ? void 0 : options.dir) !== null && _a !== void 0 ? _a : 'auto', lang: (_b = options === null || options === void 0 ? void 0 : options.lang) !== null && _b !== void 0 ? _b : 'zh-CN', requireInteraction: (_c = options === null || options === void 0 ? void 0 : options.requireInteraction) !== null && _c !== void 0 ? _c : false, tag: (_d = options === null || options === void 0 ? void 0 : options.tag) !== null && _d !== void 0 ? _d : getRandStr(8), icon: (_e = options === null || options === void 0 ? void 0 : options.icon) !== null && _e !== void 0 ? _e : 'favicon.ico', timestamp: (_f = options === null || options === void 0 ? void 0 : options.timestamp) !== null && _f !== void 0 ? _f : new Date().getTime(), body: msg }));
+    notify.onclick = function () {
+        var _a;
+        window.focus();
+        (_a = options === null || options === void 0 ? void 0 : options.onClick) === null || _a === void 0 ? void 0 : _a.call(this);
+        notify.close();
+    };
+    notify.onerror = function () {
+        var _a;
+        (_a = options === null || options === void 0 ? void 0 : options.onError) === null || _a === void 0 ? void 0 : _a.call(this);
+    };
+    notify.onclose = function () {
+        var _a;
+        (_a = options === null || options === void 0 ? void 0 : options.onClose) === null || _a === void 0 ? void 0 : _a.call(this);
+    };
+}
+
 function round(number, d) {
     var tempNum = number + '';
     d = !d ? 0 : d;
@@ -591,6 +656,30 @@ function round(number, d) {
         }
         return parseFloat((pm + tempStr).replace(/\.$/, ''));
     }
+}
+function isInteger(value, type) {
+    if (type == '+') {
+        return /(^[1-9]\d*$)|(^0$)/.test(value);
+    }
+    if (type == '-') {
+        return /(^\-0$)|(^\-[1-9]\d*$)/.test(value);
+    }
+    return /(^[1-9]\d*$)|(^0$)|(^\-0$)|(^\-[1-9]\d*$)/.test(value);
+}
+function isDecimal(value, type, noLastZero) {
+    if (noLastZero === void 0) { noLastZero = false; }
+    if (type == '+') {
+        var reg = noLastZero ? /(^0\.[1-9]*\d*[1-9]$)|(^[1-9]\d*\.\d*[1-9]$)/ : /(^0\.\d+$)|(^[1-9]\d*\.\d+$)/;
+        return reg.test(value);
+    }
+    if (type == '-') {
+        var reg = noLastZero ? /(^\-0\.[1-9]*\d*[1-9]$)|(^\-[1-9]\d*\.\d*[1-9]$)/ : /(^\-0\.\d+$)|(^\-[1-9]\d*\.\d+$)/;
+        return reg.test(value);
+    }
+    if (noLastZero) {
+        return /(^0\.[1-9]*\d*[1-9]$)|(^[1-9]\d*\.\d*[1-9]$)|(^\-0\.[1-9]*\d*[1-9]$)|(^\-[1-9]\d*\.\d*[1-9]$)/.test(value);
+    }
+    return /(^0\.\d+$)|(^[1-9]\d*\.\d+$)|(^\-0\.\d+$)|(^\-[1-9]\d*\.\d+$)/.test(value);
 }
 
 function getV(defaultResult) {
@@ -767,6 +856,83 @@ function getBaseURL(url) {
     return url.replace(/[?#].*$/, '');
 }
 
+function localStorageGet(key) {
+    var result = window.localStorage.getItem(key);
+    switch (getType(result)) {
+        case 'object':
+        case 'array':
+            return JSON.parse(result);
+        case 'string':
+            if (isDecimal(result) || isInteger(result)) {
+                return parseFloat(result);
+            }
+            if (result === 'true' || result === 'false') {
+                return result === 'true';
+            }
+            return result;
+        default:
+            return result;
+    }
+}
+function localStorageSet(key, value) {
+    var newVal;
+    switch (getType(value)) {
+        case 'null':
+        case 'undefined':
+            window.localStorage.removeItem(key);
+            return;
+        case 'object':
+        case 'array':
+            newVal = JSON.stringify(value);
+            break;
+        case 'number':
+        case 'boolean':
+        case 'string':
+        default:
+            newVal = value;
+            break;
+    }
+    window.localStorage.setItem(key, newVal);
+}
+function sessionStorageGet(key) {
+    var result = window.sessionStorage.getItem(key);
+    switch (getType(result)) {
+        case 'object':
+        case 'array':
+            return JSON.parse(result);
+        case 'string':
+            if (isDecimal(result) || isInteger(result)) {
+                return parseFloat(result);
+            }
+            if (result === 'true' || result === 'false') {
+                return result === 'true';
+            }
+            return result;
+        default:
+            return result;
+    }
+}
+function sessionStorageSet(key, value) {
+    var newVal;
+    switch (getType(value)) {
+        case 'null':
+        case 'undefined':
+            window.sessionStorage.removeItem(key);
+            return;
+        case 'object':
+        case 'array':
+            newVal = JSON.stringify(value);
+            break;
+        case 'number':
+        case 'boolean':
+        case 'string':
+        default:
+            newVal = value;
+            break;
+    }
+    window.sessionStorage.setItem(key, newVal);
+}
+
 function unicode2str(value) {
     return escape(value).toLocaleLowerCase().replace(/%u/gi, '\\u');
 }
@@ -804,4 +970,4 @@ function base64Decode(str) {
     return Buffer.from(str, 'base64').toString('utf8');
 }
 
-export { add, all, any, arraySet, base64Decode, base64Encode, catchPromise, copyContent, copyToClipboard, curryIt, data2Arr, data2Obj, debounce, deepClone, div, empty, findChildren, findParents, formatBytes, formatDate, formatFormData, formatURLSearchParams, get1Var, getBaseURL, getCookie, getMonthDays, getRandColor, getRandNum, getRandStr, getStyleByName, getTimeAndStr, getTimeCode, getType, getUUID, getV, getViewportSize, globalError, html2str, insertAfter, isAppleDevice, isBrowser, isDarkMode, isNode, isValidJSON, isWeekday, mergeObj, offDefaultEvent, qsParse, qsStringify, removeCookie, retry, round, scrollTo, setCookie, setIcon, shuffleArray, sleep, sortCallBack, str2html, str2unicode, sub, throttle, timeSince, times, to, trim, unicode2str };
+export { add, all, any, arraySet, base64Decode, base64Encode, catchPromise, copyContent, copyToClipboard, curryIt, data2Arr, data2Obj, debounce, deepClone, div, empty, findChildren, findParents, formatBytes, formatDate, formatFormData, formatURLSearchParams, get1Var, getBaseURL, getCookie, getMonthDays, getRandColor, getRandNum, getRandStr, getStyleByName, getTimeAndStr, getTimeCode, getType, getUUID, getV, getViewportSize, globalError, html2str, initNotification, insertAfter, isAppleDevice, isBrowser, isDarkMode, isDecimal, isInteger, isNode, isValidJSON, isWeekday, localStorageGet, localStorageSet, mergeObj, offDefaultEvent, qsParse, qsStringify, removeCookie, retry, round, scrollToBottom, scrollToTop, sendNotification, sessionStorageGet, sessionStorageSet, setCookie, setIcon, shuffleArray, sleep, sortCallBack, str2html, str2unicode, sub, throttle, timeSince, times, to, trim, unicode2str };

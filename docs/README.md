@@ -1,6 +1,6 @@
-js-xxx - v1.1.5
+js-xxx - v1.1.6
 
-# js-xxx - v1.1.5
+# js-xxx - v1.1.6
 
 ## Table of contents
 
@@ -44,13 +44,18 @@ js-xxx - v1.1.5
 - [getViewportSize](README.md#getviewportsize)
 - [globalError](README.md#globalerror)
 - [html2str](README.md#html2str)
+- [initNotification](README.md#initnotification)
 - [insertAfter](README.md#insertafter)
 - [isAppleDevice](README.md#isappledevice)
 - [isBrowser](README.md#isbrowser)
 - [isDarkMode](README.md#isdarkmode)
+- [isDecimal](README.md#isdecimal)
+- [isInteger](README.md#isinteger)
 - [isNode](README.md#isnode)
 - [isValidJSON](README.md#isvalidjson)
 - [isWeekday](README.md#isweekday)
+- [localStorageGet](README.md#localstorageget)
+- [localStorageSet](README.md#localstorageset)
 - [mergeObj](README.md#mergeobj)
 - [offDefaultEvent](README.md#offdefaultevent)
 - [qsParse](README.md#qsparse)
@@ -58,7 +63,11 @@ js-xxx - v1.1.5
 - [removeCookie](README.md#removecookie)
 - [retry](README.md#retry)
 - [round](README.md#round)
-- [scrollTo](README.md#scrollto)
+- [scrollToBottom](README.md#scrolltobottom)
+- [scrollToTop](README.md#scrolltotop)
+- [sendNotification](README.md#sendnotification)
+- [sessionStorageGet](README.md#sessionstorageget)
+- [sessionStorageSet](README.md#sessionstorageset)
 - [setCookie](README.md#setcookie)
 - [setIcon](README.md#seticon)
 - [shuffleArray](README.md#shufflearray)
@@ -838,6 +847,19 @@ Example: `html2str('&lt;&gt;&amp;&quot;') => '<>&"'`
 
 ___
 
+### initNotification
+
+▸ **initNotification**(): `boolean`
+
+初始化 Notification
+Example: `initNotification() => true||false`
+
+#### Returns
+
+`boolean`
+
+___
+
 ### insertAfter
 
 ▸ **insertAfter**(`newElement`, `targetElement`): `void`
@@ -897,6 +919,51 @@ Example: `isDarkMode() => true`
 
 ___
 
+### isDecimal
+
+▸ **isDecimal**(`value`, `type?`, `noLastZero?`): `boolean`
+
+是否小数(严格匹配)
+Example: `isDecimal('0.0') => true`
+Example: `isDecimal('0.0', '+', true) => false`
+Example: `isDecimal('-0.1', '+') => false`
+Example: `isDecimal('-0.10', '-') => true`
+
+#### Parameters
+
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `value` | `string` | `undefined` |
+| `type?` | ``"-"`` \| ``"+"`` | `undefined` |
+| `noLastZero` | `boolean` | `false` |
+
+#### Returns
+
+`boolean`
+
+___
+
+### isInteger
+
+▸ **isInteger**(`value`, `type?`): `boolean`
+
+是否整数(严格匹配)
+Example: `isInteger('0') => true`
+Example: `isInteger('-0', '+') => false`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `string` |
+| `type?` | ``"-"`` \| ``"+"`` |
+
+#### Returns
+
+`boolean`
+
+___
+
 ### isNode
 
 ▸ **isNode**(): `boolean`
@@ -948,6 +1015,45 @@ Example: `isWorkDay(new Date()) => true`
 #### Returns
 
 `boolean`
+
+___
+
+### localStorageGet
+
+▸ **localStorageGet**(`key`): `any`
+
+获取 localStorage
+Example: `localStorageGet("key") => 处理过后的 value，不需要再 decode`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `key` | `string` | 存储key |
+
+#### Returns
+
+`any`
+
+___
+
+### localStorageSet
+
+▸ **localStorageSet**(`key`, `value`): `any`
+
+设置 localStorage
+Example: `localStorageSet("key", "value") => 存储时不需要处理数据，value === null|undefined 清除数据。`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `key` | `string` | 存储key |
+| `value` | `any` | 存储value，value === null\|undefined 清除数据。 |
+
+#### Returns
+
+`any`
 
 ___
 
@@ -1104,23 +1210,104 @@ const toFixed = (n, fixed) => ~~(Math.pow(10, fixed) * n) / Math.pow(10, fixed);
 
 ___
 
-### scrollTo
+### scrollToBottom
 
-▸ **scrollTo**(`element`, `to?`): `void`
+▸ **scrollToBottom**(`elementSelector`): `void`
 
-滚动到顶部/底部
-Example: `scrollTo(element) => 滚动到顶部`
+滚动到底部
+平滑滚动 css：`scroll-behavior: smooth;`
+Example: `scrollToBottom('body') => 滚动到底部`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `elementSelector` | `string` | 指定元素选择器 |
+
+#### Returns
+
+`void`
+
+___
+
+### scrollToTop
+
+▸ **scrollToTop**(`elementSelector`, `to?`): `void`
+
+滚动到顶部
+平滑滚动 css：`scroll-behavior: smooth;`
+Example: `scrollToTop('body') => 滚动到顶部`
 
 #### Parameters
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `element` | `any` | `undefined` | 指定元素 |
-| `to` | ``"start"`` \| ``"end"`` | `'start'` | - |
+| `elementSelector` | `string` | `undefined` | 指定元素选择器 |
+| `to` | ``"start"`` \| ``"end"`` | `'start'` | ('start'\|'end')[default: 'start'] |
 
 #### Returns
 
 `void`
+
+___
+
+### sendNotification
+
+▸ **sendNotification**(`msg`, `title?`, `options?`): `void`
+
+发送 Notification
+Example: `sendNotification('测试通知', '测试标题', {...options}) => 发送成功/失败`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `msg` | `string` |
+| `title?` | `string` |
+| `options?` | { `badge?`: `string` ; `body?`: `string` ; `data?`: `any` ; `dir?`: ``"auto"`` \| ``"ltr"`` \| ``"rtl"`` ; `icon?`: `string` ; `image?`: `string` ; `lang?`: ``"en-US"`` \| ``"zh-CN"`` ; `onClick?`: `any` ; `onClose?`: `any` ; `onError?`: `any` ; `renotify?`: `boolean` ; `requireInteraction?`: `boolean` ; `silent?`: `boolean` ; `tag?`: `string` ; `timestamp?`: `number` ; `vibrate?`: `VibratePattern`  } \| `NotificationOptions` |
+
+#### Returns
+
+`void`
+
+___
+
+### sessionStorageGet
+
+▸ **sessionStorageGet**(`key`): `any`
+
+获取 sessionStorage
+Example: `sessionStorageGet("key") => 处理过后的 value，不需要再 decode`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `key` | `string` | 存储key |
+
+#### Returns
+
+`any`
+
+___
+
+### sessionStorageSet
+
+▸ **sessionStorageSet**(`key`, `value`): `any`
+
+设置 sessionStorage
+Example: `sessionStorageSet("key", "value") => 存储时不需要处理数据，value === null|undefined 清除数据。`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `key` | `string` | 存储key |
+| `value` | `any` | 存储value，value === null\|undefined 清除数据。 |
+
+#### Returns
+
+`any`
 
 ___
 

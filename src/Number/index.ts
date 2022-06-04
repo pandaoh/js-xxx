@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 16:24:47
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-04-26 18:03:35
+ * @LastEditTime: 2022-06-04 20:04:51
  * @Description: 常用数字相关方法
  * @FilePath: \js-xxx\src\Number\index.ts
  */
@@ -54,4 +54,43 @@ export function round(number: any, d: number): number | undefined {
     }
     return parseFloat((pm + tempStr).replace(/\.$/, '')); //返回浮点数，以防万一去掉结尾的小数点（.）。
   }
+}
+
+/**
+ * 是否整数(严格匹配)
+ * Example: `isInteger('0') => true`
+ * Example: `isInteger('-0', '+') => false`
+ * @returns
+ */
+export function isInteger(value: string, type?: '-' | '+'): boolean {
+  if (type == '+') {
+    return /(^[1-9]\d*$)|(^0$)/.test(value);
+  }
+  if (type == '-') {
+    return /(^\-0$)|(^\-[1-9]\d*$)/.test(value);
+  }
+  return /(^[1-9]\d*$)|(^0$)|(^\-0$)|(^\-[1-9]\d*$)/.test(value);
+}
+
+/**
+ * 是否小数(严格匹配)
+ * Example: `isDecimal('0.0') => true`
+ * Example: `isDecimal('0.0', '+', true) => false`
+ * Example: `isDecimal('-0.1', '+') => false`
+ * Example: `isDecimal('-0.10', '-') => true`
+ * @returns
+ */
+export function isDecimal(value: string, type?: '-' | '+', noLastZero = false): boolean {
+  if (type == '+') {
+    const reg = noLastZero ? /(^0\.[1-9]*\d*[1-9]$)|(^[1-9]\d*\.\d*[1-9]$)/ : /(^0\.\d+$)|(^[1-9]\d*\.\d+$)/;
+    return reg.test(value);
+  }
+  if (type == '-') {
+    const reg = noLastZero ? /(^\-0\.[1-9]*\d*[1-9]$)|(^\-[1-9]\d*\.\d*[1-9]$)/ : /(^\-0\.\d+$)|(^\-[1-9]\d*\.\d+$)/;
+    return reg.test(value);
+  }
+  if (noLastZero) {
+    return /(^0\.[1-9]*\d*[1-9]$)|(^[1-9]\d*\.\d*[1-9]$)|(^\-0\.[1-9]*\d*[1-9]$)|(^\-[1-9]\d*\.\d*[1-9]$)/.test(value);
+  }
+  return /(^0\.\d+$)|(^[1-9]\d*\.\d+$)|(^\-0\.\d+$)|(^\-[1-9]\d*\.\d+$)/.test(value);
 }

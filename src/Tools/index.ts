@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-05-17 18:06:59
+ * @LastEditTime: 2022-06-04 16:29:36
  * @Description: 工具方法
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
@@ -267,7 +267,11 @@ export function isBrowser(): boolean {
  * @returns
  */
 export function isDarkMode(): boolean {
-  return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  return (
+    window.matchMedia &&
+    (window.matchMedia('(prefers-color-scheme:dark)').matches ||
+      window.matchMedia('(prefers-color-scheme: dark)').matches)
+  );
 }
 
 /**
