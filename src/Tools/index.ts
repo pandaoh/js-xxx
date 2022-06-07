@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-06-04 16:29:36
+ * @LastEditTime: 2022-06-07 16:26:24
  * @Description: 工具方法
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
@@ -66,52 +66,81 @@ export function get1Var(data: any): any {
 }
 
 /**
- * 深拷贝
- * https://juejin.cn/post/7075351322014253064
- * Example: `deepClone({a: 1, b: {c: 2}}) => 新的 {a: 1, b: {c: 2}}`
- * @param data 源数据
- * @param hash hash 存储，避免循环引用。
+ * 防抖函数
+ * Example: `debounce(() => {}, 1000) => 防抖执行`
+ * @param fn 执行的方法
+ * @param delay 延迟时间
  * @returns
  */
-export function deepClone(data: any, hash = new WeakMap()): any {
-  if (hash.has(data)) {
-    return data;
-  }
-  let result: any = null;
-
-  const reference = [Date, RegExp, Set, WeakSet, Map, WeakMap, Error];
-
-  if (reference.includes(data?.constructor)) {
-    result = new data.constructor(data);
-  } else if (Array.isArray(data)) {
-    result = [];
-    data.forEach((item, i) => {
-      result[i] = deepClone(item);
-    });
-  } else if (typeof data === 'object' && data !== null) {
-    hash.set(data, 'exist');
-    result = {};
-    for (const key in data) {
-      if (Object.hasOwnProperty.call(data, key)) {
-        result[key] = deepClone(data[key], hash);
-      }
-    }
-  } else {
-    result = data;
-  }
-  return result;
+export function debounce(fn: Function, delay = 1000) {
+  let timer: any = null;
+  return function () {
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      // @ts-ignore
+      fn.apply(this, arguments);
+    }, delay);
+  };
 }
-// export function deepClone(data: any): any {
-//   // JSON.parse(JSON.stringify(data))
-//   if (getType(data) !== 'object' || !Array.isArray(data)) {
-//     return data;
-//   }
-//   let result: any = Array.isArray(data) ? [] : {};
-//   for (let i in data) {
-//     result[i] = deepClone(data[i]);
-//   }
-//   return result;
-// }
+
+/**
+ * 节流函数
+ * Example: `throttle(() => {}, 1000) => 节流执行`
+ * @param fn 执行的方法
+ * @param delay 延迟时间
+ * @returns
+ */
+export function throttle(fn: Function, delay = 2000) {
+  let canRun = true;
+  return function () {
+    if (!canRun) return;
+    canRun = false;
+    // @ts-ignore
+    fn.apply(this, arguments);
+    setTimeout(function () {
+      canRun = true;
+    }, delay);
+  };
+}
+
+/**
+ * 函数柯里化
+ * 是把接受多个参数的函数变换成接受一个单一参数(最初函数的第一个参数)的函数，并且返回接受余下的参数且返回结果的新函数的技术。
+ * Example: `curryIt(function (a, b, c) {return a + b + c})(1)(2)(3) => 6`
+ * @param fn
+ * @returns
+ */
+export function curryIt(fn: Function) {
+  // 获取预定义函数的参数个数
+  let length = fn.length;
+  // 声明存放参数的数组
+  let args: any[] = [];
+  return function (arg: any) {
+    args.push(arg);
+    length--;
+    if (length <= 0) {
+      // @ts-ignore
+      return fn.apply(this, args);
+    } else {
+      // callee 属性是一个指针，指向拥有这个 arguments 对象的函数。
+      return arguments.callee;
+    }
+  };
+}
+
+/**
+ * 全局捕获异常
+ * Example: `globalError((message, source, lineno, colno, error) => console.log('全局捕获异常'), false) => '全局捕获异常'`
+ * @param {Function} fn(message, source, lineno, colno, error)
+ * @param {boolean} notShowConsole 是否不回显控制台
+ * @returns
+ */
+export function globalError(fn: Function, notShowConsole: boolean = true) {
+  window.onerror = function (message, source, lineno, colno, error) {
+    fn.call(this, message, source, lineno, colno, error);
+    return notShowConsole; // return true 不在控制台报错
+  };
+}
 
 /**
  * 获取随机数字
@@ -171,61 +200,6 @@ export function getUUID(length: number, chars: string | any[]): string {
 }
 
 /**
- * 防抖函数
- * Example: `debounce(() => {}, 1000) => 防抖执行`
- * @param fn 执行的方法
- * @param delay 延迟时间
- * @returns
- */
-export function debounce(fn: Function, delay = 1000) {
-  let timer: any = null;
-  return function () {
-    clearTimeout(timer);
-    timer = setTimeout(function () {
-      // @ts-ignore
-      fn.apply(this, arguments);
-    }, delay);
-  };
-}
-
-/**
- * 节流函数
- * Example: `throttle(() => {}, 1000) => 节流执行`
- * @param fn 执行的方法
- * @param delay 延迟时间
- * @returns
- */
-export function throttle(fn: Function, delay = 2000) {
-  let canRun = true;
-  return function () {
-    if (!canRun) return;
-    canRun = false;
-    // @ts-ignore
-    fn.apply(this, arguments);
-    setTimeout(function () {
-      canRun = true;
-    }, delay);
-  };
-}
-
-/**
- * 全局捕获异常
- * Example: `globalError(() => console.log('全局捕获异常')) => '全局捕获异常'`
- * @param {object} message
- * @param {object} source
- * @param {object} lineno
- * @param {object} colno
- * @param {object} error
- * @returns
- */
-export function globalError(fn: Function) {
-  window.onerror = function (message, source, lineno, colno, error) {
-    fn.call(this, message, source, lineno, colno, error);
-    return true; // return true 不在控制台报错
-  };
-}
-
-/**
  * 检查字符串是否为有效的 JSON
  * Example:
  * `isValidJSON('{"name":"leo", "age":20}'); => true`
@@ -281,29 +255,4 @@ export function isDarkMode(): boolean {
  */
 export function isAppleDevice(): boolean {
   return /Mac|iPod|iPhone|iPad/.test(navigator.platform);
-}
-
-/**
- * 函数柯里化
- * 是把接受多个参数的函数变换成接受一个单一参数(最初函数的第一个参数)的函数，并且返回接受余下的参数且返回结果的新函数的技术。
- * Example: `curryIt(function (a, b, c) {return a + b + c})(1)(2)(3) => 6`
- * @param fn
- * @returns
- */
-export function curryIt(fn: Function) {
-  // 获取预定义函数的参数个数
-  let length = fn.length;
-  // 声明存放参数的数组
-  let args: any[] = [];
-  return function (arg: any) {
-    args.push(arg);
-    length--;
-    if (length <= 0) {
-      // @ts-ignore
-      return fn.apply(this, args);
-    } else {
-      // callee 属性是一个指针，指向拥有这个 arguments 对象的函数。
-      return arguments.callee;
-    }
-  };
 }
