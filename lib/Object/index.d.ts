@@ -6,4 +6,5 @@ export declare function mergeObj(oldObj: {
 }, keys?: string | string[], noOld?: boolean): {
     [key: string]: any;
 };
+export declare function deepClone(data: any, hash?: WeakMap<object, any>): any;
 //# sourceMappingURL=index.d.ts.map

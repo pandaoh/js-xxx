@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:53:02
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-05-17 16:48:58
+ * @LastEditTime: 2022-06-14 18:09:11
  * @Description: 表单相关
  * @FilePath: \js-xxx\src\Form\index.ts
  */
@@ -36,9 +36,10 @@ export function formatFormData(obj: any, hasBrackets: boolean = false, hasIndex:
 
 /**
  * 对象转 URLSearchParams
- * Example: `formatURLSearchParams({a: 1, b: 2, c: [1, 2]}) => a=1&b=2&c=1&c=2`
- * Example: `formatURLSearchParams({a: 1, b: 2, c: [1, 2]}, true) => a=1&b=2&c[]=1&c[]=2`
- * Example: `formatURLSearchParams({a: 1, b: 2, c: [1, 2]}, true, true) => a=1&b=2&c[0]=1&c[1]=2`
+ * Example:
+ * `formatURLSearchParams({a: 1, b: 2, c: [1, 2]}) => a=1&b=2&c=1&c=2`
+ * `formatURLSearchParams({a: 1, b: 2, c: [1, 2]}, true) => a=1&b=2&c[]=1&c[]=2`
+ * `formatURLSearchParams({a: 1, b: 2, c: [1, 2]}, true, true) => a=1&b=2&c[0]=1&c[1]=2`
  * @param obj 源数据
  * @param hasBrackets 是否带括号
  * @param hasIndex 是否带 index

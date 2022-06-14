@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:05:14
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-06-07 16:25:13
+ * @LastEditTime: 2022-06-14 18:11:14
  * @Description: 对象相关方法
  * @FilePath: \js-xxx\src\Object\index.ts
  */
@@ -94,7 +94,7 @@ export function deepClone(data: any, hash = new WeakMap()): any {
   }
   return result;
 }
-// export function deepClone(data: any): any {
+// exportNO function deepClone(data: any): any {
 //   // JSON.parse(JSON.stringify(data))
 //   if (getType(data) !== 'object' || !Array.isArray(data)) {
 //     return data;

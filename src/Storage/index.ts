@@ -2,13 +2,14 @@
  * @Author: HxB
  * @Date: 2022-06-04 16:30:04
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-06-04 20:07:53
+ * @LastEditTime: 2022-06-14 17:43:00
  * @Description: localStorage 与 sessionStorage
  * @FilePath: \js-xxx\src\Storage\index.ts
  */
 
 import { getType } from '@/Tools';
 import { isDecimal, isInteger } from '@/Number';
+// 加密与过期设置参考 https://juejin.cn/post/7104301566857445412
 
 /**
  * 获取 localStorage

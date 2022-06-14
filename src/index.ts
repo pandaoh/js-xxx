@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 11:33:53
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-06-04 20:48:34
+ * @LastEditTime: 2022-06-14 17:43:56
  * @Description: 主项目文件汇总(请勿使用路径别名)
  * @FilePath: \js-xxx\src\index.ts
  */
@@ -13,6 +13,7 @@
 
 export * from './Array';
 export * from './Cookies';
+export * from './Crypto';
 export * from './Date';
 export * from './Dom';
 export * from './Form';

@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:54:41
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-06-07 16:47:20
+ * @LastEditTime: 2022-06-14 18:08:39
  * @Description: 时间相关方法
  * @FilePath: \js-xxx\src\Date\index.ts
  */
@@ -48,9 +48,10 @@ export function formatDate(
 
 /**
  * 时间计算
- * Example: `calcDate(new Date(), '-1 days') => date object`
- * Example: `calcDate(new Date(), '-1 DAYS') => date object`
- * Example: `calcDate(new Date(), ['-1 day', '+1 year', '-2 month', '2 weeks', '1 hour', '-3 minute', '45 seconds']) => date object`
+ * Example:
+ * `calcDate(new Date(), '-1 days') => date object`
+ * `calcDate(new Date(), '-1 DAYS') => date object`
+ * `calcDate(new Date(), ['-1 day', '+1 year', '-2 month', '2 weeks', '1 hour', '-3 minute', '45 seconds']) => date object`
  * @param date 时间
  * @param calcStrOrArr '1 days' or ['-1 day', '3 month']
  * @returns
@@ -102,8 +103,9 @@ export function calcDate(date: string | Date, calcStrOrArr: string | string[]): 
 
 /**
  * 两个时间差距计算
- * Example: `getDateDifference(new Date('2022-05-01'), new Date(), 'day') => 37`
- * Example: `getDateDifference(new Date('2022-05-01'), new Date(), 'all') => {days: 37, hours: 8, minutes: 46, seconds: 47}`
+ * Example:
+ * `getDateDifference(new Date('2022-05-01'), new Date(), 'day') => 37`
+ * `getDateDifference(new Date('2022-05-01'), new Date(), 'all') => {days: 37, hours: 8, minutes: 46, seconds: 47}`
  * @param oldDate 久远一点的时间
  * @param nowDate 近一点的时间，默认当前时间。
  * @param type 计算方式，默认计算差距的精确天数、时分秒。
@@ -274,4 +276,27 @@ export function getMonthDaysCount(date?: string | Date): number {
 export function getDateTime(date?: string | Date): number {
   date = date ? new Date(date) : new Date();
   return date.getTime();
+}
+
+/**
+ * 获取标准时间 UTC
+ * 适用于本地时间不准确或者获取其他时区时间的情况
+ * Example: `getUTCTime(8) => 中国标准时间`
+ * @param timezone 时区数字，东八区为 8，西八区为 -8。
+ * @returns
+ */
+export function getUTCTime(timezone: number = 0): Date {
+  let d = new Date();
+  let len = d.getTime();
+  // 本地时间与 UTC 时间的时间偏移差
+  let offset = d.getTimezoneOffset() * 60000;
+  // 得到现在的 UTC 时间，各时区 UTC 时间相同。
+  let utcTime = len + offset;
+  // 得到时区标准时间
+  return new Date(utcTime + 3600000 * timezone);
+
+  // 得到 UTC 时间戳
+  // return new Date(utcTime).getTime();
+  // 得到时区时间戳
+  // return new Date(utcTime + 3600000 * timezone).getTime();
 }

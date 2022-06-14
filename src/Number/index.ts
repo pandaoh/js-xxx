@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 16:24:47
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-06-04 20:04:51
+ * @LastEditTime: 2022-06-14 18:09:33
  * @Description: 常用数字相关方法
  * @FilePath: \js-xxx\src\Number\index.ts
  */
@@ -58,8 +58,9 @@ export function round(number: any, d: number): number | undefined {
 
 /**
  * 是否整数(严格匹配)
- * Example: `isInteger('0') => true`
- * Example: `isInteger('-0', '+') => false`
+ * Example:
+ * `isInteger('0') => true`
+ * `isInteger('-0', '+') => false`
  * @returns
  */
 export function isInteger(value: string, type?: '-' | '+'): boolean {
@@ -74,10 +75,11 @@ export function isInteger(value: string, type?: '-' | '+'): boolean {
 
 /**
  * 是否小数(严格匹配)
- * Example: `isDecimal('0.0') => true`
- * Example: `isDecimal('0.0', '+', true) => false`
- * Example: `isDecimal('-0.1', '+') => false`
- * Example: `isDecimal('-0.10', '-') => true`
+ * Example:
+ * `isDecimal('0.0') => true`
+ * `isDecimal('0.0', '+', true) => false`
+ * `isDecimal('-0.1', '+') => false`
+ * `isDecimal('-0.10', '-') => true`
  * @returns
  */
 export function isDecimal(value: string, type?: '-' | '+', noLastZero = false): boolean {

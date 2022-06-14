@@ -1,17 +1,20 @@
-js-xxx - v1.1.6
+js-xxx - v1.1.8
 
-# js-xxx - v1.1.6
+# js-xxx - v1.1.8
 
 ## Table of contents
 
 ### Functions
 
+- [Base64Decode](README.md#base64decode)
+- [Base64Encode](README.md#base64encode)
 - [add](README.md#add)
 - [all](README.md#all)
 - [any](README.md#any)
 - [arraySet](README.md#arrayset)
-- [base64Decode](README.md#base64decode)
-- [base64Encode](README.md#base64encode)
+- [base64Decode](README.md#base64decode-1)
+- [base64Encode](README.md#base64encode-1)
+- [calcDate](README.md#calcdate)
 - [catchPromise](README.md#catchpromise)
 - [copyContent](README.md#copycontent)
 - [copyToClipboard](README.md#copytoclipboard)
@@ -19,9 +22,11 @@ js-xxx - v1.1.6
 - [data2Arr](README.md#data2arr)
 - [data2Obj](README.md#data2obj)
 - [debounce](README.md#debounce)
+- [decrypt](README.md#decrypt)
 - [deepClone](README.md#deepclone)
 - [div](README.md#div)
 - [empty](README.md#empty)
+- [encrypt](README.md#encrypt)
 - [findChildren](README.md#findchildren)
 - [findParents](README.md#findparents)
 - [formatBytes](README.md#formatbytes)
@@ -31,7 +36,10 @@ js-xxx - v1.1.6
 - [get1Var](README.md#get1var)
 - [getBaseURL](README.md#getbaseurl)
 - [getCookie](README.md#getcookie)
+- [getDateDifference](README.md#getdatedifference)
+- [getDateTime](README.md#getdatetime)
 - [getMonthDays](README.md#getmonthdays)
+- [getMonthDaysCount](README.md#getmonthdayscount)
 - [getRandColor](README.md#getrandcolor)
 - [getRandNum](README.md#getrandnum)
 - [getRandStr](README.md#getrandstr)
@@ -39,6 +47,7 @@ js-xxx - v1.1.6
 - [getTimeAndStr](README.md#gettimeandstr)
 - [getTimeCode](README.md#gettimecode)
 - [getType](README.md#gettype)
+- [getUTCTime](README.md#getutctime)
 - [getUUID](README.md#getuuid)
 - [getV](README.md#getv)
 - [getViewportSize](README.md#getviewportsize)
@@ -56,6 +65,7 @@ js-xxx - v1.1.6
 - [isWeekday](README.md#isweekday)
 - [localStorageGet](README.md#localstorageget)
 - [localStorageSet](README.md#localstorageset)
+- [md5](README.md#md5)
 - [mergeObj](README.md#mergeobj)
 - [offDefaultEvent](README.md#offdefaultevent)
 - [qsParse](README.md#qsparse)
@@ -70,6 +80,8 @@ js-xxx - v1.1.6
 - [sessionStorageSet](README.md#sessionstorageset)
 - [setCookie](README.md#setcookie)
 - [setIcon](README.md#seticon)
+- [sha1](README.md#sha1)
+- [sha256](README.md#sha256)
 - [shuffleArray](README.md#shufflearray)
 - [sleep](README.md#sleep)
 - [sortCallBack](README.md#sortcallback)
@@ -84,6 +96,49 @@ js-xxx - v1.1.6
 - [unicode2str](README.md#unicode2str)
 
 ## Functions
+
+### Base64Decode
+
+▸ **Base64Decode**(`str`): `string`
+
+Base64 解密方法
+Example: `Base64Decode("加密后的字符串") => 解密后的字符串`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `str` | `string` | 需要加密的字符串 |
+
+#### Returns
+
+`string`
+
+___
+
+### Base64Encode
+
+▸ **Base64Encode**(`str`, `replaceChar?`): `string`
+
+Base64 加密方法
+使用 url 中时建议使用 encodeURIComponent 再次编码，因为单独 + 号在 url 中会被解析成空格。
+使用 encodeURIComponent 会把 + 解析为 %2B 与空格 %20 区分
+Example:
+`Base64Encode("value") => 加密后的字符串`
+`Base64Encode("value", true) => 加密后的字符串并替换 +/=`
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `str` | `string` | `undefined` | 需要加密的字符串 |
+| `replaceChar` | `boolean` | `false` | 是否替换结果字符串中的特殊字符 '+/='，适用于 url 编码。 |
+
+#### Returns
+
+`string`
+
+___
 
 ### add
 
@@ -190,18 +245,45 @@ ___
 ▸ **base64Encode**(`str`, `replaceChar?`): `string`
 
 base64 编码
-Example: `base64Encode('我是 leo') => '5oiR5pivIGxlbw=='`
+使用 url 中时建议使用 encodeURIComponent 再次编码，因为单独 + 号在 url 中会被解析成空格。
+使用 encodeURIComponent 会把 + 解析为 %2B 与空格 %20 区分
+Example:
+`base64Encode('我是 leo') => '5oiR5pivIGxlbw=='`
+`base64Encode('我是 leo', true) => '5oiR5pivIGxlbw'`
 
 #### Parameters
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
 | `str` | `string` | `undefined` | 字符串 |
-| `replaceChar` | `boolean` | `false` | 是否替换结果字符串中的特殊字符 '+/=' |
+| `replaceChar` | `boolean` | `false` | 是否替换结果字符串中的特殊字符 '+/='，适用于 url 编码。 |
 
 #### Returns
 
 `string`
+
+___
+
+### calcDate
+
+▸ **calcDate**(`date`, `calcStrOrArr`): `Date`
+
+时间计算
+Example:
+`calcDate(new Date(), '-1 days') => date object`
+`calcDate(new Date(), '-1 DAYS') => date object`
+`calcDate(new Date(), ['-1 day', '+1 year', '-2 month', '2 weeks', '1 hour', '-3 minute', '45 seconds']) => date object`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `date` | `string` \| `Date` | 时间 |
+| `calcStrOrArr` | `string` \| `string`[] | '1 days' or ['-1 day', '3 month'] |
+
+#### Returns
+
+`Date`
 
 ___
 
@@ -365,6 +447,28 @@ Example: `debounce(() => {}, 1000) => 防抖执行`
 
 ___
 
+### decrypt
+
+▸ **decrypt**(`dataStr`, `jsonDecode?`): `string`
+
+解密方法
+Example:
+`decrypt("加密后的字符串") => 解密后的字符串`
+`decrypt("加密后的字符串", true) => 解密后的字符串并转换为 JSON 对象`
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `dataStr` | `string` | `undefined` | 加密后的字符串 |
+| `jsonDecode` | `boolean` | `false` | 是否需要解析成 json |
+
+#### Returns
+
+`string`
+
+___
+
 ### deepClone
 
 ▸ **deepClone**(`data`, `hash?`): `any`
@@ -422,6 +526,25 @@ Example: `empty('') => true`
 #### Returns
 
 `boolean`
+
+___
+
+### encrypt
+
+▸ **encrypt**(`data`): `string`
+
+加密方法
+Example: `encrypt("value") => 加密后的字符串`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `data` | `any` | 需要加密的数据 |
+
+#### Returns
+
+`string`
 
 ___
 
@@ -486,7 +609,7 @@ ___
 
 ### formatDate
 
-▸ **formatDate**(`date`, `fmt?`, `weeks?`): `string`
+▸ **formatDate**(`date?`, `fmt?`, `weeks?`): `string`
 
 时间格式化
 Example:
@@ -496,7 +619,7 @@ Example:
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `date` | `Date` | `undefined` | 时间 |
+| `date?` | `string` \| `Date` | `undefined` | 时间 |
 | `fmt` | `string` | `'yyyy-mm-dd hh:ii:ss'` | 格式化模板 'yyyy-mm-dd hh:ii:ss' |
 | `weeks` | `any`[] | `undefined` | 星期对应数组 [7, 1, 2, 3, 4, 5, 6] |
 
@@ -532,9 +655,10 @@ ___
 ▸ **formatURLSearchParams**(`obj`, `hasBrackets?`, `hasIndex?`): `URLSearchParams`
 
 对象转 URLSearchParams
-Example: `formatURLSearchParams({a: 1, b: 2, c: [1, 2]}) => a=1&b=2&c=1&c=2`
-Example: `formatURLSearchParams({a: 1, b: 2, c: [1, 2]}, true) => a=1&b=2&c[]=1&c[]=2`
-Example: `formatURLSearchParams({a: 1, b: 2, c: [1, 2]}, true, true) => a=1&b=2&c[0]=1&c[1]=2`
+Example:
+`formatURLSearchParams({a: 1, b: 2, c: [1, 2]}) => a=1&b=2&c=1&c=2`
+`formatURLSearchParams({a: 1, b: 2, c: [1, 2]}, true) => a=1&b=2&c[]=1&c[]=2`
+`formatURLSearchParams({a: 1, b: 2, c: [1, 2]}, true, true) => a=1&b=2&c[0]=1&c[1]=2`
 
 #### Parameters
 
@@ -609,9 +733,51 @@ Example: `getCookie('name') => 获取 name 对应的 Cookie 值`
 
 ___
 
+### getDateDifference
+
+▸ **getDateDifference**(`oldDate`, `nowDate?`, `type?`): `number` \| { `days`: `number` ; `hours`: `number` ; `minutes`: `number` ; `seconds`: `number`  }
+
+两个时间差距计算
+Example:
+`getDateDifference(new Date('2022-05-01'), new Date(), 'day') => 37`
+`getDateDifference(new Date('2022-05-01'), new Date(), 'all') => {days: 37, hours: 8, minutes: 46, seconds: 47}`
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `oldDate` | `string` \| `Date` | `undefined` | 久远一点的时间 |
+| `nowDate?` | `string` \| `Date` | `undefined` | 近一点的时间，默认当前时间。 |
+| `type` | ``"all"`` \| ``"day"`` \| ``"days"`` \| ``"hour"`` \| ``"hours"`` \| ``"minute"`` \| ``"minutes"`` \| ``"second"`` \| ``"seconds"`` \| ``"ALL"`` \| ``"DAY"`` \| ``"DAYS"`` \| ``"HOUR"`` \| ``"HOURS"`` \| ``"MINUTE"`` \| ``"MINUTES"`` \| ``"SECOND"`` \| ``"SECONDS"`` | `'all'` | 计算方式，默认计算差距的精确天数、时分秒。 |
+
+#### Returns
+
+`number` \| { `days`: `number` ; `hours`: `number` ; `minutes`: `number` ; `seconds`: `number`  }
+
+___
+
+### getDateTime
+
+▸ **getDateTime**(`date?`): `number`
+
+获取日期时间戳
+Example: `getDateTime(new Date()) => time stamp`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `date?` | `string` \| `Date` | 日期 |
+
+#### Returns
+
+`number`
+
+___
+
 ### getMonthDays
 
-▸ **getMonthDays**(`date`): `number`
+▸ **getMonthDays**(`date?`): `number`
 
 获取月份天数
 Example: `getMonthDays(new Date()) => 30`
@@ -620,7 +786,26 @@ Example: `getMonthDays(new Date()) => 30`
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `date` | `string` \| `number` \| `Date` | 日期 |
+| `date?` | `string` \| `Date` | 日期 |
+
+#### Returns
+
+`number`
+
+___
+
+### getMonthDaysCount
+
+▸ **getMonthDaysCount**(`date?`): `number`
+
+获取月份天数
+Example: `getMonthDayCount(new Date()) => 30`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `date?` | `string` \| `Date` | 日期 |
 
 #### Returns
 
@@ -685,6 +870,7 @@ ___
 ▸ **getStyleByName**(`element`, `name`): `any`
 
 获取任一元素的 style 任意属性
+Example: `getStyle(document.getElementById('test'), 'width') => #test 的 width 属性`
 
 #### Parameters
 
@@ -751,6 +937,26 @@ Example: `getType(1) => 'number'`
 
 ___
 
+### getUTCTime
+
+▸ **getUTCTime**(`timezone?`): `Date`
+
+获取标准时间 UTC
+适用于本地时间不准确或者获取其他时区时间的情况
+Example: `getUTCTime(8) => 中国标准时间`
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `timezone` | `number` | `0` | 时区数字，东八区为 8，西八区为 -8。 |
+
+#### Returns
+
+`Date`
+
+___
+
 ### getUUID
 
 ▸ **getUUID**(`length`, `chars`): `string`
@@ -811,16 +1017,17 @@ ___
 
 ### globalError
 
-▸ **globalError**(`fn`): `void`
+▸ **globalError**(`fn`, `notShowConsole?`): `void`
 
 全局捕获异常
-Example: `globalError(() => console.log('全局捕获异常')) => '全局捕获异常'`
+Example: `globalError((message, source, lineno, colno, error) => console.log('全局捕获异常'), false) => '全局捕获异常'`
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `fn` | `Function` |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `fn` | `Function` | `undefined` | - |
+| `notShowConsole` | `boolean` | `true` | 是否不回显控制台 |
 
 #### Returns
 
@@ -924,10 +1131,11 @@ ___
 ▸ **isDecimal**(`value`, `type?`, `noLastZero?`): `boolean`
 
 是否小数(严格匹配)
-Example: `isDecimal('0.0') => true`
-Example: `isDecimal('0.0', '+', true) => false`
-Example: `isDecimal('-0.1', '+') => false`
-Example: `isDecimal('-0.10', '-') => true`
+Example:
+`isDecimal('0.0') => true`
+`isDecimal('0.0', '+', true) => false`
+`isDecimal('-0.1', '+') => false`
+`isDecimal('-0.10', '-') => true`
 
 #### Parameters
 
@@ -948,8 +1156,9 @@ ___
 ▸ **isInteger**(`value`, `type?`): `boolean`
 
 是否整数(严格匹配)
-Example: `isInteger('0') => true`
-Example: `isInteger('-0', '+') => false`
+Example:
+`isInteger('0') => true`
+`isInteger('-0', '+') => false`
 
 #### Parameters
 
@@ -1001,7 +1210,7 @@ ___
 
 ### isWeekday
 
-▸ **isWeekday**(`date`): `boolean`
+▸ **isWeekday**(`date?`): `boolean`
 
 检查所提供的日期是否为工作日
 Example: `isWorkDay(new Date()) => true`
@@ -1010,7 +1219,7 @@ Example: `isWorkDay(new Date()) => true`
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `date` | `Date` | 日期 |
+| `date?` | `string` \| `Date` | 日期 |
 
 #### Returns
 
@@ -1054,6 +1263,25 @@ Example: `localStorageSet("key", "value") => 存储时不需要处理数据，va
 #### Returns
 
 `any`
+
+___
+
+### md5
+
+▸ **md5**(`str`): `string`
+
+md5 加密方法
+Example: `md5("value") => 加密后的字符串`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `str` | `string` | 需要加密的字符串 |
+
+#### Returns
+
+`string`
 
 ___
 
@@ -1351,6 +1579,44 @@ Example: `setIcon('/favicon.ico')`
 
 ___
 
+### sha1
+
+▸ **sha1**(`str`): `string`
+
+sha1 加密方法
+Example: `sha1("value") => 加密后的字符串`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `str` | `string` | 需要加密的字符串 |
+
+#### Returns
+
+`string`
+
+___
+
+### sha256
+
+▸ **sha256**(`str`): `string`
+
+sha256 加密方法
+Example: `sha256("value") => 加密后的字符串`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `str` | `string` | 需要加密的字符串 |
+
+#### Returns
+
+`string`
+
+___
+
 ### shuffleArray
 
 ▸ **shuffleArray**(`arr`): `any`[]
@@ -1512,7 +1778,7 @@ ___
 
 ### timeSince
 
-▸ **timeSince**(`date`, `longago?`, `formater?`): `undefined` \| `string`
+▸ **timeSince**(`date?`, `longAgo?`, `formater?`): `string`
 
 人性化时间
 Example: `timeSince(new Date()) => '刚刚'`
@@ -1521,13 +1787,13 @@ Example: `timeSince(new Date()) => '刚刚'`
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `date` | `any` | `undefined` | 时间/string |
-| `longago` | `boolean` | `false` | 是否显示周月甚至更久 |
+| `date?` | `string` \| `Date` | `undefined` | 时间/string |
+| `longAgo` | `boolean` | `false` | 是否显示周月甚至更久 |
 | `formater` | `string` | `'yyyy-mm-dd hh:ii:ss'` | 正常显示时的时间显示格式 |
 
 #### Returns
 
-`undefined` \| `string`
+`string`
 
 ___
 

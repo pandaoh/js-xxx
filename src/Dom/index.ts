@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-06-04 16:26:31
+ * @LastEditTime: 2022-06-14 18:12:48
  * @Description: 利用 dom 的一些方法
  * @FilePath: \js-xxx\src\Dom\index.ts
  */
@@ -182,6 +182,7 @@ export function getViewportSize() {
 
 /**
  * 获取任一元素的 style 任意属性
+ * Example: `getStyle(document.getElementById('test'), 'width') => #test 的 width 属性`
  * @param element 指定元素
  * @param name 属性名称
  * @returns
