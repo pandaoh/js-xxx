@@ -1,6 +1,6 @@
-js-xxx - v1.1.8
+js-xxx - v1.1.9
 
-# js-xxx - v1.1.8
+# js-xxx - v1.1.9
 
 ## Table of contents
 
@@ -49,6 +49,7 @@ js-xxx - v1.1.8
 - [getType](README.md#gettype)
 - [getUTCTime](README.md#getutctime)
 - [getUUID](README.md#getuuid)
+- [getUserAgent](README.md#getuseragent)
 - [getV](README.md#getv)
 - [getViewportSize](README.md#getviewportsize)
 - [globalError](README.md#globalerror)
@@ -68,6 +69,7 @@ js-xxx - v1.1.8
 - [md5](README.md#md5)
 - [mergeObj](README.md#mergeobj)
 - [offDefaultEvent](README.md#offdefaultevent)
+- [onClick2MoreClick](README.md#onclick2moreclick)
 - [qsParse](README.md#qsparse)
 - [qsStringify](README.md#qsstringify)
 - [removeCookie](README.md#removecookie)
@@ -977,6 +979,26 @@ Example: `getUUID() => 'ghijklmn'`
 
 ___
 
+### getUserAgent
+
+▸ **getUserAgent**(): `Object`
+
+获取浏览器信息
+Example: `getUserAgent() => { browserName: 'Chrome', browserVersion: '102.0.0.0', osName: 'Windows', osVersion: '10.0', deviceName: '' }`
+
+#### Returns
+
+`Object`
+
+| Name | Type |
+| :------ | :------ |
+| `browserName` | `string` |
+| `browserVersion` | `string` |
+| `osName` | `string` |
+| `osVersion` | `string` |
+
+___
+
 ### getV
 
 ▸ **getV**(`defaultResult`, ...`args`): `any`
@@ -1026,7 +1048,7 @@ Example: `globalError((message, source, lineno, colno, error) => console.log('�
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `fn` | `Function` | `undefined` | - |
+| `fn` | `Function` | `undefined` | (message, source, lineno, colno, error) |
 | `notShowConsole` | `boolean` | `true` | 是否不回显控制台 |
 
 #### Returns
@@ -1325,6 +1347,27 @@ Example: `offDefaultEvent(event) => 阻止冒泡事件&阻止默认行为&阻止
 #### Returns
 
 `boolean`
+
+___
+
+### onClick2MoreClick
+
+▸ **onClick2MoreClick**(`delay?`, ...`events`): `Function`
+
+单击事件转换为多击事件
+Author: wuxingheng
+Example: `onClick2MoreClick(300, clickOneCallBack, clickTwoCallBack, clickThreeCallBack, clickFourCallBack) => void`
+
+#### Parameters
+
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `delay` | `number` | `300` |
+| `...events` | `Function`[] | `undefined` |
+
+#### Returns
+
+`Function`
 
 ___
 

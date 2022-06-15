@@ -7359,6 +7359,109 @@
     function isAppleDevice() {
         return /Mac|iPod|iPhone|iPad/.test(navigator.platform);
     }
+    function onClick2MoreClick(delay) {
+        if (delay === void 0) { delay = 300; }
+        var events = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            events[_i - 1] = arguments[_i];
+        }
+        var timer = null;
+        var lastTime = 0;
+        var count = 0;
+        return function () {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i] = arguments[_i];
+            }
+            clearTimeout(timer);
+            var currentTime = new Date().getTime();
+            count = currentTime - lastTime < delay ? count + 1 : 0;
+            lastTime = new Date().getTime();
+            events.forEach(function (event, i) {
+                if (i === count) {
+                    timer = setTimeout(function () {
+                        count = 0;
+                        lastTime = 0;
+                        event.apply(void 0, __spreadArray([], __read(args), false));
+                    }, delay);
+                }
+            });
+        };
+    }
+    function getUserAgent() {
+        var browserReg = {
+            Chrome: /Chrome/,
+            IE: /MSIE/,
+            Firefox: /Firefox/,
+            Opera: /Presto/,
+            Safari: /Version\/([\d.]+).*Safari/,
+            '360': /360SE/,
+            QQBrowswe: /QQ/
+        };
+        var deviceReg = {
+            iPhone: /iPhone/,
+            iPad: /iPad/,
+            Android: /Android/,
+            Windows: /Windows/,
+            Mac: /Macintosh/
+        };
+        var userAgentStr = navigator.userAgent;
+        var userAgentObj = {
+            browserName: '',
+            browserVersion: '',
+            osName: '',
+            osVersion: '',
+            deviceName: ''
+        };
+        for (var key in browserReg) {
+            if (browserReg[key].test(userAgentStr)) {
+                userAgentObj.browserName = key;
+                if (key === 'Chrome') {
+                    userAgentObj.browserVersion = userAgentStr.split('Chrome/')[1].split(' ')[0];
+                }
+                else if (key === 'IE') {
+                    userAgentObj.browserVersion = userAgentStr.split('MSIE ')[1].split(' ')[1];
+                }
+                else if (key === 'Firefox') {
+                    userAgentObj.browserVersion = userAgentStr.split('Firefox/')[1];
+                }
+                else if (key === 'Opera') {
+                    userAgentObj.browserVersion = userAgentStr.split('Version/')[1];
+                }
+                else if (key === 'Safari') {
+                    userAgentObj.browserVersion = userAgentStr.split('Version/')[1].split(' ')[0];
+                }
+                else if (key === '360') {
+                    userAgentObj.browserVersion = '';
+                }
+                else if (key === 'QQBrowswe') {
+                    userAgentObj.browserVersion = userAgentStr.split('Version/')[1].split(' ')[0];
+                }
+            }
+        }
+        for (var key in deviceReg) {
+            if (deviceReg[key].test(userAgentStr)) {
+                userAgentObj.osName = key;
+                if (key === 'Windows') {
+                    userAgentObj.osVersion = userAgentStr.split('Windows NT ')[1].split(';')[0];
+                }
+                else if (key === 'Mac') {
+                    userAgentObj.osVersion = userAgentStr.split('Mac OS X ')[1].split(')')[0];
+                }
+                else if (key === 'iPhone') {
+                    userAgentObj.osVersion = userAgentStr.split('iPhone OS ')[1].split(' ')[0];
+                }
+                else if (key === 'iPad') {
+                    userAgentObj.osVersion = userAgentStr.split('iPad; CPU OS ')[1].split(' ')[0];
+                }
+                else if (key === 'Android') {
+                    userAgentObj.osVersion = userAgentStr.split('Android ')[1].split(';')[0];
+                    userAgentObj.deviceName = userAgentStr.split('(Linux; Android ')[1].split('; ')[1].split(' Build')[0];
+                }
+            }
+        }
+        return userAgentObj;
+    }
 
     function formatFormData(obj, hasBrackets, hasIndex) {
         if (hasBrackets === void 0) { hasBrackets = false; }
@@ -7874,6 +7977,7 @@
     exports.getType = getType;
     exports.getUTCTime = getUTCTime;
     exports.getUUID = getUUID;
+    exports.getUserAgent = getUserAgent;
     exports.getV = getV;
     exports.getViewportSize = getViewportSize;
     exports.globalError = globalError;
@@ -7893,6 +7997,7 @@
     exports.md5 = md5;
     exports.mergeObj = mergeObj;
     exports.offDefaultEvent = offDefaultEvent;
+    exports.onClick2MoreClick = onClick2MoreClick;
     exports.qsParse = qsParse;
     exports.qsStringify = qsStringify;
     exports.removeCookie = removeCookie;

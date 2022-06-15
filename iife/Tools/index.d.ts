@@ -15,4 +15,11 @@ export declare function isNode(): boolean;
 export declare function isBrowser(): boolean;
 export declare function isDarkMode(): boolean;
 export declare function isAppleDevice(): boolean;
+export declare function onClick2MoreClick(delay?: number, ...events: Array<Function>): Function;
+export declare function getUserAgent(): {
+    browserName: string;
+    browserVersion: string;
+    osName: string;
+    osVersion: string;
+};
 //# sourceMappingURL=index.d.ts.map

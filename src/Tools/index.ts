@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-06-07 16:26:24
+ * @LastEditTime: 2022-06-15 10:54:33
  * @Description: 工具方法
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
@@ -131,7 +131,7 @@ export function curryIt(fn: Function) {
 /**
  * 全局捕获异常
  * Example: `globalError((message, source, lineno, colno, error) => console.log('全局捕获异常'), false) => '全局捕获异常'`
- * @param {Function} fn(message, source, lineno, colno, error)
+ * @param {Function} fn (message, source, lineno, colno, error)
  * @param {boolean} notShowConsole 是否不回显控制台
  * @returns
  */
@@ -255,4 +255,127 @@ export function isDarkMode(): boolean {
  */
 export function isAppleDevice(): boolean {
   return /Mac|iPod|iPhone|iPad/.test(navigator.platform);
+}
+
+/**
+ * 单击事件转换为多击事件
+ * Author: wuxingheng
+ * Example: `onClick2MoreClick(300, clickOneCallBack, clickTwoCallBack, clickThreeCallBack, clickFourCallBack) => void`
+ * @param {number} delay
+ * @param {Array} events
+ * @returns
+ */
+export function onClick2MoreClick(delay = 300, ...events: Array<Function>): Function {
+  let timer: any = null;
+  let lastTime = 0;
+  let count = 0;
+  // click 事件传递的参数 args
+  return (...args: any[]) => {
+    clearTimeout(timer);
+    const currentTime = new Date().getTime();
+    count = currentTime - lastTime < delay ? count + 1 : 0;
+    lastTime = new Date().getTime();
+    events.forEach((event, i) => {
+      if (i === count) {
+        timer = setTimeout(() => {
+          count = 0;
+          lastTime = 0;
+          event(...args);
+        }, delay);
+      }
+    });
+  };
+}
+
+/**
+ * 获取浏览器信息
+ * Example: `getUserAgent() => { browserName: 'Chrome', browserVersion: '102.0.0.0', osName: 'Windows', osVersion: '10.0', deviceName: '' }`
+ * @returns
+ */
+export function getUserAgent(): { browserName: string; browserVersion: string; osName: string; osVersion: string } {
+  interface BrowserReg {
+    [Chrome: string]: RegExp;
+    IE: RegExp;
+    Firefox: RegExp;
+    Opera: RegExp;
+    Safari: RegExp;
+    '360': RegExp;
+    QQBrowswe: RegExp;
+  }
+
+  interface DeviceReg {
+    [iPhone: string]: RegExp;
+    Android: RegExp;
+    iPad: RegExp;
+    Windows: RegExp;
+    Mac: RegExp;
+  }
+
+  let browserReg: BrowserReg = {
+    Chrome: /Chrome/,
+    IE: /MSIE/,
+    Firefox: /Firefox/,
+    Opera: /Presto/,
+    Safari: /Version\/([\d.]+).*Safari/,
+    '360': /360SE/,
+    QQBrowswe: /QQ/
+  };
+
+  let deviceReg: DeviceReg = {
+    iPhone: /iPhone/,
+    iPad: /iPad/,
+    Android: /Android/,
+    Windows: /Windows/,
+    Mac: /Macintosh/
+  };
+
+  let userAgentStr: string = navigator.userAgent;
+  const userAgentObj = {
+    browserName: '', // 浏览器名称
+    browserVersion: '', // 浏览器版本
+    osName: '', // 操作系统名称
+    osVersion: '', // 操作系统版本
+    deviceName: '' // 设备名称
+  };
+
+  for (let key in browserReg) {
+    if (browserReg[key].test(userAgentStr)) {
+      userAgentObj.browserName = key;
+      if (key === 'Chrome') {
+        userAgentObj.browserVersion = userAgentStr.split('Chrome/')[1].split(' ')[0];
+      } else if (key === 'IE') {
+        userAgentObj.browserVersion = userAgentStr.split('MSIE ')[1].split(' ')[1];
+      } else if (key === 'Firefox') {
+        userAgentObj.browserVersion = userAgentStr.split('Firefox/')[1];
+      } else if (key === 'Opera') {
+        userAgentObj.browserVersion = userAgentStr.split('Version/')[1];
+      } else if (key === 'Safari') {
+        userAgentObj.browserVersion = userAgentStr.split('Version/')[1].split(' ')[0];
+      } else if (key === '360') {
+        userAgentObj.browserVersion = '';
+      } else if (key === 'QQBrowswe') {
+        userAgentObj.browserVersion = userAgentStr.split('Version/')[1].split(' ')[0];
+      }
+    }
+  }
+
+  for (let key in deviceReg) {
+    if (deviceReg[key].test(userAgentStr)) {
+      userAgentObj.osName = key;
+      if (key === 'Windows') {
+        userAgentObj.osVersion = userAgentStr.split('Windows NT ')[1].split(';')[0];
+      } else if (key === 'Mac') {
+        userAgentObj.osVersion = userAgentStr.split('Mac OS X ')[1].split(')')[0];
+      } else if (key === 'iPhone') {
+        userAgentObj.osVersion = userAgentStr.split('iPhone OS ')[1].split(' ')[0];
+      } else if (key === 'iPad') {
+        userAgentObj.osVersion = userAgentStr.split('iPad; CPU OS ')[1].split(' ')[0];
+      } else if (key === 'Android') {
+        userAgentObj.osVersion = userAgentStr.split('Android ')[1].split(';')[0];
+        userAgentObj.deviceName = userAgentStr.split('(Linux; Android ')[1].split('; ')[1].split(' Build')[0];
+      }
+    }
+  }
+
+  return userAgentObj;
 }
