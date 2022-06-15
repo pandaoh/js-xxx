@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:54:41
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-06-14 18:29:37
+ * @LastEditTime: 2022-06-15 18:24:02
  * @Description: 加密相关方法 依赖 crypto-js
  * @FilePath: \js-xxx\src\Crypto\index.ts
  */
@@ -12,27 +12,42 @@ import CryptoJS from 'crypto-js';
 const SECRET_KEY = CryptoJS.enc.Utf8.parse('1998092819980608');
 // 十六位十六进制数作为密钥偏移量
 const SECRET_IV = CryptoJS.enc.Utf8.parse('2017040220220130');
+// 密钥测试正则表达式
+const SECRET_KEY_REG = /^[0-9a-fA-F]{16}$/i;
 
 /**
  * 加密方法
- * Example: `encrypt("value") => 加密后的字符串`
+ * 防君子不防小人，也可以通过后台获取密钥。
+ * Example:
+ * `encrypt("value") => 加密后的字符串`
+ * `encrypt("value", "1234567887654321","1234567887654321") => 自定义密钥加密后的字符串`
  * @param data 需要加密的数据
+ * @param secretKey [可选] 十六位十六进制数作为密钥
+ * @param secretIv [可选] 十六位十六进制数作为密钥偏移量
  * @returns {string}
  */
-export function encrypt(data: any): string {
+export function encrypt(data: any, secretKey?: string, secretIv?: string): string {
   if (!data) {
     return '';
+  }
+  if (secretKey && !SECRET_KEY_REG.test(secretKey)) {
+    throw new Error('secretKey 必须是十六位十六进制数');
+  }
+  if (secretIv && !SECRET_KEY_REG.test(secretIv)) {
+    throw new Error('secretIv 必须是十六位十六进制数');
   }
   if (typeof data == 'object') {
     try {
       data = JSON.stringify(data);
     } catch (error) {
-      console.log('encrypt error:', error);
+      throw new Error('encrypt error' + JSON.stringify(error));
     }
   }
+  const KEY = !secretKey ? SECRET_KEY : CryptoJS.enc.Utf8.parse(secretKey);
+  const IV = !secretIv ? SECRET_IV : CryptoJS.enc.Utf8.parse(secretIv);
   const dataHex = CryptoJS.enc.Utf8.parse(data);
-  const encrypted = CryptoJS.AES.encrypt(dataHex, SECRET_KEY, {
-    iv: SECRET_IV,
+  const encrypted = CryptoJS.AES.encrypt(dataHex, KEY, {
+    iv: IV,
     mode: CryptoJS.mode.CBC,
     padding: CryptoJS.pad.Pkcs7
   });
@@ -41,21 +56,33 @@ export function encrypt(data: any): string {
 
 /**
  * 解密方法
+ * 防君子不防小人，也可以通过后台获取密钥。
  * Example:
  * `decrypt("加密后的字符串") => 解密后的字符串`
  * `decrypt("加密后的字符串", true) => 解密后的字符串并转换为 JSON 对象`
+ * `decrypt("加密后的字符串", "1234567887654321","1234567887654321") => 自定义密钥解密后的字符串`
  * @param dataStr 加密后的字符串
  * @param jsonDecode 是否需要解析成 json
+ * @param secretKey [可选] 十六位十六进制数作为密钥
+ * @param secretIv [可选] 十六位十六进制数作为密钥偏移量
  * @returns {string}
  */
-export function decrypt(dataStr: string, jsonDecode: boolean = false): string {
+export function decrypt(dataStr: string, jsonDecode: boolean = false, secretKey?: string, secretIv?: string): string {
   if (!dataStr) {
     return '';
   }
+  if (secretKey && !SECRET_KEY_REG.test(secretKey)) {
+    throw new Error('secretKey 必须是十六位十六进制数');
+  }
+  if (secretIv && !SECRET_KEY_REG.test(secretIv)) {
+    throw new Error('secretIv 必须是十六位十六进制数');
+  }
+  const KEY = !secretKey ? SECRET_KEY : CryptoJS.enc.Utf8.parse(secretKey);
+  const IV = !secretIv ? SECRET_IV : CryptoJS.enc.Utf8.parse(secretIv);
   const encryptedHexStr = CryptoJS.enc.Hex.parse(dataStr);
   const str = CryptoJS.enc.Base64.stringify(encryptedHexStr);
-  const decrypt = CryptoJS.AES.decrypt(str, SECRET_KEY, {
-    iv: SECRET_IV,
+  const decrypt = CryptoJS.AES.decrypt(str, KEY, {
+    iv: IV,
     mode: CryptoJS.mode.CBC,
     padding: CryptoJS.pad.Pkcs7
   });
@@ -118,4 +145,15 @@ export function Base64Encode(str: string, replaceChar: boolean = false): string 
  */
 export function Base64Decode(str: string): string {
   return CryptoJS.enc.Base64.parse(str).toString(CryptoJS.enc.Utf8);
+}
+
+/**
+ * 获取 CryptoJS
+ * Example:
+ * `getCryptoJS() => CryptoJS`
+ * `getCryptoJS().MD5(str).toString() => md5 加密后的字符串`
+ * @returns
+ */
+export function getCryptoJS(): typeof CryptoJS {
+  return CryptoJS;
 }

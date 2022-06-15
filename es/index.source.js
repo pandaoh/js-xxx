@@ -6850,35 +6850,52 @@ var CryptoJS = cryptoJs.exports;
 
 var SECRET_KEY = CryptoJS.enc.Utf8.parse('1998092819980608');
 var SECRET_IV = CryptoJS.enc.Utf8.parse('2017040220220130');
-function encrypt(data) {
+var SECRET_KEY_REG = /^[0-9a-fA-F]{16}$/i;
+function encrypt(data, secretKey, secretIv) {
     if (!data) {
         return '';
+    }
+    if (secretKey && !SECRET_KEY_REG.test(secretKey)) {
+        throw new Error('secretKey 必须是十六位十六进制数');
+    }
+    if (secretIv && !SECRET_KEY_REG.test(secretIv)) {
+        throw new Error('secretIv 必须是十六位十六进制数');
     }
     if (typeof data == 'object') {
         try {
             data = JSON.stringify(data);
         }
         catch (error) {
-            console.log('encrypt error:', error);
+            throw new Error('encrypt error' + JSON.stringify(error));
         }
     }
+    var KEY = !secretKey ? SECRET_KEY : CryptoJS.enc.Utf8.parse(secretKey);
+    var IV = !secretIv ? SECRET_IV : CryptoJS.enc.Utf8.parse(secretIv);
     var dataHex = CryptoJS.enc.Utf8.parse(data);
-    var encrypted = CryptoJS.AES.encrypt(dataHex, SECRET_KEY, {
-        iv: SECRET_IV,
+    var encrypted = CryptoJS.AES.encrypt(dataHex, KEY, {
+        iv: IV,
         mode: CryptoJS.mode.CBC,
         padding: CryptoJS.pad.Pkcs7
     });
     return encrypted.ciphertext.toString();
 }
-function decrypt(dataStr, jsonDecode) {
+function decrypt(dataStr, jsonDecode, secretKey, secretIv) {
     if (jsonDecode === void 0) { jsonDecode = false; }
     if (!dataStr) {
         return '';
     }
+    if (secretKey && !SECRET_KEY_REG.test(secretKey)) {
+        throw new Error('secretKey 必须是十六位十六进制数');
+    }
+    if (secretIv && !SECRET_KEY_REG.test(secretIv)) {
+        throw new Error('secretIv 必须是十六位十六进制数');
+    }
+    var KEY = !secretKey ? SECRET_KEY : CryptoJS.enc.Utf8.parse(secretKey);
+    var IV = !secretIv ? SECRET_IV : CryptoJS.enc.Utf8.parse(secretIv);
     var encryptedHexStr = CryptoJS.enc.Hex.parse(dataStr);
     var str = CryptoJS.enc.Base64.stringify(encryptedHexStr);
-    var decrypt = CryptoJS.AES.decrypt(str, SECRET_KEY, {
-        iv: SECRET_IV,
+    var decrypt = CryptoJS.AES.decrypt(str, KEY, {
+        iv: IV,
         mode: CryptoJS.mode.CBC,
         padding: CryptoJS.pad.Pkcs7
     });
@@ -6902,6 +6919,9 @@ function Base64Encode(str, replaceChar) {
 }
 function Base64Decode(str) {
     return CryptoJS.enc.Base64.parse(str).toString(CryptoJS.enc.Utf8);
+}
+function getCryptoJS() {
+    return CryptoJS;
 }
 
 function unicode2str(value) {
@@ -7928,4 +7948,4 @@ function sessionStorageSet(key, value) {
     window.sessionStorage.setItem(key, newVal);
 }
 
-export { Base64Decode, Base64Encode, add, all, any, arraySet, base64Decode, base64Encode, calcDate, catchPromise, copyContent, copyToClipboard, curryIt, data2Arr, data2Obj, debounce, decrypt, deepClone, div, empty, encrypt, findChildren, findParents, formatBytes, formatDate, formatFormData, formatURLSearchParams, get1Var, getBaseURL, getCookie, getDateDifference, getDateTime, getMonthDays, getMonthDaysCount, getRandColor, getRandNum, getRandStr, getStyleByName, getTimeAndStr, getTimeCode, getType, getUTCTime, getUUID, getUserAgent, getV, getViewportSize, globalError, html2str, initNotification, insertAfter, isAppleDevice, isBrowser, isDarkMode, isDecimal, isInteger, isNode, isValidJSON, isWeekday, localStorageGet, localStorageSet, md5, mergeObj, offDefaultEvent, onClick2MoreClick, qsParse, qsStringify, removeCookie, retry, round, scrollToBottom, scrollToTop, sendNotification, sessionStorageGet, sessionStorageSet, setCookie, setIcon, sha1, sha256, shuffleArray, sleep, sortCallBack, str2html, str2unicode, sub, throttle, timeSince, times, to, trim, unicode2str };
+export { Base64Decode, Base64Encode, add, all, any, arraySet, base64Decode, base64Encode, calcDate, catchPromise, copyContent, copyToClipboard, curryIt, data2Arr, data2Obj, debounce, decrypt, deepClone, div, empty, encrypt, findChildren, findParents, formatBytes, formatDate, formatFormData, formatURLSearchParams, get1Var, getBaseURL, getCookie, getCryptoJS, getDateDifference, getDateTime, getMonthDays, getMonthDaysCount, getRandColor, getRandNum, getRandStr, getStyleByName, getTimeAndStr, getTimeCode, getType, getUTCTime, getUUID, getUserAgent, getV, getViewportSize, globalError, html2str, initNotification, insertAfter, isAppleDevice, isBrowser, isDarkMode, isDecimal, isInteger, isNode, isValidJSON, isWeekday, localStorageGet, localStorageSet, md5, mergeObj, offDefaultEvent, onClick2MoreClick, qsParse, qsStringify, removeCookie, retry, round, scrollToBottom, scrollToTop, sendNotification, sessionStorageGet, sessionStorageSet, setCookie, setIcon, sha1, sha256, shuffleArray, sleep, sortCallBack, str2html, str2unicode, sub, throttle, timeSince, times, to, trim, unicode2str };

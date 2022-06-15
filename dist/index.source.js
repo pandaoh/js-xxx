@@ -6856,35 +6856,52 @@
 
     var SECRET_KEY = CryptoJS.enc.Utf8.parse('1998092819980608');
     var SECRET_IV = CryptoJS.enc.Utf8.parse('2017040220220130');
-    function encrypt(data) {
+    var SECRET_KEY_REG = /^[0-9a-fA-F]{16}$/i;
+    function encrypt(data, secretKey, secretIv) {
         if (!data) {
             return '';
+        }
+        if (secretKey && !SECRET_KEY_REG.test(secretKey)) {
+            throw new Error('secretKey 必须是十六位十六进制数');
+        }
+        if (secretIv && !SECRET_KEY_REG.test(secretIv)) {
+            throw new Error('secretIv 必须是十六位十六进制数');
         }
         if (typeof data == 'object') {
             try {
                 data = JSON.stringify(data);
             }
             catch (error) {
-                console.log('encrypt error:', error);
+                throw new Error('encrypt error' + JSON.stringify(error));
             }
         }
+        var KEY = !secretKey ? SECRET_KEY : CryptoJS.enc.Utf8.parse(secretKey);
+        var IV = !secretIv ? SECRET_IV : CryptoJS.enc.Utf8.parse(secretIv);
         var dataHex = CryptoJS.enc.Utf8.parse(data);
-        var encrypted = CryptoJS.AES.encrypt(dataHex, SECRET_KEY, {
-            iv: SECRET_IV,
+        var encrypted = CryptoJS.AES.encrypt(dataHex, KEY, {
+            iv: IV,
             mode: CryptoJS.mode.CBC,
             padding: CryptoJS.pad.Pkcs7
         });
         return encrypted.ciphertext.toString();
     }
-    function decrypt(dataStr, jsonDecode) {
+    function decrypt(dataStr, jsonDecode, secretKey, secretIv) {
         if (jsonDecode === void 0) { jsonDecode = false; }
         if (!dataStr) {
             return '';
         }
+        if (secretKey && !SECRET_KEY_REG.test(secretKey)) {
+            throw new Error('secretKey 必须是十六位十六进制数');
+        }
+        if (secretIv && !SECRET_KEY_REG.test(secretIv)) {
+            throw new Error('secretIv 必须是十六位十六进制数');
+        }
+        var KEY = !secretKey ? SECRET_KEY : CryptoJS.enc.Utf8.parse(secretKey);
+        var IV = !secretIv ? SECRET_IV : CryptoJS.enc.Utf8.parse(secretIv);
         var encryptedHexStr = CryptoJS.enc.Hex.parse(dataStr);
         var str = CryptoJS.enc.Base64.stringify(encryptedHexStr);
-        var decrypt = CryptoJS.AES.decrypt(str, SECRET_KEY, {
-            iv: SECRET_IV,
+        var decrypt = CryptoJS.AES.decrypt(str, KEY, {
+            iv: IV,
             mode: CryptoJS.mode.CBC,
             padding: CryptoJS.pad.Pkcs7
         });
@@ -6908,6 +6925,9 @@
     }
     function Base64Decode(str) {
         return CryptoJS.enc.Base64.parse(str).toString(CryptoJS.enc.Utf8);
+    }
+    function getCryptoJS() {
+        return CryptoJS;
     }
 
     function unicode2str(value) {
@@ -7964,6 +7984,7 @@
     exports.get1Var = get1Var;
     exports.getBaseURL = getBaseURL;
     exports.getCookie = getCookie;
+    exports.getCryptoJS = getCryptoJS;
     exports.getDateDifference = getDateDifference;
     exports.getDateTime = getDateTime;
     exports.getMonthDays = getMonthDays;

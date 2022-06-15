@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 16:08:25
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-06-14 18:27:29
+ * @LastEditTime: 2022-06-15 18:29:21
  * @Description: 测试文件
  * @FilePath: \js-xxx\demo\test.js
  */
@@ -11,7 +11,7 @@ const { base64Decode, base64Encode, mergeObj, getTimeAndStr, qsStringify } = req
 // const { base64Decode, base64Encode, mergeObj, getTimeAndStr, qsStringify } = require('js-xxx');
 // import { base64Decode, base64Encode, mergeObj, getTimeAndStr, qsStringify } from 'js-xxx';
 
-const { Base64Decode, Base64Encode, md5, sha1, sha256, decrypt, encrypt } = require('../dist/index.js');
+const { Base64Decode, Base64Encode, md5, sha1, sha256, decrypt, encrypt, getCryptoJS } = require('../dist/index.js');
 
 console.log(
   base64Encode('我是老A'),
@@ -40,3 +40,8 @@ let encryptJSONStr = encrypt({ name: '我是老A' });
 console.log('加密JSON', encryptJSONStr);
 console.log('解密JSON', decrypt(encryptJSONStr, false));
 console.log('解密JSON', decrypt(encryptJSONStr, true));
+console.log('===========================================================');
+console.log('getCryptoJS', getCryptoJS().MD5('我是老A').toString());
+let customEncryptStr = encrypt('我是老A', '1234567887654321', '1234567887654321');
+console.log('自定义加密', customEncryptStr);
+console.log('自定义解密', decrypt(customEncryptStr, false, '1234567887654321', '1234567887654321'));

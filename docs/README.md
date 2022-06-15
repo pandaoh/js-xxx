@@ -1,6 +1,6 @@
-js-xxx - v1.1.9
+js-xxx - v1.2.0
 
-# js-xxx - v1.1.9
+# js-xxx - v1.2.0
 
 ## Table of contents
 
@@ -36,6 +36,7 @@ js-xxx - v1.1.9
 - [get1Var](README.md#get1var)
 - [getBaseURL](README.md#getbaseurl)
 - [getCookie](README.md#getcookie)
+- [getCryptoJS](README.md#getcryptojs)
 - [getDateDifference](README.md#getdatedifference)
 - [getDateTime](README.md#getdatetime)
 - [getMonthDays](README.md#getmonthdays)
@@ -451,12 +452,14 @@ ___
 
 ### decrypt
 
-▸ **decrypt**(`dataStr`, `jsonDecode?`): `string`
+▸ **decrypt**(`dataStr`, `jsonDecode?`, `secretKey?`, `secretIv?`): `string`
 
 解密方法
+防君子不防小人，也可以通过后台获取密钥。
 Example:
 `decrypt("加密后的字符串") => 解密后的字符串`
 `decrypt("加密后的字符串", true) => 解密后的字符串并转换为 JSON 对象`
+`decrypt("加密后的字符串", "1234567887654321","1234567887654321") => 自定义密钥解密后的字符串`
 
 #### Parameters
 
@@ -464,6 +467,8 @@ Example:
 | :------ | :------ | :------ | :------ |
 | `dataStr` | `string` | `undefined` | 加密后的字符串 |
 | `jsonDecode` | `boolean` | `false` | 是否需要解析成 json |
+| `secretKey?` | `string` | `undefined` | 十六位十六进制数作为密钥 |
+| `secretIv?` | `string` | `undefined` | 十六位十六进制数作为密钥偏移量 |
 
 #### Returns
 
@@ -533,16 +538,21 @@ ___
 
 ### encrypt
 
-▸ **encrypt**(`data`): `string`
+▸ **encrypt**(`data`, `secretKey?`, `secretIv?`): `string`
 
 加密方法
-Example: `encrypt("value") => 加密后的字符串`
+防君子不防小人，也可以通过后台获取密钥。
+Example:
+`encrypt("value") => 加密后的字符串`
+`encrypt("value", "1234567887654321","1234567887654321") => 自定义密钥加密后的字符串`
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `data` | `any` | 需要加密的数据 |
+| `secretKey?` | `string` | 十六位十六进制数作为密钥 |
+| `secretIv?` | `string` | 十六位十六进制数作为密钥偏移量 |
 
 #### Returns
 
@@ -732,6 +742,21 @@ Example: `getCookie('name') => 获取 name 对应的 Cookie 值`
 #### Returns
 
 `any`
+
+___
+
+### getCryptoJS
+
+▸ **getCryptoJS**(): typeof `CryptoJS`
+
+获取 CryptoJS
+Example:
+`getCryptoJS() => CryptoJS`
+`getCryptoJS().MD5(str).toString() => md5 加密后的字符串`
+
+#### Returns
+
+typeof `CryptoJS`
 
 ___
 
