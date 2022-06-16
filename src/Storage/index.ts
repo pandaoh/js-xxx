@@ -2,14 +2,15 @@
  * @Author: HxB
  * @Date: 2022-06-04 16:30:04
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-06-14 17:43:00
+ * @LastEditTime: 2022-06-16 15:11:26
  * @Description: localStorage 与 sessionStorage
  * @FilePath: \js-xxx\src\Storage\index.ts
  */
 
-import { getType } from '@/Tools';
+import { getType, isValidJSON } from '@/Tools';
 import { isDecimal, isInteger } from '@/Number';
 // 加密与过期设置参考 https://juejin.cn/post/7104301566857445412
+// 可以利用提供的加密方法手动绝对是否加密一些关键数据
 
 /**
  * 获取 localStorage
@@ -18,7 +19,8 @@ import { isDecimal, isInteger } from '@/Number';
  * @returns
  */
 export function localStorageGet(key: string): any {
-  const result: any = window.localStorage.getItem(key);
+  let result: any = window.localStorage.getItem(key);
+  result = isValidJSON(result) ? JSON.parse(result) : result;
   switch (getType(result)) {
     case 'object':
     case 'array':
@@ -71,7 +73,8 @@ export function localStorageSet(key: string, value: any): any {
  * @returns
  */
 export function sessionStorageGet(key: string): any {
-  const result: any = window.sessionStorage.getItem(key);
+  let result: any = window.sessionStorage.getItem(key);
+  result = isValidJSON(result) ? JSON.parse(result) : result;
   switch (getType(result)) {
     case 'object':
     case 'array':

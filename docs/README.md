@@ -1,6 +1,6 @@
-js-xxx - v1.2.0
+js-xxx - v1.2.1
 
-# js-xxx - v1.2.0
+# js-xxx - v1.2.1
 
 ## Table of contents
 
@@ -24,6 +24,7 @@ js-xxx - v1.2.0
 - [debounce](README.md#debounce)
 - [decrypt](README.md#decrypt)
 - [deepClone](README.md#deepclone)
+- [disableConflictEvent](README.md#disableconflictevent)
 - [div](README.md#div)
 - [empty](README.md#empty)
 - [encrypt](README.md#encrypt)
@@ -497,6 +498,27 @@ Example: `deepClone({a: 1, b: {c: 2}}) => 新的 {a: 1, b: {c: 2}}`
 
 ___
 
+### disableConflictEvent
+
+▸ **disableConflictEvent**(`event`): `boolean`
+
+禁用冲突事件，条码枪、关闭窗口快捷键等。
+Example:
+`document.addEventListener('keydown', disableConflictEvent); => 进入页面后禁用冲突事件`
+`document.removeEventListener('keydown', disableConflictEvent); => 退出页面后关闭监听`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `event` | `any` | 触发事件 |
+
+#### Returns
+
+`boolean`
+
+___
+
 ### div
 
 ▸ **div**(`div1`, `div2`): `number`
@@ -604,7 +626,7 @@ ___
 ▸ **formatBytes**(`bytes`, `precision?`): `string`
 
 文件大小格式化
-Example: `formatFileSize(1024) => '1.00 KB'`
+Example: `formatBytes(1024) => '1.00 KB'`
 
 #### Parameters
 

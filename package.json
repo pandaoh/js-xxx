@@ -1,6 +1,6 @@
 {
   "name": "js-xxx",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "JavaScript 常用函数库",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -8,7 +8,7 @@
   "main-source": "lib/index.source.js",
   "module-source": "es/index.source.js",
   "unpkg-source": "dist/index.source.js",
-  "iife": "iife/index.js",
+  "iife": "iife/index.min.js",
   "iife-source": "iife/index.source.js",
   "scripts": {
     "build": "rollup -c",

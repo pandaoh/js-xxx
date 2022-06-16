@@ -11,10 +11,14 @@ npm i js-xxx
 ## Use
 
 ```javascript
+// Es or Node
 import { xFunctionName } from 'js-xxx';
 const { xFunctionName } = require('js-xxx');
-
 xFunctionName();
+
+// Browser
+<script src="/iife/index.min.js"></script>
+$xxx.xFunctionName();
 ```
 
 ## Docs

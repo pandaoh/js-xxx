@@ -11,15 +11,4 @@ export declare function getRandStr(len?: number): string;
 export declare function getTimeAndStr(len?: number, radix?: number | undefined): string;
 export declare function getUUID(length: number, chars: string | any[]): string;
 export declare function isValidJSON(str: any): boolean;
-export declare function isNode(): boolean;
-export declare function isBrowser(): boolean;
-export declare function isDarkMode(): boolean;
-export declare function isAppleDevice(): boolean;
-export declare function onClick2MoreClick(delay?: number, ...events: Array<Function>): Function;
-export declare function getUserAgent(): {
-    browserName: string;
-    browserVersion: string;
-    osName: string;
-    osVersion: string;
-};
 //# sourceMappingURL=index.d.ts.map
