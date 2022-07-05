@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-06-14 18:12:48
+ * @LastEditTime: 2022-07-05 11:22:38
  * @Description: 利用 dom 的一些方法
  * @FilePath: \js-xxx\src\Dom\index.ts
  */
@@ -189,4 +189,36 @@ export function getViewportSize() {
  */
 export function getStyleByName(element: any, name: any) {
   return window.getComputedStyle ? window.getComputedStyle(element, null)[name] : element.currentStyle[name];
+}
+
+/**
+ * 添加 link 标签
+ * Example: `appendLink('favicon', 'favicon') => 添加一个 link 标签`
+ * @param linkUrl 链接地址
+ * @param rel 类型
+ * @returns
+ */
+export function appendLink(linkUrl: string, rel: string = 'stylesheet'): HTMLLinkElement {
+  var link = document.createElement('link');
+  link.rel = rel;
+  link.href = linkUrl;
+  document.head.appendChild(link);
+  return link;
+}
+
+/**
+ * 添加 script 标签
+ * Example: `appendScript('./test.js') => 添加一个 script 标签`
+ * @param scriptUrl 脚本地址
+ * @param async 是否异步
+ * @param defer 是否延迟加载
+ * @returns
+ */
+export function appendScript(scriptUrl: string, async: boolean = false, defer: boolean = false): HTMLScriptElement {
+  var script = document.createElement('script');
+  script.src = scriptUrl;
+  script.async = async;
+  script.defer = defer;
+  document.head.appendChild(script);
+  return script;
 }

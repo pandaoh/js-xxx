@@ -14,4 +14,5 @@ export * from './Request';
 export * from './Storage';
 export * from './String';
 export * from './Tools';
+export * from './WebSocket';
 //# sourceMappingURL=index.d.ts.map

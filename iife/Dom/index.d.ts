@@ -12,4 +12,6 @@ export declare function getViewportSize(): {
     h: number;
 };
 export declare function getStyleByName(element: any, name: any): any;
+export declare function appendLink(linkUrl: string, rel?: string): HTMLLinkElement;
+export declare function appendScript(scriptUrl: string, async?: boolean, defer?: boolean): HTMLScriptElement;
 //# sourceMappingURL=index.d.ts.map

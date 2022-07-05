@@ -1,6 +1,6 @@
-js-xxx - v1.2.1
+js-xxx - v1.2.2
 
-# js-xxx - v1.2.1
+# js-xxx - v1.2.2
 
 ## Table of contents
 
@@ -11,11 +11,14 @@ js-xxx - v1.2.1
 - [add](README.md#add)
 - [all](README.md#all)
 - [any](README.md#any)
+- [appendLink](README.md#appendlink)
+- [appendScript](README.md#appendscript)
 - [arraySet](README.md#arrayset)
 - [base64Decode](README.md#base64decode-1)
 - [base64Encode](README.md#base64encode-1)
 - [calcDate](README.md#calcdate)
 - [catchPromise](README.md#catchpromise)
+- [closeWebSocket](README.md#closewebsocket)
 - [copyContent](README.md#copycontent)
 - [copyToClipboard](README.md#copytoclipboard)
 - [curryIt](README.md#curryit)
@@ -54,9 +57,11 @@ js-xxx - v1.2.1
 - [getUserAgent](README.md#getuseragent)
 - [getV](README.md#getv)
 - [getViewportSize](README.md#getviewportsize)
+- [getWebSocket](README.md#getwebsocket)
 - [globalError](README.md#globalerror)
 - [html2str](README.md#html2str)
 - [initNotification](README.md#initnotification)
+- [initWebSocket](README.md#initwebsocket)
 - [insertAfter](README.md#insertafter)
 - [isAppleDevice](README.md#isappledevice)
 - [isBrowser](README.md#isbrowser)
@@ -80,10 +85,12 @@ js-xxx - v1.2.1
 - [scrollToBottom](README.md#scrolltobottom)
 - [scrollToTop](README.md#scrolltotop)
 - [sendNotification](README.md#sendnotification)
+- [sendWsMessage](README.md#sendwsmessage)
 - [sessionStorageGet](README.md#sessionstorageget)
 - [sessionStorageSet](README.md#sessionstorageset)
 - [setCookie](README.md#setcookie)
 - [setIcon](README.md#seticon)
+- [setWsBinaryType](README.md#setwsbinarytype)
 - [sha1](README.md#sha1)
 - [sha256](README.md#sha256)
 - [shuffleArray](README.md#shufflearray)
@@ -204,6 +211,47 @@ Example: `await any(...promise array) => success result`
 
 ___
 
+### appendLink
+
+▸ **appendLink**(`linkUrl`, `rel?`): `HTMLLinkElement`
+
+添加 link 标签
+Example: `appendLink('favicon', 'favicon') => 添加一个 link 标签`
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `linkUrl` | `string` | `undefined` | 链接地址 |
+| `rel` | `string` | `'stylesheet'` | 类型 |
+
+#### Returns
+
+`HTMLLinkElement`
+
+___
+
+### appendScript
+
+▸ **appendScript**(`scriptUrl`, `async?`, `defer?`): `HTMLScriptElement`
+
+添加 script 标签
+Example: `appendScript('./test.js') => 添加一个 script 标签`
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `scriptUrl` | `string` | `undefined` | 脚本地址 |
+| `async` | `boolean` | `false` | 是否异步 |
+| `defer` | `boolean` | `false` | 是否延迟加载 |
+
+#### Returns
+
+`HTMLScriptElement`
+
+___
+
 ### arraySet
 
 ▸ **arraySet**(`arr`): `string` \| `Iterable`<`any`\> \| ``null`` \| `undefined`
@@ -308,6 +356,19 @@ Example: `new catchPromise(resolve, reject, rejectHandler) => Promise`
 #### Returns
 
 `Promise`<`any`\>
+
+___
+
+### closeWebSocket
+
+▸ **closeWebSocket**(): `boolean`
+
+关闭 websocket
+Example: `closeWebSocket() => true/false`
+
+#### Returns
+
+`boolean`
 
 ___
 
@@ -1084,6 +1145,19 @@ Example: `getViewportSize() => { width: 1280, height: 649 }`
 
 ___
 
+### getWebSocket
+
+▸ **getWebSocket**(): `WebSocket`
+
+获取 websocket 实例
+Example: `getWebSocket() => [websocket object]`
+
+#### Returns
+
+`WebSocket`
+
+___
+
 ### globalError
 
 ▸ **globalError**(`fn`, `notShowConsole?`): `void`
@@ -1133,6 +1207,33 @@ Example: `initNotification() => true||false`
 #### Returns
 
 `boolean`
+
+___
+
+### initWebSocket
+
+▸ **initWebSocket**(`options`): `WebSocket`
+
+初始化 websocket
+Example: `initWebSocket({ url: 'ws://localhost:8080/ws', onOpen: () => {}, onMessage: () => {}, onClose: () => {}, onError: () => {}, reconnect: {} })`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `options` | `Object` | \| boolean} WebSocket 配置 |
+| `options.onClose?` | `Function` | - |
+| `options.onError?` | `Function` | - |
+| `options.onMessage?` | `Function` | - |
+| `options.onOpen?` | `Function` | - |
+| `options.reconnect?` | `Object` | - |
+| `options.reconnect.onReconnect?` | `Function` | - |
+| `options.reconnect.timeout?` | `number` | - |
+| `options.url` | `string` | - |
+
+#### Returns
+
+`WebSocket`
 
 ___
 
@@ -1590,6 +1691,25 @@ Example: `sendNotification('测试通知', '测试标题', {...options}) => 发�
 
 ___
 
+### sendWsMessage
+
+▸ **sendWsMessage**(`message`): `boolean`
+
+发送消息
+Example: `sendWsMessage({ type: 'login', data: { username: 'admin', password: '123456' } }) => true/false`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `message` | `any` | 消息 |
+
+#### Returns
+
+`boolean`
+
+___
+
 ### sessionStorageGet
 
 ▸ **sessionStorageGet**(`key`): `any`
@@ -1666,6 +1786,25 @@ Example: `setIcon('/favicon.ico')`
 #### Returns
 
 `void`
+
+___
+
+### setWsBinaryType
+
+▸ **setWsBinaryType**(`binaryType?`): `boolean`
+
+设置 websocket binaryType default: 'blob'
+Example: `setWsBinaryType() => true/false`
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `binaryType` | `BinaryType` | `'arraybuffer'` | 二进制类型 default: 'arraybuffer' |
+
+#### Returns
+
+`boolean`
 
 ___
 
