@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-07-05 11:52:21
+ * @LastEditTime: 2022-07-11 14:38:28
  * @Description: websocket
  * @FilePath: \js-xxx\src\WebSocket\index.ts
  */
@@ -30,6 +30,7 @@ export function initWebSocket(options: {
     options?.onOpen?.call(xWebSocket);
   };
   xWebSocket.onclose = function () {
+    // 考虑是否增加次数限制
     options?.onClose?.call(xWebSocket);
     if (options.reconnect) {
       setTimeout(() => {
