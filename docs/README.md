@@ -1246,7 +1246,7 @@ Example: `initWebSocket({ url: 'ws://localhost:8080/ws', onOpen: () => {}, onMes
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `options` | `Object` | \| boolean} WebSocket 配置 |
+| `options` | `Object` | `{url, onOpen, onMessage, onClose, onError, reconnect: {timeout, onReconnect} \| boolean} WebSocket 配置` |
 | `options.onClose?` | `Function` | - |
 | `options.onError?` | `Function` | - |
 | `options.onMessage?` | `Function` | - |
