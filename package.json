@@ -1,6 +1,6 @@
 {
   "name": "js-xxx",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "JavaScript 常用函数库",
   "main": "lib/index.js",
   "module": "es/index.js",

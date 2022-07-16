@@ -13,4 +13,5 @@ export declare function isDarkMode(): boolean;
 export declare function isAppleDevice(): boolean;
 export declare function onClick2MoreClick(delay?: number, ...events: Array<Function>): Function;
 export declare function disableConflictEvent(event: any): boolean;
+export declare function checkVersion(targetVersion: string, currentVersion: string, testStr?: string): number;
 //# sourceMappingURL=index.d.ts.map

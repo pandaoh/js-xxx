@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-07-11 14:38:28
+ * @LastEditTime: 2022-07-16 22:16:26
  * @Description: websocket
  * @FilePath: \js-xxx\src\WebSocket\index.ts
  */
@@ -11,7 +11,7 @@ var xWebSocket: WebSocket;
 /**
  * 初始化 websocket
  * Example: `initWebSocket({ url: 'ws://localhost:8080/ws', onOpen: () => {}, onMessage: () => {}, onClose: () => {}, onError: () => {}, reconnect: {} })`
- * @param options {url, onOpen, onMessage, onClose, onError, reconnect: {timeout, onReconnect} | boolean} WebSocket 配置
+ * @param options `{url, onOpen, onMessage, onClose, onError, reconnect: {timeout, onReconnect} | boolean} WebSocket 配置`
  * @returns {WebSocket}
  */
 export function initWebSocket(options: {

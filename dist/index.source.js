@@ -7792,6 +7792,24 @@
         }
         return false;
     }
+    function checkVersion(targetVersion, currentVersion, testStr) {
+        var _a, _b;
+        if (testStr === void 0) { testStr = '-rc'; }
+        var targetVersionList = targetVersion.replace(testStr, '').split('.');
+        var currentVersionList = currentVersion.replace(testStr, '').split('.');
+        var length = targetVersionList.length > currentVersionList.length ? targetVersionList.length : currentVersionList.length;
+        for (var i = 0; i < length; i++) {
+            var targetVersionValue = i < targetVersionList.length ? parseInt((_a = targetVersionList[i]) !== null && _a !== void 0 ? _a : 0) : 0;
+            var currentVersionValue = i < currentVersionList.length ? parseInt((_b = currentVersionList[i]) !== null && _b !== void 0 ? _b : 0) : 0;
+            if (targetVersionValue > currentVersionValue) {
+                return 1;
+            }
+            if (targetVersionValue < currentVersionValue) {
+                return -1;
+            }
+        }
+        return 0;
+    }
 
     function sleep(milliseconds) {
         return new Promise(function (resolve) { return setTimeout(resolve, milliseconds); });
@@ -8051,6 +8069,7 @@
     exports.base64Encode = base64Encode;
     exports.calcDate = calcDate;
     exports.catchPromise = catchPromise;
+    exports.checkVersion = checkVersion;
     exports.closeWebSocket = closeWebSocket;
     exports.copyContent = copyContent;
     exports.copyToClipboard = copyToClipboard;

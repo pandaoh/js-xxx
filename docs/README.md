@@ -1,6 +1,6 @@
-js-xxx - v1.2.2
+js-xxx - v1.2.3
 
-# js-xxx - v1.2.2
+# js-xxx - v1.2.3
 
 ## Table of contents
 
@@ -18,6 +18,7 @@ js-xxx - v1.2.2
 - [base64Encode](README.md#base64encode-1)
 - [calcDate](README.md#calcdate)
 - [catchPromise](README.md#catchpromise)
+- [checkVersion](README.md#checkversion)
 - [closeWebSocket](README.md#closewebsocket)
 - [copyContent](README.md#copycontent)
 - [copyToClipboard](README.md#copytoclipboard)
@@ -356,6 +357,30 @@ Example: `new catchPromise(resolve, reject, rejectHandler) => Promise`
 #### Returns
 
 `Promise`<`any`\>
+
+___
+
+### checkVersion
+
+▸ **checkVersion**(`targetVersion`, `currentVersion`, `testStr?`): `number`
+
+版本号比对算法
+Example:
+`checkVersion('1.0.1-rc', '1.0.0', '-rc'); => 1`
+`checkVersion('1.0.0', '1.0.1'); => -1`
+`checkVersion('1.0.0', '1.0.0'); => 0`
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `targetVersion` | `string` | `undefined` |  |
+| `currentVersion` | `string` | `undefined` |  |
+| `testStr` | `string` | `'-rc'` | default(-rc) |
+
+#### Returns
+
+`number`
 
 ___
 

@@ -7786,6 +7786,24 @@ function disableConflictEvent(event) {
     }
     return false;
 }
+function checkVersion(targetVersion, currentVersion, testStr) {
+    var _a, _b;
+    if (testStr === void 0) { testStr = '-rc'; }
+    var targetVersionList = targetVersion.replace(testStr, '').split('.');
+    var currentVersionList = currentVersion.replace(testStr, '').split('.');
+    var length = targetVersionList.length > currentVersionList.length ? targetVersionList.length : currentVersionList.length;
+    for (var i = 0; i < length; i++) {
+        var targetVersionValue = i < targetVersionList.length ? parseInt((_a = targetVersionList[i]) !== null && _a !== void 0 ? _a : 0) : 0;
+        var currentVersionValue = i < currentVersionList.length ? parseInt((_b = currentVersionList[i]) !== null && _b !== void 0 ? _b : 0) : 0;
+        if (targetVersionValue > currentVersionValue) {
+            return 1;
+        }
+        if (targetVersionValue < currentVersionValue) {
+            return -1;
+        }
+    }
+    return 0;
+}
 
 function sleep(milliseconds) {
     return new Promise(function (resolve) { return setTimeout(resolve, milliseconds); });
@@ -8033,4 +8051,4 @@ function setWsBinaryType(binaryType) {
     return true;
 }
 
-export { Base64Decode, Base64Encode, add, all, any, appendLink, appendScript, arraySet, base64Decode, base64Encode, calcDate, catchPromise, closeWebSocket, copyContent, copyToClipboard, curryIt, data2Arr, data2Obj, debounce, decrypt, deepClone, disableConflictEvent, div, empty, encrypt, findChildren, findParents, formatBytes, formatDate, formatFormData, formatURLSearchParams, get1Var, getBaseURL, getCookie, getCryptoJS, getDateDifference, getDateTime, getMonthDays, getMonthDaysCount, getRandColor, getRandNum, getRandStr, getStyleByName, getTimeAndStr, getTimeCode, getType, getUTCTime, getUUID, getUserAgent, getV, getViewportSize, getWebSocket, globalError, html2str, initNotification, initWebSocket, insertAfter, isAppleDevice, isBrowser, isDarkMode, isDecimal, isInteger, isNode, isValidJSON, isWeekday, localStorageGet, localStorageSet, md5, mergeObj, offDefaultEvent, onClick2MoreClick, qsParse, qsStringify, removeCookie, retry, round, scrollToBottom, scrollToTop, sendNotification, sendWsMessage, sessionStorageGet, sessionStorageSet, setCookie, setIcon, setWsBinaryType, sha1, sha256, shuffleArray, sleep, sortCallBack, str2html, str2unicode, sub, throttle, timeSince, times, to, trim, unicode2str };
+export { Base64Decode, Base64Encode, add, all, any, appendLink, appendScript, arraySet, base64Decode, base64Encode, calcDate, catchPromise, checkVersion, closeWebSocket, copyContent, copyToClipboard, curryIt, data2Arr, data2Obj, debounce, decrypt, deepClone, disableConflictEvent, div, empty, encrypt, findChildren, findParents, formatBytes, formatDate, formatFormData, formatURLSearchParams, get1Var, getBaseURL, getCookie, getCryptoJS, getDateDifference, getDateTime, getMonthDays, getMonthDaysCount, getRandColor, getRandNum, getRandStr, getStyleByName, getTimeAndStr, getTimeCode, getType, getUTCTime, getUUID, getUserAgent, getV, getViewportSize, getWebSocket, globalError, html2str, initNotification, initWebSocket, insertAfter, isAppleDevice, isBrowser, isDarkMode, isDecimal, isInteger, isNode, isValidJSON, isWeekday, localStorageGet, localStorageSet, md5, mergeObj, offDefaultEvent, onClick2MoreClick, qsParse, qsStringify, removeCookie, retry, round, scrollToBottom, scrollToTop, sendNotification, sendWsMessage, sessionStorageGet, sessionStorageSet, setCookie, setIcon, setWsBinaryType, sha1, sha256, shuffleArray, sleep, sortCallBack, str2html, str2unicode, sub, throttle, timeSince, times, to, trim, unicode2str };
