@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-07-05 11:22:38
+ * @LastEditTime: 2022-07-27 15:14:53
  * @Description: 利用 dom 的一些方法
  * @FilePath: \js-xxx\src\Dom\index.ts
  */
@@ -221,4 +221,48 @@ export function appendScript(scriptUrl: string, async: boolean = false, defer: b
   script.defer = defer;
   document.head.appendChild(script);
   return script;
+}
+
+/**
+ * 下载一个链接文档
+ * Example: `download('https://xxx.com/xxx', 'xxx') => 下载后端返回的流`
+ * @param link 链接
+ * @param name 文件名称(可选，默认以链接最好一段作为名称，填写时可不带后缀自动识别，写了后缀会以写的后缀为准。)
+ * @returns
+ */
+export function download(link: string, name: string) {
+  if (!name) {
+    name = link.slice(link.lastIndexOf('/') + 1);
+  }
+  let eleLink = document.createElement('a');
+  eleLink.download = name;
+  eleLink.style.display = 'none';
+  eleLink.href = link;
+  document.body.appendChild(eleLink);
+  eleLink.click();
+  document.body.removeChild(eleLink);
+}
+
+/**
+ * 在浏览器中自定义下载一些内容
+ * Example:
+ * `downloadContent('test.txt', 'test txt content') => 下载返回的流`
+ * `downloadContent('test.json', JSON.stringify({content: 'test json'})) => 下载返回的流`
+ * @param name 文件名称(需带后缀)，默认 txt。
+ * @param content 内容
+ * @returns
+ */
+export function downloadContent(name: string, content: BlobPart | any) {
+  if (!name) {
+    name = 'unknown';
+  }
+  try {
+    if (!(content instanceof Blob)) {
+      content = new Blob([content]);
+    }
+    const link = URL.createObjectURL(content);
+    download(link, name);
+  } catch (e) {
+    console.log(e);
+  }
 }

@@ -14,4 +14,5 @@ export declare function isAppleDevice(): boolean;
 export declare function onClick2MoreClick(delay?: number, ...events: Array<Function>): Function;
 export declare function disableConflictEvent(event: any): boolean;
 export declare function checkVersion(targetVersion: string, currentVersion: string, testStr?: string): number;
+export declare function versionUpgrade(version: string, maxVersionCode?: number): string;
 //# sourceMappingURL=index.d.ts.map

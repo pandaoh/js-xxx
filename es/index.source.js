@@ -7265,6 +7265,33 @@ function appendScript(scriptUrl, async, defer) {
     document.head.appendChild(script);
     return script;
 }
+function download(link, name) {
+    if (!name) {
+        name = link.slice(link.lastIndexOf('/') + 1);
+    }
+    var eleLink = document.createElement('a');
+    eleLink.download = name;
+    eleLink.style.display = 'none';
+    eleLink.href = link;
+    document.body.appendChild(eleLink);
+    eleLink.click();
+    document.body.removeChild(eleLink);
+}
+function downloadContent(name, content) {
+    if (!name) {
+        name = 'unknown';
+    }
+    try {
+        if (!(content instanceof Blob)) {
+            content = new Blob([content]);
+        }
+        var link = URL.createObjectURL(content);
+        download(link, name);
+    }
+    catch (e) {
+        console.log(e);
+    }
+}
 
 function getType(variable) {
     return Object.prototype.toString.call(variable).slice(8, -1).toLowerCase();
@@ -7804,6 +7831,31 @@ function checkVersion(targetVersion, currentVersion, testStr) {
     }
     return 0;
 }
+function versionUpgrade(version, maxVersionCode) {
+    if (maxVersionCode === void 0) { maxVersionCode = 99; }
+    if (maxVersionCode == 0) {
+        maxVersionCode = 99;
+    }
+    var tempVersionArr = version.split('.').map(function (v) { return Number(v); });
+    var nan = tempVersionArr.some(function (v) { return isNaN(v); });
+    if (nan) {
+        return version;
+    }
+    tempVersionArr = tempVersionArr.reverse();
+    var check = true;
+    tempVersionArr.forEach(function (v, i) {
+        if (check) {
+            if (v >= maxVersionCode) {
+                tempVersionArr[i] = 0;
+            }
+            else {
+                check = false;
+                tempVersionArr[i] = tempVersionArr[i] + 1;
+            }
+        }
+    });
+    return tempVersionArr.reverse().join('.');
+}
 
 function sleep(milliseconds) {
     return new Promise(function (resolve) { return setTimeout(resolve, milliseconds); });
@@ -8066,4 +8118,4 @@ function setWsBinaryType(binaryType) {
     return true;
 }
 
-export { Base64Decode, Base64Encode, add, all, any, appendLink, appendScript, arraySet, base64Decode, base64Encode, calcDate, catchPromise, checkVersion, closeWebSocket, copyContent, copyToClipboard, curryIt, data2Arr, data2Obj, debounce, decrypt, deepClone, disableConflictEvent, div, empty, encrypt, findChildren, findParents, formatBytes, formatDate, formatFormData, formatURLSearchParams, get1Var, getBaseURL, getCookie, getCryptoJS, getDateDifference, getDateTime, getMonthDays, getMonthDaysCount, getRandColor, getRandNum, getRandStr, getStyleByName, getTimeAndStr, getTimeCode, getType, getUTCTime, getUUID, getUserAgent, getV, getViewportSize, getWebSocket, globalError, html2str, initNotification, initWebSocket, insertAfter, isAppleDevice, isBrowser, isDarkMode, isDecimal, isInteger, isNode, isValidJSON, isWeekday, localStorageGet, localStorageSet, md5, mergeObj, offDefaultEvent, onClick2MoreClick, qsParse, qsStringify, removeCookie, retry, round, scrollToBottom, scrollToTop, sendNotification, sendWsMessage, sessionStorageGet, sessionStorageSet, setCookie, setIcon, setWsBinaryType, sha1, sha256, shuffleArray, sleep, sortCallBack, str2html, str2unicode, sub, throttle, timeSince, times, to, trim, unicode2str };
+export { Base64Decode, Base64Encode, add, all, any, appendLink, appendScript, arraySet, base64Decode, base64Encode, calcDate, catchPromise, checkVersion, closeWebSocket, copyContent, copyToClipboard, curryIt, data2Arr, data2Obj, debounce, decrypt, deepClone, disableConflictEvent, div, download, downloadContent, empty, encrypt, findChildren, findParents, formatBytes, formatDate, formatFormData, formatURLSearchParams, get1Var, getBaseURL, getCookie, getCryptoJS, getDateDifference, getDateTime, getMonthDays, getMonthDaysCount, getRandColor, getRandNum, getRandStr, getStyleByName, getTimeAndStr, getTimeCode, getType, getUTCTime, getUUID, getUserAgent, getV, getViewportSize, getWebSocket, globalError, html2str, initNotification, initWebSocket, insertAfter, isAppleDevice, isBrowser, isDarkMode, isDecimal, isInteger, isNode, isValidJSON, isWeekday, localStorageGet, localStorageSet, md5, mergeObj, offDefaultEvent, onClick2MoreClick, qsParse, qsStringify, removeCookie, retry, round, scrollToBottom, scrollToTop, sendNotification, sendWsMessage, sessionStorageGet, sessionStorageSet, setCookie, setIcon, setWsBinaryType, sha1, sha256, shuffleArray, sleep, sortCallBack, str2html, str2unicode, sub, throttle, timeSince, times, to, trim, unicode2str, versionUpgrade };

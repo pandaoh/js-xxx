@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:53:39
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-07-16 22:11:59
+ * @LastEditTime: 2022-07-27 15:16:35
  * @Description: 因项目需要常用方法，不管任何项目，都放到一起。注意甄别，没有复用意义的方法就不要添加了。
  * @FilePath: \js-xxx\src\Others\index.ts
  */
@@ -270,4 +270,39 @@ export function checkVersion(targetVersion: string, currentVersion: string, test
   }
 
   return 0;
+}
+
+/**
+ * 版本号升级算法
+ * Example:
+ * `versionUpgrade('0.0.1') => '0.0.2'`
+ * `versionUpgrade('0.0.0.9') => '0.0.0.10'`
+ * `versionUpgrade('0.0.0.9', 9) => '0.0.1.0'`
+ * `versionUpgrade('0.0.9.9', 9) => '0.1.0.0'`
+ * @param version 版本号
+ * @param maxVersionCode 最大版本号
+ * @returns
+ */
+export function versionUpgrade(version: string, maxVersionCode: number = 99): string {
+  if (maxVersionCode == 0) {
+    maxVersionCode = 99;
+  }
+  let tempVersionArr = version.split('.').map((v) => Number(v));
+  const nan = tempVersionArr.some((v) => isNaN(v));
+  if (nan) {
+    return version;
+  }
+  tempVersionArr = tempVersionArr.reverse();
+  let check = true;
+  tempVersionArr.forEach((v, i) => {
+    if (check) {
+      if (v >= maxVersionCode) {
+        tempVersionArr[i] = 0;
+      } else {
+        check = false;
+        tempVersionArr[i] = tempVersionArr[i] + 1;
+      }
+    }
+  });
+  return tempVersionArr.reverse().join('.');
 }

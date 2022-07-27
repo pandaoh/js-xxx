@@ -7268,6 +7268,33 @@ var $xxx = (function (exports) {
         document.head.appendChild(script);
         return script;
     }
+    function download(link, name) {
+        if (!name) {
+            name = link.slice(link.lastIndexOf('/') + 1);
+        }
+        var eleLink = document.createElement('a');
+        eleLink.download = name;
+        eleLink.style.display = 'none';
+        eleLink.href = link;
+        document.body.appendChild(eleLink);
+        eleLink.click();
+        document.body.removeChild(eleLink);
+    }
+    function downloadContent(name, content) {
+        if (!name) {
+            name = 'unknown';
+        }
+        try {
+            if (!(content instanceof Blob)) {
+                content = new Blob([content]);
+            }
+            var link = URL.createObjectURL(content);
+            download(link, name);
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
 
     function getType(variable) {
         return Object.prototype.toString.call(variable).slice(8, -1).toLowerCase();
@@ -7807,6 +7834,31 @@ var $xxx = (function (exports) {
         }
         return 0;
     }
+    function versionUpgrade(version, maxVersionCode) {
+        if (maxVersionCode === void 0) { maxVersionCode = 99; }
+        if (maxVersionCode == 0) {
+            maxVersionCode = 99;
+        }
+        var tempVersionArr = version.split('.').map(function (v) { return Number(v); });
+        var nan = tempVersionArr.some(function (v) { return isNaN(v); });
+        if (nan) {
+            return version;
+        }
+        tempVersionArr = tempVersionArr.reverse();
+        var check = true;
+        tempVersionArr.forEach(function (v, i) {
+            if (check) {
+                if (v >= maxVersionCode) {
+                    tempVersionArr[i] = 0;
+                }
+                else {
+                    check = false;
+                    tempVersionArr[i] = tempVersionArr[i] + 1;
+                }
+            }
+        });
+        return tempVersionArr.reverse().join('.');
+    }
 
     function sleep(milliseconds) {
         return new Promise(function (resolve) { return setTimeout(resolve, milliseconds); });
@@ -8093,6 +8145,8 @@ var $xxx = (function (exports) {
     exports.deepClone = deepClone;
     exports.disableConflictEvent = disableConflictEvent;
     exports.div = div;
+    exports.download = download;
+    exports.downloadContent = downloadContent;
     exports.empty = empty;
     exports.encrypt = encrypt;
     exports.findChildren = findChildren;
@@ -8169,6 +8223,7 @@ var $xxx = (function (exports) {
     exports.to = to;
     exports.trim = trim;
     exports.unicode2str = unicode2str;
+    exports.versionUpgrade = versionUpgrade;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

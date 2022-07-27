@@ -1,6 +1,6 @@
-js-xxx - v1.2.4
+js-xxx - v1.2.5
 
-# js-xxx - v1.2.4
+# js-xxx - v1.2.5
 
 ## Table of contents
 
@@ -30,6 +30,8 @@ js-xxx - v1.2.4
 - [deepClone](README.md#deepclone)
 - [disableConflictEvent](README.md#disableconflictevent)
 - [div](README.md#div)
+- [download](README.md#download)
+- [downloadContent](README.md#downloadcontent)
 - [empty](README.md#empty)
 - [encrypt](README.md#encrypt)
 - [findChildren](README.md#findchildren)
@@ -106,6 +108,7 @@ js-xxx - v1.2.4
 - [to](README.md#to)
 - [trim](README.md#trim)
 - [unicode2str](README.md#unicode2str)
+- [versionUpgrade](README.md#versionupgrade)
 
 ## Functions
 
@@ -622,6 +625,48 @@ Example: `div(1, 2) => 0.5`
 #### Returns
 
 `number`
+
+___
+
+### download
+
+▸ **download**(`link`, `name`): `void`
+
+下载一个链接文档
+Example: `download('https://xxx.com/xxx', 'xxx') => 下载后端返回的流`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `link` | `string` | 链接 |
+| `name` | `string` | 文件名称(可选，默认以链接最好一段作为名称，填写时可不带后缀自动识别，写了后缀会以写的后缀为准。) |
+
+#### Returns
+
+`void`
+
+___
+
+### downloadContent
+
+▸ **downloadContent**(`name`, `content`): `void`
+
+在浏览器中自定义下载一些内容
+Example:
+`downloadContent('test.txt', 'test txt content') => 下载返回的流`
+`downloadContent('test.json', JSON.stringify({content: 'test json'})) => 下载返回的流`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `name` | `string` | 文件名称(需带后缀)，默认 txt。 |
+| `content` | `any` | 内容 |
+
+#### Returns
+
+`void`
 
 ___
 
@@ -2130,6 +2175,30 @@ Example: `unicode2str("我是老A") => '\\u6211\\u662f\\u8001a'`
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `value` | `string` | 中文字符串 |
+
+#### Returns
+
+`string`
+
+___
+
+### versionUpgrade
+
+▸ **versionUpgrade**(`version`, `maxVersionCode?`): `string`
+
+版本号升级算法
+Example:
+`versionUpgrade('0.0.1') => '0.0.2'`
+`versionUpgrade('0.0.0.9') => '0.0.0.10'`
+`versionUpgrade('0.0.0.9', 9) => '0.0.1.0'`
+`versionUpgrade('0.0.9.9', 9) => '0.1.0.0'`
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `version` | `string` | `undefined` | 版本号 |
+| `maxVersionCode` | `number` | `99` | 最大版本号 |
 
 #### Returns
 
