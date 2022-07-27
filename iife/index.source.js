@@ -8002,37 +8002,52 @@ var $xxx = (function (exports) {
     }
 
     var xWebSocket;
+    var xWebSocketTimer;
     function initWebSocket(options) {
+        var _a;
         xWebSocket = new WebSocket(options.url);
+        if (!xWebSocketTimer) {
+            xWebSocketTimer = setTimeout(function () {
+                xWebSocketTimer = null;
+            }, (_a = options.timeout) !== null && _a !== void 0 ? _a : 10000);
+        }
         xWebSocket.onopen = function () {
             var _a;
-            (_a = options === null || options === void 0 ? void 0 : options.onOpen) === null || _a === void 0 ? void 0 : _a.call(xWebSocket);
-        };
-        xWebSocket.onclose = function () {
-            var _a, _b, _c, _d;
-            (_a = options === null || options === void 0 ? void 0 : options.onClose) === null || _a === void 0 ? void 0 : _a.call(xWebSocket);
-            if (options.reconnect) {
-                setTimeout(function () {
-                    initWebSocket(options);
-                }, ((_b = options.reconnect) === null || _b === void 0 ? void 0 : _b.timeout) || 1000);
-                (_d = (_c = options.reconnect) === null || _c === void 0 ? void 0 : _c.onReconnect) === null || _d === void 0 ? void 0 : _d.call(xWebSocket);
-            }
+            (_a = options === null || options === void 0 ? void 0 : options.onOpen) === null || _a === void 0 ? void 0 : _a.call(options, xWebSocket, options);
         };
         xWebSocket.onmessage = function (event) {
             var _a;
-            (_a = options === null || options === void 0 ? void 0 : options.onMessage) === null || _a === void 0 ? void 0 : _a.call(event, xWebSocket);
+            (_a = options === null || options === void 0 ? void 0 : options.onMessage) === null || _a === void 0 ? void 0 : _a.call(options, event, xWebSocket, options);
         };
         xWebSocket.onerror = function (event) {
             var _a;
-            (_a = options === null || options === void 0 ? void 0 : options.onError) === null || _a === void 0 ? void 0 : _a.call(event, xWebSocket);
+            (_a = options === null || options === void 0 ? void 0 : options.onError) === null || _a === void 0 ? void 0 : _a.call(options, event, xWebSocket, options);
+        };
+        xWebSocket.onclose = function () {
+            var _a, _b, _c, _d, _e;
+            if (xWebSocketTimer) {
+                initWebSocket(options);
+                return;
+            }
+            (_a = options === null || options === void 0 ? void 0 : options.onClose) === null || _a === void 0 ? void 0 : _a.call(options, xWebSocket, options);
+            var times = (_c = (_b = options === null || options === void 0 ? void 0 : options.reconnect) === null || _b === void 0 ? void 0 : _b.times) !== null && _c !== void 0 ? _c : 1;
+            if (options.reconnect && times > 0) {
+                times--;
+                setTimeout(function () {
+                    var _a, _b;
+                    (_b = (_a = options.reconnect) === null || _a === void 0 ? void 0 : _a.onReconnect) === null || _b === void 0 ? void 0 : _b.call(_a, xWebSocket, options);
+                    initWebSocket(__assign(__assign({}, options), { reconnect: __assign(__assign({}, options.reconnect), { times: times }) }));
+                }, (_e = (_d = options.reconnect) === null || _d === void 0 ? void 0 : _d.delay) !== null && _e !== void 0 ? _e : 1000);
+            }
         };
         return xWebSocket;
     }
-    function sendWsMessage(message) {
+    function sendWsMessage(message, isJSONEncode) {
+        if (isJSONEncode === void 0) { isJSONEncode = false; }
         if (!xWebSocket) {
             return false;
         }
-        xWebSocket.send(JSON.stringify(message));
+        xWebSocket.send(isJSONEncode ? JSON.stringify(message) : message);
         return true;
     }
     function closeWebSocket() {

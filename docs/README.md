@@ -1,6 +1,6 @@
-js-xxx - v1.2.3
+js-xxx - v1.2.4
 
-# js-xxx - v1.2.3
+# js-xxx - v1.2.4
 
 ## Table of contents
 
@@ -1172,14 +1172,14 @@ ___
 
 ### getWebSocket
 
-▸ **getWebSocket**(): `WebSocket`
+▸ **getWebSocket**(): `WebSocket` \| `undefined`
 
 获取 websocket 实例
 Example: `getWebSocket() => [websocket object]`
 
 #### Returns
 
-`WebSocket`
+`WebSocket` \| `undefined`
 
 ___
 
@@ -1237,28 +1237,30 @@ ___
 
 ### initWebSocket
 
-▸ **initWebSocket**(`options`): `WebSocket`
+▸ **initWebSocket**(`options`): `WebSocket` \| `undefined`
 
 初始化 websocket
-Example: `initWebSocket({ url: 'ws://localhost:8080/ws', onOpen: () => {}, onMessage: () => {}, onClose: () => {}, onError: () => {}, reconnect: {} })`
+Example: `initWebSocket({ url: 'ws://localhost:8080/ws', timeout: 30000, onOpen: () => {}, onMessage: () => {}, onClose: () => {}, onError: () => {}, reconnect: {} })`
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `options` | `Object` | `{url, onOpen, onMessage, onClose, onError, reconnect: {timeout, onReconnect} \| boolean} WebSocket 配置` |
+| `options` | `Object` | `{url, onOpen, onMessage, onClose, onError, timeout, reconnect: {times, delay, onReconnect} \| boolean} WebSocket 配置` |
 | `options.onClose?` | `Function` | - |
 | `options.onError?` | `Function` | - |
 | `options.onMessage?` | `Function` | - |
 | `options.onOpen?` | `Function` | - |
 | `options.reconnect?` | `Object` | - |
+| `options.reconnect.delay?` | `number` | - |
 | `options.reconnect.onReconnect?` | `Function` | - |
-| `options.reconnect.timeout?` | `number` | - |
+| `options.reconnect.times` | `number` | - |
+| `options.timeout?` | `number` | - |
 | `options.url` | `string` | - |
 
 #### Returns
 
-`WebSocket`
+`WebSocket` \| `undefined`
 
 ___
 
@@ -1718,16 +1720,18 @@ ___
 
 ### sendWsMessage
 
-▸ **sendWsMessage**(`message`): `boolean`
+▸ **sendWsMessage**(`message`, `isJSONEncode?`): `boolean`
 
 发送消息
-Example: `sendWsMessage({ type: 'login', data: { username: 'admin', password: '123456' } }) => true/false`
+Example: `sendWsMessage({ type: 'login', data: { username: 'admin', password: '123456' }}, true) => true/false`
+Example: `sendWsMessage('testMsg') => true/false`
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `message` | `any` | 消息 |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `message` | `any` | `undefined` | 消息 |
+| `isJSONEncode` | `boolean` | `false` | 是否 JSON 序列化 |
 
 #### Returns
 
