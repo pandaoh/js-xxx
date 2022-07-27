@@ -1,5 +1,7 @@
 # JavaScript 常用函数库
 
+[![OSCS Status](https://www.oscs1024.com/platform/badge/pandaoh/js-xxx.svg?size=small)](https://www.oscs1024.com/project/pandaoh/js-xxx?ref=badge_small)
+
 > 封装常用函数，支持按需引入；无依赖和第三方库，无冗余代码，无需改动原代码结构；拆箱即用，简单便捷。
 
 ## Install
