@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:18:13
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-05-26 17:45:01
+ * @LastEditTime: 2022-08-03 17:20:15
  * @Description: Promise 常用方法，或者扩展方法。
  * @FilePath: \js-xxx\src\Promise\index.ts
  */
@@ -32,9 +32,9 @@ export function to(promise: Promise<any>, res?: Function, rej?: Function): Promi
       res && res(data);
       return data;
     })
-    .catch((err) => {
-      rej && rej(err);
-      console.log(err);
+    .catch((e) => {
+      rej && rej(e);
+      console.log('js-xxx:toError', e);
     });
 }
 

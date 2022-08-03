@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-06-04 20:07:41
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-06-04 20:46:18
+ * @LastEditTime: 2022-08-03 17:19:44
  * @Description: 系统推送通知 https://developer.mozilla.org/zh-CN/docs/Web/API/Notifications_API
  * @FilePath: \js-xxx\src\Notify\index.ts
  */
@@ -73,7 +73,7 @@ export function sendNotification(
   // @ts-ignore
   const NOTIFICATION = window.Notification || window?.mozNotification || window?.webkitNotification;
   if (!NOTIFICATION) {
-    console.log('系统不支持 Notification API');
+    console.log('js-xxx:sendNotification', '系统不支持 Notification API');
     return;
   }
   const notify = new Notification(title ?? 'js-xxx Notification', {

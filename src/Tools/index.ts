@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-06-16 14:22:18
+ * @LastEditTime: 2022-08-03 17:20:51
  * @Description: 工具方法
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
@@ -137,6 +137,7 @@ export function curryIt(fn: Function) {
  */
 export function globalError(fn: Function, notShowConsole: boolean = true) {
   window.onerror = function (message, source, lineno, colno, error) {
+    notShowConsole && console.log('js-xxx:globalError', { message, source, lineno, colno, error });
     fn.call(this, message, source, lineno, colno, error);
     return notShowConsole; // return true 不在控制台报错
   };

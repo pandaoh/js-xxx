@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-07-27 15:14:53
+ * @LastEditTime: 2022-08-03 17:18:57
  * @Description: 利用 dom 的一些方法
  * @FilePath: \js-xxx\src\Dom\index.ts
  */
@@ -88,7 +88,7 @@ export function copyContent(targetDom: any, addMsg: any = null) {
     info = '浏览器不支持此操作，请手动复制。';
   }
   document.body.removeChild(tempDom);
-  console.log(info);
+  console.log('js-xxx:copyContent', info);
   return Msg;
 }
 
@@ -263,6 +263,6 @@ export function downloadContent(name: string, content: BlobPart | any) {
     const link = URL.createObjectURL(content);
     download(link, name);
   } catch (e) {
-    console.log(e);
+    console.log('js-xxx:downloadContentError', e);
   }
 }

@@ -7196,7 +7196,7 @@
             info = '浏览器不支持此操作，请手动复制。';
         }
         document.body.removeChild(tempDom);
-        console.log(info);
+        console.log('js-xxx:copyContent', info);
         return Msg;
     }
     function scrollToTop(elementSelector, to) {
@@ -7295,7 +7295,7 @@
             download(link, name);
         }
         catch (e) {
-            console.log(e);
+            console.log('js-xxx:downloadContentError', e);
         }
     }
 
@@ -7372,6 +7372,7 @@
     function globalError(fn, notShowConsole) {
         if (notShowConsole === void 0) { notShowConsole = true; }
         window.onerror = function (message, source, lineno, colno, error) {
+            notShowConsole && console.log('js-xxx:globalError', { message: message, source: source, lineno: lineno, colno: colno, error: error });
             fn.call(this, message, source, lineno, colno, error);
             return notShowConsole;
         };
@@ -7522,7 +7523,7 @@
         var _a, _b, _c, _d, _e, _f;
         var NOTIFICATION = window.Notification || (window === null || window === void 0 ? void 0 : window.mozNotification) || (window === null || window === void 0 ? void 0 : window.webkitNotification);
         if (!NOTIFICATION) {
-            console.log('系统不支持 Notification API');
+            console.log('js-xxx:sendNotification', '系统不支持 Notification API');
             return;
         }
         var notify = new Notification(title !== null && title !== void 0 ? title : 'js-xxx Notification', __assign(__assign({}, options), { dir: (_a = options === null || options === void 0 ? void 0 : options.dir) !== null && _a !== void 0 ? _a : 'auto', lang: (_b = options === null || options === void 0 ? void 0 : options.lang) !== null && _b !== void 0 ? _b : 'zh-CN', requireInteraction: (_c = options === null || options === void 0 ? void 0 : options.requireInteraction) !== null && _c !== void 0 ? _c : false, tag: (_d = options === null || options === void 0 ? void 0 : options.tag) !== null && _d !== void 0 ? _d : getRandStr(8), icon: (_e = options === null || options === void 0 ? void 0 : options.icon) !== null && _e !== void 0 ? _e : 'favicon.ico', timestamp: (_f = options === null || options === void 0 ? void 0 : options.timestamp) !== null && _f !== void 0 ? _f : new Date().getTime(), body: msg }));
@@ -7872,9 +7873,9 @@
             res && res(data);
             return data;
         })
-            .catch(function (err) {
-            rej && rej(err);
-            console.log(err);
+            .catch(function (e) {
+            rej && rej(e);
+            console.log('js-xxx:toError', e);
         });
     }
     function retry(promise, count, delay) {
@@ -7977,83 +7978,80 @@
         return url.replace(/[?#].*$/, '');
     }
 
-    function localStorageGet(key) {
-        var result = window.localStorage.getItem(key);
+    function _tempSet(key, value, storeType) {
+        try {
+            var newVal = void 0;
+            var type = getType(value);
+            switch (type) {
+                case 'null':
+                case 'undefined':
+                    storeType === 'L' ? window.localStorage.removeItem(key) : window.sessionStorage.removeItem(key);
+                    return true;
+                case 'object':
+                case 'array':
+                    newVal = JSON.stringify(value);
+                    break;
+                case 'number':
+                case 'boolean':
+                case 'string':
+                default:
+                    newVal = "[X_TYPE_".concat(type, "]").concat(value);
+                    break;
+            }
+            storeType === 'L' ? window.localStorage.setItem(key, newVal) : window.sessionStorage.setItem(key, newVal);
+            return true;
+        }
+        catch (e) {
+            console.log('js-xxx:storageSetError', e);
+            return false;
+        }
+    }
+    function _tempGet(key, storeType) {
+        var result = storeType === 'L' ? window.localStorage.getItem(key) : window.sessionStorage.getItem(key);
         result = isValidJSON(result) ? JSON.parse(result) : result;
-        switch (getType(result)) {
+        var numberType = '[X_TYPE_number]';
+        var stringType = '[X_TYPE_string]';
+        var booleanType = '[X_TYPE_boolean]';
+        var type = getType(result);
+        switch (type) {
+            case 'string':
+                if (result.includes(numberType)) {
+                    result = result.replace(numberType, '');
+                    if (isDecimal(result) || isInteger(result)) {
+                        return parseFloat(result);
+                    }
+                    return result;
+                }
+                if (result.includes(stringType)) {
+                    result = result.replace(stringType, '');
+                    return result;
+                }
+                if (result.includes(booleanType)) {
+                    result = result.replace(booleanType, '');
+                    if (result === 'true' || result === 'false') {
+                        return result === 'true';
+                    }
+                    return result;
+                }
+                return result;
             case 'object':
             case 'array':
-                return JSON.parse(result);
-            case 'string':
-                if (isDecimal(result) || isInteger(result)) {
-                    return parseFloat(result);
-                }
-                if (result === 'true' || result === 'false') {
-                    return result === 'true';
-                }
                 return result;
             default:
                 return result;
         }
+    }
+    function localStorageGet(key) {
+        return _tempGet(key, 'L');
     }
     function localStorageSet(key, value) {
-        var newVal;
-        switch (getType(value)) {
-            case 'null':
-            case 'undefined':
-                window.localStorage.removeItem(key);
-                return;
-            case 'object':
-            case 'array':
-                newVal = JSON.stringify(value);
-                break;
-            case 'number':
-            case 'boolean':
-            case 'string':
-            default:
-                newVal = value;
-                break;
-        }
-        window.localStorage.setItem(key, newVal);
+        return _tempSet(key, value, 'L');
     }
     function sessionStorageGet(key) {
-        var result = window.sessionStorage.getItem(key);
-        result = isValidJSON(result) ? JSON.parse(result) : result;
-        switch (getType(result)) {
-            case 'object':
-            case 'array':
-                return JSON.parse(result);
-            case 'string':
-                if (isDecimal(result) || isInteger(result)) {
-                    return parseFloat(result);
-                }
-                if (result === 'true' || result === 'false') {
-                    return result === 'true';
-                }
-                return result;
-            default:
-                return result;
-        }
+        return _tempGet(key, 'S');
     }
     function sessionStorageSet(key, value) {
-        var newVal;
-        switch (getType(value)) {
-            case 'null':
-            case 'undefined':
-                window.sessionStorage.removeItem(key);
-                return;
-            case 'object':
-            case 'array':
-                newVal = JSON.stringify(value);
-                break;
-            case 'number':
-            case 'boolean':
-            case 'string':
-            default:
-                newVal = value;
-                break;
-        }
-        window.sessionStorage.setItem(key, newVal);
+        return _tempSet(key, value, 'S');
     }
 
     var xWebSocket;

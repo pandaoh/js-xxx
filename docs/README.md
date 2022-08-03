@@ -1,6 +1,6 @@
-js-xxx - v1.2.5
+js-xxx - v1.2.6
 
-# js-xxx - v1.2.5
+# js-xxx - v1.2.6
 
 ## Table of contents
 
@@ -1490,10 +1490,10 @@ ___
 
 ### localStorageSet
 
-▸ **localStorageSet**(`key`, `value`): `any`
+▸ **localStorageSet**(`key`, `value`): `boolean`
 
 设置 localStorage
-Example: `localStorageSet("key", "value") => 存储时不需要处理数据，value === null|undefined 清除数据。`
+Example: `localStorageSet("key", "value") => 存储时不需要处理数据，value === null|undefined 清除数据。(boolean)`
 
 #### Parameters
 
@@ -1504,7 +1504,7 @@ Example: `localStorageSet("key", "value") => 存储时不需要处理数据，va
 
 #### Returns
 
-`any`
+`boolean`
 
 ___
 
@@ -1805,7 +1805,7 @@ ___
 
 ### sessionStorageSet
 
-▸ **sessionStorageSet**(`key`, `value`): `any`
+▸ **sessionStorageSet**(`key`, `value`): `boolean`
 
 设置 sessionStorage
 Example: `sessionStorageSet("key", "value") => 存储时不需要处理数据，value === null|undefined 清除数据。`
@@ -1819,7 +1819,7 @@ Example: `sessionStorageSet("key", "value") => 存储时不需要处理数据，
 
 #### Returns
 
-`any`
+`boolean`
 
 ___
 
