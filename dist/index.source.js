@@ -7601,6 +7601,14 @@
         }
         return /(^0\.\d+$)|(^[1-9]\d*\.\d+$)|(^\-0\.\d+$)|(^\-[1-9]\d*\.\d+$)/.test(value);
     }
+    function formatNumber(value) {
+        try {
+            return Number(value).toLocaleString();
+        }
+        catch (e) {
+            return "".concat(value);
+        }
+    }
 
     function getV(defaultResult) {
         var args = [];
@@ -7808,14 +7816,52 @@
             });
         };
     }
+    function bindMoreClick(fn, times, delay) {
+        if (times === void 0) { times = 3; }
+        if (delay === void 0) { delay = 300; }
+        var timer = null;
+        var lastTime = 0;
+        var count = 0;
+        return function () {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i] = arguments[_i];
+            }
+            clearTimeout(timer);
+            var currentTime = new Date().getTime();
+            count = currentTime - lastTime < delay ? count + 1 : 0;
+            lastTime = new Date().getTime();
+            if (count === times) {
+                timer = setTimeout(function () {
+                    count = 0;
+                    lastTime = 0;
+                    fn.apply(void 0, __spreadArray([], __read(args), false));
+                }, delay);
+            }
+        };
+    }
+    function emitKeyboardEvent(eventType, keyCode) {
+        if (eventType === void 0) { eventType = 'keydown'; }
+        if (keyCode === void 0) { keyCode = 13; }
+        var myEvent = new KeyboardEvent(eventType, {
+            bubbles: true,
+            cancelable: true,
+            keyCode: keyCode
+        });
+        document.body.dispatchEvent(myEvent);
+    }
     function disableConflictEvent(event) {
         var keyCode = event.keyCode || event.which || event.charCode;
         var ctrlKey = event.ctrlKey || event.metaKey;
         var altKey = event.altKey;
         if (ctrlKey && keyCode == 74) {
             event.preventDefault();
+            emitKeyboardEvent();
         }
         if (altKey && keyCode == 115) {
+            event.preventDefault();
+        }
+        if (ctrlKey && keyCode == 115) {
             event.preventDefault();
         }
         return false;
@@ -8132,6 +8178,7 @@
     exports.arraySet = arraySet;
     exports.base64Decode = base64Decode;
     exports.base64Encode = base64Encode;
+    exports.bindMoreClick = bindMoreClick;
     exports.calcDate = calcDate;
     exports.catchPromise = catchPromise;
     exports.checkVersion = checkVersion;
@@ -8148,6 +8195,7 @@
     exports.div = div;
     exports.download = download;
     exports.downloadContent = downloadContent;
+    exports.emitKeyboardEvent = emitKeyboardEvent;
     exports.empty = empty;
     exports.encrypt = encrypt;
     exports.findChildren = findChildren;
@@ -8155,6 +8203,7 @@
     exports.formatBytes = formatBytes;
     exports.formatDate = formatDate;
     exports.formatFormData = formatFormData;
+    exports.formatNumber = formatNumber;
     exports.formatURLSearchParams = formatURLSearchParams;
     exports.get1Var = get1Var;
     exports.getBaseURL = getBaseURL;

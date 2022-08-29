@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:53:39
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-07-27 15:16:35
+ * @LastEditTime: 2022-08-29 15:23:36
  * @Description: 因项目需要常用方法，不管任何项目，都放到一起。注意甄别，没有复用意义的方法就不要添加了。
  * @FilePath: \js-xxx\src\Others\index.ts
  */
@@ -217,6 +217,48 @@ export function onClick2MoreClick(delay = 300, ...events: Array<Function>): Func
 }
 
 /**
+ * 单独绑定多击事件
+ * Example: `bindMoreClick(moreClickCallBack, 4, 500) => 绑定 4 击事件`
+ * @param fn
+ * @param times
+ * @param delay
+ * @returns
+ */
+export function bindMoreClick(fn: Function | any, times = 3, delay = 300) {
+  let timer: any = null;
+  let lastTime = 0;
+  let count = 0;
+  return (...args: any[]) => {
+    clearTimeout(timer);
+    const currentTime = new Date().getTime();
+    count = currentTime - lastTime < delay ? count + 1 : 0;
+    lastTime = new Date().getTime();
+    if (count === times) {
+      timer = setTimeout(() => {
+        count = 0;
+        lastTime = 0;
+        fn(...args);
+      }, delay);
+    }
+  };
+}
+
+/**
+ * 触发某个键盘按键事件
+ * Example: `emitKeyboardEvent('keydown', 108) => 小键盘回车事件`
+ * @param eventType 事件类型
+ * @param keyCode 触发键盘 code
+ */
+export function emitKeyboardEvent(eventType: 'keydown' | 'keypress' | 'keyup' = 'keydown', keyCode: number = 13): void {
+  const myEvent = new KeyboardEvent(eventType, {
+    bubbles: true,
+    cancelable: true,
+    keyCode: keyCode
+  });
+  document.body.dispatchEvent(myEvent);
+}
+
+/**
  * 禁用冲突事件，条码枪、关闭窗口快捷键等。
  * Example:
  * `document.addEventListener('keydown', disableConflictEvent); => 进入页面后禁用冲突事件`
@@ -231,9 +273,14 @@ export function disableConflictEvent(event: any) {
   if (ctrlKey && keyCode == 74) {
     // ctrl+j 禁用条码枪触发事件
     event.preventDefault();
+    emitKeyboardEvent();
   }
   if (altKey && keyCode == 115) {
     // alt+f4 关闭窗口快捷键
+    event.preventDefault();
+  }
+  if (ctrlKey && keyCode == 115) {
+    // ctrl+f4 关闭窗口快捷键
     event.preventDefault();
   }
   return false; // true 防止此事件被进一步传播;false 允许此事件继续传播;

@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 16:24:47
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-06-14 18:09:33
+ * @LastEditTime: 2022-08-29 15:14:50
  * @Description: 常用数字相关方法
  * @FilePath: \js-xxx\src\Number\index.ts
  */
@@ -95,4 +95,18 @@ export function isDecimal(value: string, type?: '-' | '+', noLastZero = false): 
     return /(^0\.[1-9]*\d*[1-9]$)|(^[1-9]\d*\.\d*[1-9]$)|(^\-0\.[1-9]*\d*[1-9]$)|(^\-[1-9]\d*\.\d*[1-9]$)/.test(value);
   }
   return /(^0\.\d+$)|(^[1-9]\d*\.\d+$)|(^\-0\.\d+$)|(^\-[1-9]\d*\.\d+$)/.test(value);
+}
+
+/**
+ * 数字人性化显示
+ * Example: `formatNumber('12312300') => '12,312,300'`
+ * @param value
+ * @returns
+ */
+export function formatNumber(value: string | number): string {
+  try {
+    return Number(value).toLocaleString();
+  } catch (e) {
+    return `${value}`;
+  }
 }

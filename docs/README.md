@@ -1,6 +1,6 @@
-js-xxx - v1.2.6
+js-xxx - v1.2.7
 
-# js-xxx - v1.2.6
+# js-xxx - v1.2.7
 
 ## Table of contents
 
@@ -16,6 +16,7 @@ js-xxx - v1.2.6
 - [arraySet](README.md#arrayset)
 - [base64Decode](README.md#base64decode-1)
 - [base64Encode](README.md#base64encode-1)
+- [bindMoreClick](README.md#bindmoreclick)
 - [calcDate](README.md#calcdate)
 - [catchPromise](README.md#catchpromise)
 - [checkVersion](README.md#checkversion)
@@ -32,6 +33,7 @@ js-xxx - v1.2.6
 - [div](README.md#div)
 - [download](README.md#download)
 - [downloadContent](README.md#downloadcontent)
+- [emitKeyboardEvent](README.md#emitkeyboardevent)
 - [empty](README.md#empty)
 - [encrypt](README.md#encrypt)
 - [findChildren](README.md#findchildren)
@@ -39,6 +41,7 @@ js-xxx - v1.2.6
 - [formatBytes](README.md#formatbytes)
 - [formatDate](README.md#formatdate)
 - [formatFormData](README.md#formatformdata)
+- [formatNumber](README.md#formatnumber)
 - [formatURLSearchParams](README.md#formaturlsearchparams)
 - [get1Var](README.md#get1var)
 - [getBaseURL](README.md#getbaseurl)
@@ -317,6 +320,39 @@ Example:
 #### Returns
 
 `string`
+
+___
+
+### bindMoreClick
+
+▸ **bindMoreClick**(`fn`, `times?`, `delay?`): (...`args`: `any`[]) => `void`
+
+单独绑定多击事件
+Example: `bindMoreClick(moreClickCallBack, 4, 500) => 绑定 4 击事件`
+
+#### Parameters
+
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `fn` | `any` | `undefined` |
+| `times` | `number` | `3` |
+| `delay` | `number` | `300` |
+
+#### Returns
+
+`fn`
+
+▸ (...`args`): `void`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `...args` | `any`[] |
+
+##### Returns
+
+`void`
 
 ___
 
@@ -670,6 +706,26 @@ Example:
 
 ___
 
+### emitKeyboardEvent
+
+▸ **emitKeyboardEvent**(`eventType?`, `keyCode?`): `void`
+
+触发某个键盘按键事件
+Example: `emitKeyboardEvent('keydown', 108) => 小键盘回车事件`
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `eventType` | ``"keydown"`` \| ``"keypress"`` \| ``"keyup"`` | `'keydown'` | 事件类型 |
+| `keyCode` | `number` | `13` | 触发键盘 code |
+
+#### Returns
+
+`void`
+
+___
+
 ### empty
 
 ▸ **empty**(`variable`): `boolean`
@@ -812,6 +868,25 @@ Example: `formatFormData({a: 1, b: 2}) => FormData`
 #### Returns
 
 `FormData`
+
+___
+
+### formatNumber
+
+▸ **formatNumber**(`value`): `string`
+
+数字人性化显示
+Example: `formatNumber('12312300') => '12,312,300'`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `string` \| `number` |
+
+#### Returns
+
+`string`
 
 ___
 

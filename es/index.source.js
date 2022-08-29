@@ -7595,6 +7595,14 @@ function isDecimal(value, type, noLastZero) {
     }
     return /(^0\.\d+$)|(^[1-9]\d*\.\d+$)|(^\-0\.\d+$)|(^\-[1-9]\d*\.\d+$)/.test(value);
 }
+function formatNumber(value) {
+    try {
+        return Number(value).toLocaleString();
+    }
+    catch (e) {
+        return "".concat(value);
+    }
+}
 
 function getV(defaultResult) {
     var args = [];
@@ -7802,14 +7810,52 @@ function onClick2MoreClick(delay) {
         });
     };
 }
+function bindMoreClick(fn, times, delay) {
+    if (times === void 0) { times = 3; }
+    if (delay === void 0) { delay = 300; }
+    var timer = null;
+    var lastTime = 0;
+    var count = 0;
+    return function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        clearTimeout(timer);
+        var currentTime = new Date().getTime();
+        count = currentTime - lastTime < delay ? count + 1 : 0;
+        lastTime = new Date().getTime();
+        if (count === times) {
+            timer = setTimeout(function () {
+                count = 0;
+                lastTime = 0;
+                fn.apply(void 0, __spreadArray([], __read(args), false));
+            }, delay);
+        }
+    };
+}
+function emitKeyboardEvent(eventType, keyCode) {
+    if (eventType === void 0) { eventType = 'keydown'; }
+    if (keyCode === void 0) { keyCode = 13; }
+    var myEvent = new KeyboardEvent(eventType, {
+        bubbles: true,
+        cancelable: true,
+        keyCode: keyCode
+    });
+    document.body.dispatchEvent(myEvent);
+}
 function disableConflictEvent(event) {
     var keyCode = event.keyCode || event.which || event.charCode;
     var ctrlKey = event.ctrlKey || event.metaKey;
     var altKey = event.altKey;
     if (ctrlKey && keyCode == 74) {
         event.preventDefault();
+        emitKeyboardEvent();
     }
     if (altKey && keyCode == 115) {
+        event.preventDefault();
+    }
+    if (ctrlKey && keyCode == 115) {
         event.preventDefault();
     }
     return false;
@@ -8116,4 +8162,4 @@ function setWsBinaryType(binaryType) {
     return true;
 }
 
-export { Base64Decode, Base64Encode, add, all, any, appendLink, appendScript, arraySet, base64Decode, base64Encode, calcDate, catchPromise, checkVersion, closeWebSocket, copyContent, copyToClipboard, curryIt, data2Arr, data2Obj, debounce, decrypt, deepClone, disableConflictEvent, div, download, downloadContent, empty, encrypt, findChildren, findParents, formatBytes, formatDate, formatFormData, formatURLSearchParams, get1Var, getBaseURL, getCookie, getCryptoJS, getDateDifference, getDateTime, getMonthDays, getMonthDaysCount, getRandColor, getRandNum, getRandStr, getStyleByName, getTimeAndStr, getTimeCode, getType, getUTCTime, getUUID, getUserAgent, getV, getViewportSize, getWebSocket, globalError, html2str, initNotification, initWebSocket, insertAfter, isAppleDevice, isBrowser, isDarkMode, isDecimal, isInteger, isNode, isValidJSON, isWeekday, localStorageGet, localStorageSet, md5, mergeObj, offDefaultEvent, onClick2MoreClick, qsParse, qsStringify, removeCookie, retry, round, scrollToBottom, scrollToTop, sendNotification, sendWsMessage, sessionStorageGet, sessionStorageSet, setCookie, setIcon, setWsBinaryType, sha1, sha256, shuffleArray, sleep, sortCallBack, str2html, str2unicode, sub, throttle, timeSince, times, to, trim, unicode2str, versionUpgrade };
+export { Base64Decode, Base64Encode, add, all, any, appendLink, appendScript, arraySet, base64Decode, base64Encode, bindMoreClick, calcDate, catchPromise, checkVersion, closeWebSocket, copyContent, copyToClipboard, curryIt, data2Arr, data2Obj, debounce, decrypt, deepClone, disableConflictEvent, div, download, downloadContent, emitKeyboardEvent, empty, encrypt, findChildren, findParents, formatBytes, formatDate, formatFormData, formatNumber, formatURLSearchParams, get1Var, getBaseURL, getCookie, getCryptoJS, getDateDifference, getDateTime, getMonthDays, getMonthDaysCount, getRandColor, getRandNum, getRandStr, getStyleByName, getTimeAndStr, getTimeCode, getType, getUTCTime, getUUID, getUserAgent, getV, getViewportSize, getWebSocket, globalError, html2str, initNotification, initWebSocket, insertAfter, isAppleDevice, isBrowser, isDarkMode, isDecimal, isInteger, isNode, isValidJSON, isWeekday, localStorageGet, localStorageSet, md5, mergeObj, offDefaultEvent, onClick2MoreClick, qsParse, qsStringify, removeCookie, retry, round, scrollToBottom, scrollToTop, sendNotification, sendWsMessage, sessionStorageGet, sessionStorageSet, setCookie, setIcon, setWsBinaryType, sha1, sha256, shuffleArray, sleep, sortCallBack, str2html, str2unicode, sub, throttle, timeSince, times, to, trim, unicode2str, versionUpgrade };
