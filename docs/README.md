@@ -1,6 +1,6 @@
-js-xxx - v1.2.7
+js-xxx - v1.2.8
 
-# js-xxx - v1.2.7
+# js-xxx - v1.2.8
 
 ## Table of contents
 
@@ -21,6 +21,7 @@ js-xxx - v1.2.7
 - [catchPromise](README.md#catchpromise)
 - [checkVersion](README.md#checkversion)
 - [closeWebSocket](README.md#closewebsocket)
+- [compareDate](README.md#comparedate)
 - [copyContent](README.md#copycontent)
 - [copyToClipboard](README.md#copytoclipboard)
 - [curryIt](README.md#curryit)
@@ -42,9 +43,12 @@ js-xxx - v1.2.7
 - [formatDate](README.md#formatdate)
 - [formatFormData](README.md#formatformdata)
 - [formatNumber](README.md#formatnumber)
+- [formatRh](README.md#formatrh)
 - [formatURLSearchParams](README.md#formaturlsearchparams)
 - [get1Var](README.md#get1var)
+- [getBSColor](README.md#getbscolor)
 - [getBaseURL](README.md#getbaseurl)
+- [getBloodGroup](README.md#getbloodgroup)
 - [getCookie](README.md#getcookie)
 - [getCryptoJS](README.md#getcryptojs)
 - [getDateDifference](README.md#getdatedifference)
@@ -75,10 +79,12 @@ js-xxx - v1.2.7
 - [isDecimal](README.md#isdecimal)
 - [isInteger](README.md#isinteger)
 - [isNode](README.md#isnode)
+- [isRhNegative](README.md#isrhnegative)
 - [isValidJSON](README.md#isvalidjson)
 - [isWeekday](README.md#isweekday)
 - [localStorageGet](README.md#localstorageget)
 - [localStorageSet](README.md#localstorageset)
+- [maskString](README.md#maskstring)
 - [md5](README.md#md5)
 - [mergeObj](README.md#mergeobj)
 - [offDefaultEvent](README.md#offdefaultevent)
@@ -433,6 +439,29 @@ Example: `closeWebSocket() => true/false`
 #### Returns
 
 `boolean`
+
+___
+
+### compareDate
+
+▸ **compareDate**(`dateA`, `dateB?`): `number`
+
+时间大小比较
+-1(A<B), 1(A>B), 0(A=B)
+Example:
+`compareDate('2023-1-1') => 1`
+`compareDate('2023-1-1 12:00:00', '2023-1-2 12:00:00') => -1`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `dateA` | `any` |
+| `dateB?` | `any` |
+
+#### Returns
+
+`number`
 
 ___
 
@@ -890,6 +919,32 @@ Example: `formatNumber('12312300') => '12,312,300'`
 
 ___
 
+### formatRh
+
+▸ **formatRh**(`input`, `options?`): `string` \| `boolean` \| `number`
+
+处理 rh 血型
+Example:
+`formatRh('**d**') => '阴性'`
+`formatRh('**d**', { format: [true, false], default: false }) => true`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `input` | `string` | 输入值 |
+| `options?` | `Object` | 处理配置 |
+| `options.default?` | `string` \| `number` \| `boolean` | - |
+| `options.format?` | [`string` \| `number` \| `boolean`, `string` \| `number` \| `boolean`] | - |
+| `options.negative?` | `string`[] | - |
+| `options.positive?` | `string`[] | - |
+
+#### Returns
+
+`string` \| `boolean` \| `number`
+
+___
+
 ### formatURLSearchParams
 
 ▸ **formatURLSearchParams**(`obj`, `hasBrackets?`, `hasIndex?`): `URLSearchParams`
@@ -935,6 +990,27 @@ Example:
 
 ___
 
+### getBSColor
+
+▸ **getBSColor**(`key`): `string`
+
+获取 bootstrap 颜色
+Example:
+`getBSColor('red') => '#dc3545'`
+`getBSColor('warning') => '#ffc107'`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `key` | `string` | color name |
+
+#### Returns
+
+`string`
+
+___
+
 ### getBaseURL
 
 ▸ **getBaseURL**(`url`): `string`
@@ -951,6 +1027,33 @@ Example: `getBaseURL('https://test.com/index?name=leo&org=biugle') => 'https://t
 #### Returns
 
 `string`
+
+___
+
+### getBloodGroup
+
+▸ **getBloodGroup**(`bloodGroup`): `Object`
+
+获取血型枚举信息
+Example: `getBloodGroup('A') => { value: 'A', label: 'A型', color: '#1890FF', lower: 'a', upper: 'A' }`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `bloodGroup` | `string` |
+
+#### Returns
+
+`Object`
+
+| Name | Type |
+| :------ | :------ |
+| `color` | `string` |
+| `label` | `string` |
+| `lower` | `string` |
+| `upper` | `string` |
+| `value` | `string` |
 
 ___
 
@@ -1503,6 +1606,25 @@ Example: `isNode() => true`
 
 ___
 
+### isRhNegative
+
+▸ **isRhNegative**(`input`): `boolean`
+
+是否阴性血
+Example: `isRhNegative('**d**') => true`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `input` | `string` | 输入值 |
+
+#### Returns
+
+`boolean`
+
+___
+
 ### isValidJSON
 
 ▸ **isValidJSON**(`str`): `boolean`
@@ -1580,6 +1702,32 @@ Example: `localStorageSet("key", "value") => 存储时不需要处理数据，va
 #### Returns
 
 `boolean`
+
+___
+
+### maskString
+
+▸ **maskString**(`str`): `string`
+
+字符串脱敏(biugle 自定义规则)
+Example:
+`maskString(undefined) => '-'`
+`maskString('13579246810') => '135****6810'`
+`maskString('王小二') => '王***二'`
+`maskString('123456789') => '123****89'`
+`maskString('130223199809282927') => '130223********927'`
+`maskString('广东省深圳市龙华区') => 广东省****华区'`
+`maskString('广东省深圳市福田区福田保税区xxx小区xxx单元x栋x楼xxx号') => '广东省深圳市福田区******xx号'`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `str` | `string` |
+
+#### Returns
+
+`string`
 
 ___
 

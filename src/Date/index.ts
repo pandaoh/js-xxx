@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:54:41
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-06-14 18:08:39
+ * @LastEditTime: 2022-08-31 15:16:39
  * @Description: 时间相关方法
  * @FilePath: \js-xxx\src\Date\index.ts
  */
@@ -299,4 +299,27 @@ export function getUTCTime(timezone: number = 0): Date {
   // return new Date(utcTime).getTime();
   // 得到时区时间戳
   // return new Date(utcTime + 3600000 * timezone).getTime();
+}
+
+/**
+ * 时间大小比较
+ * -1(A<B), 1(A>B), 0(A=B)
+ * Example:
+ * `compareDate('2023-1-1') => 1`
+ * `compareDate('2023-1-1 12:00:00', '2023-1-2 12:00:00') => -1`
+ * @param dateA
+ * @param dateB
+ * @returns
+ */
+export function compareDate(dateA: any, dateB?: any): number {
+  dateA = dateA ? new Date(dateA) : new Date();
+  dateB = dateB ? new Date(dateB) : new Date();
+  let result = dateA.getTime() - dateB.getTime();
+  if (result < 0) {
+    return -1;
+  }
+  if (result > 0) {
+    return 1;
+  }
+  return 0;
 }

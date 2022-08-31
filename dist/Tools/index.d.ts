@@ -11,4 +11,5 @@ export declare function getRandStr(len?: number): string;
 export declare function getTimeAndStr(len?: number, radix?: number | undefined): string;
 export declare function getUUID(length: number, chars: string | any[]): string;
 export declare function isValidJSON(str: any): boolean;
+export declare function getBSColor(key: string): string;
 //# sourceMappingURL=index.d.ts.map

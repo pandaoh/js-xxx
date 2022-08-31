@@ -9,6 +9,22 @@
 * `npm run build && npm run doc` or `npm run push:before`
 * `package.json` 中修改版本号 `push` 到 `publish` 分支即可发布新版本。
 
+```javascript
+/**
+ * 注释
+ * 多个例子换行，单个例子一行显示。
+ * Example:
+ * `demo('1') => 'demo'`
+ * `demo('test', 100) => 'demo'`
+ * @param a 参数 a
+ * @param b 参数 b
+ * @returns
+ */
+export function demo(a: string, b: number = 0): string {
+  return 'demo';
+}
+```
+
 ## 创建分类
 
 * 创建分类文件夹后，请添加文件头说明此分类主要内容。(注意：批量导出时请勿使用路径别名，否则会导致声明文件路径失效。)

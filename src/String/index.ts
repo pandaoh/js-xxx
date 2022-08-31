@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:45:48
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-06-14 18:26:15
+ * @LastEditTime: 2022-08-31 15:05:14
  * @Description: 字符串常用方法
  * @FilePath: \js-xxx\src\String\index.ts
  */
@@ -91,4 +91,47 @@ export function base64Decode(str: string): string {
   // }
   // return atob(str.replace('-_', '+/'));
   return Buffer.from(str, 'base64').toString('utf8');
+}
+
+/**
+ * 字符串脱敏(biugle 自定义规则)
+ * Example:
+ * `maskString(undefined) => '-'`
+ * `maskString('13579246810') => '135****6810'`
+ * `maskString('王小二') => '王***二'`
+ * `maskString('123456789') => '123****89'`
+ * `maskString('130223199809282927') => '130223********927'`
+ * `maskString('广东省深圳市龙华区') => 广东省****华区'`
+ * `maskString('广东省深圳市福田区福田保税区xxx小区xxx单元x栋x楼xxx号') => '广东省深圳市福田区******xx号'`
+ * @param str
+ * @returns
+ */
+export function maskString(str: string): string {
+  str = str ? `${str}` : '';
+  switch (str.length) {
+    case 0:
+      return '-';
+    case 1:
+      return '***';
+    case 2:
+      return str.charAt(0) + '***';
+    case 3:
+    case 4:
+    case 5:
+      return str.charAt(0) + '***' + str.charAt(str.length - 1);
+    case 11:
+      return str.substring(0, 3) + '*****' + str.substring(7);
+    case 18:
+      return str.substring(0, 5) + '********' + str.substring(15);
+  }
+  if (str.length > 6 && str.length < 11) {
+    return str.substring(0, 3) + '****' + str.substring(str.length - 2);
+  }
+  if (str.length <= 11) {
+    return str.substring(0, 3) + '*****';
+  }
+  if (str.length <= 18) {
+    return str.substring(0, 3) + '*****' + str.substring(str.length - 3);
+  }
+  return str.substring(0, 9) + '******' + str.substring(str.length - 3);
 }

@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-08-03 17:20:51
+ * @LastEditTime: 2022-08-31 13:52:00
  * @Description: 工具方法
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
@@ -35,8 +35,8 @@ export function empty(variable: any): boolean {
   if (variable === 'undefined') {
     return true; // 检验字符串类型的 undefined
   }
-  if (!variable && variable !== 0) {
-    return true; // 检验 undefined 和 null "" 0 NaN
+  if (!variable && variable != 0) {
+    return true; // 检验 undefined 和 null "" 0 NaN "0"
   }
   if (Array.isArray(variable) && variable.length === 0) {
     return true; // 检验空数组
@@ -216,4 +216,54 @@ export function isValidJSON(str: any): boolean {
   } catch (e) {
     return false;
   }
+}
+
+/**
+ * 获取 bootstrap 颜色
+ * Example:
+ * `getBSColor('red') => '#dc3545'`
+ * `getBSColor('warning') => '#ffc107'`
+ * @param key color name
+ * @returns
+ */
+export function getBSColor(key: string): string {
+  key = `${key}`.toLowerCase();
+  const keyList = [
+    'dark',
+    'black',
+    'light',
+    'white',
+    'info',
+    'cyan',
+    'success',
+    'green',
+    'warning',
+    'yellow',
+    'danger',
+    'red',
+    'primary',
+    'blue',
+    'secondary',
+    'grey'
+  ];
+  key = keyList.includes(key) ? key : 'others';
+  const colors: any = {
+    dark: '#343a40',
+    black: '#343a40',
+    light: '#f8f9fa',
+    white: '#f8f9fa',
+    info: '#17a2b8',
+    cyan: '#17a2b8',
+    success: '#28a745',
+    green: '#28a745',
+    warning: '#ffc107',
+    yellow: '#ffc107',
+    danger: '#dc3545',
+    red: '#dc3545',
+    primary: '#007bff',
+    blue: '#007bff',
+    secondary: '#6c757d',
+    grey: '#6c757d'
+  };
+  return colors[key];
 }

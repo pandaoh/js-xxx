@@ -6963,6 +6963,35 @@ var $xxx = (function (exports) {
     function base64Decode(str) {
         return Buffer.from(str, 'base64').toString('utf8');
     }
+    function maskString(str) {
+        str = str ? "".concat(str) : '';
+        switch (str.length) {
+            case 0:
+                return '-';
+            case 1:
+                return '***';
+            case 2:
+                return str.charAt(0) + '***';
+            case 3:
+            case 4:
+            case 5:
+                return str.charAt(0) + '***' + str.charAt(str.length - 1);
+            case 11:
+                return str.substring(0, 3) + '*****' + str.substring(7);
+            case 18:
+                return str.substring(0, 5) + '********' + str.substring(15);
+        }
+        if (str.length > 6 && str.length < 11) {
+            return str.substring(0, 3) + '****' + str.substring(str.length - 2);
+        }
+        if (str.length <= 11) {
+            return str.substring(0, 3) + '*****';
+        }
+        if (str.length <= 18) {
+            return str.substring(0, 3) + '*****' + str.substring(str.length - 3);
+        }
+        return str.substring(0, 9) + '******' + str.substring(str.length - 3);
+    }
 
     function formatDate(date, fmt, weeks) {
         if (fmt === void 0) { fmt = 'yyyy-mm-dd hh:ii:ss'; }
@@ -7143,6 +7172,18 @@ var $xxx = (function (exports) {
         var utcTime = len + offset;
         return new Date(utcTime + 3600000 * timezone);
     }
+    function compareDate(dateA, dateB) {
+        dateA = dateA ? new Date(dateA) : new Date();
+        dateB = dateB ? new Date(dateB) : new Date();
+        var result = dateA.getTime() - dateB.getTime();
+        if (result < 0) {
+            return -1;
+        }
+        if (result > 0) {
+            return 1;
+        }
+        return 0;
+    }
 
     function str2html(str) {
         var div = document.createElement('div');
@@ -7309,7 +7350,7 @@ var $xxx = (function (exports) {
         if (variable === 'undefined') {
             return true;
         }
-        if (!variable && variable !== 0) {
+        if (!variable && variable != 0) {
             return true;
         }
         if (Array.isArray(variable) && variable.length === 0) {
@@ -7407,6 +7448,47 @@ var $xxx = (function (exports) {
         catch (e) {
             return false;
         }
+    }
+    function getBSColor(key) {
+        key = "".concat(key).toLowerCase();
+        var keyList = [
+            'dark',
+            'black',
+            'light',
+            'white',
+            'info',
+            'cyan',
+            'success',
+            'green',
+            'warning',
+            'yellow',
+            'danger',
+            'red',
+            'primary',
+            'blue',
+            'secondary',
+            'grey'
+        ];
+        key = keyList.includes(key) ? key : 'others';
+        var colors = {
+            dark: '#343a40',
+            black: '#343a40',
+            light: '#f8f9fa',
+            white: '#f8f9fa',
+            info: '#17a2b8',
+            cyan: '#17a2b8',
+            success: '#28a745',
+            green: '#28a745',
+            warning: '#ffc107',
+            yellow: '#ffc107',
+            danger: '#dc3545',
+            red: '#dc3545',
+            primary: '#007bff',
+            blue: '#007bff',
+            secondary: '#6c757d',
+            grey: '#6c757d'
+        };
+        return colors[key];
     }
 
     function formatFormData(obj, hasBrackets, hasIndex) {
@@ -7906,6 +7988,73 @@ var $xxx = (function (exports) {
         });
         return tempVersionArr.reverse().join('.');
     }
+    function formatRh(input, options) {
+        var defaultOptions = {
+            format: ['阴性', '阳性'],
+            default: '-',
+            negative: ['阴性', '-', '**d**'],
+            positive: ['阳性', '+', '**D**']
+        };
+        var _a = __assign(__assign({}, defaultOptions), options), negative = _a.negative, positive = _a.positive, format = _a.format, def = _a.default;
+        if (negative.includes(input)) {
+            return format[0];
+        }
+        if (positive.includes(input)) {
+            return format[1];
+        }
+        if (input.includes('d')) {
+            return format[0];
+        }
+        if (input.includes('D')) {
+            return format[1];
+        }
+        return def;
+    }
+    function isRhNegative(input) {
+        return formatRh(input, { format: [true, false], default: false });
+    }
+    function getBloodGroup(bloodGroup) {
+        var keyList = ['A', 'a', 'B', 'b', 'O', 'o', 'AB', 'ab'];
+        bloodGroup = keyList.includes(bloodGroup) ? bloodGroup.toUpperCase() : 'unknown';
+        var bloodGroups = {
+            A: {
+                value: 'A',
+                label: 'A型',
+                color: '#1890FF',
+                lower: 'a',
+                upper: 'A'
+            },
+            B: {
+                value: 'B',
+                label: 'B型',
+                color: '#36AE7C',
+                lower: 'b',
+                upper: 'B'
+            },
+            O: {
+                value: 'O',
+                label: 'O型',
+                color: '#E64848',
+                lower: 'o',
+                upper: 'O'
+            },
+            AB: {
+                value: 'AB',
+                label: 'AB型',
+                color: '#A575F2',
+                lower: 'a',
+                upper: 'A'
+            },
+            unknown: {
+                value: 'unknown',
+                label: '未知',
+                color: '#CB9D83',
+                lower: 'unknown',
+                upper: 'UNKNOWN'
+            }
+        };
+        return bloodGroups[bloodGroup];
+    }
 
     function sleep(milliseconds) {
         return new Promise(function (resolve) { return setTimeout(resolve, milliseconds); });
@@ -8180,6 +8329,7 @@ var $xxx = (function (exports) {
     exports.catchPromise = catchPromise;
     exports.checkVersion = checkVersion;
     exports.closeWebSocket = closeWebSocket;
+    exports.compareDate = compareDate;
     exports.copyContent = copyContent;
     exports.copyToClipboard = copyToClipboard;
     exports.curryIt = curryIt;
@@ -8201,9 +8351,12 @@ var $xxx = (function (exports) {
     exports.formatDate = formatDate;
     exports.formatFormData = formatFormData;
     exports.formatNumber = formatNumber;
+    exports.formatRh = formatRh;
     exports.formatURLSearchParams = formatURLSearchParams;
     exports.get1Var = get1Var;
+    exports.getBSColor = getBSColor;
     exports.getBaseURL = getBaseURL;
+    exports.getBloodGroup = getBloodGroup;
     exports.getCookie = getCookie;
     exports.getCryptoJS = getCryptoJS;
     exports.getDateDifference = getDateDifference;
@@ -8234,10 +8387,12 @@ var $xxx = (function (exports) {
     exports.isDecimal = isDecimal;
     exports.isInteger = isInteger;
     exports.isNode = isNode;
+    exports.isRhNegative = isRhNegative;
     exports.isValidJSON = isValidJSON;
     exports.isWeekday = isWeekday;
     exports.localStorageGet = localStorageGet;
     exports.localStorageSet = localStorageSet;
+    exports.maskString = maskString;
     exports.md5 = md5;
     exports.mergeObj = mergeObj;
     exports.offDefaultEvent = offDefaultEvent;

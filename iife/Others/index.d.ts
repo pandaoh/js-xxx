@@ -17,4 +17,18 @@ export declare function emitKeyboardEvent(eventType?: 'keydown' | 'keypress' | '
 export declare function disableConflictEvent(event: any): boolean;
 export declare function checkVersion(targetVersion: string, currentVersion: string, testStr?: string): number;
 export declare function versionUpgrade(version: string, maxVersionCode?: number): string;
+export declare function formatRh(input: string, options?: {
+    format?: [string | number | boolean, string | number | boolean];
+    default?: string | number | boolean;
+    negative?: Array<string>;
+    positive?: Array<string>;
+}): string | boolean | number;
+export declare function isRhNegative(input: string): boolean;
+export declare function getBloodGroup(bloodGroup: string): {
+    value: string;
+    label: string;
+    color: string;
+    lower: string;
+    upper: string;
+};
 //# sourceMappingURL=index.d.ts.map

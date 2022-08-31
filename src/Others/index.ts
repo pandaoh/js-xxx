@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:53:39
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-08-29 15:23:36
+ * @LastEditTime: 2022-08-31 13:39:20
  * @Description: 因项目需要常用方法，不管任何项目，都放到一起。注意甄别，没有复用意义的方法就不要添加了。
  * @FilePath: \js-xxx\src\Others\index.ts
  */
@@ -352,4 +352,125 @@ export function versionUpgrade(version: string, maxVersionCode: number = 99): st
     }
   });
   return tempVersionArr.reverse().join('.');
+}
+
+/**
+ * 处理 rh 血型
+ * Example:
+ * `formatRh('**d**') => '阴性'`
+ * `formatRh('**d**', { format: [true, false], default: false }) => true`
+ * @param input 输入值
+ * @param options 处理配置
+ * @returns
+ */
+export function formatRh(
+  input: string,
+  options?: {
+    format?: [string | number | boolean, string | number | boolean];
+    default?: string | number | boolean;
+    negative?: Array<string>;
+    positive?: Array<string>;
+  }
+): string | boolean | number {
+  const defaultOptions = {
+    format: ['阴性', '阳性'],
+    default: '-',
+    negative: ['阴性', '-', '**d**'],
+    positive: ['阳性', '+', '**D**']
+  };
+  const {
+    negative,
+    positive,
+    format,
+    default: def
+  } = {
+    ...defaultOptions,
+    ...options
+  };
+  if (negative.includes(input)) {
+    return format[0];
+  }
+  if (positive.includes(input)) {
+    return format[1];
+  }
+  if (input.includes('d')) {
+    return format[0];
+  }
+  if (input.includes('D')) {
+    return format[1];
+  }
+  return def;
+}
+
+/**
+ * 是否阴性血
+ * Example: `isRhNegative('**d**') => true`
+ * @param input 输入值
+ * @returns
+ */
+export function isRhNegative(input: string): boolean {
+  return formatRh(input, { format: [true, false], default: false }) as boolean;
+}
+
+/**
+ * 获取血型枚举信息
+ * Example: `getBloodGroup('A') => { value: 'A', label: 'A型', color: '#1890FF', lower: 'a', upper: 'A' }`
+ * @param bloodGroup
+ * @returns
+ */
+export function getBloodGroup(bloodGroup: string): {
+  value: string;
+  label: string;
+  color: string;
+  lower: string;
+  upper: string;
+} {
+  const keyList = ['A', 'a', 'B', 'b', 'O', 'o', 'AB', 'ab'];
+  bloodGroup = keyList.includes(bloodGroup) ? bloodGroup.toUpperCase() : 'unknown';
+  const bloodGroups: {
+    [key: string]: {
+      value: string;
+      label: string;
+      color: string;
+      lower: string;
+      upper: string;
+    };
+  } = {
+    A: {
+      value: 'A',
+      label: 'A型',
+      color: '#1890FF',
+      lower: 'a',
+      upper: 'A'
+    },
+    B: {
+      value: 'B',
+      label: 'B型',
+      color: '#36AE7C',
+      lower: 'b',
+      upper: 'B'
+    },
+    O: {
+      value: 'O',
+      label: 'O型',
+      color: '#E64848',
+      lower: 'o',
+      upper: 'O'
+    },
+    AB: {
+      value: 'AB',
+      label: 'AB型',
+      color: '#A575F2',
+      lower: 'a',
+      upper: 'A'
+    },
+    unknown: {
+      value: 'unknown',
+      label: '未知',
+      color: '#CB9D83',
+      lower: 'unknown',
+      upper: 'UNKNOWN'
+    }
+  };
+  return bloodGroups[bloodGroup];
 }
