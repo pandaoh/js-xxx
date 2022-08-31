@@ -7541,7 +7541,7 @@
             div2FloatLen = tempDiv2.split('.')[1].length;
         }
         catch (e) { }
-        return ((Number(tempDiv1.replace('.', '')) / Number(tempDiv2.replace('.', ''))) * Math.pow(10, div2FloatLen - div1FloatLen));
+        return times(Number(tempDiv1.replace('.', '')) / Number(tempDiv2.replace('.', '')), Math.pow(10, div2FloatLen - div1FloatLen));
     }
     function times(mul1, mul2) {
         var mulFloatLen = 0, tempMul1 = mul1.toString(), tempMul2 = mul2.toString();
@@ -7566,7 +7566,7 @@
         }
         catch (e) { }
         multiple = Math.pow(10, Math.max(add1FloatLen, add2FloatLen));
-        return (add1 * multiple + add2 * multiple) / multiple;
+        return (times(add1, multiple) + times(add2, multiple)) / multiple;
     }
     function sub(sub1, sub2) {
         var sub1FloatLen = 0, sub2FloatLen = 0, multiple = 1;
@@ -7579,7 +7579,7 @@
         }
         catch (e) { }
         multiple = Math.pow(10, Math.max(sub1FloatLen, sub2FloatLen));
-        return parseFloat("".concat((sub1 * multiple - sub2 * multiple) / multiple));
+        return parseFloat("".concat((times(sub1, multiple) - times(sub2, multiple)) / multiple));
     }
 
     function initNotification() {

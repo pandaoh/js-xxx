@@ -169,14 +169,16 @@ ___
 ▸ **add**(`add1`, `add2`): `number`
 
 加法函数
-Example: `add(1, 2) => 3`
+Example:
+`add(1, 2) => 3`
+`add(0.1, 0.2) => 0.3`
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `add1` | `number` | 被加数 |
-| `add2` | `number` | 加数 |
+| `add1` | `string` \| `number` | 被加数 |
+| `add2` | `string` \| `number` | 加数 |
 
 #### Returns
 
@@ -678,14 +680,16 @@ ___
 ▸ **div**(`div1`, `div2`): `number`
 
 除法函数
-Example: `div(1, 2) => 0.5`
+Example:
+`div(1, 2) => 0.5`
+`div(0.55, 100) => 0.0055`
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `div1` | `number` | 被除数 |
-| `div2` | `number` | 除数 |
+| `div1` | `string` \| `number` | 被除数 |
+| `div2` | `string` \| `number` | 除数 |
 
 #### Returns
 
@@ -1908,8 +1912,10 @@ ___
 ▸ **round**(`number`, `d`): `number` \| `undefined`
 
 四舍五入
-Example: `round(1.2345, 2) => 1.23`
-const toFixed = (n, fixed) => ~~(Math.pow(10, fixed) * n) / Math.pow(10, fixed);
+Example:
+`round(1.2345, 2) => 1.23`
+`round(0.355, 2) => 0.36`
+`const toFixed = (n, fixed) => ~~(Math.pow(10, fixed) * n) / Math.pow(10, fixed)`;
 
 #### Parameters
 
@@ -2261,14 +2267,16 @@ ___
 ▸ **sub**(`sub1`, `sub2`): `number`
 
 减法函数
-Example: `sub(1, 2) => -1`
+Example:
+`sub(1, 2) => -1`
+`sub(0.55, 0.1) => 0.45`
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `sub1` | `number` | 被减数 |
-| `sub2` | `number` | 减数 |
+| `sub1` | `string` \| `number` | 被减数 |
+| `sub2` | `string` \| `number` | 减数 |
 
 #### Returns
 
@@ -2328,14 +2336,16 @@ ___
 ▸ **times**(`mul1`, `mul2`): `number`
 
 乘法函数
-Example: `times(1, 2) => 2`
+Example:
+`times(1, 2) => 2`
+`times(0.55, 100) => 55`
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `mul1` | `number` | 被乘数 |
-| `mul2` | `number` | 乘数 |
+| `mul1` | `string` \| `number` | 被乘数 |
+| `mul2` | `string` \| `number` | 乘数 |
 
 #### Returns
 

@@ -2,15 +2,17 @@
  * @Author: HxB
  * @Date: 2022-04-26 16:24:47
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-08-29 15:14:50
+ * @LastEditTime: 2022-08-31 16:48:15
  * @Description: 常用数字相关方法
  * @FilePath: \js-xxx\src\Number\index.ts
  */
 
 /**
  * 四舍五入
- * Example: `round(1.2345, 2) => 1.23`
- * const toFixed = (n, fixed) => ~~(Math.pow(10, fixed) * n) / Math.pow(10, fixed);
+ * Example:
+ * `round(1.2345, 2) => 1.23`
+ * `round(0.355, 2) => 0.36`
+ * `const toFixed = (n, fixed) => ~~(Math.pow(10, fixed) * n) / Math.pow(10, fixed)`;
  * @param number 浮点数
  * @param d 保留小数位
  * @returns
