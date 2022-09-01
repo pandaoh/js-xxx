@@ -14,12 +14,15 @@ js-xxx - v1.2.8
 - [appendLink](README.md#appendlink)
 - [appendScript](README.md#appendscript)
 - [arraySet](README.md#arrayset)
+- [average](README.md#average)
 - [base64Decode](README.md#base64decode-1)
 - [base64Encode](README.md#base64encode-1)
 - [bindMoreClick](README.md#bindmoreclick)
 - [calcDate](README.md#calcdate)
+- [camelCase](README.md#camelcase)
 - [catchPromise](README.md#catchpromise)
 - [checkVersion](README.md#checkversion)
+- [closeFullscreen](README.md#closefullscreen)
 - [closeWebSocket](README.md#closewebsocket)
 - [compareDate](README.md#comparedate)
 - [copyContent](README.md#copycontent)
@@ -30,6 +33,7 @@ js-xxx - v1.2.8
 - [debounce](README.md#debounce)
 - [decrypt](README.md#decrypt)
 - [deepClone](README.md#deepclone)
+- [difference](README.md#difference)
 - [disableConflictEvent](README.md#disableconflictevent)
 - [div](README.md#div)
 - [download](README.md#download)
@@ -53,11 +57,15 @@ js-xxx - v1.2.8
 - [getCryptoJS](README.md#getcryptojs)
 - [getDateDifference](README.md#getdatedifference)
 - [getDateTime](README.md#getdatetime)
+- [getKey](README.md#getkey)
+- [getLastVar](README.md#getlastvar)
 - [getMonthDays](README.md#getmonthdays)
 - [getMonthDaysCount](README.md#getmonthdayscount)
 - [getRandColor](README.md#getrandcolor)
 - [getRandNum](README.md#getrandnum)
 - [getRandStr](README.md#getrandstr)
+- [getRandVar](README.md#getrandvar)
+- [getSize](README.md#getsize)
 - [getStyleByName](README.md#getstylebyname)
 - [getTimeAndStr](README.md#gettimeandstr)
 - [getTimeCode](README.md#gettimecode)
@@ -73,6 +81,7 @@ js-xxx - v1.2.8
 - [initNotification](README.md#initnotification)
 - [initWebSocket](README.md#initwebsocket)
 - [insertAfter](README.md#insertafter)
+- [intersection](README.md#intersection)
 - [isAppleDevice](README.md#isappledevice)
 - [isBrowser](README.md#isbrowser)
 - [isDarkMode](README.md#isdarkmode)
@@ -82,6 +91,7 @@ js-xxx - v1.2.8
 - [isRhNegative](README.md#isrhnegative)
 - [isValidJSON](README.md#isvalidjson)
 - [isWeekday](README.md#isweekday)
+- [jsonClone](README.md#jsonclone)
 - [localStorageGet](README.md#localstorageget)
 - [localStorageSet](README.md#localstorageset)
 - [maskString](README.md#maskstring)
@@ -89,9 +99,12 @@ js-xxx - v1.2.8
 - [mergeObj](README.md#mergeobj)
 - [offDefaultEvent](README.md#offdefaultevent)
 - [onClick2MoreClick](README.md#onclick2moreclick)
+- [openFile](README.md#openfile)
+- [openFullscreen](README.md#openfullscreen)
 - [qsParse](README.md#qsparse)
 - [qsStringify](README.md#qsstringify)
 - [removeCookie](README.md#removecookie)
+- [repeat](README.md#repeat)
 - [retry](README.md#retry)
 - [round](README.md#round)
 - [scrollToBottom](README.md#scrolltobottom)
@@ -108,6 +121,7 @@ js-xxx - v1.2.8
 - [shuffleArray](README.md#shufflearray)
 - [sleep](README.md#sleep)
 - [sortCallBack](README.md#sortcallback)
+- [splitCase](README.md#splitcase)
 - [str2html](README.md#str2html)
 - [str2unicode](README.md#str2unicode)
 - [sub](README.md#sub)
@@ -115,8 +129,14 @@ js-xxx - v1.2.8
 - [timeSince](README.md#timesince)
 - [times](README.md#times)
 - [to](README.md#to)
+- [toBool](README.md#tobool)
+- [toNum](README.md#tonum)
+- [toStr](README.md#tostr)
+- [transferCase](README.md#transfercase)
 - [trim](README.md#trim)
 - [unicode2str](README.md#unicode2str)
+- [union](README.md#union)
+- [uuid](README.md#uuid)
 - [versionUpgrade](README.md#versionupgrade)
 
 ## Functions
@@ -286,6 +306,27 @@ Example: `arraySet([1, 2, 3, 1, 2, 3]) => [1, 2, 3]`
 
 ___
 
+### average
+
+▸ **average**(...`args`): `number`
+
+获取平均数
+Example:
+`average(1, 2, 3, 4) => 2.5`
+`average(1, 2, 3, 4.123) => 2.53075`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `...args` | `any`[] |
+
+#### Returns
+
+`number`
+
+___
+
 ### base64Decode
 
 ▸ **base64Decode**(`str`): `string`
@@ -387,6 +428,29 @@ Example:
 
 ___
 
+### camelCase
+
+▸ **camelCase**(`str`): `string`
+
+字符串转驼峰
+Example:
+`camelCase('foo-bar') => 'fooBar'`
+`camelCase('foo_bar') => 'fooBar'`
+`camelCase('foo bar') => 'fooBar'`
+`camelCase('foo.bar') => 'fooBar'`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `str` | `string` |
+
+#### Returns
+
+`string`
+
+___
+
 ### catchPromise
 
 ▸ **catchPromise**(`promiseHandler`, `errorHandler?`): `Promise`<`any`\>
@@ -428,6 +492,19 @@ Example:
 #### Returns
 
 `number`
+
+___
+
+### closeFullscreen
+
+▸ **closeFullscreen**(): `void`
+
+关闭全屏
+Example: `closeFullscreen() => 关闭全屏`
+
+#### Returns
+
+`void`
 
 ___
 
@@ -647,6 +724,28 @@ Example: `deepClone({a: 1, b: {c: 2}}) => 新的 {a: 1, b: {c: 2}}`
 | :------ | :------ | :------ |
 | `data` | `any` | 源数据 |
 | `hash` | `WeakMap`<`object`, `any`\> | hash 存储，避免循环引用。 |
+
+#### Returns
+
+`any`
+
+___
+
+### difference
+
+▸ **difference**(`paramA`, `paramB`): `any`
+
+获取数组或对象不同值集合
+Example:
+`difference([1, 2, 2, 3, 3], [1, 2, 4, 5]) => [3]`
+`difference({a: 1, b: 2}, {a: 1, c: 3, b: 4}) => {b: 2}`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `paramA` | `any` |
+| `paramB` | `any` |
 
 #### Returns
 
@@ -1137,6 +1236,49 @@ Example: `getDateTime(new Date()) => time stamp`
 
 ___
 
+### getKey
+
+▸ **getKey**(`size?`, `prefix?`): `string`
+
+获取带前缀的唯一 key
+Example:
+`getKey() => 'M2rmCcGpXCa5MTdN4Kks5'`
+`getKey(2, 'test-') => test-aK'`
+
+#### Parameters
+
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `size` | `number` | `21` |
+| `prefix` | `string` | `''` |
+
+#### Returns
+
+`string`
+
+___
+
+### getLastVar
+
+▸ **getLastVar**(`data`): `any`
+
+获取对象/数组最后一个值(对象为 Object.keys 的顺序)
+Example:
+`getLastVar([1, 2]) => 2`
+`getLastVar({a: 2, b: 1}) => b`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `data` | `any` | 源数据 |
+
+#### Returns
+
+`any`
+
+___
+
 ### getMonthDays
 
 ▸ **getMonthDays**(`date?`): `number`
@@ -1224,6 +1366,50 @@ Example: `getRandStr(6) => 'xxxxxx'`
 #### Returns
 
 `string`
+
+___
+
+### getRandVar
+
+▸ **getRandVar**(`value`, `count?`): `any` \| `any`[]
+
+获取数组或对象随机数据
+Example:
+`getRandVar({ a: 1, b: 3 }) => 1`
+`getRandomVar([1, 2, 3, 4], 2) => [2, 4]`
+
+#### Parameters
+
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `value` | `any` | `undefined` |
+| `count` | `number` | `1` |
+
+#### Returns
+
+`any` \| `any`[]
+
+___
+
+### getSize
+
+▸ **getSize**(`value`): `number`
+
+获取任意变量长度
+Example:
+`getSize([]) => 0`
+`getSize({a: 1, b: 2}) => 2`
+`getSize(null) => 0`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `any` |
+
+#### Returns
+
+`number`
 
 ___
 
@@ -1511,6 +1697,28 @@ Example: `insertAfter(document.getElementById('a'), document.getElementById('b')
 
 ___
 
+### intersection
+
+▸ **intersection**(`paramA`, `paramB`): `any`
+
+获取数组或对象交集
+Example:
+`intersection([1, 2, 2, 3, 3], [1, 2, 4, 5]) => [1, 2]`
+`intersection({a: 1, b: 2}, {a: 1, c: 3, b: 4}) => {a: 1}`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `paramA` | `any` |
+| `paramB` | `any` |
+
+#### Returns
+
+`any`
+
+___
+
 ### isAppleDevice
 
 ▸ **isAppleDevice**(): `boolean`
@@ -1670,6 +1878,27 @@ Example: `isWorkDay(new Date()) => true`
 
 ___
 
+### jsonClone
+
+▸ **jsonClone**(`value`): `any`
+
+JSON 转字符串式克隆
+Example:
+`jsonClone([1, 2, 2, 3, 3]) => [1, 2, 2, 3, 3]`
+`jsonClone({a: 1, b: 2}) => {a: 1, b: 2}`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `any` |
+
+#### Returns
+
+`any`
+
+___
+
 ### localStorageGet
 
 ▸ **localStorageGet**(`key`): `any`
@@ -1818,6 +2047,46 @@ Example: `onClick2MoreClick(300, clickOneCallBack, clickTwoCallBack, clickThreeC
 
 ___
 
+### openFile
+
+▸ **openFile**(`options?`): `Promise`<`any`\>
+
+在浏览器中打开文件选择框
+Example: `openFile({ multiple: true, accept: '.txt' }).then(fileList => console.log(fileList));`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options?` | `Object` |
+| `options.accept?` | `string` |
+| `options.multiple?` | `boolean` |
+
+#### Returns
+
+`Promise`<`any`\>
+
+___
+
+### openFullscreen
+
+▸ **openFullscreen**(`element?`): `void`
+
+开启全屏
+Example: `openFullscreen() => 开启全屏`
+
+#### Parameters
+
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `element` | `any` | `document.body` |
+
+#### Returns
+
+`void`
+
+___
+
 ### qsParse
 
 ▸ **qsParse**(`url?`, `key?`): `any`
@@ -1883,6 +2152,28 @@ Example: `removeCookie('name') => 删除 name 对应的 Cookie`
 #### Returns
 
 `void`
+
+___
+
+### repeat
+
+▸ **repeat**(`str`, `n?`): `string`
+
+字符串 repeat
+Example:
+`repeat('*') => '*'`
+`repeat('*', 3) => '***'`
+
+#### Parameters
+
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `str` | `string` | `undefined` |
+| `n` | `number` | `1` |
+
+#### Returns
+
+`string`
 
 ___
 
@@ -2224,6 +2515,31 @@ Example:
 
 ___
 
+### splitCase
+
+▸ **splitCase**(`str`): `string`[]
+
+按照普遍的特殊字符分割字符串
+Example:
+`splitCase('foo-bar') => ['foo', 'bar']`
+`splitCase('foo_bar') => ['foo', 'bar']`
+`splitCase('foo bar') => ['foo', 'bar']`
+`splitCase('foo.bar') => ['foo', 'bar']`
+`splitCase('fooBar') => ['foo', 'bar']`
+`splitCase('foo-Bar') => ['foo', 'bar']`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `str` | `string` |
+
+#### Returns
+
+`string`[]
+
+___
+
 ### str2html
 
 ▸ **str2html**(`str`): `string`
@@ -2375,6 +2691,95 @@ Example: `to(Promise.resolve(1)) => Promise.resolve(1)`
 
 ___
 
+### toBool
+
+▸ **toBool**(`value`): `boolean`
+
+任意值转换为布尔类型
+Example:
+`toBool(1) => true`
+`toBool('false') => false`
+`toBool(null) => false`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `any` |
+
+#### Returns
+
+`boolean`
+
+___
+
+### toNum
+
+▸ **toNum**(`value`): `string`
+
+任意值转换为数字
+Example:
+`toNum({}) => 0`
+`toNum([2]) => 2`
+`toNum('-123') => -123`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `any` |
+
+#### Returns
+
+`string`
+
+___
+
+### toStr
+
+▸ **toStr**(`value`): `string`
+
+任意值转换为字符串
+Example:
+`toStr({}) => '{}'`
+`toStr([1, 2]) => '[1,2]'`
+`toStr(null) => ''`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `any` |
+
+#### Returns
+
+`string`
+
+___
+
+### transferCase
+
+▸ **transferCase**(`str`, `type`): `string`
+
+改变字符串大小写
+Example:
+`transferCase('red', 'upper'|1) => 'RED'`
+`transferCase('red', 'lower'|2) => 'red'`
+`transferCase('red', 'first'|3) => 'Red'`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `str` | `string` |
+| `type` | ``1`` \| ``2`` \| ``3`` \| ``"upper"`` \| ``"lower"`` \| ``"first"`` |
+
+#### Returns
+
+`string`
+
+___
+
 ### trim
 
 ▸ **trim**(`str`, `type?`): `string`
@@ -2408,6 +2813,41 @@ Example: `unicode2str("我是老A") => '\\u6211\\u662f\\u8001a'`
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `value` | `string` | 中文字符串 |
+
+#### Returns
+
+`string`
+
+___
+
+### union
+
+▸ **union**(`paramA`, `paramB`): `any`
+
+获取数组或对象并集
+Example:
+`union([1, 2, 2, 3, 3], [1, 2, 4, 5]) => [1, 2, 3, 4, 5]`
+`union({a: 1, b: 2}, {a: 1, c: 3, b: 4}) => {a: 1, c: 3, b: 2}`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `paramA` | `any` |
+| `paramB` | `any` |
+
+#### Returns
+
+`any`
+
+___
+
+### uuid
+
+▸ **uuid**(): `string`
+
+获取 V4 版本 UUID
+Example: `uuid() => '7b72e264-61fe-426e-b95f-35d4e61c5742'`
 
 #### Returns
 

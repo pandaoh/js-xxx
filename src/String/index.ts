@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:45:48
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-08-31 15:05:14
+ * @LastEditTime: 2022-09-01 17:25:10
  * @Description: 字符串常用方法
  * @FilePath: \js-xxx\src\String\index.ts
  */
@@ -134,4 +134,97 @@ export function maskString(str: string): string {
     return str.substring(0, 3) + '*****' + str.substring(str.length - 3);
   }
   return str.substring(0, 9) + '******' + str.substring(str.length - 3);
+}
+
+/**
+ * 改变字符串大小写
+ * Example:
+ * `transferCase('red', 'upper'|1) => 'RED'`
+ * `transferCase('red', 'lower'|2) => 'red'`
+ * `transferCase('red', 'first'|3) => 'Red'`
+ * @param str
+ * @param type
+ * @returns
+ */
+export function transferCase(str: string, type: 1 | 2 | 3 | 'upper' | 'lower' | 'first') {
+  switch (type) {
+    case 1:
+    case 'upper':
+      return str.toUpperCase();
+    case 2:
+    case 'lower':
+      return str.toLowerCase();
+    case 3:
+    case 'first':
+      return str.charAt(0).toUpperCase() + str.substring(1).toLowerCase();
+    default:
+      return str;
+  }
+}
+
+/**
+ * 按照普遍的特殊字符分割字符串
+ * Example:
+ * `splitCase('foo-bar') => ['foo', 'bar']`
+ * `splitCase('foo_bar') => ['foo', 'bar']`
+ * `splitCase('foo bar') => ['foo', 'bar']`
+ * `splitCase('foo.bar') => ['foo', 'bar']`
+ * `splitCase('fooBar') => ['foo', 'bar']`
+ * `splitCase('foo-Bar') => ['foo', 'bar']`
+ * @param str
+ * @returns
+ */
+export function splitCase(str: string): string[] {
+  const regUpperCase = /([A-Z])/g;
+  const regSeparator = /[_.\- ]+/g;
+  const regTrim = /(^-)|(-$)/g;
+  str = str.replace(regUpperCase, '-$1').toLowerCase().replace(regSeparator, '-').replace(regTrim, '');
+
+  return str.split('-');
+}
+
+/**
+ * 字符串转驼峰
+ * Example:
+ * `camelCase('foo-bar') => 'fooBar'`
+ * `camelCase('foo_bar') => 'fooBar'`
+ * `camelCase('foo bar') => 'fooBar'`
+ * `camelCase('foo.bar') => 'fooBar'`
+ * @param str
+ * @returns
+ */
+export function camelCase(str: string) {
+  const arr = splitCase(str);
+
+  let ret = arr[0];
+  arr.shift();
+
+  arr.forEach((i, idx) => {
+    arr[idx] = transferCase(i, 'first');
+  });
+  ret += arr.join('');
+
+  return ret;
+}
+
+/**
+ * 字符串 repeat
+ * Example:
+ * `repeat('*') => '*'`
+ * `repeat('*', 3) => '***'`
+ * @param str
+ * @returns
+ */
+export function repeat(str: string, n: number = 1): string {
+  let ret = '';
+
+  if (n < 1) return '';
+
+  while (n > 0) {
+    if (n & 1) ret += str;
+    n >>= 1;
+    str += str;
+  }
+
+  return ret;
 }

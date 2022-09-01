@@ -1,6 +1,8 @@
 export declare function getType(variable: any): string;
 export declare function empty(variable: any): boolean;
 export declare function get1Var(data: any): any;
+export declare function getRandVar(value: any, count?: number): any | any[];
+export declare function getLastVar(data: any): any;
 export declare function debounce(fn: Function, delay?: number): () => void;
 export declare function throttle(fn: Function, delay?: number): () => void;
 export declare function curryIt(fn: Function): (arg: any) => any;
@@ -12,4 +14,20 @@ export declare function getTimeAndStr(len?: number, radix?: number | undefined):
 export declare function getUUID(length: number, chars: string | any[]): string;
 export declare function isValidJSON(str: any): boolean;
 export declare function getBSColor(key: string): string;
+export declare function toStr(value: any): string;
+export declare function toNum(value: any): string;
+export declare function toBool(value: any): boolean;
+export declare function uuid(): string;
+export declare function getKey(size?: number, prefix?: string): string;
+export declare function getSize(value: any): number;
+export declare function openFile(options?: {
+    accept?: string;
+    multiple?: boolean;
+}): Promise<any>;
+export declare function openFullscreen(element?: any): void;
+export declare function closeFullscreen(): void;
+export declare function intersection(paramA: any, paramB: any): any;
+export declare function union(paramA: any, paramB: any): any;
+export declare function difference(paramA: any, paramB: any): any;
+export declare function jsonClone(value: any): any;
 //# sourceMappingURL=index.d.ts.map

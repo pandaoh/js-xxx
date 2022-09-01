@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 16:24:34
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-08-31 16:47:24
+ * @LastEditTime: 2022-09-01 17:25:23
  * @Description: 数学常用方法
  * @FilePath: \js-xxx\src\Math\index.ts
  */
@@ -99,4 +99,21 @@ export function sub(sub1: number | string, sub2: number | string): number {
   } catch (e) {}
   multiple = Math.pow(10, Math.max(sub1FloatLen, sub2FloatLen));
   return parseFloat(`${(times(sub1, multiple) - times(sub2, multiple)) / multiple}`);
+}
+
+/**
+ * 获取平均数
+ * Example:
+ * `average(1, 2, 3, 4) => 2.5`
+ * `average(1, 2, 3, 4.123) => 2.53075`
+ * @param args
+ * @returns
+ */
+export function average(...args: any[]) {
+  let sum = 0;
+  const len = args.length;
+
+  for (let i = 0; i < len; i++) sum = add(sum, args[i]);
+
+  return args.length ? div(sum, len) : 0;
 }
