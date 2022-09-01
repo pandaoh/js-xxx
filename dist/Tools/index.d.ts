@@ -13,7 +13,7 @@ export declare function getRandStr(len?: number): string;
 export declare function getTimeAndStr(len?: number, radix?: number | undefined): string;
 export declare function getUUID(length: number, chars: string | any[]): string;
 export declare function isValidJSON(str: any): boolean;
-export declare function getBSColor(key: string): string;
+export declare function getBSColor(key?: string): string;
 export declare function toStr(value: any): string;
 export declare function toNum(value: any): string;
 export declare function toBool(value: any): boolean;
@@ -30,4 +30,14 @@ export declare function intersection(paramA: any, paramB: any): any;
 export declare function union(paramA: any, paramB: any): any;
 export declare function difference(paramA: any, paramB: any): any;
 export declare function jsonClone(value: any): any;
+export declare function Logger(): {
+    log: (...args: any[]) => void;
+    info: (...args: any[]) => void;
+    success: (...args: any[]) => void;
+    warning: (...args: any[]) => void;
+    danger: (...args: any[]) => void;
+    primary: (...args: any[]) => void;
+    dark: (...args: any[]) => void;
+    [key: string]: (...args: any[]) => void;
+};
 //# sourceMappingURL=index.d.ts.map

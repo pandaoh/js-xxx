@@ -7519,6 +7519,7 @@ var $xxx = (function (exports) {
         }
     }
     function getBSColor(key) {
+        if (key === void 0) { key = 'default'; }
         key = "".concat(key).toLowerCase();
         var keyList = [
             'dark',
@@ -7536,6 +7537,7 @@ var $xxx = (function (exports) {
             'primary',
             'blue',
             'secondary',
+            'default',
             'grey'
         ];
         key = keyList.includes(key) ? key : 'others';
@@ -7555,6 +7557,7 @@ var $xxx = (function (exports) {
             primary: '#007bff',
             blue: '#007bff',
             secondary: '#6c757d',
+            default: '#6c757d',
             grey: '#6c757d'
         };
         return colors[key];
@@ -7728,6 +7731,26 @@ var $xxx = (function (exports) {
         catch (e) {
             return value;
         }
+    }
+    function Logger() {
+        function _logger(value, type) {
+            if (type === void 0) { type = 'default'; }
+            console.log("\n%c==========> ", "color:".concat(getBSColor(type)), value, '\n');
+        }
+        var result = {};
+        ['warning', 'info', 'danger', 'primary', 'success', 'dark', 'log'].forEach(function (type) {
+            result[type] = function () {
+                var args = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    args[_i] = arguments[_i];
+                }
+                var printType = type == 'log' ? 'default' : type;
+                args.forEach(function (val) {
+                    _logger(val, printType);
+                });
+            };
+        });
+        return result;
     }
 
     function formatFormData(obj, hasBrackets, hasIndex) {
@@ -8566,6 +8589,7 @@ var $xxx = (function (exports) {
 
     exports.Base64Decode = Base64Decode;
     exports.Base64Encode = Base64Encode;
+    exports.Logger = Logger;
     exports.add = add;
     exports.all = all;
     exports.any = any;

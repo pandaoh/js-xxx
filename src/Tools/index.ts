@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-09-01 17:31:55
+ * @LastEditTime: 2022-09-01 18:34:48
  * @Description: 工具方法
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
@@ -269,12 +269,13 @@ export function isValidJSON(str: any): boolean {
 /**
  * 获取 bootstrap 颜色
  * Example:
+ * `getBSColor() => '#6c757d'`
  * `getBSColor('red') => '#dc3545'`
  * `getBSColor('warning') => '#ffc107'`
  * @param key color name
  * @returns
  */
-export function getBSColor(key: string): string {
+export function getBSColor(key: string = 'default'): string {
   key = `${key}`.toLowerCase();
   const keyList = [
     'dark',
@@ -292,6 +293,7 @@ export function getBSColor(key: string): string {
     'primary',
     'blue',
     'secondary',
+    'default',
     'grey'
   ];
   key = keyList.includes(key) ? key : 'others';
@@ -311,6 +313,7 @@ export function getBSColor(key: string): string {
     primary: '#007bff',
     blue: '#007bff',
     secondary: '#6c757d',
+    default: '#6c757d',
     grey: '#6c757d'
   };
   return colors[key];
@@ -634,4 +637,54 @@ export function jsonClone(value: any): any {
   } catch (e) {
     return value;
   }
+}
+
+/**
+ * 打印日志工具类
+ * Example:
+ * `const {log, warning, success, danger, dark, primary, info} = Logger()`
+ * `log(1, new Date, 'test', [1, 2, 3], {log})`
+ * @returns
+ */
+export function Logger(): {
+  log: (...args: any[]) => void;
+  info: (...args: any[]) => void;
+  success: (...args: any[]) => void;
+  warning: (...args: any[]) => void;
+  danger: (...args: any[]) => void;
+  primary: (...args: any[]) => void;
+  dark: (...args: any[]) => void;
+  [key: string]: (...args: any[]) => void;
+} {
+  function _logger(
+    value: any,
+    type: 'warning' | 'info' | 'danger' | 'primary' | 'success' | 'default' | 'dark' = 'default'
+  ): void {
+    console.log(`\n%c==========> `, `color:${getBSColor(type)}`, value, '\n');
+  }
+  interface LogFn {
+    (...args: any[]): void;
+  }
+  // @ts-ignore
+  const result: {
+    log: LogFn;
+    info: LogFn;
+    success: LogFn;
+    warning: LogFn;
+    danger: LogFn;
+    primary: LogFn;
+    dark: LogFn;
+    [key: string]: LogFn;
+  } = {};
+  ['warning', 'info', 'danger', 'primary', 'success', 'dark', 'log'].forEach((type: string) => {
+    // @ts-ignore
+    result[type] = (...args: any[]) => {
+      const printType = type == 'log' ? 'default' : type;
+      args.forEach((val) => {
+        // @ts-ignore
+        _logger(val, printType);
+      });
+    };
+  });
+  return result;
 }

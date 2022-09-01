@@ -8,6 +8,7 @@ js-xxx - v1.2.8
 
 - [Base64Decode](README.md#base64decode)
 - [Base64Encode](README.md#base64encode)
+- [Logger](README.md#logger)
 - [add](README.md#add)
 - [all](README.md#all)
 - [any](README.md#any)
@@ -181,6 +182,31 @@ Example:
 #### Returns
 
 `string`
+
+___
+
+### Logger
+
+▸ **Logger**(): `Object`
+
+打印日志工具类
+Example:
+`const {log, warning, success, danger, dark, primary, info} = Logger()`
+`log(1, new Date, 'test', [1, 2, 3], {log})`
+
+#### Returns
+
+`Object`
+
+| Name | Type |
+| :------ | :------ |
+| `danger` | (...`args`: `any`[]) => `void` |
+| `dark` | (...`args`: `any`[]) => `void` |
+| `info` | (...`args`: `any`[]) => `void` |
+| `log` | (...`args`: `any`[]) => `void` |
+| `primary` | (...`args`: `any`[]) => `void` |
+| `success` | (...`args`: `any`[]) => `void` |
+| `warning` | (...`args`: `any`[]) => `void` |
 
 ___
 
@@ -1095,18 +1121,19 @@ ___
 
 ### getBSColor
 
-▸ **getBSColor**(`key`): `string`
+▸ **getBSColor**(`key?`): `string`
 
 获取 bootstrap 颜色
 Example:
+`getBSColor() => '#6c757d'`
 `getBSColor('red') => '#dc3545'`
 `getBSColor('warning') => '#ffc107'`
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `key` | `string` | color name |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `key` | `string` | `'default'` | color name |
 
 #### Returns
 

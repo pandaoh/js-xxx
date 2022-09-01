@@ -7516,6 +7516,7 @@ function isValidJSON(str) {
     }
 }
 function getBSColor(key) {
+    if (key === void 0) { key = 'default'; }
     key = "".concat(key).toLowerCase();
     var keyList = [
         'dark',
@@ -7533,6 +7534,7 @@ function getBSColor(key) {
         'primary',
         'blue',
         'secondary',
+        'default',
         'grey'
     ];
     key = keyList.includes(key) ? key : 'others';
@@ -7552,6 +7554,7 @@ function getBSColor(key) {
         primary: '#007bff',
         blue: '#007bff',
         secondary: '#6c757d',
+        default: '#6c757d',
         grey: '#6c757d'
     };
     return colors[key];
@@ -7725,6 +7728,26 @@ function jsonClone(value) {
     catch (e) {
         return value;
     }
+}
+function Logger() {
+    function _logger(value, type) {
+        if (type === void 0) { type = 'default'; }
+        console.log("\n%c==========> ", "color:".concat(getBSColor(type)), value, '\n');
+    }
+    var result = {};
+    ['warning', 'info', 'danger', 'primary', 'success', 'dark', 'log'].forEach(function (type) {
+        result[type] = function () {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i] = arguments[_i];
+            }
+            var printType = type == 'log' ? 'default' : type;
+            args.forEach(function (val) {
+                _logger(val, printType);
+            });
+        };
+    });
+    return result;
 }
 
 function formatFormData(obj, hasBrackets, hasIndex) {
@@ -8561,4 +8584,4 @@ function setWsBinaryType(binaryType) {
     return true;
 }
 
-export { Base64Decode, Base64Encode, add, all, any, appendLink, appendScript, arraySet, average, base64Decode, base64Encode, bindMoreClick, calcDate, camelCase, catchPromise, checkVersion, closeFullscreen, closeWebSocket, compareDate, copyContent, copyToClipboard, curryIt, data2Arr, data2Obj, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitKeyboardEvent, empty, encrypt, findChildren, findParents, formatBytes, formatDate, formatFormData, formatNumber, formatRh, formatURLSearchParams, get1Var, getBSColor, getBaseURL, getBloodGroup, getCookie, getCryptoJS, getDateDifference, getDateTime, getKey, getLastVar, getMonthDays, getMonthDaysCount, getRandColor, getRandNum, getRandStr, getRandVar, getSize, getStyleByName, getTimeAndStr, getTimeCode, getType, getUTCTime, getUUID, getUserAgent, getV, getViewportSize, getWebSocket, globalError, html2str, initNotification, initWebSocket, insertAfter, intersection, isAppleDevice, isBrowser, isDarkMode, isDecimal, isInteger, isNode, isRhNegative, isValidJSON, isWeekday, jsonClone, localStorageGet, localStorageSet, maskString, md5, mergeObj, offDefaultEvent, onClick2MoreClick, openFile, openFullscreen, qsParse, qsStringify, removeCookie, repeat, retry, round, scrollToBottom, scrollToTop, sendNotification, sendWsMessage, sessionStorageGet, sessionStorageSet, setCookie, setIcon, setWsBinaryType, sha1, sha256, shuffleArray, sleep, sortCallBack, splitCase, str2html, str2unicode, sub, throttle, timeSince, times, to, toBool, toNum, toStr, transferCase, trim, unicode2str, union, uuid, versionUpgrade };
+export { Base64Decode, Base64Encode, Logger, add, all, any, appendLink, appendScript, arraySet, average, base64Decode, base64Encode, bindMoreClick, calcDate, camelCase, catchPromise, checkVersion, closeFullscreen, closeWebSocket, compareDate, copyContent, copyToClipboard, curryIt, data2Arr, data2Obj, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitKeyboardEvent, empty, encrypt, findChildren, findParents, formatBytes, formatDate, formatFormData, formatNumber, formatRh, formatURLSearchParams, get1Var, getBSColor, getBaseURL, getBloodGroup, getCookie, getCryptoJS, getDateDifference, getDateTime, getKey, getLastVar, getMonthDays, getMonthDaysCount, getRandColor, getRandNum, getRandStr, getRandVar, getSize, getStyleByName, getTimeAndStr, getTimeCode, getType, getUTCTime, getUUID, getUserAgent, getV, getViewportSize, getWebSocket, globalError, html2str, initNotification, initWebSocket, insertAfter, intersection, isAppleDevice, isBrowser, isDarkMode, isDecimal, isInteger, isNode, isRhNegative, isValidJSON, isWeekday, jsonClone, localStorageGet, localStorageSet, maskString, md5, mergeObj, offDefaultEvent, onClick2MoreClick, openFile, openFullscreen, qsParse, qsStringify, removeCookie, repeat, retry, round, scrollToBottom, scrollToTop, sendNotification, sendWsMessage, sessionStorageGet, sessionStorageSet, setCookie, setIcon, setWsBinaryType, sha1, sha256, shuffleArray, sleep, sortCallBack, splitCase, str2html, str2unicode, sub, throttle, timeSince, times, to, toBool, toNum, toStr, transferCase, trim, unicode2str, union, uuid, versionUpgrade };
