@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 11:52:01
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-09-02 13:41:07
+ * @LastEditTime: 2022-09-02 17:06:25
  * @Description: 数组常用方法
  * @FilePath: \js-xxx\src\Array\index.ts
  */
@@ -95,9 +95,9 @@ export function shuffleArray(arr: any[]) {
  * `arraySort(["a", "3", 1, 2, "b"], false) => ['b', 'a', '3', 2, 1]`
  * `arraySort(["a", "3", 1, 2, "b"], 'desc') => ['b', 'a', '3', 2, 1]`
  * `let arr1 = [{ a: 'a', b: 'b', c: '张三', d: 1 }, { a: 'c', b: 'd', c: '李四', d: 2 }, { a: 'e', b: 'f', c: '王五', d: 3 }];`
- * `arraySort(arr1, false, 'a')` => e - c - a`
- * `arraySort(arr1, false, ['d', 'c'])` => 3 - 2 - 1`
- * `arraySort(arr1, 'DESC', ['c'])` => 张三 - 王五 - 李四`
+ * `arraySort(arr1, false, 'a') => e - c - a`
+ * `arraySort(arr1, false, ['d', 'c']) => 3 - 2 - 1`
+ * `arraySort(arr1, 'DESC', ['c']) => 张三 - 王五 - 李四`
  * @param arr 数组
  * @param type 类型
  * @param keys 关键字/集合

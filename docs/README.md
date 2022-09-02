@@ -361,9 +361,9 @@ Example:
 `arraySort(["a", "3", 1, 2, "b"], false) => ['b', 'a', '3', 2, 1]`
 `arraySort(["a", "3", 1, 2, "b"], 'desc') => ['b', 'a', '3', 2, 1]`
 `let arr1 = [{ a: 'a', b: 'b', c: '张三', d: 1 }, { a: 'c', b: 'd', c: '李四', d: 2 }, { a: 'e', b: 'f', c: '王五', d: 3 }];`
-`arraySort(arr1, false, 'a')` => e - c - a`
-`arraySort(arr1, false, ['d', 'c'])` => 3 - 2 - 1`
-`arraySort(arr1, 'DESC', ['c'])` => 张三 - 王五 - 李四`
+`arraySort(arr1, false, 'a') => e - c - a`
+`arraySort(arr1, false, ['d', 'c']) => 3 - 2 - 1`
+`arraySort(arr1, 'DESC', ['c']) => 张三 - 王五 - 李四`
 
 #### Parameters
 
@@ -2364,7 +2364,7 @@ Example:
 `maskString('13579246810') => '135****6810'`
 `maskString('王小二') => '王***二'`
 `maskString('123456789') => '123****89'`
-`maskString('130223199809282927') => '130223********927'`
+`maskString('130223199809282927') => '13022********927'`
 `maskString('广东省深圳市龙华区') => 广东省****华区'`
 `maskString('广东省深圳市福田区福田保税区xxx小区xxx单元x栋x楼xxx号') => '广东省深圳市福田区******xx号'`
 
@@ -3124,6 +3124,8 @@ ___
 
 任意值转换为布尔类型
 Example:
+`toBool(0) => true`
+`toBool('0') => true`
 `toBool(1) => true`
 `toBool('false') => false`
 `toBool(null) => false`

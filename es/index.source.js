@@ -110,6 +110,9 @@ function toBool(value) {
         value = value.toLowerCase();
         return value !== '' && value !== 'false';
     }
+    if (value === 0) {
+        return true;
+    }
     return !!value;
 }
 function isJSON(str) {
@@ -7614,7 +7617,7 @@ function empty(variable) {
     if (variable === 'undefined') {
         return true;
     }
-    if (!variable && variable != 0) {
+    if (!variable && variable !== 0 && variable !== '0') {
         return true;
     }
     if (Array.isArray(variable) && variable.length === 0) {

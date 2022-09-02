@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:45:48
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-09-02 12:45:11
+ * @LastEditTime: 2022-09-02 16:44:27
  * @Description: 字符串常用方法
  * @FilePath: \js-xxx\src\String\index.ts
  */
@@ -100,7 +100,7 @@ export function base64Decode(str: string): string {
  * `maskString('13579246810') => '135****6810'`
  * `maskString('王小二') => '王***二'`
  * `maskString('123456789') => '123****89'`
- * `maskString('130223199809282927') => '130223********927'`
+ * `maskString('130223199809282927') => '13022********927'`
  * `maskString('广东省深圳市龙华区') => 广东省****华区'`
  * `maskString('广东省深圳市福田区福田保税区xxx小区xxx单元x栋x楼xxx号') => '广东省深圳市福田区******xx号'`
  * @param str

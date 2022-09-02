@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-09-02 10:20:07
+ * @LastEditTime: 2022-09-05 16:20:29
  * @Description: 工具方法
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
@@ -27,8 +27,8 @@ export function empty(variable: any): boolean {
   if (variable === 'undefined') {
     return true; // 检验字符串类型的 undefined
   }
-  if (!variable && variable != 0) {
-    return true; // 检验 undefined 和 null "" 0 NaN "0"
+  if (!variable && variable !== 0 && variable !== '0') {
+    return true; // 检验 undefined 和 null "" NaN
   }
   if (Array.isArray(variable) && variable.length === 0) {
     return true; // 检验空数组

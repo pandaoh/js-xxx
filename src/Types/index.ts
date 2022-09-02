@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-09-02 11:21:02
+ * @LastEditTime: 2022-09-05 16:23:35
  * @Description: 类型校验等方法
  * @FilePath: \js-xxx\src\Types\index.ts
  */
@@ -55,6 +55,8 @@ export function toNum(value: any): string {
 /**
  * 任意值转换为布尔类型
  * Example:
+ * `toBool(0) => true`
+ * `toBool('0') => true`
  * `toBool(1) => true`
  * `toBool('false') => false`
  * `toBool(null) => false`
@@ -65,6 +67,9 @@ export function toBool(value: any): boolean {
   if (getType(value) == 'string') {
     value = value.toLowerCase();
     return value !== '' && value !== 'false';
+  }
+  if (value === 0) {
+    return true;
   }
   return !!value;
 }
