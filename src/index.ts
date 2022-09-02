@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 11:33:53
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-07-05 11:24:39
+ * @LastEditTime: 2022-09-02 10:19:52
  * @Description: 主项目文件汇总(请勿使用路径别名，否则会导致声明文件失效。)
  * @FilePath: \js-xxx\src\index.ts
  */
@@ -27,4 +27,5 @@ export * from './Request';
 export * from './Storage';
 export * from './String';
 export * from './Tools';
+export * from './Types';
 export * from './WebSocket';

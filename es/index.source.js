@@ -89,6 +89,82 @@ function __spreadArray(to, from, pack) {
     return to.concat(ar || Array.prototype.slice.call(from));
 }
 
+function getType(variable) {
+    return Object.prototype.toString.call(variable).slice(8, -1).toLowerCase();
+}
+function toStr(value) {
+    if (value == null) {
+        return '';
+    }
+    if (typeof value == 'object') {
+        return JSON.stringify(value);
+    }
+    return value.toString();
+}
+function toNum(value) {
+    value = Number(value);
+    return isNaN$1(value) ? 0 : value;
+}
+function toBool(value) {
+    if (getType(value) == 'string') {
+        value = value.toLowerCase();
+        return value !== '' && value !== 'false';
+    }
+    return !!value;
+}
+function isJSON(str) {
+    try {
+        JSON.parse(str);
+        return true;
+    }
+    catch (e) {
+        return false;
+    }
+}
+function isBool(value) {
+    return getType(value) === 'boolean';
+}
+function isDate(value) {
+    return getType(value) === 'date';
+}
+function isStr(value) {
+    return getType(value) === 'string';
+}
+function isUndef(value) {
+    return getType(value) === 'undefined';
+}
+function isNull(value) {
+    return getType(value) === 'null';
+}
+function isNum(value) {
+    return getType(value) === 'number' && !Object.is(NaN, value);
+}
+function isArr(value) {
+    return Array.isArray(value);
+}
+function isObj(value) {
+    return getType(value) === 'object';
+}
+function isElement(value) {
+    return !!(value && value.nodeType === 1);
+}
+function isFn(value) {
+    var type = getType(value);
+    return type === 'function' || type === 'generatorfunction' || type === 'asyncfunction';
+}
+function isPromise(value) {
+    return getType(value) === 'promise';
+}
+function isNaN$1(value) {
+    return Object.is(NaN, value);
+}
+function isBlob(value) {
+    return getType(value) === 'blob';
+}
+function isArrayBuffer(value) {
+    return getType(value) === 'arraybuffer';
+}
+
 function data2Obj(sourceData, key, vKey) {
     var obj = {};
     if (!Array.isArray(sourceData)) {
@@ -125,6 +201,48 @@ function sortCallBack(key, isAscend) {
 }
 function shuffleArray(arr) {
     return arr.sort(function () { return Math.random() - 0.5; });
+}
+function arraySort(arr, type, keys) {
+    if (type === void 0) { type = 'asc'; }
+    var isAscend = type == 'asc' || type == 'ASC' || type == true;
+    try {
+        if (!keys) {
+            return arr.sort(function (a, b) {
+                return isAscend ? toStr(a).localeCompare(toStr(b)) : toStr(b).localeCompare(toStr(a));
+            });
+        }
+        if (isStr(keys)) {
+            return arr.sort(function (a, b) {
+                var aSort = toStr(a[keys]);
+                var bSort = toStr(b[keys]);
+                return isAscend ? aSort.localeCompare(bSort) : bSort.localeCompare(aSort);
+            });
+        }
+        return arr.sort(function (a, b) {
+            var _a, _b;
+            var aSort = (_a = keys === null || keys === void 0 ? void 0 : keys.reduce(function (total, currentValue) { return toStr(total).concat(a[currentValue]); }, '')) !== null && _a !== void 0 ? _a : '0';
+            var bSort = (_b = keys === null || keys === void 0 ? void 0 : keys.reduce(function (total, currentValue) { return toStr(total).concat(b[currentValue]); }, '')) !== null && _b !== void 0 ? _b : '0';
+            return isAscend ? aSort.localeCompare(bSort) : bSort.localeCompare(aSort);
+        });
+    }
+    catch (e) {
+        return arr;
+    }
+}
+function sortBy(keys, isAscend) {
+    if (isAscend === void 0) { isAscend = true; }
+    if (!keys) {
+        return function (a, b) {
+            return isAscend ? toStr(a).localeCompare(toStr(b)) : toStr(b).localeCompare(toStr(a));
+        };
+    }
+    var transferKeys = isStr(keys) ? [keys] : keys;
+    return function (a, b) {
+        var _a, _b;
+        var aSort = (_a = transferKeys === null || transferKeys === void 0 ? void 0 : transferKeys.reduce(function (total, currentValue) { return toStr(total).concat(a[currentValue]); }, '')) !== null && _a !== void 0 ? _a : '0';
+        var bSort = (_b = transferKeys === null || transferKeys === void 0 ? void 0 : transferKeys.reduce(function (total, currentValue) { return toStr(total).concat(b[currentValue]); }, '')) !== null && _b !== void 0 ? _b : '0';
+        return isAscend ? aSort.localeCompare(bSort) : bSort.localeCompare(aSort);
+    };
 }
 
 function getCookie(key) {
@@ -7034,6 +7152,14 @@ function repeat(str, n) {
     }
     return ret;
 }
+function isUrl(value) {
+    var regUrl = /^(?:\w+:)?\/\/([^\s.]+\.\S{2}|localhost[:?\d]*)\S*$/;
+    return regUrl.test(value);
+}
+function isEmail(value) {
+    var regEmail = /.+@.+\..+/;
+    return regEmail.test(value);
+}
 
 function formatDate(date, fmt, weeks) {
     if (fmt === void 0) { fmt = 'yyyy-mm-dd hh:ii:ss'; }
@@ -7379,9 +7505,105 @@ function downloadContent(name, content) {
     }
 }
 
-function getType(variable) {
-    return Object.prototype.toString.call(variable).slice(8, -1).toLowerCase();
+function formatFormData(obj, hasBrackets, hasIndex) {
+    if (hasBrackets === void 0) { hasBrackets = false; }
+    if (hasIndex === void 0) { hasIndex = false; }
+    var formData = new FormData();
+    Object.keys(obj).forEach(function (key) {
+        if (Array.isArray(obj[key])) {
+            for (var arrIndex in obj[key]) {
+                hasBrackets
+                    ? formData.append(hasIndex ? "".concat(key, "[]") : "".concat(key, "[").concat(arrIndex, "]"), obj[key][arrIndex])
+                    : formData.append(key, obj[key][arrIndex]);
+            }
+        }
+        else {
+            formData.append(key, getType(obj[key]) == 'object' ? JSON.stringify(obj[key]) : obj[key]);
+        }
+    });
+    return formData;
 }
+function formatURLSearchParams(obj, hasBrackets, hasIndex) {
+    if (hasBrackets === void 0) { hasBrackets = false; }
+    if (hasIndex === void 0) { hasIndex = false; }
+    var queryString = new URLSearchParams();
+    Object.keys(obj).forEach(function (key) {
+        if (Array.isArray(obj[key])) {
+            for (var arrIndex in obj[key]) {
+                hasBrackets
+                    ? queryString.append(hasIndex ? "".concat(key, "[]") : "".concat(key, "[").concat(arrIndex, "]"), obj[key][arrIndex])
+                    : queryString.append(key, obj[key][arrIndex]);
+            }
+        }
+        else {
+            queryString.append(key, getType(obj[key]) == 'object' ? JSON.stringify(obj[key]) : obj[key]);
+        }
+    });
+    return queryString;
+}
+
+function div(div1, div2) {
+    var div1FloatLen = 0, div2FloatLen = 0, tempDiv1 = div1.toString(), tempDiv2 = div2.toString();
+    try {
+        div1FloatLen = tempDiv1.split('.')[1].length;
+    }
+    catch (e) { }
+    try {
+        div2FloatLen = tempDiv2.split('.')[1].length;
+    }
+    catch (e) { }
+    return times(Number(tempDiv1.replace('.', '')) / Number(tempDiv2.replace('.', '')), Math.pow(10, div2FloatLen - div1FloatLen));
+}
+function times(mul1, mul2) {
+    var mulFloatLen = 0, tempMul1 = mul1.toString(), tempMul2 = mul2.toString();
+    try {
+        mulFloatLen += tempMul1.split('.')[1].length;
+    }
+    catch (e) { }
+    try {
+        mulFloatLen += tempMul2.split('.')[1].length;
+    }
+    catch (e) { }
+    return (Number(tempMul1.replace('.', '')) * Number(tempMul2.replace('.', ''))) / Math.pow(10, mulFloatLen);
+}
+function add(add1, add2) {
+    var add1FloatLen = 0, add2FloatLen = 0, multiple = 1;
+    try {
+        add1FloatLen = add1.toString().split('.')[1].length;
+    }
+    catch (e) { }
+    try {
+        add2FloatLen = add2.toString().split('.')[1].length;
+    }
+    catch (e) { }
+    multiple = Math.pow(10, Math.max(add1FloatLen, add2FloatLen));
+    return (times(add1, multiple) + times(add2, multiple)) / multiple;
+}
+function sub(sub1, sub2) {
+    var sub1FloatLen = 0, sub2FloatLen = 0, multiple = 1;
+    try {
+        sub1FloatLen = sub1.toString().split('.')[1].length;
+    }
+    catch (e) { }
+    try {
+        sub2FloatLen = sub2.toString().split('.')[1].length;
+    }
+    catch (e) { }
+    multiple = Math.pow(10, Math.max(sub1FloatLen, sub2FloatLen));
+    return parseFloat("".concat((times(sub1, multiple) - times(sub2, multiple)) / multiple));
+}
+function average() {
+    var args = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        args[_i] = arguments[_i];
+    }
+    var sum = 0;
+    var len = args.length;
+    for (var i = 0; i < len; i++)
+        sum = add(sum, args[i]);
+    return args.length ? div(sum, len) : 0;
+}
+
 function empty(variable) {
     if (typeof variable === 'boolean') {
         return false;
@@ -7506,15 +7728,6 @@ function getUUID(length, chars) {
         result += chars[Math.floor(Math.random() * chars.length)];
     return result;
 }
-function isValidJSON(str) {
-    try {
-        JSON.parse(str);
-        return true;
-    }
-    catch (e) {
-        return false;
-    }
-}
 function getBSColor(key) {
     if (key === void 0) { key = 'default'; }
     key = "".concat(key).toLowerCase();
@@ -7558,26 +7771,6 @@ function getBSColor(key) {
         grey: '#6c757d'
     };
     return colors[key];
-}
-function toStr(value) {
-    if (value == null) {
-        return '';
-    }
-    if (typeof value == 'object') {
-        return JSON.stringify(value);
-    }
-    return value.toString();
-}
-function toNum(value) {
-    value = Number(value);
-    return isNaN(value) ? 0 : value;
-}
-function toBool(value) {
-    if (getType(value) == 'string') {
-        value = value.toLowerCase();
-        return value !== '' && value !== 'false';
-    }
-    return !!value;
 }
 function uuid() {
     var tempUrl = URL.createObjectURL(new Blob());
@@ -7748,105 +7941,6 @@ function Logger() {
         };
     });
     return result;
-}
-
-function formatFormData(obj, hasBrackets, hasIndex) {
-    if (hasBrackets === void 0) { hasBrackets = false; }
-    if (hasIndex === void 0) { hasIndex = false; }
-    var formData = new FormData();
-    Object.keys(obj).forEach(function (key) {
-        if (Array.isArray(obj[key])) {
-            for (var arrIndex in obj[key]) {
-                hasBrackets
-                    ? formData.append(hasIndex ? "".concat(key, "[]") : "".concat(key, "[").concat(arrIndex, "]"), obj[key][arrIndex])
-                    : formData.append(key, obj[key][arrIndex]);
-            }
-        }
-        else {
-            formData.append(key, getType(obj[key]) == 'object' ? JSON.stringify(obj[key]) : obj[key]);
-        }
-    });
-    return formData;
-}
-function formatURLSearchParams(obj, hasBrackets, hasIndex) {
-    if (hasBrackets === void 0) { hasBrackets = false; }
-    if (hasIndex === void 0) { hasIndex = false; }
-    var queryString = new URLSearchParams();
-    Object.keys(obj).forEach(function (key) {
-        if (Array.isArray(obj[key])) {
-            for (var arrIndex in obj[key]) {
-                hasBrackets
-                    ? queryString.append(hasIndex ? "".concat(key, "[]") : "".concat(key, "[").concat(arrIndex, "]"), obj[key][arrIndex])
-                    : queryString.append(key, obj[key][arrIndex]);
-            }
-        }
-        else {
-            queryString.append(key, getType(obj[key]) == 'object' ? JSON.stringify(obj[key]) : obj[key]);
-        }
-    });
-    return queryString;
-}
-
-function div(div1, div2) {
-    var div1FloatLen = 0, div2FloatLen = 0, tempDiv1 = div1.toString(), tempDiv2 = div2.toString();
-    try {
-        div1FloatLen = tempDiv1.split('.')[1].length;
-    }
-    catch (e) { }
-    try {
-        div2FloatLen = tempDiv2.split('.')[1].length;
-    }
-    catch (e) { }
-    return times(Number(tempDiv1.replace('.', '')) / Number(tempDiv2.replace('.', '')), Math.pow(10, div2FloatLen - div1FloatLen));
-}
-function times(mul1, mul2) {
-    var mulFloatLen = 0, tempMul1 = mul1.toString(), tempMul2 = mul2.toString();
-    try {
-        mulFloatLen += tempMul1.split('.')[1].length;
-    }
-    catch (e) { }
-    try {
-        mulFloatLen += tempMul2.split('.')[1].length;
-    }
-    catch (e) { }
-    return (Number(tempMul1.replace('.', '')) * Number(tempMul2.replace('.', ''))) / Math.pow(10, mulFloatLen);
-}
-function add(add1, add2) {
-    var add1FloatLen = 0, add2FloatLen = 0, multiple = 1;
-    try {
-        add1FloatLen = add1.toString().split('.')[1].length;
-    }
-    catch (e) { }
-    try {
-        add2FloatLen = add2.toString().split('.')[1].length;
-    }
-    catch (e) { }
-    multiple = Math.pow(10, Math.max(add1FloatLen, add2FloatLen));
-    return (times(add1, multiple) + times(add2, multiple)) / multiple;
-}
-function sub(sub1, sub2) {
-    var sub1FloatLen = 0, sub2FloatLen = 0, multiple = 1;
-    try {
-        sub1FloatLen = sub1.toString().split('.')[1].length;
-    }
-    catch (e) { }
-    try {
-        sub2FloatLen = sub2.toString().split('.')[1].length;
-    }
-    catch (e) { }
-    multiple = Math.pow(10, Math.max(sub1FloatLen, sub2FloatLen));
-    return parseFloat("".concat((times(sub1, multiple) - times(sub2, multiple)) / multiple));
-}
-function average() {
-    var args = [];
-    for (var _i = 0; _i < arguments.length; _i++) {
-        args[_i] = arguments[_i];
-    }
-    var sum = 0;
-    var len = args.length;
-    for (var i = 0; i < len; i++)
-        sum = add(sum, args[i]);
-    return args.length ? div(sum, len) : 0;
 }
 
 function initNotification() {
@@ -8470,7 +8564,7 @@ function _tempSet(key, value, storeType) {
 }
 function _tempGet(key, storeType) {
     var result = storeType === 'L' ? window.localStorage.getItem(key) : window.sessionStorage.getItem(key);
-    result = isValidJSON(result) ? JSON.parse(result) : result;
+    result = isJSON(result) ? JSON.parse(result) : result;
     var numberType = '[X_TYPE_number]';
     var stringType = '[X_TYPE_string]';
     var booleanType = '[X_TYPE_boolean]';
@@ -8584,4 +8678,4 @@ function setWsBinaryType(binaryType) {
     return true;
 }
 
-export { Base64Decode, Base64Encode, Logger, add, all, any, appendLink, appendScript, arraySet, average, base64Decode, base64Encode, bindMoreClick, calcDate, camelCase, catchPromise, checkVersion, closeFullscreen, closeWebSocket, compareDate, copyContent, copyToClipboard, curryIt, data2Arr, data2Obj, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitKeyboardEvent, empty, encrypt, findChildren, findParents, formatBytes, formatDate, formatFormData, formatNumber, formatRh, formatURLSearchParams, get1Var, getBSColor, getBaseURL, getBloodGroup, getCookie, getCryptoJS, getDateDifference, getDateTime, getKey, getLastVar, getMonthDays, getMonthDaysCount, getRandColor, getRandNum, getRandStr, getRandVar, getSize, getStyleByName, getTimeAndStr, getTimeCode, getType, getUTCTime, getUUID, getUserAgent, getV, getViewportSize, getWebSocket, globalError, html2str, initNotification, initWebSocket, insertAfter, intersection, isAppleDevice, isBrowser, isDarkMode, isDecimal, isInteger, isNode, isRhNegative, isValidJSON, isWeekday, jsonClone, localStorageGet, localStorageSet, maskString, md5, mergeObj, offDefaultEvent, onClick2MoreClick, openFile, openFullscreen, qsParse, qsStringify, removeCookie, repeat, retry, round, scrollToBottom, scrollToTop, sendNotification, sendWsMessage, sessionStorageGet, sessionStorageSet, setCookie, setIcon, setWsBinaryType, sha1, sha256, shuffleArray, sleep, sortCallBack, splitCase, str2html, str2unicode, sub, throttle, timeSince, times, to, toBool, toNum, toStr, transferCase, trim, unicode2str, union, uuid, versionUpgrade };
+export { Base64Decode, Base64Encode, Logger, add, all, any, appendLink, appendScript, arraySet, arraySort, average, base64Decode, base64Encode, bindMoreClick, calcDate, camelCase, catchPromise, checkVersion, closeFullscreen, closeWebSocket, compareDate, copyContent, copyToClipboard, curryIt, data2Arr, data2Obj, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitKeyboardEvent, empty, encrypt, findChildren, findParents, formatBytes, formatDate, formatFormData, formatNumber, formatRh, formatURLSearchParams, get1Var, getBSColor, getBaseURL, getBloodGroup, getCookie, getCryptoJS, getDateDifference, getDateTime, getKey, getLastVar, getMonthDays, getMonthDaysCount, getRandColor, getRandNum, getRandStr, getRandVar, getSize, getStyleByName, getTimeAndStr, getTimeCode, getType, getUTCTime, getUUID, getUserAgent, getV, getViewportSize, getWebSocket, globalError, html2str, initNotification, initWebSocket, insertAfter, intersection, isAppleDevice, isArr, isArrayBuffer, isBlob, isBool, isBrowser, isDarkMode, isDate, isDecimal, isElement, isEmail, isFn, isInteger, isJSON, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPromise, isRhNegative, isStr, isUndef, isUrl, isWeekday, jsonClone, localStorageGet, localStorageSet, maskString, md5, mergeObj, offDefaultEvent, onClick2MoreClick, openFile, openFullscreen, qsParse, qsStringify, removeCookie, repeat, retry, round, scrollToBottom, scrollToTop, sendNotification, sendWsMessage, sessionStorageGet, sessionStorageSet, setCookie, setIcon, setWsBinaryType, sha1, sha256, shuffleArray, sleep, sortBy, sortCallBack, splitCase, str2html, str2unicode, sub, throttle, timeSince, times, to, toBool, toNum, toStr, transferCase, trim, unicode2str, union, uuid, versionUpgrade };

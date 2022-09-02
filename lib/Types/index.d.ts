@@ -1,0 +1,20 @@
+export declare function getType(variable: any): string;
+export declare function toStr(value: any): string;
+export declare function toNum(value: any): string;
+export declare function toBool(value: any): boolean;
+export declare function isJSON(str: any): boolean;
+export declare function isBool(value: any): boolean;
+export declare function isDate(value: any): boolean;
+export declare function isStr(value: any): boolean;
+export declare function isUndef(value: any): boolean;
+export declare function isNull(value: any): boolean;
+export declare function isNum(value: any): boolean;
+export declare function isArr(value: any): boolean;
+export declare function isObj(value: any): boolean;
+export declare function isElement(value: any): boolean;
+export declare function isFn(value: any): boolean;
+export declare function isPromise(value: any): boolean;
+export declare function isNaN(value: any): boolean;
+export declare function isBlob(value: any): boolean;
+export declare function isArrayBuffer(value: any): boolean;
+//# sourceMappingURL=index.d.ts.map

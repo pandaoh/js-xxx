@@ -2,12 +2,12 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:53:02
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-06-14 18:09:11
+ * @LastEditTime: 2022-09-02 10:17:41
  * @Description: 表单相关
  * @FilePath: \js-xxx\src\Form\index.ts
  */
 
-import { getType } from '@/Tools';
+import { getType } from '@/Types';
 
 /**
  * 对象转 FormData

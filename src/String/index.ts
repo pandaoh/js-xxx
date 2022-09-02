@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:45:48
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-09-01 17:25:10
+ * @LastEditTime: 2022-09-02 12:45:11
  * @Description: 字符串常用方法
  * @FilePath: \js-xxx\src\String\index.ts
  */
@@ -227,4 +227,30 @@ export function repeat(str: string, n: number = 1): string {
   }
 
   return ret;
+}
+
+/**
+ * 检查是否为 url string
+ * Example:
+ * `isUrl('http://www.example.com?foo=bar&param=test') => true`
+ * `isUrl(http://www) => false`
+ * @param value
+ * @returns
+ */
+export function isUrl(value: string): boolean {
+  const regUrl = /^(?:\w+:)?\/\/([^\s.]+\.\S{2}|localhost[:?\d]*)\S*$/;
+  return regUrl.test(value);
+}
+
+/**
+ * 检查是否为 email string
+ * Example:
+ * `isEmail('test@qq.com') => true`
+ * `isEmail('@qq.com') => false`
+ * @param value
+ * @returns
+ */
+export function isEmail(value: string): boolean {
+  const regEmail = /.+@.+\..+/;
+  return regEmail.test(value);
 }

@@ -15,6 +15,7 @@ js-xxx - v1.2.8
 - [appendLink](README.md#appendlink)
 - [appendScript](README.md#appendscript)
 - [arraySet](README.md#arrayset)
+- [arraySort](README.md#arraysort)
 - [average](README.md#average)
 - [base64Decode](README.md#base64decode-1)
 - [base64Encode](README.md#base64encode-1)
@@ -84,13 +85,29 @@ js-xxx - v1.2.8
 - [insertAfter](README.md#insertafter)
 - [intersection](README.md#intersection)
 - [isAppleDevice](README.md#isappledevice)
+- [isArr](README.md#isarr)
+- [isArrayBuffer](README.md#isarraybuffer)
+- [isBlob](README.md#isblob)
+- [isBool](README.md#isbool)
 - [isBrowser](README.md#isbrowser)
 - [isDarkMode](README.md#isdarkmode)
+- [isDate](README.md#isdate)
 - [isDecimal](README.md#isdecimal)
+- [isElement](README.md#iselement)
+- [isEmail](README.md#isemail)
+- [isFn](README.md#isfn)
 - [isInteger](README.md#isinteger)
+- [isJSON](README.md#isjson)
+- [isNaN](README.md#isnan)
 - [isNode](README.md#isnode)
+- [isNull](README.md#isnull)
+- [isNum](README.md#isnum)
+- [isObj](README.md#isobj)
+- [isPromise](README.md#ispromise)
 - [isRhNegative](README.md#isrhnegative)
-- [isValidJSON](README.md#isvalidjson)
+- [isStr](README.md#isstr)
+- [isUndef](README.md#isundef)
+- [isUrl](README.md#isurl)
 - [isWeekday](README.md#isweekday)
 - [jsonClone](README.md#jsonclone)
 - [localStorageGet](README.md#localstorageget)
@@ -121,6 +138,7 @@ js-xxx - v1.2.8
 - [sha256](README.md#sha256)
 - [shuffleArray](README.md#shufflearray)
 - [sleep](README.md#sleep)
+- [sortBy](README.md#sortby)
 - [sortCallBack](README.md#sortcallback)
 - [splitCase](README.md#splitcase)
 - [str2html](README.md#str2html)
@@ -332,6 +350,35 @@ Example: `arraySet([1, 2, 3, 1, 2, 3]) => [1, 2, 3]`
 
 ___
 
+### arraySort
+
+▸ **arraySort**(`arr`, `type?`, `keys?`): `any`[]
+
+数组排序(支持多条件排序+中文)
+Example:
+`arraySort(["a", "3", 1, 2, "b"]) => [1, 2, '3', 'a', 'b']`
+`arraySort(["a", "3", 1, 2, "b"], 'asc') => [1, 2, '3', 'a', 'b']`
+`arraySort(["a", "3", 1, 2, "b"], false) => ['b', 'a', '3', 2, 1]`
+`arraySort(["a", "3", 1, 2, "b"], 'desc') => ['b', 'a', '3', 2, 1]`
+`let arr1 = [{ a: 'a', b: 'b', c: '张三', d: 1 }, { a: 'c', b: 'd', c: '李四', d: 2 }, { a: 'e', b: 'f', c: '王五', d: 3 }];`
+`arraySort(arr1, false, 'a')` => e - c - a`
+`arraySort(arr1, false, ['d', 'c'])` => 3 - 2 - 1`
+`arraySort(arr1, 'DESC', ['c'])` => 张三 - 王五 - 李四`
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `arr` | `any`[] | `undefined` | 数组 |
+| `type` | `boolean` \| ``"desc"`` \| ``"asc"`` \| ``"ASC"`` \| ``"DESC"`` | `'asc'` | 类型 |
+| `keys?` | `string` \| `string`[] | `undefined` | 关键字/集合 |
+
+#### Returns
+
+`any`[]
+
+___
+
 ### average
 
 ▸ **average**(...`args`): `number`
@@ -503,9 +550,9 @@ ___
 
 版本号比对算法
 Example:
-`checkVersion('1.0.1-rc', '1.0.0', '-rc'); => 1`
-`checkVersion('1.0.0', '1.0.1'); => -1`
-`checkVersion('1.0.0', '1.0.0'); => 0`
+`checkVersion('1.0.1-rc', '1.0.0', '-rc') => 1`
+`checkVersion('1.0.0', '1.0.1') => -1`
+`checkVersion('1.0.0', '1.0.0') => 0`
 
 #### Parameters
 
@@ -785,8 +832,8 @@ ___
 
 禁用冲突事件，条码枪、关闭窗口快捷键等。
 Example:
-`document.addEventListener('keydown', disableConflictEvent); => 进入页面后禁用冲突事件`
-`document.removeEventListener('keydown', disableConflictEvent); => 退出页面后关闭监听`
+`document.addEventListener('keydown', disableConflictEvent) => 进入页面后禁用冲突事件`
+`document.removeEventListener('keydown', disableConflictEvent) => 退出页面后关闭监听`
 
 #### Parameters
 
@@ -1498,7 +1545,9 @@ ___
 ▸ **getType**(`variable`): `string`
 
 获取变量类型
-Example: `getType(1) => 'number'`
+Example:
+`getType(1) => 'number'`
+`getType(async function(){}) => 'asyncfunction'`
 
 #### Parameters
 
@@ -1759,6 +1808,90 @@ Example: `isAppleDevice() => true`
 
 ___
 
+### isArr
+
+▸ **isArr**(`value`): `boolean`
+
+检查是否数组
+Example:
+`isArr([]) => true`
+`isArr({}) => false`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `any` |
+
+#### Returns
+
+`boolean`
+
+___
+
+### isArrayBuffer
+
+▸ **isArrayBuffer**(`value`): `boolean`
+
+检查是否为 ArrayBuffer
+Example:
+`isArrayBuffer(new ArrayBuffer()) => true`
+`isArrayBuffer(null) => false`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `any` |
+
+#### Returns
+
+`boolean`
+
+___
+
+### isBlob
+
+▸ **isBlob**(`value`): `boolean`
+
+检查是否为 Blob
+Example:
+`isBlob(new Blob()) => true`
+`isBlob(null) => false`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `any` |
+
+#### Returns
+
+`boolean`
+
+___
+
+### isBool
+
+▸ **isBool**(`value`): `boolean`
+
+检查是否为 boolean 类型
+Example:
+`isBool(true) => true`
+`isBool(null) => false`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `any` |
+
+#### Returns
+
+`boolean`
+
+___
+
 ### isBrowser
 
 ▸ **isBrowser**(): `boolean`
@@ -1778,6 +1911,27 @@ ___
 
 检测黑暗模式
 Example: `isDarkMode() => true`
+
+#### Returns
+
+`boolean`
+
+___
+
+### isDate
+
+▸ **isDate**(`value`): `boolean`
+
+检查是否 date 类型
+Example:
+`isDate(new Date()) => true`
+`isDate(null) => false`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `any` |
 
 #### Returns
 
@@ -1810,6 +1964,72 @@ Example:
 
 ___
 
+### isElement
+
+▸ **isElement**(`value`): `boolean`
+
+检查是否为 dom 元素
+Example:
+`isElement(document.body) => true`
+`isElement(document) => false`
+`isElement({}) => false`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `any` |
+
+#### Returns
+
+`boolean`
+
+___
+
+### isEmail
+
+▸ **isEmail**(`value`): `boolean`
+
+检查是否为 email string
+Example:
+`isEmail('test@qq.com') => true`
+`isEmail('@qq.com') => false`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `string` |
+
+#### Returns
+
+`boolean`
+
+___
+
+### isFn
+
+▸ **isFn**(`value`): `boolean`
+
+检查是否为 function
+Example:
+`isFn(function(){}) => true`
+`isFn(async function(){}) => true`
+`isFn(new Promise((resolve, reject) => resolve()) => false`
+`isFn({}) => false`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `any` |
+
+#### Returns
+
+`boolean`
+
+___
+
 ### isInteger
 
 ▸ **isInteger**(`value`, `type?`): `boolean`
@@ -1832,12 +2052,140 @@ Example:
 
 ___
 
+### isJSON
+
+▸ **isJSON**(`str`): `boolean`
+
+检查字符串是否为有效的 JSON
+Example:
+`isJSON('{"name":"leo", "age":20}') => true`
+`isJSON('{"name":"leo", age:"20"}') => false`
+`isJSON(null) => true`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `str` | `any` | 字符串 |
+
+#### Returns
+
+`boolean`
+
+___
+
+### isNaN
+
+▸ **isNaN**(`value`): `boolean`
+
+检查是否为 NaN
+Example:
+`isNaN(1) => false`
+`isNaN(NaN) => true`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `any` |
+
+#### Returns
+
+`boolean`
+
+___
+
 ### isNode
 
 ▸ **isNode**(): `boolean`
 
 判断当前运行环境是否为 Node.js
 Example: `isNode() => true`
+
+#### Returns
+
+`boolean`
+
+___
+
+### isNull
+
+▸ **isNull**(`value`): `boolean`
+
+检查是否 null
+Example:
+`isNull(undefined) => false`
+`isNull(null) => true`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `any` |
+
+#### Returns
+
+`boolean`
+
+___
+
+### isNum
+
+▸ **isNum**(`value`): `boolean`
+
+检查是否 number 类型
+Example:
+`isNum(NaN) => false`
+`isNum(1) => true`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `any` |
+
+#### Returns
+
+`boolean`
+
+___
+
+### isObj
+
+▸ **isObj**(`value`): `boolean`
+
+检查是否对象
+Example:
+`isObj({}) => true`
+`isObj(null) => false`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `any` |
+
+#### Returns
+
+`boolean`
+
+___
+
+### isPromise
+
+▸ **isPromise**(`value`): `boolean`
+
+检查是否为 Promise
+Example:
+`isPromise(function(){}) => false`
+`isPromise(async function(){}) => false`
+`isPromise(new Promise((resolve, reject) => resolve())) => true`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `any` |
 
 #### Returns
 
@@ -1864,21 +2212,62 @@ Example: `isRhNegative('**d**') => true`
 
 ___
 
-### isValidJSON
+### isStr
 
-▸ **isValidJSON**(`str`): `boolean`
+▸ **isStr**(`value`): `boolean`
 
-检查字符串是否为有效的 JSON
+检查是否字符串类型
 Example:
-`isValidJSON('{"name":"leo", "age":20}'); => true`
-`isValidJSON('{"name":"leo", age:"20"}'); => false`
-`isValidJSON(null); => true`
+`isStr('test') => true`
+`isStr(null) => false`
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `str` | `any` | 字符串 |
+| Name | Type |
+| :------ | :------ |
+| `value` | `any` |
+
+#### Returns
+
+`boolean`
+
+___
+
+### isUndef
+
+▸ **isUndef**(`value`): `boolean`
+
+检查是否 undefined
+Example:
+`isUndef(undefined) => true`
+`isUndef(null) => false`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `any` |
+
+#### Returns
+
+`boolean`
+
+___
+
+### isUrl
+
+▸ **isUrl**(`value`): `boolean`
+
+检查是否为 url string
+Example:
+`isUrl('http://www.example.com?foo=bar&param=test') => true`
+`isUrl(http://www) => false`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `string` |
 
 #### Returns
 
@@ -2505,11 +2894,35 @@ Example: `await sleep(1000) => 等待 1000 毫秒再执行后面的`
 
 ___
 
+### sortBy
+
+▸ **sortBy**(`keys?`, `isAscend?`): `any`
+
+返回排序回调函数(也支持中文、多个字段、混合类型)
+Example:
+`['a', '3', 1, 2, 'b'].sort(sortBy('', false)) => ['b', 'a', '3', 2, 1]`
+`['a', '3', 1, 2, 'b'].sort(sortBy()) => [1, 2, '3', 'a', 'b']`
+`sortBy('createDt') => 按照 createDt 升序排列`
+`sortBy(['name', 'age'], false) => 按照 name + age 降序排列`
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `keys?` | `string` \| `string`[] | `undefined` | 排序的字段/集合 |
+| `isAscend` | `boolean` | `true` | - |
+
+#### Returns
+
+`any`
+
+___
+
 ### sortCallBack
 
-▸ **sortCallBack**(`key`, `isAscend?`): (`a`: `any`, `b`: `any`) => ``1`` \| ``-1``
+▸ **sortCallBack**(`key`, `isAscend?`): `any`
 
-排序回调函数
+返回排序回调函数(支持中文，不支持一级数据与混合类型。)
 Example:
 `sortCallBack('createDt', true) => 按照 createDt 升序排列`
 `const arr = [{name: '666'}, {name: '333'}]`
@@ -2525,20 +2938,7 @@ Example:
 
 #### Returns
 
-`fn`
-
-▸ (`a`, `b`): ``1`` \| ``-1``
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `a` | `any` |
-| `b` | `any` |
-
-##### Returns
-
-``1`` \| ``-1``
+`any`
 
 ___
 
@@ -2799,7 +3199,7 @@ Example:
 | Name | Type |
 | :------ | :------ |
 | `str` | `string` |
-| `type` | ``1`` \| ``2`` \| ``3`` \| ``"upper"`` \| ``"lower"`` \| ``"first"`` |
+| `type` | ``2`` \| ``3`` \| ``1`` \| ``"upper"`` \| ``"lower"`` \| ``"first"`` |
 
 #### Returns
 

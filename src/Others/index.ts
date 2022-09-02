@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:53:39
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-08-31 13:39:20
+ * @LastEditTime: 2022-09-02 10:44:15
  * @Description: 因项目需要常用方法，不管任何项目，都放到一起。注意甄别，没有复用意义的方法就不要添加了。
  * @FilePath: \js-xxx\src\Others\index.ts
  */
@@ -261,8 +261,8 @@ export function emitKeyboardEvent(eventType: 'keydown' | 'keypress' | 'keyup' = 
 /**
  * 禁用冲突事件，条码枪、关闭窗口快捷键等。
  * Example:
- * `document.addEventListener('keydown', disableConflictEvent); => 进入页面后禁用冲突事件`
- * `document.removeEventListener('keydown', disableConflictEvent); => 退出页面后关闭监听`
+ * `document.addEventListener('keydown', disableConflictEvent) => 进入页面后禁用冲突事件`
+ * `document.removeEventListener('keydown', disableConflictEvent) => 退出页面后关闭监听`
  * @param event 触发事件
  * @returns
  */
@@ -289,9 +289,9 @@ export function disableConflictEvent(event: any) {
 /**
  * 版本号比对算法
  * Example:
- * `checkVersion('1.0.1-rc', '1.0.0', '-rc'); => 1`
- * `checkVersion('1.0.0', '1.0.1'); => -1`
- * `checkVersion('1.0.0', '1.0.0'); => 0`
+ * `checkVersion('1.0.1-rc', '1.0.0', '-rc') => 1`
+ * `checkVersion('1.0.0', '1.0.1') => -1`
+ * `checkVersion('1.0.0', '1.0.0') => 0`
  * @param targetVersion
  * @param currentVersion
  * @param testStr default(-rc)

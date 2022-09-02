@@ -2,11 +2,11 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:05:14
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-06-14 18:11:14
+ * @LastEditTime: 2022-09-02 10:17:37
  * @Description: 对象相关方法
  * @FilePath: \js-xxx\src\Object\index.ts
  */
-import { getType } from '@/Tools';
+import { getType } from '@/Types';
 
 /**
  * 获取多级对象值

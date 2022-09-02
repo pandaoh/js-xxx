@@ -8,4 +8,6 @@ export declare function transferCase(str: string, type: 1 | 2 | 3 | 'upper' | 'l
 export declare function splitCase(str: string): string[];
 export declare function camelCase(str: string): string;
 export declare function repeat(str: string, n?: number): string;
+export declare function isUrl(value: string): boolean;
+export declare function isEmail(value: string): boolean;
 //# sourceMappingURL=index.d.ts.map

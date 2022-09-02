@@ -2,11 +2,11 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:15:37
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-05-25 17:15:19
+ * @LastEditTime: 2022-09-02 10:17:54
  * @Description: 请求相关方法
  * @FilePath: \js-xxx\src\Request\index.ts
  */
-import { getType } from '@/Tools';
+import { getType } from '@/Types';
 
 /**
  * 对象转 querystring 暂时只支持两层数据，第二层对象与与数组值不能为引用类型。

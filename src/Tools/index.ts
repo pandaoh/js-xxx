@@ -2,23 +2,14 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-09-01 18:34:48
+ * @LastEditTime: 2022-09-02 10:20:07
  * @Description: 工具方法
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
 
 import { getTimeCode } from '@/Date';
 import { arraySet } from '@/Array';
-
-/**
- * 获取变量类型
- * Example: `getType(1) => 'number'`
- * @param variable 变量
- * @returns
- */
-export function getType(variable: any): string {
-  return Object.prototype.toString.call(variable).slice(8, -1).toLowerCase();
-}
+import { getType } from '@/Types';
 
 /**
  * 判断值是否为空
@@ -249,24 +240,6 @@ export function getUUID(length: number, chars: string | any[]): string {
 }
 
 /**
- * 检查字符串是否为有效的 JSON
- * Example:
- * `isValidJSON('{"name":"leo", "age":20}'); => true`
- * `isValidJSON('{"name":"leo", age:"20"}'); => false`
- * `isValidJSON(null); => true`
- * @param str 字符串
- * @returns
- */
-export function isValidJSON(str: any): boolean {
-  try {
-    JSON.parse(str);
-    return true;
-  } catch (e) {
-    return false;
-  }
-}
-
-/**
  * 获取 bootstrap 颜色
  * Example:
  * `getBSColor() => '#6c757d'`
@@ -317,56 +290,6 @@ export function getBSColor(key: string = 'default'): string {
     grey: '#6c757d'
   };
   return colors[key];
-}
-
-/**
- * 任意值转换为字符串
- * Example:
- * `toStr({}) => '{}'`
- * `toStr([1, 2]) => '[1,2]'`
- * `toStr(null) => ''`
- * @param value
- * @returns
- */
-export function toStr(value: any): string {
-  if (value == null) {
-    return '';
-  }
-  if (typeof value == 'object') {
-    return JSON.stringify(value);
-  }
-  return value.toString();
-}
-
-/**
- * 任意值转换为数字
- * Example:
- * `toNum({}) => 0`
- * `toNum([2]) => 2`
- * `toNum('-123') => -123`
- * @param value
- * @returns
- */
-export function toNum(value: any): string {
-  value = Number(value);
-  return isNaN(value) ? 0 : value;
-}
-
-/**
- * 任意值转换为布尔类型
- * Example:
- * `toBool(1) => true`
- * `toBool('false') => false`
- * `toBool(null) => false`
- * @param value
- * @returns
- */
-export function toBool(value: any): boolean {
-  if (getType(value) == 'string') {
-    value = value.toLowerCase();
-    return value !== '' && value !== 'false';
-  }
-  return !!value;
 }
 
 /**

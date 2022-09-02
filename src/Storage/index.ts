@@ -2,12 +2,12 @@
  * @Author: HxB
  * @Date: 2022-06-04 16:30:04
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-08-03 17:26:38
+ * @LastEditTime: 2022-09-02 10:19:28
  * @Description: localStorage 与 sessionStorage
  * @FilePath: \js-xxx\src\Storage\index.ts
  */
 
-import { getType, isValidJSON } from '@/Tools';
+import { getType, isJSON } from '@/Types';
 import { isDecimal, isInteger } from '@/Number';
 // 加密与过期设置参考 https://juejin.cn/post/7104301566857445412
 // 可以利用提供的加密方法手动绝对是否加密一些关键数据
@@ -42,7 +42,7 @@ function _tempSet(key: string, value: any, storeType: 'L' | 'S'): boolean {
 
 function _tempGet(key: string, storeType: 'L' | 'S'): any {
   let result: any = storeType === 'L' ? window.localStorage.getItem(key) : window.sessionStorage.getItem(key);
-  result = isValidJSON(result) ? JSON.parse(result) : result;
+  result = isJSON(result) ? JSON.parse(result) : result;
   let numberType = '[X_TYPE_number]';
   let stringType = '[X_TYPE_string]';
   let booleanType = '[X_TYPE_boolean]';
