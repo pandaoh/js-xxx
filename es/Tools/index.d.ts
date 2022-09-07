@@ -25,6 +25,7 @@ export declare function intersection(paramA: any, paramB: any): any;
 export declare function union(paramA: any, paramB: any): any;
 export declare function difference(paramA: any, paramB: any): any;
 export declare function jsonClone(value: any): any;
+export declare function logRunTime(fn: any, timeKey: string): void;
 export declare function Logger(): {
     log: (...args: any[]) => void;
     info: (...args: any[]) => void;
@@ -35,4 +36,6 @@ export declare function Logger(): {
     dark: (...args: any[]) => void;
     [key: string]: (...args: any[]) => void;
 };
+export declare function waitUntil(condition: any, timeout?: number, interval?: number): Promise<any>;
+export declare function ms(str: any): string | number;
 //# sourceMappingURL=index.d.ts.map

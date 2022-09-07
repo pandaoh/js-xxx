@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-09-05 16:23:35
+ * @LastEditTime: 2022-09-07 14:31:46
  * @Description: 类型校验等方法
  * @FilePath: \js-xxx\src\Types\index.ts
  */
@@ -47,7 +47,7 @@ export function toStr(value: any): string {
  * @param value
  * @returns
  */
-export function toNum(value: any): string {
+export function toNum(value: any): number {
   value = Number(value);
   return isNaN(value) ? 0 : value;
 }
@@ -226,7 +226,7 @@ export function isFn(value: any): boolean {
  * @returns
  */
 export function isPromise(value: any): boolean {
-  return getType(value) === 'promise';
+  return getType(value) === 'promise' || (isFn(value?.then) && isFn(value?.catch));
 }
 
 /**

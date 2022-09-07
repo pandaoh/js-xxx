@@ -2,14 +2,14 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-09-05 16:20:29
+ * @LastEditTime: 2022-09-07 16:46:29
  * @Description: 工具方法
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
 
 import { getTimeCode } from '@/Date';
 import { arraySet } from '@/Array';
-import { getType } from '@/Types';
+import { getType, isPromise, isStr, toBool, toNum } from '@/Types';
 
 /**
  * 判断值是否为空
@@ -350,6 +350,7 @@ export function uuid(): string {
  * @returns
  */
 export function getKey(size: number = 21, prefix: string = ''): string {
+  // 外部
   const symbols = 'ModuleSymbhasOwnPr-0123456789ABCDEFGHIJKLNQRTUVWXYZ_cfgijkpqtvxz';
 
   let id = '';
@@ -563,6 +564,44 @@ export function jsonClone(value: any): any {
 }
 
 /**
+ * 打印某个方法运行时间
+ * Example:
+ * `logRunTime(() => [1, 2, 3].reduce(...))`
+ * `logRunTime(() => [1, 2, 3].reduce(...), 'timeKey')`
+ * `logRunTime(async () => { await fun1(); await fun2(); })`
+ * `logRunTime($promiseReturnFunction)`
+ * `logRunTime(new Promise((resolve, reject) => { setTimeout(() => resolve('test'), 1000) }))`
+ * @param fn
+ * @param timeKey
+ * @returns
+ */
+export function logRunTime(fn: any, timeKey: string): void {
+  timeKey = timeKey ?? getKey(5, 'log-run-time-');
+  const type = getType(fn);
+  if (type == 'asyncfunction' || isPromise(fn) || isPromise(fn?.())) {
+    if (type == 'promise') {
+      console.time(timeKey);
+      fn.then(() => console.timeEnd(timeKey)).catch((e: any) => {
+        console.log({ e });
+        console.timeEnd(timeKey);
+      });
+    } else {
+      console.time(timeKey);
+      fn()
+        .then(() => console.timeEnd(timeKey))
+        .catch((e: any) => {
+          console.log({ e });
+          console.timeEnd(timeKey);
+        });
+    }
+  } else {
+    console.time(timeKey);
+    fn?.();
+    console.timeEnd(timeKey);
+  }
+}
+
+/**
  * 打印日志工具类
  * Example:
  * `const {log, warning, success, danger, dark, primary, info} = Logger()`
@@ -610,4 +649,90 @@ export function Logger(): {
     };
   });
   return result;
+}
+
+/**
+ * 直到某个函数返回 toBool(true) 的结果(执行完成)
+ * Example:
+ * `let a = 5;`
+ * `setTimeout(() => (a = 10), 5000);`
+ * `waitUntil(() => a === 10).then(() => { console.log(a) });`
+ * @param condition
+ * @param timeout
+ * @param interval
+ * @returns
+ */
+export function waitUntil(condition: any, timeout: number = 0, interval: number = 250): Promise<any> {
+  function evalCondition() {
+    return new Promise((resolve, reject) => {
+      try {
+        resolve(condition());
+      } catch (e) {
+        reject(e);
+      }
+    });
+  }
+
+  return new Promise((resolve, reject) => {
+    const startTime = new Date().getTime();
+    const pollCondition = () => {
+      evalCondition().then((val) => {
+        const elapsed = new Date().getTime() - startTime;
+        if (toBool(val)) {
+          resolve(val);
+        } else if (timeout && elapsed >= timeout) {
+          reject(Error(`Wait timed out after ${timeout} ms`));
+        } else {
+          setTimeout(pollCondition, interval);
+        }
+      }, reject);
+    };
+    pollCondition();
+  });
+}
+
+/**
+ * 毫秒转换
+ * Example:
+ * `ms('1s') => 1000`
+ * `ms('1m') => 60000`
+ * `ms('1.5h') => 5400000`
+ * `ms('1d') => 86400000`
+ * `ms('1y') => 31557600000`
+ * `ms('1000') => 1000`
+ * `ms(1500) => '1.5s'`
+ * `ms(60000) => '1m'`
+ * @param str
+ * @returns
+ */
+export function ms(str: any): string | number {
+  // 外部
+  const factor: any = {
+    ms: 1,
+    s: 1000
+  };
+  factor.m = factor.s * 60;
+  factor.h = factor.m * 60;
+  factor.d = factor.h * 24;
+  factor.y = factor.d * 365.25;
+  const suffixList = ['y', 'd', 'h', 'm', 's'];
+  const regStrTime = /^((?:\d+)?\.?\d+) *(s|m|h|d|y)?$/;
+  if (isStr(str)) {
+    const match = str.match(regStrTime);
+
+    if (!match) return 0;
+
+    return toNum(match[1]) * factor[match[2] || 'ms'];
+  }
+  const num = str;
+  let suffix = 'ms';
+
+  for (let i = 0, len = suffixList.length; i < len; i++) {
+    if (num >= factor[suffixList[i]]) {
+      suffix = suffixList[i];
+      break;
+    }
+  }
+
+  return +(num / factor[suffix]).toFixed(2) + suffix;
 }

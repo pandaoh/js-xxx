@@ -1,4 +1,5 @@
 export declare function getV(defaultResult: any, ...args: any): any;
+export declare function getVar(data: any, keys: string, defaultResult?: any): any;
 export declare function mergeObj(oldObj: {
     [key: string]: any;
 }, newObj: {

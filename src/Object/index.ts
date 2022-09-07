@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:05:14
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-09-02 10:17:37
+ * @LastEditTime: 2022-09-07 15:14:11
  * @Description: 对象相关方法
  * @FilePath: \js-xxx\src\Object\index.ts
  */
@@ -10,7 +10,7 @@ import { getType } from '@/Types';
 
 /**
  * 获取多级对象值
- * Example: `getV('', {name: {children: 123}}, 'name', 'children') => 123`
+ * Example: `getV('默认值', {name: {children: [123, 456]}}, 'name', 'children', '0') => 123`
  * @param defaultResult 默认值
  * @param args 需要获取的多级 rest 参数
  * @returns
@@ -18,6 +18,27 @@ import { getType } from '@/Types';
 export function getV(defaultResult: any, ...args: any): any {
   return args.length >= 2
     ? args.reduce((a: any, b: any) => (a && a.hasOwnProperty(b) ? a[b] : defaultResult))
+    : defaultResult;
+}
+
+/**
+ * 获取多级对象值通过字符串 keys
+ * Example:
+ * `getVar({name: {children: [123, 456]}}, 'name.children.1', '默认值') => 456`
+ * `getVar([1, 2, 3, 4], '100', '默认值') => '默认值'`
+ * @param data 源数据
+ * @param keys 多级对象字符串
+ * @param defaultResult 默认值
+ * @returns
+ */
+export function getVar(data: any, keys: string, defaultResult?: any): any {
+  if (keys == undefined) {
+    return defaultResult;
+  }
+  // 不要使用 replace(/\[(\w+)\]/g, '.$1') 去替换，哪怕加个前后 \. 的正则也无法兼容所有情况，应该交给使用者去考虑，因为确实有 [] 做 key 的情况。
+  const args = `${keys}`?.split('.');
+  return args && args?.length
+    ? args.reduce((a: any, b: any) => (a && a.hasOwnProperty(b) ? a[b] : defaultResult), data)
     : defaultResult;
 }
 

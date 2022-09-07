@@ -10,4 +10,11 @@ export declare function camelCase(str: string): string;
 export declare function repeat(str: string, n?: number): string;
 export declare function isUrl(value: string): boolean;
 export declare function isEmail(value: string): boolean;
+export declare function slugify(str: string, replacement?: {
+    [index: string]: string;
+}): string;
+export declare function truncate(txt: string, width: number, options?: {
+    ellipsis?: string;
+    separator?: string;
+}): string;
 //# sourceMappingURL=index.d.ts.map

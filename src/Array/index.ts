@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 11:52:01
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-09-02 17:06:25
+ * @LastEditTime: 2022-09-07 16:59:27
  * @Description: 数组常用方法
  * @FilePath: \js-xxx\src\Array\index.ts
  */
@@ -62,6 +62,31 @@ export function arraySet(arr: string | Iterable<any> | null | undefined): string
     return arr;
   }
   return [...new Set(arr)];
+}
+
+/**
+ * 数组去重
+ * Example:
+ * `unique([1, 2, 3, 1, 2, 3]) => [1, 2, 3]`
+ * `unique([{id: 1, value: 'hello'}, {id: 2, value: 'world'}, {id: 2, value: 'world', others: true}], (a, b) => a.id === b.id) => [id1, id2带true]`
+ * @param arr 数组
+ * @param filter 过滤逻辑
+ * @returns
+ */
+export function unique(arr: any[], filter: any) {
+  if (!filter) {
+    filter = (a: any, b: any) => a === b;
+  }
+  return arr.filter((item, idx, arr) => {
+    const len = arr.length;
+
+    while (++idx < len) {
+      if (filter(item, arr[idx])) return false;
+    }
+
+    // arr.indexOf(item) === idx;
+    return true;
+  });
 }
 
 /**

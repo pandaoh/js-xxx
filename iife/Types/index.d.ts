@@ -1,6 +1,6 @@
 export declare function getType(variable: any): string;
 export declare function toStr(value: any): string;
-export declare function toNum(value: any): string;
+export declare function toNum(value: any): number;
 export declare function toBool(value: any): boolean;
 export declare function isJSON(str: any): boolean;
 export declare function isBool(value: any): boolean;

@@ -1,6 +1,6 @@
-js-xxx - v1.2.8
+js-xxx - v1.2.9
 
-# js-xxx - v1.2.8
+# js-xxx - v1.2.9
 
 ## Table of contents
 
@@ -76,6 +76,7 @@ js-xxx - v1.2.8
 - [getUUID](README.md#getuuid)
 - [getUserAgent](README.md#getuseragent)
 - [getV](README.md#getv)
+- [getVar](README.md#getvar)
 - [getViewportSize](README.md#getviewportsize)
 - [getWebSocket](README.md#getwebsocket)
 - [globalError](README.md#globalerror)
@@ -112,9 +113,11 @@ js-xxx - v1.2.8
 - [jsonClone](README.md#jsonclone)
 - [localStorageGet](README.md#localstorageget)
 - [localStorageSet](README.md#localstorageset)
+- [logRunTime](README.md#logruntime)
 - [maskString](README.md#maskstring)
 - [md5](README.md#md5)
 - [mergeObj](README.md#mergeobj)
+- [ms](README.md#ms)
 - [offDefaultEvent](README.md#offdefaultevent)
 - [onClick2MoreClick](README.md#onclick2moreclick)
 - [openFile](README.md#openfile)
@@ -138,6 +141,7 @@ js-xxx - v1.2.8
 - [sha256](README.md#sha256)
 - [shuffleArray](README.md#shufflearray)
 - [sleep](README.md#sleep)
+- [slugify](README.md#slugify)
 - [sortBy](README.md#sortby)
 - [sortCallBack](README.md#sortcallback)
 - [splitCase](README.md#splitcase)
@@ -153,10 +157,13 @@ js-xxx - v1.2.8
 - [toStr](README.md#tostr)
 - [transferCase](README.md#transfercase)
 - [trim](README.md#trim)
+- [truncate](README.md#truncate)
 - [unicode2str](README.md#unicode2str)
 - [union](README.md#union)
+- [unique](README.md#unique)
 - [uuid](README.md#uuid)
 - [versionUpgrade](README.md#versionupgrade)
+- [waitUntil](README.md#waituntil)
 
 ## Functions
 
@@ -1626,7 +1633,7 @@ ___
 ▸ **getV**(`defaultResult`, ...`args`): `any`
 
 获取多级对象值
-Example: `getV('', {name: {children: 123}}, 'name', 'children') => 123`
+Example: `getV('默认值', {name: {children: [123, 456]}}, 'name', 'children', '0') => 123`
 
 #### Parameters
 
@@ -1634,6 +1641,29 @@ Example: `getV('', {name: {children: 123}}, 'name', 'children') => 123`
 | :------ | :------ | :------ |
 | `defaultResult` | `any` | 默认值 |
 | `...args` | `any` | 需要获取的多级 rest 参数 |
+
+#### Returns
+
+`any`
+
+___
+
+### getVar
+
+▸ **getVar**(`data`, `keys`, `defaultResult?`): `any`
+
+获取多级对象值通过字符串 keys
+Example:
+`getVar({name: {children: [123, 456]}}, 'name.children.1', '默认值') => 456`
+`getVar([1, 2, 3, 4], '100', '默认值') => '默认值'`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `data` | `any` | 源数据 |
+| `keys` | `string` | 多级对象字符串 |
+| `defaultResult?` | `any` | 默认值 |
 
 #### Returns
 
@@ -2354,6 +2384,31 @@ Example: `localStorageSet("key", "value") => 存储时不需要处理数据，va
 
 ___
 
+### logRunTime
+
+▸ **logRunTime**(`fn`, `timeKey`): `void`
+
+打印某个方法运行时间
+Example:
+`logRunTime(() => [1, 2, 3].reduce(...))`
+`logRunTime(() => [1, 2, 3].reduce(...), 'timeKey')`
+`logRunTime(async () => { await fun1(); await fun2(); })`
+`logRunTime($promiseReturnFunction)`
+`logRunTime(new Promise((resolve, reject) => { setTimeout(() => resolve('test'), 1000) }))`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fn` | `any` |
+| `timeKey` | `string` |
+
+#### Returns
+
+`void`
+
+___
+
 ### maskString
 
 ▸ **maskString**(`str`): `string`
@@ -2420,6 +2475,33 @@ Example:
 #### Returns
 
 `Object`
+
+___
+
+### ms
+
+▸ **ms**(`str`): `string` \| `number`
+
+毫秒转换
+Example:
+`ms('1s') => 1000`
+`ms('1m') => 60000`
+`ms('1.5h') => 5400000`
+`ms('1d') => 86400000`
+`ms('1y') => 31557600000`
+`ms('1000') => 1000`
+`ms(1500) => '1.5s'`
+`ms(60000) => '1m'`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `str` | `any` |
+
+#### Returns
+
+`string` \| `number`
 
 ___
 
@@ -2894,6 +2976,28 @@ Example: `await sleep(1000) => 等待 1000 毫秒再执行后面的`
 
 ___
 
+### slugify
+
+▸ **slugify**(`str`, `replacement?`): `string`
+
+Slug 化字符串 => URL
+Example:
+`slugify('I LOVE OQM') => 'I_LOVE_OQM'`
+`slugify('I LOVE OQM', { ' ': '-' }) => 'I-LOVE-OQM'`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `str` | `string` |
+| `replacement?` | `Object` |
+
+#### Returns
+
+`string`
+
+___
+
 ### sortBy
 
 ▸ **sortBy**(`keys?`, `isAscend?`): `any`
@@ -3144,7 +3248,7 @@ ___
 
 ### toNum
 
-▸ **toNum**(`value`): `string`
+▸ **toNum**(`value`): `number`
 
 任意值转换为数字
 Example:
@@ -3160,7 +3264,7 @@ Example:
 
 #### Returns
 
-`string`
+`number`
 
 ___
 
@@ -3230,6 +3334,31 @@ Example: `trim('  a  b  ', 4) => 'a b'`
 
 ___
 
+### truncate
+
+▸ **truncate**(`txt`, `width`, `options?`): `string`
+
+截取字符串，使其长度为指定值，包含省略符。
+Example:
+`truncate('HXB HXB HXB HXB HXB HXB', 12) => 'HXB HXB H...'`
+`truncate('OQM-OQM-OQM-OQM-OQM-OQM', 10, { ellipsis: '～', separator: '-' }) => 'OQM-OQM～'`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `txt` | `string` |
+| `width` | `number` |
+| `options?` | `Object` |
+| `options.ellipsis?` | `string` |
+| `options.separator?` | `string` |
+
+#### Returns
+
+`string`
+
+___
+
 ### unicode2str
 
 ▸ **unicode2str**(`value`): `string`
@@ -3271,6 +3400,28 @@ Example:
 
 ___
 
+### unique
+
+▸ **unique**(`arr`, `filter`): `any`[]
+
+数组去重
+Example:
+`unique([1, 2, 3, 1, 2, 3]) => [1, 2, 3]`
+`unique([{id: 1, value: 'hello'}, {id: 2, value: 'world'}, {id: 2, value: 'world', others: true}], (a, b) => a.id === b.id) => [id1, id2带true]`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `arr` | `any`[] | 数组 |
+| `filter` | `any` | 过滤逻辑 |
+
+#### Returns
+
+`any`[]
+
+___
+
 ### uuid
 
 ▸ **uuid**(): `string`
@@ -3305,3 +3456,27 @@ Example:
 #### Returns
 
 `string`
+
+___
+
+### waitUntil
+
+▸ **waitUntil**(`condition`, `timeout?`, `interval?`): `Promise`<`any`\>
+
+直到某个函数返回 toBool(true) 的结果(执行完成)
+Example:
+`let a = 5;`
+`setTimeout(() => (a = 10), 5000);`
+`waitUntil(() => a === 10).then(() => { console.log(a) });`
+
+#### Parameters
+
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `condition` | `any` | `undefined` |
+| `timeout` | `number` | `0` |
+| `interval` | `number` | `250` |
+
+#### Returns
+
+`Promise`<`any`\>

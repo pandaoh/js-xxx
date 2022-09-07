@@ -156,7 +156,7 @@ function isFn(value) {
     return type === 'function' || type === 'generatorfunction' || type === 'asyncfunction';
 }
 function isPromise(value) {
-    return getType(value) === 'promise';
+    return getType(value) === 'promise' || (isFn(value === null || value === void 0 ? void 0 : value.then) && isFn(value === null || value === void 0 ? void 0 : value.catch));
 }
 function isNaN$1(value) {
     return Object.is(NaN, value);
@@ -197,6 +197,19 @@ function arraySet(arr) {
         return arr;
     }
     return __spreadArray([], __read(new Set(arr)), false);
+}
+function unique(arr, filter) {
+    if (!filter) {
+        filter = function (a, b) { return a === b; };
+    }
+    return arr.filter(function (item, idx, arr) {
+        var len = arr.length;
+        while (++idx < len) {
+            if (filter(item, arr[idx]))
+                return false;
+        }
+        return true;
+    });
 }
 function sortCallBack(key, isAscend) {
     if (isAscend === void 0) { isAscend = true; }
@@ -7045,6 +7058,431 @@ function getCryptoJS() {
     return CryptoJS;
 }
 
+function empty(variable) {
+    if (typeof variable === 'boolean') {
+        return false;
+    }
+    if (variable === 'null') {
+        return true;
+    }
+    if (variable === 'undefined') {
+        return true;
+    }
+    if (!variable && variable !== 0 && variable !== '0') {
+        return true;
+    }
+    if (Array.isArray(variable) && variable.length === 0) {
+        return true;
+    }
+    if (Object.prototype.toString.call(variable) === '[object Object]' && Object.keys(variable).length === 0) {
+        return true;
+    }
+    return false;
+}
+function get1Var(data) {
+    if (getType(data) !== 'object' && !Array.isArray(data)) {
+        return data;
+    }
+    for (var key in data) {
+        var result = data[key];
+        return result;
+    }
+}
+function getRandVar(value, count) {
+    if (count === void 0) { count = 1; }
+    var sample = Array.isArray(value) ? JSON.parse(JSON.stringify(value)) : Object.values(value);
+    var len = sample.length;
+    count = Math.max(Math.min(count, len), 0);
+    var last = len - 1;
+    var result = [];
+    for (var i = 0; i < count; i++) {
+        var rand = getRandNum(i, last);
+        result.push(sample[rand]);
+    }
+    return result.length == 1 ? result[0] : result;
+}
+function getLastVar(data) {
+    var isObj = getType(data) == 'object';
+    if (!isObj && !Array.isArray(data)) {
+        return data;
+    }
+    if (isObj) {
+        var newArr = Object.keys(data);
+        return newArr.length ? data[newArr[newArr.length - 1]] : undefined;
+    }
+    return data.length ? data[data.length - 1] : undefined;
+}
+function debounce(fn, delay) {
+    if (delay === void 0) { delay = 1000; }
+    var timer = null;
+    return function () {
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+            fn.apply(this, arguments);
+        }, delay);
+    };
+}
+function throttle(fn, delay) {
+    if (delay === void 0) { delay = 2000; }
+    var canRun = true;
+    return function () {
+        if (!canRun)
+            return;
+        canRun = false;
+        fn.apply(this, arguments);
+        setTimeout(function () {
+            canRun = true;
+        }, delay);
+    };
+}
+function curryIt(fn) {
+    var length = fn.length;
+    var args = [];
+    return function (arg) {
+        args.push(arg);
+        length--;
+        if (length <= 0) {
+            return fn.apply(this, args);
+        }
+        else {
+            return arguments.callee;
+        }
+    };
+}
+function globalError(fn, notShowConsole) {
+    if (notShowConsole === void 0) { notShowConsole = true; }
+    window.onerror = function (message, source, lineno, colno, error) {
+        notShowConsole && console.log('js-xxx:globalError', { message: message, source: source, lineno: lineno, colno: colno, error: error });
+        fn.call(this, message, source, lineno, colno, error);
+        return notShowConsole;
+    };
+}
+function getRandNum(min, max) {
+    if (min === void 0) { min = 0; }
+    if (max === void 0) { max = 10; }
+    return Math.floor(min + Math.random() * (max - min + 1));
+}
+function getRandColor() {
+    return '#' + ('00000' + ((Math.random() * 0x1000000) << 0).toString(16)).slice(-6);
+}
+function getRandStr(len) {
+    if (len === void 0) { len = 8; }
+    return (Math.random() * Number('1'.padEnd(len + 1, '0'))).toFixed().slice(0, len);
+}
+function getTimeAndStr(len, radix) {
+    if (len === void 0) { len = 5; }
+    if (radix === void 0) { radix = 36; }
+    return len === 0 ? "".concat(getTimeCode()) : Number("".concat(getRandStr(len)).concat(Date.now())).toString(radix);
+}
+function getUUID(length, chars) {
+    chars = chars || '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    length = length || 8;
+    var result = '';
+    for (var i = length; i > 0; --i)
+        result += chars[Math.floor(Math.random() * chars.length)];
+    return result;
+}
+function getBSColor(key) {
+    if (key === void 0) { key = 'default'; }
+    key = "".concat(key).toLowerCase();
+    var keyList = [
+        'dark',
+        'black',
+        'light',
+        'white',
+        'info',
+        'cyan',
+        'success',
+        'green',
+        'warning',
+        'yellow',
+        'danger',
+        'red',
+        'primary',
+        'blue',
+        'secondary',
+        'default',
+        'grey'
+    ];
+    key = keyList.includes(key) ? key : 'others';
+    var colors = {
+        dark: '#343a40',
+        black: '#343a40',
+        light: '#f8f9fa',
+        white: '#f8f9fa',
+        info: '#17a2b8',
+        cyan: '#17a2b8',
+        success: '#28a745',
+        green: '#28a745',
+        warning: '#ffc107',
+        yellow: '#ffc107',
+        danger: '#dc3545',
+        red: '#dc3545',
+        primary: '#007bff',
+        blue: '#007bff',
+        secondary: '#6c757d',
+        default: '#6c757d',
+        grey: '#6c757d'
+    };
+    return colors[key];
+}
+function uuid() {
+    var tempUrl = URL.createObjectURL(new Blob());
+    var uuid = tempUrl.toString();
+    URL.revokeObjectURL(tempUrl);
+    return uuid.substring(uuid.lastIndexOf('/') + 1);
+}
+function getKey(size, prefix) {
+    if (size === void 0) { size = 21; }
+    if (prefix === void 0) { prefix = ''; }
+    var symbols = 'ModuleSymbhasOwnPr-0123456789ABCDEFGHIJKLNQRTUVWXYZ_cfgijkpqtvxz';
+    var id = '';
+    var len = symbols.length;
+    var ret = new Uint8Array(size);
+    for (var i = 0; i < size; i++)
+        ret[i] = getRandNum(0, 255);
+    var bytes = ret;
+    while (0 < size--) {
+        id += symbols[bytes[size] % len];
+    }
+    return prefix + id;
+}
+function getSize(value) {
+    if (getType(value) === 'object') {
+        return Object.keys(value).length;
+    }
+    try {
+        return value.length ? value.length : 0;
+    }
+    catch (e) {
+        return 0;
+    }
+}
+function openFile(options) {
+    return new Promise(function (resolve) {
+        var input = document.createElement('input');
+        input.style.position = 'fixed';
+        input.style.bottom = '0';
+        input.style.left = '0';
+        input.style.visibility = 'hidden';
+        input.setAttribute('type', 'file');
+        if (options === null || options === void 0 ? void 0 : options.accept) {
+            input.setAttribute('accept', options.accept);
+        }
+        if (options === null || options === void 0 ? void 0 : options.multiple) {
+            input.setAttribute('multiple', '');
+        }
+        document.body.appendChild(input);
+        input.addEventListener('change', function () {
+            document.body.removeChild(input);
+            resolve(input.files);
+        });
+        input.click();
+    });
+}
+function openFullscreen(element) {
+    if (element === void 0) { element = document.body; }
+    if (element.requestFullscreen) {
+        element.requestFullscreen();
+    }
+    else if (element.mozRequestFullScreen) {
+        element.mozRequestFullScreen();
+    }
+    else if (element.msRequestFullscreen) {
+        element.msRequestFullscreen();
+    }
+    else if (element.webkitRequestFullscreen) {
+        element.webkitRequestFullScreen();
+    }
+}
+function closeFullscreen() {
+    if (document.exitFullscreen) {
+        document.exitFullscreen();
+    }
+    else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+    }
+    else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+    }
+    else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+    }
+}
+function intersection(paramA, paramB) {
+    var paramAType = getType(paramA);
+    if (paramAType != getType(paramB))
+        return false;
+    if (paramAType != 'object' && paramAType != 'array')
+        return false;
+    var isObj = paramAType == 'object';
+    var result = isObj ? {} : [];
+    if (isObj) {
+        for (var key in paramA) {
+            if (paramB[key] && paramA[key] == paramB[key]) {
+                result[key] = paramA[key];
+            }
+        }
+    }
+    else {
+        for (var key in paramA) {
+            if (paramB.includes(paramA[key])) {
+                result.push(paramA[key]);
+            }
+        }
+        result = arraySet(result);
+    }
+    return jsonClone(result);
+}
+function union(paramA, paramB) {
+    var paramAType = getType(paramA);
+    if (paramAType != getType(paramB))
+        return false;
+    if (paramAType != 'object' && paramAType != 'array')
+        return false;
+    if (paramAType == 'object') {
+        return jsonClone(__assign(__assign({}, paramB), paramA));
+    }
+    else {
+        return jsonClone(arraySet(__spreadArray(__spreadArray([], __read(paramA), false), __read(paramB), false)));
+    }
+}
+function difference(paramA, paramB) {
+    var paramAType = getType(paramA);
+    if (paramAType != getType(paramB))
+        return false;
+    if (paramAType != 'object' && paramAType != 'array')
+        return false;
+    var isObj = paramAType == 'object';
+    var result = isObj ? {} : [];
+    if (isObj) {
+        for (var key in paramA) {
+            if (paramB[key] != paramA[key]) {
+                result[key] = paramA[key];
+            }
+        }
+    }
+    else {
+        result = paramA.filter(function (item) { return !paramB.includes(item); });
+        result = arraySet(result);
+    }
+    return jsonClone(result);
+}
+function jsonClone(value) {
+    try {
+        return JSON.parse(JSON.stringify(value));
+    }
+    catch (e) {
+        return value;
+    }
+}
+function logRunTime(fn, timeKey) {
+    timeKey = timeKey !== null && timeKey !== void 0 ? timeKey : getKey(5, 'log-run-time-');
+    var type = getType(fn);
+    if (type == 'asyncfunction' || isPromise(fn) || isPromise(fn === null || fn === void 0 ? void 0 : fn())) {
+        if (type == 'promise') {
+            console.time(timeKey);
+            fn.then(function () { return console.timeEnd(timeKey); }).catch(function (e) {
+                console.log({ e: e });
+                console.timeEnd(timeKey);
+            });
+        }
+        else {
+            console.time(timeKey);
+            fn()
+                .then(function () { return console.timeEnd(timeKey); })
+                .catch(function (e) {
+                console.log({ e: e });
+                console.timeEnd(timeKey);
+            });
+        }
+    }
+    else {
+        console.time(timeKey);
+        fn === null || fn === void 0 ? void 0 : fn();
+        console.timeEnd(timeKey);
+    }
+}
+function Logger() {
+    function _logger(value, type) {
+        if (type === void 0) { type = 'default'; }
+        console.log("\n%c==========> ", "color:".concat(getBSColor(type)), value, '\n');
+    }
+    var result = {};
+    ['warning', 'info', 'danger', 'primary', 'success', 'dark', 'log'].forEach(function (type) {
+        result[type] = function () {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i] = arguments[_i];
+            }
+            var printType = type == 'log' ? 'default' : type;
+            args.forEach(function (val) {
+                _logger(val, printType);
+            });
+        };
+    });
+    return result;
+}
+function waitUntil(condition, timeout, interval) {
+    if (timeout === void 0) { timeout = 0; }
+    if (interval === void 0) { interval = 250; }
+    function evalCondition() {
+        return new Promise(function (resolve, reject) {
+            try {
+                resolve(condition());
+            }
+            catch (e) {
+                reject(e);
+            }
+        });
+    }
+    return new Promise(function (resolve, reject) {
+        var startTime = new Date().getTime();
+        var pollCondition = function () {
+            evalCondition().then(function (val) {
+                var elapsed = new Date().getTime() - startTime;
+                if (toBool(val)) {
+                    resolve(val);
+                }
+                else if (timeout && elapsed >= timeout) {
+                    reject(Error("Wait timed out after ".concat(timeout, " ms")));
+                }
+                else {
+                    setTimeout(pollCondition, interval);
+                }
+            }, reject);
+        };
+        pollCondition();
+    });
+}
+function ms(str) {
+    var factor = {
+        ms: 1,
+        s: 1000
+    };
+    factor.m = factor.s * 60;
+    factor.h = factor.m * 60;
+    factor.d = factor.h * 24;
+    factor.y = factor.d * 365.25;
+    var suffixList = ['y', 'd', 'h', 'm', 's'];
+    var regStrTime = /^((?:\d+)?\.?\d+) *(s|m|h|d|y)?$/;
+    if (isStr(str)) {
+        var match = str.match(regStrTime);
+        if (!match)
+            return 0;
+        return toNum(match[1]) * factor[match[2] || 'ms'];
+    }
+    var num = str;
+    var suffix = 'ms';
+    for (var i = 0, len = suffixList.length; i < len; i++) {
+        if (num >= factor[suffixList[i]]) {
+            suffix = suffixList[i];
+            break;
+        }
+    }
+    return +(num / factor[suffix]).toFixed(2) + suffix;
+}
+
 function unicode2str(value) {
     return escape(value).toLocaleLowerCase().replace(/%u/gi, '\\u');
 }
@@ -7162,6 +7600,45 @@ function isUrl(value) {
 function isEmail(value) {
     var regEmail = /.+@.+\..+/;
     return regEmail.test(value);
+}
+function slugify(str, replacement) {
+    var regForbidden = /[^\w\s$*_+~.()'"!\-:@]/g;
+    var REPLACEMENT = '$ dollar,% percent,& and,< less,> greater,| or,¢ cent,£ pound,¤ currency,¥ yen,© (c),ª a,® (r),º o,À A,Á A,Â A,Ã A,Ä A,Å A,Æ AE,Ç C,È E,É E,Ê E,Ë E,Ì I,Í I,Î I,Ï I,Ð D,Ñ N,Ò O,Ó O,Ô O,Õ O,Ö O,Ø O,Ù U,Ú U,Û U,Ü U,Ý Y,Þ TH,ß ss,à a,á a,â a,ã a,ä a,å a,æ ae,ç c,è e,é e,ê e,ë e,ì i,í i,î i,ï i,ð d,ñ n,ò o,ó o,ô o,õ o,ö o,ø o,ù u,ú u,û u,ü u,ý y,þ th,ÿ y,Ā A,ā a,Ă A,ă a,Ą A,ą a,Ć C,ć c,Č C,č c,Ď D,ď d,Đ DJ,đ dj,Ē E,ē e,Ė E,ė e,Ę e,ę e,Ě E,ě e,Ğ G,ğ g,Ģ G,ģ g,Ĩ I,ĩ i,Ī i,ī i,Į I,į i,İ I,ı i,Ķ k,ķ k,Ļ L,ļ l,Ľ L,ľ l,Ł L,ł l,Ń N,ń n,Ņ N,ņ n,Ň N,ň n,Ő O,ő o,Œ OE,œ oe,Ŕ R,ŕ r,Ř R,ř r,Ś S,ś s,Ş S,ş s,Š S,š s,Ţ T,ţ t,Ť T,ť t,Ũ U,ũ u,Ū u,ū u,Ů U,ů u,Ű U,ű u,Ų U,ų u,Ź Z,ź z,Ż Z,ż z,Ž Z,ž z,ƒ f,Ơ O,ơ o,Ư U,ư u,ǈ LJ,ǉ lj,ǋ NJ,ǌ nj,Ș S,ș s,Ț T,ț t,˚ o,Ά A,Έ E,Ή H,Ί I,Ό O,Ύ Y,Ώ W,ΐ i,Α A,Β B,Γ G,Δ D,Ε E,Ζ Z,Η H,Θ 8,Ι I,Κ K,Λ L,Μ M,Ν N,Ξ 3,Ο O,Π P,Ρ R,Σ S,Τ T,Υ Y,Φ F,Χ X,Ψ PS,Ω W,Ϊ I,Ϋ Y,ά a,έ e,ή h,ί i,ΰ y,α a,β b,γ g,δ d,ε e,ζ z,η h,θ 8,ι i,κ k,λ l,μ m,ν n,ξ 3,ο o,π p,ρ r,ς s,σ s,τ t,υ y,φ f,χ x,ψ ps,ω w,ϊ i,ϋ y,ό o,ύ y,ώ w,Ё Yo,Ђ DJ,Є Ye,І I,Ї Yi,Ј J,Љ LJ,Њ NJ,Ћ C,Џ DZ,А A,Б B,В V,Г G,Д D,Е E,Ж Zh,З Z,И I,Й J,К K,Л L,М M,Н N,О O,П P,Р R,С S,Т T,У U,Ф F,Х H,Ц C,Ч Ch,Ш Sh,Щ Sh,Ъ U,Ы Y,Ь ,Э E,Ю Yu,Я Ya,а a,б b,в v,г g,д d,е e,ж zh,з z,и i,й j,к k,л l,м m,н n,о o,п p,р r,с s,т t,у u,ф f,х h,ц c,ч ch,ш sh,щ sh,ъ u,ы y,ь ,э e,ю yu,я ya,ё yo,ђ dj,є ye,і i,ї yi,ј j,љ lj,њ nj,ћ c,џ dz,Ґ G,ґ g,฿ baht,ა a,ბ b,გ g,დ d,ე e,ვ v,ზ z,თ t,ი i,კ k,ლ l,მ m,ნ n,ო o,პ p,ჟ zh,რ r,ს s,ტ t,უ u,ფ f,ქ k,ღ gh,ყ q,შ sh,ჩ ch,ც ts,ძ dz,წ ts,ჭ ch,ხ kh,ჯ j,ჰ h,ẞ SS,Ạ A,ạ a,Ả A,ả a,Ấ A,ấ a,Ầ A,ầ a,Ẩ A,ẩ a,Ẫ A,ẫ a,Ậ A,ậ a,Ắ A,ắ a,Ằ A,ằ a,Ẳ A,ẳ a,Ẵ A,ẵ a,Ặ A,ặ a,Ẹ E,ẹ e,Ẻ E,ẻ e,Ẽ E,ẽ e,Ế E,ế e,Ề E,ề e,Ể E,ể e,Ễ E,ễ e,Ệ E,ệ e,Ỉ I,ỉ i,Ị I,ị i,Ọ O,ọ o,Ỏ O,ỏ o,Ố O,ố o,Ồ O,ồ o,Ổ O,ổ o,Ỗ O,ỗ o,Ộ O,ộ o,Ớ O,ớ o,Ờ O,ờ o,Ở O,ở o,Ỡ O,ỡ o,Ợ O,ợ o,Ụ U,ụ u,Ủ U,ủ u,Ứ U,ứ u,Ừ U,ừ u,Ử U,ử u,Ữ U,ữ u,Ự U,ự u,Ỳ Y,ỳ y,Ỵ Y,ỵ y,Ỷ Y,ỷ y,Ỹ Y,ỹ y,‘ \',’ \',“ ",” ",† +,• *,… ...,₠ ecu,₢ cruzeiro,₣ french franc,₤ lira,₥ mill,₦ naira,₧ peseta,₨ rupee,₩ won,₪ new shequel,₫ dong,€ euro,₭ kip,₮ tugrik,₯ drachma,₰ penny,₱ peso,₲ guarani,₳ austral,₴ hryvnia,₵ cedi,₹ indian rupee,₽ russian ruble,₿ bitcoin,℠ sm,™ tm,∂ d,∆ delta,∑ sum,∞ infinity,♥ love,元 yuan,円 yen,﷼ rial';
+    var defReplacement = {};
+    REPLACEMENT.split(',').forEach(function (item) {
+        item = item.split(' ');
+        defReplacement[item[0]] = item[1];
+    });
+    defReplacement[' '] = '_';
+    var tempReplacement = union(replacement !== null && replacement !== void 0 ? replacement : {}, defReplacement);
+    return str
+        .split('')
+        .reduce(function (total, char) { return total + (tempReplacement[char] || char); }, '')
+        .replace(regForbidden, '');
+}
+function truncate(txt, width, options) {
+    var defOptions = {
+        ellipsis: '...',
+        separator: undefined
+    };
+    var tempOpts = union(options !== null && options !== void 0 ? options : {}, defOptions);
+    var ellipsis = tempOpts.ellipsis, separator = tempOpts.separator;
+    var len = txt.length;
+    if (width >= len)
+        return txt;
+    var end = width - ellipsis.length;
+    if (end < 1)
+        return ellipsis;
+    var ret = txt.slice(0, end);
+    if (isUndef(separator))
+        return ret + ellipsis;
+    if (txt.indexOf(separator, end) !== end) {
+        var idx = ret.lastIndexOf(separator);
+        if (idx > -1) {
+            ret = ret.slice(0, idx);
+        }
+    }
+    return ret + ellipsis;
 }
 
 function formatDate(date, fmt, weeks) {
@@ -7607,345 +8084,6 @@ function average() {
     return args.length ? div(sum, len) : 0;
 }
 
-function empty(variable) {
-    if (typeof variable === 'boolean') {
-        return false;
-    }
-    if (variable === 'null') {
-        return true;
-    }
-    if (variable === 'undefined') {
-        return true;
-    }
-    if (!variable && variable !== 0 && variable !== '0') {
-        return true;
-    }
-    if (Array.isArray(variable) && variable.length === 0) {
-        return true;
-    }
-    if (Object.prototype.toString.call(variable) === '[object Object]' && Object.keys(variable).length === 0) {
-        return true;
-    }
-    return false;
-}
-function get1Var(data) {
-    if (getType(data) !== 'object' && !Array.isArray(data)) {
-        return data;
-    }
-    for (var key in data) {
-        var result = data[key];
-        return result;
-    }
-}
-function getRandVar(value, count) {
-    if (count === void 0) { count = 1; }
-    var sample = Array.isArray(value) ? JSON.parse(JSON.stringify(value)) : Object.values(value);
-    var len = sample.length;
-    count = Math.max(Math.min(count, len), 0);
-    var last = len - 1;
-    var result = [];
-    for (var i = 0; i < count; i++) {
-        var rand = getRandNum(i, last);
-        result.push(sample[rand]);
-    }
-    return result.length == 1 ? result[0] : result;
-}
-function getLastVar(data) {
-    var isObj = getType(data) == 'object';
-    if (!isObj && !Array.isArray(data)) {
-        return data;
-    }
-    if (isObj) {
-        var newArr = Object.keys(data);
-        return newArr.length ? data[newArr[newArr.length - 1]] : undefined;
-    }
-    return data.length ? data[data.length - 1] : undefined;
-}
-function debounce(fn, delay) {
-    if (delay === void 0) { delay = 1000; }
-    var timer = null;
-    return function () {
-        clearTimeout(timer);
-        timer = setTimeout(function () {
-            fn.apply(this, arguments);
-        }, delay);
-    };
-}
-function throttle(fn, delay) {
-    if (delay === void 0) { delay = 2000; }
-    var canRun = true;
-    return function () {
-        if (!canRun)
-            return;
-        canRun = false;
-        fn.apply(this, arguments);
-        setTimeout(function () {
-            canRun = true;
-        }, delay);
-    };
-}
-function curryIt(fn) {
-    var length = fn.length;
-    var args = [];
-    return function (arg) {
-        args.push(arg);
-        length--;
-        if (length <= 0) {
-            return fn.apply(this, args);
-        }
-        else {
-            return arguments.callee;
-        }
-    };
-}
-function globalError(fn, notShowConsole) {
-    if (notShowConsole === void 0) { notShowConsole = true; }
-    window.onerror = function (message, source, lineno, colno, error) {
-        notShowConsole && console.log('js-xxx:globalError', { message: message, source: source, lineno: lineno, colno: colno, error: error });
-        fn.call(this, message, source, lineno, colno, error);
-        return notShowConsole;
-    };
-}
-function getRandNum(min, max) {
-    if (min === void 0) { min = 0; }
-    if (max === void 0) { max = 10; }
-    return Math.floor(min + Math.random() * (max - min + 1));
-}
-function getRandColor() {
-    return '#' + ('00000' + ((Math.random() * 0x1000000) << 0).toString(16)).slice(-6);
-}
-function getRandStr(len) {
-    if (len === void 0) { len = 8; }
-    return (Math.random() * Number('1'.padEnd(len + 1, '0'))).toFixed().slice(0, len);
-}
-function getTimeAndStr(len, radix) {
-    if (len === void 0) { len = 5; }
-    if (radix === void 0) { radix = 36; }
-    return len === 0 ? "".concat(getTimeCode()) : Number("".concat(getRandStr(len)).concat(Date.now())).toString(radix);
-}
-function getUUID(length, chars) {
-    chars = chars || '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    length = length || 8;
-    var result = '';
-    for (var i = length; i > 0; --i)
-        result += chars[Math.floor(Math.random() * chars.length)];
-    return result;
-}
-function getBSColor(key) {
-    if (key === void 0) { key = 'default'; }
-    key = "".concat(key).toLowerCase();
-    var keyList = [
-        'dark',
-        'black',
-        'light',
-        'white',
-        'info',
-        'cyan',
-        'success',
-        'green',
-        'warning',
-        'yellow',
-        'danger',
-        'red',
-        'primary',
-        'blue',
-        'secondary',
-        'default',
-        'grey'
-    ];
-    key = keyList.includes(key) ? key : 'others';
-    var colors = {
-        dark: '#343a40',
-        black: '#343a40',
-        light: '#f8f9fa',
-        white: '#f8f9fa',
-        info: '#17a2b8',
-        cyan: '#17a2b8',
-        success: '#28a745',
-        green: '#28a745',
-        warning: '#ffc107',
-        yellow: '#ffc107',
-        danger: '#dc3545',
-        red: '#dc3545',
-        primary: '#007bff',
-        blue: '#007bff',
-        secondary: '#6c757d',
-        default: '#6c757d',
-        grey: '#6c757d'
-    };
-    return colors[key];
-}
-function uuid() {
-    var tempUrl = URL.createObjectURL(new Blob());
-    var uuid = tempUrl.toString();
-    URL.revokeObjectURL(tempUrl);
-    return uuid.substring(uuid.lastIndexOf('/') + 1);
-}
-function getKey(size, prefix) {
-    if (size === void 0) { size = 21; }
-    if (prefix === void 0) { prefix = ''; }
-    var symbols = 'ModuleSymbhasOwnPr-0123456789ABCDEFGHIJKLNQRTUVWXYZ_cfgijkpqtvxz';
-    var id = '';
-    var len = symbols.length;
-    var ret = new Uint8Array(size);
-    for (var i = 0; i < size; i++)
-        ret[i] = getRandNum(0, 255);
-    var bytes = ret;
-    while (0 < size--) {
-        id += symbols[bytes[size] % len];
-    }
-    return prefix + id;
-}
-function getSize(value) {
-    if (getType(value) === 'object') {
-        return Object.keys(value).length;
-    }
-    try {
-        return value.length ? value.length : 0;
-    }
-    catch (e) {
-        return 0;
-    }
-}
-function openFile(options) {
-    return new Promise(function (resolve) {
-        var input = document.createElement('input');
-        input.style.position = 'fixed';
-        input.style.bottom = '0';
-        input.style.left = '0';
-        input.style.visibility = 'hidden';
-        input.setAttribute('type', 'file');
-        if (options === null || options === void 0 ? void 0 : options.accept) {
-            input.setAttribute('accept', options.accept);
-        }
-        if (options === null || options === void 0 ? void 0 : options.multiple) {
-            input.setAttribute('multiple', '');
-        }
-        document.body.appendChild(input);
-        input.addEventListener('change', function () {
-            document.body.removeChild(input);
-            resolve(input.files);
-        });
-        input.click();
-    });
-}
-function openFullscreen(element) {
-    if (element === void 0) { element = document.body; }
-    if (element.requestFullscreen) {
-        element.requestFullscreen();
-    }
-    else if (element.mozRequestFullScreen) {
-        element.mozRequestFullScreen();
-    }
-    else if (element.msRequestFullscreen) {
-        element.msRequestFullscreen();
-    }
-    else if (element.webkitRequestFullscreen) {
-        element.webkitRequestFullScreen();
-    }
-}
-function closeFullscreen() {
-    if (document.exitFullscreen) {
-        document.exitFullscreen();
-    }
-    else if (document.msExitFullscreen) {
-        document.msExitFullscreen();
-    }
-    else if (document.mozCancelFullScreen) {
-        document.mozCancelFullScreen();
-    }
-    else if (document.webkitExitFullscreen) {
-        document.webkitExitFullscreen();
-    }
-}
-function intersection(paramA, paramB) {
-    var paramAType = getType(paramA);
-    if (paramAType != getType(paramB))
-        return false;
-    if (paramAType != 'object' && paramAType != 'array')
-        return false;
-    var isObj = paramAType == 'object';
-    var result = isObj ? {} : [];
-    if (isObj) {
-        for (var key in paramA) {
-            if (paramB[key] && paramA[key] == paramB[key]) {
-                result[key] = paramA[key];
-            }
-        }
-    }
-    else {
-        for (var key in paramA) {
-            if (paramB.includes(paramA[key])) {
-                result.push(paramA[key]);
-            }
-        }
-        result = arraySet(result);
-    }
-    return jsonClone(result);
-}
-function union(paramA, paramB) {
-    var paramAType = getType(paramA);
-    if (paramAType != getType(paramB))
-        return false;
-    if (paramAType != 'object' && paramAType != 'array')
-        return false;
-    if (paramAType == 'object') {
-        return jsonClone(__assign(__assign({}, paramB), paramA));
-    }
-    else {
-        return jsonClone(arraySet(__spreadArray(__spreadArray([], __read(paramA), false), __read(paramB), false)));
-    }
-}
-function difference(paramA, paramB) {
-    var paramAType = getType(paramA);
-    if (paramAType != getType(paramB))
-        return false;
-    if (paramAType != 'object' && paramAType != 'array')
-        return false;
-    var isObj = paramAType == 'object';
-    var result = isObj ? {} : [];
-    if (isObj) {
-        for (var key in paramA) {
-            if (paramB[key] != paramA[key]) {
-                result[key] = paramA[key];
-            }
-        }
-    }
-    else {
-        result = paramA.filter(function (item) { return !paramB.includes(item); });
-        result = arraySet(result);
-    }
-    return jsonClone(result);
-}
-function jsonClone(value) {
-    try {
-        return JSON.parse(JSON.stringify(value));
-    }
-    catch (e) {
-        return value;
-    }
-}
-function Logger() {
-    function _logger(value, type) {
-        if (type === void 0) { type = 'default'; }
-        console.log("\n%c==========> ", "color:".concat(getBSColor(type)), value, '\n');
-    }
-    var result = {};
-    ['warning', 'info', 'danger', 'primary', 'success', 'dark', 'log'].forEach(function (type) {
-        result[type] = function () {
-            var args = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                args[_i] = arguments[_i];
-            }
-            var printType = type == 'log' ? 'default' : type;
-            args.forEach(function (val) {
-                _logger(val, printType);
-            });
-        };
-    });
-    return result;
-}
-
 function initNotification() {
     var NOTIFICATION = window.Notification || (window === null || window === void 0 ? void 0 : window.mozNotification) || (window === null || window === void 0 ? void 0 : window.webkitNotification);
     if (!NOTIFICATION) {
@@ -8063,6 +8201,16 @@ function getV(defaultResult) {
     }
     return args.length >= 2
         ? args.reduce(function (a, b) { return (a && a.hasOwnProperty(b) ? a[b] : defaultResult); })
+        : defaultResult;
+}
+function getVar(data, keys, defaultResult) {
+    var _a;
+    if (keys == undefined) {
+        return defaultResult;
+    }
+    var args = (_a = "".concat(keys)) === null || _a === void 0 ? void 0 : _a.split('.');
+    return args && (args === null || args === void 0 ? void 0 : args.length)
+        ? args.reduce(function (a, b) { return (a && a.hasOwnProperty(b) ? a[b] : defaultResult); }, data)
         : defaultResult;
 }
 function mergeObj(oldObj, newObj, keys, noOld) {
@@ -8681,4 +8829,4 @@ function setWsBinaryType(binaryType) {
     return true;
 }
 
-export { Base64Decode, Base64Encode, Logger, add, all, any, appendLink, appendScript, arraySet, arraySort, average, base64Decode, base64Encode, bindMoreClick, calcDate, camelCase, catchPromise, checkVersion, closeFullscreen, closeWebSocket, compareDate, copyContent, copyToClipboard, curryIt, data2Arr, data2Obj, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitKeyboardEvent, empty, encrypt, findChildren, findParents, formatBytes, formatDate, formatFormData, formatNumber, formatRh, formatURLSearchParams, get1Var, getBSColor, getBaseURL, getBloodGroup, getCookie, getCryptoJS, getDateDifference, getDateTime, getKey, getLastVar, getMonthDays, getMonthDaysCount, getRandColor, getRandNum, getRandStr, getRandVar, getSize, getStyleByName, getTimeAndStr, getTimeCode, getType, getUTCTime, getUUID, getUserAgent, getV, getViewportSize, getWebSocket, globalError, html2str, initNotification, initWebSocket, insertAfter, intersection, isAppleDevice, isArr, isArrayBuffer, isBlob, isBool, isBrowser, isDarkMode, isDate, isDecimal, isElement, isEmail, isFn, isInteger, isJSON, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPromise, isRhNegative, isStr, isUndef, isUrl, isWeekday, jsonClone, localStorageGet, localStorageSet, maskString, md5, mergeObj, offDefaultEvent, onClick2MoreClick, openFile, openFullscreen, qsParse, qsStringify, removeCookie, repeat, retry, round, scrollToBottom, scrollToTop, sendNotification, sendWsMessage, sessionStorageGet, sessionStorageSet, setCookie, setIcon, setWsBinaryType, sha1, sha256, shuffleArray, sleep, sortBy, sortCallBack, splitCase, str2html, str2unicode, sub, throttle, timeSince, times, to, toBool, toNum, toStr, transferCase, trim, unicode2str, union, uuid, versionUpgrade };
+export { Base64Decode, Base64Encode, Logger, add, all, any, appendLink, appendScript, arraySet, arraySort, average, base64Decode, base64Encode, bindMoreClick, calcDate, camelCase, catchPromise, checkVersion, closeFullscreen, closeWebSocket, compareDate, copyContent, copyToClipboard, curryIt, data2Arr, data2Obj, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitKeyboardEvent, empty, encrypt, findChildren, findParents, formatBytes, formatDate, formatFormData, formatNumber, formatRh, formatURLSearchParams, get1Var, getBSColor, getBaseURL, getBloodGroup, getCookie, getCryptoJS, getDateDifference, getDateTime, getKey, getLastVar, getMonthDays, getMonthDaysCount, getRandColor, getRandNum, getRandStr, getRandVar, getSize, getStyleByName, getTimeAndStr, getTimeCode, getType, getUTCTime, getUUID, getUserAgent, getV, getVar, getViewportSize, getWebSocket, globalError, html2str, initNotification, initWebSocket, insertAfter, intersection, isAppleDevice, isArr, isArrayBuffer, isBlob, isBool, isBrowser, isDarkMode, isDate, isDecimal, isElement, isEmail, isFn, isInteger, isJSON, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPromise, isRhNegative, isStr, isUndef, isUrl, isWeekday, jsonClone, localStorageGet, localStorageSet, logRunTime, maskString, md5, mergeObj, ms, offDefaultEvent, onClick2MoreClick, openFile, openFullscreen, qsParse, qsStringify, removeCookie, repeat, retry, round, scrollToBottom, scrollToTop, sendNotification, sendWsMessage, sessionStorageGet, sessionStorageSet, setCookie, setIcon, setWsBinaryType, sha1, sha256, shuffleArray, sleep, slugify, sortBy, sortCallBack, splitCase, str2html, str2unicode, sub, throttle, timeSince, times, to, toBool, toNum, toStr, transferCase, trim, truncate, unicode2str, union, unique, uuid, versionUpgrade, waitUntil };
