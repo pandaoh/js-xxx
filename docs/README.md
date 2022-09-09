@@ -1,6 +1,6 @@
-js-xxx - v1.2.9
+js-xxx - v1.3.0
 
-# js-xxx - v1.2.9
+# js-xxx - v1.3.0
 
 ## Table of contents
 
@@ -63,10 +63,12 @@ js-xxx - v1.2.9
 - [getLastVar](README.md#getlastvar)
 - [getMonthDays](README.md#getmonthdays)
 - [getMonthDaysCount](README.md#getmonthdayscount)
+- [getQueryString](README.md#getquerystring)
 - [getRandColor](README.md#getrandcolor)
 - [getRandNum](README.md#getrandnum)
 - [getRandStr](README.md#getrandstr)
 - [getRandVar](README.md#getrandvar)
+- [getSearchParams](README.md#getsearchparams)
 - [getSize](README.md#getsize)
 - [getStyleByName](README.md#getstylebyname)
 - [getTimeAndStr](README.md#gettimeandstr)
@@ -943,7 +945,18 @@ ___
 ▸ **empty**(`variable`): `boolean`
 
 判断值是否为空
-Example: `empty('') => true`
+Example:
+`empty('') => true`
+`empty(null) => true`
+`empty('null') => true`
+`empty('undefined') => true`
+`empty(undefined) => true`
+`empty(0) => false`
+`empty('0') => false`
+`empty(NaN) => true`
+`empty('NaN') => true`
+`empty({}) => true`
+`empty([]) => true`
 
 #### Parameters
 
@@ -1197,16 +1210,19 @@ ___
 
 ### getBaseURL
 
-▸ **getBaseURL**(`url`): `string`
+▸ **getBaseURL**(`url?`): `string`
 
 获取不带任何参数或片段标识符的当前 URL
-Example: `getBaseURL('https://test.com/index?name=leo&org=biugle') => 'https://test.com/index'`
+Example:
+`getBaseURL('https://test.com/index?name=leo&org=biugle#test') => 'https://test.com/index'`
+`getBaseURL('') => ''`
+`getBaseURL() => 当前页面 BaseURL`
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `url` | `string` | 当前 URL |
+| Name | Type |
+| :------ | :------ |
+| `url?` | `string` |
 
 #### Returns
 
@@ -1398,6 +1414,28 @@ Example: `getMonthDayCount(new Date()) => 30`
 
 ___
 
+### getQueryString
+
+▸ **getQueryString**(`url?`): `any`
+
+获取 url 查询参数字符串
+Example:
+`getQueryString('https://test.com/index?name=leo&org=biugle#test') => 'name=leo&org=biugle'`
+`getQueryString('') => ''`
+`getQueryString() => 当前页面 QueryString 字符串部分`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `url?` | `string` |
+
+#### Returns
+
+`any`
+
+___
+
 ### getRandColor
 
 ▸ **getRandColor**(): `string`
@@ -1469,6 +1507,28 @@ Example:
 #### Returns
 
 `any` \| `any`[]
+
+___
+
+### getSearchParams
+
+▸ **getSearchParams**(`url?`): `any`
+
+获取查询参数对象
+Example:
+`getSearchParams('https://test.com/index?name=leo&org=biugle#test') => {name: 'leo', org: 'biugle'}`
+`getSearchParams('') => {}`
+`getSearchParams() => 当前页面 SearchParams 对象`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `url?` | `string` |
+
+#### Returns
+
+`any`
 
 ___
 
@@ -2786,8 +2846,9 @@ ___
 ▸ **sendWsMessage**(`message`, `isJSONEncode?`): `boolean`
 
 发送消息
-Example: `sendWsMessage({ type: 'login', data: { username: 'admin', password: '123456' }}, true) => true/false`
-Example: `sendWsMessage('testMsg') => true/false`
+Example:
+`sendWsMessage({ type: 'login', data: { username: 'admin', password: '123456' }}, true) => true/false`
+`sendWsMessage('testMsg') => true/false`
 
 #### Parameters
 
@@ -3224,21 +3285,28 @@ ___
 
 ### toBool
 
-▸ **toBool**(`value`): `boolean`
+▸ **toBool**(`value`, `falseList?`): `boolean`
 
 任意值转换为布尔类型
 Example:
 `toBool(0) => true`
+`toBool('') => true`
+`toBool('', [0, '']) => false`
+`toBool(0, [0, '']) => false`
 `toBool('0') => true`
 `toBool(1) => true`
 `toBool('false') => false`
+`toBool('null') => false`
+`toBool('undefined') => false`
+`toBool('NaN') => false`
 `toBool(null) => false`
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `any` |
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `value` | `any` | `undefined` |
+| `falseList` | `any`[] | `[]` |
 
 #### Returns
 

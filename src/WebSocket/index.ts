@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-07-27 13:40:10
+ * @LastEditTime: 2022-09-09 11:01:46
  * @Description: websocket
  * @FilePath: \js-xxx\src\WebSocket\index.ts
  */
@@ -74,8 +74,9 @@ export function initWebSocket(options: {
 
 /**
  * 发送消息
- * Example: `sendWsMessage({ type: 'login', data: { username: 'admin', password: '123456' }}, true) => true/false`
- * Example: `sendWsMessage('testMsg') => true/false`
+ * Example:
+ * `sendWsMessage({ type: 'login', data: { username: 'admin', password: '123456' }}, true) => true/false`
+ * `sendWsMessage('testMsg') => true/false`
  * @param message 消息
  * @param isJSONEncode 是否 JSON 序列化
  * @returns

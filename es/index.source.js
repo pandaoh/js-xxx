@@ -62,6 +62,18 @@ function __generator(thisArg, body) {
     }
 }
 
+function __values(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+}
+
 function __read(o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
     if (!m) return o;
@@ -105,10 +117,13 @@ function toNum(value) {
     value = Number(value);
     return isNaN$1(value) ? 0 : value;
 }
-function toBool(value) {
-    if (getType(value) == 'string') {
-        value = value.toLowerCase();
-        return value !== '' && value !== 'false';
+function toBool(value, falseList) {
+    if (falseList === void 0) { falseList = []; }
+    if (__spreadArray(['false', 'null', 'undefined', 'NaN'], __read(falseList), false).includes(value)) {
+        return false;
+    }
+    if (value === '') {
+        return true;
     }
     if (value === 0) {
         return true;
@@ -7058,6 +7073,16 @@ function getCryptoJS() {
     return CryptoJS;
 }
 
+function getTimeCode() {
+    var dateObj = new Date();
+    return "".concat((Math.random() * 100).toFixed().padEnd(2, '0')).concat(dateObj.getSeconds().toString().padStart(2, '0')).concat(dateObj
+        .getMinutes()
+        .toString()
+        .padStart(2, '0')).concat(dateObj.getHours().toString().padStart(2, '0')).concat(dateObj
+        .getDate()
+        .toString()
+        .padStart(2, '0')).concat(String(dateObj.getMonth() + 1).padStart(2, '0')).concat(dateObj.getFullYear());
+}
 function empty(variable) {
     if (typeof variable === 'boolean') {
         return false;
@@ -7066,6 +7091,9 @@ function empty(variable) {
         return true;
     }
     if (variable === 'undefined') {
+        return true;
+    }
+    if (variable === 'NaN') {
         return true;
     }
     if (!variable && variable !== 0 && variable !== '0') {
@@ -7736,16 +7764,6 @@ function getDateDifference(oldDate, nowDate, type) {
                 seconds: Math.floor((diffTime / 1000) % 60)
             };
     }
-}
-function getTimeCode() {
-    var dateObj = new Date();
-    return "".concat((Math.random() * 100).toFixed().padEnd(2, '0')).concat(dateObj.getSeconds().toString().padStart(2, '0')).concat(dateObj
-        .getMinutes()
-        .toString()
-        .padStart(2, '0')).concat(dateObj.getHours().toString().padStart(2, '0')).concat(dateObj
-        .getDate()
-        .toString()
-        .padStart(2, '0')).concat(String(dateObj.getMonth() + 1).padStart(2, '0')).concat(dateObj.getFullYear());
 }
 function timeSince(date, longAgo, formater) {
     if (longAgo === void 0) { longAgo = false; }
@@ -8682,7 +8700,31 @@ function qsParse(url, key) {
     return key ? paramMap === null || paramMap === void 0 ? void 0 : paramMap[key] : paramMap;
 }
 function getBaseURL(url) {
+    url = url !== null && url !== void 0 ? url : window.location.href;
     return url.replace(/[?#].*$/, '');
+}
+function getQueryString(url) {
+    var _a, _b, _c, _d, _e;
+    return toBool(url) ? (_d = (_c = (_b = (_a = url === null || url === void 0 ? void 0 : url.split('?')) === null || _a === void 0 ? void 0 : _a[1]) === null || _b === void 0 ? void 0 : _b.split('#')) === null || _c === void 0 ? void 0 : _c[0]) !== null && _d !== void 0 ? _d : '' : (_e = window.location.search) === null || _e === void 0 ? void 0 : _e.replace('?', '');
+}
+function getSearchParams(url) {
+    var e_1, _a;
+    var searchPar = new URLSearchParams(getQueryString(url));
+    var paramsObj = {};
+    try {
+        for (var _b = __values(searchPar.entries()), _c = _b.next(); !_c.done; _c = _b.next()) {
+            var _d = __read(_c.value, 2), key = _d[0], value = _d[1];
+            paramsObj[key] = value;
+        }
+    }
+    catch (e_1_1) { e_1 = { error: e_1_1 }; }
+    finally {
+        try {
+            if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+        }
+        finally { if (e_1) throw e_1.error; }
+    }
+    return paramsObj;
 }
 
 function _tempSet(key, value, storeType) {
@@ -8829,4 +8871,4 @@ function setWsBinaryType(binaryType) {
     return true;
 }
 
-export { Base64Decode, Base64Encode, Logger, add, all, any, appendLink, appendScript, arraySet, arraySort, average, base64Decode, base64Encode, bindMoreClick, calcDate, camelCase, catchPromise, checkVersion, closeFullscreen, closeWebSocket, compareDate, copyContent, copyToClipboard, curryIt, data2Arr, data2Obj, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitKeyboardEvent, empty, encrypt, findChildren, findParents, formatBytes, formatDate, formatFormData, formatNumber, formatRh, formatURLSearchParams, get1Var, getBSColor, getBaseURL, getBloodGroup, getCookie, getCryptoJS, getDateDifference, getDateTime, getKey, getLastVar, getMonthDays, getMonthDaysCount, getRandColor, getRandNum, getRandStr, getRandVar, getSize, getStyleByName, getTimeAndStr, getTimeCode, getType, getUTCTime, getUUID, getUserAgent, getV, getVar, getViewportSize, getWebSocket, globalError, html2str, initNotification, initWebSocket, insertAfter, intersection, isAppleDevice, isArr, isArrayBuffer, isBlob, isBool, isBrowser, isDarkMode, isDate, isDecimal, isElement, isEmail, isFn, isInteger, isJSON, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPromise, isRhNegative, isStr, isUndef, isUrl, isWeekday, jsonClone, localStorageGet, localStorageSet, logRunTime, maskString, md5, mergeObj, ms, offDefaultEvent, onClick2MoreClick, openFile, openFullscreen, qsParse, qsStringify, removeCookie, repeat, retry, round, scrollToBottom, scrollToTop, sendNotification, sendWsMessage, sessionStorageGet, sessionStorageSet, setCookie, setIcon, setWsBinaryType, sha1, sha256, shuffleArray, sleep, slugify, sortBy, sortCallBack, splitCase, str2html, str2unicode, sub, throttle, timeSince, times, to, toBool, toNum, toStr, transferCase, trim, truncate, unicode2str, union, unique, uuid, versionUpgrade, waitUntil };
+export { Base64Decode, Base64Encode, Logger, add, all, any, appendLink, appendScript, arraySet, arraySort, average, base64Decode, base64Encode, bindMoreClick, calcDate, camelCase, catchPromise, checkVersion, closeFullscreen, closeWebSocket, compareDate, copyContent, copyToClipboard, curryIt, data2Arr, data2Obj, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitKeyboardEvent, empty, encrypt, findChildren, findParents, formatBytes, formatDate, formatFormData, formatNumber, formatRh, formatURLSearchParams, get1Var, getBSColor, getBaseURL, getBloodGroup, getCookie, getCryptoJS, getDateDifference, getDateTime, getKey, getLastVar, getMonthDays, getMonthDaysCount, getQueryString, getRandColor, getRandNum, getRandStr, getRandVar, getSearchParams, getSize, getStyleByName, getTimeAndStr, getTimeCode, getType, getUTCTime, getUUID, getUserAgent, getV, getVar, getViewportSize, getWebSocket, globalError, html2str, initNotification, initWebSocket, insertAfter, intersection, isAppleDevice, isArr, isArrayBuffer, isBlob, isBool, isBrowser, isDarkMode, isDate, isDecimal, isElement, isEmail, isFn, isInteger, isJSON, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPromise, isRhNegative, isStr, isUndef, isUrl, isWeekday, jsonClone, localStorageGet, localStorageSet, logRunTime, maskString, md5, mergeObj, ms, offDefaultEvent, onClick2MoreClick, openFile, openFullscreen, qsParse, qsStringify, removeCookie, repeat, retry, round, scrollToBottom, scrollToTop, sendNotification, sendWsMessage, sessionStorageGet, sessionStorageSet, setCookie, setIcon, setWsBinaryType, sha1, sha256, shuffleArray, sleep, slugify, sortBy, sortCallBack, splitCase, str2html, str2unicode, sub, throttle, timeSince, times, to, toBool, toNum, toStr, transferCase, trim, truncate, unicode2str, union, unique, uuid, versionUpgrade, waitUntil };

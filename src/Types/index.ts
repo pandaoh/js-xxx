@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-09-07 14:31:46
+ * @LastEditTime: 2022-09-09 11:39:07
  * @Description: 类型校验等方法
  * @FilePath: \js-xxx\src\Types\index.ts
  */
@@ -56,17 +56,26 @@ export function toNum(value: any): number {
  * 任意值转换为布尔类型
  * Example:
  * `toBool(0) => true`
+ * `toBool('') => true`
+ * `toBool('', [0, '']) => false`
+ * `toBool(0, [0, '']) => false`
  * `toBool('0') => true`
  * `toBool(1) => true`
  * `toBool('false') => false`
+ * `toBool('null') => false`
+ * `toBool('undefined') => false`
+ * `toBool('NaN') => false`
  * `toBool(null) => false`
  * @param value
+ * @param falseList
  * @returns
  */
-export function toBool(value: any): boolean {
-  if (getType(value) == 'string') {
-    value = value.toLowerCase();
-    return value !== '' && value !== 'false';
+export function toBool(value: any, falseList: any[] = []): boolean {
+  if (['false', 'null', 'undefined', 'NaN', ...falseList].includes(value)) {
+    return false;
+  }
+  if (value === '') {
+    return true;
   }
   if (value === 0) {
     return true;

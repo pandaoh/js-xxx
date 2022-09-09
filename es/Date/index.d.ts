@@ -6,7 +6,6 @@ export declare function getDateDifference(oldDate: string | Date, nowDate?: stri
     minutes: number;
     seconds: number;
 };
-export declare function getTimeCode(): string;
 export declare function timeSince(date?: string | Date, longAgo?: boolean, formater?: string): string;
 export declare function isWeekday(date?: string | Date): boolean;
 export declare function getMonthDays(date?: string | Date): number;

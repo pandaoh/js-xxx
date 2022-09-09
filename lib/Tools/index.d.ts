@@ -1,3 +1,4 @@
+export declare function getTimeCode(): string;
 export declare function empty(variable: any): boolean;
 export declare function get1Var(data: any): any;
 export declare function getRandVar(value: any, count?: number): any | any[];

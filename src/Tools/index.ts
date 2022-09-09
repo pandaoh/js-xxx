@@ -2,18 +2,44 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-09-07 16:46:29
+ * @LastEditTime: 2022-09-09 11:37:24
  * @Description: 工具方法
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
 
-import { getTimeCode } from '@/Date';
 import { arraySet } from '@/Array';
 import { getType, isPromise, isStr, toBool, toNum } from '@/Types';
 
 /**
+ * 获取 16 位可读时间戳
+ * Example: `getTimeCode() => '2036551026042022'`
+ * @returns
+ */
+export function getTimeCode(): string {
+  let dateObj = new Date();
+  return `${(Math.random() * 100).toFixed().padEnd(2, '0')}${dateObj.getSeconds().toString().padStart(2, '0')}${dateObj
+    .getMinutes()
+    .toString()
+    .padStart(2, '0')}${dateObj.getHours().toString().padStart(2, '0')}${dateObj
+    .getDate()
+    .toString()
+    .padStart(2, '0')}${String(dateObj.getMonth() + 1).padStart(2, '0')}${dateObj.getFullYear()}`;
+}
+
+/**
  * 判断值是否为空
- * Example: `empty('') => true`
+ * Example:
+ * `empty('') => true`
+ * `empty(null) => true`
+ * `empty('null') => true`
+ * `empty('undefined') => true`
+ * `empty(undefined) => true`
+ * `empty(0) => false`
+ * `empty('0') => false`
+ * `empty(NaN) => true`
+ * `empty('NaN') => true`
+ * `empty({}) => true`
+ * `empty([]) => true`
  * @param variable 变量
  * @returns
  */
@@ -26,6 +52,9 @@ export function empty(variable: any): boolean {
   }
   if (variable === 'undefined') {
     return true; // 检验字符串类型的 undefined
+  }
+  if (variable === 'NaN') {
+    return true; // 检验字符串类型的 NaN
   }
   if (!variable && variable !== 0 && variable !== '0') {
     return true; // 检验 undefined 和 null "" NaN

@@ -162,22 +162,6 @@ export function getDateDifference(
 }
 
 /**
- * 获取 16 位可读时间戳
- * Example: `getTimeCode() => '2036551026042022'`
- * @returns
- */
-export function getTimeCode(): string {
-  let dateObj = new Date();
-  return `${(Math.random() * 100).toFixed().padEnd(2, '0')}${dateObj.getSeconds().toString().padStart(2, '0')}${dateObj
-    .getMinutes()
-    .toString()
-    .padStart(2, '0')}${dateObj.getHours().toString().padStart(2, '0')}${dateObj
-    .getDate()
-    .toString()
-    .padStart(2, '0')}${String(dateObj.getMonth() + 1).padStart(2, '0')}${dateObj.getFullYear()}`;
-}
-
-/**
  * 人性化时间
  * Example: `timeSince(new Date()) => '刚刚'`
  * @param date 时间/string

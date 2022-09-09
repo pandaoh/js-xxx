@@ -1,8 +1,9 @@
+import { toBool } from '@/Types';
 /*
  * @Author: HxB
  * @Date: 2022-04-26 14:15:37
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-09-02 10:17:54
+ * @LastEditTime: 2022-09-09 11:41:13
  * @Description: 请求相关方法
  * @FilePath: \js-xxx\src\Request\index.ts
  */
@@ -94,10 +95,45 @@ export function qsParse(url?: string, key?: string): any {
 
 /**
  * 获取不带任何参数或片段标识符的当前 URL
- * Example: `getBaseURL('https://test.com/index?name=leo&org=biugle') => 'https://test.com/index'`
- * @param url 当前 URL
+ * Example:
+ * `getBaseURL('https://test.com/index?name=leo&org=biugle#test') => 'https://test.com/index'`
+ * `getBaseURL('') => ''`
+ * `getBaseURL() => 当前页面 BaseURL`
+ * @param url
  * @returns
  */
-export function getBaseURL(url: string): string {
+export function getBaseURL(url?: string): string {
+  url = url ?? window.location.href;
   return url.replace(/[?#].*$/, '');
+}
+
+/**
+ * 获取 url 查询参数字符串
+ * Example:
+ * `getQueryString('https://test.com/index?name=leo&org=biugle#test') => 'name=leo&org=biugle'`
+ * `getQueryString('') => ''`
+ * `getQueryString() => 当前页面 QueryString 字符串部分`
+ * @param url
+ * @returns
+ */
+export function getQueryString(url?: string): any {
+  return toBool(url) ? url?.split('?')?.[1]?.split('#')?.[0] ?? '' : window.location.search?.replace('?', '');
+}
+
+/**
+ * 获取查询参数对象
+ * Example:
+ * `getSearchParams('https://test.com/index?name=leo&org=biugle#test') => {name: 'leo', org: 'biugle'}`
+ * `getSearchParams('') => {}`
+ * `getSearchParams() => 当前页面 SearchParams 对象`
+ * @param url
+ * @returns
+ */
+export function getSearchParams(url?: string): any {
+  const searchPar = new URLSearchParams(getQueryString(url));
+  const paramsObj: any = {};
+  for (const [key, value] of searchPar.entries()) {
+    paramsObj[key] = value;
+  }
+  return paramsObj;
 }
