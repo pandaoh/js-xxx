@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:54:41
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-08-31 15:16:39
+ * @LastEditTime: 2022-09-13 09:50:07
  * @Description: 时间相关方法
  * @FilePath: \js-xxx\src\Date\index.ts
  */
@@ -12,7 +12,7 @@ import { trim } from '@/String';
 /**
  * 时间格式化
  * Example:
- * `formatDate(new Date(), 'yyyy-MM-dd hh:mm:ss Q S W', ['星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']) => '2022-04-26 11:33:53 2 123 星期二'`
+ * `formatDate(new Date(), 'yyyy-mm-dd hh:ii:ss Q S W', ['星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']) => '2022-04-26 11:33:53 2 123 星期二'`
  * @param date 时间
  * @param fmt 格式化模板 'yyyy-mm-dd hh:ii:ss'
  * @param weeks 星期对应数组 [7, 1, 2, 3, 4, 5, 6]
