@@ -1,6 +1,6 @@
-js-xxx - v1.3.0
+js-xxx - v1.3.1
 
-# js-xxx - v1.3.0
+# js-xxx - v1.3.1
 
 ## Table of contents
 
@@ -116,6 +116,7 @@ js-xxx - v1.3.0
 - [localStorageGet](README.md#localstorageget)
 - [localStorageSet](README.md#localstorageset)
 - [logRunTime](README.md#logruntime)
+- [marquee](README.md#marquee)
 - [maskString](README.md#maskstring)
 - [md5](README.md#md5)
 - [mergeObj](README.md#mergeobj)
@@ -2462,6 +2463,36 @@ Example:
 | :------ | :------ |
 | `fn` | `any` |
 | `timeKey` | `string` |
+
+#### Returns
+
+`void`
+
+___
+
+### marquee
+
+▸ **marquee**(`selector`, `options?`): `void`
+
+给元素设置 marquee 内容滚动效果，支持来回滚动，正常跑马灯，无限无缝滚动。
+一般来说设置两层，滚动的区间就是父元素的大小。
+`<div class="demo-container"><div id="#demo">...</div></div>`
+Example:
+`marquee('#demo') => 默认横向正常滚动(loopType=normal)`
+`marquee('.demo-y', {direction: 'Y', loopType: 'infinite', speed: 3}) => Y 轴无限无缝滚动，speed > 0 越小速度越快。`
+`marquee('.demo-x', {direction: 'X', loopType: 'origin', speed: 3, style: 'animation-delay:2s;', parentStyle: 'color:red;'}) => X 轴无限来回滚动`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `selector` | `string` |
+| `options?` | `Object` |
+| `options.direction?` | ``"X"`` \| ``"Y"`` |
+| `options.loopType?` | ``"infinite"`` \| ``"normal"`` \| ``"origin"`` |
+| `options.parentStyle?` | `string` |
+| `options.speed?` | `number` |
+| `options.style?` | `string` |
 
 #### Returns
 

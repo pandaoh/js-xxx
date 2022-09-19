@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-08-03 17:18:57
+ * @LastEditTime: 2022-09-19 17:05:28
  * @Description: 利用 dom 的一些方法
  * @FilePath: \js-xxx\src\Dom\index.ts
  */
@@ -264,5 +264,74 @@ export function downloadContent(name: string, content: BlobPart | any) {
     download(link, name);
   } catch (e) {
     console.log('js-xxx:downloadContentError', e);
+  }
+}
+
+/**
+ * 给元素设置 marquee 内容滚动效果，支持来回滚动，正常跑马灯，无限无缝滚动。
+ * 一般来说设置两层，滚动的区间就是父元素的大小。
+ * `<div class="demo-container"><div id="#demo">...</div></div>`
+ * Example:
+ * `marquee('#demo') => 默认横向正常滚动(loopType=normal)`
+ * `marquee('.demo-y', {direction: 'Y', loopType: 'infinite', speed: 3}) => Y 轴无限无缝滚动，speed > 0 越小速度越快。`
+ * `marquee('.demo-x', {direction: 'X', loopType: 'origin', speed: 3, style: 'animation-delay:2s;', parentStyle: 'color:red;'}) => X 轴无限来回滚动`
+ * @param selector
+ * @param options
+ */
+export function marquee(
+  selector: string,
+  options?: {
+    direction?: 'X' | 'Y';
+    loopType?: 'infinite' | 'normal' | 'origin';
+    speed?: number;
+    style?: string;
+    parentStyle?: string;
+  }
+): void {
+  try {
+    const cssAnimation =
+      '@keyframes marquee-ANIMATION_NAME{0%{transform:translate3d(0,0,0);-webkit-transform:translate3d(0,0,0);-moz-transform:translate3d(0,0,0);-ms-transform:translate3d(0,0,0);-o-transform:translate3d(0,0,0)}50%{transform:translate3d(X_TEMP_VAL,Y_TEMP_VAL,0);-webkit-transform:translate3d(X_TEMP_VAL,Y_TEMP_VAL,0);-moz-transform:translate3d(X_TEMP_VAL,Y_TEMP_VAL,0);-ms-transform:translate3d(X_TEMP_VAL,Y_TEMP_VAL,0);-o-transform:translate3d(X_TEMP_VAL,Y_TEMP_VAL,0)}100%{transform:translate3d(X_END_VAL,Y_END_VAL,0);-webkit-transform:translate3d(X_END_VAL,Y_END_VAL,0);-moz-transform:translate3d(X_END_VAL,Y_END_VAL,0);-ms-transform:translate3d(X_END_VAL,Y_END_VAL,0);-o-transform:translate3d(X_END_VAL,Y_END_VAL,0)}}';
+    const tempId = selector.replace(/[.#]/g, '');
+    const styleElId = `style-${tempId}`;
+    const $animationStyle = document.getElementById(styleElId) ?? document.createElement('style');
+    $animationStyle.id = styleElId;
+    const $marqueeDom: any = document.querySelector(selector);
+    $marqueeDom?.setAttribute(
+      'style',
+      `overflow:visible;animation-name:marquee-${tempId};animation-timing-function:linear;animation-iteration-count:infinite;animation-duration:${
+        ((options?.direction === 'Y' ? $marqueeDom.clientHeight : $marqueeDom.clientWidth) / 200) *
+          (options?.speed ?? 3) ?? 5
+      }s;${options?.style ?? ''}`
+    );
+    if (options?.direction === 'Y') {
+      $animationStyle.innerHTML = cssAnimation
+        .replace('ANIMATION_NAME', tempId)
+        .replace(/X_TEMP_VAL/g, '0')
+        .replace(
+          /Y_TEMP_VAL/g,
+          options.loopType === 'origin' ? `calc(-100% + ${$marqueeDom?.parentElement?.offsetHeight ?? 0}px)` : '-50%'
+        )
+        .replace(/X_END_VAL/g, '0')
+        .replace(/Y_END_VAL/g, options.loopType === 'origin' ? '0' : '-100%');
+    } else {
+      $animationStyle.innerHTML = cssAnimation
+        .replace('ANIMATION_NAME', tempId)
+        .replace(/Y_TEMP_VAL/g, '0')
+        .replace(
+          /X_TEMP_VAL/g,
+          options?.loopType === 'origin' ? `calc(-100% + ${$marqueeDom?.parentElement?.offsetWidth ?? 0}px)` : '-50%'
+        )
+        .replace(/Y_END_VAL/g, '0')
+        .replace(/X_END_VAL/g, options?.loopType === 'origin' ? '0' : '-100%');
+    }
+    $marqueeDom?.parentElement?.setAttribute('style', `overflow:hidden;${options?.parentStyle ?? ''}`);
+    if (options?.loopType === 'infinite') {
+      $marqueeDom.parentElement.innerHTML = $marqueeDom.outerHTML + $marqueeDom.outerHTML;
+    } else {
+      $marqueeDom.parentElement.innerHTML = $marqueeDom.outerHTML;
+    }
+    !document.getElementById(styleElId) && document.getElementsByTagName('head')[0].appendChild($animationStyle);
+  } catch (e) {
+    console.log('js-xxx:marqueeError', e);
   }
 }

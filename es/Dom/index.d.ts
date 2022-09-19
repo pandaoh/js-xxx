@@ -16,4 +16,11 @@ export declare function appendLink(linkUrl: string, rel?: string): HTMLLinkEleme
 export declare function appendScript(scriptUrl: string, async?: boolean, defer?: boolean): HTMLScriptElement;
 export declare function download(link: string, name: string): void;
 export declare function downloadContent(name: string, content: BlobPart | any): void;
+export declare function marquee(selector: string, options?: {
+    direction?: 'X' | 'Y';
+    loopType?: 'infinite' | 'normal' | 'origin';
+    speed?: number;
+    style?: string;
+    parentStyle?: string;
+}): void;
 //# sourceMappingURL=index.d.ts.map
