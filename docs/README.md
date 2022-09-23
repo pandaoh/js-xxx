@@ -1,6 +1,6 @@
-js-xxx - v1.3.1
+js-xxx - v1.3.2
 
-# js-xxx - v1.3.1
+# js-xxx - v1.3.2
 
 ## Table of contents
 

@@ -8040,7 +8040,6 @@
                 $marqueeDom.parentElement.innerHTML = $marqueeDom.outerHTML + $marqueeDom.outerHTML;
             }
             else {
-                $marqueeDom.parentElement.innerHTML = $marqueeDom.outerHTML;
             }
             !document.getElementById(styleElId) && document.getElementsByTagName('head')[0].appendChild($animationStyle);
         }

@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-09-19 17:05:28
+ * @LastEditTime: 2022-09-23 18:26:10
  * @Description: 利用 dom 的一些方法
  * @FilePath: \js-xxx\src\Dom\index.ts
  */
@@ -328,7 +328,7 @@ export function marquee(
     if (options?.loopType === 'infinite') {
       $marqueeDom.parentElement.innerHTML = $marqueeDom.outerHTML + $marqueeDom.outerHTML;
     } else {
-      $marqueeDom.parentElement.innerHTML = $marqueeDom.outerHTML;
+      // $marqueeDom.parentElement.innerHTML = $marqueeDom.outerHTML;
     }
     !document.getElementById(styleElId) && document.getElementsByTagName('head')[0].appendChild($animationStyle);
   } catch (e) {
