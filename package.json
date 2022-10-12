@@ -1,6 +1,6 @@
 {
   "name": "js-xxx",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "JavaScript 常用函数库",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -39,7 +39,15 @@
     "xfunctions",
     "xmethod",
     "xmethods",
-    "rollup"
+    "rollup",
+    "xxx",
+    "$xxx",
+    "js-xxx",
+    "xajax",
+    "xfetch",
+    "xcall",
+    "xhttp",
+    "xcmd"
   ],
   "author": "leohe",
   "publisher": "hxbpandaoh@163.com",

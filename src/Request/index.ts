@@ -1,13 +1,30 @@
-import { toBool } from '@/Types';
 /*
  * @Author: HxB
  * @Date: 2022-04-26 14:15:37
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-09-09 11:41:13
+ * @LastEditTime: 2022-10-12 16:11:09
  * @Description: 请求相关方法
  * @FilePath: \js-xxx\src\Request\index.ts
  */
-import { getType } from '@/Types';
+import { getType, isObj, toBool } from '@/Types';
+
+/**
+ * Http Method
+ */
+export enum HttpMethod {
+  GET = 'GET',
+  POST = 'POST',
+  PUT = 'PUT',
+  PATCH = 'PATCH',
+  DELETE = 'DELETE',
+  OPTIONS = 'OPTIONS',
+  get = 'GET',
+  post = 'POST',
+  put = 'PUT',
+  patch = 'PATCH',
+  delete = 'DELETE',
+  options = 'OPTIONS'
+}
 
 /**
  * 对象转 querystring 暂时只支持两层数据，第二层对象与与数组值不能为引用类型。
@@ -136,4 +153,103 @@ export function getSearchParams(url?: string): any {
     paramsObj[key] = value;
   }
   return paramsObj;
+}
+
+/**
+ * ajax 简单封装
+ * Example:
+ * `xAjax('get', 'https://test.cn', { params: { test: 123, hello: 456 }, success: (data) => console.log('success', data), fail: (error) => console.log('fail', error) }) => ajax`
+ * `xAjax('POST', 'https://test.cn', { contentType: 'application/json', data: { test: 123 }, success: (data) => console.log('success', data), fail: (error) => console.log('fail', error) }) => ajax`
+ * @param method
+ * @param url
+ * @param options
+ * @returns
+ */
+export function xAjax(
+  method: HttpMethod | string,
+  url: string,
+  options?: {
+    data?: any;
+    params?: any;
+    success?: any;
+    fail?: any;
+    contentType?: string;
+    async?: boolean;
+    raw?: boolean;
+    withCredentials?: boolean;
+  }
+): any {
+  var xhr: any;
+  method = method.toUpperCase();
+  if (window.XMLHttpRequest) {
+    xhr = new XMLHttpRequest();
+  } else {
+    // @ts-ignore
+    xhr = new ActiveXObject('Microsoft.XMLHttp');
+  }
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status < 400) {
+        options?.success?.(xhr.response);
+      } else if (xhr.status >= 400) {
+        options?.fail?.(xhr.response);
+      }
+    }
+  };
+  let async: boolean = options?.async ?? true;
+  // setting after open for compatibility with IE versions <=10
+  xhr.withCredentials = options?.withCredentials ?? false;
+  if (options?.data) {
+    options.data = !options?.raw && isObj(options.data) ? JSON.stringify(options.data) : options.data;
+  }
+  if (method == 'GET') {
+    xhr.open(
+      'GET',
+      !options?.params
+        ? url
+        : `${url}${url.includes('?') ? '&' : '?'}${new URLSearchParams(options.params).toString()}`,
+      async
+    );
+    xhr.send();
+  } else {
+    xhr.open(method, url, async);
+    xhr.setRequestHeader('Content-Type', options?.contentType ?? 'application/x-www-form-urlencoded;charset=UTF-8');
+    xhr.send(options?.data ?? null);
+  }
+  return xhr;
+}
+
+/**
+ * fetch 简单封装
+ * Example:
+ * `xFetch('get', 'https://test.cn', { params: { test: 123, hello: 456 } }).then(res => res.json()).then(data => console.log(data)) => fetchXPromise`
+ * `xFetch('POST', 'https://test.cn', { contentType: 'application/json', data: { test: 123 } }).catch(error => console.log(error)) => fetchXPromise`
+ * @param method
+ * @param url
+ * @param options
+ * @returns
+ */
+export function xFetch(
+  method: HttpMethod,
+  url: string,
+  options?: {
+    data?: any;
+    params?: any;
+    raw?: boolean;
+    contentType?: string;
+  }
+): any {
+  if (options?.params) {
+    url = `${url}${url.includes('?') ? '&' : '?'}${new URLSearchParams(options.params).toString()}`;
+  }
+  if (options?.data) {
+    options.data = !options?.raw && isObj(options.data) ? JSON.stringify(options.data) : options.data;
+  }
+  return fetch(url, {
+    headers: {
+      'content-type': options?.contentType ?? 'application/x-www-form-urlencoded;charset=UTF-8'
+    },
+    method: method,
+    body: options?.data
+  });
 }

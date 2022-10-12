@@ -2,11 +2,10 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-09-09 11:37:24
+ * @LastEditTime: 2022-10-12 15:34:08
  * @Description: 工具方法
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
-
 import { arraySet } from '@/Array';
 import { getType, isPromise, isStr, toBool, toNum } from '@/Types';
 

@@ -2,11 +2,10 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:45:48
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-09-07 17:03:53
+ * @LastEditTime: 2022-10-12 15:34:00
  * @Description: 字符串常用方法
  * @FilePath: \js-xxx\src\String\index.ts
  */
-
 import { union } from '@/Tools';
 import { isUndef } from '@/Types';
 

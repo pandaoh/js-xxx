@@ -2,11 +2,10 @@
  * @Author: HxB
  * @Date: 2022-06-04 16:30:04
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-09-02 10:19:28
+ * @LastEditTime: 2022-10-12 15:34:24
  * @Description: localStorage 与 sessionStorage
  * @FilePath: \js-xxx\src\Storage\index.ts
  */
-
 import { getType, isJSON } from '@/Types';
 import { isDecimal, isInteger } from '@/Number';
 // 加密与过期设置参考 https://juejin.cn/post/7104301566857445412

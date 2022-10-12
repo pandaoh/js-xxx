@@ -1,8 +1,12 @@
-js-xxx - v1.3.2
+js-xxx - v1.3.3
 
-# js-xxx - v1.3.2
+# js-xxx - v1.3.3
 
 ## Table of contents
+
+### Enumerations
+
+- [HttpMethod](enums/HttpMethod.md)
 
 ### Functions
 
@@ -167,6 +171,8 @@ js-xxx - v1.3.2
 - [uuid](README.md#uuid)
 - [versionUpgrade](README.md#versionupgrade)
 - [waitUntil](README.md#waituntil)
+- [xAjax](README.md#xajax)
+- [xFetch](README.md#xfetch)
 
 ## Functions
 
@@ -3579,3 +3585,61 @@ Example:
 #### Returns
 
 `Promise`<`any`\>
+
+___
+
+### xAjax
+
+▸ **xAjax**(`method`, `url`, `options?`): `any`
+
+ajax 简单封装
+Example:
+`xAjax('get', 'https://test.cn', { params: { test: 123, hello: 456 }, success: (data) => console.log('success', data), fail: (error) => console.log('fail', error) }) => ajax`
+`xAjax('POST', 'https://test.cn', { contentType: 'application/json', data: { test: 123 }, success: (data) => console.log('success', data), fail: (error) => console.log('fail', error) }) => ajax`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `method` | `string` |
+| `url` | `string` |
+| `options?` | `Object` |
+| `options.async?` | `boolean` |
+| `options.contentType?` | `string` |
+| `options.data?` | `any` |
+| `options.fail?` | `any` |
+| `options.params?` | `any` |
+| `options.raw?` | `boolean` |
+| `options.success?` | `any` |
+| `options.withCredentials?` | `boolean` |
+
+#### Returns
+
+`any`
+
+___
+
+### xFetch
+
+▸ **xFetch**(`method`, `url`, `options?`): `any`
+
+fetch 简单封装
+Example:
+`xFetch('get', 'https://test.cn', { params: { test: 123, hello: 456 } }).then(res => res.json()).then(data => console.log(data)) => fetchXPromise`
+`xFetch('POST', 'https://test.cn', { contentType: 'application/json', data: { test: 123 } }).catch(error => console.log(error)) => fetchXPromise`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `method` | [`HttpMethod`](enums/HttpMethod.md) |
+| `url` | `string` |
+| `options?` | `Object` |
+| `options.contentType?` | `string` |
+| `options.data?` | `any` |
+| `options.params?` | `any` |
+| `options.raw?` | `boolean` |
+
+#### Returns
+
+`any`

@@ -8684,6 +8684,21 @@ var $xxx = (function (exports) {
         return new Promise(promiseHandler).catch(function (e) { return errorHandler && errorHandler(e); });
     }
 
+    exports.HttpMethod = void 0;
+    (function (HttpMethod) {
+        HttpMethod["GET"] = "GET";
+        HttpMethod["POST"] = "POST";
+        HttpMethod["PUT"] = "PUT";
+        HttpMethod["PATCH"] = "PATCH";
+        HttpMethod["DELETE"] = "DELETE";
+        HttpMethod["OPTIONS"] = "OPTIONS";
+        HttpMethod["get"] = "GET";
+        HttpMethod["post"] = "POST";
+        HttpMethod["put"] = "PUT";
+        HttpMethod["patch"] = "PATCH";
+        HttpMethod["delete"] = "DELETE";
+        HttpMethod["options"] = "OPTIONS";
+    })(exports.HttpMethod || (exports.HttpMethod = {}));
     function qsStringify(obj, options) {
         if (!obj) {
             return '';
@@ -8767,6 +8782,61 @@ var $xxx = (function (exports) {
             finally { if (e_1) throw e_1.error; }
         }
         return paramsObj;
+    }
+    function xAjax(method, url, options) {
+        var _a, _b, _c, _d;
+        var xhr;
+        method = method.toUpperCase();
+        if (window.XMLHttpRequest) {
+            xhr = new XMLHttpRequest();
+        }
+        else {
+            xhr = new ActiveXObject('Microsoft.XMLHttp');
+        }
+        xhr.onreadystatechange = function () {
+            var _a, _b;
+            if (xhr.readyState === 4) {
+                if (xhr.status < 400) {
+                    (_a = options === null || options === void 0 ? void 0 : options.success) === null || _a === void 0 ? void 0 : _a.call(options, xhr.response);
+                }
+                else if (xhr.status >= 400) {
+                    (_b = options === null || options === void 0 ? void 0 : options.fail) === null || _b === void 0 ? void 0 : _b.call(options, xhr.response);
+                }
+            }
+        };
+        var async = (_a = options === null || options === void 0 ? void 0 : options.async) !== null && _a !== void 0 ? _a : true;
+        xhr.withCredentials = (_b = options === null || options === void 0 ? void 0 : options.withCredentials) !== null && _b !== void 0 ? _b : false;
+        if (options === null || options === void 0 ? void 0 : options.data) {
+            options.data = !(options === null || options === void 0 ? void 0 : options.raw) && isObj(options.data) ? JSON.stringify(options.data) : options.data;
+        }
+        if (method == 'GET') {
+            xhr.open('GET', !(options === null || options === void 0 ? void 0 : options.params)
+                ? url
+                : "".concat(url).concat(url.includes('?') ? '&' : '?').concat(new URLSearchParams(options.params).toString()), async);
+            xhr.send();
+        }
+        else {
+            xhr.open(method, url, async);
+            xhr.setRequestHeader('Content-Type', (_c = options === null || options === void 0 ? void 0 : options.contentType) !== null && _c !== void 0 ? _c : 'application/x-www-form-urlencoded;charset=UTF-8');
+            xhr.send((_d = options === null || options === void 0 ? void 0 : options.data) !== null && _d !== void 0 ? _d : null);
+        }
+        return xhr;
+    }
+    function xFetch(method, url, options) {
+        var _a;
+        if (options === null || options === void 0 ? void 0 : options.params) {
+            url = "".concat(url).concat(url.includes('?') ? '&' : '?').concat(new URLSearchParams(options.params).toString());
+        }
+        if (options === null || options === void 0 ? void 0 : options.data) {
+            options.data = !(options === null || options === void 0 ? void 0 : options.raw) && isObj(options.data) ? JSON.stringify(options.data) : options.data;
+        }
+        return fetch(url, {
+            headers: {
+                'content-type': (_a = options === null || options === void 0 ? void 0 : options.contentType) !== null && _a !== void 0 ? _a : 'application/x-www-form-urlencoded;charset=UTF-8'
+            },
+            method: method,
+            body: options === null || options === void 0 ? void 0 : options.data
+        });
     }
 
     function _tempSet(key, value, storeType) {
@@ -9074,6 +9144,8 @@ var $xxx = (function (exports) {
     exports.uuid = uuid;
     exports.versionUpgrade = versionUpgrade;
     exports.waitUntil = waitUntil;
+    exports.xAjax = xAjax;
+    exports.xFetch = xFetch;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

@@ -2,11 +2,10 @@
  * @Author: HxB
  * @Date: 2022-06-04 20:07:41
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-08-03 17:19:44
+ * @LastEditTime: 2022-10-12 15:34:42
  * @Description: 系统推送通知 https://developer.mozilla.org/zh-CN/docs/Web/API/Notifications_API
  * @FilePath: \js-xxx\src\Notify\index.ts
  */
-
 import { getRandStr } from '@/Tools';
 
 /**

@@ -2,11 +2,10 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:53:02
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-09-02 10:17:41
+ * @LastEditTime: 2022-10-12 15:34:49
  * @Description: 表单相关
  * @FilePath: \js-xxx\src\Form\index.ts
  */
-
 import { getType } from '@/Types';
 
 /**

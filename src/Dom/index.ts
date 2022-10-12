@@ -2,11 +2,10 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-09-23 18:26:10
+ * @LastEditTime: 2022-10-12 15:35:09
  * @Description: 利用 dom 的一些方法
  * @FilePath: \js-xxx\src\Dom\index.ts
  */
-
 /**
  * 字符串转实体字符
  * Example: `str2html('<>&"') => '&lt;&gt;&amp;&quot;'`

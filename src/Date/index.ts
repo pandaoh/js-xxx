@@ -2,11 +2,10 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:54:41
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-09-13 09:50:07
+ * @LastEditTime: 2022-10-12 15:35:06
  * @Description: 时间相关方法
  * @FilePath: \js-xxx\src\Date\index.ts
  */
-
 import { trim } from '@/String';
 
 /**

@@ -8681,6 +8681,21 @@ function catchPromise(promiseHandler, errorHandler) {
     return new Promise(promiseHandler).catch(function (e) { return errorHandler && errorHandler(e); });
 }
 
+var HttpMethod;
+(function (HttpMethod) {
+    HttpMethod["GET"] = "GET";
+    HttpMethod["POST"] = "POST";
+    HttpMethod["PUT"] = "PUT";
+    HttpMethod["PATCH"] = "PATCH";
+    HttpMethod["DELETE"] = "DELETE";
+    HttpMethod["OPTIONS"] = "OPTIONS";
+    HttpMethod["get"] = "GET";
+    HttpMethod["post"] = "POST";
+    HttpMethod["put"] = "PUT";
+    HttpMethod["patch"] = "PATCH";
+    HttpMethod["delete"] = "DELETE";
+    HttpMethod["options"] = "OPTIONS";
+})(HttpMethod || (HttpMethod = {}));
 function qsStringify(obj, options) {
     if (!obj) {
         return '';
@@ -8764,6 +8779,61 @@ function getSearchParams(url) {
         finally { if (e_1) throw e_1.error; }
     }
     return paramsObj;
+}
+function xAjax(method, url, options) {
+    var _a, _b, _c, _d;
+    var xhr;
+    method = method.toUpperCase();
+    if (window.XMLHttpRequest) {
+        xhr = new XMLHttpRequest();
+    }
+    else {
+        xhr = new ActiveXObject('Microsoft.XMLHttp');
+    }
+    xhr.onreadystatechange = function () {
+        var _a, _b;
+        if (xhr.readyState === 4) {
+            if (xhr.status < 400) {
+                (_a = options === null || options === void 0 ? void 0 : options.success) === null || _a === void 0 ? void 0 : _a.call(options, xhr.response);
+            }
+            else if (xhr.status >= 400) {
+                (_b = options === null || options === void 0 ? void 0 : options.fail) === null || _b === void 0 ? void 0 : _b.call(options, xhr.response);
+            }
+        }
+    };
+    var async = (_a = options === null || options === void 0 ? void 0 : options.async) !== null && _a !== void 0 ? _a : true;
+    xhr.withCredentials = (_b = options === null || options === void 0 ? void 0 : options.withCredentials) !== null && _b !== void 0 ? _b : false;
+    if (options === null || options === void 0 ? void 0 : options.data) {
+        options.data = !(options === null || options === void 0 ? void 0 : options.raw) && isObj(options.data) ? JSON.stringify(options.data) : options.data;
+    }
+    if (method == 'GET') {
+        xhr.open('GET', !(options === null || options === void 0 ? void 0 : options.params)
+            ? url
+            : "".concat(url).concat(url.includes('?') ? '&' : '?').concat(new URLSearchParams(options.params).toString()), async);
+        xhr.send();
+    }
+    else {
+        xhr.open(method, url, async);
+        xhr.setRequestHeader('Content-Type', (_c = options === null || options === void 0 ? void 0 : options.contentType) !== null && _c !== void 0 ? _c : 'application/x-www-form-urlencoded;charset=UTF-8');
+        xhr.send((_d = options === null || options === void 0 ? void 0 : options.data) !== null && _d !== void 0 ? _d : null);
+    }
+    return xhr;
+}
+function xFetch(method, url, options) {
+    var _a;
+    if (options === null || options === void 0 ? void 0 : options.params) {
+        url = "".concat(url).concat(url.includes('?') ? '&' : '?').concat(new URLSearchParams(options.params).toString());
+    }
+    if (options === null || options === void 0 ? void 0 : options.data) {
+        options.data = !(options === null || options === void 0 ? void 0 : options.raw) && isObj(options.data) ? JSON.stringify(options.data) : options.data;
+    }
+    return fetch(url, {
+        headers: {
+            'content-type': (_a = options === null || options === void 0 ? void 0 : options.contentType) !== null && _a !== void 0 ? _a : 'application/x-www-form-urlencoded;charset=UTF-8'
+        },
+        method: method,
+        body: options === null || options === void 0 ? void 0 : options.data
+    });
 }
 
 function _tempSet(key, value, storeType) {
@@ -8910,4 +8980,4 @@ function setWsBinaryType(binaryType) {
     return true;
 }
 
-export { Base64Decode, Base64Encode, Logger, add, all, any, appendLink, appendScript, arraySet, arraySort, average, base64Decode, base64Encode, bindMoreClick, calcDate, camelCase, catchPromise, checkVersion, closeFullscreen, closeWebSocket, compareDate, copyContent, copyToClipboard, curryIt, data2Arr, data2Obj, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitKeyboardEvent, empty, encrypt, findChildren, findParents, formatBytes, formatDate, formatFormData, formatNumber, formatRh, formatURLSearchParams, get1Var, getBSColor, getBaseURL, getBloodGroup, getCookie, getCryptoJS, getDateDifference, getDateTime, getKey, getLastVar, getMonthDays, getMonthDaysCount, getQueryString, getRandColor, getRandNum, getRandStr, getRandVar, getSearchParams, getSize, getStyleByName, getTimeAndStr, getTimeCode, getType, getUTCTime, getUUID, getUserAgent, getV, getVar, getViewportSize, getWebSocket, globalError, html2str, initNotification, initWebSocket, insertAfter, intersection, isAppleDevice, isArr, isArrayBuffer, isBlob, isBool, isBrowser, isDarkMode, isDate, isDecimal, isElement, isEmail, isFn, isInteger, isJSON, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPromise, isRhNegative, isStr, isUndef, isUrl, isWeekday, jsonClone, localStorageGet, localStorageSet, logRunTime, marquee, maskString, md5, mergeObj, ms, offDefaultEvent, onClick2MoreClick, openFile, openFullscreen, qsParse, qsStringify, removeCookie, repeat, retry, round, scrollToBottom, scrollToTop, sendNotification, sendWsMessage, sessionStorageGet, sessionStorageSet, setCookie, setIcon, setWsBinaryType, sha1, sha256, shuffleArray, sleep, slugify, sortBy, sortCallBack, splitCase, str2html, str2unicode, sub, throttle, timeSince, times, to, toBool, toNum, toStr, transferCase, trim, truncate, unicode2str, union, unique, uuid, versionUpgrade, waitUntil };
+export { Base64Decode, Base64Encode, HttpMethod, Logger, add, all, any, appendLink, appendScript, arraySet, arraySort, average, base64Decode, base64Encode, bindMoreClick, calcDate, camelCase, catchPromise, checkVersion, closeFullscreen, closeWebSocket, compareDate, copyContent, copyToClipboard, curryIt, data2Arr, data2Obj, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitKeyboardEvent, empty, encrypt, findChildren, findParents, formatBytes, formatDate, formatFormData, formatNumber, formatRh, formatURLSearchParams, get1Var, getBSColor, getBaseURL, getBloodGroup, getCookie, getCryptoJS, getDateDifference, getDateTime, getKey, getLastVar, getMonthDays, getMonthDaysCount, getQueryString, getRandColor, getRandNum, getRandStr, getRandVar, getSearchParams, getSize, getStyleByName, getTimeAndStr, getTimeCode, getType, getUTCTime, getUUID, getUserAgent, getV, getVar, getViewportSize, getWebSocket, globalError, html2str, initNotification, initWebSocket, insertAfter, intersection, isAppleDevice, isArr, isArrayBuffer, isBlob, isBool, isBrowser, isDarkMode, isDate, isDecimal, isElement, isEmail, isFn, isInteger, isJSON, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPromise, isRhNegative, isStr, isUndef, isUrl, isWeekday, jsonClone, localStorageGet, localStorageSet, logRunTime, marquee, maskString, md5, mergeObj, ms, offDefaultEvent, onClick2MoreClick, openFile, openFullscreen, qsParse, qsStringify, removeCookie, repeat, retry, round, scrollToBottom, scrollToTop, sendNotification, sendWsMessage, sessionStorageGet, sessionStorageSet, setCookie, setIcon, setWsBinaryType, sha1, sha256, shuffleArray, sleep, slugify, sortBy, sortCallBack, splitCase, str2html, str2unicode, sub, throttle, timeSince, times, to, toBool, toNum, toStr, transferCase, trim, truncate, unicode2str, union, unique, uuid, versionUpgrade, waitUntil, xAjax, xFetch };
