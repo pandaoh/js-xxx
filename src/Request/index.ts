@@ -2,11 +2,95 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:15:37
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-10-12 16:11:09
+ * @LastEditTime: 2022-11-16 16:06:28
  * @Description: 请求相关方法
  * @FilePath: \js-xxx\src\Request\index.ts
  */
 import { getType, isObj, toBool } from '@/Types';
+
+/**
+ * content types
+ */
+export const CONTENT_TYPES: { [propName: string]: string } = {
+  '7z': 'application/octet-stream',
+  avi: 'video/x-msvideo',
+  bmp: 'image/bmp',
+  css: 'text/css',
+  csv: 'text/csv',
+  conf: 'text/plain',
+  class: 'application/x-java',
+  docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  doc: 'application/msword',
+  dv: 'video/dv',
+  dwg: 'image/vnd.dwg',
+  exe: 'application/x-msdownload',
+  fig: 'image/x-xfig',
+  flac: 'audio/x-flac',
+  flv: 'video/x-flv',
+  gif: 'image/gif',
+  html: 'text/html',
+  ico: 'image/x-icon',
+  ini: 'text/plain',
+  jpeg: 'image/jpeg',
+  jpg: 'image/jpg',
+  js: 'text/javascript',
+  jsonp: 'application/jsonp',
+  json: 'application/json',
+  log: 'text/plain',
+  lock: 'text/plain',
+  m4a: 'audio/mp4',
+  mkv: 'video/x-matroska',
+  mp3: 'audio/mpeg',
+  mp4: 'video/mp4',
+  m4v: 'video/mp4',
+  moov: 'video/quicktime',
+  mov: 'video/quicktime',
+  movie: 'video/x-sgi-movie',
+  md: 'text/plain',
+  ogg: 'video/x-theora+ogg',
+  oga: 'audio/ogg',
+  ppk: 'text/plain',
+  php: 'application/x-php',
+  py: 'text/x-python',
+  png: 'image/png',
+  pptx: 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+  ppt: 'application/vnd.ms-powerpoint',
+  pdf: 'application/pdf',
+  reg: 'text/x-ms-regedit',
+  rar: 'application/octet-stream',
+  so: 'application/x-sharedlib',
+  svg: 'image/svg+xml',
+  sql: 'text/x-sql',
+  'tar.gz': 'application/x-compressed-tar',
+  tgz: 'application/x-compressed-tar',
+  ttf: 'application/x-font-ttf',
+  tif: 'image/tiff',
+  txt: 'text/plain',
+  ts: 'text/plain',
+  tsx: 'text/plain',
+  jsx: 'text/plain',
+  vue: 'text/plain',
+  scss: 'text/plain',
+  less: 'text/plain',
+  uri: 'text/x-uri',
+  url: 'text/x-uri',
+  wav: 'audio/x-wav',
+  wbmp: 'image/vnd.wap.wbmp',
+  webm: 'video/webm',
+  wmv: 'video/x-ms-wmv',
+  xls: 'application/vnd.ms-excel',
+  xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  xhtml: 'application/xhtml+xml',
+  xml: 'application/xml',
+  xmind: 'application/octet-stream',
+  yml: 'text/plain',
+  yaml: 'text/plain',
+  zip: 'application/x-zip-compressed',
+  binary: 'application/octet-stream',
+  form: 'application/x-www-form-urlencoded',
+  file: 'multipart/form-data',
+  utf8: 'charset=utf-8'
+};
 
 /**
  * Http Method
@@ -252,4 +336,18 @@ export function xFetch(
     method: method,
     body: options?.data
   });
+}
+
+/**
+ * 获取常见的 content-type
+ * Example:
+ * `getContentType('form') => 'application/x-www-form-urlencoded'`
+ * `getContentType('file') => 'multipart/form-data'`
+ * `getContentType('pdf') => 'application/pdf'`
+ * `getContentType('unknown') => 'application/octet-stream'`
+ * @param fileType
+ * @returns
+ */
+export function getContentType(fileType: string): string {
+  return CONTENT_TYPES[fileType] ?? 'application/octet-stream';
 }

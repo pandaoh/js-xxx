@@ -39,4 +39,22 @@ export declare function Logger(): {
 };
 export declare function waitUntil(condition: any, timeout?: number, interval?: number): Promise<any>;
 export declare function ms(str: any): string | number;
+export declare function transferFileToBase64(content: BlobPart | any, contentType: string, callBack: any): void;
+export declare function checkIdCard(value: string): boolean;
+export declare function getAge(birthday: any, targetDate?: any): number;
+export declare function getAnimal(date: any): string;
+export declare function transferIdCard(idCard: string): any;
+export declare function transferMoney(n: number): string;
+export declare function Speaker(text: string, lang?: string, volume?: number, pitch?: number, rate?: number): {
+    getInstance: () => SpeechSynthesisUtterance;
+    setText: (txt: string) => void;
+    setLang: (lang: string) => void;
+    setVolume: (volume: number) => void;
+    setPitch: (pitch: number) => void;
+    setRate: (rate: number) => void;
+    setVoice: (voice: any) => void;
+    getVoices: () => SpeechSynthesisVoice[];
+    speak: () => void;
+    stop: () => void;
+};
 //# sourceMappingURL=index.d.ts.map

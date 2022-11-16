@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:54:41
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-10-12 15:35:06
+ * @LastEditTime: 2022-11-16 18:42:10
  * @Description: 时间相关方法
  * @FilePath: \js-xxx\src\Date\index.ts
  */
@@ -294,7 +294,7 @@ export function getUTCTime(timezone: number = 0): Date {
  * @param dateB
  * @returns
  */
-export function compareDate(dateA: any, dateB?: any): number {
+export function compareDate(dateA: any, dateB?: any): -1 | 1 | 0 {
   dateA = dateA ? new Date(dateA) : new Date();
   dateB = dateB ? new Date(dateB) : new Date();
   let result = dateA.getTime() - dateB.getTime();
@@ -305,4 +305,30 @@ export function compareDate(dateA: any, dateB?: any): number {
     return 1;
   }
   return 0;
+}
+
+/**
+ * 倒计时
+ * Example: `console.time('test'); countdown(10, (x) => console.log('===>', x), () => console.timeEnd('test')); => test: 10023.636962890625 ms`
+ * @param seconds
+ * @param callback
+ * @param finishCallBack
+ * @returns
+ */
+export function countdown(seconds: number, callback?: any, finishCallBack?: any): any {
+  let timer: any;
+  timer = setInterval(() => {
+    console.log('js-xxx:countdown-timer-count', seconds);
+    try {
+      callback && callback(seconds);
+      seconds--;
+      if (seconds === 0) {
+        clearInterval(timer);
+        finishCallBack && finishCallBack();
+      }
+    } catch (e) {
+      clearInterval(timer);
+    }
+  }, 1000);
+  return timer;
 }

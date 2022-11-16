@@ -15,7 +15,7 @@ export declare function onClick2MoreClick(delay?: number, ...events: Array<Funct
 export declare function bindMoreClick(fn: Function | any, times?: number, delay?: number): (...args: any[]) => void;
 export declare function emitKeyboardEvent(eventType?: 'keydown' | 'keypress' | 'keyup', keyCode?: number): void;
 export declare function disableConflictEvent(event: any): boolean;
-export declare function checkVersion(targetVersion: string, currentVersion: string, testStr?: string): number;
+export declare function checkVersion(targetVersion: string, currentVersion: string, testStr?: string): -1 | 1 | 0;
 export declare function versionUpgrade(version: string, maxVersionCode?: number): string;
 export declare function formatRh(input: string, options?: {
     format?: [string | number | boolean, string | number | boolean];

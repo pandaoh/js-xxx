@@ -12,5 +12,6 @@ export declare function getMonthDays(date?: string | Date): number;
 export declare function getMonthDaysCount(date?: string | Date): number;
 export declare function getDateTime(date?: string | Date): number;
 export declare function getUTCTime(timezone?: number): Date;
-export declare function compareDate(dateA: any, dateB?: any): number;
+export declare function compareDate(dateA: any, dateB?: any): -1 | 1 | 0;
+export declare function countdown(seconds: number, callback?: any, finishCallBack?: any): any;
 //# sourceMappingURL=index.d.ts.map

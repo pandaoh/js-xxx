@@ -7076,6 +7076,44 @@ var $xxx = (function (exports) {
         return CryptoJS;
     }
 
+    var ANIMALS = ['猴', '鸡', '狗', '猪', '鼠', '牛', '虎', '兔', '龙', '蛇', '马', '羊'];
+    var ID_CARD_PROVINCE = {
+        '11': '北京',
+        '12': '天津',
+        '13': '河北',
+        '14': '山西',
+        '15': '内蒙古',
+        '21': '辽宁',
+        '22': '吉林',
+        '23': '黑龙江',
+        '31': '上海',
+        '32': '江苏',
+        '33': '浙江',
+        '34': '安徽',
+        '35': '福建',
+        '36': '江西',
+        '37': '山东',
+        '41': '河南',
+        '42': '湖北',
+        '43': '湖南',
+        '44': '广东',
+        '45': '广西',
+        '46': '海南',
+        '50': '重庆',
+        '51': '四川',
+        '52': '贵州',
+        '53': '云南',
+        '54': '西藏',
+        '61': '陕西',
+        '62': '甘肃',
+        '63': '青海',
+        '64': '宁夏',
+        '65': '新疆',
+        '71': '台湾',
+        '81': '香港',
+        '82': '澳门',
+        '91': '国外'
+    };
     function getTimeCode() {
         var dateObj = new Date();
         return "".concat((Math.random() * 100).toFixed().padEnd(2, '0')).concat(dateObj.getSeconds().toString().padStart(2, '0')).concat(dateObj
@@ -7513,6 +7551,126 @@ var $xxx = (function (exports) {
         }
         return +(num / factor[suffix]).toFixed(2) + suffix;
     }
+    function transferFileToBase64(content, contentType, callBack) {
+        var blob = new Blob([content], {
+            type: contentType
+        });
+        var reader = new FileReader();
+        reader.readAsDataURL(blob);
+        reader.addEventListener('loadend', function () {
+            callBack === null || callBack === void 0 ? void 0 : callBack({
+                result: reader === null || reader === void 0 ? void 0 : reader.result
+            });
+        });
+    }
+    function checkIdCard(value) {
+        var regIdCard15 = /^[1-9]d{5}d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)d{2}$/;
+        var regIdCard18 = /^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/;
+        return regIdCard15.test(value) || regIdCard18.test(value);
+    }
+    function getAge(birthday, targetDate) {
+        return new Date(new Date(targetDate !== null && targetDate !== void 0 ? targetDate : Date.now()).getTime() - new Date(birthday).getTime()).getFullYear() - 1970;
+    }
+    function getAnimal(date) {
+        return ANIMALS[new Date(date).getFullYear() % 12];
+    }
+    function transferIdCard(idCard) {
+        if (!checkIdCard(idCard)) {
+            return {};
+        }
+        var is18 = idCard.length === 18;
+        var year = is18
+            ? idCard.substring(6, 10)
+            : "".concat(parseInt(idCard.charAt(6)) <= 4 ? '20' : '19').concat(idCard.substring(6, 8));
+        var province = ID_CARD_PROVINCE[idCard.substring(0, 2)];
+        var sex = parseInt(is18 ? idCard.charAt(16) : idCard.charAt(14)) % 2 === 1 ? '男' : '女';
+        var animal = getAnimal(year);
+        var birthday = "".concat(year, "-").concat(is18 ? idCard.substring(10, 12) : idCard.substring(8, 10), "-").concat(is18 ? idCard.substring(12, 14) : idCard.substring(10, 12));
+        var age = getAge(birthday);
+        return {
+            age: age,
+            year: year,
+            idCard: idCard,
+            sex: sex,
+            province: province,
+            animal: animal,
+            birthday: birthday
+        };
+    }
+    function transferMoney(n) {
+        var fraction = ['角', '分'];
+        var digit = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖'];
+        var unit = [
+            ['元', '万', '亿'],
+            ['', '拾', '佰', '仟']
+        ];
+        var head = n < 0 ? '欠' : '';
+        n = Math.abs(n);
+        var s = '';
+        var fraLen = fraction.length;
+        for (var i = 0; i < fraLen; i++) {
+            s += (digit[Math.floor(n * 10 * Math.pow(10, i)) % 10] + fraction[i]).replace(/零./, '');
+        }
+        s = s || '整';
+        n = Math.floor(n);
+        for (var i = 0; i < unit[0].length && n > 0; i++) {
+            var p = '';
+            for (var j = 0; j < unit[1].length && n > 0; j++) {
+                p = digit[n % 10] + unit[1][j] + p;
+                n = Math.floor(n / 10);
+            }
+            s = p.replace(/(零.)*零$/, '').replace(/^$/, '零') + unit[0][i] + s;
+        }
+        return (head +
+            s
+                .replace(/(零.)*零元/, '元')
+                .replace(/(零.)+/g, '零')
+                .replace(/^整$/, '零元整'));
+    }
+    function Speaker(text, lang, volume, pitch, rate) {
+        if (lang === void 0) { lang = 'zh-CN'; }
+        if (volume === void 0) { volume = 1; }
+        if (pitch === void 0) { pitch = 1; }
+        if (rate === void 0) { rate = 1; }
+        var speaker = new window.SpeechSynthesisUtterance(text);
+        speaker.text = text;
+        speaker.lang = lang;
+        speaker.volume = volume;
+        speaker.pitch = pitch;
+        speaker.rate = rate;
+        return {
+            getInstance: function () {
+                return speaker;
+            },
+            setText: function (txt) {
+                speaker.text = txt;
+            },
+            setLang: function (lang) {
+                speaker.lang = lang;
+            },
+            setVolume: function (volume) {
+                speaker.volume = volume;
+            },
+            setPitch: function (pitch) {
+                speaker.pitch = pitch;
+            },
+            setRate: function (rate) {
+                speaker.rate = rate;
+            },
+            setVoice: function (voice) {
+                speaker.voice = voice;
+            },
+            getVoices: function () {
+                return window.speechSynthesis.getVoices();
+            },
+            speak: function () {
+                window.speechSynthesis.speak(speaker);
+            },
+            stop: function () {
+                window.speechSynthesis.cancel();
+            }
+        };
+    }
 
     function unicode2str(value) {
         return escape(value).toLocaleLowerCase().replace(/%u/gi, '\\u');
@@ -7631,6 +7789,46 @@ var $xxx = (function (exports) {
     function isEmail(value) {
         var regEmail = /.+@.+\..+/;
         return regEmail.test(value);
+    }
+    function isPhoneNum(value) {
+        var regPhoneNum = /^(0|86|17951)?(1[3-9][0-9])[0-9]{8}$/;
+        return regPhoneNum.test(value);
+    }
+    function isChar(value, hasChinese) {
+        if (hasChinese === void 0) { hasChinese = false; }
+        var regChar = hasChinese
+            ? /^[a-zA-Z\u4E00-\u9FA5]([a-zA-Z0-9_\u4E00-\u9FA5]{5,17})$/
+            : /^[a-zA-Z]([a-zA-Z0-9_\u4E00-\u9FA5]{5,17})$/;
+        return regChar.test(value);
+    }
+    function isStrongPassWord(value) {
+        var pwChar = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).{8,16}/;
+        return pwChar.test(value);
+    }
+    function isCarCode(value) {
+        var regCarCode = /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[\.]{0,1}[A-Z0-9]{4,5}[A-Z0-9挂学警港澳]{1}$/;
+        return regCarCode.test(value);
+    }
+    function isIpv4(value) {
+        var regIpv4 = /^((\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.){4}$/;
+        return regIpv4.test(value + '.');
+    }
+    function isIpv6(value) {
+        if (value == '::1')
+            return true;
+        var regIpv6 = /^(([\da-fA-F]{1,4}):){8}$/;
+        return regIpv6.test(value + ':');
+    }
+    function isIpAddress(value) {
+        return isIpv4(value) || isIpv6(value);
+    }
+    function checkFileExt(arr, value) {
+        var regFileExt = arr.map(function (name) { return ".".concat(name); }).join('|');
+        return new RegExp("(".concat(regFileExt, ")$")).test(value);
+    }
+    function isHttp(value) {
+        var flag = value.substring(0, 8);
+        return flag.includes('http://') ? 1 : flag.includes('https://') ? -1 : 0;
     }
     function slugify(str, replacement) {
         var regForbidden = /[^\w\s$*_+~.()'"!\-:@]/g;
@@ -7852,6 +8050,24 @@ var $xxx = (function (exports) {
             return 1;
         }
         return 0;
+    }
+    function countdown(seconds, callback, finishCallBack) {
+        var timer;
+        timer = setInterval(function () {
+            console.log('js-xxx:countdown-timer-count', seconds);
+            try {
+                callback && callback(seconds);
+                seconds--;
+                if (seconds === 0) {
+                    clearInterval(timer);
+                    finishCallBack && finishCallBack();
+                }
+            }
+            catch (e) {
+                clearInterval(timer);
+            }
+        }, 1000);
+        return timer;
     }
 
     function str2html(str) {
@@ -8684,6 +8900,86 @@ var $xxx = (function (exports) {
         return new Promise(promiseHandler).catch(function (e) { return errorHandler && errorHandler(e); });
     }
 
+    var CONTENT_TYPES = {
+        '7z': 'application/octet-stream',
+        avi: 'video/x-msvideo',
+        bmp: 'image/bmp',
+        css: 'text/css',
+        csv: 'text/csv',
+        conf: 'text/plain',
+        class: 'application/x-java',
+        docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        doc: 'application/msword',
+        dv: 'video/dv',
+        dwg: 'image/vnd.dwg',
+        exe: 'application/x-msdownload',
+        fig: 'image/x-xfig',
+        flac: 'audio/x-flac',
+        flv: 'video/x-flv',
+        gif: 'image/gif',
+        html: 'text/html',
+        ico: 'image/x-icon',
+        ini: 'text/plain',
+        jpeg: 'image/jpeg',
+        jpg: 'image/jpg',
+        js: 'text/javascript',
+        jsonp: 'application/jsonp',
+        json: 'application/json',
+        log: 'text/plain',
+        lock: 'text/plain',
+        m4a: 'audio/mp4',
+        mkv: 'video/x-matroska',
+        mp3: 'audio/mpeg',
+        mp4: 'video/mp4',
+        m4v: 'video/mp4',
+        moov: 'video/quicktime',
+        mov: 'video/quicktime',
+        movie: 'video/x-sgi-movie',
+        md: 'text/plain',
+        ogg: 'video/x-theora+ogg',
+        oga: 'audio/ogg',
+        ppk: 'text/plain',
+        php: 'application/x-php',
+        py: 'text/x-python',
+        png: 'image/png',
+        pptx: 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+        ppt: 'application/vnd.ms-powerpoint',
+        pdf: 'application/pdf',
+        reg: 'text/x-ms-regedit',
+        rar: 'application/octet-stream',
+        so: 'application/x-sharedlib',
+        svg: 'image/svg+xml',
+        sql: 'text/x-sql',
+        'tar.gz': 'application/x-compressed-tar',
+        tgz: 'application/x-compressed-tar',
+        ttf: 'application/x-font-ttf',
+        tif: 'image/tiff',
+        txt: 'text/plain',
+        ts: 'text/plain',
+        tsx: 'text/plain',
+        jsx: 'text/plain',
+        vue: 'text/plain',
+        scss: 'text/plain',
+        less: 'text/plain',
+        uri: 'text/x-uri',
+        url: 'text/x-uri',
+        wav: 'audio/x-wav',
+        wbmp: 'image/vnd.wap.wbmp',
+        webm: 'video/webm',
+        wmv: 'video/x-ms-wmv',
+        xls: 'application/vnd.ms-excel',
+        xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        xhtml: 'application/xhtml+xml',
+        xml: 'application/xml',
+        xmind: 'application/octet-stream',
+        yml: 'text/plain',
+        yaml: 'text/plain',
+        zip: 'application/x-zip-compressed',
+        binary: 'application/octet-stream',
+        form: 'application/x-www-form-urlencoded',
+        file: 'multipart/form-data',
+        utf8: 'charset=utf-8'
+    };
     exports.HttpMethod = void 0;
     (function (HttpMethod) {
         HttpMethod["GET"] = "GET";
@@ -8838,6 +9134,10 @@ var $xxx = (function (exports) {
             body: options === null || options === void 0 ? void 0 : options.data
         });
     }
+    function getContentType(fileType) {
+        var _a;
+        return (_a = CONTENT_TYPES[fileType]) !== null && _a !== void 0 ? _a : 'application/octet-stream';
+    }
 
     function _tempSet(key, value, storeType) {
         try {
@@ -8985,7 +9285,9 @@ var $xxx = (function (exports) {
 
     exports.Base64Decode = Base64Decode;
     exports.Base64Encode = Base64Encode;
+    exports.CONTENT_TYPES = CONTENT_TYPES;
     exports.Logger = Logger;
+    exports.Speaker = Speaker;
     exports.add = add;
     exports.all = all;
     exports.any = any;
@@ -9000,12 +9302,15 @@ var $xxx = (function (exports) {
     exports.calcDate = calcDate;
     exports.camelCase = camelCase;
     exports.catchPromise = catchPromise;
+    exports.checkFileExt = checkFileExt;
+    exports.checkIdCard = checkIdCard;
     exports.checkVersion = checkVersion;
     exports.closeFullscreen = closeFullscreen;
     exports.closeWebSocket = closeWebSocket;
     exports.compareDate = compareDate;
     exports.copyContent = copyContent;
     exports.copyToClipboard = copyToClipboard;
+    exports.countdown = countdown;
     exports.curryIt = curryIt;
     exports.data2Arr = data2Arr;
     exports.data2Obj = data2Obj;
@@ -9029,9 +9334,12 @@ var $xxx = (function (exports) {
     exports.formatRh = formatRh;
     exports.formatURLSearchParams = formatURLSearchParams;
     exports.get1Var = get1Var;
+    exports.getAge = getAge;
+    exports.getAnimal = getAnimal;
     exports.getBSColor = getBSColor;
     exports.getBaseURL = getBaseURL;
     exports.getBloodGroup = getBloodGroup;
+    exports.getContentType = getContentType;
     exports.getCookie = getCookie;
     exports.getCryptoJS = getCryptoJS;
     exports.getDateDifference = getDateDifference;
@@ -9070,22 +9378,30 @@ var $xxx = (function (exports) {
     exports.isBlob = isBlob;
     exports.isBool = isBool;
     exports.isBrowser = isBrowser;
+    exports.isCarCode = isCarCode;
+    exports.isChar = isChar;
     exports.isDarkMode = isDarkMode;
     exports.isDate = isDate;
     exports.isDecimal = isDecimal;
     exports.isElement = isElement;
     exports.isEmail = isEmail;
     exports.isFn = isFn;
+    exports.isHttp = isHttp;
     exports.isInteger = isInteger;
+    exports.isIpAddress = isIpAddress;
+    exports.isIpv4 = isIpv4;
+    exports.isIpv6 = isIpv6;
     exports.isJSON = isJSON;
     exports.isNaN = isNaN$1;
     exports.isNode = isNode;
     exports.isNull = isNull;
     exports.isNum = isNum;
     exports.isObj = isObj;
+    exports.isPhoneNum = isPhoneNum;
     exports.isPromise = isPromise;
     exports.isRhNegative = isRhNegative;
     exports.isStr = isStr;
+    exports.isStrongPassWord = isStrongPassWord;
     exports.isUndef = isUndef;
     exports.isUrl = isUrl;
     exports.isWeekday = isWeekday;
@@ -9136,6 +9452,9 @@ var $xxx = (function (exports) {
     exports.toNum = toNum;
     exports.toStr = toStr;
     exports.transferCase = transferCase;
+    exports.transferFileToBase64 = transferFileToBase64;
+    exports.transferIdCard = transferIdCard;
+    exports.transferMoney = transferMoney;
     exports.trim = trim;
     exports.truncate = truncate;
     exports.unicode2str = unicode2str;

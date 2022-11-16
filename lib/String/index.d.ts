@@ -10,6 +10,15 @@ export declare function camelCase(str: string): string;
 export declare function repeat(str: string, n?: number): string;
 export declare function isUrl(value: string): boolean;
 export declare function isEmail(value: string): boolean;
+export declare function isPhoneNum(value: string): boolean;
+export declare function isChar(value: string, hasChinese?: boolean): boolean;
+export declare function isStrongPassWord(value: string): boolean;
+export declare function isCarCode(value: string): boolean;
+export declare function isIpv4(value: string): boolean;
+export declare function isIpv6(value: string): boolean;
+export declare function isIpAddress(value: string): boolean;
+export declare function checkFileExt(arr: string[], value: string): boolean;
+export declare function isHttp(value: string): -1 | 1 | 0;
 export declare function slugify(str: string, replacement?: {
     [index: string]: string;
 }): string;

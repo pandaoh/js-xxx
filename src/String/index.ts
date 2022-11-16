@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:45:48
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-10-12 15:34:00
+ * @LastEditTime: 2022-11-16 18:33:24
  * @Description: 字符串常用方法
  * @FilePath: \js-xxx\src\String\index.ts
  */
@@ -245,7 +245,7 @@ export function isUrl(value: string): boolean {
 }
 
 /**
- * 检查是否为 email string
+ * 检查是否为 email string 邮箱
  * Example:
  * `isEmail('test@qq.com') => true`
  * `isEmail('@qq.com') => false`
@@ -255,6 +255,141 @@ export function isUrl(value: string): boolean {
 export function isEmail(value: string): boolean {
   const regEmail = /.+@.+\..+/;
   return regEmail.test(value);
+}
+
+/**
+ * 检查是否为 phoneNum string 手机号
+ * Example:
+ * `isPhoneNum('13579246810') => true`
+ * `isPhoneNum('12345678910') => false`
+ * @param value
+ * @returns
+ */
+export function isPhoneNum(value: string): boolean {
+  const regPhoneNum = /^(0|86|17951)?(1[3-9][0-9])[0-9]{8}$/;
+  return regPhoneNum.test(value);
+}
+
+/**
+ * 检查是否为 char string 用户名规范(字母数字下划线或中文)
+ * Example:
+ * `isChar('test123@qq.com') => false`
+ * `isChar('_test123_qq_com') => false`
+ * `isChar('test123_qq_com') => true`
+ * `isChar('我test123_qq_com') => false`
+ * `isChar('我test123_qq_com', true) => true`
+ * @param value
+ * @returns
+ */
+export function isChar(value: string, hasChinese: boolean = false): boolean {
+  const regChar = hasChinese
+    ? /^[a-zA-Z\u4E00-\u9FA5]([a-zA-Z0-9_\u4E00-\u9FA5]{5,17})$/
+    : /^[a-zA-Z]([a-zA-Z0-9_\u4E00-\u9FA5]{5,17})$/;
+  return regChar.test(value);
+}
+
+/**
+ * 检查密码强度是否足够
+ * Example:
+ * `isStrongPassWord('test@qq.com') => false`
+ * `isStrongPassWord('test@qq.com123') => true`
+ * @param value
+ * @returns
+ */
+export function isStrongPassWord(value: string): boolean {
+  const pwChar = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).{8,16}/;
+  return pwChar.test(value);
+}
+
+/**
+ * 检查是否为 carCode string 车牌号
+ * Example:
+ * `isCarCode('粤B68928') => true`
+ * `isCarCode('粤B.68928') => true`
+ * `isCarCode('广东B12345') => false`
+ * @param value
+ * @returns
+ */
+export function isCarCode(value: string): boolean {
+  const regCarCode =
+    /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[\.]{0,1}[A-Z0-9]{4,5}[A-Z0-9挂学警港澳]{1}$/;
+  return regCarCode.test(value);
+}
+
+/**
+ * 检查是否为 ipv4 string
+ * Example:
+ * `isIpv4('127.0.0.1') => true`
+ * `isIpv4('255.255.255.0') => true`
+ * `isIpv4('255.255.255.2555') => false`
+ * `isIpv4('255.255.255.2555.255') => false`
+ * @param value
+ * @returns
+ */
+export function isIpv4(value: string): boolean {
+  const regIpv4 = /^((\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.){4}$/;
+  return regIpv4.test(value + '.');
+}
+
+/**
+ * 检查是否为 ipv6 string
+ * Example:
+ * `isIpv6('::1') => true`
+ * `isIpv6('127.0.0.1') => false`
+ * `isIpv6('2000:0000:0000:0000:0001:2345:6789:abcd') => true`
+ * `isIpv6('2001:DB8:0:0:8:800:200C:417A') => true`
+ * `isIpv6('2001:DB8::8:800:200C:417A') => false 暂不兼容缩写`
+ * `isIpv6('2001:DB8:0:0:8:800:200C:417A:123') => false`
+ * `isIpv6('2000:0000:0000:0000:0001:2345:6789:abcd:1') => false`
+ * @param value
+ * @returns
+ */
+export function isIpv6(value: string): boolean {
+  if (value == '::1') return true;
+  const regIpv6 = /^(([\da-fA-F]{1,4}):){8}$/;
+  return regIpv6.test(value + ':');
+}
+
+/**
+ * 检查是否为 ip string
+ * Example:
+ * `isIpAddress('::1') => true`
+ * `isIpAddress('127.0.0.1') => true`
+ * `isIpAddress('2001:DB8:0:0:8:800:200C:417A') => true`
+ * `isIpAddress('255.255.255.123.123') => false`
+ * @param value
+ * @returns
+ */
+export function isIpAddress(value: string): boolean {
+  return isIpv4(value) || isIpv6(value);
+}
+
+/**
+ * 检查是否为 file.ext string 文件扩展名
+ * Example:
+ * `checkFileExt(['png', 'jpg'], 'test.jpg') => true`
+ * `checkFileExt(['png', 'jpg'], 'test.jpg.txt') => false`
+ * @param value
+ * @returns
+ */
+export function checkFileExt(arr: string[], value: string): boolean {
+  let regFileExt = arr.map((name) => `.${name}`).join('|');
+  return new RegExp(`(${regFileExt})$`).test(value);
+}
+
+/**
+ * 检查是否为 http 协议，1 是，-1 为 https，0 啥也不是。
+ * Example:
+ * `isHttp('http://test.com') => 1`
+ * `isHttp('http:test.com') => 0`
+ * `isHttp('https://test.com') => -1`
+ * `isHttp('12345') => 0`
+ * @param value
+ * @returns
+ */
+export function isHttp(value: string): -1 | 1 | 0 {
+  let flag = value.substring(0, 8);
+  return flag.includes('http://') ? 1 : flag.includes('https://') ? -1 : 0;
 }
 
 /**

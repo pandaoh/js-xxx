@@ -1,3 +1,6 @@
+export declare const CONTENT_TYPES: {
+    [propName: string]: string;
+};
 export declare enum HttpMethod {
     GET = "GET",
     POST = "POST",
@@ -38,4 +41,5 @@ export declare function xFetch(method: HttpMethod, url: string, options?: {
     raw?: boolean;
     contentType?: string;
 }): any;
+export declare function getContentType(fileType: string): string;
 //# sourceMappingURL=index.d.ts.map

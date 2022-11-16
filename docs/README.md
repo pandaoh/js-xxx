@@ -1,6 +1,6 @@
-js-xxx - v1.3.3
+js-xxx - v1.4.0
 
-# js-xxx - v1.3.3
+# js-xxx - v1.4.0
 
 ## Table of contents
 
@@ -8,11 +8,16 @@ js-xxx - v1.3.3
 
 - [HttpMethod](enums/HttpMethod.md)
 
+### Variables
+
+- [CONTENT\_TYPES](README.md#content_types)
+
 ### Functions
 
 - [Base64Decode](README.md#base64decode)
 - [Base64Encode](README.md#base64encode)
 - [Logger](README.md#logger)
+- [Speaker](README.md#speaker)
 - [add](README.md#add)
 - [all](README.md#all)
 - [any](README.md#any)
@@ -27,12 +32,15 @@ js-xxx - v1.3.3
 - [calcDate](README.md#calcdate)
 - [camelCase](README.md#camelcase)
 - [catchPromise](README.md#catchpromise)
+- [checkFileExt](README.md#checkfileext)
+- [checkIdCard](README.md#checkidcard)
 - [checkVersion](README.md#checkversion)
 - [closeFullscreen](README.md#closefullscreen)
 - [closeWebSocket](README.md#closewebsocket)
 - [compareDate](README.md#comparedate)
 - [copyContent](README.md#copycontent)
 - [copyToClipboard](README.md#copytoclipboard)
+- [countdown](README.md#countdown)
 - [curryIt](README.md#curryit)
 - [data2Arr](README.md#data2arr)
 - [data2Obj](README.md#data2obj)
@@ -56,9 +64,12 @@ js-xxx - v1.3.3
 - [formatRh](README.md#formatrh)
 - [formatURLSearchParams](README.md#formaturlsearchparams)
 - [get1Var](README.md#get1var)
+- [getAge](README.md#getage)
+- [getAnimal](README.md#getanimal)
 - [getBSColor](README.md#getbscolor)
 - [getBaseURL](README.md#getbaseurl)
 - [getBloodGroup](README.md#getbloodgroup)
+- [getContentType](README.md#getcontenttype)
 - [getCookie](README.md#getcookie)
 - [getCryptoJS](README.md#getcryptojs)
 - [getDateDifference](README.md#getdatedifference)
@@ -97,22 +108,30 @@ js-xxx - v1.3.3
 - [isBlob](README.md#isblob)
 - [isBool](README.md#isbool)
 - [isBrowser](README.md#isbrowser)
+- [isCarCode](README.md#iscarcode)
+- [isChar](README.md#ischar)
 - [isDarkMode](README.md#isdarkmode)
 - [isDate](README.md#isdate)
 - [isDecimal](README.md#isdecimal)
 - [isElement](README.md#iselement)
 - [isEmail](README.md#isemail)
 - [isFn](README.md#isfn)
+- [isHttp](README.md#ishttp)
 - [isInteger](README.md#isinteger)
+- [isIpAddress](README.md#isipaddress)
+- [isIpv4](README.md#isipv4)
+- [isIpv6](README.md#isipv6)
 - [isJSON](README.md#isjson)
 - [isNaN](README.md#isnan)
 - [isNode](README.md#isnode)
 - [isNull](README.md#isnull)
 - [isNum](README.md#isnum)
 - [isObj](README.md#isobj)
+- [isPhoneNum](README.md#isphonenum)
 - [isPromise](README.md#ispromise)
 - [isRhNegative](README.md#isrhnegative)
 - [isStr](README.md#isstr)
+- [isStrongPassWord](README.md#isstrongpassword)
 - [isUndef](README.md#isundef)
 - [isUrl](README.md#isurl)
 - [isWeekday](README.md#isweekday)
@@ -163,6 +182,9 @@ js-xxx - v1.3.3
 - [toNum](README.md#tonum)
 - [toStr](README.md#tostr)
 - [transferCase](README.md#transfercase)
+- [transferFileToBase64](README.md#transferfiletobase64)
+- [transferIdCard](README.md#transferidcard)
+- [transferMoney](README.md#transfermoney)
 - [trim](README.md#trim)
 - [truncate](README.md#truncate)
 - [unicode2str](README.md#unicode2str)
@@ -173,6 +195,18 @@ js-xxx - v1.3.3
 - [waitUntil](README.md#waituntil)
 - [xAjax](README.md#xajax)
 - [xFetch](README.md#xfetch)
+
+## Variables
+
+### CONTENT\_TYPES
+
+• `Const` **CONTENT\_TYPES**: `Object`
+
+content types
+
+#### Index signature
+
+▪ [propName: `string`]: `string`
 
 ## Functions
 
@@ -241,6 +275,44 @@ Example:
 | `primary` | (...`args`: `any`[]) => `void` |
 | `success` | (...`args`: `any`[]) => `void` |
 | `warning` | (...`args`: `any`[]) => `void` |
+
+___
+
+### Speaker
+
+▸ **Speaker**(`text`, `lang?`, `volume?`, `pitch?`, `rate?`): `Object`
+
+TTS 语音，可以在现代浏览器直接运行。
+Example:
+`const mySpeaker = Speaker()`
+`mySpeaker.setText('你好，这是一条测试语音！hello'); mySpeaker.speak();`
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `text` | `string` | `undefined` | 内容 |
+| `lang` | `string` | `'zh-CN'` | 语言 |
+| `volume` | `number` | `1` | 音量 [0, 1] |
+| `pitch` | `number` | `1` | 音高 [0, 2] |
+| `rate` | `number` | `1` | 速度 [0.1, 10] |
+
+#### Returns
+
+`Object`
+
+| Name | Type |
+| :------ | :------ |
+| `getInstance` | () => `SpeechSynthesisUtterance` |
+| `getVoices` | () => `SpeechSynthesisVoice`[] |
+| `setLang` | (`lang`: `string`) => `void` |
+| `setPitch` | (`pitch`: `number`) => `void` |
+| `setRate` | (`rate`: `number`) => `void` |
+| `setText` | (`txt`: `string`) => `void` |
+| `setVoice` | (`voice`: `any`) => `void` |
+| `setVolume` | (`volume`: `number`) => `void` |
+| `speak` | () => `void` |
+| `stop` | () => `void` |
 
 ___
 
@@ -560,9 +632,55 @@ Example: `new catchPromise(resolve, reject, rejectHandler) => Promise`
 
 ___
 
+### checkFileExt
+
+▸ **checkFileExt**(`arr`, `value`): `boolean`
+
+检查是否为 file.ext string 文件扩展名
+Example:
+`checkFileExt(['png', 'jpg'], 'test.jpg') => true`
+`checkFileExt(['png', 'jpg'], 'test.jpg.txt') => false`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `arr` | `string`[] |
+| `value` | `string` |
+
+#### Returns
+
+`boolean`
+
+___
+
+### checkIdCard
+
+▸ **checkIdCard**(`value`): `boolean`
+
+检查是否为 idCard string 身份证
+支持 15 、18 位
+Example:
+`checkIdCard('350424870506202') => true`
+`checkIdCard('003424870506202') => false`
+`checkIdCard('415106199801012130') => true`
+`checkIdCard('123123123123123222') => false`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `string` |
+
+#### Returns
+
+`boolean`
+
+___
+
 ### checkVersion
 
-▸ **checkVersion**(`targetVersion`, `currentVersion`, `testStr?`): `number`
+▸ **checkVersion**(`targetVersion`, `currentVersion`, `testStr?`): ``-1`` \| ``1`` \| ``0``
 
 版本号比对算法
 Example:
@@ -580,7 +698,7 @@ Example:
 
 #### Returns
 
-`number`
+``-1`` \| ``1`` \| ``0``
 
 ___
 
@@ -612,7 +730,7 @@ ___
 
 ### compareDate
 
-▸ **compareDate**(`dateA`, `dateB?`): `number`
+▸ **compareDate**(`dateA`, `dateB?`): ``-1`` \| ``1`` \| ``0``
 
 时间大小比较
 -1(A<B), 1(A>B), 0(A=B)
@@ -629,7 +747,7 @@ Example:
 
 #### Returns
 
-`number`
+``-1`` \| ``1`` \| ``0``
 
 ___
 
@@ -669,6 +787,27 @@ Example: `copyToClipboard('hello world')`
 #### Returns
 
 `void`
+
+___
+
+### countdown
+
+▸ **countdown**(`seconds`, `callback?`, `finishCallBack?`): `any`
+
+倒计时
+Example: `console.time('test'); countdown(10, (x) => console.log('===>', x), () => console.timeEnd('test')); => test: 10023.636962890625 ms`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `seconds` | `number` |
+| `callback?` | `any` |
+| `finishCallBack?` | `any` |
+
+#### Returns
+
+`any`
 
 ___
 
@@ -1193,6 +1332,51 @@ Example:
 
 ___
 
+### getAge
+
+▸ **getAge**(`birthday`, `targetDate?`): `number`
+
+获取年龄
+Example:
+`getAge('1998-9-28') => 24`
+`getAge('1998-6-8', '2023-7') => 25`
+`getAge('2023') => -1`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `birthday` | `any` |
+| `targetDate?` | `any` |
+
+#### Returns
+
+`number`
+
+___
+
+### getAnimal
+
+▸ **getAnimal**(`date`): `string`
+
+获取生肖
+Example:
+`getAnimal('1998') => '虎'`
+`getAnimal('1998-6-8') => '虎'`
+`getAnimal('2023') => '兔'`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `date` | `any` |
+
+#### Returns
+
+`string`
+
+___
+
 ### getBSColor
 
 ▸ **getBSColor**(`key?`): `string`
@@ -1261,6 +1445,29 @@ Example: `getBloodGroup('A') => { value: 'A', label: 'A型', color: '#1890FF', l
 | `lower` | `string` |
 | `upper` | `string` |
 | `value` | `string` |
+
+___
+
+### getContentType
+
+▸ **getContentType**(`fileType`): `string`
+
+获取常见的 content-type
+Example:
+`getContentType('form') => 'application/x-www-form-urlencoded'`
+`getContentType('file') => 'multipart/form-data'`
+`getContentType('pdf') => 'application/pdf'`
+`getContentType('unknown') => 'application/octet-stream'`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fileType` | `string` |
+
+#### Returns
+
+`string`
 
 ___
 
@@ -2002,6 +2209,53 @@ Example: `isBrowser() => true`
 
 ___
 
+### isCarCode
+
+▸ **isCarCode**(`value`): `boolean`
+
+检查是否为 carCode string 车牌号
+Example:
+`isCarCode('粤B68928') => true`
+`isCarCode('粤B.68928') => true`
+`isCarCode('广东B12345') => false`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `string` |
+
+#### Returns
+
+`boolean`
+
+___
+
+### isChar
+
+▸ **isChar**(`value`, `hasChinese?`): `boolean`
+
+检查是否为 char string 用户名规范(字母数字下划线或中文)
+Example:
+`isChar('test123@qq.com') => false`
+`isChar('_test123_qq_com') => false`
+`isChar('test123_qq_com') => true`
+`isChar('我test123_qq_com') => false`
+`isChar('我test123_qq_com', true) => true`
+
+#### Parameters
+
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `value` | `string` | `undefined` |
+| `hasChinese` | `boolean` | `false` |
+
+#### Returns
+
+`boolean`
+
+___
+
 ### isDarkMode
 
 ▸ **isDarkMode**(): `boolean`
@@ -2087,7 +2341,7 @@ ___
 
 ▸ **isEmail**(`value`): `boolean`
 
-检查是否为 email string
+检查是否为 email string 邮箱
 Example:
 `isEmail('test@qq.com') => true`
 `isEmail('@qq.com') => false`
@@ -2127,6 +2381,29 @@ Example:
 
 ___
 
+### isHttp
+
+▸ **isHttp**(`value`): ``-1`` \| ``1`` \| ``0``
+
+检查是否为 http 协议，1 是，-1 为 https，0 啥也不是。
+Example:
+`isHttp('http://test.com') => 1`
+`isHttp('http:test.com') => 0`
+`isHttp('https://test.com') => -1`
+`isHttp('12345') => 0`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `string` |
+
+#### Returns
+
+``-1`` \| ``1`` \| ``0``
+
+___
+
 ### isInteger
 
 ▸ **isInteger**(`value`, `type?`): `boolean`
@@ -2142,6 +2419,78 @@ Example:
 | :------ | :------ |
 | `value` | `string` |
 | `type?` | ``"-"`` \| ``"+"`` |
+
+#### Returns
+
+`boolean`
+
+___
+
+### isIpAddress
+
+▸ **isIpAddress**(`value`): `boolean`
+
+检查是否为 ip string
+Example:
+`isIpAddress('::1') => true`
+`isIpAddress('127.0.0.1') => true`
+`isIpAddress('2001:DB8:0:0:8:800:200C:417A') => true`
+`isIpAddress('255.255.255.123.123') => false`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `string` |
+
+#### Returns
+
+`boolean`
+
+___
+
+### isIpv4
+
+▸ **isIpv4**(`value`): `boolean`
+
+检查是否为 ipv4 string
+Example:
+`isIpv4('127.0.0.1') => true`
+`isIpv4('255.255.255.0') => true`
+`isIpv4('255.255.255.2555') => false`
+`isIpv4('255.255.255.2555.255') => false`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `string` |
+
+#### Returns
+
+`boolean`
+
+___
+
+### isIpv6
+
+▸ **isIpv6**(`value`): `boolean`
+
+检查是否为 ipv6 string
+Example:
+`isIpv6('::1') => true`
+`isIpv6('127.0.0.1') => false`
+`isIpv6('2000:0000:0000:0000:0001:2345:6789:abcd') => true`
+`isIpv6('2001:DB8:0:0:8:800:200C:417A') => true`
+`isIpv6('2001:DB8::8:800:200C:417A') => false 暂不兼容缩写`
+`isIpv6('2001:DB8:0:0:8:800:200C:417A:123') => false`
+`isIpv6('2000:0000:0000:0000:0001:2345:6789:abcd:1') => false`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `string` |
 
 #### Returns
 
@@ -2268,6 +2617,27 @@ Example:
 
 ___
 
+### isPhoneNum
+
+▸ **isPhoneNum**(`value`): `boolean`
+
+检查是否为 phoneNum string 手机号
+Example:
+`isPhoneNum('13579246810') => true`
+`isPhoneNum('12345678910') => false`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `string` |
+
+#### Returns
+
+`boolean`
+
+___
+
 ### isPromise
 
 ▸ **isPromise**(`value`): `boolean`
@@ -2323,6 +2693,27 @@ Example:
 | Name | Type |
 | :------ | :------ |
 | `value` | `any` |
+
+#### Returns
+
+`boolean`
+
+___
+
+### isStrongPassWord
+
+▸ **isStrongPassWord**(`value`): `boolean`
+
+检查密码强度是否足够
+Example:
+`isStrongPassWord('test@qq.com') => false`
+`isStrongPassWord('test@qq.com123') => true`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `string` |
 
 #### Returns
 
@@ -3411,6 +3802,72 @@ Example:
 | :------ | :------ |
 | `str` | `string` |
 | `type` | ``2`` \| ``3`` \| ``1`` \| ``"upper"`` \| ``"lower"`` \| ``"first"`` |
+
+#### Returns
+
+`string`
+
+___
+
+### transferFileToBase64
+
+▸ **transferFileToBase64**(`content`, `contentType`, `callBack`): `void`
+
+文件流或内容转 Base64
+Example:
+`transferFileToBase64(file, 'application/pdf;charset=utf-8', (res) => console.log({ res })) => result object`
+`transferFileToBase64('test', 'text/plain', (res) => console.log({ res })) => result object`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `content` | `any` |
+| `contentType` | `string` |
+| `callBack` | `any` |
+
+#### Returns
+
+`void`
+
+___
+
+### transferIdCard
+
+▸ **transferIdCard**(`idCard`): `any`
+
+身份证解析
+Example:
+`transferIdCard('350424870506202') => {"age":35,"year":"1987","idCard":"350424870506202","sex":"女","province":"福建","animal":"兔","birthday":"1987-05-06"}`
+`transferIdCard('415106199801012130') => {"age":24,"year":"1998","idCard":"415106199801012130","sex":"男","province":"河南","animal":"虎","birthday":"1998-01-01"}`
+`transferIdCard('xxxxx') => {}`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `idCard` | `string` |
+
+#### Returns
+
+`any`
+
+___
+
+### transferMoney
+
+▸ **transferMoney**(`n`): `string`
+
+金额转中文
+Example:
+`transferMoney(852.5) => '玖佰元整'`
+`transferMoney(900) => '捌佰伍拾贰元伍角'`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `n` | `number` |
 
 #### Returns
 

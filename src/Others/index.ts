@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:53:39
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-09-02 10:44:15
+ * @LastEditTime: 2022-11-16 17:40:38
  * @Description: 因项目需要常用方法，不管任何项目，都放到一起。注意甄别，没有复用意义的方法就不要添加了。
  * @FilePath: \js-xxx\src\Others\index.ts
  */
@@ -297,7 +297,7 @@ export function disableConflictEvent(event: any) {
  * @param testStr default(-rc)
  * @returns
  */
-export function checkVersion(targetVersion: string, currentVersion: string, testStr: string = '-rc'): number {
+export function checkVersion(targetVersion: string, currentVersion: string, testStr: string = '-rc'): -1 | 1 | 0 {
   let targetVersionList: string[] = targetVersion.replace(testStr, '').split('.');
   let currentVersionList: string[] = currentVersion.replace(testStr, '').split('.');
   let length: number =

@@ -2,12 +2,58 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-10-12 15:34:08
+ * @LastEditTime: 2022-11-16 18:52:26
  * @Description: 工具方法
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
 import { arraySet } from '@/Array';
 import { getType, isPromise, isStr, toBool, toNum } from '@/Types';
+
+/**
+ * 根据年份求生肖，年 % 12。
+ */
+const ANIMALS: string[] = ['猴', '鸡', '狗', '猪', '鼠', '牛', '虎', '兔', '龙', '蛇', '马', '羊'];
+
+/**
+ * 身份证省份
+ */
+const ID_CARD_PROVINCE: { [prop: string]: string } = {
+  '11': '北京',
+  '12': '天津',
+  '13': '河北',
+  '14': '山西',
+  '15': '内蒙古',
+  '21': '辽宁',
+  '22': '吉林',
+  '23': '黑龙江',
+  '31': '上海',
+  '32': '江苏',
+  '33': '浙江',
+  '34': '安徽',
+  '35': '福建',
+  '36': '江西',
+  '37': '山东',
+  '41': '河南',
+  '42': '湖北',
+  '43': '湖南',
+  '44': '广东',
+  '45': '广西',
+  '46': '海南',
+  '50': '重庆',
+  '51': '四川',
+  '52': '贵州',
+  '53': '云南',
+  '54': '西藏',
+  '61': '陕西',
+  '62': '甘肃',
+  '63': '青海',
+  '64': '宁夏',
+  '65': '新疆',
+  '71': '台湾',
+  '81': '香港',
+  '82': '澳门',
+  '91': '国外'
+};
 
 /**
  * 获取 16 位可读时间戳
@@ -763,4 +809,206 @@ export function ms(str: any): string | number {
   }
 
   return +(num / factor[suffix]).toFixed(2) + suffix;
+}
+
+/**
+ * 文件流或内容转 Base64
+ * Example:
+ * `transferFileToBase64(file, 'application/pdf;charset=utf-8', (res) => console.log({ res })) => result object`
+ * `transferFileToBase64('test', 'text/plain', (res) => console.log({ res })) => result object`
+ * @param content
+ * @param contentType
+ * @param callBack
+ * @returns
+ */
+export function transferFileToBase64(content: BlobPart | any, contentType: string, callBack: any): void {
+  const blob = new Blob([content], {
+    type: contentType
+  });
+  const reader = new FileReader();
+  reader.readAsDataURL(blob);
+  reader.addEventListener('loadend', () => {
+    callBack?.({
+      result: reader?.result
+      // // @ts-ignore
+      // baseCode: Buffer?.from(reader?.result?.split('base64,')[1], 'base64')
+    });
+  });
+}
+
+/**
+ * 检查是否为 idCard string 身份证
+ * 支持 15 、18 位
+ * Example:
+ * `checkIdCard('350424870506202') => true`
+ * `checkIdCard('003424870506202') => false`
+ * `checkIdCard('415106199801012130') => true`
+ * `checkIdCard('123123123123123222') => false`
+ * @param value
+ * @returns
+ */
+export function checkIdCard(value: string): boolean {
+  const regIdCard15 = /^[1-9]d{5}d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)d{2}$/;
+  const regIdCard18 =
+    /^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/;
+
+  return regIdCard15.test(value) || regIdCard18.test(value);
+}
+
+/**
+ * 获取年龄
+ * Example:
+ * `getAge('1998-9-28') => 24`
+ * `getAge('1998-6-8', '2023-7') => 25`
+ * `getAge('2023') => -1`
+ * @param birthday
+ * @param targetDate
+ * @returns
+ */
+export function getAge(birthday: any, targetDate?: any): number {
+  return new Date(new Date(targetDate ?? Date.now()).getTime() - new Date(birthday).getTime()).getFullYear() - 1970;
+}
+
+/**
+ * 获取生肖
+ * Example:
+ * `getAnimal('1998') => '虎'`
+ * `getAnimal('1998-6-8') => '虎'`
+ * `getAnimal('2023') => '兔'`
+ * @param date
+ * @returns
+ */
+export function getAnimal(date: any): string {
+  return ANIMALS[new Date(date).getFullYear() % 12];
+}
+
+/**
+ * 身份证解析
+ * Example:
+ * `transferIdCard('350424870506202') => {"age":35,"year":"1987","idCard":"350424870506202","sex":"女","province":"福建","animal":"兔","birthday":"1987-05-06"}`
+ * `transferIdCard('415106199801012130') => {"age":24,"year":"1998","idCard":"415106199801012130","sex":"男","province":"河南","animal":"虎","birthday":"1998-01-01"}`
+ * `transferIdCard('xxxxx') => {}`
+ * @param idCard
+ * @returns
+ */
+export function transferIdCard(idCard: string): any {
+  if (!checkIdCard(idCard)) {
+    return {};
+  }
+  const is18 = idCard.length === 18;
+  // 新中国成立年份-2049
+  const year = is18
+    ? idCard.substring(6, 10)
+    : `${parseInt(idCard.charAt(6)) <= 4 ? '20' : '19'}${idCard.substring(6, 8)}`;
+  const province = ID_CARD_PROVINCE[idCard.substring(0, 2)];
+  const sex = parseInt(is18 ? idCard.charAt(16) : idCard.charAt(14)) % 2 === 1 ? '男' : '女';
+  const animal = getAnimal(year);
+  const birthday = `${year}-${is18 ? idCard.substring(10, 12) : idCard.substring(8, 10)}-${
+    is18 ? idCard.substring(12, 14) : idCard.substring(10, 12)
+  }`;
+  const age = getAge(birthday);
+  return {
+    age,
+    year,
+    idCard,
+    sex,
+    province,
+    animal,
+    birthday
+  };
+}
+
+/**
+ * 金额转中文
+ * Example:
+ * `transferMoney(852.5) => '玖佰元整'`
+ * `transferMoney(900) => '捌佰伍拾贰元伍角'`
+ * @param n
+ * @returns
+ */
+export function transferMoney(n: number): string {
+  let fraction = ['角', '分'];
+  let digit = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖'];
+  let unit = [
+    ['元', '万', '亿'],
+    ['', '拾', '佰', '仟']
+  ];
+  let head = n < 0 ? '欠' : '';
+  n = Math.abs(n);
+  let s = '';
+  let fraLen = fraction.length;
+  for (let i = 0; i < fraLen; i++) {
+    s += (digit[Math.floor(n * 10 * Math.pow(10, i)) % 10] + fraction[i]).replace(/零./, '');
+  }
+  s = s || '整';
+  n = Math.floor(n);
+  for (let i = 0; i < unit[0].length && n > 0; i++) {
+    var p = '';
+    for (let j = 0; j < unit[1].length && n > 0; j++) {
+      p = digit[n % 10] + unit[1][j] + p;
+      n = Math.floor(n / 10);
+    }
+    s = p.replace(/(零.)*零$/, '').replace(/^$/, '零') + unit[0][i] + s;
+  }
+  return (
+    head +
+    s
+      .replace(/(零.)*零元/, '元')
+      .replace(/(零.)+/g, '零')
+      .replace(/^整$/, '零元整')
+  );
+}
+
+/**
+ * TTS 语音，可以在现代浏览器直接运行。
+ * Example:
+ * `const mySpeaker = Speaker()`
+ * `mySpeaker.setText('你好，这是一条测试语音！hello'); mySpeaker.speak();`
+ * @param text 内容
+ * @param lang 语言
+ * @param volume 音量 [0, 1]
+ * @param pitch 音高 [0, 2]
+ * @param rate 速度 [0.1, 10]
+ * @returns
+ */
+export function Speaker(text: string, lang: string = 'zh-CN', volume: number = 1, pitch: number = 1, rate: number = 1) {
+  let speaker: SpeechSynthesisUtterance = new window.SpeechSynthesisUtterance(text);
+  speaker.text = text;
+  speaker.lang = lang;
+  speaker.volume = volume;
+  speaker.pitch = pitch;
+  speaker.rate = rate;
+
+  return {
+    getInstance: () => {
+      return speaker;
+    },
+    setText: (txt: string) => {
+      speaker.text = txt;
+    },
+    setLang: (lang: string) => {
+      speaker.lang = lang;
+    },
+    setVolume: (volume: number) => {
+      speaker.volume = volume;
+    },
+    setPitch: (pitch: number) => {
+      speaker.pitch = pitch;
+    },
+    setRate: (rate: number) => {
+      speaker.rate = rate;
+    },
+    setVoice: (voice: any) => {
+      speaker.voice = voice;
+    },
+    getVoices: () => {
+      return window.speechSynthesis.getVoices();
+    },
+    speak: () => {
+      window.speechSynthesis.speak(speaker);
+    },
+    stop: () => {
+      window.speechSynthesis.cancel();
+    }
+  };
 }
