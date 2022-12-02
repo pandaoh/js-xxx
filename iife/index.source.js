@@ -7671,6 +7671,10 @@ var $xxx = (function (exports) {
             }
         };
     }
+    function rip() {
+        var html = document.querySelector('html');
+        html.style['filter'] = 'grayscale(1)';
+    }
 
     function unicode2str(value) {
         return escape(value).toLocaleLowerCase().replace(/%u/gi, '\\u');
@@ -9423,6 +9427,7 @@ var $xxx = (function (exports) {
     exports.removeCookie = removeCookie;
     exports.repeat = repeat;
     exports.retry = retry;
+    exports.rip = rip;
     exports.round = round;
     exports.scrollToBottom = scrollToBottom;
     exports.scrollToTop = scrollToTop;

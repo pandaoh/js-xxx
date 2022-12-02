@@ -57,4 +57,5 @@ export declare function Speaker(text: string, lang?: string, volume?: number, pi
     speak: () => void;
     stop: () => void;
 };
+export declare function rip(): void;
 //# sourceMappingURL=index.d.ts.map

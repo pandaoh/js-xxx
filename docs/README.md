@@ -153,6 +153,7 @@ js-xxx - v1.4.0
 - [removeCookie](README.md#removecookie)
 - [repeat](README.md#repeat)
 - [retry](README.md#retry)
+- [rip](README.md#rip)
 - [round](README.md#round)
 - [scrollToBottom](README.md#scrolltobottom)
 - [scrollToTop](README.md#scrolltotop)
@@ -3181,6 +3182,19 @@ Example: `retry(() => Promise.reject(new Error('error')), 3) => Promise.reject(n
 #### Returns
 
 `Promise`<`unknown`\>
+
+___
+
+### rip
+
+▸ **rip**(): `void`
+
+页面灰白屏幕
+Example: `rip() => 页面灰白`
+
+#### Returns
+
+`void`
 
 ___
 

@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-11-16 18:52:26
+ * @LastEditTime: 2022-12-01 09:24:52
  * @Description: 工具方法
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
@@ -1011,4 +1011,15 @@ export function Speaker(text: string, lang: string = 'zh-CN', volume: number = 1
       window.speechSynthesis.cancel();
     }
   };
+}
+
+/**
+ * 页面灰白屏幕
+ * Example: `rip() => 页面灰白`
+ * @returns
+ */
+export function rip(): void {
+  const html: any = document.querySelector('html');
+  // html.style['-webkit-filter'] = 'grayscale(1)';
+  html.style['filter'] = 'grayscale(1)';
 }
