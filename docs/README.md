@@ -69,6 +69,7 @@ js-xxx - v1.4.0
 - [getBSColor](README.md#getbscolor)
 - [getBaseURL](README.md#getbaseurl)
 - [getBloodGroup](README.md#getbloodgroup)
+- [getConstellation](README.md#getconstellation)
 - [getContentType](README.md#getcontenttype)
 - [getCookie](README.md#getcookie)
 - [getCryptoJS](README.md#getcryptojs)
@@ -1446,6 +1447,34 @@ Example: `getBloodGroup('A') => { value: 'A', label: 'A型', color: '#1890FF', l
 | `lower` | `string` |
 | `upper` | `string` |
 | `value` | `string` |
+
+___
+
+### getConstellation
+
+▸ **getConstellation**(`date`): `Object`
+
+获取星座
+Example:
+`getConstellation('11-24') => { cn: '射手', en: 'Sagittarius', date: '11.23-12.21' }`
+`getConstellation('xxx') => {cn: '未知', en: 'unknown', date: 'xxx'}`
+`getConstellation(new Date('2022-11-24')) => { cn: '射手', en: 'Sagittarius', date: '11.23-12.21' }`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `date` | `any` |
+
+#### Returns
+
+`Object`
+
+| Name | Type |
+| :------ | :------ |
+| `cn` | `string` |
+| `date` | `any` |
+| `en` | `string` |
 
 ___
 
@@ -3852,8 +3881,8 @@ ___
 
 身份证解析
 Example:
-`transferIdCard('350424870506202') => {"age":35,"year":"1987","idCard":"350424870506202","sex":"女","province":"福建","animal":"兔","birthday":"1987-05-06"}`
-`transferIdCard('415106199801012130') => {"age":24,"year":"1998","idCard":"415106199801012130","sex":"男","province":"河南","animal":"虎","birthday":"1998-01-01"}`
+`transferIdCard('350424870506202') => {"age":35,"year":"1987","idCard":"350424870506202","sex":"女","constellation":{"cn":"金牛","en":"Taurus","date":"4.20-5.20"},"gender":0,"province":"福建","animal":"兔","birthday":"1987-05-06"}`
+`transferIdCard('415106199801012130') => {"age":24,"year":"1998","idCard":"415106199801012130","sex":"男","constellation":{"cn":"魔羯","en":"Capricorn","date":"12.22-1.19"},"gender":1,"province":"河南","animal":"虎","birthday":"1998-01-01"}`
 `transferIdCard('xxxxx') => {}`
 
 #### Parameters

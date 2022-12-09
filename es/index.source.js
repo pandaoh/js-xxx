@@ -7074,6 +7074,20 @@ function getCryptoJS() {
 }
 
 var ANIMALS = ['猴', '鸡', '狗', '猪', '鼠', '牛', '虎', '兔', '龙', '蛇', '马', '羊'];
+var CONSTELLATION = {
+    Capricorn: { cn: '魔羯', en: 'Capricorn', date: '12.22-1.19' },
+    Aquarius: { cn: '水瓶', en: 'Aquarius', date: '1.20-2.18' },
+    Pisces: { cn: '双鱼', en: 'Pisces', date: '2.19-3.20' },
+    Aries: { cn: '白羊', en: 'Aries', date: '3.21-4.19' },
+    Taurus: { cn: '金牛', en: 'Taurus', date: '4.20-5.20' },
+    Gemini: { cn: '双子', en: 'Gemini', date: '5.21-6.21' },
+    Cancer: { cn: '巨蟹', en: 'Cancer', date: '6.22-7.22' },
+    Leo: { cn: '狮子', en: 'Leo', date: '7.23-8.22' },
+    Virgo: { cn: '处女', en: 'Virgo', date: '8.23-9.22' },
+    Libra: { cn: '天秤', en: 'Libra', date: '9.23-10.23' },
+    Scorpio: { cn: '天蝎', en: 'Scorpio', date: '10.24-11.22' },
+    Sagittarius: { cn: '射手', en: 'Sagittarius', date: '11.23-12.21' }
+};
 var ID_CARD_PROVINCE = {
     '11': '北京',
     '12': '天津',
@@ -7584,11 +7598,14 @@ function transferIdCard(idCard) {
     var animal = getAnimal(year);
     var birthday = "".concat(year, "-").concat(is18 ? idCard.substring(10, 12) : idCard.substring(8, 10), "-").concat(is18 ? idCard.substring(12, 14) : idCard.substring(10, 12));
     var age = getAge(birthday);
+    var constellation = getConstellation(birthday);
     return {
         age: age,
         year: year,
         idCard: idCard,
         sex: sex,
+        constellation: constellation,
+        gender: sex === '男' ? 1 : 0,
         province: province,
         animal: animal,
         birthday: birthday
@@ -7671,6 +7688,125 @@ function Speaker(text, lang, volume, pitch, rate) {
 function rip() {
     var html = document.querySelector('html');
     html.style['filter'] = 'grayscale(1)';
+}
+function getConstellation(date) {
+    var _a;
+    var defaultV = {
+        cn: '未知',
+        en: 'unknown',
+        date: date
+    };
+    if (!date) {
+        return defaultV;
+    }
+    try {
+        date = new Date(date);
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        var star = 'defaultV';
+        switch (month) {
+            case 3:
+                if (day >= 21) {
+                    star = 'Aries';
+                }
+                else {
+                    star = 'Pisces';
+                }
+                break;
+            case 4:
+                if (day >= 21) {
+                    star = 'Taurus';
+                }
+                else {
+                    star = 'Aries';
+                }
+                break;
+            case 5:
+                if (day >= 22) {
+                    star = 'Gemini';
+                }
+                else {
+                    star = 'Taurus';
+                }
+                break;
+            case 6:
+                if (day >= 22) {
+                    star = 'Cancer';
+                }
+                else {
+                    star = 'Gemini';
+                }
+                break;
+            case 7:
+                if (day >= 23) {
+                    star = 'Leo';
+                }
+                else {
+                    star = 'Cancer';
+                }
+                break;
+            case 8:
+                if (day >= 23) {
+                    star = 'Virgo';
+                }
+                else {
+                    star = 'Leo';
+                }
+                break;
+            case 9:
+                if (day >= 24) {
+                    star = 'Libra';
+                }
+                else {
+                    star = 'Virgo';
+                }
+                break;
+            case 10:
+                if (day >= 24) {
+                    star = 'Scorpio';
+                }
+                else {
+                    star = 'Libra';
+                }
+                break;
+            case 11:
+                if (day >= 23) {
+                    star = 'Sagittarius';
+                }
+                else {
+                    star = 'Scorpio';
+                }
+                break;
+            case 12:
+                if (day >= 22) {
+                    star = 'Capricorn';
+                }
+                else {
+                    star = 'Sagittarius';
+                }
+                break;
+            case 1:
+                if (day >= 21) {
+                    star = 'Aquarius';
+                }
+                else {
+                    star = 'Capricorn';
+                }
+                break;
+            case 2:
+                if (day >= 20) {
+                    star = 'Pisces';
+                }
+                else {
+                    star = 'Aquarius';
+                }
+                break;
+        }
+        return (_a = CONSTELLATION[star]) !== null && _a !== void 0 ? _a : defaultV;
+    }
+    catch (e) {
+        return defaultV;
+    }
 }
 
 function unicode2str(value) {
@@ -9284,4 +9420,4 @@ function setWsBinaryType(binaryType) {
     return true;
 }
 
-export { Base64Decode, Base64Encode, CONTENT_TYPES, HttpMethod, Logger, Speaker, add, all, any, appendLink, appendScript, arraySet, arraySort, average, base64Decode, base64Encode, bindMoreClick, calcDate, camelCase, catchPromise, checkFileExt, checkIdCard, checkVersion, closeFullscreen, closeWebSocket, compareDate, copyContent, copyToClipboard, countdown, curryIt, data2Arr, data2Obj, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitKeyboardEvent, empty, encrypt, findChildren, findParents, formatBytes, formatDate, formatFormData, formatNumber, formatRh, formatURLSearchParams, get1Var, getAge, getAnimal, getBSColor, getBaseURL, getBloodGroup, getContentType, getCookie, getCryptoJS, getDateDifference, getDateTime, getKey, getLastVar, getMonthDays, getMonthDaysCount, getQueryString, getRandColor, getRandNum, getRandStr, getRandVar, getSearchParams, getSize, getStyleByName, getTimeAndStr, getTimeCode, getType, getUTCTime, getUUID, getUserAgent, getV, getVar, getViewportSize, getWebSocket, globalError, html2str, initNotification, initWebSocket, insertAfter, intersection, isAppleDevice, isArr, isArrayBuffer, isBlob, isBool, isBrowser, isCarCode, isChar, isDarkMode, isDate, isDecimal, isElement, isEmail, isFn, isHttp, isInteger, isIpAddress, isIpv4, isIpv6, isJSON, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPhoneNum, isPromise, isRhNegative, isStr, isStrongPassWord, isUndef, isUrl, isWeekday, jsonClone, localStorageGet, localStorageSet, logRunTime, marquee, maskString, md5, mergeObj, ms, offDefaultEvent, onClick2MoreClick, openFile, openFullscreen, qsParse, qsStringify, removeCookie, repeat, retry, rip, round, scrollToBottom, scrollToTop, sendNotification, sendWsMessage, sessionStorageGet, sessionStorageSet, setCookie, setIcon, setWsBinaryType, sha1, sha256, shuffleArray, sleep, slugify, sortBy, sortCallBack, splitCase, str2html, str2unicode, sub, throttle, timeSince, times, to, toBool, toNum, toStr, transferCase, transferFileToBase64, transferIdCard, transferMoney, trim, truncate, unicode2str, union, unique, uuid, versionUpgrade, waitUntil, xAjax, xFetch };
+export { Base64Decode, Base64Encode, CONTENT_TYPES, HttpMethod, Logger, Speaker, add, all, any, appendLink, appendScript, arraySet, arraySort, average, base64Decode, base64Encode, bindMoreClick, calcDate, camelCase, catchPromise, checkFileExt, checkIdCard, checkVersion, closeFullscreen, closeWebSocket, compareDate, copyContent, copyToClipboard, countdown, curryIt, data2Arr, data2Obj, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitKeyboardEvent, empty, encrypt, findChildren, findParents, formatBytes, formatDate, formatFormData, formatNumber, formatRh, formatURLSearchParams, get1Var, getAge, getAnimal, getBSColor, getBaseURL, getBloodGroup, getConstellation, getContentType, getCookie, getCryptoJS, getDateDifference, getDateTime, getKey, getLastVar, getMonthDays, getMonthDaysCount, getQueryString, getRandColor, getRandNum, getRandStr, getRandVar, getSearchParams, getSize, getStyleByName, getTimeAndStr, getTimeCode, getType, getUTCTime, getUUID, getUserAgent, getV, getVar, getViewportSize, getWebSocket, globalError, html2str, initNotification, initWebSocket, insertAfter, intersection, isAppleDevice, isArr, isArrayBuffer, isBlob, isBool, isBrowser, isCarCode, isChar, isDarkMode, isDate, isDecimal, isElement, isEmail, isFn, isHttp, isInteger, isIpAddress, isIpv4, isIpv6, isJSON, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPhoneNum, isPromise, isRhNegative, isStr, isStrongPassWord, isUndef, isUrl, isWeekday, jsonClone, localStorageGet, localStorageSet, logRunTime, marquee, maskString, md5, mergeObj, ms, offDefaultEvent, onClick2MoreClick, openFile, openFullscreen, qsParse, qsStringify, removeCookie, repeat, retry, rip, round, scrollToBottom, scrollToTop, sendNotification, sendWsMessage, sessionStorageGet, sessionStorageSet, setCookie, setIcon, setWsBinaryType, sha1, sha256, shuffleArray, sleep, slugify, sortBy, sortCallBack, splitCase, str2html, str2unicode, sub, throttle, timeSince, times, to, toBool, toNum, toStr, transferCase, transferFileToBase64, transferIdCard, transferMoney, trim, truncate, unicode2str, union, unique, uuid, versionUpgrade, waitUntil, xAjax, xFetch };

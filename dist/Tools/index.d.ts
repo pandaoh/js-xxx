@@ -58,4 +58,9 @@ export declare function Speaker(text: string, lang?: string, volume?: number, pi
     stop: () => void;
 };
 export declare function rip(): void;
+export declare function getConstellation(date: any): {
+    cn: string;
+    en: string;
+    date: any;
+};
 //# sourceMappingURL=index.d.ts.map

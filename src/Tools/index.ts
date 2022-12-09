@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-12-01 09:24:52
+ * @LastEditTime: 2022-12-09 18:08:05
  * @Description: 工具方法
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
@@ -13,6 +13,24 @@ import { getType, isPromise, isStr, toBool, toNum } from '@/Types';
  * 根据年份求生肖，年 % 12。
  */
 const ANIMALS: string[] = ['猴', '鸡', '狗', '猪', '鼠', '牛', '虎', '兔', '龙', '蛇', '马', '羊'];
+
+/**
+ * 根据日期获取星座
+ */
+const CONSTELLATION: any = {
+  Capricorn: { cn: '魔羯', en: 'Capricorn', date: '12.22-1.19' },
+  Aquarius: { cn: '水瓶', en: 'Aquarius', date: '1.20-2.18' },
+  Pisces: { cn: '双鱼', en: 'Pisces', date: '2.19-3.20' },
+  Aries: { cn: '白羊', en: 'Aries', date: '3.21-4.19' },
+  Taurus: { cn: '金牛', en: 'Taurus', date: '4.20-5.20' },
+  Gemini: { cn: '双子', en: 'Gemini', date: '5.21-6.21' },
+  Cancer: { cn: '巨蟹', en: 'Cancer', date: '6.22-7.22' },
+  Leo: { cn: '狮子', en: 'Leo', date: '7.23-8.22' },
+  Virgo: { cn: '处女', en: 'Virgo', date: '8.23-9.22' },
+  Libra: { cn: '天秤', en: 'Libra', date: '9.23-10.23' },
+  Scorpio: { cn: '天蝎', en: 'Scorpio', date: '10.24-11.22' },
+  Sagittarius: { cn: '射手', en: 'Sagittarius', date: '11.23-12.21' }
+};
 
 /**
  * 身份证省份
@@ -885,8 +903,8 @@ export function getAnimal(date: any): string {
 /**
  * 身份证解析
  * Example:
- * `transferIdCard('350424870506202') => {"age":35,"year":"1987","idCard":"350424870506202","sex":"女","province":"福建","animal":"兔","birthday":"1987-05-06"}`
- * `transferIdCard('415106199801012130') => {"age":24,"year":"1998","idCard":"415106199801012130","sex":"男","province":"河南","animal":"虎","birthday":"1998-01-01"}`
+ * `transferIdCard('350424870506202') => {"age":35,"year":"1987","idCard":"350424870506202","sex":"女","constellation":{"cn":"金牛","en":"Taurus","date":"4.20-5.20"},"gender":0,"province":"福建","animal":"兔","birthday":"1987-05-06"}`
+ * `transferIdCard('415106199801012130') => {"age":24,"year":"1998","idCard":"415106199801012130","sex":"男","constellation":{"cn":"魔羯","en":"Capricorn","date":"12.22-1.19"},"gender":1,"province":"河南","animal":"虎","birthday":"1998-01-01"}`
  * `transferIdCard('xxxxx') => {}`
  * @param idCard
  * @returns
@@ -907,11 +925,14 @@ export function transferIdCard(idCard: string): any {
     is18 ? idCard.substring(12, 14) : idCard.substring(10, 12)
   }`;
   const age = getAge(birthday);
+  const constellation = getConstellation(birthday);
   return {
     age,
     year,
     idCard,
     sex,
+    constellation,
+    gender: sex === '男' ? 1 : 0,
     province,
     animal,
     birthday
@@ -1022,4 +1043,118 @@ export function rip(): void {
   const html: any = document.querySelector('html');
   // html.style['-webkit-filter'] = 'grayscale(1)';
   html.style['filter'] = 'grayscale(1)';
+}
+
+/**
+ * 获取星座
+ * Example:
+ * `getConstellation('11-24') => { cn: '射手', en: 'Sagittarius', date: '11.23-12.21' }`
+ * `getConstellation('xxx') => {cn: '未知', en: 'unknown', date: 'xxx'}`
+ * `getConstellation(new Date('2022-11-24')) => { cn: '射手', en: 'Sagittarius', date: '11.23-12.21' }`
+ * @returns
+ */
+export function getConstellation(date: any): { cn: string; en: string; date: any } {
+  const defaultV = {
+    cn: '未知',
+    en: 'unknown',
+    date: date
+  };
+  if (!date) {
+    return defaultV;
+  }
+  try {
+    date = new Date(date);
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    var star = 'defaultV';
+    switch (month) {
+      case 3:
+        if (day >= 21) {
+          star = 'Aries';
+        } else {
+          star = 'Pisces';
+        }
+        break;
+      case 4:
+        if (day >= 21) {
+          star = 'Taurus';
+        } else {
+          star = 'Aries';
+        }
+        break;
+      case 5:
+        if (day >= 22) {
+          star = 'Gemini';
+        } else {
+          star = 'Taurus';
+        }
+        break;
+      case 6:
+        if (day >= 22) {
+          star = 'Cancer';
+        } else {
+          star = 'Gemini';
+        }
+        break;
+      case 7:
+        if (day >= 23) {
+          star = 'Leo';
+        } else {
+          star = 'Cancer';
+        }
+        break;
+      case 8:
+        if (day >= 23) {
+          star = 'Virgo';
+        } else {
+          star = 'Leo';
+        }
+        break;
+      case 9:
+        if (day >= 24) {
+          star = 'Libra';
+        } else {
+          star = 'Virgo';
+        }
+        break;
+      case 10:
+        if (day >= 24) {
+          star = 'Scorpio';
+        } else {
+          star = 'Libra';
+        }
+        break;
+      case 11:
+        if (day >= 23) {
+          star = 'Sagittarius';
+        } else {
+          star = 'Scorpio';
+        }
+        break;
+      case 12:
+        if (day >= 22) {
+          star = 'Capricorn';
+        } else {
+          star = 'Sagittarius';
+        }
+        break;
+      case 1:
+        if (day >= 21) {
+          star = 'Aquarius';
+        } else {
+          star = 'Capricorn';
+        }
+        break;
+      case 2:
+        if (day >= 20) {
+          star = 'Pisces';
+        } else {
+          star = 'Aquarius';
+        }
+        break;
+    }
+    return CONSTELLATION[star] ?? defaultV;
+  } catch (e) {
+    return defaultV;
+  }
 }
