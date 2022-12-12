@@ -1,6 +1,6 @@
-js-xxx - v1.4.0
+js-xxx - v1.4.1
 
-# js-xxx - v1.4.0
+# js-xxx - v1.4.1
 
 ## Table of contents
 
@@ -16,6 +16,7 @@ js-xxx - v1.4.0
 
 - [Base64Decode](README.md#base64decode)
 - [Base64Encode](README.md#base64encode)
+- [H5Resize](README.md#h5resize)
 - [Logger](README.md#logger)
 - [Speaker](README.md#speaker)
 - [add](README.md#add)
@@ -163,6 +164,7 @@ js-xxx - v1.4.0
 - [sessionStorageGet](README.md#sessionstorageget)
 - [sessionStorageSet](README.md#sessionstorageset)
 - [setCookie](README.md#setcookie)
+- [setEventListener](README.md#seteventlistener)
 - [setIcon](README.md#seticon)
 - [setWsBinaryType](README.md#setwsbinarytype)
 - [sha1](README.md#sha1)
@@ -252,6 +254,27 @@ Example:
 #### Returns
 
 `string`
+
+___
+
+### H5Resize
+
+▸ **H5Resize**(`downCb`, `upCb`): `any`
+
+H5 软键盘缩回/弹起回调
+return cancel listener of H5Resize
+Example: `H5Resize(()=>{ console.log('downCb'); }, ()=>{ console.log('upCb'); }) => do something`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `downCb` | `any` |
+| `upCb` | `any` |
+
+#### Returns
+
+`any`
 
 ___
 
@@ -3391,6 +3414,27 @@ Example: `setCookie('name', 'value', 1) => 设置 name 对应的 Cookie 值`
 #### Returns
 
 `void`
+
+___
+
+### setEventListener
+
+▸ **setEventListener**(`eventKey`, `foo`): `any`
+
+设置监听方法
+返回取消该监听的方法 return cancel
+Example: `setEventListener('resize', () => { console.log('resize'); }) => cancel 当前 listener 的 function`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `eventKey` | `string` |
+| `foo` | `any` |
+
+#### Returns
+
+`any`
 
 ___
 

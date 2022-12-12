@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-12-09 18:08:05
+ * @LastEditTime: 2022-12-12 15:42:40
  * @Description: 工具方法
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
@@ -1157,4 +1157,41 @@ export function getConstellation(date: any): { cn: string; en: string; date: any
   } catch (e) {
     return defaultV;
   }
+}
+
+/**
+ * 设置监听方法
+ * 返回取消该监听的方法 return cancel
+ * Example: `setEventListener('resize', () => { console.log('resize'); }) => cancel 当前 listener 的 function`
+ * @returns
+ */
+export function setEventListener(eventKey: string, foo: any): any {
+  window.addEventListener(eventKey, foo);
+  return () => {
+    window.removeEventListener(eventKey, foo);
+  };
+}
+
+/**
+ * H5 软键盘缩回/弹起回调
+ * return cancel listener of H5Resize
+ * Example: `H5Resize(()=>{ console.log('downCb'); }, ()=>{ console.log('upCb'); }) => do something`
+ * @returns
+ */
+export function H5Resize(downCb: any, upCb: any): any {
+  // 当软件键盘弹起会改变当前 window.innerHeight
+  // 监听这个值变化 [downCb 缩回的回调、upCb 弹起的回调]
+  var clientHeight = window.innerHeight;
+  downCb = typeof downCb === 'function' ? downCb : function () {};
+  upCb = typeof upCb === 'function' ? upCb : function () {};
+  const H5ResizeFoo = () => {
+    var height = window.innerHeight;
+    if (height === clientHeight) {
+      downCb();
+    }
+    if (height < clientHeight) {
+      upCb();
+    }
+  };
+  return setEventListener('resize', H5ResizeFoo);
 }

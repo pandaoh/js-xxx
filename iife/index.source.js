@@ -7811,6 +7811,27 @@ var $xxx = (function (exports) {
             return defaultV;
         }
     }
+    function setEventListener(eventKey, foo) {
+        window.addEventListener(eventKey, foo);
+        return function () {
+            window.removeEventListener(eventKey, foo);
+        };
+    }
+    function H5Resize(downCb, upCb) {
+        var clientHeight = window.innerHeight;
+        downCb = typeof downCb === 'function' ? downCb : function () { };
+        upCb = typeof upCb === 'function' ? upCb : function () { };
+        var H5ResizeFoo = function () {
+            var height = window.innerHeight;
+            if (height === clientHeight) {
+                downCb();
+            }
+            if (height < clientHeight) {
+                upCb();
+            }
+        };
+        return setEventListener('resize', H5ResizeFoo);
+    }
 
     function unicode2str(value) {
         return escape(value).toLocaleLowerCase().replace(/%u/gi, '\\u');
@@ -9426,6 +9447,7 @@ var $xxx = (function (exports) {
     exports.Base64Decode = Base64Decode;
     exports.Base64Encode = Base64Encode;
     exports.CONTENT_TYPES = CONTENT_TYPES;
+    exports.H5Resize = H5Resize;
     exports.Logger = Logger;
     exports.Speaker = Speaker;
     exports.add = add;
@@ -9573,6 +9595,7 @@ var $xxx = (function (exports) {
     exports.sessionStorageGet = sessionStorageGet;
     exports.sessionStorageSet = sessionStorageSet;
     exports.setCookie = setCookie;
+    exports.setEventListener = setEventListener;
     exports.setIcon = setIcon;
     exports.setWsBinaryType = setWsBinaryType;
     exports.sha1 = sha1;

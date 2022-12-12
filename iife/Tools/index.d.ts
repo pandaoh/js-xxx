@@ -63,4 +63,6 @@ export declare function getConstellation(date: any): {
     en: string;
     date: any;
 };
+export declare function setEventListener(eventKey: string, foo: any): any;
+export declare function H5Resize(downCb: any, upCb: any): any;
 //# sourceMappingURL=index.d.ts.map
