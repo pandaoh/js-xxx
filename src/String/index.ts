@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:45:48
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-11-16 18:33:24
+ * @LastEditTime: 2023-03-02 18:12:57
  * @Description: 字符串常用方法
  * @FilePath: \js-xxx\src\String\index.ts
  */
@@ -470,4 +470,25 @@ export function truncate(
   }
 
   return ret + ellipsis;
+}
+
+/**
+ * 格式化 JSON 字符串
+ * Example:
+ * `formatJSON({ a: 123, b: 456 }, null, 2) => '{\n  "a": 123,\n  "b": 456\n}'`
+ * `formatJSON('123', null, 2) => '"123"'`
+ * `formatJSON(123, null, 2) => '123'`
+ * `formatJSON(null, null, 2) => 'null'`
+ * `formatJSON(true, null, 2) => 'true'`
+ * `formatJSON(undefined, null, 2) => 'undefined'`
+ * `formatJSON(new Date(), null, 2) => '"2023-03-02T10:02:42.019Z"'`
+ * @param value
+ * @returns
+ */
+export function formatJSON(value: any): string {
+  try {
+    return JSON.stringify(value, null, 2) ?? 'undefined';
+  } catch (e) {
+    return `${value}`;
+  }
 }
