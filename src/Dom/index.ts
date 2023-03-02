@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-10-12 15:35:09
+ * @LastEditTime: 2023-03-02 17:50:48
  * @Description: 利用 dom 的一些方法
  * @FilePath: \js-xxx\src\Dom\index.ts
  */
@@ -269,7 +269,8 @@ export function downloadContent(name: string, content: BlobPart | any) {
 /**
  * 给元素设置 marquee 内容滚动效果，支持来回滚动，正常跑马灯，无限无缝滚动。
  * 一般来说设置两层，滚动的区间就是父元素的大小。
- * `<div class="demo-container"><div id="#demo">...</div></div>`
+ * 若 #demo 高度小于 container，除非 loopType 设置 infinite，否则不会有动画。
+ * `<div class="demo-container"><div id="#demo">...span.items...</div></div>`
  * Example:
  * `marquee('#demo') => 默认横向正常滚动(loopType=normal)`
  * `marquee('.demo-y', {direction: 'Y', loopType: 'infinite', speed: 3}) => Y 轴无限无缝滚动，speed > 0 越小速度越快。`
@@ -295,12 +296,14 @@ export function marquee(
     const $animationStyle = document.getElementById(styleElId) ?? document.createElement('style');
     $animationStyle.id = styleElId;
     const $marqueeDom: any = document.querySelector(selector);
+    const noAnimation =
+      options?.loopType != 'infinite' && $marqueeDom?.clientHeight < $marqueeDom?.parentElement?.offsetHeight;
     $marqueeDom?.setAttribute(
       'style',
       `overflow:visible;animation-name:marquee-${tempId};animation-timing-function:linear;animation-iteration-count:infinite;animation-duration:${
         ((options?.direction === 'Y' ? $marqueeDom.clientHeight : $marqueeDom.clientWidth) / 200) *
           (options?.speed ?? 3) ?? 5
-      }s;${options?.style ?? ''}`
+      }s;${noAnimation ? 'animation-duration:0s;' : ''}${options?.style ?? ''}`
     );
     if (options?.direction === 'Y') {
       $animationStyle.innerHTML = cssAnimation
