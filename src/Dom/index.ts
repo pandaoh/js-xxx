@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-03 14:53:14
+ * @LastEditTime: 2023-03-03 15:08:12
  * @Description: 利用 dom 的一些方法
  * @FilePath: \js-xxx\src\Dom\index.ts
  */
@@ -128,30 +128,30 @@ export function scrollToBottom(elementSelector: string) {
  * Y 轴滚动到指定位置
  * Example:
  *  `scrollYTo(0) => 滚动到顶部`
- *  `scrollYTo('start', document.documentElement) => 滚动到顶部`
- *  `scrollYTo('end', document.documentElement, (percent) => console.log(percent)) => 滚动到底部`
- * @param dom 元素对象
+ *  `scrollYTo('start', null, document.documentElement) => 滚动到顶部`
+ *  `scrollYTo('end', (percent) => console.log(percent), document.querySelector('body')) => 滚动到底部`
  * @param targetVal 'start' | 'end' | number
  * @param callback 回调
+ * @param dom 元素对象
  * @returns
  */
 export function scrollYTo(
   targetVal: 'start' | 'end' | number,
-  dom: any = document.documentElement,
-  callback: Function
+  callback: Function,
+  dom: any = document.documentElement
 ) {
   const vals: any = {
     start: 0,
     end: dom.scrollHeight - dom.clientHeight
   };
   targetVal = vals[targetVal] ?? targetVal;
-  if (callback != null && targetVal != dom.scrollTop) {
+  if (callback && targetVal != dom.scrollTop) {
     let timer: any;
     const cancel = setEventListener(
       'scroll',
       () => {
         clearTimeout(timer);
-        callback(getScrollPercent(dom, 'Y'));
+        callback(getScrollPercent('Y', dom));
         timer = setTimeout(cancel, 100);
       },
       window
@@ -159,7 +159,7 @@ export function scrollYTo(
     // 防止位置已经到极限了，没触发 scroll 事件。
     timer = setTimeout(cancel, 100);
   }
-  dom.scroll({ top: vals[targetVal] ?? targetVal, behavior: 'smooth' });
+  window.scroll({ top: vals[targetVal] ?? targetVal, behavior: 'smooth' });
   /* 新版 demo */
   // // back2top
   // window.scroll({ top: 0, left: 0, behavior: 'smooth' });
@@ -197,30 +197,30 @@ export function scrollYTo(
  * X 轴滚动到指定位置
  * Example:
  *  `scrollXTo(0) => 滚动到左侧`
- *  `scrollXTo('start', document.documentElement) => 滚动到左侧`
- *  `scrollXTo('end', document.documentElement, (percent) => console.log(percent)) => 滚动到右侧`
- * @param dom 元素对象
+ *  `scrollXTo('start', null, document.documentElement) => 滚动到左侧
+ *  `scrollXTo('end', (percent) => console.log(percent), document.querySelector('body')) => 滚动到右侧`
  * @param targetVal 'start' | 'end' | number
  * @param callback 回调
+ * @param dom 元素对象
  * @returns
  */
 export function scrollXTo(
   targetVal: 'start' | 'end' | number,
-  dom: any = document.documentElement,
-  callback: Function
+  callback: Function,
+  dom: any = document.documentElement
 ) {
   const vals: any = {
     start: 0,
     end: dom.scrollWidth - dom.clientWidth
   };
   targetVal = vals[targetVal] ?? targetVal;
-  if (callback != null && targetVal != dom.scrollLeft) {
+  if (callback && targetVal != dom.scrollLeft) {
     let timer: any;
     const cancel = setEventListener(
       'scroll',
       () => {
         clearTimeout(timer);
-        callback(getScrollPercent(dom, 'X'));
+        callback(getScrollPercent('X', dom));
         timer = setTimeout(cancel, 100);
       },
       window
@@ -228,17 +228,17 @@ export function scrollXTo(
     // 防止位置已经到极限了，没触发 scroll 事件。
     timer = setTimeout(cancel, 100);
   }
-  dom.scroll({ left: vals[targetVal] ?? targetVal, behavior: 'smooth' });
+  window.scroll({ left: vals[targetVal] ?? targetVal, behavior: 'smooth' });
 }
 
 /**
  * 获取滚动条百分比
  * Example: `getScrollPercent(document.documentElement, 'Y') => 0.581134549876`
- * @param dom 元素
  * @param direction X/Y 轴的进度条
+ * @param dom 元素
  * @returns
  */
-export function getScrollPercent(dom: any = document.documentElement, direction: 'X' | 'Y' = 'Y'): number {
+export function getScrollPercent(direction: 'X' | 'Y' = 'Y', dom: any = document.documentElement): number {
   let percent: number;
   try {
     if (direction === 'X') {
