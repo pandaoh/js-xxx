@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-03 15:08:12
+ * @LastEditTime: 2023-03-03 15:38:25
  * @Description: 利用 dom 的一些方法
  * @FilePath: \js-xxx\src\Dom\index.ts
  */
@@ -140,11 +140,11 @@ export function scrollYTo(
   callback: Function,
   dom: any = document.documentElement
 ) {
-  const vals: any = {
+  const customVal: any = {
     start: 0,
     end: dom.scrollHeight - dom.clientHeight
   };
-  targetVal = vals[targetVal] ?? targetVal;
+  targetVal = customVal[targetVal] ?? targetVal;
   if (callback && targetVal != dom.scrollTop) {
     let timer: any;
     const cancel = setEventListener(
@@ -159,7 +159,7 @@ export function scrollYTo(
     // 防止位置已经到极限了，没触发 scroll 事件。
     timer = setTimeout(cancel, 100);
   }
-  window.scroll({ top: vals[targetVal] ?? targetVal, behavior: 'smooth' });
+  window.scroll({ top: customVal[targetVal] ?? targetVal, behavior: 'smooth' });
   /* 新版 demo */
   // // back2top
   // window.scroll({ top: 0, left: 0, behavior: 'smooth' });
@@ -209,11 +209,11 @@ export function scrollXTo(
   callback: Function,
   dom: any = document.documentElement
 ) {
-  const vals: any = {
+  const customVal: any = {
     start: 0,
     end: dom.scrollWidth - dom.clientWidth
   };
-  targetVal = vals[targetVal] ?? targetVal;
+  targetVal = customVal[targetVal] ?? targetVal;
   if (callback && targetVal != dom.scrollLeft) {
     let timer: any;
     const cancel = setEventListener(
@@ -228,7 +228,7 @@ export function scrollXTo(
     // 防止位置已经到极限了，没触发 scroll 事件。
     timer = setTimeout(cancel, 100);
   }
-  window.scroll({ left: vals[targetVal] ?? targetVal, behavior: 'smooth' });
+  window.scroll({ left: customVal[targetVal] ?? targetVal, behavior: 'smooth' });
 }
 
 /**
@@ -416,6 +416,7 @@ export function downloadContent(name: string, content: BlobPart | any) {
  * `marquee('.demo-x', {direction: 'X', loopType: 'origin', speed: 3, style: 'animation-delay:2s;', parentStyle: 'color:red;'}) => X 轴无限来回滚动`
  * @param selector
  * @param options
+ * @returns
  */
 export function marquee(
   selector: string,

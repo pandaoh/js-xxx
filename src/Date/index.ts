@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:54:41
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-11-16 18:42:10
+ * @LastEditTime: 2023-03-03 15:36:22
  * @Description: 时间相关方法
  * @FilePath: \js-xxx\src\Date\index.ts
  */
@@ -165,10 +165,10 @@ export function getDateDifference(
  * Example: `timeSince(new Date()) => '刚刚'`
  * @param date 时间/string
  * @param longAgo 是否显示周月甚至更久
- * @param formater 正常显示时的时间显示格式
+ * @param formatter 正常显示时的时间显示格式
  * @returns
  */
-export function timeSince(date?: string | Date, longAgo = false, formater = 'yyyy-mm-dd hh:ii:ss') {
+export function timeSince(date?: string | Date, longAgo = false, formatter = 'yyyy-mm-dd hh:ii:ss') {
   // date.replace(/-/g, '/'); // 虽然 win 浏览器两种符号都可以，但是需兼容 ios。
   date = date ? new Date(date) : new Date();
   let dateTS = new Date(date).getTime();
@@ -177,7 +177,7 @@ export function timeSince(date?: string | Date, longAgo = false, formater = 'yyy
   if (longAgo) {
     interval = Math.floor(seconds / (30 * 24 * 3600));
     if (interval >= 4) {
-      return formatDate(new Date(dateTS), formater);
+      return formatDate(new Date(dateTS), formatter);
     }
     if (interval >= 1) {
       return interval + ' 月前';
@@ -188,7 +188,7 @@ export function timeSince(date?: string | Date, longAgo = false, formater = 'yyy
     }
   }
   if (interval >= 8) {
-    return formatDate(new Date(dateTS), formater);
+    return formatDate(new Date(dateTS), formatter);
   }
   interval = Math.floor(seconds / (24 * 3600));
   if (interval >= 1) {

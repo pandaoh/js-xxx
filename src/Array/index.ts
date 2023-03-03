@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 11:52:01
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-10-12 15:34:57
+ * @LastEditTime: 2023-03-03 15:27:13
  * @Description: 数组常用方法
  * @FilePath: \js-xxx\src\Array\index.ts
  */
@@ -96,6 +96,8 @@ export function unique(arr: any[], filter: any) {
  * `arr.sort(sortCallBack('name')) => [{name: '333'}, {name: '666'}]`
  * `arr.sort(sortCallBack('name', false)) => [{name: '666'}, {name: '333'}]`
  * @param key 排序的字段
+ * @param isAscend 是否升序
+ * @returns
  */
 export function sortCallBack(key: string, isAscend = true): any {
   return (a: any, b: any) => (a[key] > b[key] ? (isAscend ? 1 : -1) : isAscend ? -1 : 1);
@@ -166,6 +168,8 @@ export function arraySort(
  * `sortBy('createDt') => 按照 createDt 升序排列`
  * `sortBy(['name', 'age'], false) => 按照 name + age 降序排列`
  * @param keys 排序的字段/集合
+ * @param isAscend 是否升序
+ * @returns
  */
 export function sortBy(keys?: string | string[], isAscend: boolean = true): any {
   if (!keys) {

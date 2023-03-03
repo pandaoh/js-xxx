@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:53:39
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-11-16 17:40:38
+ * @LastEditTime: 2023-03-03 15:37:17
  * @Description: 因项目需要常用方法，不管任何项目，都放到一起。注意甄别，没有复用意义的方法就不要添加了。
  * @FilePath: \js-xxx\src\Others\index.ts
  */
@@ -46,6 +46,7 @@ export function setIcon(iconLink: string) {
  * 复制到剪贴板
  * Example: `copyToClipboard('hello world')`
  * @param text 内容文本
+ * @returns
  */
 export function copyToClipboard(text: string) {
   if (navigator.clipboard) {
@@ -66,7 +67,7 @@ export function getUserAgent(): { browserName: string; browserVersion: string; o
     Opera: RegExp;
     Safari: RegExp;
     '360': RegExp;
-    QQBrowswe: RegExp;
+    QQBrowser: RegExp;
   }
 
   interface DeviceReg {
@@ -84,7 +85,7 @@ export function getUserAgent(): { browserName: string; browserVersion: string; o
     Opera: /Presto/,
     Safari: /Version\/([\d.]+).*Safari/,
     '360': /360SE/,
-    QQBrowswe: /QQ/
+    QQBrowser: /QQ/
   };
 
   let deviceReg: DeviceReg = {
@@ -119,7 +120,7 @@ export function getUserAgent(): { browserName: string; browserVersion: string; o
         userAgentObj.browserVersion = userAgentStr.split('Version/')[1].split(' ')[0];
       } else if (key === '360') {
         userAgentObj.browserVersion = '';
-      } else if (key === 'QQBrowswe') {
+      } else if (key === 'QQBrowser') {
         userAgentObj.browserVersion = userAgentStr.split('Version/')[1].split(' ')[0];
       }
     }
@@ -248,6 +249,7 @@ export function bindMoreClick(fn: Function | any, times = 3, delay = 300) {
  * Example: `emitKeyboardEvent('keydown', 108) => 小键盘回车事件`
  * @param eventType 事件类型
  * @param keyCode 触发键盘 code
+ * @returns
  */
 export function emitKeyboardEvent(eventType: 'keydown' | 'keypress' | 'keyup' = 'keydown', keyCode: number = 13): void {
   const myEvent = new KeyboardEvent(eventType, {
