@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-03 14:50:46
+ * @LastEditTime: 2023-03-03 15:45:32
  * @Description: 工具方法
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
@@ -741,6 +741,22 @@ export function Logger(): {
     };
   });
   return result;
+}
+
+/**
+ * 在页面上显示某个值
+ * Example:
+ * `showVar([1, 2, 2, 3, 3]) => 显示序列化之后的数据`
+ * `showVar({a: 1, b: 2}) => 显示序列化之后的数据`
+ * @param value
+ * @returns
+ */
+export function showVar(value: any): any {
+  try {
+    alert(JSON.stringify(value, null, 2) ?? 'undefined');
+  } catch (e) {
+    console.log('js-xxx:showVar===>', value);
+  }
 }
 
 /**
