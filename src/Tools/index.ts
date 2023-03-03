@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-12-12 15:42:40
+ * @LastEditTime: 2023-03-03 14:50:46
  * @Description: 工具方法
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
@@ -197,7 +197,7 @@ export function getLastVar(data: any): any {
 }
 
 /**
- * 防抖函数
+ * 防抖函数-最后一次有效（抢购）
  * Example: `debounce(() => {}, 1000) => 防抖执行`
  * @param fn 执行的方法
  * @param delay 延迟时间
@@ -215,7 +215,7 @@ export function debounce(fn: Function, delay = 1000) {
 }
 
 /**
- * 节流函数
+ * 节流函数-第一次有效（游戏开枪间隔）
  * Example: `throttle(() => {}, 1000) => 节流执行`
  * @param fn 执行的方法
  * @param delay 延迟时间
@@ -1051,6 +1051,7 @@ export function rip(): void {
  * `getConstellation('11-24') => { cn: '射手', en: 'Sagittarius', date: '11.23-12.21' }`
  * `getConstellation('xxx') => {cn: '未知', en: 'unknown', date: 'xxx'}`
  * `getConstellation(new Date('2022-11-24')) => { cn: '射手', en: 'Sagittarius', date: '11.23-12.21' }`
+ * @param date
  * @returns
  */
 export function getConstellation(date: any): { cn: string; en: string; date: any } {
@@ -1163,12 +1164,15 @@ export function getConstellation(date: any): { cn: string; en: string; date: any
  * 设置监听方法
  * 返回取消该监听的方法 return cancel
  * Example: `setEventListener('resize', () => { console.log('resize'); }) => cancel 当前 listener 的 function`
+ * @param eventKey
+ * @param foo
+ * @param dom
  * @returns
  */
-export function setEventListener(eventKey: string, foo: any): any {
-  window.addEventListener(eventKey, foo);
+export function setEventListener(eventKey: string, foo: any, dom: any = window): any {
+  dom.addEventListener(eventKey, foo);
   return () => {
-    window.removeEventListener(eventKey, foo);
+    dom.removeEventListener(eventKey, foo);
   };
 }
 
@@ -1176,6 +1180,8 @@ export function setEventListener(eventKey: string, foo: any): any {
  * H5 软键盘缩回/弹起回调
  * return cancel listener of H5Resize
  * Example: `H5Resize(()=>{ console.log('downCb'); }, ()=>{ console.log('upCb'); }) => do something`
+ * @param downCb
+ * @param upCb
  * @returns
  */
 export function H5Resize(downCb: any, upCb: any): any {

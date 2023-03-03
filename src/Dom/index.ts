@@ -2,10 +2,13 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-02 17:50:48
+ * @LastEditTime: 2023-03-03 14:53:14
  * @Description: 利用 dom 的一些方法
  * @FilePath: \js-xxx\src\Dom\index.ts
  */
+
+import { setEventListener } from '@/Tools';
+
 /**
  * 字符串转实体字符
  * Example: `str2html('<>&"') => '&lt;&gt;&amp;&quot;'`
@@ -68,6 +71,7 @@ export function offDefaultEvent(event: any) {
  * Example: `copyContent(document.getElementById('copy')) => 复制 #copy 的内容成功`
  * @param targetDom 目标内容元素
  * @param addMsg 复制后增加内容
+ * @returns
  */
 export function copyContent(targetDom: any, addMsg: any = null) {
   let Msg = !targetDom.innerText ? targetDom.value : targetDom.innerText;
@@ -97,6 +101,7 @@ export function copyContent(targetDom: any, addMsg: any = null) {
  * Example: `scrollToTop('body') => 滚动到顶部`
  * @param elementSelector 指定元素选择器
  * @param to ('start'|'end')[default: 'start']
+ * @returns
  */
 export function scrollToTop(elementSelector: string, to: 'start' | 'end' = 'start') {
   const element = document.querySelector(elementSelector);
@@ -110,6 +115,7 @@ export function scrollToTop(elementSelector: string, to: 'start' | 'end' = 'star
  * 平滑滚动 css：`scroll-behavior: smooth;`
  * Example: `scrollToBottom('body') => 滚动到底部`
  * @param elementSelector 指定元素选择器
+ * @returns
  */
 export function scrollToBottom(elementSelector: string) {
   const element = document.querySelector(elementSelector);
@@ -119,10 +125,143 @@ export function scrollToBottom(elementSelector: string) {
 }
 
 /**
+ * Y 轴滚动到指定位置
+ * Example:
+ *  `scrollYTo(0) => 滚动到顶部`
+ *  `scrollYTo('start', document.documentElement) => 滚动到顶部`
+ *  `scrollYTo('end', document.documentElement, (percent) => console.log(percent)) => 滚动到底部`
+ * @param dom 元素对象
+ * @param targetVal 'start' | 'end' | number
+ * @param callback 回调
+ * @returns
+ */
+export function scrollYTo(
+  targetVal: 'start' | 'end' | number,
+  dom: any = document.documentElement,
+  callback: Function
+) {
+  const vals: any = {
+    start: 0,
+    end: dom.scrollHeight - dom.clientHeight
+  };
+  targetVal = vals[targetVal] ?? targetVal;
+  if (callback != null && targetVal != dom.scrollTop) {
+    let timer: any;
+    const cancel = setEventListener(
+      'scroll',
+      () => {
+        clearTimeout(timer);
+        callback(getScrollPercent(dom, 'Y'));
+        timer = setTimeout(cancel, 100);
+      },
+      window
+    );
+    // 防止位置已经到极限了，没触发 scroll 事件。
+    timer = setTimeout(cancel, 100);
+  }
+  dom.scroll({ top: vals[targetVal] ?? targetVal, behavior: 'smooth' });
+  /* 新版 demo */
+  // // back2top
+  // window.scroll({ top: 0, left: 0, behavior: 'smooth' });
+  // // back2bottom
+  // document.documentElement.scroll({ top: document.documentElement.scrollHeight, left: 0, behavior: 'smooth' });
+  // window.scroll({ top: document.body.scrollHeight, left: 0, behavior: 'smooth' });
+  /* 新版 demo */
+  /* 旧版方法 */
+  // clearInterval(dom.timer);
+  // dom.timer = setInterval(function () {
+  //   var step = (targetVal - dom.scrollY) / 10;
+  //   step = step > 0 ? Math.ceil(step) : Math.floor(step);
+  //   if (dom.scrollY == targetVal) {
+  //     clearInterval(dom.timer);
+  //     callback && callback();
+  //   }
+  //   window.scroll(0, dom.scrollY + step);
+  // }, 15);
+  // // scrollTo();
+  // // scrollTo(window, document.documentElement.scrollHeight - document.body.clientHeight, () => console.log('finish'));
+  // function _customScrollEvent() {
+  //   // @ts-ignore
+  //   const div = this.document.getElementById('back2top');
+  //   if (window.scrollY > 150) {
+  //     div.style.display = 'block';
+  //     div.style.opacity = 0.5;
+  //   } else {
+  //     div.style.display = 'none';
+  //   }
+  // }
+  /* 旧版方法 */
+}
+
+/**
+ * X 轴滚动到指定位置
+ * Example:
+ *  `scrollXTo(0) => 滚动到左侧`
+ *  `scrollXTo('start', document.documentElement) => 滚动到左侧`
+ *  `scrollXTo('end', document.documentElement, (percent) => console.log(percent)) => 滚动到右侧`
+ * @param dom 元素对象
+ * @param targetVal 'start' | 'end' | number
+ * @param callback 回调
+ * @returns
+ */
+export function scrollXTo(
+  targetVal: 'start' | 'end' | number,
+  dom: any = document.documentElement,
+  callback: Function
+) {
+  const vals: any = {
+    start: 0,
+    end: dom.scrollWidth - dom.clientWidth
+  };
+  targetVal = vals[targetVal] ?? targetVal;
+  if (callback != null && targetVal != dom.scrollLeft) {
+    let timer: any;
+    const cancel = setEventListener(
+      'scroll',
+      () => {
+        clearTimeout(timer);
+        callback(getScrollPercent(dom, 'X'));
+        timer = setTimeout(cancel, 100);
+      },
+      window
+    );
+    // 防止位置已经到极限了，没触发 scroll 事件。
+    timer = setTimeout(cancel, 100);
+  }
+  dom.scroll({ left: vals[targetVal] ?? targetVal, behavior: 'smooth' });
+}
+
+/**
+ * 获取滚动条百分比
+ * Example: `getScrollPercent(document.documentElement, 'Y') => 0.581134549876`
+ * @param dom 元素
+ * @param direction X/Y 轴的进度条
+ * @returns
+ */
+export function getScrollPercent(dom: any = document.documentElement, direction: 'X' | 'Y' = 'Y'): number {
+  let percent: number;
+  try {
+    if (direction === 'X') {
+      percent = Number(dom.scrollLeft.toFixed(2)) == 0 ? 0 : dom.scrollLeft / (dom.scrollWidth - dom.clientWidth);
+    } else {
+      percent = Number(dom.scrollTop.toFixed(2)) == 0 ? 0 : dom.scrollTop / (dom.scrollHeight - dom.clientHeight);
+    }
+  } catch (e) {
+    console.log('js-xxx:getScrollPercentError', e);
+    percent = -1;
+  }
+  return percent;
+  // // scroll percent
+  // window.scrollY / (document.documentElement.scrollHeight - document.documentElement.clientHeight);
+  // document.documentElement.scrollTop / (document.documentElement.scrollHeight - document.documentElement.clientHeight);
+}
+
+/**
  * 找元素的第 n 级父元素
  * Example: `findParents(document.getElementById('test'), 3) => #test 的第三个父元素`
  * @param element 指定元素
  * @param n 第几个
+ * @returns
  */
 export function findParents(element: any, n: number) {
   while (element && n) {
