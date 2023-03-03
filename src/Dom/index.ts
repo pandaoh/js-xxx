@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-03 15:38:25
+ * @LastEditTime: 2023-03-03 16:29:00
  * @Description: 利用 dom 的一些方法
  * @FilePath: \js-xxx\src\Dom\index.ts
  */
@@ -197,7 +197,7 @@ export function scrollYTo(
  * X 轴滚动到指定位置
  * Example:
  *  `scrollXTo(0) => 滚动到左侧`
- *  `scrollXTo('start', null, document.documentElement) => 滚动到左侧
+ *  `scrollXTo('start', null, document.documentElement) => 滚动到左侧`
  *  `scrollXTo('end', (percent) => console.log(percent), document.querySelector('body')) => 滚动到右侧`
  * @param targetVal 'start' | 'end' | number
  * @param callback 回调

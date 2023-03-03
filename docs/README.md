@@ -3391,7 +3391,7 @@ ___
 X 轴滚动到指定位置
 Example:
  `scrollXTo(0) => 滚动到左侧`
- `scrollXTo('start', null, document.documentElement) => 滚动到左侧
+ `scrollXTo('start', null, document.documentElement) => 滚动到左侧`
  `scrollXTo('end', (percent) => console.log(percent), document.querySelector('body')) => 滚动到右侧`
 
 #### Parameters
