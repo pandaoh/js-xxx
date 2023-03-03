@@ -37,6 +37,7 @@ export declare function Logger(): {
     dark: (...args: any[]) => void;
     [key: string]: (...args: any[]) => void;
 };
+export declare function showVar(value: any): any;
 export declare function waitUntil(condition: any, timeout?: number, interval?: number): Promise<any>;
 export declare function ms(str: any): string | number;
 export declare function transferFileToBase64(content: BlobPart | any, contentType: string, callBack: any): void;
@@ -63,6 +64,7 @@ export declare function getConstellation(date: any): {
     en: string;
     date: any;
 };
-export declare function setEventListener(eventKey: string, foo: any): any;
+export declare function setEventListener(eventKey: string, foo: any, dom?: any): any;
 export declare function H5Resize(downCb: any, upCb: any): any;
+export declare function banConsole(): Function;
 //# sourceMappingURL=index.d.ts.map

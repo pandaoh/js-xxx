@@ -1,6 +1,6 @@
-js-xxx - v1.4.1
+js-xxx - v1.4.5
 
-# js-xxx - v1.4.1
+# js-xxx - v1.4.5
 
 ## Table of contents
 
@@ -27,6 +27,7 @@ js-xxx - v1.4.1
 - [arraySet](README.md#arrayset)
 - [arraySort](README.md#arraysort)
 - [average](README.md#average)
+- [banConsole](README.md#banconsole)
 - [base64Decode](README.md#base64decode-1)
 - [base64Encode](README.md#base64encode-1)
 - [bindMoreClick](README.md#bindmoreclick)
@@ -61,6 +62,7 @@ js-xxx - v1.4.1
 - [formatBytes](README.md#formatbytes)
 - [formatDate](README.md#formatdate)
 - [formatFormData](README.md#formatformdata)
+- [formatJSON](README.md#formatjson)
 - [formatNumber](README.md#formatnumber)
 - [formatRh](README.md#formatrh)
 - [formatURLSearchParams](README.md#formaturlsearchparams)
@@ -85,6 +87,7 @@ js-xxx - v1.4.1
 - [getRandNum](README.md#getrandnum)
 - [getRandStr](README.md#getrandstr)
 - [getRandVar](README.md#getrandvar)
+- [getScrollPercent](README.md#getscrollpercent)
 - [getSearchParams](README.md#getsearchparams)
 - [getSize](README.md#getsize)
 - [getStyleByName](README.md#getstylebyname)
@@ -159,6 +162,8 @@ js-xxx - v1.4.1
 - [round](README.md#round)
 - [scrollToBottom](README.md#scrolltobottom)
 - [scrollToTop](README.md#scrolltotop)
+- [scrollXTo](README.md#scrollxto)
+- [scrollYTo](README.md#scrollyto)
 - [sendNotification](README.md#sendnotification)
 - [sendWsMessage](README.md#sendwsmessage)
 - [sessionStorageGet](README.md#sessionstorageget)
@@ -169,6 +174,7 @@ js-xxx - v1.4.1
 - [setWsBinaryType](README.md#setwsbinarytype)
 - [sha1](README.md#sha1)
 - [sha256](README.md#sha256)
+- [showVar](README.md#showvar)
 - [shuffleArray](README.md#shufflearray)
 - [sleep](README.md#sleep)
 - [slugify](README.md#slugify)
@@ -510,6 +516,23 @@ Example:
 #### Returns
 
 `number`
+
+___
+
+### banConsole
+
+▸ **banConsole**(): `Function`
+
+禁用控制台
+windows
+防君子不防小人
+监听页面大小变化没必要
+监听编辑 dom 事件 reload 也算了
+Example: `banConsole() => 返回取消禁用的 function`
+
+#### Returns
+
+`Function`
 
 ___
 
@@ -915,7 +938,7 @@ ___
 
 ▸ **debounce**(`fn`, `delay?`): () => `void`
 
-防抖函数
+防抖函数-最后一次有效（抢购）
 Example: `debounce(() => {}, 1000) => 防抖执行`
 
 #### Parameters
@@ -1264,6 +1287,32 @@ Example: `formatFormData({a: 1, b: 2}) => FormData`
 #### Returns
 
 `FormData`
+
+___
+
+### formatJSON
+
+▸ **formatJSON**(`value`): `string`
+
+格式化 JSON 字符串
+Example:
+`formatJSON({ a: 123, b: 456 }, null, 2) => '{\n  "a": 123,\n  "b": 456\n}'`
+`formatJSON('123', null, 2) => '"123"'`
+`formatJSON(123, null, 2) => '123'`
+`formatJSON(null, null, 2) => 'null'`
+`formatJSON(true, null, 2) => 'true'`
+`formatJSON(undefined, null, 2) => 'undefined'`
+`formatJSON(new Date(), null, 2) => '"2023-03-02T10:02:42.019Z"'`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `any` |
+
+#### Returns
+
+`string`
 
 ___
 
@@ -1774,6 +1823,26 @@ Example:
 #### Returns
 
 `any` \| `any`[]
+
+___
+
+### getScrollPercent
+
+▸ **getScrollPercent**(`direction?`, `dom?`): `number`
+
+获取滚动条百分比
+Example: `getScrollPercent(document.documentElement, 'Y') => 0.581134549876`
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `direction` | ``"X"`` \| ``"Y"`` | `'Y'` | X/Y 轴的进度条 |
+| `dom` | `any` | `document.documentElement` | 元素 |
+
+#### Returns
+
+`number`
 
 ___
 
@@ -2926,7 +2995,8 @@ ___
 
 给元素设置 marquee 内容滚动效果，支持来回滚动，正常跑马灯，无限无缝滚动。
 一般来说设置两层，滚动的区间就是父元素的大小。
-`<div class="demo-container"><div id="#demo">...</div></div>`
+若 #demo 高度小于 container，除非 loopType 设置 infinite，否则不会有动画。
+`<div class="demo-container"><div id="#demo">...span.items...</div></div>`
 Example:
 `marquee('#demo') => 默认横向正常滚动(loopType=normal)`
 `marquee('.demo-y', {direction: 'Y', loopType: 'infinite', speed: 3}) => Y 轴无限无缝滚动，speed > 0 越小速度越快。`
@@ -3314,6 +3384,54 @@ Example: `scrollToTop('body') => 滚动到顶部`
 
 ___
 
+### scrollXTo
+
+▸ **scrollXTo**(`targetVal`, `callback`, `dom?`): `void`
+
+X 轴滚动到指定位置
+Example:
+ `scrollXTo(0) => 滚动到左侧`
+ `scrollXTo('start', null, document.documentElement) => 滚动到左侧
+ `scrollXTo('end', (percent) => console.log(percent), document.querySelector('body')) => 滚动到右侧`
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `targetVal` | `number` \| ``"start"`` \| ``"end"`` | `undefined` | 'start' \| 'end' \| number |
+| `callback` | `Function` | `undefined` | 回调 |
+| `dom` | `any` | `document.documentElement` | 元素对象 |
+
+#### Returns
+
+`void`
+
+___
+
+### scrollYTo
+
+▸ **scrollYTo**(`targetVal`, `callback`, `dom?`): `void`
+
+Y 轴滚动到指定位置
+Example:
+ `scrollYTo(0) => 滚动到顶部`
+ `scrollYTo('start', null, document.documentElement) => 滚动到顶部`
+ `scrollYTo('end', (percent) => console.log(percent), document.querySelector('body')) => 滚动到底部`
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `targetVal` | `number` \| ``"start"`` \| ``"end"`` | `undefined` | 'start' \| 'end' \| number |
+| `callback` | `Function` | `undefined` | 回调 |
+| `dom` | `any` | `document.documentElement` | 元素对象 |
+
+#### Returns
+
+`void`
+
+___
+
 ### sendNotification
 
 ▸ **sendNotification**(`msg`, `title?`, `options?`): `void`
@@ -3419,7 +3537,7 @@ ___
 
 ### setEventListener
 
-▸ **setEventListener**(`eventKey`, `foo`): `any`
+▸ **setEventListener**(`eventKey`, `foo`, `dom?`): `any`
 
 设置监听方法
 返回取消该监听的方法 return cancel
@@ -3427,10 +3545,11 @@ Example: `setEventListener('resize', () => { console.log('resize'); }) => cancel
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `eventKey` | `string` |
-| `foo` | `any` |
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `eventKey` | `string` | `undefined` |
+| `foo` | `any` | `undefined` |
+| `dom` | `any` | `window` |
 
 #### Returns
 
@@ -3514,6 +3633,27 @@ Example: `sha256("value") => 加密后的字符串`
 
 ___
 
+### showVar
+
+▸ **showVar**(`value`): `any`
+
+在页面上显示某个值
+Example:
+`showVar([1, 2, 2, 3, 3]) => 显示序列化之后的数据`
+`showVar({a: 1, b: 2}) => 显示序列化之后的数据`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `any` |
+
+#### Returns
+
+`any`
+
+___
+
 ### shuffleArray
 
 ▸ **shuffleArray**(`arr`): `any`[]
@@ -3590,7 +3730,7 @@ Example:
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
 | `keys?` | `string` \| `string`[] | `undefined` | 排序的字段/集合 |
-| `isAscend` | `boolean` | `true` | - |
+| `isAscend` | `boolean` | `true` | 是否升序 |
 
 #### Returns
 
@@ -3614,7 +3754,7 @@ Example:
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
 | `key` | `string` | `undefined` | 排序的字段 |
-| `isAscend` | `boolean` | `true` | - |
+| `isAscend` | `boolean` | `true` | 是否升序 |
 
 #### Returns
 
@@ -3711,7 +3851,7 @@ ___
 
 ▸ **throttle**(`fn`, `delay?`): () => `void`
 
-节流函数
+节流函数-第一次有效（游戏开枪间隔）
 Example: `throttle(() => {}, 1000) => 节流执行`
 
 #### Parameters
@@ -3735,7 +3875,7 @@ ___
 
 ### timeSince
 
-▸ **timeSince**(`date?`, `longAgo?`, `formater?`): `string`
+▸ **timeSince**(`date?`, `longAgo?`, `formatter?`): `string`
 
 人性化时间
 Example: `timeSince(new Date()) => '刚刚'`
@@ -3746,7 +3886,7 @@ Example: `timeSince(new Date()) => '刚刚'`
 | :------ | :------ | :------ | :------ |
 | `date?` | `string` \| `Date` | `undefined` | 时间/string |
 | `longAgo` | `boolean` | `false` | 是否显示周月甚至更久 |
-| `formater` | `string` | `'yyyy-mm-dd hh:ii:ss'` | 正常显示时的时间显示格式 |
+| `formatter` | `string` | `'yyyy-mm-dd hh:ii:ss'` | 正常显示时的时间显示格式 |
 
 #### Returns
 

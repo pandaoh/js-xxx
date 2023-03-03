@@ -26,4 +26,5 @@ export declare function truncate(txt: string, width: number, options?: {
     ellipsis?: string;
     separator?: string;
 }): string;
+export declare function formatJSON(value: any): string;
 //# sourceMappingURL=index.d.ts.map
