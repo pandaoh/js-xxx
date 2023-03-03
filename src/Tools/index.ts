@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-03 15:45:32
+ * @LastEditTime: 2023-03-03 16:20:32
  * @Description: 工具方法
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
@@ -1216,4 +1216,29 @@ export function H5Resize(downCb: any, upCb: any): any {
     }
   };
   return setEventListener('resize', H5ResizeFoo);
+}
+
+/**
+ * 禁用控制台
+ * windows
+ * 防君子不防小人
+ * 监听页面大小变化没必要
+ * 监听编辑 dom 事件 reload 也算了
+ * Example: `banConsole() => 返回取消禁用的 function`
+ * @returns
+ */
+export function banConsole(): Function {
+  document.body.setAttribute('style', 'user-select: none;' + document.body.style ?? '');
+  const cancelContextMenu = setEventListener('contextmenu', function (e: any) {
+    return e.preventDefault();
+  });
+  const cancelKeyDown = setEventListener('keydown', function (e: any) {
+    if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && e.keyCode === 73)) {
+      return e.preventDefault();
+    }
+  });
+  return () => {
+    cancelContextMenu();
+    cancelKeyDown();
+  };
 }
