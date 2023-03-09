@@ -8220,6 +8220,29 @@ function getMonthDaysCount(date) {
         return monthDayCount[month];
     }
 }
+function getDateList(n, type, date) {
+    if (type === void 0) { type = 'day'; }
+    if (date === void 0) { date = new Date(); }
+    var myDate = calcDate(new Date(date), "".concat(n > 0 ? n - 1 : n + 1, " ").concat(type));
+    var dateArray = [];
+    var dateTemp;
+    var flag = n > 0 ? -1 : 1;
+    var formatters = {
+        year: 'yyyy',
+        month: 'yyyy-mm',
+        day: 'yyyy-mm-dd',
+        hour: 'yyyy-mm-dd hh:00',
+        minute: 'yyyy-mm-dd hh:ii',
+        second: 'yyyy-mm-dd hh:ii:ss'
+    };
+    var tempN = Math.abs(n);
+    for (var i = 0; i < tempN; i++) {
+        dateTemp = formatDate(myDate, formatters[type]);
+        dateArray.push(dateTemp);
+        myDate = calcDate(dateTemp, "".concat(flag, " ").concat(type));
+    }
+    return flag === 1 ? dateArray : dateArray.reverse();
+}
 function getDateTime(date) {
     date = date ? new Date(date) : new Date();
     return date.getTime();
@@ -9533,4 +9556,4 @@ function setWsBinaryType(binaryType) {
     return true;
 }
 
-export { Base64Decode, Base64Encode, CONTENT_TYPES, H5Resize, HttpMethod, Logger, Speaker, add, all, any, appendLink, appendScript, arraySet, arraySort, average, banConsole, base64Decode, base64Encode, bindMoreClick, calcDate, camelCase, catchPromise, checkFileExt, checkIdCard, checkVersion, closeFullscreen, closeWebSocket, compareDate, copyContent, copyToClipboard, countdown, curryIt, data2Arr, data2Obj, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitKeyboardEvent, empty, encrypt, findChildren, findParents, formatBytes, formatDate, formatFormData, formatJSON, formatNumber, formatRh, formatURLSearchParams, get1Var, getAge, getAnimal, getBSColor, getBaseURL, getBloodGroup, getConstellation, getContentType, getCookie, getCryptoJS, getDateDifference, getDateTime, getKey, getLastVar, getMonthDays, getMonthDaysCount, getQueryString, getRandColor, getRandNum, getRandStr, getRandVar, getScrollPercent, getSearchParams, getSize, getStyleByName, getTimeAndStr, getTimeCode, getType, getUTCTime, getUUID, getUserAgent, getV, getVar, getViewportSize, getWebSocket, globalError, html2str, initNotification, initWebSocket, insertAfter, intersection, isAppleDevice, isArr, isArrayBuffer, isBlob, isBool, isBrowser, isCarCode, isChar, isDarkMode, isDate, isDecimal, isElement, isEmail, isFn, isHttp, isInteger, isIpAddress, isIpv4, isIpv6, isJSON, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPhoneNum, isPromise, isRhNegative, isStr, isStrongPassWord, isUndef, isUrl, isWeekday, jsonClone, localStorageGet, localStorageSet, logRunTime, marquee, maskString, md5, mergeObj, ms, offDefaultEvent, onClick2MoreClick, openFile, openFullscreen, qsParse, qsStringify, removeCookie, repeat, retry, rip, round, scrollToBottom, scrollToTop, scrollXTo, scrollYTo, sendNotification, sendWsMessage, sessionStorageGet, sessionStorageSet, setCookie, setEventListener, setIcon, setWsBinaryType, sha1, sha256, showVar, shuffleArray, sleep, slugify, sortBy, sortCallBack, splitCase, str2html, str2unicode, sub, throttle, timeSince, times, to, toBool, toNum, toStr, transferCase, transferFileToBase64, transferIdCard, transferMoney, trim, truncate, unicode2str, union, unique, uuid, versionUpgrade, waitUntil, xAjax, xFetch };
+export { Base64Decode, Base64Encode, CONTENT_TYPES, H5Resize, HttpMethod, Logger, Speaker, add, all, any, appendLink, appendScript, arraySet, arraySort, average, banConsole, base64Decode, base64Encode, bindMoreClick, calcDate, camelCase, catchPromise, checkFileExt, checkIdCard, checkVersion, closeFullscreen, closeWebSocket, compareDate, copyContent, copyToClipboard, countdown, curryIt, data2Arr, data2Obj, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitKeyboardEvent, empty, encrypt, findChildren, findParents, formatBytes, formatDate, formatFormData, formatJSON, formatNumber, formatRh, formatURLSearchParams, get1Var, getAge, getAnimal, getBSColor, getBaseURL, getBloodGroup, getConstellation, getContentType, getCookie, getCryptoJS, getDateDifference, getDateList, getDateTime, getKey, getLastVar, getMonthDays, getMonthDaysCount, getQueryString, getRandColor, getRandNum, getRandStr, getRandVar, getScrollPercent, getSearchParams, getSize, getStyleByName, getTimeAndStr, getTimeCode, getType, getUTCTime, getUUID, getUserAgent, getV, getVar, getViewportSize, getWebSocket, globalError, html2str, initNotification, initWebSocket, insertAfter, intersection, isAppleDevice, isArr, isArrayBuffer, isBlob, isBool, isBrowser, isCarCode, isChar, isDarkMode, isDate, isDecimal, isElement, isEmail, isFn, isHttp, isInteger, isIpAddress, isIpv4, isIpv6, isJSON, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPhoneNum, isPromise, isRhNegative, isStr, isStrongPassWord, isUndef, isUrl, isWeekday, jsonClone, localStorageGet, localStorageSet, logRunTime, marquee, maskString, md5, mergeObj, ms, offDefaultEvent, onClick2MoreClick, openFile, openFullscreen, qsParse, qsStringify, removeCookie, repeat, retry, rip, round, scrollToBottom, scrollToTop, scrollXTo, scrollYTo, sendNotification, sendWsMessage, sessionStorageGet, sessionStorageSet, setCookie, setEventListener, setIcon, setWsBinaryType, sha1, sha256, showVar, shuffleArray, sleep, slugify, sortBy, sortCallBack, splitCase, str2html, str2unicode, sub, throttle, timeSince, times, to, toBool, toNum, toStr, transferCase, transferFileToBase64, transferIdCard, transferMoney, trim, truncate, unicode2str, union, unique, uuid, versionUpgrade, waitUntil, xAjax, xFetch };

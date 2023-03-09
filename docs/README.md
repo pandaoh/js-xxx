@@ -1,6 +1,6 @@
-js-xxx - v1.4.5
+js-xxx - v1.4.6
 
-# js-xxx - v1.4.5
+# js-xxx - v1.4.6
 
 ## Table of contents
 
@@ -77,6 +77,7 @@ js-xxx - v1.4.5
 - [getCookie](README.md#getcookie)
 - [getCryptoJS](README.md#getcryptojs)
 - [getDateDifference](README.md#getdatedifference)
+- [getDateList](README.md#getdatelist)
 - [getDateTime](README.md#getdatetime)
 - [getKey](README.md#getkey)
 - [getLastVar](README.md#getlastvar)
@@ -1627,6 +1628,32 @@ Example:
 #### Returns
 
 `number` \| { `days`: `number` ; `hours`: `number` ; `minutes`: `number` ; `seconds`: `number`  }
+
+___
+
+### getDateList
+
+▸ **getDateList**(`n`, `type?`, `date?`): `string`[]
+
+获取指定日期数目的数组
+Example:
+`getDateList(7, 'day') => 得到今天到未来 7 天的日期数组`
+`getDateList(-7, 'day') => 得到今天到之前 7 天的日期数组`
+`getDateList(7, 'year') => 得到今年到未来 7 年的日期数组`
+`getDateList(7, 'month') => 得到本月到未来 7 个月的日期数组`
+`getDateList(7, 'day', '2023-02-01') => 得到 2023-02-01 日到未来 7 天的日期数组`
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `n` | `number` | `undefined` | 数目 |
+| `type` | ``"day"`` \| ``"hour"`` \| ``"minute"`` \| ``"second"`` \| ``"year"`` \| ``"month"`` | `'day'` | 类型 |
+| `date` | `any` | `undefined` | 日期 |
+
+#### Returns
+
+`string`[]
 
 ___
 

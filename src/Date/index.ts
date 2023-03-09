@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:54:41
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-03 15:36:22
+ * @LastEditTime: 2023-03-09 18:05:23
  * @Description: 时间相关方法
  * @FilePath: \js-xxx\src\Date\index.ts
  */
@@ -248,6 +248,45 @@ export function getMonthDaysCount(date?: string | Date): number {
     let monthDayCount = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; // 平年
     return monthDayCount[month]; // 当前月的天数
   }
+}
+
+/**
+ * 获取指定日期数目的数组
+ * Example:
+ * `getDateList(7, 'day') => 得到今天到未来 7 天的日期数组`
+ * `getDateList(-7, 'day') => 得到今天到之前 7 天的日期数组`
+ * `getDateList(7, 'year') => 得到今年到未来 7 年的日期数组`
+ * `getDateList(7, 'month') => 得到本月到未来 7 个月的日期数组`
+ * `getDateList(7, 'day', '2023-02-01') => 得到 2023-02-01 日到未来 7 天的日期数组`
+ * @param n 数目
+ * @param type 类型
+ * @param date 日期
+ * @returns
+ */
+export function getDateList(
+  n: number,
+  type: 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second' = 'day',
+  date: any = new Date()
+): string[] {
+  let myDate = calcDate(new Date(date), `${n > 0 ? n - 1 : n + 1} ${type}`); // 包含当天
+  const dateArray = [];
+  let dateTemp;
+  const flag = n > 0 ? -1 : 1;
+  const formatters = {
+    year: 'yyyy',
+    month: 'yyyy-mm',
+    day: 'yyyy-mm-dd',
+    hour: 'yyyy-mm-dd hh:00',
+    minute: 'yyyy-mm-dd hh:ii',
+    second: 'yyyy-mm-dd hh:ii:ss'
+  };
+  let tempN = Math.abs(n);
+  for (let i = 0; i < tempN; i++) {
+    dateTemp = formatDate(myDate, formatters[type]);
+    dateArray.push(dateTemp);
+    myDate = calcDate(dateTemp, `${flag} ${type}`);
+  }
+  return flag === 1 ? dateArray : dateArray.reverse();
 }
 
 /**

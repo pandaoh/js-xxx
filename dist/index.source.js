@@ -8226,6 +8226,29 @@
             return monthDayCount[month];
         }
     }
+    function getDateList(n, type, date) {
+        if (type === void 0) { type = 'day'; }
+        if (date === void 0) { date = new Date(); }
+        var myDate = calcDate(new Date(date), "".concat(n > 0 ? n - 1 : n + 1, " ").concat(type));
+        var dateArray = [];
+        var dateTemp;
+        var flag = n > 0 ? -1 : 1;
+        var formatters = {
+            year: 'yyyy',
+            month: 'yyyy-mm',
+            day: 'yyyy-mm-dd',
+            hour: 'yyyy-mm-dd hh:00',
+            minute: 'yyyy-mm-dd hh:ii',
+            second: 'yyyy-mm-dd hh:ii:ss'
+        };
+        var tempN = Math.abs(n);
+        for (var i = 0; i < tempN; i++) {
+            dateTemp = formatDate(myDate, formatters[type]);
+            dateArray.push(dateTemp);
+            myDate = calcDate(dateTemp, "".concat(flag, " ").concat(type));
+        }
+        return flag === 1 ? dateArray : dateArray.reverse();
+    }
     function getDateTime(date) {
         date = date ? new Date(date) : new Date();
         return date.getTime();
@@ -9603,6 +9626,7 @@
     exports.getCookie = getCookie;
     exports.getCryptoJS = getCryptoJS;
     exports.getDateDifference = getDateDifference;
+    exports.getDateList = getDateList;
     exports.getDateTime = getDateTime;
     exports.getKey = getKey;
     exports.getLastVar = getLastVar;

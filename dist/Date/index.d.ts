@@ -10,6 +10,7 @@ export declare function timeSince(date?: string | Date, longAgo?: boolean, forma
 export declare function isWeekday(date?: string | Date): boolean;
 export declare function getMonthDays(date?: string | Date): number;
 export declare function getMonthDaysCount(date?: string | Date): number;
+export declare function getDateList(n: number, type?: 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second', date?: any): string[];
 export declare function getDateTime(date?: string | Date): number;
 export declare function getUTCTime(timezone?: number): Date;
 export declare function compareDate(dateA: any, dateB?: any): -1 | 1 | 0;
