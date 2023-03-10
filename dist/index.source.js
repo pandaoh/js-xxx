@@ -8638,6 +8638,17 @@
             sum = add(sum, args[i]);
         return args.length ? div(sum, len) : 0;
     }
+    function abs(value) {
+        return Math.abs(value);
+    }
+    function float(value, d, isStr) {
+        if (d === void 0) { d = 0; }
+        if (isStr === void 0) { isStr = false; }
+        var arr = "".concat(value).split('.');
+        var doubleStr = arr.length > 1 ? arr[1].padEnd(d, '0').substring(0, d) : '0'.padEnd(d, '0');
+        var res = d === 0 ? arr[0] : "".concat(arr[0], ".").concat(doubleStr);
+        return isStr ? res : Number(res);
+    }
 
     function initNotification() {
         var NOTIFICATION = window.Notification || (window === null || window === void 0 ? void 0 : window.mozNotification) || (window === null || window === void 0 ? void 0 : window.webkitNotification);
@@ -9568,6 +9579,7 @@
     exports.H5Resize = H5Resize;
     exports.Logger = Logger;
     exports.Speaker = Speaker;
+    exports.abs = abs;
     exports.add = add;
     exports.all = all;
     exports.any = any;
@@ -9608,6 +9620,7 @@
     exports.encrypt = encrypt;
     exports.findChildren = findChildren;
     exports.findParents = findParents;
+    exports.float = float;
     exports.formatBytes = formatBytes;
     exports.formatDate = formatDate;
     exports.formatFormData = formatFormData;

@@ -19,6 +19,7 @@ js-xxx - v1.4.6
 - [H5Resize](README.md#h5resize)
 - [Logger](README.md#logger)
 - [Speaker](README.md#speaker)
+- [abs](README.md#abs)
 - [add](README.md#add)
 - [all](README.md#all)
 - [any](README.md#any)
@@ -59,6 +60,7 @@ js-xxx - v1.4.6
 - [encrypt](README.md#encrypt)
 - [findChildren](README.md#findchildren)
 - [findParents](README.md#findparents)
+- [float](README.md#float)
 - [formatBytes](README.md#formatbytes)
 - [formatDate](README.md#formatdate)
 - [formatFormData](README.md#formatformdata)
@@ -345,6 +347,27 @@ Example:
 | `setVolume` | (`volume`: `number`) => `void` |
 | `speak` | () => `void` |
 | `stop` | () => `void` |
+
+___
+
+### abs
+
+▸ **abs**(`value`): `number`
+
+获取绝对值
+Example:
+`abs(-1) => 1`
+`abs(1) => 1`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `number` |
+
+#### Returns
+
+`number`
 
 ___
 
@@ -1225,6 +1248,32 @@ Example: `findParents(document.getElementById('test'), 3) => #test 的第三个�
 #### Returns
 
 `any`
+
+___
+
+### float
+
+▸ **float**(`value`, `d?`, `isStr?`): `number` \| `string`
+
+去尾法获取数值
+Example:
+`float(1.135, 0, true) => '1'`
+`float(1.135, 2, true) => '1.13'`
+`float(1.135, 1) => 1.1`
+`float(1.135, 4) => 1.135`
+`float(1.135, 4, true) => '1.1350'`
+
+#### Parameters
+
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `value` | `number` | `undefined` |
+| `d` | `number` | `0` |
+| `isStr` | `boolean` | `false` |
+
+#### Returns
+
+`number` \| `string`
 
 ___
 

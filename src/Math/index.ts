@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 16:24:34
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-09-01 17:25:23
+ * @LastEditTime: 2023-03-10 09:43:49
  * @Description: 数学常用方法
  * @FilePath: \js-xxx\src\Math\index.ts
  */
@@ -116,4 +116,36 @@ export function average(...args: any[]) {
   for (let i = 0; i < len; i++) sum = add(sum, args[i]);
 
   return args.length ? div(sum, len) : 0;
+}
+
+/**
+ * 获取绝对值
+ * Example:
+ * `abs(-1) => 1`
+ * `abs(1) => 1`
+ * @param value
+ * @returns
+ */
+export function abs(value: number): number {
+  return Math.abs(value);
+}
+
+/**
+ * 去尾法获取数值
+ * Example:
+ * `float(1.135, 0, true) => '1'`
+ * `float(1.135, 2, true) => '1.13'`
+ * `float(1.135, 1) => 1.1`
+ * `float(1.135, 4) => 1.135`
+ * `float(1.135, 4, true) => '1.1350'`
+ * @param value
+ * @param d
+ * @param isStr
+ * @returns
+ */
+export function float(value: number, d: number = 0, isStr: boolean = false): number | string {
+  const arr = `${value}`.split('.');
+  const doubleStr = arr.length > 1 ? arr[1].padEnd(d, '0').substring(0, d) : '0'.padEnd(d, '0');
+  const res = d === 0 ? arr[0] : `${arr[0]}.${doubleStr}`;
+  return isStr ? res : Number(res);
 }
