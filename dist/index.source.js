@@ -210,6 +210,31 @@
         }
         return arr;
     }
+    function arrObj2objArr(data, key) {
+        var result = {};
+        try {
+            var keys_1 = [];
+            data.forEach(function (item) {
+                var itemKeys = Object.keys(item);
+                keys_1 = itemKeys.length > keys_1.length ? itemKeys : keys_1;
+            });
+            unique(data, function (a, b) { return a[key] === b[key]; })
+                .sort(sortBy(key))
+                .forEach(function (item) {
+                keys_1.forEach(function (objKey) {
+                    var _a;
+                    if (!result[objKey]) {
+                        result[objKey] = [];
+                    }
+                    result[objKey].push((_a = item[objKey]) !== null && _a !== void 0 ? _a : null);
+                });
+            });
+        }
+        catch (e) {
+            console.log('js-xxx:arrObj2objArrError===>', e);
+        }
+        return result;
+    }
     function arraySet(arr) {
         if (!Array.isArray(arr)) {
             return arr;
@@ -9766,6 +9791,7 @@
     exports.any = any;
     exports.appendLink = appendLink;
     exports.appendScript = appendScript;
+    exports.arrObj2objArr = arrObj2objArr;
     exports.arraySet = arraySet;
     exports.arraySort = arraySort;
     exports.atob = atob;

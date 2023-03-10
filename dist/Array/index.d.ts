@@ -6,6 +6,11 @@ export declare function data2Obj(sourceData: {
 export declare function data2Arr(sourceData: {
     [key: string]: any;
 }[], key: string): any[];
+export declare function arrObj2objArr(data: {
+    [key: string]: any;
+}[], key: string): {
+    [key: string]: any[];
+};
 export declare function arraySet(arr: string | Iterable<any> | null | undefined): string | Iterable<any> | null | undefined;
 export declare function unique(arr: any[], filter: any): any[];
 export declare function sortCallBack(key: string, isAscend?: boolean): any;

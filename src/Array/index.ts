@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 11:52:01
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-03 15:27:13
+ * @LastEditTime: 2023-03-10 15:56:01
  * @Description: 数组常用方法
  * @FilePath: \js-xxx\src\Array\index.ts
  */
@@ -45,6 +45,40 @@ export function data2Arr(sourceData: { [key: string]: any }[], key: string): any
     sourceData[k]?.[key] && arr.push(sourceData[k][key]);
   }
   return arr;
+}
+
+/**
+ * 数组对象转换为对象数组，需确保源数据已经去重哦，否则会暴力去重，最后一条数据有效。
+ * 一般图表类插件需要此类转换
+ * Example:
+ * `const data = [{ id: 1, name: '张三', score: 98, remark: '语文成绩' }, { id: 3, name: '王五', score: 98 }, { id: 3, name: '王五', score: 99, remark: '最后一条有效成绩' }, { id: 2, name: '李四', score: 100 }];`
+ * `arrObj2objArr(data, 'id') => {"id": [1, 2, 3], "name": ["张三", "李四", "王五"], "score": [98, 100, 99], "remark": ["语文成绩", null, "最后一条有效成绩"]}`
+ * @param data
+ * @param key
+ * @returns
+ */
+export function arrObj2objArr(data: { [key: string]: any }[], key: string): { [key: string]: any[] } {
+  const result: { [key: string]: any[] } = {};
+  try {
+    let keys: string[] = [];
+    data.forEach((item: any) => {
+      const itemKeys: string[] = Object.keys(item);
+      keys = itemKeys.length > keys.length ? itemKeys : keys;
+    });
+    unique(data, (a: any, b: any) => a[key] === b[key])
+      .sort(sortBy(key))
+      .forEach((item: any) => {
+        keys.forEach((objKey: string) => {
+          if (!result[objKey]) {
+            result[objKey] = [];
+          }
+          result[objKey].push(item[objKey] ?? null);
+        });
+      });
+  } catch (e) {
+    console.log('js-xxx:arrObj2objArrError===>', e);
+  }
+  return result;
 }
 
 /**
