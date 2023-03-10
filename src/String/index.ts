@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:45:48
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-02 18:12:57
+ * @LastEditTime: 2023-03-10 10:17:32
  * @Description: 字符串常用方法
  * @FilePath: \js-xxx\src\String\index.ts
  */
@@ -60,31 +60,33 @@ export function trim(str: string, type: number | string = 0): string {
 }
 
 /**
- * base64 编码
+ * base64 编码 btoa(binary to ascii)(not support unicode)
  * 使用 url 中时建议使用 encodeURIComponent 再次编码，因为单独 + 号在 url 中会被解析成空格。
  * 使用 encodeURIComponent 会把 + 解析为 %2B 与空格 %20 区分
+ * `btoa(encodeURIComponent(str))`
  * Example:
- * `base64Encode('我是 leo') => '5oiR5pivIGxlbw=='`
- * `base64Encode('我是 leo', true) => '5oiR5pivIGxlbw'`
+ * `btoa('我是 leo') => '5oiR5pivIGxlbw=='`
+ * `btoa('我是 leo', true) => '5oiR5pivIGxlbw'`
  * @param str 字符串
  * @param replaceChar 是否替换结果字符串中的特殊字符 '+/='，适用于 url 编码。
  * @returns
  */
-export function base64Encode(str: string, replaceChar: boolean = false): string {
+export function btoa(str: string, replaceChar: boolean = false): string {
   // btoa(str).replace(/\+\//g, '-_').replace(/=/g, '');
   let result: string = Buffer.from(str, 'utf-8').toString('base64');
   return replaceChar ? result.replace(/\+\//g, '-_').replace(/=/g, '') : result;
 }
 
 /**
- * base64 解码
+ * base64 解码 atob(ascii to binary)(not support unicode)
+ * `decodeURIComponent(atob(encodeStr))`
  * Example:
- * `base64Decode('5oiR5pivIGxlbw==') => '我是 leo'`
- * `base64Decode('5oiR5pivIGxlbw') => '我是 leo'`
- * @param str base64 字符串
+ * `atob('5oiR5pivIGxlbw==') => '我是 leo'`
+ * `atob('5oiR5pivIGxlbw') => '我是 leo'`
+ * @param str base64 加密后的字符串
  * @returns
  */
-export function base64Decode(str: string): string {
+export function atob(str: string): string {
   // let remainder = str.length % 4;
   // let padlen;
   // if (remainder) {

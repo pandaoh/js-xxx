@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:54:41
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-06-15 18:24:02
+ * @LastEditTime: 2023-03-10 10:20:35
  * @Description: 加密相关方法 依赖 crypto-js
  * @FilePath: \js-xxx\src\Crypto\index.ts
  */
@@ -122,28 +122,28 @@ export function sha256(str: string): string {
 }
 
 /**
- * Base64 加密方法
+ * base64 加密方法
  * 使用 url 中时建议使用 encodeURIComponent 再次编码，因为单独 + 号在 url 中会被解析成空格。
  * 使用 encodeURIComponent 会把 + 解析为 %2B 与空格 %20 区分
  * Example:
- * `Base64Encode("value") => 加密后的字符串`
- * `Base64Encode("value", true) => 加密后的字符串并替换 +/=`
+ * `base64Encode("value") => 加密后的字符串`
+ * `base64Encode("value", true) => 加密后的字符串并替换 +/=`
  * @param str 需要加密的字符串
  * @param replaceChar 是否替换结果字符串中的特殊字符 '+/='，适用于 url 编码。
  * @returns
  */
-export function Base64Encode(str: string, replaceChar: boolean = false): string {
+export function base64Encode(str: string, replaceChar: boolean = false): string {
   let result = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(str));
   return replaceChar ? result.replace(/\+\//g, '-_').replace(/\=/g, '') : result;
 }
 
 /**
- * Base64 解密方法
- * Example: `Base64Decode("加密后的字符串") => 解密后的字符串`
+ * base64 解密方法
+ * Example: `base64Decode("加密后的字符串") => 解密后的字符串`
  * @param str 需要加密的字符串
  * @returns
  */
-export function Base64Decode(str: string): string {
+export function base64Decode(str: string): string {
   return CryptoJS.enc.Base64.parse(str).toString(CryptoJS.enc.Utf8);
 }
 

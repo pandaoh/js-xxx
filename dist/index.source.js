@@ -7067,12 +7067,12 @@
     function sha256(str) {
         return CryptoJS.SHA256(str).toString();
     }
-    function Base64Encode(str, replaceChar) {
+    function base64Encode(str, replaceChar) {
         if (replaceChar === void 0) { replaceChar = false; }
         var result = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(str));
         return replaceChar ? result.replace(/\+\//g, '-_').replace(/\=/g, '') : result;
     }
-    function Base64Decode(str) {
+    function base64Decode(str) {
         return CryptoJS.enc.Base64.parse(str).toString(CryptoJS.enc.Utf8);
     }
     function getCryptoJS() {
@@ -7890,12 +7890,12 @@
                 return str;
         }
     }
-    function base64Encode(str, replaceChar) {
+    function btoa(str, replaceChar) {
         if (replaceChar === void 0) { replaceChar = false; }
         var result = Buffer.from(str, 'utf-8').toString('base64');
         return replaceChar ? result.replace(/\+\//g, '-_').replace(/=/g, '') : result;
     }
-    function base64Decode(str) {
+    function atob(str) {
         return Buffer.from(str, 'base64').toString('utf8');
     }
     function maskString(str) {
@@ -9573,8 +9573,6 @@
         return true;
     }
 
-    exports.Base64Decode = Base64Decode;
-    exports.Base64Encode = Base64Encode;
     exports.CONTENT_TYPES = CONTENT_TYPES;
     exports.H5Resize = H5Resize;
     exports.Logger = Logger;
@@ -9587,11 +9585,13 @@
     exports.appendScript = appendScript;
     exports.arraySet = arraySet;
     exports.arraySort = arraySort;
+    exports.atob = atob;
     exports.average = average;
     exports.banConsole = banConsole;
     exports.base64Decode = base64Decode;
     exports.base64Encode = base64Encode;
     exports.bindMoreClick = bindMoreClick;
+    exports.btoa = btoa;
     exports.calcDate = calcDate;
     exports.camelCase = camelCase;
     exports.catchPromise = catchPromise;

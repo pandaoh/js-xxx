@@ -14,8 +14,6 @@ js-xxx - v1.4.6
 
 ### Functions
 
-- [Base64Decode](README.md#base64decode)
-- [Base64Encode](README.md#base64encode)
 - [H5Resize](README.md#h5resize)
 - [Logger](README.md#logger)
 - [Speaker](README.md#speaker)
@@ -27,11 +25,13 @@ js-xxx - v1.4.6
 - [appendScript](README.md#appendscript)
 - [arraySet](README.md#arrayset)
 - [arraySort](README.md#arraysort)
+- [atob](README.md#atob)
 - [average](README.md#average)
 - [banConsole](README.md#banconsole)
-- [base64Decode](README.md#base64decode-1)
-- [base64Encode](README.md#base64encode-1)
+- [base64Decode](README.md#base64decode)
+- [base64Encode](README.md#base64encode)
 - [bindMoreClick](README.md#bindmoreclick)
+- [btoa](README.md#btoa)
 - [calcDate](README.md#calcdate)
 - [camelCase](README.md#camelcase)
 - [catchPromise](README.md#catchpromise)
@@ -222,49 +222,6 @@ content types
 ▪ [propName: `string`]: `string`
 
 ## Functions
-
-### Base64Decode
-
-▸ **Base64Decode**(`str`): `string`
-
-Base64 解密方法
-Example: `Base64Decode("加密后的字符串") => 解密后的字符串`
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `str` | `string` | 需要加密的字符串 |
-
-#### Returns
-
-`string`
-
-___
-
-### Base64Encode
-
-▸ **Base64Encode**(`str`, `replaceChar?`): `string`
-
-Base64 加密方法
-使用 url 中时建议使用 encodeURIComponent 再次编码，因为单独 + 号在 url 中会被解析成空格。
-使用 encodeURIComponent 会把 + 解析为 %2B 与空格 %20 区分
-Example:
-`Base64Encode("value") => 加密后的字符串`
-`Base64Encode("value", true) => 加密后的字符串并替换 +/=`
-
-#### Parameters
-
-| Name | Type | Default value | Description |
-| :------ | :------ | :------ | :------ |
-| `str` | `string` | `undefined` | 需要加密的字符串 |
-| `replaceChar` | `boolean` | `false` | 是否替换结果字符串中的特殊字符 '+/='，适用于 url 编码。 |
-
-#### Returns
-
-`string`
-
-___
 
 ### H5Resize
 
@@ -522,6 +479,28 @@ Example:
 
 ___
 
+### atob
+
+▸ **atob**(`str`): `string`
+
+base64 解码 atob(ascii to binary)(not support unicode)
+`decodeURIComponent(atob(encodeStr))`
+Example:
+`atob('5oiR5pivIGxlbw==') => '我是 leo'`
+`atob('5oiR5pivIGxlbw') => '我是 leo'`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `str` | `string` | base64 加密后的字符串 |
+
+#### Returns
+
+`string`
+
+___
+
 ### average
 
 ▸ **average**(...`args`): `number`
@@ -564,16 +543,14 @@ ___
 
 ▸ **base64Decode**(`str`): `string`
 
-base64 解码
-Example:
-`base64Decode('5oiR5pivIGxlbw==') => '我是 leo'`
-`base64Decode('5oiR5pivIGxlbw') => '我是 leo'`
+base64 解密方法
+Example: `base64Decode("加密后的字符串") => 解密后的字符串`
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `str` | `string` | base64 字符串 |
+| `str` | `string` | 需要加密的字符串 |
 
 #### Returns
 
@@ -585,18 +562,18 @@ ___
 
 ▸ **base64Encode**(`str`, `replaceChar?`): `string`
 
-base64 编码
+base64 加密方法
 使用 url 中时建议使用 encodeURIComponent 再次编码，因为单独 + 号在 url 中会被解析成空格。
 使用 encodeURIComponent 会把 + 解析为 %2B 与空格 %20 区分
 Example:
-`base64Encode('我是 leo') => '5oiR5pivIGxlbw=='`
-`base64Encode('我是 leo', true) => '5oiR5pivIGxlbw'`
+`base64Encode("value") => 加密后的字符串`
+`base64Encode("value", true) => 加密后的字符串并替换 +/=`
 
 #### Parameters
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `str` | `string` | `undefined` | 字符串 |
+| `str` | `string` | `undefined` | 需要加密的字符串 |
 | `replaceChar` | `boolean` | `false` | 是否替换结果字符串中的特殊字符 '+/='，适用于 url 编码。 |
 
 #### Returns
@@ -635,6 +612,31 @@ Example: `bindMoreClick(moreClickCallBack, 4, 500) => 绑定 4 击事件`
 ##### Returns
 
 `void`
+
+___
+
+### btoa
+
+▸ **btoa**(`str`, `replaceChar?`): `string`
+
+base64 编码 btoa(binary to ascii)(not support unicode)
+使用 url 中时建议使用 encodeURIComponent 再次编码，因为单独 + 号在 url 中会被解析成空格。
+使用 encodeURIComponent 会把 + 解析为 %2B 与空格 %20 区分
+`btoa(encodeURIComponent(str))`
+Example:
+`btoa('我是 leo') => '5oiR5pivIGxlbw=='`
+`btoa('我是 leo', true) => '5oiR5pivIGxlbw'`
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `str` | `string` | `undefined` | 字符串 |
+| `replaceChar` | `boolean` | `false` | 是否替换结果字符串中的特殊字符 '+/='，适用于 url 编码。 |
+
+#### Returns
+
+`string`
 
 ___
 
