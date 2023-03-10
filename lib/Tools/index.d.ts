@@ -39,6 +39,7 @@ export declare function Logger(): {
 };
 export declare function showVar(value: any): any;
 export declare function logVar(value: any): any;
+export declare function contains(value: any[], target: any): boolean;
 export declare function waitUntil(condition: any, timeout?: number, interval?: number): Promise<any>;
 export declare function ms(str: any): string | number;
 export declare function transferFileToBase64(content: BlobPart | any, contentType: string, callBack: any): void;

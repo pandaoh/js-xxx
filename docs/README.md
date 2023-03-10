@@ -41,6 +41,7 @@ js-xxx - v1.5.0
 - [closeFullscreen](README.md#closefullscreen)
 - [closeWebSocket](README.md#closewebsocket)
 - [compareDate](README.md#comparedate)
+- [contains](README.md#contains)
 - [copyContent](README.md#copycontent)
 - [copyToClipboard](README.md#copytoclipboard)
 - [countdown](README.md#countdown)
@@ -826,6 +827,30 @@ Example:
 #### Returns
 
 ``-1`` \| ``1`` \| ``0``
+
+___
+
+### contains
+
+▸ **contains**(`value`, `target`): `boolean`
+
+检测某个数组是否包含某个值
+Example:
+`contains([1, 2, 2, 3, 3], 3) => true`
+`contains([1, 2, 2, 3, 3], '3') => false`
+`contains([{a: 1, b: 2}, {a: 2, b: 3}], {a: 2, b: 3}) => true`
+`contains([[1, 2], [3, 4]], [1, 3]) => false`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `any`[] |
+| `target` | `any` |
+
+#### Returns
+
+`boolean`
 
 ___
 

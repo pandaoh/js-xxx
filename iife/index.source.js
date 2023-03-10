@@ -7655,6 +7655,15 @@ var $xxx = (function (exports) {
     function logVar(value) {
         console.log('js-xxx:logVar=====>', value);
     }
+    function contains(value, target) {
+        try {
+            var temp = value.map(function (item) { return JSON.stringify(item); });
+            return temp.includes(JSON.stringify(target));
+        }
+        catch (e) {
+            return false;
+        }
+    }
     function waitUntil(condition, timeout, interval) {
         if (timeout === void 0) { timeout = 0; }
         if (interval === void 0) { interval = 250; }
@@ -9772,6 +9781,7 @@ var $xxx = (function (exports) {
     exports.closeFullscreen = closeFullscreen;
     exports.closeWebSocket = closeWebSocket;
     exports.compareDate = compareDate;
+    exports.contains = contains;
     exports.copyContent = copyContent;
     exports.copyToClipboard = copyToClipboard;
     exports.countdown = countdown;

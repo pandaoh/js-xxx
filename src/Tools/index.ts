@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-10 14:42:28
+ * @LastEditTime: 2023-03-10 15:10:45
  * @Description: 工具方法
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
@@ -926,6 +926,26 @@ export function showVar(value: any): any {
  */
 export function logVar(value: any): any {
   console.log('js-xxx:logVar=====>', value);
+}
+
+/**
+ * 检测某个数组是否包含某个值
+ * Example:
+ * `contains([1, 2, 2, 3, 3], 3) => true`
+ * `contains([1, 2, 2, 3, 3], '3') => false`
+ * `contains([{a: 1, b: 2}, {a: 2, b: 3}], {a: 2, b: 3}) => true`
+ * `contains([[1, 2], [3, 4]], [1, 3]) => false`
+ * @param value
+ * @param target
+ * @returns
+ */
+export function contains(value: any[], target: any): boolean {
+  try {
+    const temp = value.map((item) => JSON.stringify(item));
+    return temp.includes(JSON.stringify(target));
+  } catch (e) {
+    return false;
+  }
 }
 
 /**
