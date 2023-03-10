@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-03 16:20:32
+ * @LastEditTime: 2023-03-10 14:42:28
  * @Description: 工具方法
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
@@ -31,6 +31,163 @@ const CONSTELLATION: any = {
   Scorpio: { cn: '天蝎', en: 'Scorpio', date: '10.24-11.22' },
   Sagittarius: { cn: '射手', en: 'Sagittarius', date: '11.23-12.21' }
 };
+
+/**
+ * 星期数据
+ */
+const WEEKS_INFO: {
+  key: string;
+  name: string;
+  abbr: string;
+  id: number;
+  others: string;
+}[] = [
+  {
+    key: 'Monday',
+    name: '星期一',
+    abbr: 'Mon',
+    id: 1,
+    others: 'Day of the Moon.(月亮日)'
+  },
+  {
+    key: 'Tuesday',
+    name: '星期二',
+    abbr: 'Tues',
+    id: 2,
+    others: 'Day of the Mars.(火星日)'
+  },
+  {
+    key: 'Wednesday',
+    name: '星期三',
+    abbr: 'Wed',
+    id: 3,
+    others: 'Day of the Mercury.(水星日)'
+  },
+  {
+    key: 'Thursday',
+    name: '星期四',
+    abbr: 'Thur',
+    id: 4,
+    others: 'Day of Jupiter.(木星日)'
+  },
+  {
+    key: 'Friday',
+    name: '星期五',
+    abbr: 'Fri',
+    id: 5,
+    others: 'Day of Venus.(金星日)'
+  },
+  {
+    key: 'Saturday',
+    name: '星期六',
+    abbr: 'Sat',
+    id: 6,
+    others: 'Day of Saturn.(土星日)'
+  },
+  {
+    key: 'Sunday',
+    name: '星期日',
+    abbr: 'Sun',
+    id: 7,
+    others: 'Day of the Sun.(太阳日)'
+  }
+];
+
+/**
+ * 月份信息
+ */
+const MONTH_INFO: {
+  key: string;
+  name: string;
+  abbr: string;
+  id: number;
+  others: string;
+}[] = [
+  {
+    key: 'January',
+    name: '一月',
+    abbr: 'Jan',
+    id: 1,
+    others: '寅.虎'
+  },
+  {
+    key: 'February',
+    name: '二月',
+    abbr: 'Feb',
+    id: 2,
+    others: '卯.兔'
+  },
+  {
+    key: 'March',
+    name: '三月',
+    abbr: 'March',
+    id: 3,
+    others: '辰.龙'
+  },
+  {
+    key: 'April',
+    name: '四月',
+    abbr: 'Apr',
+    id: 4,
+    others: '巳.蛇'
+  },
+  {
+    key: 'May',
+    name: '五月',
+    abbr: 'May',
+    id: 5,
+    others: '午.马'
+  },
+  {
+    key: 'June',
+    name: '六月',
+    abbr: 'Jun',
+    id: 6,
+    others: '未.羊'
+  },
+  {
+    key: 'July',
+    name: '七月',
+    abbr: 'Jul',
+    id: 7,
+    others: '申.猴'
+  },
+  {
+    key: 'August',
+    name: '八月',
+    abbr: 'Aug',
+    id: 8,
+    others: '酉.鸡'
+  },
+  {
+    key: 'September',
+    name: '九月',
+    abbr: 'Sept',
+    id: 9,
+    others: '戌.狗'
+  },
+  {
+    key: 'October',
+    name: '十月',
+    abbr: 'Oct',
+    id: 10,
+    others: '亥.猪'
+  },
+  {
+    key: 'November',
+    name: '十一月',
+    abbr: 'Nov',
+    id: 11,
+    others: '子.鼠'
+  },
+  {
+    key: 'December',
+    name: '十二月',
+    abbr: 'Dec',
+    id: 12,
+    others: '丑.牛'
+  }
+];
 
 /**
  * 身份证省份
@@ -755,8 +912,20 @@ export function showVar(value: any): any {
   try {
     alert(JSON.stringify(value, null, 2) ?? 'undefined');
   } catch (e) {
-    console.log('js-xxx:showVar===>', value);
+    console.log('js-xxx:showVarError===>', value);
   }
+}
+
+/**
+ * 在页面上打印某个值，我们打包通常会设置清除 console，使用此方法打印关键信息就不会被清除啦。
+ * Example:
+ * `logVar([1, 2, 2, 3, 3]) => 打印数据`
+ * `logVar({a: 1, b: 2}) => 打印数据`
+ * @param value
+ * @returns
+ */
+export function logVar(value: any): any {
+  console.log('js-xxx:logVar=====>', value);
 }
 
 /**
@@ -1241,4 +1410,78 @@ export function banConsole(): Function {
     cancelContextMenu();
     cancelKeyDown();
   };
+}
+
+/**
+ * 获取星期信息
+ * Example:
+ * `getWeekInfo() => WEEKS_INFO`
+ * `getWeekInfo('0') => WEEKS_INFO`
+ * `getWeekInfo('ALL') => WEEKS_INFO`
+ * `getWeekInfo('all') => WEEKS_INFO`
+ * `getWeekInfo('unknown') => WEEKS_INFO`
+ * `getWeekInfo(1) => 星期一相关信息`
+ * `getWeekInfo(8) => WEEKS_INFO`
+ * @param n
+ * @returns
+ */
+export function getWeekInfo(n: string | number):
+  | {
+      key: string;
+      name: string;
+      abbr: string;
+      id: number;
+      others: string;
+    }
+  | {
+      key: string;
+      name: string;
+      abbr: string;
+      id: number;
+      others: string;
+    }[] {
+  if (n === 'all' || n === 'ALL') {
+    return WEEKS_INFO;
+  }
+  if (!n || !Number.isInteger(n) || n < 1 || n > 7) {
+    return WEEKS_INFO;
+  }
+  return WEEKS_INFO[Number(n) - 1] ?? WEEKS_INFO;
+}
+
+/**
+ * 获取星期信息
+ * Example:
+ * `getMonthInfo() => MONTH_INFO`
+ * `getMonthInfo('0') => MONTH_INFO`
+ * `getMonthInfo('ALL') => MONTH_INFO`
+ * `getMonthInfo('all') => MONTH_INFO`
+ * `getMonthInfo('unknown') => MONTH_INFO`
+ * `getMonthInfo(1) => 一月相关信息`
+ * `getMonthInfo(13) => MONTH_INFO`
+ * @param n
+ * @returns
+ */
+export function getMonthInfo(n: string | number):
+  | {
+      key: string;
+      name: string;
+      abbr: string;
+      id: number;
+      others: string;
+    }
+  | {
+      key: string;
+      name: string;
+      abbr: string;
+      id: number;
+      others: string;
+    }[] {
+  if (n === 'all' || n === 'ALL') {
+    return MONTH_INFO;
+  }
+  if (!n || !Number.isInteger(n) || n < 1 || n > 12) {
+    return MONTH_INFO;
+  }
+  return MONTH_INFO[Number(n) - 1] ?? MONTH_INFO;
 }

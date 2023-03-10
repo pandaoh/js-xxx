@@ -1,6 +1,6 @@
-js-xxx - v1.4.6
+js-xxx - v1.5.0
 
-# js-xxx - v1.4.6
+# js-xxx - v1.5.0
 
 ## Table of contents
 
@@ -47,6 +47,7 @@ js-xxx - v1.4.6
 - [curryIt](README.md#curryit)
 - [data2Arr](README.md#data2arr)
 - [data2Obj](README.md#data2obj)
+- [dataTo](README.md#datato)
 - [debounce](README.md#debounce)
 - [decrypt](README.md#decrypt)
 - [deepClone](README.md#deepclone)
@@ -85,6 +86,7 @@ js-xxx - v1.4.6
 - [getLastVar](README.md#getlastvar)
 - [getMonthDays](README.md#getmonthdays)
 - [getMonthDaysCount](README.md#getmonthdayscount)
+- [getMonthInfo](README.md#getmonthinfo)
 - [getQueryString](README.md#getquerystring)
 - [getRandColor](README.md#getrandcolor)
 - [getRandNum](README.md#getrandnum)
@@ -104,6 +106,7 @@ js-xxx - v1.4.6
 - [getVar](README.md#getvar)
 - [getViewportSize](README.md#getviewportsize)
 - [getWebSocket](README.md#getwebsocket)
+- [getWeekInfo](README.md#getweekinfo)
 - [globalError](README.md#globalerror)
 - [html2str](README.md#html2str)
 - [initNotification](README.md#initnotification)
@@ -147,6 +150,7 @@ js-xxx - v1.4.6
 - [localStorageGet](README.md#localstorageget)
 - [localStorageSet](README.md#localstorageset)
 - [logRunTime](README.md#logruntime)
+- [logVar](README.md#logvar)
 - [marquee](README.md#marquee)
 - [maskString](README.md#maskstring)
 - [md5](README.md#md5)
@@ -957,6 +961,31 @@ Example:
 #### Returns
 
 `Object`
+
+___
+
+### dataTo
+
+▸ **dataTo**(`key`, `value`): `void`
+
+填对应值到对应的 dom 中
+Example:
+`dataTo('.className', 'xxx') => xxx 会填入到类名为 class-name 的元素中`
+`dataTo('.class-name', 'xxx') => xxx 会填入到类名为 class-name 的元素中`
+`dataTo('.class_name', 'xxx') => xxx 会填入到类名为 class-name 的元素中`
+`dataTo('.class.name', 'xxx') => xxx 会填入到类名为 class-name 的元素中`
+`dataTo('#id.name', 'xxx') => xxx 会填入到 id 名为 id-name 的元素中`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `key` | `string` |
+| `value` | `any` |
+
+#### Returns
+
+`void`
 
 ___
 
@@ -1808,6 +1837,32 @@ Example: `getMonthDayCount(new Date()) => 30`
 
 ___
 
+### getMonthInfo
+
+▸ **getMonthInfo**(`n`): { `abbr`: `string` ; `id`: `number` ; `key`: `string` ; `name`: `string` ; `others`: `string`  } \| { `abbr`: `string` ; `id`: `number` ; `key`: `string` ; `name`: `string` ; `others`: `string`  }[]
+
+获取星期信息
+Example:
+`getMonthInfo() => MONTH_INFO`
+`getMonthInfo('0') => MONTH_INFO`
+`getMonthInfo('ALL') => MONTH_INFO`
+`getMonthInfo('all') => MONTH_INFO`
+`getMonthInfo('unknown') => MONTH_INFO`
+`getMonthInfo(1) => 一月相关信息`
+`getMonthInfo(13) => MONTH_INFO`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `n` | `string` \| `number` |
+
+#### Returns
+
+{ `abbr`: `string` ; `id`: `number` ; `key`: `string` ; `name`: `string` ; `others`: `string`  } \| { `abbr`: `string` ; `id`: `number` ; `key`: `string` ; `name`: `string` ; `others`: `string`  }[]
+
+___
+
 ### getQueryString
 
 ▸ **getQueryString**(`url?`): `any`
@@ -2173,6 +2228,32 @@ Example: `getWebSocket() => [websocket object]`
 #### Returns
 
 `WebSocket` \| `undefined`
+
+___
+
+### getWeekInfo
+
+▸ **getWeekInfo**(`n`): { `abbr`: `string` ; `id`: `number` ; `key`: `string` ; `name`: `string` ; `others`: `string`  } \| { `abbr`: `string` ; `id`: `number` ; `key`: `string` ; `name`: `string` ; `others`: `string`  }[]
+
+获取星期信息
+Example:
+`getWeekInfo() => WEEKS_INFO`
+`getWeekInfo('0') => WEEKS_INFO`
+`getWeekInfo('ALL') => WEEKS_INFO`
+`getWeekInfo('all') => WEEKS_INFO`
+`getWeekInfo('unknown') => WEEKS_INFO`
+`getWeekInfo(1) => 星期一相关信息`
+`getWeekInfo(8) => WEEKS_INFO`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `n` | `string` \| `number` |
+
+#### Returns
+
+{ `abbr`: `string` ; `id`: `number` ; `key`: `string` ; `name`: `string` ; `others`: `string`  } \| { `abbr`: `string` ; `id`: `number` ; `key`: `string` ; `name`: `string` ; `others`: `string`  }[]
 
 ___
 
@@ -3064,6 +3145,27 @@ Example:
 #### Returns
 
 `void`
+
+___
+
+### logVar
+
+▸ **logVar**(`value`): `any`
+
+在页面上打印某个值，我们打包通常会设置清除 console，使用此方法打印关键信息就不会被清除啦。
+Example:
+`logVar([1, 2, 2, 3, 3]) => 打印数据`
+`logVar({a: 1, b: 2}) => 打印数据`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `any` |
+
+#### Returns
+
+`any`
 
 ___
 

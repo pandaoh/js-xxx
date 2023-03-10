@@ -38,6 +38,7 @@ export declare function Logger(): {
     [key: string]: (...args: any[]) => void;
 };
 export declare function showVar(value: any): any;
+export declare function logVar(value: any): any;
 export declare function waitUntil(condition: any, timeout?: number, interval?: number): Promise<any>;
 export declare function ms(str: any): string | number;
 export declare function transferFileToBase64(content: BlobPart | any, contentType: string, callBack: any): void;
@@ -67,4 +68,30 @@ export declare function getConstellation(date: any): {
 export declare function setEventListener(eventKey: string, foo: any, dom?: any): any;
 export declare function H5Resize(downCb: any, upCb: any): any;
 export declare function banConsole(): Function;
+export declare function getWeekInfo(n: string | number): {
+    key: string;
+    name: string;
+    abbr: string;
+    id: number;
+    others: string;
+} | {
+    key: string;
+    name: string;
+    abbr: string;
+    id: number;
+    others: string;
+}[];
+export declare function getMonthInfo(n: string | number): {
+    key: string;
+    name: string;
+    abbr: string;
+    id: number;
+    others: string;
+} | {
+    key: string;
+    name: string;
+    abbr: string;
+    id: number;
+    others: string;
+}[];
 //# sourceMappingURL=index.d.ts.map

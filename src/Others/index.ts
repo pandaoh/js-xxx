@@ -2,10 +2,12 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:53:39
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-03 15:57:07
+ * @LastEditTime: 2023-03-10 14:56:03
  * @Description: 因项目需要常用方法，不管任何项目，都放到一起。注意甄别，没有复用意义的方法就不要添加了。
  * @FilePath: \js-xxx\src\Others\index.ts
  */
+
+import { splitCase } from '@/String';
 
 /**
  * 文件大小格式化
@@ -475,4 +477,31 @@ export function getBloodGroup(bloodGroup: string): {
     }
   };
   return bloodGroups[bloodGroup];
+}
+
+/**
+ * 填对应值到对应的 dom 中
+ * Example:
+ * `dataTo('.className', 'xxx') => xxx 会填入到类名为 class-name 的元素中`
+ * `dataTo('.class-name', 'xxx') => xxx 会填入到类名为 class-name 的元素中`
+ * `dataTo('.class_name', 'xxx') => xxx 会填入到类名为 class-name 的元素中`
+ * `dataTo('.class.name', 'xxx') => xxx 会填入到类名为 class-name 的元素中`
+ * `dataTo('#id.name', 'xxx') => xxx 会填入到 id 名为 id-name 的元素中`
+ * @param key
+ * @param value
+ * @returns
+ */
+export function dataTo(key: string, value: any): void {
+  let $dom;
+  try {
+    key = key.toString();
+    $dom = document.querySelector((['.'].includes(key.charAt(0)) ? key.charAt(0) : '') + splitCase(key).join('-'));
+    if ($dom) {
+      $dom.innerHTML = value;
+      // @ts-ignore
+      $dom.value = value;
+    }
+  } catch (e) {
+    console.log('js-xxx:dataToError', e, { key, value, $dom });
+  }
 }

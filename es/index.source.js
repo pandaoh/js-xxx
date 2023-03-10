@@ -7088,6 +7088,143 @@ var CONSTELLATION = {
     Scorpio: { cn: '天蝎', en: 'Scorpio', date: '10.24-11.22' },
     Sagittarius: { cn: '射手', en: 'Sagittarius', date: '11.23-12.21' }
 };
+var WEEKS_INFO = [
+    {
+        key: 'Monday',
+        name: '星期一',
+        abbr: 'Mon',
+        id: 1,
+        others: 'Day of the Moon.(月亮日)'
+    },
+    {
+        key: 'Tuesday',
+        name: '星期二',
+        abbr: 'Tues',
+        id: 2,
+        others: 'Day of the Mars.(火星日)'
+    },
+    {
+        key: 'Wednesday',
+        name: '星期三',
+        abbr: 'Wed',
+        id: 3,
+        others: 'Day of the Mercury.(水星日)'
+    },
+    {
+        key: 'Thursday',
+        name: '星期四',
+        abbr: 'Thur',
+        id: 4,
+        others: 'Day of Jupiter.(木星日)'
+    },
+    {
+        key: 'Friday',
+        name: '星期五',
+        abbr: 'Fri',
+        id: 5,
+        others: 'Day of Venus.(金星日)'
+    },
+    {
+        key: 'Saturday',
+        name: '星期六',
+        abbr: 'Sat',
+        id: 6,
+        others: 'Day of Saturn.(土星日)'
+    },
+    {
+        key: 'Sunday',
+        name: '星期日',
+        abbr: 'Sun',
+        id: 7,
+        others: 'Day of the Sun.(太阳日)'
+    }
+];
+var MONTH_INFO = [
+    {
+        key: 'January',
+        name: '一月',
+        abbr: 'Jan',
+        id: 1,
+        others: '寅.虎'
+    },
+    {
+        key: 'February',
+        name: '二月',
+        abbr: 'Feb',
+        id: 2,
+        others: '卯.兔'
+    },
+    {
+        key: 'March',
+        name: '三月',
+        abbr: 'March',
+        id: 3,
+        others: '辰.龙'
+    },
+    {
+        key: 'April',
+        name: '四月',
+        abbr: 'Apr',
+        id: 4,
+        others: '巳.蛇'
+    },
+    {
+        key: 'May',
+        name: '五月',
+        abbr: 'May',
+        id: 5,
+        others: '午.马'
+    },
+    {
+        key: 'June',
+        name: '六月',
+        abbr: 'Jun',
+        id: 6,
+        others: '未.羊'
+    },
+    {
+        key: 'July',
+        name: '七月',
+        abbr: 'Jul',
+        id: 7,
+        others: '申.猴'
+    },
+    {
+        key: 'August',
+        name: '八月',
+        abbr: 'Aug',
+        id: 8,
+        others: '酉.鸡'
+    },
+    {
+        key: 'September',
+        name: '九月',
+        abbr: 'Sept',
+        id: 9,
+        others: '戌.狗'
+    },
+    {
+        key: 'October',
+        name: '十月',
+        abbr: 'Oct',
+        id: 10,
+        others: '亥.猪'
+    },
+    {
+        key: 'November',
+        name: '十一月',
+        abbr: 'Nov',
+        id: 11,
+        others: '子.鼠'
+    },
+    {
+        key: 'December',
+        name: '十二月',
+        abbr: 'Dec',
+        id: 12,
+        others: '丑.牛'
+    }
+];
 var ID_CARD_PROVINCE = {
     '11': '北京',
     '12': '天津',
@@ -7509,8 +7646,11 @@ function showVar(value) {
         alert((_a = JSON.stringify(value, null, 2)) !== null && _a !== void 0 ? _a : 'undefined');
     }
     catch (e) {
-        console.log('js-xxx:showVar===>', value);
+        console.log('js-xxx:showVarError===>', value);
     }
+}
+function logVar(value) {
+    console.log('js-xxx:logVar=====>', value);
 }
 function waitUntil(condition, timeout, interval) {
     if (timeout === void 0) { timeout = 0; }
@@ -7854,6 +7994,26 @@ function banConsole() {
         cancelContextMenu();
         cancelKeyDown();
     };
+}
+function getWeekInfo(n) {
+    var _a;
+    if (n === 'all' || n === 'ALL') {
+        return WEEKS_INFO;
+    }
+    if (!n || !Number.isInteger(n) || n < 1 || n > 7) {
+        return WEEKS_INFO;
+    }
+    return (_a = WEEKS_INFO[Number(n) - 1]) !== null && _a !== void 0 ? _a : WEEKS_INFO;
+}
+function getMonthInfo(n) {
+    var _a;
+    if (n === 'all' || n === 'ALL') {
+        return MONTH_INFO;
+    }
+    if (!n || !Number.isInteger(n) || n < 1 || n > 12) {
+        return MONTH_INFO;
+    }
+    return (_a = MONTH_INFO[Number(n) - 1]) !== null && _a !== void 0 ? _a : MONTH_INFO;
 }
 
 function unicode2str(value) {
@@ -9130,6 +9290,20 @@ function getBloodGroup(bloodGroup) {
     };
     return bloodGroups[bloodGroup];
 }
+function dataTo(key, value) {
+    var $dom;
+    try {
+        key = key.toString();
+        $dom = document.querySelector((['.'].includes(key.charAt(0)) ? key.charAt(0) : '') + splitCase(key).join('-'));
+        if ($dom) {
+            $dom.innerHTML = value;
+            $dom.value = value;
+        }
+    }
+    catch (e) {
+        console.log('js-xxx:dataToError', e, { key: key, value: value, $dom: $dom });
+    }
+}
 
 function sleep(milliseconds) {
     return new Promise(function (resolve) { return setTimeout(resolve, milliseconds); });
@@ -9567,4 +9741,4 @@ function setWsBinaryType(binaryType) {
     return true;
 }
 
-export { CONTENT_TYPES, H5Resize, HttpMethod, Logger, Speaker, abs, add, all, any, appendLink, appendScript, arraySet, arraySort, atob, average, banConsole, base64Decode, base64Encode, bindMoreClick, btoa, calcDate, camelCase, catchPromise, checkFileExt, checkIdCard, checkVersion, closeFullscreen, closeWebSocket, compareDate, copyContent, copyToClipboard, countdown, curryIt, data2Arr, data2Obj, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitKeyboardEvent, empty, encrypt, findChildren, findParents, float, formatBytes, formatDate, formatFormData, formatJSON, formatNumber, formatRh, formatURLSearchParams, get1Var, getAge, getAnimal, getBSColor, getBaseURL, getBloodGroup, getConstellation, getContentType, getCookie, getCryptoJS, getDateDifference, getDateList, getDateTime, getKey, getLastVar, getMonthDays, getMonthDaysCount, getQueryString, getRandColor, getRandNum, getRandStr, getRandVar, getScrollPercent, getSearchParams, getSize, getStyleByName, getTimeAndStr, getTimeCode, getType, getUTCTime, getUUID, getUserAgent, getV, getVar, getViewportSize, getWebSocket, globalError, html2str, initNotification, initWebSocket, insertAfter, intersection, isAppleDevice, isArr, isArrayBuffer, isBlob, isBool, isBrowser, isCarCode, isChar, isDarkMode, isDate, isDecimal, isElement, isEmail, isFn, isHttp, isInteger, isIpAddress, isIpv4, isIpv6, isJSON, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPhoneNum, isPromise, isRhNegative, isStr, isStrongPassWord, isUndef, isUrl, isWeekday, jsonClone, localStorageGet, localStorageSet, logRunTime, marquee, maskString, md5, mergeObj, ms, offDefaultEvent, onClick2MoreClick, openFile, openFullscreen, qsParse, qsStringify, removeCookie, repeat, retry, rip, round, scrollToBottom, scrollToTop, scrollXTo, scrollYTo, sendNotification, sendWsMessage, sessionStorageGet, sessionStorageSet, setCookie, setEventListener, setIcon, setWsBinaryType, sha1, sha256, showVar, shuffleArray, sleep, slugify, sortBy, sortCallBack, splitCase, str2html, str2unicode, sub, throttle, timeSince, times, to, toBool, toNum, toStr, transferCase, transferFileToBase64, transferIdCard, transferMoney, trim, truncate, unicode2str, union, unique, uuid, versionUpgrade, waitUntil, xAjax, xFetch };
+export { CONTENT_TYPES, H5Resize, HttpMethod, Logger, Speaker, abs, add, all, any, appendLink, appendScript, arraySet, arraySort, atob, average, banConsole, base64Decode, base64Encode, bindMoreClick, btoa, calcDate, camelCase, catchPromise, checkFileExt, checkIdCard, checkVersion, closeFullscreen, closeWebSocket, compareDate, copyContent, copyToClipboard, countdown, curryIt, data2Arr, data2Obj, dataTo, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitKeyboardEvent, empty, encrypt, findChildren, findParents, float, formatBytes, formatDate, formatFormData, formatJSON, formatNumber, formatRh, formatURLSearchParams, get1Var, getAge, getAnimal, getBSColor, getBaseURL, getBloodGroup, getConstellation, getContentType, getCookie, getCryptoJS, getDateDifference, getDateList, getDateTime, getKey, getLastVar, getMonthDays, getMonthDaysCount, getMonthInfo, getQueryString, getRandColor, getRandNum, getRandStr, getRandVar, getScrollPercent, getSearchParams, getSize, getStyleByName, getTimeAndStr, getTimeCode, getType, getUTCTime, getUUID, getUserAgent, getV, getVar, getViewportSize, getWebSocket, getWeekInfo, globalError, html2str, initNotification, initWebSocket, insertAfter, intersection, isAppleDevice, isArr, isArrayBuffer, isBlob, isBool, isBrowser, isCarCode, isChar, isDarkMode, isDate, isDecimal, isElement, isEmail, isFn, isHttp, isInteger, isIpAddress, isIpv4, isIpv6, isJSON, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPhoneNum, isPromise, isRhNegative, isStr, isStrongPassWord, isUndef, isUrl, isWeekday, jsonClone, localStorageGet, localStorageSet, logRunTime, logVar, marquee, maskString, md5, mergeObj, ms, offDefaultEvent, onClick2MoreClick, openFile, openFullscreen, qsParse, qsStringify, removeCookie, repeat, retry, rip, round, scrollToBottom, scrollToTop, scrollXTo, scrollYTo, sendNotification, sendWsMessage, sessionStorageGet, sessionStorageSet, setCookie, setEventListener, setIcon, setWsBinaryType, sha1, sha256, showVar, shuffleArray, sleep, slugify, sortBy, sortCallBack, splitCase, str2html, str2unicode, sub, throttle, timeSince, times, to, toBool, toNum, toStr, transferCase, transferFileToBase64, transferIdCard, transferMoney, trim, truncate, unicode2str, union, unique, uuid, versionUpgrade, waitUntil, xAjax, xFetch };

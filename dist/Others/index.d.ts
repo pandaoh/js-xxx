@@ -31,4 +31,5 @@ export declare function getBloodGroup(bloodGroup: string): {
     lower: string;
     upper: string;
 };
+export declare function dataTo(key: string, value: any): void;
 //# sourceMappingURL=index.d.ts.map
