@@ -1,8 +1,9 @@
+/* eslint-disable no-undef */
 /*
  * @Author: HxB
  * @Date: 2022-06-04 20:07:41
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-10-12 15:34:42
+ * @LastEditTime: 2023-03-13 15:41:07
  * @Description: 系统推送通知 https://developer.mozilla.org/zh-CN/docs/Web/API/Notifications_API
  * @FilePath: \js-xxx\src\Notify\index.ts
  */
@@ -62,9 +63,9 @@ export function sendNotification(
         icon?: string;
         body?: 'msg content' | string;
         timestamp?: EpochTimeStamp;
-        onClick?: Function | any;
-        onError?: Function | any;
-        onClose?: Function | any;
+        onClick?: any;
+        onError?: any;
+        onClose?: any;
       }
     | NotificationOptions
     | undefined
@@ -83,7 +84,7 @@ export function sendNotification(
     tag: options?.tag ?? getRandStr(8),
     icon: options?.icon ?? 'favicon.ico',
     timestamp: options?.timestamp ?? new Date().getTime(),
-    body: msg
+    body: msg,
   });
   notify.onclick = function () {
     // 如果通知消息被点击 通知窗口将被激活

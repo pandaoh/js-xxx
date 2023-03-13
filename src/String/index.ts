@@ -2,13 +2,14 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:45:48
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-10 10:17:32
+ * @LastEditTime: 2023-03-13 16:28:17
  * @Description: 字符串常用方法
  * @FilePath: \js-xxx\src\String\index.ts
  */
 import { union } from '@/Tools';
 import { isUndef } from '@/Types';
 
+// eslint-disable-next-line spellcheck/spell-checker, zob/comment
 /**
  * 字符转 unicode
  * Example: `unicode2str("我是老A") => '\\u6211\\u662f\\u8001a'`
@@ -19,6 +20,7 @@ export function unicode2str(value: string): string {
   return escape(value).toLocaleLowerCase().replace(/%u/gi, '\\u');
 }
 
+// eslint-disable-next-line spellcheck/spell-checker, zob/comment
 /**
  * unicode 转字符
  * Example: `str2unicode("\\u6211\\u662f\\u8001a") => '我是老a'`
@@ -53,7 +55,7 @@ export function trim(str: string, type: number | string = 0): string {
       return (str = str.replace(/\s/g, ''));
     case 4:
     case 'pro':
-      return (str = str.replace(/(^\s*)|(\s*$)|\s(?=\s)/g, '')); //去除前后空格并将中间的单个空格保留，多个空格变为一个空格。
+      return (str = str.replace(/(^\s*)|(\s*$)|\s(?=\s)/g, '')); // 去除前后空格并将中间的单个空格保留，多个空格变为一个空格。
     default:
       return str;
   }
@@ -71,9 +73,9 @@ export function trim(str: string, type: number | string = 0): string {
  * @param replaceChar 是否替换结果字符串中的特殊字符 '+/='，适用于 url 编码。
  * @returns
  */
-export function btoa(str: string, replaceChar: boolean = false): string {
+export function btoa(str: string, replaceChar = false): string {
   // btoa(str).replace(/\+\//g, '-_').replace(/=/g, '');
-  let result: string = Buffer.from(str, 'utf-8').toString('base64');
+  const result: string = Buffer.from(str, 'utf-8').toString('base64');
   return replaceChar ? result.replace(/\+\//g, '-_').replace(/=/g, '') : result;
 }
 
@@ -97,6 +99,7 @@ export function atob(str: string): string {
   return Buffer.from(str, 'base64').toString('utf8');
 }
 
+// eslint-disable-next-line spellcheck/spell-checker, zob/comment
 /**
  * 字符串脱敏(biugle 自定义规则)
  * Example:
@@ -219,7 +222,7 @@ export function camelCase(str: string) {
  * @param str
  * @returns
  */
-export function repeat(str: string, n: number = 1): string {
+export function repeat(str: string, n = 1): string {
   let ret = '';
 
   if (n < 1) return '';
@@ -272,6 +275,7 @@ export function isPhoneNum(value: string): boolean {
   return regPhoneNum.test(value);
 }
 
+// eslint-disable-next-line zob/comment
 /**
  * 检查是否为 char string 用户名规范(字母数字下划线或中文)
  * Example:
@@ -283,7 +287,7 @@ export function isPhoneNum(value: string): boolean {
  * @param value
  * @returns
  */
-export function isChar(value: string, hasChinese: boolean = false): boolean {
+export function isChar(value: string, hasChinese = false): boolean {
   const regChar = hasChinese
     ? /^[a-zA-Z\u4E00-\u9FA5]([a-zA-Z0-9_\u4E00-\u9FA5]{5,17})$/
     : /^[a-zA-Z]([a-zA-Z0-9_\u4E00-\u9FA5]{5,17})$/;
@@ -303,18 +307,22 @@ export function isStrongPassWord(value: string): boolean {
   return pwChar.test(value);
 }
 
+// eslint-disable-next-line zob/comment
 /**
  * 检查是否为 carCode string 车牌号
  * Example:
  * `isCarCode('粤B68928') => true`
+ * `isCarCode('粤-B68928') => true`
+ * `isCarCode('粤 B68928') => true`
  * `isCarCode('粤B.68928') => true`
- * `isCarCode('广东B12345') => false`
+ * `isCarCode('粤B 68928') => true`
+ * `isCarCode('广东 B12345') => false`
  * @param value
  * @returns
  */
 export function isCarCode(value: string): boolean {
   const regCarCode =
-    /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[\.]{0,1}[A-Z0-9]{4,5}[A-Z0-9挂学警港澳]{1}$/;
+    /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[\s\-]{0,1}[A-Z]{1}[\.\s]{0,1}[A-Z0-9]{4,5}[A-Z0-9挂学警港澳]{1}$/;
   return regCarCode.test(value);
 }
 
@@ -375,7 +383,7 @@ export function isIpAddress(value: string): boolean {
  * @returns
  */
 export function checkFileExt(arr: string[], value: string): boolean {
-  let regFileExt = arr.map((name) => `.${name}`).join('|');
+  const regFileExt = arr.map((name) => `.${name}`).join('|');
   return new RegExp(`(${regFileExt})$`).test(value);
 }
 
@@ -390,7 +398,7 @@ export function checkFileExt(arr: string[], value: string): boolean {
  * @returns
  */
 export function isHttp(value: string): -1 | 1 | 0 {
-  let flag = value.substring(0, 8);
+  const flag = value.substring(0, 8);
   return flag.includes('http://') ? 1 : flag.includes('https://') ? -1 : 0;
 }
 
@@ -446,7 +454,7 @@ export function truncate(
 ) {
   const defOptions = {
     ellipsis: '...',
-    separator: undefined
+    separator: undefined,
   };
   const tempOpts: {
     ellipsis: string;

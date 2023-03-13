@@ -57,7 +57,7 @@ export declare function getLastVar(data: any): any;
  * @param delay 延迟时间
  * @returns
  */
-export declare function debounce(fn: Function, delay?: number): () => void;
+export declare function debounce(fn: any, delay?: number): () => void;
 /**
  * 节流函数-第一次有效（游戏开枪间隔）
  * Example: `throttle(() => {}, 1000) => 节流执行`
@@ -65,7 +65,7 @@ export declare function debounce(fn: Function, delay?: number): () => void;
  * @param delay 延迟时间
  * @returns
  */
-export declare function throttle(fn: Function, delay?: number): () => void;
+export declare function throttle(fn: any, delay?: number): () => void;
 /**
  * 函数柯里化
  * 是把接受多个参数的函数变换成接受一个单一参数(最初函数的第一个参数)的函数，并且返回接受余下的参数且返回结果的新函数的技术。
@@ -73,18 +73,18 @@ export declare function throttle(fn: Function, delay?: number): () => void;
  * @param fn
  * @returns
  */
-export declare function curryIt(fn: Function): (arg: any) => any;
+export declare function curryIt(fn: any): (arg: any) => any;
 /**
  * 全局捕获异常
  * Example: `globalError((message, source, lineno, colno, error) => console.log('全局捕获异常'), false) => '全局捕获异常'`
- * @param {Function} fn (message, source, lineno, colno, error)
+ * @param {any} fn (message, source, lineno, colno, error)
  * @param {boolean} notShowConsole 是否不回显控制台
  * @returns
  */
-export declare function globalError(fn: Function, notShowConsole?: boolean): void;
+export declare function globalError(fn: any, notShowConsole?: boolean): void;
 /**
  * 获取随机数字
- * Example: `getRandNum(1, 10) => 1~10之间的随机数，闭区间。`
+ * Example: `getRandNum(1, 10) => 1~10 之间的随机数，闭区间。`
  * @param min 最小值
  * @param max 最大值
  * @returns
@@ -310,15 +310,15 @@ export declare function ms(str: any): string | number;
  * Example:
  * `transferFileToBase64(file, 'application/pdf;charset=utf-8', (res) => console.log({ res })) => result object`
  * `transferFileToBase64('test', 'text/plain', (res) => console.log({ res })) => result object`
- * @param content
+ * @param content BlobPart | any
  * @param contentType
  * @param callBack
  * @returns
  */
-export declare function transferFileToBase64(content: BlobPart | any, contentType: string, callBack: any): void;
+export declare function transferFileToBase64(content: any, contentType: string, callBack: any): void;
 /**
  * 检查是否为 idCard string 身份证
- * 支持 15 、18 位
+ * 支持 15 、 18 位
  * Example:
  * `checkIdCard('350424870506202') => true`
  * `checkIdCard('003424870506202') => false`
@@ -440,7 +440,7 @@ export declare function H5Resize(downCb: any, upCb: any): any;
  * Example: `banConsole() => 返回取消禁用的 function`
  * @returns
  */
-export declare function banConsole(): Function;
+export declare function banConsole(): any;
 /**
  * 获取星期信息
  * Example:

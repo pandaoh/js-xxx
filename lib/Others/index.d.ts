@@ -63,7 +63,7 @@ export declare function isAppleDevice(): boolean;
  * @param {Array} events
  * @returns
  */
-export declare function onClick2MoreClick(delay?: number, ...events: Array<Function>): Function;
+export declare function onClick2MoreClick(delay?: number, ...events: Array<any>): any;
 /**
  * 单独绑定多击事件
  * Example: `bindMoreClick(moreClickCallBack, 4, 500) => 绑定 4 击事件`
@@ -72,7 +72,7 @@ export declare function onClick2MoreClick(delay?: number, ...events: Array<Funct
  * @param delay
  * @returns
  */
-export declare function bindMoreClick(fn: Function | any, times?: number, delay?: number): (...args: any[]) => void;
+export declare function bindMoreClick(fn: any, times?: number, delay?: number): (...args: any[]) => void;
 /**
  * 触发某个键盘按键事件
  * Example: `emitKeyboardEvent('keydown', 108) => 小键盘回车事件`
@@ -138,7 +138,7 @@ export declare function formatRh(input: string, options?: {
 export declare function isRhNegative(input: string): boolean;
 /**
  * 获取血型枚举信息
- * Example: `getBloodGroup('A') => { value: 'A', label: 'A型', color: '#1890FF', lower: 'a', upper: 'A' }`
+ * Example: `getBloodGroup('A') => { value: 'A', label: 'A 型', color: '#1890FF', lower: 'a', upper: 'A' }`
  * @param bloodGroup
  * @returns
  */

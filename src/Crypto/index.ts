@@ -49,7 +49,7 @@ export function encrypt(data: any, secretKey?: string, secretIv?: string): strin
   const encrypted = CryptoJS.AES.encrypt(dataHex, KEY, {
     iv: IV,
     mode: CryptoJS.mode.CBC,
-    padding: CryptoJS.pad.Pkcs7
+    padding: CryptoJS.pad.Pkcs7,
   });
   return encrypted.ciphertext.toString();
 }
@@ -67,7 +67,7 @@ export function encrypt(data: any, secretKey?: string, secretIv?: string): strin
  * @param secretIv [可选] 十六位十六进制数作为密钥偏移量
  * @returns {string}
  */
-export function decrypt(dataStr: string, jsonDecode: boolean = false, secretKey?: string, secretIv?: string): string {
+export function decrypt(dataStr: string, jsonDecode = false, secretKey?: string, secretIv?: string): string {
   if (!dataStr) {
     return '';
   }
@@ -84,7 +84,7 @@ export function decrypt(dataStr: string, jsonDecode: boolean = false, secretKey?
   const decrypt = CryptoJS.AES.decrypt(str, KEY, {
     iv: IV,
     mode: CryptoJS.mode.CBC,
-    padding: CryptoJS.pad.Pkcs7
+    padding: CryptoJS.pad.Pkcs7,
   });
   const decryptedStr = decrypt.toString(CryptoJS.enc.Utf8);
   const result = decryptedStr.toString();
@@ -132,8 +132,8 @@ export function sha256(str: string): string {
  * @param replaceChar 是否替换结果字符串中的特殊字符 '+/='，适用于 url 编码。
  * @returns
  */
-export function base64Encode(str: string, replaceChar: boolean = false): string {
-  let result = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(str));
+export function base64Encode(str: string, replaceChar = false): string {
+  const result = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(str));
   return replaceChar ? result.replace(/\+\//g, '-_').replace(/\=/g, '') : result;
 }
 

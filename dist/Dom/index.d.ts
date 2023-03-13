@@ -63,7 +63,7 @@ export declare function scrollToBottom(elementSelector: string): void;
  * @param dom 元素对象
  * @returns
  */
-export declare function scrollYTo(targetVal: 'start' | 'end' | number, callback: Function, dom?: any): void;
+export declare function scrollYTo(targetVal: 'start' | 'end' | number, callback: any, dom?: any): void;
 /**
  * X 轴滚动到指定位置
  * Example:
@@ -75,7 +75,7 @@ export declare function scrollYTo(targetVal: 'start' | 'end' | number, callback:
  * @param dom 元素对象
  * @returns
  */
-export declare function scrollXTo(targetVal: 'start' | 'end' | number, callback: Function, dom?: any): void;
+export declare function scrollXTo(targetVal: 'start' | 'end' | number, callback: any, dom?: any): void;
 /**
  * 获取滚动条百分比
  * Example: `getScrollPercent(document.documentElement, 'Y') => 0.581134549876`
@@ -146,11 +146,11 @@ export declare function download(link: string, name: string): void;
  * Example:
  * `downloadContent('test.txt', 'test txt content') => 下载返回的流`
  * `downloadContent('test.json', JSON.stringify({content: 'test json'})) => 下载返回的流`
- * @param name 文件名称(需带后缀)，默认 txt。
- * @param content 内容
+ * @param name 文件名称(需带后缀)，默认 txt 。
+ * @param content 内容 BlobPart | any
  * @returns
  */
-export declare function downloadContent(name: string, content: BlobPart | any): void;
+export declare function downloadContent(name: string, content: any): void;
 /**
  * 给元素设置 marquee 内容滚动效果，支持来回滚动，正常跑马灯，无限无缝滚动。
  * 一般来说设置两层，滚动的区间就是父元素的大小。

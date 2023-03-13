@@ -16,11 +16,11 @@ import { getType } from '@/Types';
  * @param hasIndex 是否带 index
  * @returns
  */
-export function formatFormData(obj: any, hasBrackets: boolean = false, hasIndex: boolean = false): FormData {
-  let formData: FormData = new FormData();
+export function formatFormData(obj: any, hasBrackets = false, hasIndex = false): FormData {
+  const formData: FormData = new FormData();
   Object.keys(obj).forEach((key) => {
     if (Array.isArray(obj[key])) {
-      for (let arrIndex in obj[key]) {
+      for (const arrIndex in obj[key]) {
         hasBrackets
           ? formData.append(hasIndex ? `${key}[]` : `${key}[${arrIndex}]`, obj[key][arrIndex])
           : formData.append(key, obj[key][arrIndex]);
@@ -44,15 +44,11 @@ export function formatFormData(obj: any, hasBrackets: boolean = false, hasIndex:
  * @param hasIndex 是否带 index
  * @returns
  */
-export function formatURLSearchParams(
-  obj: any,
-  hasBrackets: boolean = false,
-  hasIndex: boolean = false
-): URLSearchParams {
-  let queryString: URLSearchParams = new URLSearchParams();
+export function formatURLSearchParams(obj: any, hasBrackets = false, hasIndex = false): URLSearchParams {
+  const queryString: URLSearchParams = new URLSearchParams();
   Object.keys(obj).forEach((key) => {
     if (Array.isArray(obj[key])) {
-      for (let arrIndex in obj[key]) {
+      for (const arrIndex in obj[key]) {
         hasBrackets
           ? queryString.append(hasIndex ? `${key}[]` : `${key}[${arrIndex}]`, obj[key][arrIndex])
           : queryString.append(key, obj[key][arrIndex]);

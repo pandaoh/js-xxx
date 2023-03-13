@@ -23,8 +23,8 @@ export declare function sendNotification(msg: string, title?: string, options?: 
     icon?: string;
     body?: 'msg content' | string;
     timestamp?: EpochTimeStamp;
-    onClick?: Function | any;
-    onError?: Function | any;
-    onClose?: Function | any;
+    onClick?: any;
+    onError?: any;
+    onClose?: any;
 } | NotificationOptions | undefined): void;
 //# sourceMappingURL=index.d.ts.map

@@ -154,8 +154,11 @@ export declare function isStrongPassWord(value: string): boolean;
  * 检查是否为 carCode string 车牌号
  * Example:
  * `isCarCode('粤B68928') => true`
+ * `isCarCode('粤-B68928') => true`
+ * `isCarCode('粤 B68928') => true`
  * `isCarCode('粤B.68928') => true`
- * `isCarCode('广东B12345') => false`
+ * `isCarCode('粤B 68928') => true`
+ * `isCarCode('广东 B12345') => false`
  * @param value
  * @returns
  */

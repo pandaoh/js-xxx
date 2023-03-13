@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:05:14
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-09-07 15:14:11
+ * @LastEditTime: 2023-03-13 15:42:13
  * @Description: 对象相关方法
  * @FilePath: \js-xxx\src\Object\index.ts
  */
@@ -17,7 +17,8 @@ import { getType } from '@/Types';
  */
 export function getV(defaultResult: any, ...args: any): any {
   return args.length >= 2
-    ? args.reduce((a: any, b: any) => (a && a.hasOwnProperty(b) ? a[b] : defaultResult))
+    ? // eslint-disable-next-line no-prototype-builtins, indent
+      args.reduce((a: any, b: any) => (a && a.hasOwnProperty(b) ? a[b] : defaultResult))
     : defaultResult;
 }
 
@@ -38,7 +39,8 @@ export function getVar(data: any, keys: string, defaultResult?: any): any {
   // 不要使用 replace(/\[(\w+)\]/g, '.$1') 去替换，哪怕加个前后 \. 的正则也无法兼容所有情况，应该交给使用者去考虑，因为确实有 [] 做 key 的情况。
   const args = `${keys}`?.split('.');
   return args && args?.length
-    ? args.reduce((a: any, b: any) => (a && a.hasOwnProperty(b) ? a[b] : defaultResult), data)
+    ? // eslint-disable-next-line no-prototype-builtins, indent
+      args.reduce((a: any, b: any) => (a && a.hasOwnProperty(b) ? a[b] : defaultResult), data)
     : defaultResult;
 }
 
@@ -57,9 +59,9 @@ export function mergeObj(
   oldObj: { [key: string]: any },
   newObj: { [key: string]: any },
   keys?: string | string[],
-  noOld: boolean = false
+  noOld = false
 ): { [key: string]: any } {
-  for (let newKey in newObj) {
+  for (const newKey in newObj) {
     if (getType(newObj[newKey]) === 'object' && getType(oldObj[newKey] === 'object')) {
       oldObj[newKey] = mergeObj(oldObj[newKey], newObj[newKey], keys);
     } else if (Object.keys(oldObj).includes(newKey) && !keys?.includes(newKey)) {
@@ -69,7 +71,7 @@ export function mergeObj(
     }
   }
   if (noOld) {
-    for (let oldKey in oldObj) {
+    for (const oldKey in oldObj) {
       // 新对象上没有的属性删掉
       if (newObj[oldKey] === undefined) {
         delete oldObj[oldKey];

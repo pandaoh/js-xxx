@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:15:37
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-11-16 16:06:28
+ * @LastEditTime: 2023-03-13 15:44:42
  * @Description: 请求相关方法
  * @FilePath: \js-xxx\src\Request\index.ts
  */
@@ -89,7 +89,7 @@ export const CONTENT_TYPES: { [propName: string]: string } = {
   binary: 'application/octet-stream',
   form: 'application/x-www-form-urlencoded',
   file: 'multipart/form-data',
-  utf8: 'charset=utf-8'
+  utf8: 'charset=utf-8',
 };
 
 /**
@@ -107,7 +107,7 @@ export enum HttpMethod {
   put = 'PUT',
   patch = 'PATCH',
   delete = 'DELETE',
-  options = 'OPTIONS'
+  options = 'OPTIONS',
 }
 
 /**
@@ -126,10 +126,10 @@ export function qsStringify(
   if (!obj) {
     return '';
   }
-  let queryString: URLSearchParams = new URLSearchParams();
+  const queryString: URLSearchParams = new URLSearchParams();
   // 不用 for...in，避免污染原对象，且数组遍历效率高。
   Object.keys(obj).forEach((key: string) => {
-    let val: any = obj[key];
+    const val: any = obj[key];
     switch (getType(val)) {
       case 'object':
         Object.keys(val).forEach((objKey: string) => {
@@ -144,7 +144,7 @@ export function qsStringify(
           queryString.append(key, val.join(','));
         } else {
           val.filter(Boolean).forEach((arrVal: any, arrIndex: number) => {
-            let newArrVal: any = getType(arrVal) == 'object' ? JSON.stringify(arrVal) : arrVal;
+            const newArrVal: any = getType(arrVal) == 'object' ? JSON.stringify(arrVal) : arrVal;
             options?.hasBrackets
               ? queryString.append(options?.hasIndex ? `${key}[${arrIndex}]` : `${key}[]`, newArrVal)
               : queryString.append(key, newArrVal);
@@ -170,19 +170,19 @@ export function qsStringify(
  */
 export function qsParse(url?: string, key?: string): any {
   // 也可使用 new URL(url) 或者 new URLSearchParams(params) API 获取
-  let pathname: string = url ?? window.location.pathname;
+  const pathname: string = url ?? window.location.pathname;
   url = url ?? window.location.search;
-  let filename: string = pathname.substring(pathname.lastIndexOf('/') + 1);
-  let paramMap: any = {
-    '/': filename ?? undefined
+  const filename: string = pathname.substring(pathname.lastIndexOf('/') + 1);
+  const paramMap: any = {
+    '/': filename ?? undefined,
   };
-  let querystring: string = url.indexOf('?') === 0 ? url.substring(1) : url;
+  const querystring: string = url.indexOf('?') === 0 ? url.substring(1) : url;
   if (querystring.length !== 0) {
-    let parts: any[] = querystring.split('&');
+    const parts: any[] = querystring.split('&');
     for (let i = 0; i < parts.length; i++) {
-      let component: any[] = parts[i].split('=');
-      let paramKey = decodeURIComponent(component[0]);
-      let paramVal = decodeURIComponent(component[1]);
+      const component: any[] = parts[i].split('=');
+      const paramKey = decodeURIComponent(component[0]);
+      const paramVal = decodeURIComponent(component[1]);
       if (!paramMap[paramKey]) {
         paramMap[paramKey] = paramVal;
         continue;
@@ -263,12 +263,13 @@ export function xAjax(
     withCredentials?: boolean;
   }
 ): any {
-  var xhr: any;
+  let xhr: any;
   method = method.toUpperCase();
   if (window.XMLHttpRequest) {
     xhr = new XMLHttpRequest();
   } else {
     // @ts-ignore
+    // eslint-disable-next-line no-undef
     xhr = new ActiveXObject('Microsoft.XMLHttp');
   }
   xhr.onreadystatechange = function () {
@@ -280,7 +281,7 @@ export function xAjax(
       }
     }
   };
-  let async: boolean = options?.async ?? true;
+  const async: boolean = options?.async ?? true;
   // setting after open for compatibility with IE versions <=10
   xhr.withCredentials = options?.withCredentials ?? false;
   if (options?.data) {
@@ -331,10 +332,10 @@ export function xFetch(
   }
   return fetch(url, {
     headers: {
-      'content-type': options?.contentType ?? 'application/x-www-form-urlencoded;charset=UTF-8'
+      'content-type': options?.contentType ?? 'application/x-www-form-urlencoded;charset=UTF-8',
     },
     method: method,
-    body: options?.data
+    body: options?.data,
   });
 }
 

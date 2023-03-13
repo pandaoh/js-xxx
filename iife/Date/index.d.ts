@@ -90,7 +90,7 @@ export declare function getDateTime(date?: string | Date): number;
  * 获取标准时间 UTC
  * 适用于本地时间不准确或者获取其他时区时间的情况
  * Example: `getUTCTime(8) => 中国标准时间`
- * @param timezone 时区数字，东八区为 8，西八区为 -8。
+ * @param timezone 时区数字，东八区为 8，西八区为 -8 。
  * @returns
  */
 export declare function getUTCTime(timezone?: number): Date;

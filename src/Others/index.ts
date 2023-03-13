@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:53:39
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-10 14:56:03
+ * @LastEditTime: 2023-03-13 15:43:00
  * @Description: 因项目需要常用方法，不管任何项目，都放到一起。注意甄别，没有复用意义的方法就不要添加了。
  * @FilePath: \js-xxx\src\Others\index.ts
  */
@@ -16,12 +16,12 @@ import { splitCase } from '@/String';
  * @param precision 精度
  * @returns
  */
-export function formatBytes(bytes: number, precision: number = 2): string {
-  let units: string[] = ['B', 'KB', 'MB', 'GB', 'TB'];
+export function formatBytes(bytes: number, precision = 2): string {
+  const units: string[] = ['B', 'KB', 'MB', 'GB', 'TB'];
   let pow = Math.floor((bytes ? Math.log(bytes) : 0) / Math.log(1024));
   pow = Math.min(pow, units.length - 1);
   bytes /= 1 << (10 * pow);
-  let unit = units?.[pow] ?? units[0];
+  const unit = units?.[pow] ?? units[0];
   return bytes.toFixed(precision) + ' ' + unit;
 }
 
@@ -32,12 +32,12 @@ export function formatBytes(bytes: number, precision: number = 2): string {
  * @returns
  */
 export function setIcon(iconLink: string) {
-  let dom: any = document.querySelector('head [rel="icon"]');
+  const dom: any = document.querySelector('head [rel="icon"]');
   if (dom) {
     dom.setAttribute('href', iconLink);
     dom.setAttribute('rel', 'icon');
   } else {
-    let iconDom = document.createElement('link');
+    const iconDom = document.createElement('link');
     iconDom.setAttribute('rel', 'icon');
     iconDom.setAttribute('href', iconLink);
     document.querySelector('head')?.appendChild(iconDom);
@@ -80,34 +80,34 @@ export function getUserAgent(): { browserName: string; browserVersion: string; o
     Mac: RegExp;
   }
 
-  let browserReg: BrowserReg = {
+  const browserReg: BrowserReg = {
     Chrome: /Chrome/,
     IE: /MSIE/,
     Firefox: /Firefox/,
     Opera: /Presto/,
     Safari: /Version\/([\d.]+).*Safari/,
     '360': /360SE/,
-    QQBrowser: /QQ/
+    QQBrowser: /QQ/,
   };
 
-  let deviceReg: DeviceReg = {
+  const deviceReg: DeviceReg = {
     iPhone: /iPhone/,
     iPad: /iPad/,
     Android: /Android/,
     Windows: /Windows/,
-    Mac: /Macintosh/
+    Mac: /Macintosh/,
   };
 
-  let userAgentStr: string = navigator.userAgent;
+  const userAgentStr: string = navigator.userAgent;
   const userAgentObj = {
     browserName: '', // 浏览器名称
     browserVersion: '', // 浏览器版本
     osName: '', // 操作系统名称
     osVersion: '', // 操作系统版本
-    deviceName: '' // 设备名称
+    deviceName: '', // 设备名称
   };
 
-  for (let key in browserReg) {
+  for (const key in browserReg) {
     if (browserReg[key].test(userAgentStr)) {
       userAgentObj.browserName = key;
       if (key === 'Chrome') {
@@ -128,7 +128,7 @@ export function getUserAgent(): { browserName: string; browserVersion: string; o
     }
   }
 
-  for (let key in deviceReg) {
+  for (const key in deviceReg) {
     if (deviceReg[key].test(userAgentStr)) {
       userAgentObj.osName = key;
       if (key === 'Windows') {
@@ -197,7 +197,7 @@ export function isAppleDevice(): boolean {
  * @param {Array} events
  * @returns
  */
-export function onClick2MoreClick(delay = 300, ...events: Array<Function>): Function {
+export function onClick2MoreClick(delay = 300, ...events: Array<any>): any {
   let timer: any = null;
   let lastTime = 0;
   let count = 0;
@@ -227,7 +227,7 @@ export function onClick2MoreClick(delay = 300, ...events: Array<Function>): Func
  * @param delay
  * @returns
  */
-export function bindMoreClick(fn: Function | any, times = 3, delay = 300) {
+export function bindMoreClick(fn: any, times = 3, delay = 300) {
   let timer: any = null;
   let lastTime = 0;
   let count = 0;
@@ -253,11 +253,11 @@ export function bindMoreClick(fn: Function | any, times = 3, delay = 300) {
  * @param keyCode 触发键盘 code
  * @returns
  */
-export function emitKeyboardEvent(eventType: 'keydown' | 'keypress' | 'keyup' = 'keydown', keyCode: number = 13): void {
+export function emitKeyboardEvent(eventType: 'keydown' | 'keypress' | 'keyup' = 'keydown', keyCode = 13): void {
   const myEvent = new KeyboardEvent(eventType, {
     bubbles: true,
     cancelable: true,
-    keyCode: keyCode
+    keyCode: keyCode,
   });
   document.body.dispatchEvent(myEvent);
 }
@@ -271,9 +271,9 @@ export function emitKeyboardEvent(eventType: 'keydown' | 'keypress' | 'keyup' = 
  * @returns
  */
 export function disableConflictEvent(event: any) {
-  let keyCode = event.keyCode || event.which || event.charCode;
-  let ctrlKey = event.ctrlKey || event.metaKey;
-  let altKey = event.altKey;
+  const keyCode = event.keyCode || event.which || event.charCode;
+  const ctrlKey = event.ctrlKey || event.metaKey;
+  const altKey = event.altKey;
   if (ctrlKey && keyCode == 74) {
     // ctrl+j 禁用条码枪触发事件
     event.preventDefault();
@@ -301,15 +301,15 @@ export function disableConflictEvent(event: any) {
  * @param testStr default(-rc)
  * @returns
  */
-export function checkVersion(targetVersion: string, currentVersion: string, testStr: string = '-rc'): -1 | 1 | 0 {
-  let targetVersionList: string[] = targetVersion.replace(testStr, '').split('.');
-  let currentVersionList: string[] = currentVersion.replace(testStr, '').split('.');
-  let length: number =
+export function checkVersion(targetVersion: string, currentVersion: string, testStr = '-rc'): -1 | 1 | 0 {
+  const targetVersionList: string[] = targetVersion.replace(testStr, '').split('.');
+  const currentVersionList: string[] = currentVersion.replace(testStr, '').split('.');
+  const length: number =
     targetVersionList.length > currentVersionList.length ? targetVersionList.length : currentVersionList.length;
 
   for (let i = 0; i < length; i++) {
-    let targetVersionValue: number = i < targetVersionList.length ? parseInt(targetVersionList[i] ?? 0) : 0;
-    let currentVersionValue: number = i < currentVersionList.length ? parseInt(currentVersionList[i] ?? 0) : 0;
+    const targetVersionValue: number = i < targetVersionList.length ? parseInt(targetVersionList[i] ?? 0) : 0;
+    const currentVersionValue: number = i < currentVersionList.length ? parseInt(currentVersionList[i] ?? 0) : 0;
 
     if (targetVersionValue > currentVersionValue) {
       return 1;
@@ -334,7 +334,7 @@ export function checkVersion(targetVersion: string, currentVersion: string, test
  * @param maxVersionCode 最大版本号
  * @returns
  */
-export function versionUpgrade(version: string, maxVersionCode: number = 99): string {
+export function versionUpgrade(version: string, maxVersionCode = 99): string {
   if (maxVersionCode == 0) {
     maxVersionCode = 99;
   }
@@ -380,16 +380,16 @@ export function formatRh(
     format: ['阴性', '阳性'],
     default: '-',
     negative: ['阴性', '-', '**d**'],
-    positive: ['阳性', '+', '**D**']
+    positive: ['阳性', '+', '**D**'],
   };
   const {
     negative,
     positive,
     format,
-    default: def
+    default: def,
   } = {
     ...defaultOptions,
-    ...options
+    ...options,
   };
   if (negative.includes(input)) {
     return format[0];
@@ -418,7 +418,7 @@ export function isRhNegative(input: string): boolean {
 
 /**
  * 获取血型枚举信息
- * Example: `getBloodGroup('A') => { value: 'A', label: 'A型', color: '#1890FF', lower: 'a', upper: 'A' }`
+ * Example: `getBloodGroup('A') => { value: 'A', label: 'A 型', color: '#1890FF', lower: 'a', upper: 'A' }`
  * @param bloodGroup
  * @returns
  */
@@ -445,36 +445,36 @@ export function getBloodGroup(bloodGroup: string): {
       label: 'A型',
       color: '#1890FF',
       lower: 'a',
-      upper: 'A'
+      upper: 'A',
     },
     B: {
       value: 'B',
       label: 'B型',
       color: '#36AE7C',
       lower: 'b',
-      upper: 'B'
+      upper: 'B',
     },
     O: {
       value: 'O',
       label: 'O型',
       color: '#E64848',
       lower: 'o',
-      upper: 'O'
+      upper: 'O',
     },
     AB: {
       value: 'AB',
       label: 'AB型',
       color: '#A575F2',
       lower: 'a',
-      upper: 'A'
+      upper: 'A',
     },
     unknown: {
       value: 'unknown',
       label: '未知',
       color: '#CB9D83',
       lower: 'unknown',
-      upper: 'UNKNOWN'
-    }
+      upper: 'UNKNOWN',
+    },
   };
   return bloodGroups[bloodGroup];
 }

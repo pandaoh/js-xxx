@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:54:41
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-09 18:05:23
+ * @LastEditTime: 2023-03-13 15:38:25
  * @Description: 时间相关方法
  * @FilePath: \js-xxx\src\Date\index.ts
  */
@@ -19,12 +19,12 @@ import { trim } from '@/String';
  */
 export function formatDate(
   date?: string | Date,
-  fmt: string = 'yyyy-mm-dd hh:ii:ss',
+  fmt = 'yyyy-mm-dd hh:ii:ss',
   weeks: any[] = [7, 1, 2, 3, 4, 5, 6]
 ): string {
-  // date.replace(/-/g, '/'); // 虽然 win 浏览器两种符号都可以，但是需兼容 ios。
+  // date.replace(/-/g, '/'); // 虽然 win 浏览器两种符号都可以，但是需兼容 ios 。
   date = date ? new Date(date) : new Date();
-  let o: any = {
+  const o: any = {
     'm+': date.getMonth() + 1,
     'd+': date.getDate(),
     'h+': date.getHours(),
@@ -32,12 +32,12 @@ export function formatDate(
     's+': date.getSeconds(),
     Q: Math.floor((date.getMonth() + 3) / 3),
     S: `${date.getMilliseconds()}`.padStart(3, '0'),
-    W: weeks[date.getDay()]
+    W: weeks[date.getDay()],
   };
   if (/(y+)/.test(fmt)) {
     fmt = fmt.replace(RegExp.$1, `${date.getFullYear()}`.substr(4 - RegExp.$1.length));
   }
-  for (let k in o) {
+  for (const k in o) {
     if (new RegExp('(' + k + ')').test(fmt)) {
       fmt = fmt.replace(RegExp.$1, RegExp.$1.length === 1 ? o[k] : `00${o[k]}`.substr(`${o[k]}`.length)); // `${o[k]}`.padStart(RegExp.$1.length, 0) 也可以实现
     }
@@ -56,16 +56,16 @@ export function formatDate(
  * @returns
  */
 export function calcDate(date: string | Date, calcStrOrArr: string | string[]): Date {
-  // date.replace(/-/g, '/'); // 虽然 win 浏览器两种符号都可以，但是需兼容 ios。
+  // date.replace(/-/g, '/'); // 虽然 win 浏览器两种符号都可以，但是需兼容 ios 。
   let oldDate = date ? new Date(date) : new Date();
   if (Array.isArray(calcStrOrArr)) {
     calcStrOrArr.forEach((calcStr) => {
       oldDate = calcDate(oldDate, calcStr);
     });
   } else {
-    let [val, unit] = trim(calcStrOrArr, 'pro').split(' ');
-    let newVal = Number(val);
-    let newUnit = unit.toLocaleLowerCase();
+    const [val, unit] = trim(calcStrOrArr, 'pro').split(' ');
+    const newVal = Number(val);
+    const newUnit = unit.toLocaleLowerCase();
     switch (newUnit) {
       case 'year':
       case 'years':
@@ -135,7 +135,7 @@ export function getDateDifference(
 ): number | { days: number; hours: number; minutes: number; seconds: number } {
   oldDate = new Date(oldDate);
   nowDate = nowDate ? new Date(nowDate) : new Date();
-  let diffTime = nowDate.getTime() - oldDate.getTime();
+  const diffTime = nowDate.getTime() - oldDate.getTime();
   switch ((type as string).toLocaleLowerCase()) {
     case 'day':
     case 'days':
@@ -155,7 +155,7 @@ export function getDateDifference(
         days: Math.floor(diffTime / 1000 / 3600 / 24),
         hours: Math.floor((diffTime / 1000 / 60 / 60) % 24),
         minutes: Math.floor((diffTime / 1000 / 60) % 60),
-        seconds: Math.floor((diffTime / 1000) % 60)
+        seconds: Math.floor((diffTime / 1000) % 60),
       };
   }
 }
@@ -169,10 +169,10 @@ export function getDateDifference(
  * @returns
  */
 export function timeSince(date?: string | Date, longAgo = false, formatter = 'yyyy-mm-dd hh:ii:ss') {
-  // date.replace(/-/g, '/'); // 虽然 win 浏览器两种符号都可以，但是需兼容 ios。
+  // date.replace(/-/g, '/'); // 虽然 win 浏览器两种符号都可以，但是需兼容 ios 。
   date = date ? new Date(date) : new Date();
-  let dateTS = new Date(date).getTime();
-  let seconds = Math.floor((new Date().getTime() - dateTS) / 1000);
+  const dateTS = new Date(date).getTime();
+  const seconds = Math.floor((new Date().getTime() - dateTS) / 1000);
   let interval = Math.floor(seconds / (24 * 3600));
   if (longAgo) {
     interval = Math.floor(seconds / (30 * 24 * 3600));
@@ -238,14 +238,14 @@ export function getMonthDays(date?: string | Date): number {
  */
 export function getMonthDaysCount(date?: string | Date): number {
   date = date ? new Date(date) : new Date();
-  let fullYear = date.getFullYear();
-  let month = date.getMonth();
+  const fullYear = date.getFullYear();
+  const month = date.getMonth();
   if ((fullYear % 4 == 0 && fullYear % 100 != 0) || fullYear % 400 == 0) {
-    let monthDayCount = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; // 闰年
+    const monthDayCount = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; // 闰年
     return monthDayCount[month]; // 当前月的天数
   } else {
     //
-    let monthDayCount = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; // 平年
+    const monthDayCount = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; // 平年
     return monthDayCount[month]; // 当前月的天数
   }
 }
@@ -278,9 +278,9 @@ export function getDateList(
     day: 'yyyy-mm-dd',
     hour: 'yyyy-mm-dd hh:00',
     minute: 'yyyy-mm-dd hh:ii',
-    second: 'yyyy-mm-dd hh:ii:ss'
+    second: 'yyyy-mm-dd hh:ii:ss',
   };
-  let tempN = Math.abs(n);
+  const tempN = Math.abs(n);
   for (let i = 0; i < tempN; i++) {
     dateTemp = formatDate(myDate, formatters[type]);
     dateArray.push(dateTemp);
@@ -304,16 +304,16 @@ export function getDateTime(date?: string | Date): number {
  * 获取标准时间 UTC
  * 适用于本地时间不准确或者获取其他时区时间的情况
  * Example: `getUTCTime(8) => 中国标准时间`
- * @param timezone 时区数字，东八区为 8，西八区为 -8。
+ * @param timezone 时区数字，东八区为 8，西八区为 -8 。
  * @returns
  */
-export function getUTCTime(timezone: number = 0): Date {
-  let d = new Date();
-  let len = d.getTime();
+export function getUTCTime(timezone = 0): Date {
+  const d = new Date();
+  const len = d.getTime();
   // 本地时间与 UTC 时间的时间偏移差
-  let offset = d.getTimezoneOffset() * 60000;
+  const offset = d.getTimezoneOffset() * 60000;
   // 得到现在的 UTC 时间，各时区 UTC 时间相同。
-  let utcTime = len + offset;
+  const utcTime = len + offset;
   // 得到时区标准时间
   return new Date(utcTime + 3600000 * timezone);
 
@@ -336,7 +336,7 @@ export function getUTCTime(timezone: number = 0): Date {
 export function compareDate(dateA: any, dateB?: any): -1 | 1 | 0 {
   dateA = dateA ? new Date(dateA) : new Date();
   dateB = dateB ? new Date(dateB) : new Date();
-  let result = dateA.getTime() - dateB.getTime();
+  const result = dateA.getTime() - dateB.getTime();
   if (result < 0) {
     return -1;
   }
@@ -355,8 +355,7 @@ export function compareDate(dateA: any, dateB?: any): -1 | 1 | 0 {
  * @returns
  */
 export function countdown(seconds: number, callback?: any, finishCallBack?: any): any {
-  let timer: any;
-  timer = setInterval(() => {
+  const timer: any = setInterval(() => {
     console.log('js-xxx:countdown-timer-count', seconds);
     try {
       callback && callback(seconds);

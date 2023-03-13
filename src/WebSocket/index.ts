@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-types */
+/* eslint-disable no-undef */
 /*
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
@@ -6,9 +8,9 @@
  * @Description: websocket
  * @FilePath: \js-xxx\src\WebSocket\index.ts
  */
-var xWebSocket: WebSocket;
+let xWebSocket: WebSocket;
 // 用于设置 websocket 连接超时问题 timeout
-var xWebSocketTimer: any;
+let xWebSocketTimer: any;
 
 /**
  * 初始化 websocket
@@ -68,6 +70,7 @@ export function initWebSocket(options: {
     }
   };
   {
+    /* empty */
   }
   return xWebSocket;
 }
@@ -81,7 +84,7 @@ export function initWebSocket(options: {
  * @param isJSONEncode 是否 JSON 序列化
  * @returns
  */
-export function sendWsMessage(message: any, isJSONEncode: boolean = false): boolean {
+export function sendWsMessage(message: any, isJSONEncode = false): boolean {
   if (!xWebSocket) {
     return false;
   }

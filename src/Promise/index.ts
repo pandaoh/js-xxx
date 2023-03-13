@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/ban-types */
 /*
  * @Author: HxB
  * @Date: 2022-04-26 15:18:13
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-08-03 17:20:15
+ * @LastEditTime: 2023-03-13 15:43:34
  * @Description: Promise 常用方法，或者扩展方法。
  * @FilePath: \js-xxx\src\Promise\index.ts
  */
@@ -46,7 +47,7 @@ export function to(promise: Promise<any>, res?: Function, rej?: Function): Promi
  * @param delay 延迟时间
  * @returns
  */
-export function retry(promise: Promise<any>, count: number = 0, delay: number = 0) {
+export function retry(promise: Promise<any>, count = 0, delay = 0) {
   return new Promise((resolve, reject) => {
     promise
       .then((res) => {

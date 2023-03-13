@@ -1,8 +1,9 @@
+/* eslint-disable max-lines */
 /*
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-10 15:10:45
+ * @LastEditTime: 2023-03-13 15:48:09
  * @Description: 工具方法
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
@@ -10,7 +11,7 @@ import { arraySet } from '@/Array';
 import { getType, isPromise, isStr, toBool, toNum } from '@/Types';
 
 /**
- * 根据年份求生肖，年 % 12。
+ * 根据年份求生肖，年 % 12 。
  */
 const ANIMALS: string[] = ['猴', '鸡', '狗', '猪', '鼠', '牛', '虎', '兔', '龙', '蛇', '马', '羊'];
 
@@ -29,7 +30,7 @@ const CONSTELLATION: any = {
   Virgo: { cn: '处女', en: 'Virgo', date: '8.23-9.22' },
   Libra: { cn: '天秤', en: 'Libra', date: '9.23-10.23' },
   Scorpio: { cn: '天蝎', en: 'Scorpio', date: '10.24-11.22' },
-  Sagittarius: { cn: '射手', en: 'Sagittarius', date: '11.23-12.21' }
+  Sagittarius: { cn: '射手', en: 'Sagittarius', date: '11.23-12.21' },
 };
 
 /**
@@ -47,50 +48,50 @@ const WEEKS_INFO: {
     name: '星期一',
     abbr: 'Mon',
     id: 1,
-    others: 'Day of the Moon.(月亮日)'
+    others: 'Day of the Moon.(月亮日)',
   },
   {
     key: 'Tuesday',
     name: '星期二',
     abbr: 'Tues',
     id: 2,
-    others: 'Day of the Mars.(火星日)'
+    others: 'Day of the Mars.(火星日)',
   },
   {
     key: 'Wednesday',
     name: '星期三',
     abbr: 'Wed',
     id: 3,
-    others: 'Day of the Mercury.(水星日)'
+    others: 'Day of the Mercury.(水星日)',
   },
   {
     key: 'Thursday',
     name: '星期四',
     abbr: 'Thur',
     id: 4,
-    others: 'Day of Jupiter.(木星日)'
+    others: 'Day of Jupiter.(木星日)',
   },
   {
     key: 'Friday',
     name: '星期五',
     abbr: 'Fri',
     id: 5,
-    others: 'Day of Venus.(金星日)'
+    others: 'Day of Venus.(金星日)',
   },
   {
     key: 'Saturday',
     name: '星期六',
     abbr: 'Sat',
     id: 6,
-    others: 'Day of Saturn.(土星日)'
+    others: 'Day of Saturn.(土星日)',
   },
   {
     key: 'Sunday',
     name: '星期日',
     abbr: 'Sun',
     id: 7,
-    others: 'Day of the Sun.(太阳日)'
-  }
+    others: 'Day of the Sun.(太阳日)',
+  },
 ];
 
 /**
@@ -108,85 +109,85 @@ const MONTH_INFO: {
     name: '一月',
     abbr: 'Jan',
     id: 1,
-    others: '寅.虎'
+    others: '寅.虎',
   },
   {
     key: 'February',
     name: '二月',
     abbr: 'Feb',
     id: 2,
-    others: '卯.兔'
+    others: '卯.兔',
   },
   {
     key: 'March',
     name: '三月',
     abbr: 'March',
     id: 3,
-    others: '辰.龙'
+    others: '辰.龙',
   },
   {
     key: 'April',
     name: '四月',
     abbr: 'Apr',
     id: 4,
-    others: '巳.蛇'
+    others: '巳.蛇',
   },
   {
     key: 'May',
     name: '五月',
     abbr: 'May',
     id: 5,
-    others: '午.马'
+    others: '午.马',
   },
   {
     key: 'June',
     name: '六月',
     abbr: 'Jun',
     id: 6,
-    others: '未.羊'
+    others: '未.羊',
   },
   {
     key: 'July',
     name: '七月',
     abbr: 'Jul',
     id: 7,
-    others: '申.猴'
+    others: '申.猴',
   },
   {
     key: 'August',
     name: '八月',
     abbr: 'Aug',
     id: 8,
-    others: '酉.鸡'
+    others: '酉.鸡',
   },
   {
     key: 'September',
     name: '九月',
     abbr: 'Sept',
     id: 9,
-    others: '戌.狗'
+    others: '戌.狗',
   },
   {
     key: 'October',
     name: '十月',
     abbr: 'Oct',
     id: 10,
-    others: '亥.猪'
+    others: '亥.猪',
   },
   {
     key: 'November',
     name: '十一月',
     abbr: 'Nov',
     id: 11,
-    others: '子.鼠'
+    others: '子.鼠',
   },
   {
     key: 'December',
     name: '十二月',
     abbr: 'Dec',
     id: 12,
-    others: '丑.牛'
-  }
+    others: '丑.牛',
+  },
 ];
 
 /**
@@ -227,7 +228,7 @@ const ID_CARD_PROVINCE: { [prop: string]: string } = {
   '71': '台湾',
   '81': '香港',
   '82': '澳门',
-  '91': '国外'
+  '91': '国外',
 };
 
 /**
@@ -236,7 +237,7 @@ const ID_CARD_PROVINCE: { [prop: string]: string } = {
  * @returns
  */
 export function getTimeCode(): string {
-  let dateObj = new Date();
+  const dateObj = new Date();
   return `${(Math.random() * 100).toFixed().padEnd(2, '0')}${dateObj.getSeconds().toString().padStart(2, '0')}${dateObj
     .getMinutes()
     .toString()
@@ -300,8 +301,8 @@ export function get1Var(data: any): any {
   if (getType(data) !== 'object' && !Array.isArray(data)) {
     return data;
   }
-  for (let key in data) {
-    let result = data[key];
+  for (const key in data) {
+    const result = data[key];
     return result;
   }
 }
@@ -315,7 +316,7 @@ export function get1Var(data: any): any {
  * @param count
  * @returns
  */
-export function getRandVar(value: any, count: number = 1): any | any[] {
+export function getRandVar(value: any, count = 1): any | any[] {
   const sample = Array.isArray(value) ? JSON.parse(JSON.stringify(value)) : Object.values(value);
   const len = sample.length;
 
@@ -360,12 +361,13 @@ export function getLastVar(data: any): any {
  * @param delay 延迟时间
  * @returns
  */
-export function debounce(fn: Function, delay = 1000) {
+export function debounce(fn: any, delay = 1000) {
   let timer: any = null;
   return function () {
     clearTimeout(timer);
     timer = setTimeout(function () {
       // @ts-ignore
+      // eslint-disable-next-line prefer-rest-params
       fn.apply(this, arguments);
     }, delay);
   };
@@ -378,12 +380,13 @@ export function debounce(fn: Function, delay = 1000) {
  * @param delay 延迟时间
  * @returns
  */
-export function throttle(fn: Function, delay = 2000) {
+export function throttle(fn: any, delay = 2000) {
   let canRun = true;
   return function () {
     if (!canRun) return;
     canRun = false;
     // @ts-ignore
+    // eslint-disable-next-line prefer-rest-params
     fn.apply(this, arguments);
     setTimeout(function () {
       canRun = true;
@@ -398,11 +401,11 @@ export function throttle(fn: Function, delay = 2000) {
  * @param fn
  * @returns
  */
-export function curryIt(fn: Function) {
+export function curryIt(fn: any) {
   // 获取预定义函数的参数个数
   let length = fn.length;
   // 声明存放参数的数组
-  let args: any[] = [];
+  const args: any[] = [];
   return function (arg: any) {
     args.push(arg);
     length--;
@@ -419,11 +422,11 @@ export function curryIt(fn: Function) {
 /**
  * 全局捕获异常
  * Example: `globalError((message, source, lineno, colno, error) => console.log('全局捕获异常'), false) => '全局捕获异常'`
- * @param {Function} fn (message, source, lineno, colno, error)
+ * @param {any} fn (message, source, lineno, colno, error)
  * @param {boolean} notShowConsole 是否不回显控制台
  * @returns
  */
-export function globalError(fn: Function, notShowConsole: boolean = true) {
+export function globalError(fn: any, notShowConsole = true) {
   window.onerror = function (message, source, lineno, colno, error) {
     notShowConsole && console.log('js-xxx:globalError', { message, source, lineno, colno, error });
     fn.call(this, message, source, lineno, colno, error);
@@ -433,12 +436,12 @@ export function globalError(fn: Function, notShowConsole: boolean = true) {
 
 /**
  * 获取随机数字
- * Example: `getRandNum(1, 10) => 1~10之间的随机数，闭区间。`
+ * Example: `getRandNum(1, 10) => 1~10 之间的随机数，闭区间。`
  * @param min 最小值
  * @param max 最大值
  * @returns
  */
-export function getRandNum(min: number = 0, max: number = 10): number {
+export function getRandNum(min = 0, max = 10): number {
   return Math.floor(min + Math.random() * (max - min + 1));
 }
 
@@ -457,7 +460,7 @@ export function getRandColor(): string {
  * @param len 长度
  * @returns
  */
-export function getRandStr(len: number = 8): string {
+export function getRandStr(len = 8): string {
   return (Math.random() * Number('1'.padEnd(len + 1, '0'))).toFixed().slice(0, len);
 }
 
@@ -468,7 +471,7 @@ export function getRandStr(len: number = 8): string {
  * @param radix 结果以此进行进制转换
  * @returns
  */
-export function getTimeAndStr(len: number = 5, radix: number | undefined = 36): string {
+export function getTimeAndStr(len = 5, radix: number | undefined = 36): string {
   // Number('xxxx') // 超大 string 转 number 结果不准确 玄学
   return len === 0 ? `${getTimeCode()}` : Number(`${getRandStr(len)}${Date.now()}`).toString(radix); // new Date().getTime()
 }
@@ -497,7 +500,7 @@ export function getUUID(length: number, chars: string | any[]): string {
  * @param key color name
  * @returns
  */
-export function getBSColor(key: string = 'default'): string {
+export function getBSColor(key = 'default'): string {
   key = `${key}`.toLowerCase();
   const keyList = [
     'dark',
@@ -516,7 +519,7 @@ export function getBSColor(key: string = 'default'): string {
     'blue',
     'secondary',
     'default',
-    'grey'
+    'grey',
   ];
   key = keyList.includes(key) ? key : 'others';
   const colors: any = {
@@ -536,7 +539,7 @@ export function getBSColor(key: string = 'default'): string {
     blue: '#007bff',
     secondary: '#6c757d',
     default: '#6c757d',
-    grey: '#6c757d'
+    grey: '#6c757d',
   };
   return colors[key];
 }
@@ -598,7 +601,7 @@ export function uuid(): string {
  * @param prefix
  * @returns
  */
-export function getKey(size: number = 21, prefix: string = ''): string {
+export function getKey(size = 21, prefix = ''): string {
   // 外部
   const symbols = 'ModuleSymbhasOwnPr-0123456789ABCDEFGHIJKLNQRTUVWXYZ_cfgijkpqtvxz';
 
@@ -726,13 +729,13 @@ export function intersection(paramA: any, paramB: any): any {
   let result: any = isObj ? {} : [];
 
   if (isObj) {
-    for (let key in paramA) {
+    for (const key in paramA) {
       if (paramB[key] && paramA[key] == paramB[key]) {
         result[key] = paramA[key];
       }
     }
   } else {
-    for (let key in paramA) {
+    for (const key in paramA) {
       if (paramB.includes(paramA[key])) {
         result.push(paramA[key]);
       }
@@ -760,7 +763,7 @@ export function union(paramA: any, paramB: any): any {
   if (paramAType == 'object') {
     return jsonClone({
       ...paramB,
-      ...paramA // 以前一个为准
+      ...paramA, // 以前一个为准
     });
   } else {
     return jsonClone(arraySet([...paramA, ...paramB]));
@@ -784,7 +787,7 @@ export function difference(paramA: any, paramB: any): any {
   let result: any = isObj ? {} : [];
 
   if (isObj) {
-    for (let key in paramA) {
+    for (const key in paramA) {
       if (paramB[key] != paramA[key]) {
         result[key] = paramA[key]; // 以前一个为准
       }
@@ -866,12 +869,13 @@ export function Logger(): {
   primary: (...args: any[]) => void;
   dark: (...args: any[]) => void;
   [key: string]: (...args: any[]) => void;
+  // eslint-disable-next-line indent
 } {
   function _logger(
     value: any,
     type: 'warning' | 'info' | 'danger' | 'primary' | 'success' | 'default' | 'dark' = 'default'
   ): void {
-    console.log(`\n%c==========> `, `color:${getBSColor(type)}`, value, '\n');
+    console.log('\n%c==========> ', `color:${getBSColor(type)}`, value, '\n');
   }
   interface LogFn {
     (...args: any[]): void;
@@ -959,7 +963,7 @@ export function contains(value: any[], target: any): boolean {
  * @param interval
  * @returns
  */
-export function waitUntil(condition: any, timeout: number = 0, interval: number = 250): Promise<any> {
+export function waitUntil(condition: any, timeout = 0, interval = 250): Promise<any> {
   function evalCondition() {
     return new Promise((resolve, reject) => {
       try {
@@ -1006,7 +1010,7 @@ export function ms(str: any): string | number {
   // 外部
   const factor: any = {
     ms: 1,
-    s: 1000
+    s: 1000,
   };
   factor.m = factor.s * 60;
   factor.h = factor.m * 60;
@@ -1039,20 +1043,20 @@ export function ms(str: any): string | number {
  * Example:
  * `transferFileToBase64(file, 'application/pdf;charset=utf-8', (res) => console.log({ res })) => result object`
  * `transferFileToBase64('test', 'text/plain', (res) => console.log({ res })) => result object`
- * @param content
+ * @param content BlobPart | any
  * @param contentType
  * @param callBack
  * @returns
  */
-export function transferFileToBase64(content: BlobPart | any, contentType: string, callBack: any): void {
+export function transferFileToBase64(content: any, contentType: string, callBack: any): void {
   const blob = new Blob([content], {
-    type: contentType
+    type: contentType,
   });
   const reader = new FileReader();
   reader.readAsDataURL(blob);
   reader.addEventListener('loadend', () => {
     callBack?.({
-      result: reader?.result
+      result: reader?.result,
       // // @ts-ignore
       // baseCode: Buffer?.from(reader?.result?.split('base64,')[1], 'base64')
     });
@@ -1061,7 +1065,7 @@ export function transferFileToBase64(content: BlobPart | any, contentType: strin
 
 /**
  * 检查是否为 idCard string 身份证
- * 支持 15 、18 位
+ * 支持 15 、 18 位
  * Example:
  * `checkIdCard('350424870506202') => true`
  * `checkIdCard('003424870506202') => false`
@@ -1140,7 +1144,7 @@ export function transferIdCard(idCard: string): any {
     gender: sex === '男' ? 1 : 0,
     province,
     animal,
-    birthday
+    birthday,
   };
 }
 
@@ -1153,23 +1157,23 @@ export function transferIdCard(idCard: string): any {
  * @returns
  */
 export function transferMoney(n: number): string {
-  let fraction = ['角', '分'];
-  let digit = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖'];
-  let unit = [
+  const fraction = ['角', '分'];
+  const digit = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖'];
+  const unit = [
     ['元', '万', '亿'],
-    ['', '拾', '佰', '仟']
+    ['', '拾', '佰', '仟'],
   ];
-  let head = n < 0 ? '欠' : '';
+  const head = n < 0 ? '欠' : '';
   n = Math.abs(n);
   let s = '';
-  let fraLen = fraction.length;
+  const fraLen = fraction.length;
   for (let i = 0; i < fraLen; i++) {
     s += (digit[Math.floor(n * 10 * Math.pow(10, i)) % 10] + fraction[i]).replace(/零./, '');
   }
   s = s || '整';
   n = Math.floor(n);
   for (let i = 0; i < unit[0].length && n > 0; i++) {
-    var p = '';
+    let p = '';
     for (let j = 0; j < unit[1].length && n > 0; j++) {
       p = digit[n % 10] + unit[1][j] + p;
       n = Math.floor(n / 10);
@@ -1197,8 +1201,8 @@ export function transferMoney(n: number): string {
  * @param rate 速度 [0.1, 10]
  * @returns
  */
-export function Speaker(text: string, lang: string = 'zh-CN', volume: number = 1, pitch: number = 1, rate: number = 1) {
-  let speaker: SpeechSynthesisUtterance = new window.SpeechSynthesisUtterance(text);
+export function Speaker(text: string, lang = 'zh-CN', volume = 1, pitch = 1, rate = 1) {
+  const speaker: SpeechSynthesisUtterance = new window.SpeechSynthesisUtterance(text);
   speaker.text = text;
   speaker.lang = lang;
   speaker.volume = volume;
@@ -1235,7 +1239,7 @@ export function Speaker(text: string, lang: string = 'zh-CN', volume: number = 1
     },
     stop: () => {
       window.speechSynthesis.cancel();
-    }
+    },
   };
 }
 
@@ -1263,7 +1267,7 @@ export function getConstellation(date: any): { cn: string; en: string; date: any
   const defaultV = {
     cn: '未知',
     en: 'unknown',
-    date: date
+    date: date,
   };
   if (!date) {
     return defaultV;
@@ -1272,7 +1276,7 @@ export function getConstellation(date: any): { cn: string; en: string; date: any
     date = new Date(date);
     const month = date.getMonth() + 1;
     const day = date.getDate();
-    var star = 'defaultV';
+    let star = 'defaultV';
     switch (month) {
       case 3:
         if (day >= 21) {
@@ -1391,12 +1395,14 @@ export function setEventListener(eventKey: string, foo: any, dom: any = window):
  */
 export function H5Resize(downCb: any, upCb: any): any {
   // 当软件键盘弹起会改变当前 window.innerHeight
-  // 监听这个值变化 [downCb 缩回的回调、upCb 弹起的回调]
-  var clientHeight = window.innerHeight;
+  // 监听这个值变化 [downCb 缩回的回调、 upCb 弹起的回调]
+  const clientHeight = window.innerHeight;
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   downCb = typeof downCb === 'function' ? downCb : function () {};
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   upCb = typeof upCb === 'function' ? upCb : function () {};
   const H5ResizeFoo = () => {
-    var height = window.innerHeight;
+    const height = window.innerHeight;
     if (height === clientHeight) {
       downCb();
     }
@@ -1416,7 +1422,7 @@ export function H5Resize(downCb: any, upCb: any): any {
  * Example: `banConsole() => 返回取消禁用的 function`
  * @returns
  */
-export function banConsole(): Function {
+export function banConsole(): any {
   document.body.setAttribute('style', 'user-select: none;' + document.body.style ?? '');
   const cancelContextMenu = setEventListener('contextmenu', function (e: any) {
     return e.preventDefault();

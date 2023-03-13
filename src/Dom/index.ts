@@ -16,9 +16,9 @@ import { setEventListener } from '@/Tools';
  * @returns
  */
 export function str2html(str: string): string {
-  let div = document.createElement('div');
+  const div = document.createElement('div');
   div.textContent = str;
-  let specialChars: string = div.innerHTML;
+  const specialChars: string = div.innerHTML;
   return specialChars;
 }
 
@@ -29,9 +29,9 @@ export function str2html(str: string): string {
  * @returns
  */
 export function html2str(value: string): string | null {
-  let div = document.createElement('div');
+  const div = document.createElement('div');
   div.innerHTML = value;
-  let str: string | null = div.textContent;
+  const str: string | null = div.textContent;
   return str;
 }
 
@@ -43,7 +43,7 @@ export function html2str(value: string): string | null {
  * @returns
  */
 export function insertAfter(newElement: any, targetElement: any) {
-  let parent: any = targetElement.parentNode;
+  const parent: any = targetElement.parentNode;
   if (parent.lastElementChild === targetElement) {
     parent.appendChild(newElement);
   } else {
@@ -58,7 +58,7 @@ export function insertAfter(newElement: any, targetElement: any) {
  * @returns
  */
 export function offDefaultEvent(event: any) {
-  let e = event || window.event;
+  const e = event || window.event;
   if (e) {
     e.preventDefault();
     e.stopPropagation();
@@ -74,8 +74,8 @@ export function offDefaultEvent(event: any) {
  * @returns
  */
 export function copyContent(targetDom: any, addMsg: any = null) {
-  let Msg = !targetDom.innerText ? targetDom.value : targetDom.innerText;
-  let tempDom = document.createElement('input');
+  const Msg = !targetDom.innerText ? targetDom.value : targetDom.innerText;
+  const tempDom = document.createElement('input');
   let info = '复制成功！';
   tempDom.style.position = 'absolute';
   tempDom.style.top = '-5201314px';
@@ -135,14 +135,10 @@ export function scrollToBottom(elementSelector: string) {
  * @param dom 元素对象
  * @returns
  */
-export function scrollYTo(
-  targetVal: 'start' | 'end' | number,
-  callback: Function,
-  dom: any = document.documentElement
-) {
+export function scrollYTo(targetVal: 'start' | 'end' | number, callback: any, dom: any = document.documentElement) {
   const customVal: any = {
     start: 0,
-    end: dom.scrollHeight - dom.clientHeight
+    end: dom.scrollHeight - dom.clientHeight,
   };
   targetVal = customVal[targetVal] ?? targetVal;
   if (callback && targetVal != dom.scrollTop) {
@@ -204,14 +200,10 @@ export function scrollYTo(
  * @param dom 元素对象
  * @returns
  */
-export function scrollXTo(
-  targetVal: 'start' | 'end' | number,
-  callback: Function,
-  dom: any = document.documentElement
-) {
+export function scrollXTo(targetVal: 'start' | 'end' | number, callback: any, dom: any = document.documentElement) {
   const customVal: any = {
     start: 0,
-    end: dom.scrollWidth - dom.clientWidth
+    end: dom.scrollWidth - dom.clientWidth,
   };
   targetVal = customVal[targetVal] ?? targetVal;
   if (callback && targetVal != dom.scrollLeft) {
@@ -278,7 +270,7 @@ export function findParents(element: any, n: number) {
  * @returns
  */
 export function findChildren(element: any) {
-  let children: any[] = element.childNodes,
+  const children: any[] = element.childNodes,
     result: any[] = [],
     len = children.length;
   for (let i = 0; i < len; i++) {
@@ -298,7 +290,7 @@ export function getViewportSize() {
   if (window.innerWidth) {
     return {
       w: window.innerWidth,
-      h: window.innerHeight
+      h: window.innerHeight,
     };
   } else {
     // ie8 及其以下
@@ -306,13 +298,13 @@ export function getViewportSize() {
       // 怪异模式
       return {
         w: document.body.clientWidth,
-        h: document.body.clientHeight
+        h: document.body.clientHeight,
       };
     } else {
       // 标准模式
       return {
         w: document.documentElement.clientWidth,
-        h: document.documentElement.clientHeight
+        h: document.documentElement.clientHeight,
       };
     }
   }
@@ -336,8 +328,8 @@ export function getStyleByName(element: any, name: any) {
  * @param rel 类型
  * @returns
  */
-export function appendLink(linkUrl: string, rel: string = 'stylesheet'): HTMLLinkElement {
-  var link = document.createElement('link');
+export function appendLink(linkUrl: string, rel = 'stylesheet'): HTMLLinkElement {
+  const link = document.createElement('link');
   link.rel = rel;
   link.href = linkUrl;
   document.head.appendChild(link);
@@ -352,8 +344,8 @@ export function appendLink(linkUrl: string, rel: string = 'stylesheet'): HTMLLin
  * @param defer 是否延迟加载
  * @returns
  */
-export function appendScript(scriptUrl: string, async: boolean = false, defer: boolean = false): HTMLScriptElement {
-  var script = document.createElement('script');
+export function appendScript(scriptUrl: string, async = false, defer = false): HTMLScriptElement {
+  const script = document.createElement('script');
   script.src = scriptUrl;
   script.async = async;
   script.defer = defer;
@@ -372,7 +364,7 @@ export function download(link: string, name: string) {
   if (!name) {
     name = link.slice(link.lastIndexOf('/') + 1);
   }
-  let eleLink = document.createElement('a');
+  const eleLink = document.createElement('a');
   eleLink.download = name;
   eleLink.style.display = 'none';
   eleLink.href = link;
@@ -386,11 +378,11 @@ export function download(link: string, name: string) {
  * Example:
  * `downloadContent('test.txt', 'test txt content') => 下载返回的流`
  * `downloadContent('test.json', JSON.stringify({content: 'test json'})) => 下载返回的流`
- * @param name 文件名称(需带后缀)，默认 txt。
- * @param content 内容
+ * @param name 文件名称(需带后缀)，默认 txt 。
+ * @param content 内容 BlobPart | any
  * @returns
  */
-export function downloadContent(name: string, content: BlobPart | any) {
+export function downloadContent(name: string, content: any) {
   if (!name) {
     name = 'unknown';
   }

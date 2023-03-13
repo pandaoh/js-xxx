@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 11:52:01
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-10 15:56:01
+ * @LastEditTime: 2023-03-13 15:51:34
  * @Description: 数组常用方法
  * @FilePath: \js-xxx\src\Array\index.ts
  */
@@ -19,7 +19,7 @@ import { isStr, toStr } from '@/Types';
  * @returns
  */
 export function data2Obj(sourceData: { [key: string]: any }[], key: string, vKey?: string): { [key: string]: any } {
-  let obj: { [key: string]: any } = {};
+  const obj: { [key: string]: any } = {};
   if (!Array.isArray(sourceData)) {
     return obj;
   }
@@ -37,11 +37,11 @@ export function data2Obj(sourceData: { [key: string]: any }[], key: string, vKey
  * @returns
  */
 export function data2Arr(sourceData: { [key: string]: any }[], key: string): any[] {
-  let arr: any[] = [];
+  const arr: any[] = [];
   if (sourceData.length === 0) {
     return arr;
   }
-  for (let k in sourceData) {
+  for (const k in sourceData) {
     sourceData[k]?.[key] && arr.push(sourceData[k][key]);
   }
   return arr;
@@ -101,7 +101,7 @@ export function arraySet(arr: string | Iterable<any> | null | undefined): string
  * 数组去重
  * Example:
  * `unique([1, 2, 3, 1, 2, 3]) => [1, 2, 3]`
- * `unique([{id: 1, value: 'hello'}, {id: 2, value: 'world'}, {id: 2, value: 'world', others: true}], (a, b) => a.id === b.id) => [id1, id2带true]`
+ * `unique([{id: 1, value: 'hello'}, {id: 2, value: 'world'}, {id: 2, value: 'world', others: true}], (a, b) => a.id === b.id) => [id1, id2 带 true]`
  * @param arr 数组
  * @param filter 过滤逻辑
  * @returns
@@ -205,7 +205,7 @@ export function arraySort(
  * @param isAscend 是否升序
  * @returns
  */
-export function sortBy(keys?: string | string[], isAscend: boolean = true): any {
+export function sortBy(keys?: string | string[], isAscend = true): any {
   if (!keys) {
     return (a: any, b: any) => {
       return isAscend ? toStr(a).localeCompare(toStr(b)) : toStr(b).localeCompare(toStr(a));

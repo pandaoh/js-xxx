@@ -553,7 +553,7 @@ ___
 
 ### banConsole
 
-▸ **banConsole**(): `Function`
+▸ **banConsole**(): `any`
 
 禁用控制台
 windows
@@ -564,7 +564,7 @@ Example: `banConsole() => 返回取消禁用的 function`
 
 #### Returns
 
-`Function`
+`any`
 
 ___
 
@@ -762,7 +762,7 @@ ___
 ▸ **checkIdCard**(`value`): `boolean`
 
 检查是否为 idCard string 身份证
-支持 15 、18 位
+支持 15 、 18 位
 Example:
 `checkIdCard('350424870506202') => true`
 `checkIdCard('003424870506202') => false`
@@ -950,7 +950,7 @@ Example: `curryIt(function (a, b, c) {return a + b + c})(1)(2)(3) => 6`
 
 | Name | Type |
 | :------ | :------ |
-| `fn` | `Function` |
+| `fn` | `any` |
 
 #### Returns
 
@@ -1049,7 +1049,7 @@ Example: `debounce(() => {}, 1000) => 防抖执行`
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `fn` | `Function` | `undefined` | 执行的方法 |
+| `fn` | `any` | `undefined` | 执行的方法 |
 | `delay` | `number` | `1000` | 延迟时间 |
 
 #### Returns
@@ -1209,8 +1209,8 @@ Example:
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `name` | `string` | 文件名称(需带后缀)，默认 txt。 |
-| `content` | `any` | 内容 |
+| `name` | `string` | 文件名称(需带后缀)，默认 txt 。 |
+| `content` | `any` | 内容 BlobPart \| any |
 
 #### Returns
 
@@ -1630,7 +1630,7 @@ ___
 ▸ **getBloodGroup**(`bloodGroup`): `Object`
 
 获取血型枚举信息
-Example: `getBloodGroup('A') => { value: 'A', label: 'A型', color: '#1890FF', lower: 'a', upper: 'A' }`
+Example: `getBloodGroup('A') => { value: 'A', label: 'A 型', color: '#1890FF', lower: 'a', upper: 'A' }`
 
 #### Parameters
 
@@ -1952,7 +1952,7 @@ ___
 ▸ **getRandNum**(`min?`, `max?`): `number`
 
 获取随机数字
-Example: `getRandNum(1, 10) => 1~10之间的随机数，闭区间。`
+Example: `getRandNum(1, 10) => 1~10 之间的随机数，闭区间。`
 
 #### Parameters
 
@@ -2158,7 +2158,7 @@ Example: `getUTCTime(8) => 中国标准时间`
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `timezone` | `number` | `0` | 时区数字，东八区为 8，西八区为 -8。 |
+| `timezone` | `number` | `0` | 时区数字，东八区为 8，西八区为 -8 。 |
 
 #### Returns
 
@@ -2317,7 +2317,7 @@ Example: `globalError((message, source, lineno, colno, error) => console.log('�
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `fn` | `Function` | `undefined` | (message, source, lineno, colno, error) |
+| `fn` | `any` | `undefined` | (message, source, lineno, colno, error) |
 | `notShowConsole` | `boolean` | `true` | 是否不回显控制台 |
 
 #### Returns
@@ -2546,8 +2546,11 @@ ___
 检查是否为 carCode string 车牌号
 Example:
 `isCarCode('粤B68928') => true`
+`isCarCode('粤-B68928') => true`
+`isCarCode('粤 B68928') => true`
 `isCarCode('粤B.68928') => true`
-`isCarCode('广东B12345') => false`
+`isCarCode('粤B 68928') => true`
+`isCarCode('广东 B12345') => false`
 
 #### Parameters
 
@@ -3144,7 +3147,7 @@ Example: `localStorageGet("key") => 处理过后的 value，不需要再 decode`
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `key` | `string` | 存储key |
+| `key` | `string` | 存储 key |
 
 #### Returns
 
@@ -3163,8 +3166,8 @@ Example: `localStorageSet("key", "value") => 存储时不需要处理数据，va
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `key` | `string` | 存储key |
-| `value` | `any` | 存储value，value === null\|undefined 清除数据。 |
+| `key` | `string` | 存储 key |
+| `value` | `any` | 存储 value，value === null\|undefined 清除数据。 |
 
 #### Returns
 
@@ -3366,7 +3369,7 @@ ___
 
 ### onClick2MoreClick
 
-▸ **onClick2MoreClick**(`delay?`, ...`events`): `Function`
+▸ **onClick2MoreClick**(`delay?`, ...`events`): `any`
 
 单击事件转换为多击事件
 Author: wuxingheng
@@ -3377,11 +3380,11 @@ Example: `onClick2MoreClick(300, clickOneCallBack, clickTwoCallBack, clickThreeC
 | Name | Type | Default value |
 | :------ | :------ | :------ |
 | `delay` | `number` | `300` |
-| `...events` | `Function`[] | `undefined` |
+| `...events` | `any`[] | `undefined` |
 
 #### Returns
 
-`Function`
+`any`
 
 ___
 
@@ -3628,7 +3631,7 @@ Example:
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
 | `targetVal` | `number` \| ``"start"`` \| ``"end"`` | `undefined` | 'start' \| 'end' \| number |
-| `callback` | `Function` | `undefined` | 回调 |
+| `callback` | `any` | `undefined` | 回调 |
 | `dom` | `any` | `document.documentElement` | 元素对象 |
 
 #### Returns
@@ -3652,7 +3655,7 @@ Example:
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
 | `targetVal` | `number` \| ``"start"`` \| ``"end"`` | `undefined` | 'start' \| 'end' \| number |
-| `callback` | `Function` | `undefined` | 回调 |
+| `callback` | `any` | `undefined` | 回调 |
 | `dom` | `any` | `document.documentElement` | 元素对象 |
 
 #### Returns
@@ -3715,7 +3718,7 @@ Example: `sessionStorageGet("key") => 处理过后的 value，不需要再 decod
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `key` | `string` | 存储key |
+| `key` | `string` | 存储 key |
 
 #### Returns
 
@@ -3734,8 +3737,8 @@ Example: `sessionStorageSet("key", "value") => 存储时不需要处理数据，
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `key` | `string` | 存储key |
-| `value` | `any` | 存储value，value === null\|undefined 清除数据。 |
+| `key` | `string` | 存储 key |
+| `value` | `any` | 存储 value，value === null\|undefined 清除数据。 |
 
 #### Returns
 
@@ -4087,7 +4090,7 @@ Example: `throttle(() => {}, 1000) => 节流执行`
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `fn` | `Function` | `undefined` | 执行的方法 |
+| `fn` | `any` | `undefined` | 执行的方法 |
 | `delay` | `number` | `2000` | 延迟时间 |
 
 #### Returns
@@ -4276,11 +4279,11 @@ Example:
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `content` | `any` |
-| `contentType` | `string` |
-| `callBack` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `content` | `any` | BlobPart \| any |
+| `contentType` | `string` |  |
+| `callBack` | `any` |  |
 
 #### Returns
 
@@ -4425,7 +4428,7 @@ ___
 数组去重
 Example:
 `unique([1, 2, 3, 1, 2, 3]) => [1, 2, 3]`
-`unique([{id: 1, value: 'hello'}, {id: 2, value: 'world'}, {id: 2, value: 'world', others: true}], (a, b) => a.id === b.id) => [id1, id2带true]`
+`unique([{id: 1, value: 'hello'}, {id: 2, value: 'world'}, {id: 2, value: 'world', others: true}], (a, b) => a.id === b.id) => [id1, id2 带 true]`
 
 #### Parameters
 

@@ -14,8 +14,8 @@
  * @returns
  */
 export function getCookie(key: string): any {
-  let arr,
-    reg = new RegExp('(^| )' + key + '=([^;]*)(;|$)');
+  let arr;
+  const reg = new RegExp('(^| )' + key + '=([^;]*)(;|$)');
   arr === document.cookie.match(reg) ? unescape(arr[2]) : null;
 }
 
@@ -29,7 +29,7 @@ export function getCookie(key: string): any {
  */
 export function setCookie(key: string, value: any, expires: number) {
   expires = expires || 30; // 没有设置有效期，默认有效期是 30 天。
-  let exp = new Date(); // 获取当前日期
+  const exp = new Date(); // 获取当前日期
   exp.setTime(exp.getTime() + expires * 24 * 60 * 60 * 1000); // 设置过期日期
   document.cookie = key + '=' + escape(value) + ';expires=' + exp.toUTCString() + ';path=/';
 }
@@ -41,9 +41,9 @@ export function setCookie(key: string, value: any, expires: number) {
  * @returns
  */
 export function removeCookie(key: string) {
-  let exp = new Date();
+  const exp = new Date();
   exp.setTime(exp.getTime() - 1);
-  let cVal = getCookie(key);
+  const cVal = getCookie(key);
   if (cVal !== null) {
     document.cookie = key + '=' + cVal + ';expires=' + exp.toUTCString() + ';path=/';
   }

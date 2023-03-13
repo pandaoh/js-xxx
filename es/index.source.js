@@ -452,7 +452,7 @@ function arraySet(arr) {
  * 数组去重
  * Example:
  * `unique([1, 2, 3, 1, 2, 3]) => [1, 2, 3]`
- * `unique([{id: 1, value: 'hello'}, {id: 2, value: 'world'}, {id: 2, value: 'world', others: true}], (a, b) => a.id === b.id) => [id1, id2带true]`
+ * `unique([{id: 1, value: 'hello'}, {id: 2, value: 'world'}, {id: 2, value: 'world', others: true}], (a, b) => a.id === b.id) => [id1, id2 带 true]`
  * @param arr 数组
  * @param filter 过滤逻辑
  * @returns
@@ -580,7 +580,8 @@ function sortBy(keys, isAscend) {
  * @returns
  */
 function getCookie(key) {
-    var arr, reg = new RegExp('(^| )' + key + '=([^;]*)(;|$)');
+    var arr;
+    var reg = new RegExp('(^| )' + key + '=([^;]*)(;|$)');
     arr === document.cookie.match(reg) ? unescape(arr[2]) : null;
 }
 /**
@@ -7363,7 +7364,7 @@ function encrypt(data, secretKey, secretIv) {
     var encrypted = CryptoJS.AES.encrypt(dataHex, KEY, {
         iv: IV,
         mode: CryptoJS.mode.CBC,
-        padding: CryptoJS.pad.Pkcs7
+        padding: CryptoJS.pad.Pkcs7,
     });
     return encrypted.ciphertext.toString();
 }
@@ -7398,7 +7399,7 @@ function decrypt(dataStr, jsonDecode, secretKey, secretIv) {
     var decrypt = CryptoJS.AES.decrypt(str, KEY, {
         iv: IV,
         mode: CryptoJS.mode.CBC,
-        padding: CryptoJS.pad.Pkcs7
+        padding: CryptoJS.pad.Pkcs7,
     });
     var decryptedStr = decrypt.toString(CryptoJS.enc.Utf8);
     var result = decryptedStr.toString();
@@ -7468,7 +7469,7 @@ function getCryptoJS() {
 }
 
 /**
- * 根据年份求生肖，年 % 12。
+ * 根据年份求生肖，年 % 12 。
  */
 var ANIMALS = ['猴', '鸡', '狗', '猪', '鼠', '牛', '虎', '兔', '龙', '蛇', '马', '羊'];
 /**
@@ -7486,7 +7487,7 @@ var CONSTELLATION = {
     Virgo: { cn: '处女', en: 'Virgo', date: '8.23-9.22' },
     Libra: { cn: '天秤', en: 'Libra', date: '9.23-10.23' },
     Scorpio: { cn: '天蝎', en: 'Scorpio', date: '10.24-11.22' },
-    Sagittarius: { cn: '射手', en: 'Sagittarius', date: '11.23-12.21' }
+    Sagittarius: { cn: '射手', en: 'Sagittarius', date: '11.23-12.21' },
 };
 /**
  * 星期数据
@@ -7497,50 +7498,50 @@ var WEEKS_INFO = [
         name: '星期一',
         abbr: 'Mon',
         id: 1,
-        others: 'Day of the Moon.(月亮日)'
+        others: 'Day of the Moon.(月亮日)',
     },
     {
         key: 'Tuesday',
         name: '星期二',
         abbr: 'Tues',
         id: 2,
-        others: 'Day of the Mars.(火星日)'
+        others: 'Day of the Mars.(火星日)',
     },
     {
         key: 'Wednesday',
         name: '星期三',
         abbr: 'Wed',
         id: 3,
-        others: 'Day of the Mercury.(水星日)'
+        others: 'Day of the Mercury.(水星日)',
     },
     {
         key: 'Thursday',
         name: '星期四',
         abbr: 'Thur',
         id: 4,
-        others: 'Day of Jupiter.(木星日)'
+        others: 'Day of Jupiter.(木星日)',
     },
     {
         key: 'Friday',
         name: '星期五',
         abbr: 'Fri',
         id: 5,
-        others: 'Day of Venus.(金星日)'
+        others: 'Day of Venus.(金星日)',
     },
     {
         key: 'Saturday',
         name: '星期六',
         abbr: 'Sat',
         id: 6,
-        others: 'Day of Saturn.(土星日)'
+        others: 'Day of Saturn.(土星日)',
     },
     {
         key: 'Sunday',
         name: '星期日',
         abbr: 'Sun',
         id: 7,
-        others: 'Day of the Sun.(太阳日)'
-    }
+        others: 'Day of the Sun.(太阳日)',
+    },
 ];
 /**
  * 月份信息
@@ -7551,85 +7552,85 @@ var MONTH_INFO = [
         name: '一月',
         abbr: 'Jan',
         id: 1,
-        others: '寅.虎'
+        others: '寅.虎',
     },
     {
         key: 'February',
         name: '二月',
         abbr: 'Feb',
         id: 2,
-        others: '卯.兔'
+        others: '卯.兔',
     },
     {
         key: 'March',
         name: '三月',
         abbr: 'March',
         id: 3,
-        others: '辰.龙'
+        others: '辰.龙',
     },
     {
         key: 'April',
         name: '四月',
         abbr: 'Apr',
         id: 4,
-        others: '巳.蛇'
+        others: '巳.蛇',
     },
     {
         key: 'May',
         name: '五月',
         abbr: 'May',
         id: 5,
-        others: '午.马'
+        others: '午.马',
     },
     {
         key: 'June',
         name: '六月',
         abbr: 'Jun',
         id: 6,
-        others: '未.羊'
+        others: '未.羊',
     },
     {
         key: 'July',
         name: '七月',
         abbr: 'Jul',
         id: 7,
-        others: '申.猴'
+        others: '申.猴',
     },
     {
         key: 'August',
         name: '八月',
         abbr: 'Aug',
         id: 8,
-        others: '酉.鸡'
+        others: '酉.鸡',
     },
     {
         key: 'September',
         name: '九月',
         abbr: 'Sept',
         id: 9,
-        others: '戌.狗'
+        others: '戌.狗',
     },
     {
         key: 'October',
         name: '十月',
         abbr: 'Oct',
         id: 10,
-        others: '亥.猪'
+        others: '亥.猪',
     },
     {
         key: 'November',
         name: '十一月',
         abbr: 'Nov',
         id: 11,
-        others: '子.鼠'
+        others: '子.鼠',
     },
     {
         key: 'December',
         name: '十二月',
         abbr: 'Dec',
         id: 12,
-        others: '丑.牛'
-    }
+        others: '丑.牛',
+    },
 ];
 /**
  * 身份证省份
@@ -7669,7 +7670,7 @@ var ID_CARD_PROVINCE = {
     '71': '台湾',
     '81': '香港',
     '82': '澳门',
-    '91': '国外'
+    '91': '国外',
 };
 /**
  * 获取 16 位可读时间戳
@@ -7799,6 +7800,7 @@ function debounce(fn, delay) {
         clearTimeout(timer);
         timer = setTimeout(function () {
             // @ts-ignore
+            // eslint-disable-next-line prefer-rest-params
             fn.apply(this, arguments);
         }, delay);
     };
@@ -7818,6 +7820,7 @@ function throttle(fn, delay) {
             return;
         canRun = false;
         // @ts-ignore
+        // eslint-disable-next-line prefer-rest-params
         fn.apply(this, arguments);
         setTimeout(function () {
             canRun = true;
@@ -7852,7 +7855,7 @@ function curryIt(fn) {
 /**
  * 全局捕获异常
  * Example: `globalError((message, source, lineno, colno, error) => console.log('全局捕获异常'), false) => '全局捕获异常'`
- * @param {Function} fn (message, source, lineno, colno, error)
+ * @param {any} fn (message, source, lineno, colno, error)
  * @param {boolean} notShowConsole 是否不回显控制台
  * @returns
  */
@@ -7866,7 +7869,7 @@ function globalError(fn, notShowConsole) {
 }
 /**
  * 获取随机数字
- * Example: `getRandNum(1, 10) => 1~10之间的随机数，闭区间。`
+ * Example: `getRandNum(1, 10) => 1~10 之间的随机数，闭区间。`
  * @param min 最小值
  * @param max 最大值
  * @returns
@@ -7951,7 +7954,7 @@ function getBSColor(key) {
         'blue',
         'secondary',
         'default',
-        'grey'
+        'grey',
     ];
     key = keyList.includes(key) ? key : 'others';
     var colors = {
@@ -7971,7 +7974,7 @@ function getBSColor(key) {
         blue: '#007bff',
         secondary: '#6c757d',
         default: '#6c757d',
-        grey: '#6c757d'
+        grey: '#6c757d',
     };
     return colors[key];
 }
@@ -8188,8 +8191,7 @@ function union(paramA, paramB) {
     if (paramAType != 'object' && paramAType != 'array')
         return false;
     if (paramAType == 'object') {
-        return jsonClone(__assign(__assign({}, paramB), paramA // 以前一个为准
-        ));
+        return jsonClone(__assign(__assign({}, paramB), paramA));
     }
     else {
         return jsonClone(arraySet(__spreadArray(__spreadArray([], __read(paramA), false), __read(paramB), false)));
@@ -8290,7 +8292,7 @@ function logRunTime(fn, timeKey) {
 function Logger() {
     function _logger(value, type) {
         if (type === void 0) { type = 'default'; }
-        console.log("\n%c==========> ", "color:".concat(getBSColor(type)), value, '\n');
+        console.log('\n%c==========> ', "color:".concat(getBSColor(type)), value, '\n');
     }
     // @ts-ignore
     var result = {};
@@ -8419,7 +8421,7 @@ function ms(str) {
     // 外部
     var factor = {
         ms: 1,
-        s: 1000
+        s: 1000,
     };
     factor.m = factor.s * 60;
     factor.h = factor.m * 60;
@@ -8448,20 +8450,20 @@ function ms(str) {
  * Example:
  * `transferFileToBase64(file, 'application/pdf;charset=utf-8', (res) => console.log({ res })) => result object`
  * `transferFileToBase64('test', 'text/plain', (res) => console.log({ res })) => result object`
- * @param content
+ * @param content BlobPart | any
  * @param contentType
  * @param callBack
  * @returns
  */
 function transferFileToBase64(content, contentType, callBack) {
     var blob = new Blob([content], {
-        type: contentType
+        type: contentType,
     });
     var reader = new FileReader();
     reader.readAsDataURL(blob);
     reader.addEventListener('loadend', function () {
         callBack === null || callBack === void 0 ? void 0 : callBack({
-            result: reader === null || reader === void 0 ? void 0 : reader.result
+            result: reader === null || reader === void 0 ? void 0 : reader.result,
             // // @ts-ignore
             // baseCode: Buffer?.from(reader?.result?.split('base64,')[1], 'base64')
         });
@@ -8469,7 +8471,7 @@ function transferFileToBase64(content, contentType, callBack) {
 }
 /**
  * 检查是否为 idCard string 身份证
- * 支持 15 、18 位
+ * 支持 15 、 18 位
  * Example:
  * `checkIdCard('350424870506202') => true`
  * `checkIdCard('003424870506202') => false`
@@ -8541,7 +8543,7 @@ function transferIdCard(idCard) {
         gender: sex === '男' ? 1 : 0,
         province: province,
         animal: animal,
-        birthday: birthday
+        birthday: birthday,
     };
 }
 /**
@@ -8557,7 +8559,7 @@ function transferMoney(n) {
     var digit = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖'];
     var unit = [
         ['元', '万', '亿'],
-        ['', '拾', '佰', '仟']
+        ['', '拾', '佰', '仟'],
     ];
     var head = n < 0 ? '欠' : '';
     n = Math.abs(n);
@@ -8635,7 +8637,7 @@ function Speaker(text, lang, volume, pitch, rate) {
         },
         stop: function () {
             window.speechSynthesis.cancel();
-        }
+        },
     };
 }
 /**
@@ -8662,7 +8664,7 @@ function getConstellation(date) {
     var defaultV = {
         cn: '未知',
         en: 'unknown',
-        date: date
+        date: date,
     };
     if (!date) {
         return defaultV;
@@ -8802,9 +8804,11 @@ function setEventListener(eventKey, foo, dom) {
  */
 function H5Resize(downCb, upCb) {
     // 当软件键盘弹起会改变当前 window.innerHeight
-    // 监听这个值变化 [downCb 缩回的回调、upCb 弹起的回调]
+    // 监听这个值变化 [downCb 缩回的回调、 upCb 弹起的回调]
     var clientHeight = window.innerHeight;
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     downCb = typeof downCb === 'function' ? downCb : function () { };
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     upCb = typeof upCb === 'function' ? upCb : function () { };
     var H5ResizeFoo = function () {
         var height = window.innerHeight;
@@ -8893,10 +8897,11 @@ function getMonthInfo(n) {
  * @Author: HxB
  * @Date: 2022-04-26 15:45:48
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-10 10:17:32
+ * @LastEditTime: 2023-03-13 16:28:17
  * @Description: 字符串常用方法
  * @FilePath: \js-xxx\src\String\index.ts
  */
+// eslint-disable-next-line spellcheck/spell-checker, zob/comment
 /**
  * 字符转 unicode
  * Example: `unicode2str("我是老A") => '\\u6211\\u662f\\u8001a'`
@@ -8906,6 +8911,7 @@ function getMonthInfo(n) {
 function unicode2str(value) {
     return escape(value).toLocaleLowerCase().replace(/%u/gi, '\\u');
 }
+// eslint-disable-next-line spellcheck/spell-checker, zob/comment
 /**
  * unicode 转字符
  * Example: `str2unicode("\\u6211\\u662f\\u8001a") => '我是老a'`
@@ -8940,7 +8946,7 @@ function trim(str, type) {
             return (str = str.replace(/\s/g, ''));
         case 4:
         case 'pro':
-            return (str = str.replace(/(^\s*)|(\s*$)|\s(?=\s)/g, '')); //去除前后空格并将中间的单个空格保留，多个空格变为一个空格。
+            return (str = str.replace(/(^\s*)|(\s*$)|\s(?=\s)/g, '')); // 去除前后空格并将中间的单个空格保留，多个空格变为一个空格。
         default:
             return str;
     }
@@ -8982,6 +8988,7 @@ function atob(str) {
     // return atob(str.replace('-_', '+/'));
     return Buffer.from(str, 'base64').toString('utf8');
 }
+// eslint-disable-next-line spellcheck/spell-checker, zob/comment
 /**
  * 字符串脱敏(biugle 自定义规则)
  * Example:
@@ -9145,6 +9152,7 @@ function isPhoneNum(value) {
     var regPhoneNum = /^(0|86|17951)?(1[3-9][0-9])[0-9]{8}$/;
     return regPhoneNum.test(value);
 }
+// eslint-disable-next-line zob/comment
 /**
  * 检查是否为 char string 用户名规范(字母数字下划线或中文)
  * Example:
@@ -9175,17 +9183,21 @@ function isStrongPassWord(value) {
     var pwChar = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).{8,16}/;
     return pwChar.test(value);
 }
+// eslint-disable-next-line zob/comment
 /**
  * 检查是否为 carCode string 车牌号
  * Example:
  * `isCarCode('粤B68928') => true`
+ * `isCarCode('粤-B68928') => true`
+ * `isCarCode('粤 B68928') => true`
  * `isCarCode('粤B.68928') => true`
- * `isCarCode('广东B12345') => false`
+ * `isCarCode('粤B 68928') => true`
+ * `isCarCode('广东 B12345') => false`
  * @param value
  * @returns
  */
 function isCarCode(value) {
-    var regCarCode = /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[\.]{0,1}[A-Z0-9]{4,5}[A-Z0-9挂学警港澳]{1}$/;
+    var regCarCode = /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[\s\-]{0,1}[A-Z]{1}[\.\s]{0,1}[A-Z0-9]{4,5}[A-Z0-9挂学警港澳]{1}$/;
     return regCarCode.test(value);
 }
 /**
@@ -9298,7 +9310,7 @@ function slugify(str, replacement) {
 function truncate(txt, width, options) {
     var defOptions = {
         ellipsis: '...',
-        separator: undefined
+        separator: undefined,
     };
     var tempOpts = union(options !== null && options !== void 0 ? options : {}, defOptions);
     var ellipsis = tempOpts.ellipsis, separator = tempOpts.separator;
@@ -9354,7 +9366,7 @@ function formatJSON(value) {
 function formatDate(date, fmt, weeks) {
     if (fmt === void 0) { fmt = 'yyyy-mm-dd hh:ii:ss'; }
     if (weeks === void 0) { weeks = [7, 1, 2, 3, 4, 5, 6]; }
-    // date.replace(/-/g, '/'); // 虽然 win 浏览器两种符号都可以，但是需兼容 ios。
+    // date.replace(/-/g, '/'); // 虽然 win 浏览器两种符号都可以，但是需兼容 ios 。
     date = date ? new Date(date) : new Date();
     var o = {
         'm+': date.getMonth() + 1,
@@ -9364,7 +9376,7 @@ function formatDate(date, fmt, weeks) {
         's+': date.getSeconds(),
         Q: Math.floor((date.getMonth() + 3) / 3),
         S: "".concat(date.getMilliseconds()).padStart(3, '0'),
-        W: weeks[date.getDay()]
+        W: weeks[date.getDay()],
     };
     if (/(y+)/.test(fmt)) {
         fmt = fmt.replace(RegExp.$1, "".concat(date.getFullYear()).substr(4 - RegExp.$1.length));
@@ -9387,7 +9399,7 @@ function formatDate(date, fmt, weeks) {
  * @returns
  */
 function calcDate(date, calcStrOrArr) {
-    // date.replace(/-/g, '/'); // 虽然 win 浏览器两种符号都可以，但是需兼容 ios。
+    // date.replace(/-/g, '/'); // 虽然 win 浏览器两种符号都可以，但是需兼容 ios 。
     var oldDate = date ? new Date(date) : new Date();
     if (Array.isArray(calcStrOrArr)) {
         calcStrOrArr.forEach(function (calcStr) {
@@ -9465,7 +9477,7 @@ function getDateDifference(oldDate, nowDate, type) {
                 days: Math.floor(diffTime / 1000 / 3600 / 24),
                 hours: Math.floor((diffTime / 1000 / 60 / 60) % 24),
                 minutes: Math.floor((diffTime / 1000 / 60) % 60),
-                seconds: Math.floor((diffTime / 1000) % 60)
+                seconds: Math.floor((diffTime / 1000) % 60),
             };
     }
 }
@@ -9480,7 +9492,7 @@ function getDateDifference(oldDate, nowDate, type) {
 function timeSince(date, longAgo, formatter) {
     if (longAgo === void 0) { longAgo = false; }
     if (formatter === void 0) { formatter = 'yyyy-mm-dd hh:ii:ss'; }
-    // date.replace(/-/g, '/'); // 虽然 win 浏览器两种符号都可以，但是需兼容 ios。
+    // date.replace(/-/g, '/'); // 虽然 win 浏览器两种符号都可以，但是需兼容 ios 。
     date = date ? new Date(date) : new Date();
     var dateTS = new Date(date).getTime();
     var seconds = Math.floor((new Date().getTime() - dateTS) / 1000);
@@ -9584,7 +9596,7 @@ function getDateList(n, type, date) {
         day: 'yyyy-mm-dd',
         hour: 'yyyy-mm-dd hh:00',
         minute: 'yyyy-mm-dd hh:ii',
-        second: 'yyyy-mm-dd hh:ii:ss'
+        second: 'yyyy-mm-dd hh:ii:ss',
     };
     var tempN = Math.abs(n);
     for (var i = 0; i < tempN; i++) {
@@ -9608,7 +9620,7 @@ function getDateTime(date) {
  * 获取标准时间 UTC
  * 适用于本地时间不准确或者获取其他时区时间的情况
  * Example: `getUTCTime(8) => 中国标准时间`
- * @param timezone 时区数字，东八区为 8，西八区为 -8。
+ * @param timezone 时区数字，东八区为 8，西八区为 -8 。
  * @returns
  */
 function getUTCTime(timezone) {
@@ -9657,8 +9669,7 @@ function compareDate(dateA, dateB) {
  * @returns
  */
 function countdown(seconds, callback, finishCallBack) {
-    var timer;
-    timer = setInterval(function () {
+    var timer = setInterval(function () {
         console.log('js-xxx:countdown-timer-count', seconds);
         try {
             callback && callback(seconds);
@@ -9811,7 +9822,7 @@ function scrollYTo(targetVal, callback, dom) {
     if (dom === void 0) { dom = document.documentElement; }
     var customVal = {
         start: 0,
-        end: dom.scrollHeight - dom.clientHeight
+        end: dom.scrollHeight - dom.clientHeight,
     };
     targetVal = (_a = customVal[targetVal]) !== null && _a !== void 0 ? _a : targetVal;
     if (callback && targetVal != dom.scrollTop) {
@@ -9873,7 +9884,7 @@ function scrollXTo(targetVal, callback, dom) {
     if (dom === void 0) { dom = document.documentElement; }
     var customVal = {
         start: 0,
-        end: dom.scrollWidth - dom.clientWidth
+        end: dom.scrollWidth - dom.clientWidth,
     };
     targetVal = (_a = customVal[targetVal]) !== null && _a !== void 0 ? _a : targetVal;
     if (callback && targetVal != dom.scrollLeft) {
@@ -9954,7 +9965,7 @@ function getViewportSize() {
     if (window.innerWidth) {
         return {
             w: window.innerWidth,
-            h: window.innerHeight
+            h: window.innerHeight,
         };
     }
     else {
@@ -9963,14 +9974,14 @@ function getViewportSize() {
             // 怪异模式
             return {
                 w: document.body.clientWidth,
-                h: document.body.clientHeight
+                h: document.body.clientHeight,
             };
         }
         else {
             // 标准模式
             return {
                 w: document.documentElement.clientWidth,
-                h: document.documentElement.clientHeight
+                h: document.documentElement.clientHeight,
             };
         }
     }
@@ -10042,8 +10053,8 @@ function download(link, name) {
  * Example:
  * `downloadContent('test.txt', 'test txt content') => 下载返回的流`
  * `downloadContent('test.json', JSON.stringify({content: 'test json'})) => 下载返回的流`
- * @param name 文件名称(需带后缀)，默认 txt。
- * @param content 内容
+ * @param name 文件名称(需带后缀)，默认 txt 。
+ * @param content 内容 BlobPart | any
  * @returns
  */
 function downloadContent(name, content) {
@@ -10186,7 +10197,7 @@ function formatURLSearchParams(obj, hasBrackets, hasIndex) {
  * @Author: HxB
  * @Date: 2022-04-26 16:24:34
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-10 09:43:49
+ * @LastEditTime: 2023-03-13 15:39:44
  * @Description: 数学常用方法
  * @FilePath: \js-xxx\src\Math\index.ts
  */
@@ -10200,16 +10211,21 @@ function formatURLSearchParams(obj, hasBrackets, hasIndex) {
  * @returns
  */
 function div(div1, div2) {
-    var div1FloatLen = 0, div2FloatLen = 0, tempDiv1 = div1.toString(), tempDiv2 = div2.toString();
+    var div1FloatLen = 0, div2FloatLen = 0;
+    var tempDiv1 = div1.toString(), tempDiv2 = div2.toString();
     try {
-        div1FloatLen = tempDiv1.split('.')[1].length; //获取小数长度
+        div1FloatLen = tempDiv1.split('.')[1].length; // 获取小数长度
     }
-    catch (e) { }
+    catch (e) {
+        /* empty */
+    }
     try {
         div2FloatLen = tempDiv2.split('.')[1].length;
     }
-    catch (e) { }
-    return times(Number(tempDiv1.replace('.', '')) / Number(tempDiv2.replace('.', '')), Math.pow(10, div2FloatLen - div1FloatLen)); //转换整数计算再使用科学计数法转换小数位
+    catch (e) {
+        /* empty */
+    }
+    return times(Number(tempDiv1.replace('.', '')) / Number(tempDiv2.replace('.', '')), Math.pow(10, div2FloatLen - div1FloatLen)); // 转换整数计算再使用科学计数法转换小数位
 }
 /**
  * 乘法函数
@@ -10221,15 +10237,20 @@ function div(div1, div2) {
  * @returns
  */
 function times(mul1, mul2) {
-    var mulFloatLen = 0, tempMul1 = mul1.toString(), tempMul2 = mul2.toString();
+    var mulFloatLen = 0;
+    var tempMul1 = mul1.toString(), tempMul2 = mul2.toString();
     try {
         mulFloatLen += tempMul1.split('.')[1].length;
     }
-    catch (e) { }
+    catch (e) {
+        /* empty */
+    }
     try {
         mulFloatLen += tempMul2.split('.')[1].length;
     }
-    catch (e) { }
+    catch (e) {
+        /* empty */
+    }
     return (Number(tempMul1.replace('.', '')) * Number(tempMul2.replace('.', ''))) / Math.pow(10, mulFloatLen);
 }
 /**
@@ -10246,11 +10267,15 @@ function add(add1, add2) {
     try {
         add1FloatLen = add1.toString().split('.')[1].length;
     }
-    catch (e) { }
+    catch (e) {
+        /* empty */
+    }
     try {
         add2FloatLen = add2.toString().split('.')[1].length;
     }
-    catch (e) { }
+    catch (e) {
+        /* empty */
+    }
     multiple = Math.pow(10, Math.max(add1FloatLen, add2FloatLen));
     return (times(add1, multiple) + times(add2, multiple)) / multiple;
 }
@@ -10268,11 +10293,15 @@ function sub(sub1, sub2) {
     try {
         sub1FloatLen = sub1.toString().split('.')[1].length;
     }
-    catch (e) { }
+    catch (e) {
+        /* empty */
+    }
     try {
         sub2FloatLen = sub2.toString().split('.')[1].length;
     }
-    catch (e) { }
+    catch (e) {
+        /* empty */
+    }
     multiple = Math.pow(10, Math.max(sub1FloatLen, sub2FloatLen));
     return parseFloat("".concat((times(sub1, multiple) - times(sub2, multiple)) / multiple));
 }
@@ -10394,7 +10423,7 @@ function sendNotification(msg, title, options) {
  * @Author: HxB
  * @Date: 2022-04-26 16:24:47
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-08-31 16:48:15
+ * @LastEditTime: 2023-03-13 15:41:51
  * @Description: 常用数字相关方法
  * @FilePath: \js-xxx\src\Number\index.ts
  */
@@ -10409,42 +10438,44 @@ function sendNotification(msg, title, options) {
  * @returns
  */
 function round(number, d) {
-    var tempNum = number + ''; //example-0.155
+    var tempNum = number + ''; // example-0.155
     d = !d ? 0 : d;
     if (d == 0) {
-        //保留0位小数直接取整就好了
+        // 保留 0 位小数直接取整就好了
         return Math.round(number);
     }
     if (tempNum.indexOf('.') === -1) {
         tempNum += '.';
     }
-    tempNum += new Array(d + 1).join('0'); //-0.15500
+    tempNum += new Array(d + 1).join('0'); // -0.15500
     if (new RegExp('^(-|\\+)?(\\d+(\\.\\d{0,' + (d + 1) + '})?)\\d*$').test(tempNum)) {
         //  【/^(-|\+)?(\d+(\.\d{0,3})?)\d*$/】
-        var tempStr = '0' + RegExp.$2, pm = RegExp.$1, a = RegExp.$3.length, flag = true; //tempStr：数值部分（0.155）加0是为了防止产生进位，pm：正负号（-），a：小数点+小数（.155）长度为上一条正则表达式得出的结果（此处为{0,3}），flag：首位0是否未产生进位。
+        var tempStr = '0' + RegExp.$2, 
+        // eslint-disable-next-line prefer-const
+        pm = RegExp.$1, a = RegExp.$3.length, flag = true; // tempStr：数值部分（0.155）加 0 是为了防止产生进位，pm：正负号（-），a：小数点+小数（.155）长度为上一条正则表达式得出的结果（此处为{0,3}），flag：首位 0 是否未产生进位。
         if (a == d + 1 + 1) {
-            //一个1为小数点，一个1为需要多一位数字才能判断，此处判断是否有足够的数字来得出结果。
-            a = tempStr.match(/\d/g); //["0", "0", "1", "5", "5"]
+            // 一个 1 为小数点，一个 1 为需要多一位数字才能判断，此处判断是否有足够的数字来得出结果。
+            a = tempStr.match(/\d/g); // ["0", "0", "1", "5", "5"]
             var aLen = a.length;
             if (parseInt(a[aLen - 1]) > 4) {
-                //保留小数的后一位是否大于4
+                // 保留小数的后一位是否大于 4
                 for (var i = aLen - 2; i >= 0; i--) {
                     a[i] = parseInt(a[i]) + 1;
                     if (a[i] == 10) {
                         a[i] = 0;
-                        flag = i != 1; //判断首位0是否未产生进位，false为产生了进位，后续不裁剪首位0（因为i==1时，首位0发生了变化，0变为1）。
+                        flag = i != 1; // 判断首位 0 是否未产生进位，false 为产生了进位，后续不裁剪首位 0（因为 i==1 时，首位 0 发生了变化，0 变为 1）。
                     }
                     else
                         break;
                 }
             }
-            tempStr = a.join('').replace(new RegExp('(\\d+)(\\d{' + d + '})\\d$'), '$1.$2'); //【/(\d+)(\d{2})\d$/】$1至少包含一个数字，$2必须为保留的小数位，结尾必须有一个数字，所以如果00155，d=2,结果为00.15，若d=1，则结果为001.5。
+            tempStr = a.join('').replace(new RegExp('(\\d+)(\\d{' + d + '})\\d$'), '$1.$2'); // 【/(\d+)(\d{2})\d$/】$1 至少包含一个数字，$2 必须为保留的小数位，结尾必须有一个数字，所以如果 00155，d=2,结果为 00.15，若 d=1，则结果为 001.5 。
         }
         if (flag) {
-            //如果首位0未产生进位，去掉多余的0。
+            // 如果首位 0 未产生进位，去掉多余的 0 。
             tempStr = tempStr.substr(1);
         }
-        return parseFloat((pm + tempStr).replace(/\.$/, '')); //返回浮点数，以防万一去掉结尾的小数点（.）。
+        return parseFloat((pm + tempStr).replace(/\.$/, '')); // 返回浮点数，以防万一去掉结尾的小数点（.）。
     }
 }
 /**
@@ -10506,7 +10537,7 @@ function formatNumber(value) {
  * @Author: HxB
  * @Date: 2022-04-26 15:05:14
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-09-07 15:14:11
+ * @LastEditTime: 2023-03-13 15:42:13
  * @Description: 对象相关方法
  * @FilePath: \js-xxx\src\Object\index.ts
  */
@@ -10523,7 +10554,8 @@ function getV(defaultResult) {
         args[_i - 1] = arguments[_i];
     }
     return args.length >= 2
-        ? args.reduce(function (a, b) { return (a && a.hasOwnProperty(b) ? a[b] : defaultResult); })
+        ? // eslint-disable-next-line no-prototype-builtins, indent
+            args.reduce(function (a, b) { return (a && a.hasOwnProperty(b) ? a[b] : defaultResult); })
         : defaultResult;
 }
 /**
@@ -10544,7 +10576,8 @@ function getVar(data, keys, defaultResult) {
     // 不要使用 replace(/\[(\w+)\]/g, '.$1') 去替换，哪怕加个前后 \. 的正则也无法兼容所有情况，应该交给使用者去考虑，因为确实有 [] 做 key 的情况。
     var args = (_a = "".concat(keys)) === null || _a === void 0 ? void 0 : _a.split('.');
     return args && (args === null || args === void 0 ? void 0 : args.length)
-        ? args.reduce(function (a, b) { return (a && a.hasOwnProperty(b) ? a[b] : defaultResult); }, data)
+        ? // eslint-disable-next-line no-prototype-builtins, indent
+            args.reduce(function (a, b) { return (a && a.hasOwnProperty(b) ? a[b] : defaultResult); }, data)
         : defaultResult;
 }
 /**
@@ -10633,7 +10666,7 @@ function deepClone(data, hash) {
  * @Author: HxB
  * @Date: 2022-04-26 14:53:39
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-10 14:56:03
+ * @LastEditTime: 2023-03-13 15:43:00
  * @Description: 因项目需要常用方法，不管任何项目，都放到一起。注意甄别，没有复用意义的方法就不要添加了。
  * @FilePath: \js-xxx\src\Others\index.ts
  */
@@ -10698,14 +10731,14 @@ function getUserAgent() {
         Opera: /Presto/,
         Safari: /Version\/([\d.]+).*Safari/,
         '360': /360SE/,
-        QQBrowser: /QQ/
+        QQBrowser: /QQ/,
     };
     var deviceReg = {
         iPhone: /iPhone/,
         iPad: /iPad/,
         Android: /Android/,
         Windows: /Windows/,
-        Mac: /Macintosh/
+        Mac: /Macintosh/,
     };
     var userAgentStr = navigator.userAgent;
     var userAgentObj = {
@@ -10713,7 +10746,7 @@ function getUserAgent() {
         browserVersion: '',
         osName: '',
         osVersion: '',
-        deviceName: '' // 设备名称
+        deviceName: '', // 设备名称
     };
     for (var key in browserReg) {
         if (browserReg[key].test(userAgentStr)) {
@@ -10881,7 +10914,7 @@ function emitKeyboardEvent(eventType, keyCode) {
     var myEvent = new KeyboardEvent(eventType, {
         bubbles: true,
         cancelable: true,
-        keyCode: keyCode
+        keyCode: keyCode,
     });
     document.body.dispatchEvent(myEvent);
 }
@@ -10991,7 +11024,7 @@ function formatRh(input, options) {
         format: ['阴性', '阳性'],
         default: '-',
         negative: ['阴性', '-', '**d**'],
-        positive: ['阳性', '+', '**D**']
+        positive: ['阳性', '+', '**D**'],
     };
     var _a = __assign(__assign({}, defaultOptions), options), negative = _a.negative, positive = _a.positive, format = _a.format, def = _a.default;
     if (negative.includes(input)) {
@@ -11019,7 +11052,7 @@ function isRhNegative(input) {
 }
 /**
  * 获取血型枚举信息
- * Example: `getBloodGroup('A') => { value: 'A', label: 'A型', color: '#1890FF', lower: 'a', upper: 'A' }`
+ * Example: `getBloodGroup('A') => { value: 'A', label: 'A 型', color: '#1890FF', lower: 'a', upper: 'A' }`
  * @param bloodGroup
  * @returns
  */
@@ -11032,36 +11065,36 @@ function getBloodGroup(bloodGroup) {
             label: 'A型',
             color: '#1890FF',
             lower: 'a',
-            upper: 'A'
+            upper: 'A',
         },
         B: {
             value: 'B',
             label: 'B型',
             color: '#36AE7C',
             lower: 'b',
-            upper: 'B'
+            upper: 'B',
         },
         O: {
             value: 'O',
             label: 'O型',
             color: '#E64848',
             lower: 'o',
-            upper: 'O'
+            upper: 'O',
         },
         AB: {
             value: 'AB',
             label: 'AB型',
             color: '#A575F2',
             lower: 'a',
-            upper: 'A'
+            upper: 'A',
         },
         unknown: {
             value: 'unknown',
             label: '未知',
             color: '#CB9D83',
             lower: 'unknown',
-            upper: 'UNKNOWN'
-        }
+            upper: 'UNKNOWN',
+        },
     };
     return bloodGroups[bloodGroup];
 }
@@ -11093,14 +11126,7 @@ function dataTo(key, value) {
     }
 }
 
-/*
- * @Author: HxB
- * @Date: 2022-04-26 15:18:13
- * @LastEditors: DoubleAm
- * @LastEditTime: 2022-08-03 17:20:15
- * @Description: Promise 常用方法，或者扩展方法。
- * @FilePath: \js-xxx\src\Promise\index.ts
- */
+/* eslint-disable @typescript-eslint/ban-types */
 /**
  * 睡眠
  * Example: `await sleep(1000) => 等待 1000 毫秒再执行后面的`
@@ -11281,7 +11307,7 @@ var CONTENT_TYPES = {
     binary: 'application/octet-stream',
     form: 'application/x-www-form-urlencoded',
     file: 'multipart/form-data',
-    utf8: 'charset=utf-8'
+    utf8: 'charset=utf-8',
 };
 /**
  * Http Method
@@ -11359,7 +11385,7 @@ function qsParse(url, key) {
     url = url !== null && url !== void 0 ? url : window.location.search;
     var filename = pathname.substring(pathname.lastIndexOf('/') + 1);
     var paramMap = {
-        '/': filename !== null && filename !== void 0 ? filename : undefined
+        '/': filename !== null && filename !== void 0 ? filename : undefined,
     };
     var querystring = url.indexOf('?') === 0 ? url.substring(1) : url;
     if (querystring.length !== 0) {
@@ -11451,6 +11477,7 @@ function xAjax(method, url, options) {
     }
     else {
         // @ts-ignore
+        // eslint-disable-next-line no-undef
         xhr = new ActiveXObject('Microsoft.XMLHttp');
     }
     xhr.onreadystatechange = function () {
@@ -11503,10 +11530,10 @@ function xFetch(method, url, options) {
     }
     return fetch(url, {
         headers: {
-            'content-type': (_a = options === null || options === void 0 ? void 0 : options.contentType) !== null && _a !== void 0 ? _a : 'application/x-www-form-urlencoded;charset=UTF-8'
+            'content-type': (_a = options === null || options === void 0 ? void 0 : options.contentType) !== null && _a !== void 0 ? _a : 'application/x-www-form-urlencoded;charset=UTF-8',
         },
         method: method,
-        body: options === null || options === void 0 ? void 0 : options.data
+        body: options === null || options === void 0 ? void 0 : options.data,
     });
 }
 /**
@@ -11600,7 +11627,7 @@ function _tempGet(key, storeType) {
 /**
  * 获取 localStorage
  * Example: `localStorageGet("key") => 处理过后的 value，不需要再 decode`
- * @param key 存储key
+ * @param key 存储 key
  * @returns
  */
 function localStorageGet(key) {
@@ -11609,8 +11636,8 @@ function localStorageGet(key) {
 /**
  * 设置 localStorage
  * Example: `localStorageSet("key", "value") => 存储时不需要处理数据，value === null|undefined 清除数据。(boolean)`
- * @param key 存储key
- * @param value 存储value，value === null|undefined 清除数据。
+ * @param key 存储 key
+ * @param value 存储 value，value === null|undefined 清除数据。
  * @returns
  */
 function localStorageSet(key, value) {
@@ -11619,7 +11646,7 @@ function localStorageSet(key, value) {
 /**
  * 获取 sessionStorage
  * Example: `sessionStorageGet("key") => 处理过后的 value，不需要再 decode`
- * @param key 存储key
+ * @param key 存储 key
  * @returns
  */
 function sessionStorageGet(key) {
@@ -11628,14 +11655,16 @@ function sessionStorageGet(key) {
 /**
  * 设置 sessionStorage
  * Example: `sessionStorageSet("key", "value") => 存储时不需要处理数据，value === null|undefined 清除数据。`
- * @param key 存储key
- * @param value 存储value，value === null|undefined 清除数据。
+ * @param key 存储 key
+ * @param value 存储 value，value === null|undefined 清除数据。
  * @returns
  */
 function sessionStorageSet(key, value) {
     return _tempSet(key, value, 'S');
 }
 
+/* eslint-disable @typescript-eslint/ban-types */
+/* eslint-disable no-undef */
 /*
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
