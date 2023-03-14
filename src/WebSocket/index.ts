@@ -1,10 +1,8 @@
-/* eslint-disable @typescript-eslint/ban-types */
-/* eslint-disable no-undef */
 /*
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-09-09 11:01:46
+ * @LastEditTime: 2023-03-14 11:18:41
  * @Description: websocket
  * @FilePath: \js-xxx\src\WebSocket\index.ts
  */
@@ -12,6 +10,7 @@ let xWebSocket: WebSocket;
 // 用于设置 websocket 连接超时问题 timeout
 let xWebSocketTimer: any;
 
+// eslint-disable-next-line spellcheck/spell-checker
 /**
  * 初始化 websocket
  * Example: `initWebSocket({ url: 'ws://localhost:8080/ws', timeout: 30000, onOpen: () => {}, onMessage: () => {}, onClose: () => {}, onError: () => {}, reconnect: {} })`
@@ -20,15 +19,15 @@ let xWebSocketTimer: any;
  */
 export function initWebSocket(options: {
   url: string;
-  onOpen?: Function;
-  onClose?: Function;
-  onMessage?: Function;
-  onError?: Function;
+  onOpen?: any;
+  onClose?: any;
+  onMessage?: any;
+  onError?: any;
   timeout?: number;
   reconnect?: {
     times: number;
     delay?: number;
-    onReconnect?: Function;
+    onReconnect?: any;
   };
 }): WebSocket | undefined {
   xWebSocket = new WebSocket(options.url);
@@ -117,10 +116,10 @@ export function getWebSocket(): WebSocket | undefined {
 /**
  * 设置 websocket binaryType default: 'blob'
  * Example: `setWsBinaryType() => true/false`
- * @param binaryType 二进制类型 default: 'arraybuffer'
+ * @param binaryType BinaryType 二进制类型 default: 'arraybuffer'
  * @returns
  */
-export function setWsBinaryType(binaryType: BinaryType = 'arraybuffer'): boolean {
+export function setWsBinaryType(binaryType: any = 'arraybuffer'): boolean {
   if (!xWebSocket) {
     return false;
   }

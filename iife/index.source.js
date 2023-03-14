@@ -108,8 +108,8 @@ var $xxx = (function (exports) {
      * @Author: HxB
      * @Date: 2022-04-26 14:10:35
      * @LastEditors: DoubleAm
-     * @LastEditTime: 2022-09-09 11:39:07
-     * @Description: 类型校验等方法
+     * @LastEditTime: 2023-03-14 11:15:16
+     * @Description: 类型校验等函数
      * @FilePath: \js-xxx\src\Types\index.ts
      */
     /**
@@ -573,7 +573,7 @@ var $xxx = (function (exports) {
      * @Date: 2022-04-26 16:29:18
      * @LastEditors: DoubleAm
      * @LastEditTime: 2022-05-17 17:50:44
-     * @Description: Cookies 常用方法
+     * @Description: Cookies 常用函数
      * @FilePath: \js-xxx\src\Cookies\index.ts
      */
     /**
@@ -7322,8 +7322,8 @@ var $xxx = (function (exports) {
      * @Author: HxB
      * @Date: 2022-04-26 15:54:41
      * @LastEditors: DoubleAm
-     * @LastEditTime: 2023-03-10 10:20:35
-     * @Description: 加密相关方法 依赖 crypto-js
+     * @LastEditTime: 2023-03-13 18:30:58
+     * @Description: 加密相关函数 依赖 crypto-js
      * @FilePath: \js-xxx\src\Crypto\index.ts
      */
     // 十六位十六进制数作为密钥
@@ -7333,7 +7333,7 @@ var $xxx = (function (exports) {
     // 密钥测试正则表达式
     var SECRET_KEY_REG = /^[0-9a-fA-F]{16}$/i;
     /**
-     * 加密方法
+     * 加密函数
      * 防君子不防小人，也可以通过后台获取密钥。
      * Example:
      * `encrypt("value") => 加密后的字符串`
@@ -7371,8 +7371,9 @@ var $xxx = (function (exports) {
         });
         return encrypted.ciphertext.toString();
     }
+    // eslint-disable-next-line spellcheck/spell-checker
     /**
-     * 解密方法
+     * 解密函数
      * 防君子不防小人，也可以通过后台获取密钥。
      * Example:
      * `decrypt("加密后的字符串") => 解密后的字符串`
@@ -7409,7 +7410,7 @@ var $xxx = (function (exports) {
         return jsonDecode ? JSON.parse(result) : result;
     }
     /**
-     * md5 加密方法
+     * md5 加密函数
      * Example: `md5("value") => 加密后的字符串`
      * @param str 需要加密的字符串
      * @returns
@@ -7418,7 +7419,7 @@ var $xxx = (function (exports) {
         return CryptoJS.MD5(str).toString();
     }
     /**
-     * sha1 加密方法
+     * sha1 加密函数
      * Example: `sha1("value") => 加密后的字符串`
      * @param str 需要加密的字符串
      * @returns
@@ -7427,7 +7428,7 @@ var $xxx = (function (exports) {
         return CryptoJS.SHA1(str).toString();
     }
     /**
-     * sha256 加密方法
+     * sha256 加密函数
      * Example: `sha256("value") => 加密后的字符串`
      * @param str 需要加密的字符串
      * @returns
@@ -7436,7 +7437,7 @@ var $xxx = (function (exports) {
         return CryptoJS.SHA256(str).toString();
     }
     /**
-     * base64 加密方法
+     * base64 加密函数
      * 使用 url 中时建议使用 encodeURIComponent 再次编码，因为单独 + 号在 url 中会被解析成空格。
      * 使用 encodeURIComponent 会把 + 解析为 %2B 与空格 %20 区分
      * Example:
@@ -7452,7 +7453,7 @@ var $xxx = (function (exports) {
         return replaceChar ? result.replace(/\+\//g, '-_').replace(/\=/g, '') : result;
     }
     /**
-     * base64 解密方法
+     * base64 解密函数
      * Example: `base64Decode("加密后的字符串") => 解密后的字符串`
      * @param str 需要加密的字符串
      * @returns
@@ -7709,7 +7710,7 @@ var $xxx = (function (exports) {
      */
     function empty(variable) {
         if (typeof variable === 'boolean') {
-            return false; // 此处方法定义布尔型不算空
+            return false; // 此处函数定义布尔型不算空
         }
         if (variable === 'null') {
             return true; // 检验字符串类型的 null
@@ -7792,7 +7793,7 @@ var $xxx = (function (exports) {
     /**
      * 防抖函数-最后一次有效（抢购）
      * Example: `debounce(() => {}, 1000) => 防抖执行`
-     * @param fn 执行的方法
+     * @param fn 执行的函数
      * @param delay 延迟时间
      * @returns
      */
@@ -7811,7 +7812,7 @@ var $xxx = (function (exports) {
     /**
      * 节流函数-第一次有效（游戏开枪间隔）
      * Example: `throttle(() => {}, 1000) => 节流执行`
-     * @param fn 执行的方法
+     * @param fn 执行的函数
      * @param delay 延迟时间
      * @returns
      */
@@ -7857,16 +7858,16 @@ var $xxx = (function (exports) {
     }
     /**
      * 全局捕获异常
-     * Example: `globalError((message, source, lineno, colno, error) => console.log('全局捕获异常'), false) => '全局捕获异常'`
-     * @param {any} fn (message, source, lineno, colno, error)
+     * Example: `globalError((message, source, lineNo, colNo, error) => console.log('全局捕获异常'), false) => '全局捕获异常'`
+     * @param {any} fn (message, source, lineNo, colNo, error)
      * @param {boolean} notShowConsole 是否不回显控制台
      * @returns
      */
     function globalError(fn, notShowConsole) {
         if (notShowConsole === void 0) { notShowConsole = true; }
-        window.onerror = function (message, source, lineno, colno, error) {
-            notShowConsole && console.log('js-xxx:globalError', { message: message, source: source, lineno: lineno, colno: colno, error: error });
-            fn.call(this, message, source, lineno, colno, error);
+        window.onerror = function (message, source, lineNo, colNo, error) {
+            notShowConsole && console.log('js-xxx:globalError', { message: message, source: source, lineNo: lineNo, colNo: colNo, error: error });
+            fn.call(this, message, source, lineNo, colNo, error);
             return notShowConsole; // return true 不在控制台报错
         };
     }
@@ -7913,6 +7914,7 @@ var $xxx = (function (exports) {
         // Number('xxxx') // 超大 string 转 number 结果不准确 玄学
         return len === 0 ? "".concat(getTimeCode()) : Number("".concat(getRandStr(len)).concat(Date.now())).toString(radix); // new Date().getTime()
     }
+    // eslint-disable-next-line spellcheck/spell-checker
     /**
      * 获取简单的 UUID
      * Example: `getUUID() => 'ghijklmn'`
@@ -7921,6 +7923,7 @@ var $xxx = (function (exports) {
      * @returns
      */
     function getUUID(length, chars) {
+        // eslint-disable-next-line spellcheck/spell-checker
         chars = chars || '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         length = length || 8;
         var result = '';
@@ -7928,6 +7931,7 @@ var $xxx = (function (exports) {
             result += chars[Math.floor(Math.random() * chars.length)];
         return result;
     }
+    // eslint-disable-next-line spellcheck/spell-checker
     /**
      * 获取 bootstrap 颜色
      * Example:
@@ -8037,9 +8041,11 @@ var $xxx = (function (exports) {
         if (size === void 0) { size = 21; }
         if (prefix === void 0) { prefix = ''; }
         // 外部
+        // eslint-disable-next-line spellcheck/spell-checker
         var symbols = 'ModuleSymbhasOwnPr-0123456789ABCDEFGHIJKLNQRTUVWXYZ_cfgijkpqtvxz';
         var id = '';
         var len = symbols.length;
+        // eslint-disable-next-line spellcheck/spell-checker
         var ret = new Uint8Array(size);
         for (var i = 0; i < size; i++)
             ret[i] = getRandNum(0, 255);
@@ -8247,7 +8253,7 @@ var $xxx = (function (exports) {
         }
     }
     /**
-     * 打印某个方法运行时间
+     * 打印某个函数运行时间
      * Example:
      * `logRunTime(() => [1, 2, 3].reduce(...))`
      * `logRunTime(() => [1, 2, 3].reduce(...), 'timeKey')`
@@ -8333,7 +8339,7 @@ var $xxx = (function (exports) {
         }
     }
     /**
-     * 在页面上打印某个值，我们打包通常会设置清除 console，使用此方法打印关键信息就不会被清除啦。
+     * 在页面上打印某个值，我们打包通常会设置清除 console，使用此函数打印关键信息就不会被清除啦。
      * Example:
      * `logVar([1, 2, 2, 3, 3]) => 打印数据`
      * `logVar({a: 1, b: 2}) => 打印数据`
@@ -8653,6 +8659,7 @@ var $xxx = (function (exports) {
         // html.style['-webkit-filter'] = 'grayscale(1)';
         html.style['filter'] = 'grayscale(1)';
     }
+    // eslint-disable-next-line spellcheck/spell-checker
     /**
      * 获取星座
      * Example:
@@ -8782,8 +8789,8 @@ var $xxx = (function (exports) {
         }
     }
     /**
-     * 设置监听方法
-     * 返回取消该监听的方法 return cancel
+     * 设置监听函数
+     * 返回取消该监听的函数 return cancel
      * Example: `setEventListener('resize', () => { console.log('resize'); }) => cancel 当前 listener 的 function`
      * @param eventKey
      * @param foo
@@ -8900,8 +8907,8 @@ var $xxx = (function (exports) {
      * @Author: HxB
      * @Date: 2022-04-26 15:45:48
      * @LastEditors: DoubleAm
-     * @LastEditTime: 2023-03-13 16:28:17
-     * @Description: 字符串常用方法
+     * @LastEditTime: 2023-03-14 11:05:42
+     * @Description: 字符串常用函数
      * @FilePath: \js-xxx\src\String\index.ts
      */
     // eslint-disable-next-line spellcheck/spell-checker, zob/comment
@@ -8954,6 +8961,7 @@ var $xxx = (function (exports) {
                 return str;
         }
     }
+    // eslint-disable-next-line spellcheck/spell-checker
     /**
      * base64 编码 btoa(binary to ascii)(not support unicode)
      * 使用 url 中时建议使用 encodeURIComponent 再次编码，因为单独 + 号在 url 中会被解析成空格。
@@ -8972,6 +8980,7 @@ var $xxx = (function (exports) {
         var result = Buffer.from(str, 'utf-8').toString('base64');
         return replaceChar ? result.replace(/\+\//g, '-_').replace(/=/g, '') : result;
     }
+    // eslint-disable-next-line spellcheck/spell-checker
     /**
      * base64 解码 atob(ascii to binary)(not support unicode)
      * `decodeURIComponent(atob(encodeStr))`
@@ -9217,6 +9226,7 @@ var $xxx = (function (exports) {
         var regIpv4 = /^((\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.){4}$/;
         return regIpv4.test(value + '.');
     }
+    // eslint-disable-next-line spellcheck/spell-checker
     /**
      * 检查是否为 ipv6 string
      * Example:
@@ -9249,6 +9259,7 @@ var $xxx = (function (exports) {
     function isIpAddress(value) {
         return isIpv4(value) || isIpv6(value);
     }
+    // eslint-disable-next-line spellcheck/spell-checker
     /**
      * 检查是否为 file.ext string 文件扩展名
      * Example:
@@ -9287,7 +9298,9 @@ var $xxx = (function (exports) {
     function slugify(str, replacement) {
         var regForbidden = /[^\w\s$*_+~.()'"!\-:@]/g;
         // https://github.com/simov/slugify
-        var REPLACEMENT = '$ dollar,% percent,& and,< less,> greater,| or,¢ cent,£ pound,¤ currency,¥ yen,© (c),ª a,® (r),º o,À A,Á A,Â A,Ã A,Ä A,Å A,Æ AE,Ç C,È E,É E,Ê E,Ë E,Ì I,Í I,Î I,Ï I,Ð D,Ñ N,Ò O,Ó O,Ô O,Õ O,Ö O,Ø O,Ù U,Ú U,Û U,Ü U,Ý Y,Þ TH,ß ss,à a,á a,â a,ã a,ä a,å a,æ ae,ç c,è e,é e,ê e,ë e,ì i,í i,î i,ï i,ð d,ñ n,ò o,ó o,ô o,õ o,ö o,ø o,ù u,ú u,û u,ü u,ý y,þ th,ÿ y,Ā A,ā a,Ă A,ă a,Ą A,ą a,Ć C,ć c,Č C,č c,Ď D,ď d,Đ DJ,đ dj,Ē E,ē e,Ė E,ė e,Ę e,ę e,Ě E,ě e,Ğ G,ğ g,Ģ G,ģ g,Ĩ I,ĩ i,Ī i,ī i,Į I,į i,İ I,ı i,Ķ k,ķ k,Ļ L,ļ l,Ľ L,ľ l,Ł L,ł l,Ń N,ń n,Ņ N,ņ n,Ň N,ň n,Ő O,ő o,Œ OE,œ oe,Ŕ R,ŕ r,Ř R,ř r,Ś S,ś s,Ş S,ş s,Š S,š s,Ţ T,ţ t,Ť T,ť t,Ũ U,ũ u,Ū u,ū u,Ů U,ů u,Ű U,ű u,Ų U,ų u,Ź Z,ź z,Ż Z,ż z,Ž Z,ž z,ƒ f,Ơ O,ơ o,Ư U,ư u,ǈ LJ,ǉ lj,ǋ NJ,ǌ nj,Ș S,ș s,Ț T,ț t,˚ o,Ά A,Έ E,Ή H,Ί I,Ό O,Ύ Y,Ώ W,ΐ i,Α A,Β B,Γ G,Δ D,Ε E,Ζ Z,Η H,Θ 8,Ι I,Κ K,Λ L,Μ M,Ν N,Ξ 3,Ο O,Π P,Ρ R,Σ S,Τ T,Υ Y,Φ F,Χ X,Ψ PS,Ω W,Ϊ I,Ϋ Y,ά a,έ e,ή h,ί i,ΰ y,α a,β b,γ g,δ d,ε e,ζ z,η h,θ 8,ι i,κ k,λ l,μ m,ν n,ξ 3,ο o,π p,ρ r,ς s,σ s,τ t,υ y,φ f,χ x,ψ ps,ω w,ϊ i,ϋ y,ό o,ύ y,ώ w,Ё Yo,Ђ DJ,Є Ye,І I,Ї Yi,Ј J,Љ LJ,Њ NJ,Ћ C,Џ DZ,А A,Б B,В V,Г G,Д D,Е E,Ж Zh,З Z,И I,Й J,К K,Л L,М M,Н N,О O,П P,Р R,С S,Т T,У U,Ф F,Х H,Ц C,Ч Ch,Ш Sh,Щ Sh,Ъ U,Ы Y,Ь ,Э E,Ю Yu,Я Ya,а a,б b,в v,г g,д d,е e,ж zh,з z,и i,й j,к k,л l,м m,н n,о o,п p,р r,с s,т t,у u,ф f,х h,ц c,ч ch,ш sh,щ sh,ъ u,ы y,ь ,э e,ю yu,я ya,ё yo,ђ dj,є ye,і i,ї yi,ј j,љ lj,њ nj,ћ c,џ dz,Ґ G,ґ g,฿ baht,ა a,ბ b,გ g,დ d,ე e,ვ v,ზ z,თ t,ი i,კ k,ლ l,მ m,ნ n,ო o,პ p,ჟ zh,რ r,ს s,ტ t,უ u,ფ f,ქ k,ღ gh,ყ q,შ sh,ჩ ch,ც ts,ძ dz,წ ts,ჭ ch,ხ kh,ჯ j,ჰ h,ẞ SS,Ạ A,ạ a,Ả A,ả a,Ấ A,ấ a,Ầ A,ầ a,Ẩ A,ẩ a,Ẫ A,ẫ a,Ậ A,ậ a,Ắ A,ắ a,Ằ A,ằ a,Ẳ A,ẳ a,Ẵ A,ẵ a,Ặ A,ặ a,Ẹ E,ẹ e,Ẻ E,ẻ e,Ẽ E,ẽ e,Ế E,ế e,Ề E,ề e,Ể E,ể e,Ễ E,ễ e,Ệ E,ệ e,Ỉ I,ỉ i,Ị I,ị i,Ọ O,ọ o,Ỏ O,ỏ o,Ố O,ố o,Ồ O,ồ o,Ổ O,ổ o,Ỗ O,ỗ o,Ộ O,ộ o,Ớ O,ớ o,Ờ O,ờ o,Ở O,ở o,Ỡ O,ỡ o,Ợ O,ợ o,Ụ U,ụ u,Ủ U,ủ u,Ứ U,ứ u,Ừ U,ừ u,Ử U,ử u,Ữ U,ữ u,Ự U,ự u,Ỳ Y,ỳ y,Ỵ Y,ỵ y,Ỷ Y,ỷ y,Ỹ Y,ỹ y,‘ \',’ \',“ ",” ",† +,• *,… ...,₠ ecu,₢ cruzeiro,₣ french franc,₤ lira,₥ mill,₦ naira,₧ peseta,₨ rupee,₩ won,₪ new shequel,₫ dong,€ euro,₭ kip,₮ tugrik,₯ drachma,₰ penny,₱ peso,₲ guarani,₳ austral,₴ hryvnia,₵ cedi,₹ indian rupee,₽ russian ruble,₿ bitcoin,℠ sm,™ tm,∂ d,∆ delta,∑ sum,∞ infinity,♥ love,元 yuan,円 yen,﷼ rial';
+        var REPLACEMENT = 
+        // eslint-disable-next-line spellcheck/spell-checker
+        '$ dollar,% percent,& and,< less,> greater,| or,¢ cent,£ pound,¤ currency,¥ yen,© (c),ª a,® (r),º o,À A,Á A,Â A,Ã A,Ä A,Å A,Æ AE,Ç C,È E,É E,Ê E,Ë E,Ì I,Í I,Î I,Ï I,Ð D,Ñ N,Ò O,Ó O,Ô O,Õ O,Ö O,Ø O,Ù U,Ú U,Û U,Ü U,Ý Y,Þ TH,ß ss,à a,á a,â a,ã a,ä a,å a,æ ae,ç c,è e,é e,ê e,ë e,ì i,í i,î i,ï i,ð d,ñ n,ò o,ó o,ô o,õ o,ö o,ø o,ù u,ú u,û u,ü u,ý y,þ th,ÿ y,Ā A,ā a,Ă A,ă a,Ą A,ą a,Ć C,ć c,Č C,č c,Ď D,ď d,Đ DJ,đ dj,Ē E,ē e,Ė E,ė e,Ę e,ę e,Ě E,ě e,Ğ G,ğ g,Ģ G,ģ g,Ĩ I,ĩ i,Ī i,ī i,Į I,į i,İ I,ı i,Ķ k,ķ k,Ļ L,ļ l,Ľ L,ľ l,Ł L,ł l,Ń N,ń n,Ņ N,ņ n,Ň N,ň n,Ő O,ő o,Œ OE,œ oe,Ŕ R,ŕ r,Ř R,ř r,Ś S,ś s,Ş S,ş s,Š S,š s,Ţ T,ţ t,Ť T,ť t,Ũ U,ũ u,Ū u,ū u,Ů U,ů u,Ű U,ű u,Ų U,ų u,Ź Z,ź z,Ż Z,ż z,Ž Z,ž z,ƒ f,Ơ O,ơ o,Ư U,ư u,ǈ LJ,ǉ lj,ǋ NJ,ǌ nj,Ș S,ș s,Ț T,ț t,˚ o,Ά A,Έ E,Ή H,Ί I,Ό O,Ύ Y,Ώ W,ΐ i,Α A,Β B,Γ G,Δ D,Ε E,Ζ Z,Η H,Θ 8,Ι I,Κ K,Λ L,Μ M,Ν N,Ξ 3,Ο O,Π P,Ρ R,Σ S,Τ T,Υ Y,Φ F,Χ X,Ψ PS,Ω W,Ϊ I,Ϋ Y,ά a,έ e,ή h,ί i,ΰ y,α a,β b,γ g,δ d,ε e,ζ z,η h,θ 8,ι i,κ k,λ l,μ m,ν n,ξ 3,ο o,π p,ρ r,ς s,σ s,τ t,υ y,φ f,χ x,ψ ps,ω w,ϊ i,ϋ y,ό o,ύ y,ώ w,Ё Yo,Ђ DJ,Є Ye,І I,Ї Yi,Ј J,Љ LJ,Њ NJ,Ћ C,Џ DZ,А A,Б B,В V,Г G,Д D,Е E,Ж Zh,З Z,И I,Й J,К K,Л L,М M,Н N,О O,П P,Р R,С S,Т T,У U,Ф F,Х H,Ц C,Ч Ch,Ш Sh,Щ Sh,Ъ U,Ы Y,Ь ,Э E,Ю Yu,Я Ya,а a,б b,в v,г g,д d,е e,ж zh,з z,и i,й j,к k,л l,м m,н n,о o,п p,р r,с s,т t,у u,ф f,х h,ц c,ч ch,ш sh,щ sh,ъ u,ы y,ь ,э e,ю yu,я ya,ё yo,ђ dj,є ye,і i,ї yi,ј j,љ lj,њ nj,ћ c,џ dz,Ґ G,ґ g,฿ baht,ა a,ბ b,გ g,დ d,ე e,ვ v,ზ z,თ t,ი i,კ k,ლ l,მ m,ნ n,ო o,პ p,ჟ zh,რ r,ს s,ტ t,უ u,ფ f,ქ k,ღ gh,ყ q,შ sh,ჩ ch,ც ts,ძ dz,წ ts,ჭ ch,ხ kh,ჯ j,ჰ h,ẞ SS,Ạ A,ạ a,Ả A,ả a,Ấ A,ấ a,Ầ A,ầ a,Ẩ A,ẩ a,Ẫ A,ẫ a,Ậ A,ậ a,Ắ A,ắ a,Ằ A,ằ a,Ẳ A,ẳ a,Ẵ A,ẵ a,Ặ A,ặ a,Ẹ E,ẹ e,Ẻ E,ẻ e,Ẽ E,ẽ e,Ế E,ế e,Ề E,ề e,Ể E,ể e,Ễ E,ễ e,Ệ E,ệ e,Ỉ I,ỉ i,Ị I,ị i,Ọ O,ọ o,Ỏ O,ỏ o,Ố O,ố o,Ồ O,ồ o,Ổ O,ổ o,Ỗ O,ỗ o,Ộ O,ộ o,Ớ O,ớ o,Ờ O,ờ o,Ở O,ở o,Ỡ O,ỡ o,Ợ O,ợ o,Ụ U,ụ u,Ủ U,ủ u,Ứ U,ứ u,Ừ U,ừ u,Ử U,ử u,Ữ U,ữ u,Ự U,ự u,Ỳ Y,ỳ y,Ỵ Y,ỵ y,Ỷ Y,ỷ y,Ỹ Y,ỹ y,‘ \',’ \',“ ",” ",† +,• *,… ...,₠ ecu,₢ cruzeiro,₣ french franc,₤ lira,₥ mill,₦ naira,₧ peseta,₨ rupee,₩ won,₪ new shequel,₫ dong,€ euro,₭ kip,₮ tugrik,₯ drachma,₰ penny,₱ peso,₲ guarani,₳ austral,₴ hryvnia,₵ cedi,₹ indian rupee,₽ russian ruble,₿ bitcoin,℠ sm,™ tm,∂ d,∆ delta,∑ sum,∞ infinity,♥ love,元 yuan,円 yen,﷼ rial';
         var defReplacement = {};
         REPLACEMENT.split(',').forEach(function (item) {
             item = item.split(' ');
@@ -9693,10 +9706,11 @@ var $xxx = (function (exports) {
      * @Author: HxB
      * @Date: 2022-04-26 15:37:27
      * @LastEditors: DoubleAm
-     * @LastEditTime: 2023-03-03 16:29:00
-     * @Description: 利用 dom 的一些方法
+     * @LastEditTime: 2023-03-13 18:31:22
+     * @Description: 利用 dom 的一些函数
      * @FilePath: \js-xxx\src\Dom\index.ts
      */
+    // eslint-disable-next-line spellcheck/spell-checker
     /**
      * 字符串转实体字符
      * Example: `str2html('<>&"') => '&lt;&gt;&amp;&quot;'`
@@ -9846,7 +9860,7 @@ var $xxx = (function (exports) {
         // document.documentElement.scroll({ top: document.documentElement.scrollHeight, left: 0, behavior: 'smooth' });
         // window.scroll({ top: document.body.scrollHeight, left: 0, behavior: 'smooth' });
         /* 新版 demo */
-        /* 旧版方法 */
+        /* 旧版函数 */
         // clearInterval(dom.timer);
         // dom.timer = setInterval(function () {
         //   var step = (targetVal - dom.scrollY) / 10;
@@ -9869,7 +9883,7 @@ var $xxx = (function (exports) {
         //     div.style.display = 'none';
         //   }
         // }
-        /* 旧版方法 */
+        /* 旧版函数 */
     }
     /**
      * X 轴滚动到指定位置
@@ -10201,7 +10215,7 @@ var $xxx = (function (exports) {
      * @Date: 2022-04-26 16:24:34
      * @LastEditors: DoubleAm
      * @LastEditTime: 2023-03-13 15:39:44
-     * @Description: 数学常用方法
+     * @Description: 数学常用函数
      * @FilePath: \js-xxx\src\Math\index.ts
      */
     /**
@@ -10427,7 +10441,7 @@ var $xxx = (function (exports) {
      * @Date: 2022-04-26 16:24:47
      * @LastEditors: DoubleAm
      * @LastEditTime: 2023-03-13 15:41:51
-     * @Description: 常用数字相关方法
+     * @Description: 常用数字相关函数
      * @FilePath: \js-xxx\src\Number\index.ts
      */
     /**
@@ -10541,7 +10555,7 @@ var $xxx = (function (exports) {
      * @Date: 2022-04-26 15:05:14
      * @LastEditors: DoubleAm
      * @LastEditTime: 2023-03-13 15:42:13
-     * @Description: 对象相关方法
+     * @Description: 对象相关函数
      * @FilePath: \js-xxx\src\Object\index.ts
      */
     /**
@@ -10670,7 +10684,7 @@ var $xxx = (function (exports) {
      * @Date: 2022-04-26 14:53:39
      * @LastEditors: DoubleAm
      * @LastEditTime: 2023-03-13 15:43:00
-     * @Description: 因项目需要常用方法，不管任何项目，都放到一起。注意甄别，没有复用意义的方法就不要添加了。
+     * @Description: 因项目需要常用函数，不管任何项目，都放到一起。注意甄别，没有复用意义的函数就不要添加了。
      * @FilePath: \js-xxx\src\Others\index.ts
      */
     /**
@@ -10834,6 +10848,7 @@ var $xxx = (function (exports) {
     function isAppleDevice() {
         return /Mac|iPod|iPhone|iPad/.test(navigator.platform);
     }
+    // eslint-disable-next-line spellcheck/spell-checker
     /**
      * 单击事件转换为多击事件
      * Author: wuxingheng
@@ -11129,7 +11144,14 @@ var $xxx = (function (exports) {
         }
     }
 
-    /* eslint-disable @typescript-eslint/ban-types */
+    /*
+     * @Author: HxB
+     * @Date: 2022-04-26 15:18:13
+     * @LastEditors: DoubleAm
+     * @LastEditTime: 2023-03-14 11:06:42
+     * @Description: Promise 常用函数，或者扩展函数。
+     * @FilePath: \js-xxx\src\Promise\index.ts
+     */
     /**
      * 睡眠
      * Example: `await sleep(1000) => 等待 1000 毫秒再执行后面的`
@@ -11180,6 +11202,7 @@ var $xxx = (function (exports) {
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
+                            console.log('js-xxx:toError', e);
                             if (!(count > 0)) return [3 /*break*/, 2];
                             // 此处也可使用 setTimeout 实现
                             return [4 /*yield*/, sleep(delay)];
@@ -11331,7 +11354,7 @@ var $xxx = (function (exports) {
         HttpMethod["options"] = "OPTIONS";
     })(exports.HttpMethod || (exports.HttpMethod = {}));
     /**
-     * 对象转 querystring 暂时只支持两层数据，第二层对象与与数组值不能为引用类型。
+     * 对象转 queryString 暂时只支持两层数据，第二层对象与与数组值不能为引用类型。
      * Example:
      * `qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3] }) => 'start=0&count=20&obj[a]=1&arr[]=1&arr[]=2&arr[]=3'`
      * `qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3] }, { arr2str: true }) => 'start=0&count=20&obj[a]=1&arr=1,2,3'`
@@ -11390,9 +11413,9 @@ var $xxx = (function (exports) {
         var paramMap = {
             '/': filename !== null && filename !== void 0 ? filename : undefined,
         };
-        var querystring = url.indexOf('?') === 0 ? url.substring(1) : url;
-        if (querystring.length !== 0) {
-            var parts = querystring.split('&');
+        var queryString = url.indexOf('?') === 0 ? url.substring(1) : url;
+        if (queryString.length !== 0) {
+            var parts = queryString.split('&');
             for (var i = 0; i < parts.length; i++) {
                 var component = parts[i].split('=');
                 var paramKey = decodeURIComponent(component[0]);
@@ -11483,6 +11506,7 @@ var $xxx = (function (exports) {
             // eslint-disable-next-line no-undef
             xhr = new ActiveXObject('Microsoft.XMLHttp');
         }
+        // eslint-disable-next-line spellcheck/spell-checker
         xhr.onreadystatechange = function () {
             var _a, _b;
             if (xhr.readyState === 4) {
@@ -11539,6 +11563,7 @@ var $xxx = (function (exports) {
             body: options === null || options === void 0 ? void 0 : options.data,
         });
     }
+    // eslint-disable-next-line spellcheck/spell-checker
     /**
      * 获取常见的 content-type
      * Example:
@@ -11558,12 +11583,12 @@ var $xxx = (function (exports) {
      * @Author: HxB
      * @Date: 2022-06-04 16:30:04
      * @LastEditors: DoubleAm
-     * @LastEditTime: 2022-10-12 15:34:24
+     * @LastEditTime: 2023-03-13 18:33:15
      * @Description: localStorage 与 sessionStorage
      * @FilePath: \js-xxx\src\Storage\index.ts
      */
     // 加密与过期设置参考 https://juejin.cn/post/7104301566857445412
-    // 可以利用提供的加密方法手动绝对是否加密一些关键数据
+    // 可以利用提供的加密函数手动绝对是否加密一些关键数据
     function _tempSet(key, value, storeType) {
         try {
             var newVal = void 0;
@@ -11666,19 +11691,18 @@ var $xxx = (function (exports) {
         return _tempSet(key, value, 'S');
     }
 
-    /* eslint-disable @typescript-eslint/ban-types */
-    /* eslint-disable no-undef */
     /*
      * @Author: HxB
      * @Date: 2022-04-26 14:10:35
      * @LastEditors: DoubleAm
-     * @LastEditTime: 2022-09-09 11:01:46
+     * @LastEditTime: 2023-03-14 11:18:41
      * @Description: websocket
      * @FilePath: \js-xxx\src\WebSocket\index.ts
      */
     var xWebSocket;
     // 用于设置 websocket 连接超时问题 timeout
     var xWebSocketTimer;
+    // eslint-disable-next-line spellcheck/spell-checker
     /**
      * 初始化 websocket
      * Example: `initWebSocket({ url: 'ws://localhost:8080/ws', timeout: 30000, onOpen: () => {}, onMessage: () => {}, onClose: () => {}, onError: () => {}, reconnect: {} })`
@@ -11767,7 +11791,7 @@ var $xxx = (function (exports) {
     /**
      * 设置 websocket binaryType default: 'blob'
      * Example: `setWsBinaryType() => true/false`
-     * @param binaryType 二进制类型 default: 'arraybuffer'
+     * @param binaryType BinaryType 二进制类型 default: 'arraybuffer'
      * @returns
      */
     function setWsBinaryType(binaryType) {

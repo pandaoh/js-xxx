@@ -1,6 +1,6 @@
-js-xxx - v1.5.0
+js-xxx - v1.6.0
 
-# js-xxx - v1.5.0
+# js-xxx - v1.6.0
 
 ## Table of contents
 
@@ -368,7 +368,7 @@ Example: `await all(...promise array) => [...result array]`
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `promises` | `Promise`<`any`\>[] | promises |
-| `errorHandler?` | `Function` | errorHandler |
+| `errorHandler?` | `any` | errorHandler |
 
 #### Returns
 
@@ -388,7 +388,7 @@ Example: `await any(...promise array) => success result`
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `promises` | `Promise`<`any`\>[] | promises |
-| `errorHandler?` | `Function` | errorHandler |
+| `errorHandler?` | `any` | errorHandler |
 
 #### Returns
 
@@ -572,7 +572,7 @@ ___
 
 ▸ **base64Decode**(`str`): `string`
 
-base64 解密方法
+base64 解密函数
 Example: `base64Decode("加密后的字符串") => 解密后的字符串`
 
 #### Parameters
@@ -591,7 +591,7 @@ ___
 
 ▸ **base64Encode**(`str`, `replaceChar?`): `string`
 
-base64 加密方法
+base64 加密函数
 使用 url 中时建议使用 encodeURIComponent 再次编码，因为单独 + 号在 url 中会被解析成空格。
 使用 encodeURIComponent 会把 + 解析为 %2B 与空格 %20 区分
 Example:
@@ -727,7 +727,7 @@ Example: `new catchPromise(resolve, reject, rejectHandler) => Promise`
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `promiseHandler` | `any` | promiseHandler |
-| `errorHandler?` | `Function` | errorHandler |
+| `errorHandler?` | `any` | errorHandler |
 
 #### Returns
 
@@ -1049,7 +1049,7 @@ Example: `debounce(() => {}, 1000) => 防抖执行`
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `fn` | `any` | `undefined` | 执行的方法 |
+| `fn` | `any` | `undefined` | 执行的函数 |
 | `delay` | `number` | `1000` | 延迟时间 |
 
 #### Returns
@@ -1068,7 +1068,7 @@ ___
 
 ▸ **decrypt**(`dataStr`, `jsonDecode?`, `secretKey?`, `secretIv?`): `string`
 
-解密方法
+解密函数
 防君子不防小人，也可以通过后台获取密钥。
 Example:
 `decrypt("加密后的字符串") => 解密后的字符串`
@@ -1272,7 +1272,7 @@ ___
 
 ▸ **encrypt**(`data`, `secretKey?`, `secretIv?`): `string`
 
-加密方法
+加密函数
 防君子不防小人，也可以通过后台获取密钥。
 Example:
 `encrypt("value") => 加密后的字符串`
@@ -2311,13 +2311,13 @@ ___
 ▸ **globalError**(`fn`, `notShowConsole?`): `void`
 
 全局捕获异常
-Example: `globalError((message, source, lineno, colno, error) => console.log('全局捕获异常'), false) => '全局捕获异常'`
+Example: `globalError((message, source, lineNo, colNo, error) => console.log('全局捕获异常'), false) => '全局捕获异常'`
 
 #### Parameters
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `fn` | `any` | `undefined` | (message, source, lineno, colno, error) |
+| `fn` | `any` | `undefined` | (message, source, lineNo, colNo, error) |
 | `notShowConsole` | `boolean` | `true` | 是否不回显控制台 |
 
 #### Returns
@@ -2370,13 +2370,13 @@ Example: `initWebSocket({ url: 'ws://localhost:8080/ws', timeout: 30000, onOpen:
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `options` | `Object` | `{url, onOpen, onMessage, onClose, onError, timeout, reconnect: {times, delay, onReconnect} \| boolean} WebSocket 配置` |
-| `options.onClose?` | `Function` | - |
-| `options.onError?` | `Function` | - |
-| `options.onMessage?` | `Function` | - |
-| `options.onOpen?` | `Function` | - |
+| `options.onClose?` | `any` | - |
+| `options.onError?` | `any` | - |
+| `options.onMessage?` | `any` | - |
+| `options.onOpen?` | `any` | - |
 | `options.reconnect?` | `Object` | - |
 | `options.reconnect.delay?` | `number` | - |
-| `options.reconnect.onReconnect?` | `Function` | - |
+| `options.reconnect.onReconnect?` | `any` | - |
 | `options.reconnect.times` | `number` | - |
 | `options.timeout?` | `number` | - |
 | `options.url` | `string` | - |
@@ -3179,7 +3179,7 @@ ___
 
 ▸ **logRunTime**(`fn`, `timeKey`): `void`
 
-打印某个方法运行时间
+打印某个函数运行时间
 Example:
 `logRunTime(() => [1, 2, 3].reduce(...))`
 `logRunTime(() => [1, 2, 3].reduce(...), 'timeKey')`
@@ -3204,7 +3204,7 @@ ___
 
 ▸ **logVar**(`value`): `any`
 
-在页面上打印某个值，我们打包通常会设置清除 console，使用此方法打印关键信息就不会被清除啦。
+在页面上打印某个值，我们打包通常会设置清除 console，使用此函数打印关键信息就不会被清除啦。
 Example:
 `logVar([1, 2, 2, 3, 3]) => 打印数据`
 `logVar({a: 1, b: 2}) => 打印数据`
@@ -3282,7 +3282,7 @@ ___
 
 ▸ **md5**(`str`): `string`
 
-md5 加密方法
+md5 加密函数
 Example: `md5("value") => 加密后的字符串`
 
 #### Parameters
@@ -3454,7 +3454,7 @@ ___
 
 ▸ **qsStringify**(`obj`, `options?`): `string`
 
-对象转 querystring 暂时只支持两层数据，第二层对象与与数组值不能为引用类型。
+对象转 queryString 暂时只支持两层数据，第二层对象与与数组值不能为引用类型。
 Example:
 `qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3] }) => 'start=0&count=20&obj[a]=1&arr[]=1&arr[]=2&arr[]=3'`
 `qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3] }, { arr2str: true }) => 'start=0&count=20&obj[a]=1&arr=1,2,3'`
@@ -3771,8 +3771,8 @@ ___
 
 ▸ **setEventListener**(`eventKey`, `foo`, `dom?`): `any`
 
-设置监听方法
-返回取消该监听的方法 return cancel
+设置监听函数
+返回取消该监听的函数 return cancel
 Example: `setEventListener('resize', () => { console.log('resize'); }) => cancel 当前 listener 的 function`
 
 #### Parameters
@@ -3819,7 +3819,7 @@ Example: `setWsBinaryType() => true/false`
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `binaryType` | `BinaryType` | `'arraybuffer'` | 二进制类型 default: 'arraybuffer' |
+| `binaryType` | `any` | `'arraybuffer'` | BinaryType 二进制类型 default: 'arraybuffer' |
 
 #### Returns
 
@@ -3831,7 +3831,7 @@ ___
 
 ▸ **sha1**(`str`): `string`
 
-sha1 加密方法
+sha1 加密函数
 Example: `sha1("value") => 加密后的字符串`
 
 #### Parameters
@@ -3850,7 +3850,7 @@ ___
 
 ▸ **sha256**(`str`): `string`
 
-sha256 加密方法
+sha256 加密函数
 Example: `sha256("value") => 加密后的字符串`
 
 #### Parameters
@@ -4090,7 +4090,7 @@ Example: `throttle(() => {}, 1000) => 节流执行`
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `fn` | `any` | `undefined` | 执行的方法 |
+| `fn` | `any` | `undefined` | 执行的函数 |
 | `delay` | `number` | `2000` | 延迟时间 |
 
 #### Returns
@@ -4161,8 +4161,8 @@ Example: `to(Promise.resolve(1)) => Promise.resolve(1)`
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `promise` | `Promise`<`any`\> | promise |
-| `res?` | `Function` | 成功回调 |
-| `rej?` | `Function` | 失败回调 |
+| `res?` | `any` | 成功回调 |
+| `rej?` | `any` | 失败回调 |
 
 #### Returns
 

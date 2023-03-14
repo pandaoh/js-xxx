@@ -3,7 +3,7 @@
  * @Date: 2022-04-26 16:24:34
  * @LastEditors: DoubleAm
  * @LastEditTime: 2023-03-13 15:39:44
- * @Description: 数学常用方法
+ * @Description: 数学常用函数
  * @FilePath: \js-xxx\src\Math\index.ts
  */
 

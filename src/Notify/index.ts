@@ -1,9 +1,8 @@
-/* eslint-disable no-undef */
 /*
  * @Author: HxB
  * @Date: 2022-06-04 20:07:41
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-13 15:41:07
+ * @LastEditTime: 2023-03-13 18:31:46
  * @Description: 系统推送通知 https://developer.mozilla.org/zh-CN/docs/Web/API/Notifications_API
  * @FilePath: \js-xxx\src\Notify\index.ts
  */
@@ -55,6 +54,7 @@ export function sendNotification(
         image?: string;
         renotify?: boolean;
         silent?: boolean;
+        // eslint-disable-next-line no-undef
         vibrate?: VibratePattern;
         dir?: 'auto' | 'ltr' | 'rtl';
         lang?: 'en-US' | 'zh-CN';
@@ -62,11 +62,13 @@ export function sendNotification(
         tag?: string;
         icon?: string;
         body?: 'msg content' | string;
+        // eslint-disable-next-line no-undef
         timestamp?: EpochTimeStamp;
         onClick?: any;
         onError?: any;
         onClose?: any;
       }
+    // eslint-disable-next-line no-undef
     | NotificationOptions
     | undefined
 ): void {

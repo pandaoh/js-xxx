@@ -53,7 +53,7 @@ export declare function getLastVar(data: any): any;
 /**
  * 防抖函数-最后一次有效（抢购）
  * Example: `debounce(() => {}, 1000) => 防抖执行`
- * @param fn 执行的方法
+ * @param fn 执行的函数
  * @param delay 延迟时间
  * @returns
  */
@@ -61,7 +61,7 @@ export declare function debounce(fn: any, delay?: number): () => void;
 /**
  * 节流函数-第一次有效（游戏开枪间隔）
  * Example: `throttle(() => {}, 1000) => 节流执行`
- * @param fn 执行的方法
+ * @param fn 执行的函数
  * @param delay 延迟时间
  * @returns
  */
@@ -76,8 +76,8 @@ export declare function throttle(fn: any, delay?: number): () => void;
 export declare function curryIt(fn: any): (arg: any) => any;
 /**
  * 全局捕获异常
- * Example: `globalError((message, source, lineno, colno, error) => console.log('全局捕获异常'), false) => '全局捕获异常'`
- * @param {any} fn (message, source, lineno, colno, error)
+ * Example: `globalError((message, source, lineNo, colNo, error) => console.log('全局捕获异常'), false) => '全局捕获异常'`
+ * @param {any} fn (message, source, lineNo, colNo, error)
  * @param {boolean} notShowConsole 是否不回显控制台
  * @returns
  */
@@ -219,7 +219,7 @@ export declare function difference(paramA: any, paramB: any): any;
  */
 export declare function jsonClone(value: any): any;
 /**
- * 打印某个方法运行时间
+ * 打印某个函数运行时间
  * Example:
  * `logRunTime(() => [1, 2, 3].reduce(...))`
  * `logRunTime(() => [1, 2, 3].reduce(...), 'timeKey')`
@@ -258,7 +258,7 @@ export declare function Logger(): {
  */
 export declare function showVar(value: any): any;
 /**
- * 在页面上打印某个值，我们打包通常会设置清除 console，使用此方法打印关键信息就不会被清除啦。
+ * 在页面上打印某个值，我们打包通常会设置清除 console，使用此函数打印关键信息就不会被清除啦。
  * Example:
  * `logVar([1, 2, 2, 3, 3]) => 打印数据`
  * `logVar({a: 1, b: 2}) => 打印数据`
@@ -413,8 +413,8 @@ export declare function getConstellation(date: any): {
     date: any;
 };
 /**
- * 设置监听方法
- * 返回取消该监听的方法 return cancel
+ * 设置监听函数
+ * 返回取消该监听的函数 return cancel
  * Example: `setEventListener('resize', () => { console.log('resize'); }) => cancel 当前 listener 的 function`
  * @param eventKey
  * @param foo

@@ -2,14 +2,14 @@
  * @Author: HxB
  * @Date: 2022-06-04 16:30:04
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-10-12 15:34:24
+ * @LastEditTime: 2023-03-13 18:33:15
  * @Description: localStorage 与 sessionStorage
  * @FilePath: \js-xxx\src\Storage\index.ts
  */
 import { getType, isJSON } from '@/Types';
 import { isDecimal, isInteger } from '@/Number';
 // 加密与过期设置参考 https://juejin.cn/post/7104301566857445412
-// 可以利用提供的加密方法手动绝对是否加密一些关键数据
+// 可以利用提供的加密函数手动绝对是否加密一些关键数据
 
 function _tempSet(key: string, value: any, storeType: 'L' | 'S'): boolean {
   try {

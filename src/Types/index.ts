@@ -2,8 +2,8 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-09-09 11:39:07
- * @Description: 类型校验等方法
+ * @LastEditTime: 2023-03-14 11:15:16
+ * @Description: 类型校验等函数
  * @FilePath: \js-xxx\src\Types\index.ts
  */
 

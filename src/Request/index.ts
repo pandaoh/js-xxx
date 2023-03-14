@@ -2,8 +2,8 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:15:37
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-13 15:44:42
- * @Description: 请求相关方法
+ * @LastEditTime: 2023-03-14 11:08:18
+ * @Description: 请求相关函数
  * @FilePath: \js-xxx\src\Request\index.ts
  */
 import { getType, isObj, toBool } from '@/Types';
@@ -111,7 +111,7 @@ export enum HttpMethod {
 }
 
 /**
- * 对象转 querystring 暂时只支持两层数据，第二层对象与与数组值不能为引用类型。
+ * 对象转 queryString 暂时只支持两层数据，第二层对象与与数组值不能为引用类型。
  * Example:
  * `qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3] }) => 'start=0&count=20&obj[a]=1&arr[]=1&arr[]=2&arr[]=3'`
  * `qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3] }, { arr2str: true }) => 'start=0&count=20&obj[a]=1&arr=1,2,3'`
@@ -176,9 +176,9 @@ export function qsParse(url?: string, key?: string): any {
   const paramMap: any = {
     '/': filename ?? undefined,
   };
-  const querystring: string = url.indexOf('?') === 0 ? url.substring(1) : url;
-  if (querystring.length !== 0) {
-    const parts: any[] = querystring.split('&');
+  const queryString: string = url.indexOf('?') === 0 ? url.substring(1) : url;
+  if (queryString.length !== 0) {
+    const parts: any[] = queryString.split('&');
     for (let i = 0; i < parts.length; i++) {
       const component: any[] = parts[i].split('=');
       const paramKey = decodeURIComponent(component[0]);
@@ -272,6 +272,7 @@ export function xAjax(
     // eslint-disable-next-line no-undef
     xhr = new ActiveXObject('Microsoft.XMLHttp');
   }
+  // eslint-disable-next-line spellcheck/spell-checker
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
       if (xhr.status < 400) {
@@ -339,6 +340,7 @@ export function xFetch(
   });
 }
 
+// eslint-disable-next-line spellcheck/spell-checker
 /**
  * 获取常见的 content-type
  * Example:

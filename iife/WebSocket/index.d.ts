@@ -6,15 +6,15 @@
  */
 export declare function initWebSocket(options: {
     url: string;
-    onOpen?: Function;
-    onClose?: Function;
-    onMessage?: Function;
-    onError?: Function;
+    onOpen?: any;
+    onClose?: any;
+    onMessage?: any;
+    onError?: any;
     timeout?: number;
     reconnect?: {
         times: number;
         delay?: number;
-        onReconnect?: Function;
+        onReconnect?: any;
     };
 }): WebSocket | undefined;
 /**
@@ -42,8 +42,8 @@ export declare function getWebSocket(): WebSocket | undefined;
 /**
  * 设置 websocket binaryType default: 'blob'
  * Example: `setWsBinaryType() => true/false`
- * @param binaryType 二进制类型 default: 'arraybuffer'
+ * @param binaryType BinaryType 二进制类型 default: 'arraybuffer'
  * @returns
  */
-export declare function setWsBinaryType(binaryType?: BinaryType): boolean;
+export declare function setWsBinaryType(binaryType?: any): boolean;
 //# sourceMappingURL=index.d.ts.map

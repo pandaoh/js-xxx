@@ -2,13 +2,14 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-03 16:29:00
- * @Description: 利用 dom 的一些方法
+ * @LastEditTime: 2023-03-13 18:31:22
+ * @Description: 利用 dom 的一些函数
  * @FilePath: \js-xxx\src\Dom\index.ts
  */
 
 import { setEventListener } from '@/Tools';
 
+// eslint-disable-next-line spellcheck/spell-checker
 /**
  * 字符串转实体字符
  * Example: `str2html('<>&"') => '&lt;&gt;&amp;&quot;'`
@@ -163,7 +164,7 @@ export function scrollYTo(targetVal: 'start' | 'end' | number, callback: any, do
   // document.documentElement.scroll({ top: document.documentElement.scrollHeight, left: 0, behavior: 'smooth' });
   // window.scroll({ top: document.body.scrollHeight, left: 0, behavior: 'smooth' });
   /* 新版 demo */
-  /* 旧版方法 */
+  /* 旧版函数 */
   // clearInterval(dom.timer);
   // dom.timer = setInterval(function () {
   //   var step = (targetVal - dom.scrollY) / 10;
@@ -186,7 +187,7 @@ export function scrollYTo(targetVal: 'start' | 'end' | number, callback: any, do
   //     div.style.display = 'none';
   //   }
   // }
-  /* 旧版方法 */
+  /* 旧版函数 */
 }
 
 /**

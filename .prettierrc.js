@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-03-13 15:20:08
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-13 15:56:28
+ * @LastEditTime: 2023-03-13 18:28:07
  * @Description: .prettierrc.js
  * @FilePath: \js-xxx\.prettierrc.js
  */
@@ -18,4 +18,3 @@ module.exports = {
   useTabs: false, // 是否使用 tab 缩进
   endOfLine: 'crlf', // 行尾换行符
 };
-// 若特殊文件，比如压缩文件，可以使用 .prettierignore 忽略。

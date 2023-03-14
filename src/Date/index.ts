@@ -3,7 +3,7 @@
  * @Date: 2022-04-26 15:54:41
  * @LastEditors: DoubleAm
  * @LastEditTime: 2023-03-13 15:38:25
- * @Description: 时间相关方法
+ * @Description: 时间相关函数
  * @FilePath: \js-xxx\src\Date\index.ts
  */
 import { trim } from '@/String';

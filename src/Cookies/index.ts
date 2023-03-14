@@ -3,7 +3,7 @@
  * @Date: 2022-04-26 16:29:18
  * @LastEditors: DoubleAm
  * @LastEditTime: 2022-05-17 17:50:44
- * @Description: Cookies 常用方法
+ * @Description: Cookies 常用函数
  * @FilePath: \js-xxx\src\Cookies\index.ts
  */
 

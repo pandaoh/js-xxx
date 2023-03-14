@@ -3,7 +3,7 @@
  * @Date: 2022-04-26 11:52:01
  * @LastEditors: DoubleAm
  * @LastEditTime: 2023-03-13 15:51:34
- * @Description: 数组常用方法
+ * @Description: 数组常用函数
  * @FilePath: \js-xxx\src\Array\index.ts
  */
 import { isStr, toStr } from '@/Types';

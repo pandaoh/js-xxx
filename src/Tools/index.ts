@@ -3,8 +3,8 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-13 15:48:09
- * @Description: 工具方法
+ * @LastEditTime: 2023-03-14 11:18:26
+ * @Description: 工具函数
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
 import { arraySet } from '@/Array';
@@ -266,7 +266,7 @@ export function getTimeCode(): string {
  */
 export function empty(variable: any): boolean {
   if (typeof variable === 'boolean') {
-    return false; // 此处方法定义布尔型不算空
+    return false; // 此处函数定义布尔型不算空
   }
   if (variable === 'null') {
     return true; // 检验字符串类型的 null
@@ -357,7 +357,7 @@ export function getLastVar(data: any): any {
 /**
  * 防抖函数-最后一次有效（抢购）
  * Example: `debounce(() => {}, 1000) => 防抖执行`
- * @param fn 执行的方法
+ * @param fn 执行的函数
  * @param delay 延迟时间
  * @returns
  */
@@ -376,7 +376,7 @@ export function debounce(fn: any, delay = 1000) {
 /**
  * 节流函数-第一次有效（游戏开枪间隔）
  * Example: `throttle(() => {}, 1000) => 节流执行`
- * @param fn 执行的方法
+ * @param fn 执行的函数
  * @param delay 延迟时间
  * @returns
  */
@@ -421,15 +421,15 @@ export function curryIt(fn: any) {
 
 /**
  * 全局捕获异常
- * Example: `globalError((message, source, lineno, colno, error) => console.log('全局捕获异常'), false) => '全局捕获异常'`
- * @param {any} fn (message, source, lineno, colno, error)
+ * Example: `globalError((message, source, lineNo, colNo, error) => console.log('全局捕获异常'), false) => '全局捕获异常'`
+ * @param {any} fn (message, source, lineNo, colNo, error)
  * @param {boolean} notShowConsole 是否不回显控制台
  * @returns
  */
 export function globalError(fn: any, notShowConsole = true) {
-  window.onerror = function (message, source, lineno, colno, error) {
-    notShowConsole && console.log('js-xxx:globalError', { message, source, lineno, colno, error });
-    fn.call(this, message, source, lineno, colno, error);
+  window.onerror = function (message, source, lineNo, colNo, error) {
+    notShowConsole && console.log('js-xxx:globalError', { message, source, lineNo, colNo, error });
+    fn.call(this, message, source, lineNo, colNo, error);
     return notShowConsole; // return true 不在控制台报错
   };
 }
@@ -476,6 +476,7 @@ export function getTimeAndStr(len = 5, radix: number | undefined = 36): string {
   return len === 0 ? `${getTimeCode()}` : Number(`${getRandStr(len)}${Date.now()}`).toString(radix); // new Date().getTime()
 }
 
+// eslint-disable-next-line spellcheck/spell-checker
 /**
  * 获取简单的 UUID
  * Example: `getUUID() => 'ghijklmn'`
@@ -484,6 +485,7 @@ export function getTimeAndStr(len = 5, radix: number | undefined = 36): string {
  * @returns
  */
 export function getUUID(length: number, chars: string | any[]): string {
+  // eslint-disable-next-line spellcheck/spell-checker
   chars = chars || '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
   length = length || 8;
   let result = '';
@@ -491,6 +493,7 @@ export function getUUID(length: number, chars: string | any[]): string {
   return result;
 }
 
+// eslint-disable-next-line spellcheck/spell-checker
 /**
  * 获取 bootstrap 颜色
  * Example:
@@ -603,12 +606,14 @@ export function uuid(): string {
  */
 export function getKey(size = 21, prefix = ''): string {
   // 外部
+  // eslint-disable-next-line spellcheck/spell-checker
   const symbols = 'ModuleSymbhasOwnPr-0123456789ABCDEFGHIJKLNQRTUVWXYZ_cfgijkpqtvxz';
 
   let id = '';
 
   const len = symbols.length;
 
+  // eslint-disable-next-line spellcheck/spell-checker
   const ret = new Uint8Array(size);
   for (let i = 0; i < size; i++) ret[i] = getRandNum(0, 255);
 
@@ -816,7 +821,7 @@ export function jsonClone(value: any): any {
 }
 
 /**
- * 打印某个方法运行时间
+ * 打印某个函数运行时间
  * Example:
  * `logRunTime(() => [1, 2, 3].reduce(...))`
  * `logRunTime(() => [1, 2, 3].reduce(...), 'timeKey')`
@@ -921,7 +926,7 @@ export function showVar(value: any): any {
 }
 
 /**
- * 在页面上打印某个值，我们打包通常会设置清除 console，使用此方法打印关键信息就不会被清除啦。
+ * 在页面上打印某个值，我们打包通常会设置清除 console，使用此函数打印关键信息就不会被清除啦。
  * Example:
  * `logVar([1, 2, 2, 3, 3]) => 打印数据`
  * `logVar({a: 1, b: 2}) => 打印数据`
@@ -1254,6 +1259,7 @@ export function rip(): void {
   html.style['filter'] = 'grayscale(1)';
 }
 
+// eslint-disable-next-line spellcheck/spell-checker
 /**
  * 获取星座
  * Example:
@@ -1370,8 +1376,8 @@ export function getConstellation(date: any): { cn: string; en: string; date: any
 }
 
 /**
- * 设置监听方法
- * 返回取消该监听的方法 return cancel
+ * 设置监听函数
+ * 返回取消该监听的函数 return cancel
  * Example: `setEventListener('resize', () => { console.log('resize'); }) => cancel 当前 listener 的 function`
  * @param eventKey
  * @param foo

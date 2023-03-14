@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/ban-types */
 /*
  * @Author: HxB
  * @Date: 2022-04-26 15:18:13
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-13 15:43:34
- * @Description: Promise 常用方法，或者扩展方法。
+ * @LastEditTime: 2023-03-14 11:06:42
+ * @Description: Promise 常用函数，或者扩展函数。
  * @FilePath: \js-xxx\src\Promise\index.ts
  */
 
@@ -27,7 +26,7 @@ export function sleep(milliseconds: number | undefined): Promise<void> {
  * @param rej 失败回调
  * @returns
  */
-export function to(promise: Promise<any>, res?: Function, rej?: Function): Promise<any> {
+export function to(promise: Promise<any>, res?: any, rej?: any): Promise<any> {
   return promise
     .then((data) => {
       res && res(data);
@@ -54,6 +53,7 @@ export function retry(promise: Promise<any>, count = 0, delay = 0) {
         resolve(res);
       })
       .catch(async (e) => {
+        console.log('js-xxx:toError', e);
         if (count > 0) {
           // 此处也可使用 setTimeout 实现
           await sleep(delay);
@@ -73,7 +73,7 @@ export function retry(promise: Promise<any>, count = 0, delay = 0) {
  * @param errorHandler errorHandler
  * @returns
  */
-export function all(promises: Promise<any>[], errorHandler?: Function): Promise<any> {
+export function all(promises: Promise<any>[], errorHandler?: any): Promise<any> {
   return Promise.all(promises).catch((e: any) => errorHandler && errorHandler(e));
 }
 
@@ -84,7 +84,7 @@ export function all(promises: Promise<any>[], errorHandler?: Function): Promise<
  * @param errorHandler errorHandler
  * @returns
  */
-export function any(promises: Promise<any>[], errorHandler?: Function): Promise<any> {
+export function any(promises: Promise<any>[], errorHandler?: any): Promise<any> {
   return Promise.any(promises).catch((e: any) => errorHandler && errorHandler(e));
 }
 
@@ -95,6 +95,6 @@ export function any(promises: Promise<any>[], errorHandler?: Function): Promise<
  * @param errorHandler errorHandler
  * @returns
  */
-export function catchPromise(promiseHandler: any, errorHandler?: Function): Promise<any> {
+export function catchPromise(promiseHandler: any, errorHandler?: any): Promise<any> {
   return new Promise(promiseHandler).catch((e: any) => errorHandler && errorHandler(e));
 }

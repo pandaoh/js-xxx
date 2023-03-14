@@ -18,6 +18,8 @@ import { xFunctionName } from 'js-xxx';
 const { xFunctionName } = require('js-xxx');
 xFunctionName();
 
+// 可参考 ./demo/test.js
+
 // Browser
 <script src="/iife/index.min.js"></script>
 $xxx.xFunctionName();
@@ -26,6 +28,7 @@ $xxx.xFunctionName();
 ## Docs
 
 * [Docs List](https://github.com/pandaoh/js-xxx/blob/main/docs/README.md)
+* [Gitee Docs List](https://gitee.com/doubleam/js-xxx/blob/main/docs/README.md)
 
 ## Others
 

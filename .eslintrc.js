@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-03-13 15:05:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-13 16:03:28
+ * @LastEditTime: 2023-03-14 11:11:50
  * @Description: eslint 配置文件
  * @FilePath: \js-xxx\.eslintrc.js
  */
@@ -38,7 +38,7 @@ module.exports = {
     'no-irregular-whitespace': [
       'error',
       { skipStrings: true, skipComments: true, skipRegExps: true, skipTemplates: true },
-    ], // 禁止使用无效或不规则的空格，字符串跳过。
+    ], // 禁止使用无效或不规则的空格，字符串等特殊情况跳过。
     'no-multi-spaces': ['error', { ignoreEOLComments: true }], // 禁止在某些表达式，函数周围使用多个空格，行尾注释除外。
     'no-trailing-spaces': ['error', { skipBlankLines: false }], // 禁止行尾添加尾随空白，空行也是一样。
     'brace-style': ['error', '1tbs', { allowSingleLine: false }], // 强制执行一个真正的大括号风格，括号必须跟在块后。
@@ -46,7 +46,7 @@ module.exports = {
     'object-curly-spacing': ['error', 'always'], // 需要大括号内的空格，比如解构赋值，导入导出。
     'array-bracket-spacing': ['error', 'never'], // 数组括号内强制实现一致的间距空格
     'max-lines': ['error', 800], // 文件限制行数最大 800 行
-    'max-statements': ['error', 100], // 一个方法限制行数最大 100 行
+    'max-statements': ['error', 100], // 一个函数限制行数最大 100 行
     'spellcheck/spell-checker': [
       // 拼写检查警告
       'warn',
@@ -111,6 +111,46 @@ module.exports = {
           'autocomplete',
           'sourcemap',
           'dicts',
+          'undef',
+          'asyncfunction',
+          'xxxxx',
+          'keydown',
+          'keyup',
+          'keypress',
+          'webkit',
+          'uint8',
+          'radix',
+          'storage',
+          'favicon',
+          'compat',
+          'keyframes',
+          'padlen',
+          'tring',
+          'xhtml',
+          'xmind',
+          'decrypt',
+          'decrypted',
+          'str2html',
+          'html2str',
+          'builtins',
+          'arr2str',
+          'multipart',
+          'contextmenu',
+          'grayscale',
+          'loadend',
+          'callee',
+          'slugify',
+          'unicode2str',
+          'str2unicode',
+          'ciphertext',
+          'urlencoded',
+          'cancelable',
+          'renotify',
+          'generatorfunction',
+          'ascii',
+          'unicode',
+          'torage',
+          'xxxxxx',
         ],
         skipIfMatch: [
           // http url

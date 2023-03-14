@@ -3,7 +3,7 @@
  * @Date: 2022-04-26 15:05:14
  * @LastEditors: DoubleAm
  * @LastEditTime: 2023-03-13 15:42:13
- * @Description: 对象相关方法
+ * @Description: 对象相关函数
  * @FilePath: \js-xxx\src\Object\index.ts
  */
 import { getType } from '@/Types';

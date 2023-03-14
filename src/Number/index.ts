@@ -3,7 +3,7 @@
  * @Date: 2022-04-26 16:24:47
  * @LastEditors: DoubleAm
  * @LastEditTime: 2023-03-13 15:41:51
- * @Description: 常用数字相关方法
+ * @Description: 常用数字相关函数
  * @FilePath: \js-xxx\src\Number\index.ts
  */
 

@@ -3,7 +3,7 @@
  * @Date: 2022-04-26 14:53:39
  * @LastEditors: DoubleAm
  * @LastEditTime: 2023-03-13 15:43:00
- * @Description: 因项目需要常用方法，不管任何项目，都放到一起。注意甄别，没有复用意义的方法就不要添加了。
+ * @Description: 因项目需要常用函数，不管任何项目，都放到一起。注意甄别，没有复用意义的函数就不要添加了。
  * @FilePath: \js-xxx\src\Others\index.ts
  */
 
@@ -189,6 +189,7 @@ export function isAppleDevice(): boolean {
   return /Mac|iPod|iPhone|iPad/.test(navigator.platform);
 }
 
+// eslint-disable-next-line spellcheck/spell-checker
 /**
  * 单击事件转换为多击事件
  * Author: wuxingheng

@@ -14,7 +14,7 @@ export declare function sleep(milliseconds: number | undefined): Promise<void>;
  * @param rej 失败回调
  * @returns
  */
-export declare function to(promise: Promise<any>, res?: Function, rej?: Function): Promise<any>;
+export declare function to(promise: Promise<any>, res?: any, rej?: any): Promise<any>;
 /**
  * Promise 重试
  * Example: `retry(() => Promise.reject(new Error('error')), 3) => Promise.reject(new Error('error')) 执行 3 次`
@@ -31,7 +31,7 @@ export declare function retry(promise: Promise<any>, count?: number, delay?: num
  * @param errorHandler errorHandler
  * @returns
  */
-export declare function all(promises: Promise<any>[], errorHandler?: Function): Promise<any>;
+export declare function all(promises: Promise<any>[], errorHandler?: any): Promise<any>;
 /**
  * 同步执行多个 promise，返回最先成功的结果，已做错误处理。
  * Example: `await any(...promise array) => success result`
@@ -39,7 +39,7 @@ export declare function all(promises: Promise<any>[], errorHandler?: Function): 
  * @param errorHandler errorHandler
  * @returns
  */
-export declare function any(promises: Promise<any>[], errorHandler?: Function): Promise<any>;
+export declare function any(promises: Promise<any>[], errorHandler?: any): Promise<any>;
 /**
  * New 一个自带错误处理的 Promise，适用于只处理成功情况，不关注失败的 Promise，省去写 catch 的时间与空间。
  * Example: `new catchPromise(resolve, reject, rejectHandler) => Promise`
@@ -47,5 +47,5 @@ export declare function any(promises: Promise<any>[], errorHandler?: Function): 
  * @param errorHandler errorHandler
  * @returns
  */
-export declare function catchPromise(promiseHandler: any, errorHandler?: Function): Promise<any>;
+export declare function catchPromise(promiseHandler: any, errorHandler?: any): Promise<any>;
 //# sourceMappingURL=index.d.ts.map
