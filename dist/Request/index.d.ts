@@ -86,7 +86,7 @@ export declare function getSearchParams(url?: string): any;
  * @param options
  * @returns
  */
-export declare function xAjax(method: HttpMethod | string, url: string, options?: {
+export declare function xAjax(method: string | HttpMethod, url: string, options?: {
     data?: any;
     params?: any;
     success?: any;
@@ -106,7 +106,7 @@ export declare function xAjax(method: HttpMethod | string, url: string, options?
  * @param options
  * @returns
  */
-export declare function xFetch(method: HttpMethod, url: string, options?: {
+export declare function xFetch(method: string | HttpMethod, url: string, options?: {
     data?: any;
     params?: any;
     raw?: boolean;

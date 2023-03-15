@@ -250,7 +250,7 @@ export function getSearchParams(url?: string): any {
  * @returns
  */
 export function xAjax(
-  method: HttpMethod | string,
+  method: string | HttpMethod,
   url: string,
   options?: {
     data?: any;
@@ -316,7 +316,7 @@ export function xAjax(
  * @returns
  */
 export function xFetch(
-  method: HttpMethod,
+  method: string | HttpMethod,
   url: string,
   options?: {
     data?: any;

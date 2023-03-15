@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-14 11:18:26
+ * @LastEditTime: 2023-03-15 17:25:26
  * @Description: 工具函数
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
@@ -1156,8 +1156,8 @@ export function transferIdCard(idCard: string): any {
 /**
  * 金额转中文
  * Example:
- * `transferMoney(852.5) => '玖佰元整'`
- * `transferMoney(900) => '捌佰伍拾贰元伍角'`
+ * `transferMoney(900) => '玖佰元整'`
+ * `transferMoney(852.5) => '捌佰伍拾贰元伍角'`
  * @param n
  * @returns
  */

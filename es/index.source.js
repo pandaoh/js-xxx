@@ -8555,8 +8555,8 @@ function transferIdCard(idCard) {
 /**
  * 金额转中文
  * Example:
- * `transferMoney(852.5) => '玖佰元整'`
- * `transferMoney(900) => '捌佰伍拾贰元伍角'`
+ * `transferMoney(900) => '玖佰元整'`
+ * `transferMoney(852.5) => '捌佰伍拾贰元伍角'`
  * @param n
  * @returns
  */

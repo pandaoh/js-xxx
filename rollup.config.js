@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 11:33:01
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-13 16:08:12
+ * @LastEditTime: 2023-03-15 17:32:53
  * @Description: rollup 配置文件
  * @FilePath: \js-xxx\rollup.config.js
  */
@@ -26,25 +26,25 @@ const options = {
   output: [
     {
       file: getPath(pkg.iife),
-      format: 'iife', // iife 支持 自执行函数, 可通过 `<script>` 标签加载
+      format: 'iife', // iife 支持 自执行函数，可通过 `<script>` 标签加载。
       name: '$xxx',
       plugins: [terser()],
     },
     {
       file: getPath(pkg.main),
-      format: 'cjs', // lib 兼容 CommonJS Node 默认的模块规范, 可通过 Webpack 加载
+      format: 'cjs', // lib 兼容 CommonJS Node 默认的模块规范，可通过 Webpack 加载。
       name: '$xxx',
       plugins: [terser()],
     },
     {
       file: getPath(pkg.module),
-      format: 'es', // es es6模块 ES module 规范, 可用 Webpack, Rollup 加载
+      format: 'es', // es es6模块 ES module 规范，可用 Webpack、Rollup 加载。
       name: '$xxx',
       plugins: [terser()],
     },
     {
       file: getPath(pkg.unpkg),
-      format: 'umd', // dist 通用模块 IIFE, AMD[`amd`: 浏览器端的模块规范, 可通过 RequireJS 可加载], CJS
+      format: 'umd', // dist 通用模块 IIFE，AMD[`amd`: 浏览器端的模块规范-可通过 RequireJS 可加载]，CJS。
       name: '$xxx',
       plugins: [terser()],
     },
