@@ -2,18 +2,18 @@
  * @Author: HxB
  * @Date: 2022-04-26 11:33:01
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-15 17:32:53
+ * @LastEditTime: 2023-03-20 13:53:58
  * @Description: rollup 配置文件
  * @FilePath: \js-xxx\rollup.config.js
  */
 import path from 'path';
-import { terser } from 'rollup-plugin-terser';
+import terser from '@rollup/plugin-terser';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import typescript from 'rollup-plugin-typescript2';
 import alias from '@rollup/plugin-alias';
+import eslint from '@rollup/plugin-eslint';
 import clear from 'rollup-plugin-clear';
-import { eslint } from 'rollup-plugin-eslint';
 import pkg from './package.json';
 
 const getPath = (_path) => path.resolve(__dirname, _path);
@@ -72,7 +72,9 @@ const options = {
   plugins: [
     resolve(extensions),
     commonjs(),
-    eslint(),
+    eslint({
+      fix: true,
+    }),
     clear({
       targets: ['dist', 'es', 'lib', 'iife', 'docs'],
       watch: true,

@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-03-13 15:20:08
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-13 18:28:07
+ * @LastEditTime: 2023-03-20 13:57:14
  * @Description: .prettierrc.js
  * @FilePath: \js-xxx\.prettierrc.js
  */
@@ -17,4 +17,6 @@ module.exports = {
   tabWidth: 2, // 缩进空格数
   useTabs: false, // 是否使用 tab 缩进
   endOfLine: 'crlf', // 行尾换行符
+  trailingComma: 'all', // 尽可能使用尾随逗号，结尾处不加逗号 none。
+  htmlWhitespaceSensitivity: 'ignore', // 忽略 '>' 下落问题
 };

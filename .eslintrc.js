@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-03-13 15:05:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-14 11:11:50
+ * @LastEditTime: 2023-03-20 13:56:49
  * @Description: eslint 配置文件
  * @FilePath: \js-xxx\.eslintrc.js
  */
@@ -20,9 +20,18 @@ module.exports = {
   },
   plugins: ['prettier', '@typescript-eslint', 'spellcheck', 'import', 'zob'],
   rules: {
+    'zob/comment': 'error', // 中英文空格间距 找英文符号正则 ([\u4e00-\u9fa5]\s*[!@#$%^&*_+=;:'"{\[\]},.\/\\`\(\)])
     '@typescript-eslint/ban-ts-comment': 'off',
-    'prettier/prettier': 'error',
     'no-useless-escape': 'warn',
+    'prettier/prettier': [
+      'error',
+      {
+        // trailingComma: 'all',
+        // arrowParens: 'always',
+        // htmlWhitespaceSensitivity: 'ignore',
+      },
+      { usePrettierrc: true },
+    ],
     'no-undef': ['error'], // 禁止未声明变量的引用
     'spaced-comment': ['error', 'always'], // 注释开始后，此规则将强制间距的一致性 // 或 /*。
     'space-before-blocks': ['error', 'always'], // 块必须至少有一个先前的空格
@@ -183,6 +192,5 @@ module.exports = {
     'import/newline-after-import': ['error'], // 导入后必须留出空行
     'import/no-duplicates': ['error'], // 同一个文件的导入必须写在一行
     'import/order': ['error', { 'newlines-between': 'never' }], // 导入排序
-    'zob/comment': 'error', // 中英文空格间距 搜索中找英文符号正则 ([\u4e00-\u9fa5]\s*[!@#$%^&*_+=;:'"{\[\]},.\/\\`\(\)])
   },
 };
