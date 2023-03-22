@@ -59,7 +59,7 @@ export function mergeObj(
   oldObj: { [key: string]: any },
   newObj: { [key: string]: any },
   keys?: string | string[],
-  noOld = false
+  noOld = false,
 ): { [key: string]: any } {
   for (const newKey in newObj) {
     if (getType(newObj[newKey]) === 'object' && getType(oldObj[newKey] === 'object')) {

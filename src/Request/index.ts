@@ -121,7 +121,7 @@ export enum HttpMethod {
  */
 export function qsStringify(
   obj: any,
-  options?: { arr2str?: boolean; hasIndex?: boolean; urlEncode?: boolean; hasBrackets?: boolean }
+  options?: { arr2str?: boolean; hasIndex?: boolean; urlEncode?: boolean; hasBrackets?: boolean },
 ): string {
   if (!obj) {
     return '';
@@ -135,7 +135,7 @@ export function qsStringify(
         Object.keys(val).forEach((objKey: string) => {
           queryString.append(
             `${key}[${objKey}]`,
-            getType(val[objKey]) == 'object' ? JSON.stringify(val[objKey]) : val[objKey]
+            getType(val[objKey]) == 'object' ? JSON.stringify(val[objKey]) : val[objKey],
           );
         });
         break;
@@ -261,7 +261,7 @@ export function xAjax(
     async?: boolean;
     raw?: boolean;
     withCredentials?: boolean;
-  }
+  },
 ): any {
   let xhr: any;
   method = method.toUpperCase();
@@ -294,7 +294,7 @@ export function xAjax(
       !options?.params
         ? url
         : `${url}${url.includes('?') ? '&' : '?'}${new URLSearchParams(options.params).toString()}`,
-      async
+      async,
     );
     xhr.send();
   } else {
@@ -323,7 +323,7 @@ export function xFetch(
     params?: any;
     raw?: boolean;
     contentType?: string;
-  }
+  },
 ): any {
   if (options?.params) {
     url = `${url}${url.includes('?') ? '&' : '?'}${new URLSearchParams(options.params).toString()}`;

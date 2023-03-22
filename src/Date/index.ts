@@ -20,7 +20,7 @@ import { trim } from '@/String';
 export function formatDate(
   date?: string | Date,
   fmt = 'yyyy-mm-dd hh:ii:ss',
-  weeks: any[] = [7, 1, 2, 3, 4, 5, 6]
+  weeks: any[] = [7, 1, 2, 3, 4, 5, 6],
 ): string {
   // date.replace(/-/g, '/'); // 虽然 win 浏览器两种符号都可以，但是需兼容 ios 。
   date = date ? new Date(date) : new Date();
@@ -131,7 +131,7 @@ export function getDateDifference(
     | 'MINUTE'
     | 'MINUTES'
     | 'SECOND'
-    | 'SECONDS' = 'all'
+    | 'SECONDS' = 'all',
 ): number | { days: number; hours: number; minutes: number; seconds: number } {
   oldDate = new Date(oldDate);
   nowDate = nowDate ? new Date(nowDate) : new Date();
@@ -266,7 +266,7 @@ export function getMonthDaysCount(date?: string | Date): number {
 export function getDateList(
   n: number,
   type: 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second' = 'day',
-  date: any = new Date()
+  date: any = new Date(),
 ): string[] {
   let myDate = calcDate(new Date(date), `${n > 0 ? n - 1 : n + 1} ${type}`); // 包含当天
   const dateArray = [];

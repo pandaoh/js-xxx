@@ -3,12 +3,13 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-15 17:25:26
+ * @LastEditTime: 2023-03-22 11:52:06
  * @Description: 工具函数
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
 import { arraySet } from '@/Array';
 import { getType, isPromise, isStr, toBool, toNum } from '@/Types';
+import { formatDate } from '@/Date';
 
 /**
  * 根据年份求生肖，年 % 12 。
@@ -878,7 +879,7 @@ export function Logger(): {
 } {
   function _logger(
     value: any,
-    type: 'warning' | 'info' | 'danger' | 'primary' | 'success' | 'default' | 'dark' = 'default'
+    type: 'warning' | 'info' | 'danger' | 'primary' | 'success' | 'default' | 'dark' = 'default',
   ): void {
     console.log('\n%c==========> ', `color:${getBSColor(type)}`, value, '\n');
   }
@@ -927,14 +928,22 @@ export function showVar(value: any): any {
 
 /**
  * 在页面上打印某个值，我们打包通常会设置清除 console，使用此函数打印关键信息就不会被清除啦。
+ * 且有更好的可读性与日志标识
+ * 每次打印会返回日志字符串，可以统一收集写入到文件保存，或者上传到服务器。
  * Example:
  * `logVar([1, 2, 2, 3, 3]) => 打印数据`
- * `logVar({a: 1, b: 2}) => 打印数据`
+ * `logVar({a: 1, b: 2}, 'danger') => 打印数据`
+ * `logVar({a: 1, b: 2}, 'success') => 打印数据`
  * @param value
+ * @param logLevel
  * @returns
  */
-export function logVar(value: any): any {
-  console.log('js-xxx:logVar=====>', value);
+export function logVar(value: any, logLevel = 'info'): string {
+  const logColors = getBSColor(logLevel);
+  // const varName = Object.keys({ value })[0];
+  const varType = getType(value);
+  console.log(`%c[${logLevel.toUpperCase()}] %c(${varType}):`, `color:${logColors};`, 'font-weight:bold;', value);
+  return `\n[${logLevel.toUpperCase()}] (${varType}) ${value} -----Log Date: ${formatDate(new Date())}\n`;
 }
 
 /**
@@ -1516,4 +1525,57 @@ export function getMonthInfo(n: string | number):
     return MONTH_INFO;
   }
   return MONTH_INFO[Number(n) - 1] ?? MONTH_INFO;
+}
+
+/**
+ * 判断两个值是否相等
+ * Example:
+ * `isEqual([1, 2, 3], [1, 2, 3]) => true`
+ * `isEqual({a: 1, b: 2}, {a: 1, b: 2}) => true`
+ * `isEqual({}, {}) => true`
+ * `isEqual(1, 1) => true`
+ * `isEqual(1, '1') => false`
+ * @param obj1
+ * @param obj2
+ * @returns
+ */
+export function isEqual(obj1: any, obj2: any): boolean {
+  // 判断类型是否相同
+  if (typeof obj1 !== typeof obj2) {
+    return false;
+  }
+
+  // 判断是对象还是数组
+  if (Array.isArray(obj1) && Array.isArray(obj2)) {
+    // 如果是数组，比较每一个元素是否相等。
+    if (obj1.length !== obj2.length) {
+      return false;
+    }
+    for (let i = 0; i < obj1.length; i++) {
+      if (!isEqual(obj1[i], obj2[i])) {
+        return false;
+      }
+    }
+    return true;
+  } else if (typeof obj1 === 'object' && typeof obj2 === 'object') {
+    // 如果是对象，比较每一个属性是否相等。
+    const keys1 = Object.keys(obj1);
+    const keys2 = Object.keys(obj2);
+    if (keys1.length !== keys2.length) {
+      return false;
+    }
+    for (const key of keys1) {
+      // eslint-disable-next-line no-prototype-builtins
+      if (!obj2.hasOwnProperty(key)) {
+        return false;
+      }
+      if (!isEqual(obj1[key], obj2[key])) {
+        return false;
+      }
+    }
+    return true;
+  } else {
+    // 其他类型直接比较值是否相等
+    return obj1 === obj2;
+  }
 }

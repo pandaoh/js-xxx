@@ -160,6 +160,7 @@ module.exports = {
           'unicode',
           'torage',
           'xxxxxx',
+          'arial',
         ],
         skipIfMatch: [
           // http url

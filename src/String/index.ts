@@ -455,7 +455,7 @@ export function truncate(
   options?: {
     ellipsis?: string; // 省略符
     separator?: string; // 分隔符，尽可能使截取位置在该处。
-  }
+  },
 ) {
   const defOptions = {
     ellipsis: '...',

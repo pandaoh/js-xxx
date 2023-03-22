@@ -70,4 +70,34 @@ export declare function abs(value: number): number;
  * @returns
  */
 export declare function float(value: number, d?: number, isStr?: boolean): number | string;
+/**
+ * 判断一个数是否在指定范围
+ * Example:
+ * `inRange(null, 0, 3) => false`
+ * `inRange(0, 0, 3) => true`
+ * `inRange(3, 0, 3) => true`
+ * `inRange(5, 0, 3) => false`
+ * @param value
+ * @param min
+ * @param max
+ * @returns
+ */
+export declare function inRange(value: any, min: number, max: number): boolean;
+/**
+ * 获取百分比
+ * Example:
+ * `getPercentage(102, 1020, 2) => 10`
+ * `getPercentage(102, 1020, 2, { float: true, suffix: true }) => '10.00%'`
+ * `getPercentage(17, 1020, 2) => 1.67`
+ * `getPercentage(1020, null, 2) => 0`
+ * `getPercentage(0, 1020, 2, { float: false, suffix: true }) => '0%'`
+ * @param value
+ * @param total
+ * @param options
+ * @returns
+ */
+export declare function getPercentage(value: any, total: any, decimals?: number, options?: {
+    float: boolean;
+    suffix: boolean;
+}): string | number;
 //# sourceMappingURL=index.d.ts.map

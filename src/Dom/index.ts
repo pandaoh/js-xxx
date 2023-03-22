@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-13 18:31:22
+ * @LastEditTime: 2023-03-22 12:22:03
  * @Description: 利用 dom 的一些函数
  * @FilePath: \js-xxx\src\Dom\index.ts
  */
@@ -151,7 +151,7 @@ export function scrollYTo(targetVal: 'start' | 'end' | number, callback: any, do
         callback(getScrollPercent('Y', dom));
         timer = setTimeout(cancel, 100);
       },
-      window
+      window,
     );
     // 防止位置已经到极限了，没触发 scroll 事件。
     timer = setTimeout(cancel, 100);
@@ -216,7 +216,7 @@ export function scrollXTo(targetVal: 'start' | 'end' | number, callback: any, do
         callback(getScrollPercent('X', dom));
         timer = setTimeout(cancel, 100);
       },
-      window
+      window,
     );
     // 防止位置已经到极限了，没触发 scroll 事件。
     timer = setTimeout(cancel, 100);
@@ -419,7 +419,7 @@ export function marquee(
     speed?: number;
     style?: string;
     parentStyle?: string;
-  }
+  },
 ): void {
   try {
     const cssAnimation =
@@ -436,7 +436,7 @@ export function marquee(
       `overflow:visible;animation-name:marquee-${tempId};animation-timing-function:linear;animation-iteration-count:infinite;animation-duration:${
         ((options?.direction === 'Y' ? $marqueeDom.clientHeight : $marqueeDom.clientWidth) / 200) *
           (options?.speed ?? 3) ?? 5
-      }s;${noAnimation ? 'animation-duration:0s;' : ''}${options?.style ?? ''}`
+      }s;${noAnimation ? 'animation-duration:0s;' : ''}${options?.style ?? ''}`,
     );
     if (options?.direction === 'Y') {
       $animationStyle.innerHTML = cssAnimation
@@ -444,7 +444,7 @@ export function marquee(
         .replace(/X_TEMP_VAL/g, '0')
         .replace(
           /Y_TEMP_VAL/g,
-          options.loopType === 'origin' ? `calc(-100% + ${$marqueeDom?.parentElement?.offsetHeight ?? 0}px)` : '-50%'
+          options.loopType === 'origin' ? `calc(-100% + ${$marqueeDom?.parentElement?.offsetHeight ?? 0}px)` : '-50%',
         )
         .replace(/X_END_VAL/g, '0')
         .replace(/Y_END_VAL/g, options.loopType === 'origin' ? '0' : '-100%');
@@ -454,7 +454,7 @@ export function marquee(
         .replace(/Y_TEMP_VAL/g, '0')
         .replace(
           /X_TEMP_VAL/g,
-          options?.loopType === 'origin' ? `calc(-100% + ${$marqueeDom?.parentElement?.offsetWidth ?? 0}px)` : '-50%'
+          options?.loopType === 'origin' ? `calc(-100% + ${$marqueeDom?.parentElement?.offsetWidth ?? 0}px)` : '-50%',
         )
         .replace(/Y_END_VAL/g, '0')
         .replace(/X_END_VAL/g, options?.loopType === 'origin' ? '0' : '-100%');
@@ -469,4 +469,45 @@ export function marquee(
   } catch (e) {
     console.log('js-xxx:marqueeError', e);
   }
+}
+
+/**
+ * 自动堆叠
+ * Example:
+ * `stackSticky('.stack', 'top') => 所有 .stack 元素自动在 top 上堆叠`
+ * `stackSticky('.stack', 'left') => 所有 .stack 元素自动在 left 上堆叠`
+ * @param selectors
+ * @param direction
+ * @returns
+ */
+export function stackSticky(selectors: string, direction = 'top'): void {
+  const elements = document.querySelectorAll(`${selectors}`);
+  let offset = 0;
+  let prevRect: any;
+  elements.forEach((element: any) => {
+    const rect = element.getBoundingClientRect();
+    element.style.position = 'sticky';
+    if (prevRect) {
+      switch (direction) {
+        case 'top':
+          element.style.top = `${offset}px`;
+          break;
+        case 'bottom':
+          element.style.bottom = `${offset}px`;
+          break;
+        case 'left':
+          element.style.left = `${offset}px`;
+          break;
+        case 'right':
+          element.style.right = `${offset}px`;
+          break;
+        default:
+          break;
+      }
+    } else {
+      element.style[direction] = `${offset}px`;
+    }
+    offset += direction === 'top' || direction === 'bottom' ? rect.height : rect.width;
+    prevRect = rect;
+  });
 }

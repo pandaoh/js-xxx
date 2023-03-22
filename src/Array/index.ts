@@ -166,13 +166,13 @@ export function shuffleArray(arr: any[]) {
 export function arraySort(
   arr: any[],
   type: 'desc' | 'asc' | 'ASC' | 'DESC' | boolean = 'asc',
-  keys?: string | string[]
+  keys?: string | string[],
 ): any[] {
   const isAscend = type == 'asc' || type == 'ASC' || type == true;
   try {
     if (!keys) {
       return arr.sort((a: any, b: any) =>
-        isAscend ? toStr(a).localeCompare(toStr(b)) : toStr(b).localeCompare(toStr(a))
+        isAscend ? toStr(a).localeCompare(toStr(b)) : toStr(b).localeCompare(toStr(a)),
       );
     }
     if (isStr(keys)) {

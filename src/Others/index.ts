@@ -1,13 +1,40 @@
+/* eslint-disable indent */
 /*
  * @Author: HxB
  * @Date: 2022-04-26 14:53:39
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-13 15:43:00
+ * @LastEditTime: 2023-03-22 14:35:51
  * @Description: 因项目需要常用函数，不管任何项目，都放到一起。注意甄别，没有复用意义的函数就不要添加了。
  * @FilePath: \js-xxx\src\Others\index.ts
  */
 
 import { splitCase } from '@/String';
+
+/**
+ * 验证 Cron 字段是否有效的辅助函数
+ * @param field
+ * @param min
+ * @param max
+ * @returns
+ */
+function _isValidCronField(field: any, min: any, max: any): boolean {
+  const regex = new RegExp('^\\d+|\\*/\\d+|[\\d,-]+/[\\d,-]+$');
+  if (!regex.test(field)) {
+    return false;
+  }
+
+  if (field.includes('/')) {
+    const [start, step] = field.split('/');
+    return _isValidCronField(start, min, max) && parseInt(step) > 0 && parseInt(step) <= max;
+  }
+
+  if (field.includes('-')) {
+    const [start, end] = field.split('-');
+    return parseInt(start) >= min && parseInt(end) <= max && parseInt(start) <= parseInt(end);
+  }
+
+  return parseInt(field) >= min && parseInt(field) <= max;
+}
 
 /**
  * 文件大小格式化
@@ -375,7 +402,7 @@ export function formatRh(
     default?: string | number | boolean;
     negative?: Array<string>;
     positive?: Array<string>;
-  }
+  },
 ): string | boolean | number {
   const defaultOptions = {
     format: ['阴性', '阳性'],
@@ -505,4 +532,195 @@ export function dataTo(key: string, value: any): void {
   } catch (e) {
     console.log('js-xxx:dataToError', e, { key, value, $dom });
   }
+}
+
+/**
+ * 给对应 dom 生成水印
+ * Example:
+ * `watermark(document.body, 'My Watermark', { fontSize: 20, opacity: 0.5, angle: -30, color: 'red', fontFamily: 'Arial', repeat: true, backgroundOpacity: 0.05 });`
+ * `watermark(document.body, 'My Watermark') => 在 body 中生成水印`
+ * `watermark(document.body, 'My Watermark', { fontSize: 120, color: 'red', repeat: false, angle: 0 }) => 在 body 中生成水印`
+ * `watermark(document.body, 'My Watermark', { fontSize: 20, color: 'red', repeat: true, angle: 90 }) => 在 body 中生成水印`
+ * @param dom
+ * @param text
+ * @param options
+ * @returns
+ */
+export function watermark(dom: any, text: string, options: any = {}) {
+  const {
+    fontSize = 16,
+    opacity = 0.3,
+    angle = -45,
+    color = '#000',
+    fontFamily = 'Arial',
+    repeat = true,
+    backgroundOpacity = 0.05,
+  } = options;
+
+  const canvas = document.createElement('canvas');
+  const ctx: any = canvas.getContext('2d');
+  ctx.font = `${fontSize}px ${fontFamily}`;
+  const textWidth = ctx.measureText(text).width;
+  const textHeight = fontSize;
+  const canvasWidth =
+    angle % 180 == 0
+      ? textWidth * 2
+      : angle % 90 == 0
+      ? textHeight * 2
+      : (Math.abs(textWidth * Math.cos((angle * Math.PI) / 180)) +
+          Math.abs(textHeight * Math.sin((angle * Math.PI) / 180))) *
+        2;
+  const canvasHeight =
+    angle % 180 == 0
+      ? textHeight * 2
+      : angle % 90 == 0
+      ? textWidth * 2
+      : (Math.abs(textHeight * Math.cos((angle * Math.PI) / 180)) +
+          Math.abs(textWidth * Math.sin((angle * Math.PI) / 180))) *
+        2;
+
+  canvas.width = canvasWidth;
+  canvas.height = canvasHeight;
+
+  ctx.font = `${fontSize}px ${fontFamily}`;
+  ctx.fillStyle = color;
+  ctx.globalAlpha = opacity;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+
+  const centerX = canvasWidth / 2;
+  const centerY = canvasHeight / 2;
+  ctx.translate(centerX, centerY);
+  ctx.rotate((angle * Math.PI) / 180);
+  ctx.fillText(text, 0, 0);
+  ctx.rotate((-angle * Math.PI) / 180);
+  ctx.translate(-centerX, -centerY);
+
+  const backgroundImage = `url(${canvas.toDataURL('image/png')})`;
+  dom.style.backgroundImage = backgroundImage;
+  dom.style.backgroundRepeat = repeat ? 'repeat' : 'no-repeat';
+  dom.style.backgroundSize = `${
+    dom.clientWidth === canvasWidth ? canvasWidth : dom.clientWidth / Math.ceil(dom.clientWidth / canvasWidth)
+  }px ${
+    dom.clientHeight === canvasHeight ? canvasHeight : dom.clientHeight / Math.ceil(dom.clientHeight / canvasHeight)
+  }px`;
+  dom.style.backgroundColor = `rgba(0, 0, 0, ${backgroundOpacity})`;
+  dom.style.backgroundPosition = 'center';
+}
+
+/**
+ * 获取 cron 表达式
+ * Example:
+ * `getCron() => '* * * * *'`
+ * `getCron({ minute: '30', hour: '1', day: '10'}) => '30 1 10 * *'`
+ * `getCron({  week: '?' }) => '* * * * ?'`
+ * `getCron({ week: '*' }) => '* * * * *'`
+ * `getCron({ week: 0 }) => '* * * * 0'`
+ * `getCron({ week: '0' }) => '* * * * 0'`
+ * `getCron({ week: '7' }) => '* * * * 0'`
+ * `getCron({ week: 'SUN,天,日,六,6,5' }) => '* * * * 0,5,6'`
+ * `getCron({ day: '1-5' }) => '* * 1-5 * * '`
+ * `getCron({ day: '1,5' }) => '* * 1,5 * * '`
+ * `getCron({ day: '1/5' }) => '* * 1/5 * * '`
+ * @param options
+ * @returns
+ */
+export function getCron({ minute = '*', hour = '*', day = '*', month = '*', week = '*' } = {}) {
+  const limits = [
+    [0, 59], // 分钟 (0-59)
+    [0, 23], // 小时 (0-23)
+    [1, 31], // 日期 (1-31)
+    [1, 12], // 月份 (1-12)
+    [0, 7], // 星期 (0-7 或 SUN-SAT)
+  ];
+
+  let weekField: any = week;
+
+  // 将星期转换为 0-7 格式
+  if (typeof weekField === 'number') {
+    if (weekField < 0 || weekField > 7) {
+      throw new Error('Invalid Week Field!');
+    }
+    weekField = weekField.toString();
+  } else if (typeof weekField === 'string' && weekField !== '*' && weekField !== '?') {
+    const weekMap: any = {
+      SUN: 0,
+      MON: 1,
+      TUE: 2,
+      WED: 3,
+      THU: 4,
+      FRI: 5,
+      SAT: 6,
+      日: 0,
+      一: 1,
+      二: 2,
+      三: 3,
+      四: 4,
+      五: 5,
+      六: 6,
+      天: 0,
+      '0': 0,
+      '1': 1,
+      '2': 2,
+      '3': 3,
+      '4': 4,
+      '5': 5,
+      '6': 6,
+      '7': 0,
+    };
+
+    const weekList = weekField.split(',').map((weekItem) => {
+      const weekUpper = weekItem.toUpperCase();
+      const mappedWeek = weekMap[weekUpper];
+      if (mappedWeek === undefined) {
+        throw new Error('Invalid Week Field!');
+      }
+      return mappedWeek;
+    });
+    weekField = [...new Set(weekList)].sort().join(',');
+  }
+
+  const fields = [minute, hour, day, month, weekField];
+
+  // 验证输入
+  for (let i = 0; i < fields.length; i++) {
+    const field = fields[i];
+    const [min, max] = limits[i];
+
+    if (typeof field === 'string') {
+      if (field === '*' || field === '?' || field === '*/1') {
+        continue;
+      }
+
+      if (field.startsWith('*/')) {
+        const step = parseInt(field.slice(2));
+        if (step > 0 && step <= max) {
+          continue;
+        }
+      }
+
+      const parts = field.split(',');
+
+      if (parts.length > 1) {
+        if (parts.every((part) => _isValidCronField(part, min, max))) {
+          continue;
+        }
+      }
+
+      const [field1, field2] = field.split('-');
+
+      if (field1 && field2 && _isValidCronField(field1, min, max) && _isValidCronField(field2, min, max)) {
+        continue;
+      }
+
+      if (_isValidCronField(field, min, max)) {
+        continue;
+      }
+    }
+
+    throw new Error(`Invalid Field: ${field}`);
+  }
+
+  // 输出 cron 表达式
+  return `${fields.join(' ')}`;
 }

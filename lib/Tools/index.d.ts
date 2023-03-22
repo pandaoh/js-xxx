@@ -259,13 +259,17 @@ export declare function Logger(): {
 export declare function showVar(value: any): any;
 /**
  * 在页面上打印某个值，我们打包通常会设置清除 console，使用此函数打印关键信息就不会被清除啦。
+ * 且有更好的可读性与日志标识
+ * 每次打印会返回日志字符串，可以统一收集写入到文件保存，或者上传到服务器。
  * Example:
  * `logVar([1, 2, 2, 3, 3]) => 打印数据`
- * `logVar({a: 1, b: 2}) => 打印数据`
+ * `logVar({a: 1, b: 2}, 'danger') => 打印数据`
+ * `logVar({a: 1, b: 2}, 'success') => 打印数据`
  * @param value
+ * @param logLevel
  * @returns
  */
-export declare function logVar(value: any): any;
+export declare function logVar(value: any, logLevel?: string): string;
 /**
  * 检测某个数组是否包含某个值
  * Example:
@@ -493,4 +497,17 @@ export declare function getMonthInfo(n: string | number): {
     id: number;
     others: string;
 }[];
+/**
+ * 判断两个值是否相等
+ * Example:
+ * `isEqual([1, 2, 3], [1, 2, 3]) => true`
+ * `isEqual({a: 1, b: 2}, {a: 1, b: 2}) => true`
+ * `isEqual({}, {}) => true`
+ * `isEqual(1, 1) => true`
+ * `isEqual(1, '1') => false`
+ * @param obj1
+ * @param obj2
+ * @returns
+ */
+export declare function isEqual(obj1: any, obj2: any): boolean;
 //# sourceMappingURL=index.d.ts.map

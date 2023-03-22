@@ -171,4 +171,14 @@ export declare function marquee(selector: string, options?: {
     style?: string;
     parentStyle?: string;
 }): void;
+/**
+ * 自动堆叠
+ * Example:
+ * `stackSticky('.stack', 'top') => 所有 .stack 元素自动在 top 上堆叠`
+ * `stackSticky('.stack', 'left') => 所有 .stack 元素自动在 left 上堆叠`
+ * @param selectors
+ * @param direction
+ * @returns
+ */
+export declare function stackSticky(selectors: string, direction?: string): void;
 //# sourceMappingURL=index.d.ts.map

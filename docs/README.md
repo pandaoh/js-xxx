@@ -1,6 +1,6 @@
-js-xxx - v1.6.0
+js-xxx - v1.6.1
 
-# js-xxx - v1.6.0
+# js-xxx - v1.6.1
 
 ## Table of contents
 
@@ -80,6 +80,7 @@ js-xxx - v1.6.0
 - [getConstellation](README.md#getconstellation)
 - [getContentType](README.md#getcontenttype)
 - [getCookie](README.md#getcookie)
+- [getCron](README.md#getcron)
 - [getCryptoJS](README.md#getcryptojs)
 - [getDateDifference](README.md#getdatedifference)
 - [getDateList](README.md#getdatelist)
@@ -89,6 +90,7 @@ js-xxx - v1.6.0
 - [getMonthDays](README.md#getmonthdays)
 - [getMonthDaysCount](README.md#getmonthdayscount)
 - [getMonthInfo](README.md#getmonthinfo)
+- [getPercentage](README.md#getpercentage)
 - [getQueryString](README.md#getquerystring)
 - [getRandColor](README.md#getrandcolor)
 - [getRandNum](README.md#getrandnum)
@@ -111,6 +113,7 @@ js-xxx - v1.6.0
 - [getWeekInfo](README.md#getweekinfo)
 - [globalError](README.md#globalerror)
 - [html2str](README.md#html2str)
+- [inRange](README.md#inrange)
 - [initNotification](README.md#initnotification)
 - [initWebSocket](README.md#initwebsocket)
 - [insertAfter](README.md#insertafter)
@@ -128,6 +131,7 @@ js-xxx - v1.6.0
 - [isDecimal](README.md#isdecimal)
 - [isElement](README.md#iselement)
 - [isEmail](README.md#isemail)
+- [isEqual](README.md#isequal)
 - [isFn](README.md#isfn)
 - [isHttp](README.md#ishttp)
 - [isInteger](README.md#isinteger)
@@ -190,6 +194,7 @@ js-xxx - v1.6.0
 - [sortBy](README.md#sortby)
 - [sortCallBack](README.md#sortcallback)
 - [splitCase](README.md#splitcase)
+- [stackSticky](README.md#stacksticky)
 - [str2html](README.md#str2html)
 - [str2unicode](README.md#str2unicode)
 - [sub](README.md#sub)
@@ -212,6 +217,7 @@ js-xxx - v1.6.0
 - [uuid](README.md#uuid)
 - [versionUpgrade](README.md#versionupgrade)
 - [waitUntil](README.md#waituntil)
+- [watermark](README.md#watermark)
 - [xAjax](README.md#xajax)
 - [xFetch](README.md#xfetch)
 
@@ -1722,6 +1728,41 @@ Example: `getCookie('name') => 获取 name 对应的 Cookie 值`
 
 ___
 
+### getCron
+
+▸ **getCron**(`options?`): `string`
+
+获取 cron 表达式
+Example:
+`getCron() => '* * * * *'`
+`getCron({ minute: '30', hour: '1', day: '10'}) => '30 1 10 * *'`
+`getCron({  week: '?' }) => '* * * * ?'`
+`getCron({ week: '*' }) => '* * * * *'`
+`getCron({ week: 0 }) => '* * * * 0'`
+`getCron({ week: '0' }) => '* * * * 0'`
+`getCron({ week: '7' }) => '* * * * 0'`
+`getCron({ week: 'SUN,天,日,六,6,5' }) => '* * * * 0,5,6'`
+`getCron({ day: '1-5' }) => '* * 1-5 * * '`
+`getCron({ day: '1,5' }) => '* * 1,5 * * '`
+`getCron({ day: '1/5' }) => '* * 1/5 * * '`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options` | `Object` |
+| `options.day` | `undefined` \| `string` |
+| `options.hour` | `undefined` \| `string` |
+| `options.minute` | `undefined` \| `string` |
+| `options.month` | `undefined` \| `string` |
+| `options.week` | `undefined` \| `string` |
+
+#### Returns
+
+`string`
+
+___
+
 ### getCryptoJS
 
 ▸ **getCryptoJS**(): typeof `CryptoJS`
@@ -1909,6 +1950,35 @@ Example:
 #### Returns
 
 { `abbr`: `string` ; `id`: `number` ; `key`: `string` ; `name`: `string` ; `others`: `string`  } \| { `abbr`: `string` ; `id`: `number` ; `key`: `string` ; `name`: `string` ; `others`: `string`  }[]
+
+___
+
+### getPercentage
+
+▸ **getPercentage**(`value`, `total`, `decimals?`, `options?`): `string` \| `number`
+
+获取百分比
+Example:
+`getPercentage(102, 1020, 2) => 10`
+`getPercentage(102, 1020, 2, { float: true, suffix: true }) => '10.00%'`
+`getPercentage(17, 1020, 2) => 1.67`
+`getPercentage(1020, null, 2) => 0`
+`getPercentage(0, 1020, 2, { float: false, suffix: true }) => '0%'`
+
+#### Parameters
+
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `value` | `any` | `undefined` |
+| `total` | `any` | `undefined` |
+| `decimals` | `number` | `0` |
+| `options` | `Object` | `undefined` |
+| `options.float` | `boolean` | `false` |
+| `options.suffix` | `boolean` | `false` |
+
+#### Returns
+
+`string` \| `number`
 
 ___
 
@@ -2345,6 +2415,31 @@ Example: `html2str('&lt;&gt;&amp;&quot;') => '<>&"'`
 
 ___
 
+### inRange
+
+▸ **inRange**(`value`, `min`, `max`): `boolean`
+
+判断一个数是否在指定范围
+Example:
+`inRange(null, 0, 3) => false`
+`inRange(0, 0, 3) => true`
+`inRange(3, 0, 3) => true`
+`inRange(5, 0, 3) => false`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `any` |
+| `min` | `number` |
+| `max` | `number` |
+
+#### Returns
+
+`boolean`
+
+___
+
 ### initNotification
 
 ▸ **initNotification**(): `boolean`
@@ -2684,6 +2779,31 @@ Example:
 | Name | Type |
 | :------ | :------ |
 | `value` | `string` |
+
+#### Returns
+
+`boolean`
+
+___
+
+### isEqual
+
+▸ **isEqual**(`obj1`, `obj2`): `boolean`
+
+判断两个值是否相等
+Example:
+`isEqual([1, 2, 3], [1, 2, 3]) => true`
+`isEqual({a: 1, b: 2}, {a: 1, b: 2}) => true`
+`isEqual({}, {}) => true`
+`isEqual(1, 1) => true`
+`isEqual(1, '1') => false`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `obj1` | `any` |
+| `obj2` | `any` |
 
 #### Returns
 
@@ -3202,22 +3322,26 @@ ___
 
 ### logVar
 
-▸ **logVar**(`value`): `any`
+▸ **logVar**(`value`, `logLevel?`): `string`
 
 在页面上打印某个值，我们打包通常会设置清除 console，使用此函数打印关键信息就不会被清除啦。
+且有更好的可读性与日志标识
+每次打印会返回日志字符串，可以统一收集写入到文件保存，或者上传到服务器。
 Example:
 `logVar([1, 2, 2, 3, 3]) => 打印数据`
-`logVar({a: 1, b: 2}) => 打印数据`
+`logVar({a: 1, b: 2}, 'danger') => 打印数据`
+`logVar({a: 1, b: 2}, 'success') => 打印数据`
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `any` |
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `value` | `any` | `undefined` |
+| `logLevel` | `string` | `'info'` |
 
 #### Returns
 
-`any`
+`string`
 
 ___
 
@@ -4019,6 +4143,28 @@ Example:
 
 ___
 
+### stackSticky
+
+▸ **stackSticky**(`selectors`, `direction?`): `void`
+
+自动堆叠
+Example:
+`stackSticky('.stack', 'top') => 所有 .stack 元素自动在 top 上堆叠`
+`stackSticky('.stack', 'left') => 所有 .stack 元素自动在 left 上堆叠`
+
+#### Parameters
+
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `selectors` | `string` | `undefined` |
+| `direction` | `string` | `'top'` |
+
+#### Returns
+
+`void`
+
+___
+
 ### str2html
 
 ▸ **str2html**(`str`): `string`
@@ -4501,6 +4647,31 @@ Example:
 #### Returns
 
 `Promise`<`any`\>
+
+___
+
+### watermark
+
+▸ **watermark**(`dom`, `text`, `options?`): `void`
+
+给对应 dom 生成水印
+Example:
+`watermark(document.body, 'My Watermark', { fontSize: 20, opacity: 0.5, angle: -30, color: 'red', fontFamily: 'Arial', repeat: true, backgroundOpacity: 0.05 });`
+`watermark(document.body, 'My Watermark') => 在 body 中生成水印`
+`watermark(document.body, 'My Watermark', { fontSize: 120, color: 'red', repeat: false, angle: 0 }) => 在 body 中生成水印`
+`watermark(document.body, 'My Watermark', { fontSize: 20, color: 'red', repeat: true, angle: 90 }) => 在 body 中生成水印`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `dom` | `any` |
+| `text` | `string` |
+| `options` | `any` |
+
+#### Returns
+
+`void`
 
 ___
 

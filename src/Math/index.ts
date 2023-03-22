@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 16:24:34
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-13 15:39:44
+ * @LastEditTime: 2023-03-22 11:48:55
  * @Description: 数学常用函数
  * @FilePath: \js-xxx\src\Math\index.ts
  */
@@ -33,7 +33,7 @@ export function div(div1: number | string, div2: number | string): number {
   }
   return times(
     Number(tempDiv1.replace('.', '')) / Number(tempDiv2.replace('.', '')),
-    Math.pow(10, div2FloatLen - div1FloatLen)
+    Math.pow(10, div2FloatLen - div1FloatLen),
   ); // 转换整数计算再使用科学计数法转换小数位
 }
 
@@ -164,4 +164,74 @@ export function float(value: number, d = 0, isStr = false): number | string {
   const doubleStr = arr.length > 1 ? arr[1].padEnd(d, '0').substring(0, d) : '0'.padEnd(d, '0');
   const res = d === 0 ? arr[0] : `${arr[0]}.${doubleStr}`;
   return isStr ? res : Number(res);
+}
+
+/**
+ * 判断一个数是否在指定范围
+ * Example:
+ * `inRange(null, 0, 3) => false`
+ * `inRange(0, 0, 3) => true`
+ * `inRange(3, 0, 3) => true`
+ * `inRange(5, 0, 3) => false`
+ * @param value
+ * @param min
+ * @param max
+ * @returns
+ */
+export function inRange(value: any, min: number, max: number) {
+  if (
+    value === null ||
+    value === undefined ||
+    value === '' ||
+    value === true ||
+    value === false ||
+    value.toString() === ''
+  ) {
+    return false;
+  }
+  value = Number(value);
+  if (isNaN(value)) {
+    return false;
+  }
+  return value >= min && value <= max;
+}
+
+/**
+ * 获取百分比
+ * Example:
+ * `getPercentage(102, 1020, 2) => 10`
+ * `getPercentage(102, 1020, 2, { float: true, suffix: true }) => '10.00%'`
+ * `getPercentage(17, 1020, 2) => 1.67`
+ * `getPercentage(1020, null, 2) => 0`
+ * `getPercentage(0, 1020, 2, { float: false, suffix: true }) => '0%'`
+ * @param value
+ * @param total
+ * @param options
+ * @returns
+ */
+export function getPercentage(
+  value: any,
+  total: any,
+  decimals = 0,
+  options = {
+    float: false,
+    suffix: false,
+  },
+) {
+  let result;
+  try {
+    value = Number(value);
+    total = Number(total);
+    if (isNaN(value) || isNaN(total) || total === 0) {
+      result = options.float ? (0).toFixed(decimals) : 0;
+      return options.suffix ? `${result}%` : result;
+    }
+    const percentage = (value / total) * 100;
+    result = options.float ? percentage.toFixed(decimals) : parseFloat(percentage.toFixed(decimals));
+    return options.suffix ? `${result}%` : result;
+  } catch (e) {
+    console.log('js-xxx:getPercentageError', e);
+    result = options.float ? (0).toFixed(decimals) : 0;
+    return options.suffix ? `${result}%` : result;
+  }
 }

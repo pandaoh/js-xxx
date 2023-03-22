@@ -70,7 +70,7 @@ export function sendNotification(
       }
     // eslint-disable-next-line no-undef
     | NotificationOptions
-    | undefined
+    | undefined,
 ): void {
   // @ts-ignore
   const NOTIFICATION = window.Notification || window?.mozNotification || window?.webkitNotification;

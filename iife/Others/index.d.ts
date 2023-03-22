@@ -162,4 +162,41 @@ export declare function getBloodGroup(bloodGroup: string): {
  * @returns
  */
 export declare function dataTo(key: string, value: any): void;
+/**
+ * 给对应 dom 生成水印
+ * Example:
+ * `watermark(document.body, 'My Watermark', { fontSize: 20, opacity: 0.5, angle: -30, color: 'red', fontFamily: 'Arial', repeat: true, backgroundOpacity: 0.05 });`
+ * `watermark(document.body, 'My Watermark') => 在 body 中生成水印`
+ * `watermark(document.body, 'My Watermark', { fontSize: 120, color: 'red', repeat: false, angle: 0 }) => 在 body 中生成水印`
+ * `watermark(document.body, 'My Watermark', { fontSize: 20, color: 'red', repeat: true, angle: 90 }) => 在 body 中生成水印`
+ * @param dom
+ * @param text
+ * @param options
+ * @returns
+ */
+export declare function watermark(dom: any, text: string, options?: any): void;
+/**
+ * 获取 cron 表达式
+ * Example:
+ * `getCron() => '* * * * *'`
+ * `getCron({ minute: '30', hour: '1', day: '10'}) => '30 1 10 * *'`
+ * `getCron({  week: '?' }) => '* * * * ?'`
+ * `getCron({ week: '*' }) => '* * * * *'`
+ * `getCron({ week: 0 }) => '* * * * 0'`
+ * `getCron({ week: '0' }) => '* * * * 0'`
+ * `getCron({ week: '7' }) => '* * * * 0'`
+ * `getCron({ week: 'SUN,天,日,六,6,5' }) => '* * * * 0,5,6'`
+ * `getCron({ day: '1-5' }) => '* * 1-5 * * '`
+ * `getCron({ day: '1,5' }) => '* * 1,5 * * '`
+ * `getCron({ day: '1/5' }) => '* * 1/5 * * '`
+ * @param options
+ * @returns
+ */
+export declare function getCron({ minute, hour, day, month, week }?: {
+    minute?: string | undefined;
+    hour?: string | undefined;
+    day?: string | undefined;
+    month?: string | undefined;
+    week?: string | undefined;
+}): string;
 //# sourceMappingURL=index.d.ts.map
