@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-22 12:22:03
+ * @LastEditTime: 2023-05-05 13:59:25
  * @Description: 利用 dom 的一些函数
  * @FilePath: \js-xxx\src\Dom\index.ts
  */
@@ -510,4 +510,49 @@ export function stackSticky(selectors: string, direction = 'top'): void {
     offset += direction === 'top' || direction === 'bottom' ? rect.height : rect.width;
     prevRect = rect;
   });
+}
+
+/**
+ * 自动计算 font-size 并设置
+ * Example:
+ * `calcFontSize() => 按 16/9 计算并设置`
+ * `calcFontSize(16/10, true) => 按 16/10 计算并设置内容居中`
+ * `calcFontSize(16/10, true, 'body') => 按 16/10 计算并设置 body 偏移使得内容居中`
+ * @param clientRatio 屏幕比例
+ * @param contentCenter 内容是否居中
+ * @param offsetSelector 偏移元素选择器，默认设置 html 根节点偏移。
+ * @returns
+ */
+export function calcFontSize(clientRatio = 16 / 9, contentCenter = false, offsetSelector: any) {
+  const $doc = document.documentElement;
+  function _setHtmlFontSize() {
+    const screenRatio = $doc.clientWidth / $doc.clientHeight;
+    const pageWidth = (screenRatio > clientRatio ? clientRatio / screenRatio : 1) * $doc.clientWidth;
+    const pageHeight = pageWidth / clientRatio;
+    $doc.style.fontSize = (pageWidth / 100).toFixed(3) + 'px';
+    if (contentCenter) {
+      try {
+        (offsetSelector ? document.querySelector(offsetSelector) : $doc).style.paddingTop =
+          (($doc.clientHeight - pageHeight) / 2).toFixed(3) + 'px';
+      } catch (e) {
+        console.log('js-xxx:calcFontSizeError===>', e);
+      }
+    }
+  }
+  _setHtmlFontSize();
+  window.addEventListener('resize', _setHtmlFontSize);
+  return () => {
+    window.removeEventListener('resize', _setHtmlFontSize);
+  };
+}
+
+/**
+ * px 转 rem
+ * Example: `px2rem(30) => 转化后的 rem`
+ * @param px
+ * @returns
+ */
+export function px2rem(px: number) {
+  const htmlFontSize = parseFloat(window.getComputedStyle(document.documentElement).fontSize);
+  return px / htmlFontSize;
 }
