@@ -3,13 +3,12 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-22 11:52:06
+ * @LastEditTime: 2023-05-19 09:33:52
  * @Description: 工具函数
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
 import { arraySet } from '@/Array';
 import { getType, isPromise, isStr, toBool, toNum } from '@/Types';
-import { formatDate } from '@/Date';
 
 /**
  * 根据年份求生肖，年 % 12 。
@@ -927,26 +926,6 @@ export function showVar(value: any): any {
 }
 
 /**
- * 在页面上打印某个值，我们打包通常会设置清除 console，使用此函数打印关键信息就不会被清除啦。
- * 且有更好的可读性与日志标识
- * 每次打印会返回日志字符串，可以统一收集写入到文件保存，或者上传到服务器。
- * Example:
- * `logVar([1, 2, 2, 3, 3]) => 打印数据`
- * `logVar({a: 1, b: 2}, 'danger') => 打印数据`
- * `logVar({a: 1, b: 2}, 'success') => 打印数据`
- * @param value
- * @param logLevel
- * @returns
- */
-export function logVar(value: any, logLevel = 'info'): string {
-  const logColors = getBSColor(logLevel);
-  // const varName = Object.keys({ value })[0];
-  const varType = getType(value);
-  console.log(`%c[${logLevel.toUpperCase()}] %c(${varType}):`, `color:${logColors};`, 'font-weight:bold;', value);
-  return `\n[${logLevel.toUpperCase()}] (${varType}) ${value} -----Log Date: ${formatDate(new Date())}\n`;
-}
-
-/**
  * 检测某个数组是否包含某个值
  * Example:
  * `contains([1, 2, 2, 3, 3], 3) => true`
@@ -1390,11 +1369,15 @@ export function getConstellation(date: any): { cn: string; en: string; date: any
  * Example: `setEventListener('resize', () => { console.log('resize'); }) => cancel 当前 listener 的 function`
  * @param eventKey
  * @param foo
- * @param dom
+ * @param once
+ * @param dom HTMLDivElement
  * @returns
  */
-export function setEventListener(eventKey: string, foo: any, dom: any = window): any {
-  dom.addEventListener(eventKey, foo);
+export function setEventListener(eventKey: string, foo: any, once = false, dom: any = window): any {
+  dom.addEventListener(eventKey, foo, {
+    // After configuring once, it will be called at most once
+    once: once,
+  });
   return () => {
     dom.removeEventListener(eventKey, foo);
   };
@@ -1484,6 +1467,7 @@ export function getWeekInfo(n: string | number):
   if (n === 'all' || n === 'ALL') {
     return WEEKS_INFO;
   }
+  // @ts-ignore
   if (!n || !Number.isInteger(n) || n < 1 || n > 7) {
     return WEEKS_INFO;
   }
@@ -1521,6 +1505,7 @@ export function getMonthInfo(n: string | number):
   if (n === 'all' || n === 'ALL') {
     return MONTH_INFO;
   }
+  // @ts-ignore
   if (!n || !Number.isInteger(n) || n < 1 || n > 12) {
     return MONTH_INFO;
   }

@@ -181,4 +181,23 @@ export declare function marquee(selector: string, options?: {
  * @returns
  */
 export declare function stackSticky(selectors: string, direction?: string): void;
+/**
+ * 自动计算 font-size 并设置
+ * Example:
+ * `calcFontSize() => 按 16/9 计算并设置`
+ * `calcFontSize(16/10, true) => 按 16/10 计算并设置内容居中`
+ * `calcFontSize(16/10, true, 'body') => 按 16/10 计算并设置 body 偏移使得内容居中`
+ * @param clientRatio 屏幕比例
+ * @param contentCenter 内容是否居中
+ * @param offsetSelector 偏移元素选择器，默认设置 html 根节点偏移。
+ * @returns
+ */
+export declare function calcFontSize(clientRatio: number | undefined, contentCenter: boolean | undefined, offsetSelector: any): () => void;
+/**
+ * px 转 rem
+ * Example: `px2rem(30) => 转化后的 rem`
+ * @param px
+ * @returns
+ */
+export declare function px2rem(px: number): number;
 //# sourceMappingURL=index.d.ts.map

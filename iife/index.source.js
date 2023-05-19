@@ -8339,26 +8339,6 @@ var $xxx = (function (exports) {
         }
     }
     /**
-     * 在页面上打印某个值，我们打包通常会设置清除 console，使用此函数打印关键信息就不会被清除啦。
-     * 且有更好的可读性与日志标识
-     * 每次打印会返回日志字符串，可以统一收集写入到文件保存，或者上传到服务器。
-     * Example:
-     * `logVar([1, 2, 2, 3, 3]) => 打印数据`
-     * `logVar({a: 1, b: 2}, 'danger') => 打印数据`
-     * `logVar({a: 1, b: 2}, 'success') => 打印数据`
-     * @param value
-     * @param logLevel
-     * @returns
-     */
-    function logVar(value, logLevel) {
-        if (logLevel === void 0) { logLevel = 'info'; }
-        var logColors = getBSColor(logLevel);
-        // const varName = Object.keys({ value })[0];
-        var varType = getType(value);
-        console.log("%c[".concat(logLevel.toUpperCase(), "] %c(").concat(varType, "):"), "color:".concat(logColors, ";"), 'font-weight:bold;', value);
-        return "\n[".concat(logLevel.toUpperCase(), "] (").concat(varType, ") ").concat(value, " -----Log Date: ").concat(formatDate(new Date()), "\n");
-    }
-    /**
      * 检测某个数组是否包含某个值
      * Example:
      * `contains([1, 2, 2, 3, 3], 3) => true`
@@ -8803,12 +8783,17 @@ var $xxx = (function (exports) {
      * Example: `setEventListener('resize', () => { console.log('resize'); }) => cancel 当前 listener 的 function`
      * @param eventKey
      * @param foo
-     * @param dom
+     * @param once
+     * @param dom HTMLDivElement
      * @returns
      */
-    function setEventListener(eventKey, foo, dom) {
+    function setEventListener(eventKey, foo, once, dom) {
+        if (once === void 0) { once = false; }
         if (dom === void 0) { dom = window; }
-        dom.addEventListener(eventKey, foo);
+        dom.addEventListener(eventKey, foo, {
+            // After configuring once, it will be called at most once
+            once: once,
+        });
         return function () {
             dom.removeEventListener(eventKey, foo);
         };
@@ -8883,6 +8868,7 @@ var $xxx = (function (exports) {
         if (n === 'all' || n === 'ALL') {
             return WEEKS_INFO;
         }
+        // @ts-ignore
         if (!n || !Number.isInteger(n) || n < 1 || n > 7) {
             return WEEKS_INFO;
         }
@@ -8906,6 +8892,7 @@ var $xxx = (function (exports) {
         if (n === 'all' || n === 'ALL') {
             return MONTH_INFO;
         }
+        // @ts-ignore
         if (!n || !Number.isInteger(n) || n < 1 || n > 12) {
             return MONTH_INFO;
         }
@@ -9779,7 +9766,7 @@ var $xxx = (function (exports) {
      * @Author: HxB
      * @Date: 2022-04-26 15:37:27
      * @LastEditors: DoubleAm
-     * @LastEditTime: 2023-03-22 12:22:03
+     * @LastEditTime: 2023-05-19 09:28:43
      * @Description: 利用 dom 的一些函数
      * @FilePath: \js-xxx\src\Dom\index.ts
      */
@@ -9921,7 +9908,7 @@ var $xxx = (function (exports) {
                 clearTimeout(timer_1);
                 callback(getScrollPercent('Y', dom));
                 timer_1 = setTimeout(cancel_1, 100);
-            }, window);
+            }, false, window);
             // 防止位置已经到极限了，没触发 scroll 事件。
             timer_1 = setTimeout(cancel_1, 100);
         }
@@ -9983,7 +9970,7 @@ var $xxx = (function (exports) {
                 clearTimeout(timer_2);
                 callback(getScrollPercent('X', dom));
                 timer_2 = setTimeout(cancel_2, 100);
-            }, window);
+            }, false, window);
             // 防止位置已经到极限了，没触发 scroll 事件。
             timer_2 = setTimeout(cancel_2, 100);
         }
@@ -10255,6 +10242,52 @@ var $xxx = (function (exports) {
             offset += direction === 'top' || direction === 'bottom' ? rect.height : rect.width;
             prevRect = rect;
         });
+    }
+    /**
+     * 自动计算 font-size 并设置
+     * Example:
+     * `calcFontSize() => 按 16/9 计算并设置`
+     * `calcFontSize(16/10, true) => 按 16/10 计算并设置内容居中`
+     * `calcFontSize(16/10, true, 'body') => 按 16/10 计算并设置 body 偏移使得内容居中`
+     * @param clientRatio 屏幕比例
+     * @param contentCenter 内容是否居中
+     * @param offsetSelector 偏移元素选择器，默认设置 html 根节点偏移。
+     * @returns
+     */
+    function calcFontSize(clientRatio, contentCenter, offsetSelector) {
+        if (clientRatio === void 0) { clientRatio = 16 / 9; }
+        if (contentCenter === void 0) { contentCenter = false; }
+        var $doc = document.documentElement;
+        function _setHtmlFontSize() {
+            var screenRatio = $doc.clientWidth / $doc.clientHeight;
+            var pageWidth = (screenRatio > clientRatio ? clientRatio / screenRatio : 1) * $doc.clientWidth;
+            var pageHeight = pageWidth / clientRatio;
+            $doc.style.fontSize = (pageWidth / 100).toFixed(3) + 'px';
+            if (contentCenter) {
+                try {
+                    (offsetSelector ? document.querySelector(offsetSelector) : $doc).style.paddingTop =
+                        (($doc.clientHeight - pageHeight) / 2).toFixed(3) + 'px';
+                }
+                catch (e) {
+                    console.log('js-xxx:calcFontSizeError===>', e);
+                }
+            }
+        }
+        _setHtmlFontSize();
+        window.addEventListener('resize', _setHtmlFontSize);
+        return function () {
+            window.removeEventListener('resize', _setHtmlFontSize);
+        };
+    }
+    /**
+     * px 转 rem
+     * Example: `px2rem(30) => 转化后的 rem`
+     * @param px
+     * @returns
+     */
+    function px2rem(px) {
+        var htmlFontSize = parseFloat(window.getComputedStyle(document.documentElement).fontSize);
+        return px / htmlFontSize;
     }
 
     /*
@@ -11497,6 +11530,26 @@ var $xxx = (function (exports) {
         // 输出 cron 表达式
         return "".concat(fields.join(' '));
     }
+    /**
+     * 在页面上打印某个值，我们打包通常会设置清除 console，使用此函数打印关键信息就不会被清除啦。
+     * 且有更好的可读性与日志标识
+     * 每次打印会返回日志字符串，可以统一收集写入到文件保存，或者上传到服务器。
+     * Example:
+     * `logVar([1, 2, 2, 3, 3]) => 打印数据`
+     * `logVar({a: 1, b: 2}, 'danger') => 打印数据`
+     * `logVar({a: 1, b: 2}, 'success') => 打印数据`
+     * @param value
+     * @param logLevel
+     * @returns
+     */
+    function logVar(value, logLevel) {
+        if (logLevel === void 0) { logLevel = 'info'; }
+        var logColors = getBSColor(logLevel);
+        // const varName = Object.keys({ value })[0];
+        var varType = getType(value);
+        console.log("%c[".concat(logLevel.toUpperCase(), "] %c(").concat(varType, "):"), "color:".concat(logColors, ";"), 'font-weight:bold;', value);
+        return "\n[".concat(logLevel.toUpperCase(), "] (").concat(varType, ") ").concat(value, " -----Log Date: ").concat(formatDate(new Date()), "\n");
+    }
 
     /*
      * @Author: HxB
@@ -12179,6 +12232,7 @@ var $xxx = (function (exports) {
     exports.bindMoreClick = bindMoreClick;
     exports.btoa = btoa;
     exports.calcDate = calcDate;
+    exports.calcFontSize = calcFontSize;
     exports.camelCase = camelCase;
     exports.catchPromise = catchPromise;
     exports.checkFileExt = checkFileExt;
@@ -12311,6 +12365,7 @@ var $xxx = (function (exports) {
     exports.onClick2MoreClick = onClick2MoreClick;
     exports.openFile = openFile;
     exports.openFullscreen = openFullscreen;
+    exports.px2rem = px2rem;
     exports.qsParse = qsParse;
     exports.qsStringify = qsStringify;
     exports.removeCookie = removeCookie;

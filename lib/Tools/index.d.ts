@@ -258,19 +258,6 @@ export declare function Logger(): {
  */
 export declare function showVar(value: any): any;
 /**
- * 在页面上打印某个值，我们打包通常会设置清除 console，使用此函数打印关键信息就不会被清除啦。
- * 且有更好的可读性与日志标识
- * 每次打印会返回日志字符串，可以统一收集写入到文件保存，或者上传到服务器。
- * Example:
- * `logVar([1, 2, 2, 3, 3]) => 打印数据`
- * `logVar({a: 1, b: 2}, 'danger') => 打印数据`
- * `logVar({a: 1, b: 2}, 'success') => 打印数据`
- * @param value
- * @param logLevel
- * @returns
- */
-export declare function logVar(value: any, logLevel?: string): string;
-/**
  * 检测某个数组是否包含某个值
  * Example:
  * `contains([1, 2, 2, 3, 3], 3) => true`
@@ -422,10 +409,11 @@ export declare function getConstellation(date: any): {
  * Example: `setEventListener('resize', () => { console.log('resize'); }) => cancel 当前 listener 的 function`
  * @param eventKey
  * @param foo
- * @param dom
+ * @param once
+ * @param dom HTMLDivElement
  * @returns
  */
-export declare function setEventListener(eventKey: string, foo: any, dom?: any): any;
+export declare function setEventListener(eventKey: string, foo: any, once?: boolean, dom?: any): any;
 /**
  * H5 软键盘缩回/弹起回调
  * return cancel listener of H5Resize

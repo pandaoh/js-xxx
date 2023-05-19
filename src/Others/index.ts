@@ -3,12 +3,15 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:53:39
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-22 14:35:51
+ * @LastEditTime: 2023-05-19 09:34:02
  * @Description: 因项目需要常用函数，不管任何项目，都放到一起。注意甄别，没有复用意义的函数就不要添加了。
  * @FilePath: \js-xxx\src\Others\index.ts
  */
 
+import { formatDate } from '@/Date';
 import { splitCase } from '@/String';
+import { getBSColor } from '@/Tools';
+import { getType } from '@/Types';
 
 /**
  * 验证 Cron 字段是否有效的辅助函数
@@ -723,4 +726,24 @@ export function getCron({ minute = '*', hour = '*', day = '*', month = '*', week
 
   // 输出 cron 表达式
   return `${fields.join(' ')}`;
+}
+
+/**
+ * 在页面上打印某个值，我们打包通常会设置清除 console，使用此函数打印关键信息就不会被清除啦。
+ * 且有更好的可读性与日志标识
+ * 每次打印会返回日志字符串，可以统一收集写入到文件保存，或者上传到服务器。
+ * Example:
+ * `logVar([1, 2, 2, 3, 3]) => 打印数据`
+ * `logVar({a: 1, b: 2}, 'danger') => 打印数据`
+ * `logVar({a: 1, b: 2}, 'success') => 打印数据`
+ * @param value
+ * @param logLevel
+ * @returns
+ */
+export function logVar(value: any, logLevel = 'info'): string {
+  const logColors = getBSColor(logLevel);
+  // const varName = Object.keys({ value })[0];
+  const varType = getType(value);
+  console.log(`%c[${logLevel.toUpperCase()}] %c(${varType}):`, `color:${logColors};`, 'font-weight:bold;', value);
+  return `\n[${logLevel.toUpperCase()}] (${varType}) ${value} -----Log Date: ${formatDate(new Date())}\n`;
 }

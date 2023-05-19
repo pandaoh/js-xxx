@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-05-05 13:59:25
+ * @LastEditTime: 2023-05-19 09:28:43
  * @Description: 利用 dom 的一些函数
  * @FilePath: \js-xxx\src\Dom\index.ts
  */
@@ -151,6 +151,7 @@ export function scrollYTo(targetVal: 'start' | 'end' | number, callback: any, do
         callback(getScrollPercent('Y', dom));
         timer = setTimeout(cancel, 100);
       },
+      false,
       window,
     );
     // 防止位置已经到极限了，没触发 scroll 事件。
@@ -216,6 +217,7 @@ export function scrollXTo(targetVal: 'start' | 'end' | number, callback: any, do
         callback(getScrollPercent('X', dom));
         timer = setTimeout(cancel, 100);
       },
+      false,
       window,
     );
     // 防止位置已经到极限了，没触发 scroll 事件。

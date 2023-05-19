@@ -34,6 +34,7 @@ js-xxx - v1.6.1
 - [bindMoreClick](README.md#bindmoreclick)
 - [btoa](README.md#btoa)
 - [calcDate](README.md#calcdate)
+- [calcFontSize](README.md#calcfontsize)
 - [camelCase](README.md#camelcase)
 - [catchPromise](README.md#catchpromise)
 - [checkFileExt](README.md#checkfileext)
@@ -166,6 +167,7 @@ js-xxx - v1.6.1
 - [onClick2MoreClick](README.md#onclick2moreclick)
 - [openFile](README.md#openfile)
 - [openFullscreen](README.md#openfullscreen)
+- [px2rem](README.md#px2rem)
 - [qsParse](README.md#qsparse)
 - [qsStringify](README.md#qsstringify)
 - [removeCookie](README.md#removecookie)
@@ -695,6 +697,36 @@ Example:
 #### Returns
 
 `Date`
+
+___
+
+### calcFontSize
+
+▸ **calcFontSize**(`clientRatio?`, `contentCenter?`, `offsetSelector`): () => `void`
+
+自动计算 font-size 并设置
+Example:
+`calcFontSize() => 按 16/9 计算并设置`
+`calcFontSize(16/10, true) => 按 16/10 计算并设置内容居中`
+`calcFontSize(16/10, true, 'body') => 按 16/10 计算并设置 body 偏移使得内容居中`
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `clientRatio` | `number` | `undefined` | 屏幕比例 |
+| `contentCenter` | `boolean` | `false` | 内容是否居中 |
+| `offsetSelector` | `any` | `undefined` | 偏移元素选择器，默认设置 html 根节点偏移。 |
+
+#### Returns
+
+`fn`
+
+▸ (): `void`
+
+##### Returns
+
+`void`
 
 ___
 
@@ -3552,6 +3584,25 @@ Example: `openFullscreen() => 开启全屏`
 
 ___
 
+### px2rem
+
+▸ **px2rem**(`px`): `number`
+
+px 转 rem
+Example: `px2rem(30) => 转化后的 rem`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `px` | `number` |
+
+#### Returns
+
+`number`
+
+___
+
 ### qsParse
 
 ▸ **qsParse**(`url?`, `key?`): `any`
@@ -3893,7 +3944,7 @@ ___
 
 ### setEventListener
 
-▸ **setEventListener**(`eventKey`, `foo`, `dom?`): `any`
+▸ **setEventListener**(`eventKey`, `foo`, `once?`, `dom?`): `any`
 
 设置监听函数
 返回取消该监听的函数 return cancel
@@ -3901,11 +3952,12 @@ Example: `setEventListener('resize', () => { console.log('resize'); }) => cancel
 
 #### Parameters
 
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `eventKey` | `string` | `undefined` |
-| `foo` | `any` | `undefined` |
-| `dom` | `any` | `window` |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `eventKey` | `string` | `undefined` |  |
+| `foo` | `any` | `undefined` |  |
+| `once` | `boolean` | `false` |  |
+| `dom` | `any` | `window` | HTMLDivElement |
 
 #### Returns
 
