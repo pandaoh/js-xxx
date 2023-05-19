@@ -8780,8 +8780,8 @@ function getConstellation(date) {
  * Example: `setEventListener('resize', () => { console.log('resize'); }) => cancel 当前 listener 的 function`
  * @param eventKey
  * @param foo
- * @param once
- * @param dom HTMLDivElement
+ * @param once 是否只触发一次
+ * @param dom document.querySelector<HTMLDivElement>('.xxx')
  * @returns
  */
 function setEventListener(eventKey, foo, once, dom) {

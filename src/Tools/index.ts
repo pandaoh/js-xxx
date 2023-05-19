@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-05-19 09:33:52
+ * @LastEditTime: 2023-05-19 10:26:43
  * @Description: 工具函数
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
@@ -1369,8 +1369,8 @@ export function getConstellation(date: any): { cn: string; en: string; date: any
  * Example: `setEventListener('resize', () => { console.log('resize'); }) => cancel 当前 listener 的 function`
  * @param eventKey
  * @param foo
- * @param once
- * @param dom HTMLDivElement
+ * @param once 是否只触发一次
+ * @param dom document.querySelector<HTMLDivElement>('.xxx')
  * @returns
  */
 export function setEventListener(eventKey: string, foo: any, once = false, dom: any = window): any {

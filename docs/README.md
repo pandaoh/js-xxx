@@ -3956,8 +3956,8 @@ Example: `setEventListener('resize', () => { console.log('resize'); }) => cancel
 | :------ | :------ | :------ | :------ |
 | `eventKey` | `string` | `undefined` |  |
 | `foo` | `any` | `undefined` |  |
-| `once` | `boolean` | `false` |  |
-| `dom` | `any` | `window` | HTMLDivElement |
+| `once` | `boolean` | `false` | 是否只触发一次 |
+| `dom` | `any` | `window` | document.querySelector<HTMLDivElement>('.xxx') |
 
 #### Returns
 
