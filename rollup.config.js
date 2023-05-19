@@ -76,7 +76,7 @@ const options = {
       fix: true,
     }),
     clear({
-      targets: ['dist', 'es', 'lib', 'iife', 'docs'],
+      targets: ['dist', 'es', 'lib', 'iife', 'docs', 'html'],
       watch: true,
     }),
     typescript({ tsconfig: getPath('tsconfig.json'), extensions }),

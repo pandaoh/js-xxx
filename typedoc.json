@@ -2,7 +2,7 @@
   "entryPoints": [
     "src/index.ts"
   ],
-  "out": "docs",
+  "out": "html",
   "readme": "none",
   "includeVersion": true,
   "disableSources": true

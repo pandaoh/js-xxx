@@ -6,7 +6,7 @@ Http Method
 
 ## Table of contents
 
-### Enumeration members
+### Enumeration Members
 
 - [DELETE](HttpMethod.md#delete)
 - [GET](HttpMethod.md#get)
@@ -21,74 +21,74 @@ Http Method
 - [post](HttpMethod.md#post-1)
 - [put](HttpMethod.md#put-1)
 
-## Enumeration members
+## Enumeration Members
 
 ### DELETE
 
-• **DELETE** = `"DELETE"`
+• **DELETE** = ``"DELETE"``
 
 ___
 
 ### GET
 
-• **GET** = `"GET"`
+• **GET** = ``"GET"``
 
 ___
 
 ### OPTIONS
 
-• **OPTIONS** = `"OPTIONS"`
+• **OPTIONS** = ``"OPTIONS"``
 
 ___
 
 ### PATCH
 
-• **PATCH** = `"PATCH"`
+• **PATCH** = ``"PATCH"``
 
 ___
 
 ### POST
 
-• **POST** = `"POST"`
+• **POST** = ``"POST"``
 
 ___
 
 ### PUT
 
-• **PUT** = `"PUT"`
+• **PUT** = ``"PUT"``
 
 ___
 
 ### delete
 
-• **delete** = `"DELETE"`
+• **delete** = ``"DELETE"``
 
 ___
 
 ### get
 
-• **get** = `"GET"`
+• **get** = ``"GET"``
 
 ___
 
 ### options
 
-• **options** = `"OPTIONS"`
+• **options** = ``"OPTIONS"``
 
 ___
 
 ### patch
 
-• **patch** = `"PATCH"`
+• **patch** = ``"PATCH"``
 
 ___
 
 ### post
 
-• **post** = `"POST"`
+• **post** = ``"POST"``
 
 ___
 
 ### put
 
-• **put** = `"PUT"`
+• **put** = ``"PUT"``

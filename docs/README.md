@@ -1,4 +1,4 @@
-js-xxx - v1.6.5
+js-xxx
 
 # js-xxx - v1.6.5
 
@@ -540,7 +540,7 @@ ___
 
 ### average
 
-▸ **average**(...`args`): `number`
+▸ **average**(`...args`): `number`
 
 获取平均数
 Example:
@@ -638,7 +638,7 @@ Example: `bindMoreClick(moreClickCallBack, 4, 500) => 绑定 4 击事件`
 
 `fn`
 
-▸ (...`args`): `void`
+▸ (`...args`): `void`
 
 ##### Parameters
 
@@ -1119,8 +1119,8 @@ Example:
 | :------ | :------ | :------ | :------ |
 | `dataStr` | `string` | `undefined` | 加密后的字符串 |
 | `jsonDecode` | `boolean` | `false` | 是否需要解析成 json |
-| `secretKey?` | `string` | `undefined` | 十六位十六进制数作为密钥 |
-| `secretIv?` | `string` | `undefined` | 十六位十六进制数作为密钥偏移量 |
+| `secretKey?` | `string` | `undefined` | [可选] 十六位十六进制数作为密钥 |
+| `secretIv?` | `string` | `undefined` | [可选] 十六位十六进制数作为密钥偏移量 |
 
 #### Returns
 
@@ -1321,8 +1321,8 @@ Example:
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `data` | `any` | 需要加密的数据 |
-| `secretKey?` | `string` | 十六位十六进制数作为密钥 |
-| `secretIv?` | `string` | 十六位十六进制数作为密钥偏移量 |
+| `secretKey?` | `string` | [可选] 十六位十六进制数作为密钥 |
+| `secretIv?` | `string` | [可选] 十六位十六进制数作为密钥偏移量 |
 
 #### Returns
 
@@ -1825,7 +1825,7 @@ Example:
 | :------ | :------ | :------ | :------ |
 | `oldDate` | `string` \| `Date` | `undefined` | 久远一点的时间 |
 | `nowDate?` | `string` \| `Date` | `undefined` | 近一点的时间，默认当前时间。 |
-| `type` | ``"all"`` \| ``"day"`` \| ``"days"`` \| ``"hour"`` \| ``"hours"`` \| ``"minute"`` \| ``"minutes"`` \| ``"second"`` \| ``"seconds"`` \| ``"ALL"`` \| ``"DAY"`` \| ``"DAYS"`` \| ``"HOUR"`` \| ``"HOURS"`` \| ``"MINUTE"`` \| ``"MINUTES"`` \| ``"SECOND"`` \| ``"SECONDS"`` | `'all'` | 计算方式，默认计算差距的精确天数、时分秒。 |
+| `type` | ``"all"`` \| ``"ALL"`` \| ``"day"`` \| ``"days"`` \| ``"hour"`` \| ``"hours"`` \| ``"minute"`` \| ``"minutes"`` \| ``"second"`` \| ``"seconds"`` \| ``"DAY"`` \| ``"DAYS"`` \| ``"HOUR"`` \| ``"HOURS"`` \| ``"MINUTE"`` \| ``"MINUTES"`` \| ``"SECOND"`` \| ``"SECONDS"`` | `'all'` | 计算方式，默认计算差距的精确天数、时分秒。 |
 
 #### Returns
 
@@ -1850,7 +1850,7 @@ Example:
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
 | `n` | `number` | `undefined` | 数目 |
-| `type` | ``"day"`` \| ``"hour"`` \| ``"minute"`` \| ``"second"`` \| ``"year"`` \| ``"month"`` | `'day'` | 类型 |
+| `type` | ``"year"`` \| ``"month"`` \| ``"day"`` \| ``"hour"`` \| ``"minute"`` \| ``"second"`` | `'day'` | 类型 |
 | `date` | `any` | `undefined` | 日期 |
 
 #### Returns
@@ -2310,7 +2310,7 @@ ___
 
 ### getV
 
-▸ **getV**(`defaultResult`, ...`args`): `any`
+▸ **getV**(`defaultResult`, `...args`): `any`
 
 获取多级对象值
 Example: `getV('默认值', {name: {children: [123, 456]}}, 'name', 'children', '0') => 123`
@@ -3525,7 +3525,7 @@ ___
 
 ### onClick2MoreClick
 
-▸ **onClick2MoreClick**(`delay?`, ...`events`): `any`
+▸ **onClick2MoreClick**(`delay?`, `...events`): `any`
 
 单击事件转换为多击事件
 Author: wuxingheng
@@ -3852,7 +3852,7 @@ Example: `sendNotification('测试通知', '测试标题', {...options}) => 发�
 | :------ | :------ |
 | `msg` | `string` |
 | `title?` | `string` |
-| `options?` | { `badge?`: `string` ; `body?`: `string` ; `data?`: `any` ; `dir?`: ``"auto"`` \| ``"ltr"`` \| ``"rtl"`` ; `icon?`: `string` ; `image?`: `string` ; `lang?`: ``"en-US"`` \| ``"zh-CN"`` ; `onClick?`: `any` ; `onClose?`: `any` ; `onError?`: `any` ; `renotify?`: `boolean` ; `requireInteraction?`: `boolean` ; `silent?`: `boolean` ; `tag?`: `string` ; `timestamp?`: `number` ; `vibrate?`: `VibratePattern`  } \| `NotificationOptions` |
+| `options?` | { `badge?`: `string` ; `body?`: `string` ; `data?`: `any` ; `dir?`: ``"auto"`` \| ``"ltr"`` \| ``"rtl"`` ; `icon?`: `string` ; `image?`: `string` ; `lang?`: ``"zh-CN"`` \| ``"en-US"`` ; `onClick?`: `any` ; `onClose?`: `any` ; `onError?`: `any` ; `renotify?`: `boolean` ; `requireInteraction?`: `boolean` ; `silent?`: `boolean` ; `tag?`: `string` ; `timestamp?`: `number` ; `vibrate?`: `VibratePattern`  } \| `NotificationOptions` |
 
 #### Returns
 
@@ -4458,7 +4458,7 @@ Example:
 | Name | Type |
 | :------ | :------ |
 | `str` | `string` |
-| `type` | ``2`` \| ``3`` \| ``1`` \| ``"upper"`` \| ``"lower"`` \| ``"first"`` |
+| `type` | ``1`` \| ``2`` \| ``3`` \| ``"upper"`` \| ``"lower"`` \| ``"first"`` |
 
 #### Returns
 
