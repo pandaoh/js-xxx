@@ -9445,7 +9445,10 @@
     function formatDate(date, fmt, weeks) {
         if (fmt === void 0) { fmt = 'yyyy-mm-dd hh:ii:ss'; }
         if (weeks === void 0) { weeks = [7, 1, 2, 3, 4, 5, 6]; }
-        // date.replace(/-/g, '/'); // 虽然 win 浏览器两种符号都可以，但是需兼容 ios 。
+        if (getType(date) === 'string') {
+            // @ts-ignore
+            date.replace(/-/g, '/'); // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
+        }
         date = date ? new Date(date) : new Date();
         var o = {
             'm+': date.getMonth() + 1,
@@ -11534,7 +11537,22 @@
         return "".concat(fields.join(' '));
     }
     /**
-     * 在页面上打印某个值，我们打包通常会设置清除 console，使用此函数打印关键信息就不会被清除啦。
+     * 在页面上打印数据，我们打包通常会设置清除 console，使用此函数打印关键信息就不会被清除啦。
+     * Example:
+     * `log([1, 2, 2, 3, 3], {a: 1, b: 2}, 'test', true) => 打印数据`
+     * `log('danger') => 打印数据`
+     * @param args
+     * @returns
+     */
+    function log() {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        eval("console.log('%c\u65E5\u5FD7[".concat(formatDate(new Date()), "]===>', 'color:#1890FF;font-size:10px;margin-right:5px', ...JSON.parse('").concat(JSON.stringify(args), "'));"));
+    }
+    /**
+     * 在页面上打印某个值
      * 且有更好的可读性与日志标识
      * 每次打印会返回日志字符串，可以统一收集写入到文件保存，或者上传到服务器。
      * Example:
@@ -12357,6 +12375,7 @@
     exports.jsonClone = jsonClone;
     exports.localStorageGet = localStorageGet;
     exports.localStorageSet = localStorageSet;
+    exports.log = log;
     exports.logRunTime = logRunTime;
     exports.logVar = logVar;
     exports.marquee = marquee;

@@ -2,11 +2,12 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:54:41
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-13 15:38:25
+ * @LastEditTime: 2023-05-31 14:06:49
  * @Description: 时间相关函数
  * @FilePath: \js-xxx\src\Date\index.ts
  */
 import { trim } from '@/String';
+import { getType } from '@/Types';
 
 /**
  * 时间格式化
@@ -22,7 +23,10 @@ export function formatDate(
   fmt = 'yyyy-mm-dd hh:ii:ss',
   weeks: any[] = [7, 1, 2, 3, 4, 5, 6],
 ): string {
-  // date.replace(/-/g, '/'); // 虽然 win 浏览器两种符号都可以，但是需兼容 ios 。
+  if (getType(date) === 'string') {
+    // @ts-ignore
+    date.replace(/-/g, '/'); // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
+  }
   date = date ? new Date(date) : new Date();
   const o: any = {
     'm+': date.getMonth() + 1,

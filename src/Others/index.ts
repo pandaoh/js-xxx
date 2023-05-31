@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:53:39
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-05-19 09:34:02
+ * @LastEditTime: 2023-05-31 14:04:03
  * @Description: 因项目需要常用函数，不管任何项目，都放到一起。注意甄别，没有复用意义的函数就不要添加了。
  * @FilePath: \js-xxx\src\Others\index.ts
  */
@@ -729,7 +729,23 @@ export function getCron({ minute = '*', hour = '*', day = '*', month = '*', week
 }
 
 /**
- * 在页面上打印某个值，我们打包通常会设置清除 console，使用此函数打印关键信息就不会被清除啦。
+ * 在页面上打印数据，我们打包通常会设置清除 console，使用此函数打印关键信息就不会被清除啦。
+ * Example:
+ * `log([1, 2, 2, 3, 3], {a: 1, b: 2}, 'test', true) => 打印数据`
+ * `log('danger') => 打印数据`
+ * @param args
+ * @returns
+ */
+export function log(...args: any[]): void {
+  eval(
+    `console.log('%c日志[${formatDate(
+      new Date(),
+    )}]===>', 'color:#1890FF;font-size:10px;margin-right:5px', ...JSON.parse('${JSON.stringify(args)}'));`,
+  );
+}
+
+/**
+ * 在页面上打印某个值
  * 且有更好的可读性与日志标识
  * 每次打印会返回日志字符串，可以统一收集写入到文件保存，或者上传到服务器。
  * Example:

@@ -9439,7 +9439,10 @@ function formatJSON(value) {
 function formatDate(date, fmt, weeks) {
     if (fmt === void 0) { fmt = 'yyyy-mm-dd hh:ii:ss'; }
     if (weeks === void 0) { weeks = [7, 1, 2, 3, 4, 5, 6]; }
-    // date.replace(/-/g, '/'); // 虽然 win 浏览器两种符号都可以，但是需兼容 ios 。
+    if (getType(date) === 'string') {
+        // @ts-ignore
+        date.replace(/-/g, '/'); // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
+    }
     date = date ? new Date(date) : new Date();
     var o = {
         'm+': date.getMonth() + 1,
@@ -11528,7 +11531,22 @@ function getCron(_a) {
     return "".concat(fields.join(' '));
 }
 /**
- * 在页面上打印某个值，我们打包通常会设置清除 console，使用此函数打印关键信息就不会被清除啦。
+ * 在页面上打印数据，我们打包通常会设置清除 console，使用此函数打印关键信息就不会被清除啦。
+ * Example:
+ * `log([1, 2, 2, 3, 3], {a: 1, b: 2}, 'test', true) => 打印数据`
+ * `log('danger') => 打印数据`
+ * @param args
+ * @returns
+ */
+function log() {
+    var args = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        args[_i] = arguments[_i];
+    }
+    eval("console.log('%c\u65E5\u5FD7[".concat(formatDate(new Date()), "]===>', 'color:#1890FF;font-size:10px;margin-right:5px', ...JSON.parse('").concat(JSON.stringify(args), "'));"));
+}
+/**
+ * 在页面上打印某个值
  * 且有更好的可读性与日志标识
  * 每次打印会返回日志字符串，可以统一收集写入到文件保存，或者上传到服务器。
  * Example:
@@ -12208,4 +12226,4 @@ function setWsBinaryType(binaryType) {
 }
 // 使用 grpc 记得 buffer2obj 和 obj2buffer
 
-export { CONTENT_TYPES, H5Resize, HttpMethod, Logger, Speaker, abs, add, all, any, appendLink, appendScript, arrObj2objArr, arraySet, arraySort, atob, average, banConsole, base64Decode, base64Encode, bindMoreClick, btoa, calcDate, calcFontSize, camelCase, catchPromise, checkFileExt, checkIdCard, checkVersion, closeFullscreen, closeWebSocket, compareDate, contains, copyContent, copyToClipboard, countdown, curryIt, data2Arr, data2Obj, dataTo, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitKeyboardEvent, empty, encrypt, findChildren, findParents, float, formatBytes, formatDate, formatFormData, formatJSON, formatNumber, formatRh, formatURLSearchParams, get1Var, getAge, getAnimal, getBSColor, getBaseURL, getBloodGroup, getConstellation, getContentType, getCookie, getCron, getCryptoJS, getDateDifference, getDateList, getDateTime, getKey, getLastVar, getMonthDays, getMonthDaysCount, getMonthInfo, getPercentage, getQueryString, getRandColor, getRandNum, getRandStr, getRandVar, getScrollPercent, getSearchParams, getSize, getStyleByName, getTimeAndStr, getTimeCode, getType, getUTCTime, getUUID, getUserAgent, getV, getVar, getViewportSize, getWebSocket, getWeekInfo, globalError, html2str, inRange, initNotification, initWebSocket, insertAfter, intersection, isAppleDevice, isArr, isArrayBuffer, isBlob, isBool, isBrowser, isCarCode, isChar, isDarkMode, isDate, isDecimal, isElement, isEmail, isEqual, isFn, isHttp, isInteger, isIpAddress, isIpv4, isIpv6, isJSON, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPhoneNum, isPromise, isRhNegative, isStr, isStrongPassWord, isUndef, isUrl, isWeekday, jsonClone, localStorageGet, localStorageSet, logRunTime, logVar, marquee, maskString, md5, mergeObj, ms, offDefaultEvent, onClick2MoreClick, openFile, openFullscreen, px2rem, qsParse, qsStringify, removeCookie, repeat, retry, rip, round, scrollToBottom, scrollToTop, scrollXTo, scrollYTo, sendNotification, sendWsMessage, sessionStorageGet, sessionStorageSet, setCookie, setEventListener, setIcon, setWsBinaryType, sha1, sha256, showVar, shuffleArray, sleep, slugify, sortBy, sortCallBack, splitCase, stackSticky, str2html, str2unicode, sub, throttle, timeSince, times, to, toBool, toNum, toStr, transferCase, transferFileToBase64, transferIdCard, transferMoney, trim, truncate, unicode2str, union, unique, uuid, versionUpgrade, waitUntil, watermark, xAjax, xFetch };
+export { CONTENT_TYPES, H5Resize, HttpMethod, Logger, Speaker, abs, add, all, any, appendLink, appendScript, arrObj2objArr, arraySet, arraySort, atob, average, banConsole, base64Decode, base64Encode, bindMoreClick, btoa, calcDate, calcFontSize, camelCase, catchPromise, checkFileExt, checkIdCard, checkVersion, closeFullscreen, closeWebSocket, compareDate, contains, copyContent, copyToClipboard, countdown, curryIt, data2Arr, data2Obj, dataTo, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitKeyboardEvent, empty, encrypt, findChildren, findParents, float, formatBytes, formatDate, formatFormData, formatJSON, formatNumber, formatRh, formatURLSearchParams, get1Var, getAge, getAnimal, getBSColor, getBaseURL, getBloodGroup, getConstellation, getContentType, getCookie, getCron, getCryptoJS, getDateDifference, getDateList, getDateTime, getKey, getLastVar, getMonthDays, getMonthDaysCount, getMonthInfo, getPercentage, getQueryString, getRandColor, getRandNum, getRandStr, getRandVar, getScrollPercent, getSearchParams, getSize, getStyleByName, getTimeAndStr, getTimeCode, getType, getUTCTime, getUUID, getUserAgent, getV, getVar, getViewportSize, getWebSocket, getWeekInfo, globalError, html2str, inRange, initNotification, initWebSocket, insertAfter, intersection, isAppleDevice, isArr, isArrayBuffer, isBlob, isBool, isBrowser, isCarCode, isChar, isDarkMode, isDate, isDecimal, isElement, isEmail, isEqual, isFn, isHttp, isInteger, isIpAddress, isIpv4, isIpv6, isJSON, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPhoneNum, isPromise, isRhNegative, isStr, isStrongPassWord, isUndef, isUrl, isWeekday, jsonClone, localStorageGet, localStorageSet, log, logRunTime, logVar, marquee, maskString, md5, mergeObj, ms, offDefaultEvent, onClick2MoreClick, openFile, openFullscreen, px2rem, qsParse, qsStringify, removeCookie, repeat, retry, rip, round, scrollToBottom, scrollToTop, scrollXTo, scrollYTo, sendNotification, sendWsMessage, sessionStorageGet, sessionStorageSet, setCookie, setEventListener, setIcon, setWsBinaryType, sha1, sha256, showVar, shuffleArray, sleep, slugify, sortBy, sortCallBack, splitCase, stackSticky, str2html, str2unicode, sub, throttle, timeSince, times, to, toBool, toNum, toStr, transferCase, transferFileToBase64, transferIdCard, transferMoney, trim, truncate, unicode2str, union, unique, uuid, versionUpgrade, waitUntil, watermark, xAjax, xFetch };
