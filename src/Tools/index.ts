@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-05-19 10:26:43
+ * @LastEditTime: 2023-06-12 18:05:09
  * @Description: 工具函数
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
@@ -1563,4 +1563,58 @@ export function isEqual(obj1: any, obj2: any): boolean {
     // 其他类型直接比较值是否相等
     return obj1 === obj2;
   }
+}
+
+/**
+ * 遍历数组或对象，并对每个元素执行回调函数，支持中途 break 和 continue 。
+ * Example:
+ * `forEach([1, 2, 3], (item, index) => console.log(item, index));`
+ * `forEach([1, 2, 3], (item, index) => item * 2, true); => [2, 4, 6]`
+ * `forEach({a: 1, b: 2}, (value, key) => console.log(value, key));`
+ * `forEach({a: 1, b: 2}, (value, key) => value * 2, true); => {a: 2, b: 4}`
+ * @param data 要遍历的数据，可以是数组或对象。
+ * @param callback 回调函数
+ * @param hasReturn 是否返回一个新值
+ * @returns
+ */
+export function forEach(data: any, callback: (value: any, ik: any) => any | '_break' | '_continue', hasReturn = false) {
+  const type: string = Object.prototype.toString.call(data);
+  if (type !== '[object Object]' && type !== '[object Array]') {
+    return undefined;
+  }
+  const isArray: boolean = type === '[object Array]';
+  const result: any = hasReturn ? (isArray ? [] : {}) : undefined;
+  let isBreak = false;
+  if (isArray) {
+    for (let i = 0; i < data.length; i++) {
+      let res = callback(data[i], i);
+      if (res === '_break') {
+        isBreak = true;
+        break;
+      }
+      if (res === '_continue') {
+        res = undefined;
+        continue;
+      }
+      if (hasReturn) {
+        result[i] = res;
+      }
+    }
+  } else {
+    for (const key in data) {
+      let res = callback(data[key], key);
+      if (res === '_break') {
+        isBreak = true;
+        break;
+      }
+      if (res === '_continue') {
+        res = undefined;
+        continue;
+      }
+      if (hasReturn) {
+        result[key] = res;
+      }
+    }
+  }
+  return hasReturn && !isBreak ? result : undefined;
 }

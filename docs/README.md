@@ -1,6 +1,6 @@
 js-xxx
 
-# js-xxx - v1.6.6
+# js-xxx - v1.6.8
 
 ## Table of contents
 
@@ -65,6 +65,7 @@ js-xxx
 - [findChildren](README.md#findchildren)
 - [findParents](README.md#findparents)
 - [float](README.md#float)
+- [forEach](README.md#foreach)
 - [formatBytes](README.md#formatbytes)
 - [formatDate](README.md#formatdate)
 - [formatFormData](README.md#formatformdata)
@@ -1393,6 +1394,31 @@ Example:
 #### Returns
 
 `number` \| `string`
+
+___
+
+### forEach
+
+▸ **forEach**(`data`, `callback`, `hasReturn?`): `any`
+
+遍历数组或对象，并对每个元素执行回调函数，支持中途 break 和 continue 。
+Example:
+`forEach([1, 2, 3], (item, index) => console.log(item, index));`
+`forEach([1, 2, 3], (item, index) => item * 2, true); => [2, 4, 6]`
+`forEach({a: 1, b: 2}, (value, key) => console.log(value, key));`
+`forEach({a: 1, b: 2}, (value, key) => value * 2, true); => {a: 2, b: 4}`
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `data` | `any` | `undefined` | 要遍历的数据，可以是数组或对象。 |
+| `callback` | (`value`: `any`, `ik`: `any`) => `any` | `undefined` | 回调函数 |
+| `hasReturn` | `boolean` | `false` | 是否返回一个新值 |
+
+#### Returns
+
+`any`
 
 ___
 

@@ -498,4 +498,17 @@ export declare function getMonthInfo(n: string | number): {
  * @returns
  */
 export declare function isEqual(obj1: any, obj2: any): boolean;
+/**
+ * 遍历数组或对象，并对每个元素执行回调函数，支持中途 break 和 continue 。
+ * Example:
+ * `forEach([1, 2, 3], (item, index) => console.log(item, index));`
+ * `forEach([1, 2, 3], (item, index) => item * 2, true); => [2, 4, 6]`
+ * `forEach({a: 1, b: 2}, (value, key) => console.log(value, key));`
+ * `forEach({a: 1, b: 2}, (value, key) => value * 2, true); => {a: 2, b: 4}`
+ * @param data 要遍历的数据，可以是数组或对象。
+ * @param callback 回调函数
+ * @param hasReturn 是否返回一个新值
+ * @returns
+ */
+export declare function forEach(data: any, callback: (value: any, ik: any) => any | '_break' | '_continue', hasReturn?: boolean): any;
 //# sourceMappingURL=index.d.ts.map
