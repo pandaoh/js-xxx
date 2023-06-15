@@ -1,6 +1,6 @@
 js-xxx
 
-# js-xxx - v1.6.8
+# js-xxx - v1.6.9
 
 ## Table of contents
 
@@ -62,10 +62,12 @@ js-xxx
 - [emitKeyboardEvent](README.md#emitkeyboardevent)
 - [empty](README.md#empty)
 - [encrypt](README.md#encrypt)
+- [exportFile](README.md#exportfile)
 - [findChildren](README.md#findchildren)
 - [findParents](README.md#findparents)
 - [float](README.md#float)
 - [forEach](README.md#foreach)
+- [forceToStr](README.md#forcetostr)
 - [formatBytes](README.md#formatbytes)
 - [formatDate](README.md#formatdate)
 - [formatFormData](README.md#formatformdata)
@@ -209,6 +211,7 @@ js-xxx
 - [toBool](README.md#tobool)
 - [toNum](README.md#tonum)
 - [toStr](README.md#tostr)
+- [transferCSVData](README.md#transfercsvdata)
 - [transferCase](README.md#transfercase)
 - [transferFileToBase64](README.md#transferfiletobase64)
 - [transferIdCard](README.md#transferidcard)
@@ -1332,6 +1335,30 @@ Example:
 
 ___
 
+### exportFile
+
+▸ **exportFile**(`data`, `fileName?`, `fileType?`): `void`
+
+导出数据为文件
+Example:
+`exportFile(data) => 导出 txt 文件`
+`exportFile(data, 'csv-导出文件测试', 'csv') => 导出 csv 文件`
+`exportFile('http://a.biugle.cn/img/cdn/dev/avatar/1.png', 'test', 'png') => 导出 png 文件`
+
+#### Parameters
+
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `data` | `string` | `undefined` |
+| `fileName?` | `string` | `undefined` |
+| `fileType` | `string` | `'txt'` |
+
+#### Returns
+
+`void`
+
+___
+
 ### findChildren
 
 ▸ **findChildren**(`element`): `any`[]
@@ -1419,6 +1446,29 @@ Example:
 #### Returns
 
 `any`
+
+___
+
+### forceToStr
+
+▸ **forceToStr**(`value`, `defaultValue?`): `string`
+
+强制转化为字符串，避免导出表格显示科学计数法。
+Example:
+`forceToStr(123123123) => '123123123'`
+`forceToStr(undefined) => '-'`
+`forceToStr(undefined, 0) => '0'`
+
+#### Parameters
+
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `value` | `any` | `undefined` |
+| `defaultValue` | `string` | `'-'` |
+
+#### Returns
+
+`string`
 
 ___
 
@@ -4484,6 +4534,28 @@ Example:
 | Name | Type |
 | :------ | :------ |
 | `value` | `any` |
+
+#### Returns
+
+`string`
+
+___
+
+### transferCSVData
+
+▸ **transferCSVData**(`fields`, `data`): `string`
+
+转换 data 为可导出的 csv 数据
+Example:
+`transferCSVData([{ prop: 'name' }, { prop: 'age' }], [{ name: '张三', age: 15 }]) => 可以导出的字符数据`
+`transferCSVData([{ label: '姓名', prop: 'name' }, { label: '年龄', prop: 'age' }], [{ name: '张三', age: 15 }]) => 可以导出的字符数据`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `fields` | { `label?`: `string` ; `prop`: `string`  }[] |
+| `data` | `any`[] |
 
 #### Returns
 

@@ -10950,7 +10950,334 @@
     //   return result;
     // }
 
-    /* eslint-disable indent */
+    /**
+     * content types
+     */
+    var CONTENT_TYPES = {
+        '7z': 'application/octet-stream',
+        avi: 'video/x-msvideo',
+        bmp: 'image/bmp',
+        css: 'text/css',
+        csv: 'text/csv',
+        conf: 'text/plain',
+        class: 'application/x-java',
+        docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        doc: 'application/msword',
+        dv: 'video/dv',
+        dwg: 'image/vnd.dwg',
+        exe: 'application/x-msdownload',
+        fig: 'image/x-xfig',
+        flac: 'audio/x-flac',
+        flv: 'video/x-flv',
+        gif: 'image/gif',
+        html: 'text/html',
+        ico: 'image/x-icon',
+        ini: 'text/plain',
+        jpeg: 'image/jpeg',
+        jpg: 'image/jpg',
+        js: 'text/javascript',
+        jsonp: 'application/jsonp',
+        json: 'application/json',
+        log: 'text/plain',
+        lock: 'text/plain',
+        m4a: 'audio/mp4',
+        mkv: 'video/x-matroska',
+        mp3: 'audio/mpeg',
+        mp4: 'video/mp4',
+        m4v: 'video/mp4',
+        moov: 'video/quicktime',
+        mov: 'video/quicktime',
+        movie: 'video/x-sgi-movie',
+        md: 'text/plain',
+        ogg: 'video/x-theora+ogg',
+        oga: 'audio/ogg',
+        ppk: 'text/plain',
+        php: 'application/x-php',
+        py: 'text/x-python',
+        png: 'image/png',
+        pptx: 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+        ppt: 'application/vnd.ms-powerpoint',
+        pdf: 'application/pdf',
+        reg: 'text/x-ms-regedit',
+        rar: 'application/octet-stream',
+        so: 'application/x-sharedlib',
+        svg: 'image/svg+xml',
+        sql: 'text/x-sql',
+        'tar.gz': 'application/x-compressed-tar',
+        tgz: 'application/x-compressed-tar',
+        ttf: 'application/x-font-ttf',
+        tif: 'image/tiff',
+        txt: 'text/plain',
+        ts: 'text/plain',
+        tsx: 'text/plain',
+        jsx: 'text/plain',
+        vue: 'text/plain',
+        scss: 'text/plain',
+        less: 'text/plain',
+        uri: 'text/x-uri',
+        url: 'text/x-uri',
+        wav: 'audio/x-wav',
+        wbmp: 'image/vnd.wap.wbmp',
+        webm: 'video/webm',
+        wmv: 'video/x-ms-wmv',
+        xls: 'application/vnd.ms-excel',
+        xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        xhtml: 'application/xhtml+xml',
+        xml: 'application/xml',
+        xmind: 'application/octet-stream',
+        yml: 'text/plain',
+        yaml: 'text/plain',
+        zip: 'application/x-zip-compressed',
+        binary: 'application/octet-stream',
+        form: 'application/x-www-form-urlencoded',
+        file: 'multipart/form-data',
+        utf8: 'charset=utf-8',
+    };
+    /**
+     * Http Method
+     */
+    exports.HttpMethod = void 0;
+    (function (HttpMethod) {
+        HttpMethod["GET"] = "GET";
+        HttpMethod["POST"] = "POST";
+        HttpMethod["PUT"] = "PUT";
+        HttpMethod["PATCH"] = "PATCH";
+        HttpMethod["DELETE"] = "DELETE";
+        HttpMethod["OPTIONS"] = "OPTIONS";
+        HttpMethod["get"] = "GET";
+        HttpMethod["post"] = "POST";
+        HttpMethod["put"] = "PUT";
+        HttpMethod["patch"] = "PATCH";
+        HttpMethod["delete"] = "DELETE";
+        HttpMethod["options"] = "OPTIONS";
+    })(exports.HttpMethod || (exports.HttpMethod = {}));
+    /**
+     * 对象转 queryString 暂时只支持两层数据，第二层对象与与数组值不能为引用类型。
+     * Example:
+     * `qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3] }) => 'start=0&count=20&obj[a]=1&arr[]=1&arr[]=2&arr[]=3'`
+     * `qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3] }, { arr2str: true }) => 'start=0&count=20&obj[a]=1&arr=1,2,3'`
+     * `qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3], str: '1' }, { hasIndex: true }) => 'start=0&count=20&obj[a]=1&arr[0]=1&arr[1]=2&arr[2]=3&str=1'`
+     * @param obj 源数据
+     * @returns
+     */
+    function qsStringify(obj, options) {
+        if (!obj) {
+            return '';
+        }
+        var queryString = new URLSearchParams();
+        // 不用 for...in，避免污染原对象，且数组遍历效率高。
+        Object.keys(obj).forEach(function (key) {
+            var val = obj[key];
+            switch (getType(val)) {
+                case 'object':
+                    Object.keys(val).forEach(function (objKey) {
+                        queryString.append("".concat(key, "[").concat(objKey, "]"), getType(val[objKey]) == 'object' ? JSON.stringify(val[objKey]) : val[objKey]);
+                    });
+                    break;
+                case 'array':
+                    if (options === null || options === void 0 ? void 0 : options.arr2str) {
+                        queryString.append(key, val.join(','));
+                    }
+                    else {
+                        val.filter(Boolean).forEach(function (arrVal, arrIndex) {
+                            var newArrVal = getType(arrVal) == 'object' ? JSON.stringify(arrVal) : arrVal;
+                            (options === null || options === void 0 ? void 0 : options.hasBrackets)
+                                ? queryString.append((options === null || options === void 0 ? void 0 : options.hasIndex) ? "".concat(key, "[").concat(arrIndex, "]") : "".concat(key, "[]"), newArrVal)
+                                : queryString.append(key, newArrVal);
+                        });
+                    }
+                    break;
+                default:
+                    queryString.append(key, val);
+                    break;
+            }
+        });
+        return (options === null || options === void 0 ? void 0 : options.urlEncode) ? queryString.toString() : decodeURIComponent(queryString.toString());
+    }
+    /**
+     * 获取 query string 参数
+     * Example:
+     * `qsParse('start=0&count=20&x=1&x=2&x=3', 'x') => [1, 2, 3]`
+     * `qsParse('start=0&count=20&x=1&x=2&x=3') => { start: '0', count: '20', x: [1, 2, 3], '/': 'start=0&count=20&x=1&x=2&x=3' }`
+     * @param url query string
+     * @param key 参数名
+     * @returns
+     */
+    function qsParse(url, key) {
+        // 也可使用 new URL(url) 或者 new URLSearchParams(params) API 获取
+        var pathname = url !== null && url !== void 0 ? url : window.location.pathname;
+        url = url !== null && url !== void 0 ? url : window.location.search;
+        var filename = pathname.substring(pathname.lastIndexOf('/') + 1);
+        var paramMap = {
+            '/': filename !== null && filename !== void 0 ? filename : undefined,
+        };
+        var queryString = url.indexOf('?') === 0 ? url.substring(1) : url;
+        if (queryString.length !== 0) {
+            var parts = queryString.split('&');
+            for (var i = 0; i < parts.length; i++) {
+                var component = parts[i].split('=');
+                var paramKey = decodeURIComponent(component[0]);
+                var paramVal = decodeURIComponent(component[1]);
+                if (!paramMap[paramKey]) {
+                    paramMap[paramKey] = paramVal;
+                    continue;
+                }
+                !Array.isArray(paramMap[paramKey]) && (paramMap[paramKey] = Array(paramMap[paramKey]));
+                paramMap[paramKey].push(paramVal);
+            }
+        }
+        return key ? paramMap === null || paramMap === void 0 ? void 0 : paramMap[key] : paramMap;
+    }
+    /**
+     * 获取不带任何参数或片段标识符的当前 URL
+     * Example:
+     * `getBaseURL('https://test.com/index?name=leo&org=biugle#test') => 'https://test.com/index'`
+     * `getBaseURL('') => ''`
+     * `getBaseURL() => 当前页面 BaseURL`
+     * @param url
+     * @returns
+     */
+    function getBaseURL(url) {
+        url = url !== null && url !== void 0 ? url : window.location.href;
+        return url.replace(/[?#].*$/, '');
+    }
+    /**
+     * 获取 url 查询参数字符串
+     * Example:
+     * `getQueryString('https://test.com/index?name=leo&org=biugle#test') => 'name=leo&org=biugle'`
+     * `getQueryString('') => ''`
+     * `getQueryString() => 当前页面 QueryString 字符串部分`
+     * @param url
+     * @returns
+     */
+    function getQueryString(url) {
+        var _a, _b, _c, _d, _e;
+        return toBool(url) ? (_d = (_c = (_b = (_a = url === null || url === void 0 ? void 0 : url.split('?')) === null || _a === void 0 ? void 0 : _a[1]) === null || _b === void 0 ? void 0 : _b.split('#')) === null || _c === void 0 ? void 0 : _c[0]) !== null && _d !== void 0 ? _d : '' : (_e = window.location.search) === null || _e === void 0 ? void 0 : _e.replace('?', '');
+    }
+    /**
+     * 获取查询参数对象
+     * Example:
+     * `getSearchParams('https://test.com/index?name=leo&org=biugle#test') => {name: 'leo', org: 'biugle'}`
+     * `getSearchParams('') => {}`
+     * `getSearchParams() => 当前页面 SearchParams 对象`
+     * @param url
+     * @returns
+     */
+    function getSearchParams(url) {
+        var e_1, _a;
+        var searchPar = new URLSearchParams(getQueryString(url));
+        var paramsObj = {};
+        try {
+            for (var _b = __values(searchPar.entries()), _c = _b.next(); !_c.done; _c = _b.next()) {
+                var _d = __read(_c.value, 2), key = _d[0], value = _d[1];
+                paramsObj[key] = value;
+            }
+        }
+        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+        finally {
+            try {
+                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+            }
+            finally { if (e_1) throw e_1.error; }
+        }
+        return paramsObj;
+    }
+    /**
+     * ajax 简单封装
+     * Example:
+     * `xAjax('get', 'https://test.cn', { params: { test: 123, hello: 456 }, success: (data) => console.log('success', data), fail: (error) => console.log('fail', error) }) => ajax`
+     * `xAjax('POST', 'https://test.cn', { contentType: 'application/json', data: { test: 123 }, success: (data) => console.log('success', data), fail: (error) => console.log('fail', error) }) => ajax`
+     * @param method
+     * @param url
+     * @param options
+     * @returns
+     */
+    function xAjax(method, url, options) {
+        var _a, _b, _c, _d;
+        var xhr;
+        method = method.toUpperCase();
+        if (window.XMLHttpRequest) {
+            xhr = new XMLHttpRequest();
+        }
+        else {
+            // @ts-ignore
+            // eslint-disable-next-line no-undef
+            xhr = new ActiveXObject('Microsoft.XMLHttp');
+        }
+        // eslint-disable-next-line spellcheck/spell-checker
+        xhr.onreadystatechange = function () {
+            var _a, _b;
+            if (xhr.readyState === 4) {
+                if (xhr.status < 400) {
+                    (_a = options === null || options === void 0 ? void 0 : options.success) === null || _a === void 0 ? void 0 : _a.call(options, xhr.response);
+                }
+                else if (xhr.status >= 400) {
+                    (_b = options === null || options === void 0 ? void 0 : options.fail) === null || _b === void 0 ? void 0 : _b.call(options, xhr.response);
+                }
+            }
+        };
+        var async = (_a = options === null || options === void 0 ? void 0 : options.async) !== null && _a !== void 0 ? _a : true;
+        // setting after open for compatibility with IE versions <=10
+        xhr.withCredentials = (_b = options === null || options === void 0 ? void 0 : options.withCredentials) !== null && _b !== void 0 ? _b : false;
+        if (options === null || options === void 0 ? void 0 : options.data) {
+            options.data = !(options === null || options === void 0 ? void 0 : options.raw) && isObj(options.data) ? JSON.stringify(options.data) : options.data;
+        }
+        if (method == 'GET') {
+            xhr.open('GET', !(options === null || options === void 0 ? void 0 : options.params)
+                ? url
+                : "".concat(url).concat(url.includes('?') ? '&' : '?').concat(new URLSearchParams(options.params).toString()), async);
+            xhr.send();
+        }
+        else {
+            xhr.open(method, url, async);
+            xhr.setRequestHeader('Content-Type', (_c = options === null || options === void 0 ? void 0 : options.contentType) !== null && _c !== void 0 ? _c : 'application/x-www-form-urlencoded;charset=UTF-8');
+            xhr.send((_d = options === null || options === void 0 ? void 0 : options.data) !== null && _d !== void 0 ? _d : null);
+        }
+        return xhr;
+    }
+    /**
+     * fetch 简单封装
+     * Example:
+     * `xFetch('get', 'https://test.cn', { params: { test: 123, hello: 456 } }).then(res => res.json()).then(data => console.log(data)) => fetchXPromise`
+     * `xFetch('POST', 'https://test.cn', { contentType: 'application/json', data: { test: 123 } }).catch(error => console.log(error)) => fetchXPromise`
+     * @param method
+     * @param url
+     * @param options
+     * @returns
+     */
+    function xFetch(method, url, options) {
+        var _a;
+        if (options === null || options === void 0 ? void 0 : options.params) {
+            url = "".concat(url).concat(url.includes('?') ? '&' : '?').concat(new URLSearchParams(options.params).toString());
+        }
+        if (options === null || options === void 0 ? void 0 : options.data) {
+            options.data = !(options === null || options === void 0 ? void 0 : options.raw) && isObj(options.data) ? JSON.stringify(options.data) : options.data;
+        }
+        return fetch(url, {
+            headers: {
+                'content-type': (_a = options === null || options === void 0 ? void 0 : options.contentType) !== null && _a !== void 0 ? _a : 'application/x-www-form-urlencoded;charset=UTF-8',
+            },
+            method: method,
+            body: options === null || options === void 0 ? void 0 : options.data,
+        });
+    }
+    // eslint-disable-next-line spellcheck/spell-checker
+    /**
+     * 获取常见的 content-type
+     * Example:
+     * `getContentType('form') => 'application/x-www-form-urlencoded'`
+     * `getContentType('file') => 'multipart/form-data'`
+     * `getContentType('pdf') => 'application/pdf'`
+     * `getContentType('unknown') => 'application/octet-stream'`
+     * @param fileType
+     * @returns
+     */
+    function getContentType(fileType) {
+        var _a;
+        return (_a = CONTENT_TYPES[fileType]) !== null && _a !== void 0 ? _a : 'application/octet-stream';
+    }
+
+    /* eslint-disable max-lines, indent */
     /**
      * 验证 Cron 字段是否有效的辅助函数
      * @param field
@@ -11604,7 +11931,19 @@
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        eval("console.log('%c\u65E5\u5FD7[".concat(formatDate(new Date()), "]===>', 'color:#1890FF;font-size:10px;margin-right:5px', ...JSON.parse('").concat(JSON.stringify(args), "'));"));
+        try {
+            // eval(
+            //   `console.log('%c 日志[${formatDate(
+            //     new Date(),
+            //   )}]===>', 'color:#1890FF;font-size:10px;margin-right:5px', ...JSON.parse('${JSON.stringify(args)}'));`,
+            // );
+            var code = "console.log('%c\u65E5\u5FD7[".concat(formatDate(new Date()), "]===>', 'color:#1890FF;font-size:10px;margin-right:5px', ...JSON.parse('").concat(JSON.stringify(args), "'));");
+            var fn = new Function(code);
+            fn();
+        }
+        catch (e) {
+            console.log.apply(console, __spreadArray(__spreadArray([], __read(args), false), [e], false));
+        }
     }
     /**
      * 在页面上打印某个值
@@ -11625,6 +11964,68 @@
         var varType = getType(value);
         console.log("%c[".concat(logLevel.toUpperCase(), "] %c(").concat(varType, "):"), "color:".concat(logColors, ";"), 'font-weight:bold;', value);
         return "\n[".concat(logLevel.toUpperCase(), "] (").concat(varType, ") ").concat(value, " -----Log Date: ").concat(formatDate(new Date()), "\n");
+    }
+    /**
+     * 强制转化为字符串，避免导出表格显示科学计数法。
+     * Example:
+     * `forceToStr(123123123) => '123123123'`
+     * `forceToStr(undefined) => '-'`
+     * `forceToStr(undefined, 0) => '0'`
+     * @param value
+     * @param defaultValue
+     * @returns
+     */
+    function forceToStr(value, defaultValue) {
+        var _a;
+        if (defaultValue === void 0) { defaultValue = '-'; }
+        return "\u200B".concat((_a = value !== null && value !== void 0 ? value : defaultValue) !== null && _a !== void 0 ? _a : '-'); // \t \u200c u200d 也可以
+    }
+    /**
+     * 转换 data 为可导出的 csv 数据
+     * Example:
+     * `transferCSVData([{ prop: 'name' }, { prop: 'age' }], [{ name: '张三', age: 15 }]) => 可以导出的字符数据`
+     * `transferCSVData([{ label: '姓名', prop: 'name' }, { label: '年龄', prop: 'age' }], [{ name: '张三', age: 15 }]) => 可以导出的字符数据`
+     * @param fields
+     * @param data
+     * @returns
+     */
+    function transferCSVData(fields, data) {
+        var _a;
+        var keys = fields.map(function (field) { return field.prop; });
+        var result = "".concat(fields.map(function (field) { var _a, _b; return forceToStr((_b = (_a = field.label) !== null && _a !== void 0 ? _a : field.prop) !== null && _b !== void 0 ? _b : 'unknown'); }).join(','), "\n");
+        var _loop_2 = function (i) {
+            var item = (_a = data[i]) !== null && _a !== void 0 ? _a : {};
+            result += keys.map(function (key) { return forceToStr(item[key]); }).join(',') + '\n';
+        };
+        for (var i = 0; i < data.length; i++) {
+            _loop_2(i);
+        }
+        return encodeURIComponent(result);
+    }
+    // eslint-disable-next-line spellcheck/spell-checker
+    /**
+     * 导出数据为文件
+     * Example:
+     * `exportFile(data) => 导出 txt 文件`
+     * `exportFile(data, 'csv-导出文件测试', 'csv') => 导出 csv 文件`
+     * `exportFile('http://a.biugle.cn/img/cdn/dev/avatar/1.png', 'test', 'png') => 导出 png 文件`
+     * @param data
+     * @param fileName
+     * @param fileType
+     * @returns
+     */
+    function exportFile(data, fileName, fileType) {
+        if (fileType === void 0) { fileType = 'txt'; }
+        if (isUrl(data)) {
+            // eslint-disable-next-line spellcheck/spell-checker
+            download(data, "".concat(fileName !== null && fileName !== void 0 ? fileName : formatDate(new Date(), 'yyyy-mm-dd-hhiiss'), ".").concat(fileType));
+            return;
+        }
+        // eslint-disable-next-line spellcheck/spell-checker
+        var uri = "data:".concat(getContentType(fileType), ";charset=utf-8,\uFEFF").concat(data); // 加入特殊字符确保 utf-8
+        // U+FEFF 是一个零宽度非断字符（Zero Width No-Break Space），也称为“字节顺序标记（Byte Order Mark，BOM）”。
+        // eslint-disable-next-line spellcheck/spell-checker
+        download(uri, "".concat(fileName !== null && fileName !== void 0 ? fileName : formatDate(new Date(), 'yyyy-mm-dd-hhiiss'), ".").concat(fileType));
     }
 
     /*
@@ -11733,333 +12134,6 @@
      */
     function catchPromise(promiseHandler, errorHandler) {
         return new Promise(promiseHandler).catch(function (e) { return errorHandler && errorHandler(e); });
-    }
-
-    /**
-     * content types
-     */
-    var CONTENT_TYPES = {
-        '7z': 'application/octet-stream',
-        avi: 'video/x-msvideo',
-        bmp: 'image/bmp',
-        css: 'text/css',
-        csv: 'text/csv',
-        conf: 'text/plain',
-        class: 'application/x-java',
-        docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-        doc: 'application/msword',
-        dv: 'video/dv',
-        dwg: 'image/vnd.dwg',
-        exe: 'application/x-msdownload',
-        fig: 'image/x-xfig',
-        flac: 'audio/x-flac',
-        flv: 'video/x-flv',
-        gif: 'image/gif',
-        html: 'text/html',
-        ico: 'image/x-icon',
-        ini: 'text/plain',
-        jpeg: 'image/jpeg',
-        jpg: 'image/jpg',
-        js: 'text/javascript',
-        jsonp: 'application/jsonp',
-        json: 'application/json',
-        log: 'text/plain',
-        lock: 'text/plain',
-        m4a: 'audio/mp4',
-        mkv: 'video/x-matroska',
-        mp3: 'audio/mpeg',
-        mp4: 'video/mp4',
-        m4v: 'video/mp4',
-        moov: 'video/quicktime',
-        mov: 'video/quicktime',
-        movie: 'video/x-sgi-movie',
-        md: 'text/plain',
-        ogg: 'video/x-theora+ogg',
-        oga: 'audio/ogg',
-        ppk: 'text/plain',
-        php: 'application/x-php',
-        py: 'text/x-python',
-        png: 'image/png',
-        pptx: 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
-        ppt: 'application/vnd.ms-powerpoint',
-        pdf: 'application/pdf',
-        reg: 'text/x-ms-regedit',
-        rar: 'application/octet-stream',
-        so: 'application/x-sharedlib',
-        svg: 'image/svg+xml',
-        sql: 'text/x-sql',
-        'tar.gz': 'application/x-compressed-tar',
-        tgz: 'application/x-compressed-tar',
-        ttf: 'application/x-font-ttf',
-        tif: 'image/tiff',
-        txt: 'text/plain',
-        ts: 'text/plain',
-        tsx: 'text/plain',
-        jsx: 'text/plain',
-        vue: 'text/plain',
-        scss: 'text/plain',
-        less: 'text/plain',
-        uri: 'text/x-uri',
-        url: 'text/x-uri',
-        wav: 'audio/x-wav',
-        wbmp: 'image/vnd.wap.wbmp',
-        webm: 'video/webm',
-        wmv: 'video/x-ms-wmv',
-        xls: 'application/vnd.ms-excel',
-        xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        xhtml: 'application/xhtml+xml',
-        xml: 'application/xml',
-        xmind: 'application/octet-stream',
-        yml: 'text/plain',
-        yaml: 'text/plain',
-        zip: 'application/x-zip-compressed',
-        binary: 'application/octet-stream',
-        form: 'application/x-www-form-urlencoded',
-        file: 'multipart/form-data',
-        utf8: 'charset=utf-8',
-    };
-    /**
-     * Http Method
-     */
-    exports.HttpMethod = void 0;
-    (function (HttpMethod) {
-        HttpMethod["GET"] = "GET";
-        HttpMethod["POST"] = "POST";
-        HttpMethod["PUT"] = "PUT";
-        HttpMethod["PATCH"] = "PATCH";
-        HttpMethod["DELETE"] = "DELETE";
-        HttpMethod["OPTIONS"] = "OPTIONS";
-        HttpMethod["get"] = "GET";
-        HttpMethod["post"] = "POST";
-        HttpMethod["put"] = "PUT";
-        HttpMethod["patch"] = "PATCH";
-        HttpMethod["delete"] = "DELETE";
-        HttpMethod["options"] = "OPTIONS";
-    })(exports.HttpMethod || (exports.HttpMethod = {}));
-    /**
-     * 对象转 queryString 暂时只支持两层数据，第二层对象与与数组值不能为引用类型。
-     * Example:
-     * `qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3] }) => 'start=0&count=20&obj[a]=1&arr[]=1&arr[]=2&arr[]=3'`
-     * `qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3] }, { arr2str: true }) => 'start=0&count=20&obj[a]=1&arr=1,2,3'`
-     * `qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3], str: '1' }, { hasIndex: true }) => 'start=0&count=20&obj[a]=1&arr[0]=1&arr[1]=2&arr[2]=3&str=1'`
-     * @param obj 源数据
-     * @returns
-     */
-    function qsStringify(obj, options) {
-        if (!obj) {
-            return '';
-        }
-        var queryString = new URLSearchParams();
-        // 不用 for...in，避免污染原对象，且数组遍历效率高。
-        Object.keys(obj).forEach(function (key) {
-            var val = obj[key];
-            switch (getType(val)) {
-                case 'object':
-                    Object.keys(val).forEach(function (objKey) {
-                        queryString.append("".concat(key, "[").concat(objKey, "]"), getType(val[objKey]) == 'object' ? JSON.stringify(val[objKey]) : val[objKey]);
-                    });
-                    break;
-                case 'array':
-                    if (options === null || options === void 0 ? void 0 : options.arr2str) {
-                        queryString.append(key, val.join(','));
-                    }
-                    else {
-                        val.filter(Boolean).forEach(function (arrVal, arrIndex) {
-                            var newArrVal = getType(arrVal) == 'object' ? JSON.stringify(arrVal) : arrVal;
-                            (options === null || options === void 0 ? void 0 : options.hasBrackets)
-                                ? queryString.append((options === null || options === void 0 ? void 0 : options.hasIndex) ? "".concat(key, "[").concat(arrIndex, "]") : "".concat(key, "[]"), newArrVal)
-                                : queryString.append(key, newArrVal);
-                        });
-                    }
-                    break;
-                default:
-                    queryString.append(key, val);
-                    break;
-            }
-        });
-        return (options === null || options === void 0 ? void 0 : options.urlEncode) ? queryString.toString() : decodeURIComponent(queryString.toString());
-    }
-    /**
-     * 获取 query string 参数
-     * Example:
-     * `qsParse('start=0&count=20&x=1&x=2&x=3', 'x') => [1, 2, 3]`
-     * `qsParse('start=0&count=20&x=1&x=2&x=3') => { start: '0', count: '20', x: [1, 2, 3], '/': 'start=0&count=20&x=1&x=2&x=3' }`
-     * @param url query string
-     * @param key 参数名
-     * @returns
-     */
-    function qsParse(url, key) {
-        // 也可使用 new URL(url) 或者 new URLSearchParams(params) API 获取
-        var pathname = url !== null && url !== void 0 ? url : window.location.pathname;
-        url = url !== null && url !== void 0 ? url : window.location.search;
-        var filename = pathname.substring(pathname.lastIndexOf('/') + 1);
-        var paramMap = {
-            '/': filename !== null && filename !== void 0 ? filename : undefined,
-        };
-        var queryString = url.indexOf('?') === 0 ? url.substring(1) : url;
-        if (queryString.length !== 0) {
-            var parts = queryString.split('&');
-            for (var i = 0; i < parts.length; i++) {
-                var component = parts[i].split('=');
-                var paramKey = decodeURIComponent(component[0]);
-                var paramVal = decodeURIComponent(component[1]);
-                if (!paramMap[paramKey]) {
-                    paramMap[paramKey] = paramVal;
-                    continue;
-                }
-                !Array.isArray(paramMap[paramKey]) && (paramMap[paramKey] = Array(paramMap[paramKey]));
-                paramMap[paramKey].push(paramVal);
-            }
-        }
-        return key ? paramMap === null || paramMap === void 0 ? void 0 : paramMap[key] : paramMap;
-    }
-    /**
-     * 获取不带任何参数或片段标识符的当前 URL
-     * Example:
-     * `getBaseURL('https://test.com/index?name=leo&org=biugle#test') => 'https://test.com/index'`
-     * `getBaseURL('') => ''`
-     * `getBaseURL() => 当前页面 BaseURL`
-     * @param url
-     * @returns
-     */
-    function getBaseURL(url) {
-        url = url !== null && url !== void 0 ? url : window.location.href;
-        return url.replace(/[?#].*$/, '');
-    }
-    /**
-     * 获取 url 查询参数字符串
-     * Example:
-     * `getQueryString('https://test.com/index?name=leo&org=biugle#test') => 'name=leo&org=biugle'`
-     * `getQueryString('') => ''`
-     * `getQueryString() => 当前页面 QueryString 字符串部分`
-     * @param url
-     * @returns
-     */
-    function getQueryString(url) {
-        var _a, _b, _c, _d, _e;
-        return toBool(url) ? (_d = (_c = (_b = (_a = url === null || url === void 0 ? void 0 : url.split('?')) === null || _a === void 0 ? void 0 : _a[1]) === null || _b === void 0 ? void 0 : _b.split('#')) === null || _c === void 0 ? void 0 : _c[0]) !== null && _d !== void 0 ? _d : '' : (_e = window.location.search) === null || _e === void 0 ? void 0 : _e.replace('?', '');
-    }
-    /**
-     * 获取查询参数对象
-     * Example:
-     * `getSearchParams('https://test.com/index?name=leo&org=biugle#test') => {name: 'leo', org: 'biugle'}`
-     * `getSearchParams('') => {}`
-     * `getSearchParams() => 当前页面 SearchParams 对象`
-     * @param url
-     * @returns
-     */
-    function getSearchParams(url) {
-        var e_1, _a;
-        var searchPar = new URLSearchParams(getQueryString(url));
-        var paramsObj = {};
-        try {
-            for (var _b = __values(searchPar.entries()), _c = _b.next(); !_c.done; _c = _b.next()) {
-                var _d = __read(_c.value, 2), key = _d[0], value = _d[1];
-                paramsObj[key] = value;
-            }
-        }
-        catch (e_1_1) { e_1 = { error: e_1_1 }; }
-        finally {
-            try {
-                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
-            }
-            finally { if (e_1) throw e_1.error; }
-        }
-        return paramsObj;
-    }
-    /**
-     * ajax 简单封装
-     * Example:
-     * `xAjax('get', 'https://test.cn', { params: { test: 123, hello: 456 }, success: (data) => console.log('success', data), fail: (error) => console.log('fail', error) }) => ajax`
-     * `xAjax('POST', 'https://test.cn', { contentType: 'application/json', data: { test: 123 }, success: (data) => console.log('success', data), fail: (error) => console.log('fail', error) }) => ajax`
-     * @param method
-     * @param url
-     * @param options
-     * @returns
-     */
-    function xAjax(method, url, options) {
-        var _a, _b, _c, _d;
-        var xhr;
-        method = method.toUpperCase();
-        if (window.XMLHttpRequest) {
-            xhr = new XMLHttpRequest();
-        }
-        else {
-            // @ts-ignore
-            // eslint-disable-next-line no-undef
-            xhr = new ActiveXObject('Microsoft.XMLHttp');
-        }
-        // eslint-disable-next-line spellcheck/spell-checker
-        xhr.onreadystatechange = function () {
-            var _a, _b;
-            if (xhr.readyState === 4) {
-                if (xhr.status < 400) {
-                    (_a = options === null || options === void 0 ? void 0 : options.success) === null || _a === void 0 ? void 0 : _a.call(options, xhr.response);
-                }
-                else if (xhr.status >= 400) {
-                    (_b = options === null || options === void 0 ? void 0 : options.fail) === null || _b === void 0 ? void 0 : _b.call(options, xhr.response);
-                }
-            }
-        };
-        var async = (_a = options === null || options === void 0 ? void 0 : options.async) !== null && _a !== void 0 ? _a : true;
-        // setting after open for compatibility with IE versions <=10
-        xhr.withCredentials = (_b = options === null || options === void 0 ? void 0 : options.withCredentials) !== null && _b !== void 0 ? _b : false;
-        if (options === null || options === void 0 ? void 0 : options.data) {
-            options.data = !(options === null || options === void 0 ? void 0 : options.raw) && isObj(options.data) ? JSON.stringify(options.data) : options.data;
-        }
-        if (method == 'GET') {
-            xhr.open('GET', !(options === null || options === void 0 ? void 0 : options.params)
-                ? url
-                : "".concat(url).concat(url.includes('?') ? '&' : '?').concat(new URLSearchParams(options.params).toString()), async);
-            xhr.send();
-        }
-        else {
-            xhr.open(method, url, async);
-            xhr.setRequestHeader('Content-Type', (_c = options === null || options === void 0 ? void 0 : options.contentType) !== null && _c !== void 0 ? _c : 'application/x-www-form-urlencoded;charset=UTF-8');
-            xhr.send((_d = options === null || options === void 0 ? void 0 : options.data) !== null && _d !== void 0 ? _d : null);
-        }
-        return xhr;
-    }
-    /**
-     * fetch 简单封装
-     * Example:
-     * `xFetch('get', 'https://test.cn', { params: { test: 123, hello: 456 } }).then(res => res.json()).then(data => console.log(data)) => fetchXPromise`
-     * `xFetch('POST', 'https://test.cn', { contentType: 'application/json', data: { test: 123 } }).catch(error => console.log(error)) => fetchXPromise`
-     * @param method
-     * @param url
-     * @param options
-     * @returns
-     */
-    function xFetch(method, url, options) {
-        var _a;
-        if (options === null || options === void 0 ? void 0 : options.params) {
-            url = "".concat(url).concat(url.includes('?') ? '&' : '?').concat(new URLSearchParams(options.params).toString());
-        }
-        if (options === null || options === void 0 ? void 0 : options.data) {
-            options.data = !(options === null || options === void 0 ? void 0 : options.raw) && isObj(options.data) ? JSON.stringify(options.data) : options.data;
-        }
-        return fetch(url, {
-            headers: {
-                'content-type': (_a = options === null || options === void 0 ? void 0 : options.contentType) !== null && _a !== void 0 ? _a : 'application/x-www-form-urlencoded;charset=UTF-8',
-            },
-            method: method,
-            body: options === null || options === void 0 ? void 0 : options.data,
-        });
-    }
-    // eslint-disable-next-line spellcheck/spell-checker
-    /**
-     * 获取常见的 content-type
-     * Example:
-     * `getContentType('form') => 'application/x-www-form-urlencoded'`
-     * `getContentType('file') => 'multipart/form-data'`
-     * `getContentType('pdf') => 'application/pdf'`
-     * `getContentType('unknown') => 'application/octet-stream'`
-     * @param fileType
-     * @returns
-     */
-    function getContentType(fileType) {
-        var _a;
-        return (_a = CONTENT_TYPES[fileType]) !== null && _a !== void 0 ? _a : 'application/octet-stream';
     }
 
     /*
@@ -12336,10 +12410,12 @@
     exports.emitKeyboardEvent = emitKeyboardEvent;
     exports.empty = empty;
     exports.encrypt = encrypt;
+    exports.exportFile = exportFile;
     exports.findChildren = findChildren;
     exports.findParents = findParents;
     exports.float = float;
     exports.forEach = forEach;
+    exports.forceToStr = forceToStr;
     exports.formatBytes = formatBytes;
     exports.formatDate = formatDate;
     exports.formatFormData = formatFormData;
@@ -12483,6 +12559,7 @@
     exports.toBool = toBool;
     exports.toNum = toNum;
     exports.toStr = toStr;
+    exports.transferCSVData = transferCSVData;
     exports.transferCase = transferCase;
     exports.transferFileToBase64 = transferFileToBase64;
     exports.transferIdCard = transferIdCard;

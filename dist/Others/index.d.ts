@@ -221,4 +221,40 @@ export declare function log(...args: any[]): void;
  * @returns
  */
 export declare function logVar(value: any, logLevel?: string): string;
+/**
+ * 强制转化为字符串，避免导出表格显示科学计数法。
+ * Example:
+ * `forceToStr(123123123) => '123123123'`
+ * `forceToStr(undefined) => '-'`
+ * `forceToStr(undefined, 0) => '0'`
+ * @param value
+ * @param defaultValue
+ * @returns
+ */
+export declare function forceToStr(value: any, defaultValue?: string): string;
+/**
+ * 转换 data 为可导出的 csv 数据
+ * Example:
+ * `transferCSVData([{ prop: 'name' }, { prop: 'age' }], [{ name: '张三', age: 15 }]) => 可以导出的字符数据`
+ * `transferCSVData([{ label: '姓名', prop: 'name' }, { label: '年龄', prop: 'age' }], [{ name: '张三', age: 15 }]) => 可以导出的字符数据`
+ * @param fields
+ * @param data
+ * @returns
+ */
+export declare function transferCSVData(fields: {
+    label?: string;
+    prop: string;
+}[], data: any[]): string;
+/**
+ * 导出数据为文件
+ * Example:
+ * `exportFile(data) => 导出 txt 文件`
+ * `exportFile(data, 'csv-导出文件测试', 'csv') => 导出 csv 文件`
+ * `exportFile('http://a.biugle.cn/img/cdn/dev/avatar/1.png', 'test', 'png') => 导出 png 文件`
+ * @param data
+ * @param fileName
+ * @param fileType
+ * @returns
+ */
+export declare function exportFile(data: string, fileName?: string, fileType?: string): void;
 //# sourceMappingURL=index.d.ts.map

@@ -1,17 +1,19 @@
-/* eslint-disable indent */
+/* eslint-disable max-lines, indent */
 /*
  * @Author: HxB
  * @Date: 2022-04-26 14:53:39
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-05-31 14:04:03
+ * @LastEditTime: 2023-06-15 13:56:38
  * @Description: 因项目需要常用函数，不管任何项目，都放到一起。注意甄别，没有复用意义的函数就不要添加了。
  * @FilePath: \js-xxx\src\Others\index.ts
  */
 
 import { formatDate } from '@/Date';
-import { splitCase } from '@/String';
+import { isUrl, splitCase } from '@/String';
 import { getBSColor } from '@/Tools';
 import { getType } from '@/Types';
+import { download } from '@/Dom';
+import { getContentType } from '@/Request';
 
 /**
  * 验证 Cron 字段是否有效的辅助函数
@@ -737,11 +739,20 @@ export function getCron({ minute = '*', hour = '*', day = '*', month = '*', week
  * @returns
  */
 export function log(...args: any[]): void {
-  eval(
-    `console.log('%c日志[${formatDate(
+  try {
+    // eval(
+    //   `console.log('%c 日志[${formatDate(
+    //     new Date(),
+    //   )}]===>', 'color:#1890FF;font-size:10px;margin-right:5px', ...JSON.parse('${JSON.stringify(args)}'));`,
+    // );
+    const code = `console.log('%c日志[${formatDate(
       new Date(),
-    )}]===>', 'color:#1890FF;font-size:10px;margin-right:5px', ...JSON.parse('${JSON.stringify(args)}'));`,
-  );
+    )}]===>', 'color:#1890FF;font-size:10px;margin-right:5px', ...JSON.parse('${JSON.stringify(args)}'));`;
+    const fn = new Function(code);
+    fn();
+  } catch (e) {
+    console.log(...args, e);
+  }
 }
 
 /**
@@ -762,4 +773,62 @@ export function logVar(value: any, logLevel = 'info'): string {
   const varType = getType(value);
   console.log(`%c[${logLevel.toUpperCase()}] %c(${varType}):`, `color:${logColors};`, 'font-weight:bold;', value);
   return `\n[${logLevel.toUpperCase()}] (${varType}) ${value} -----Log Date: ${formatDate(new Date())}\n`;
+}
+
+/**
+ * 强制转化为字符串，避免导出表格显示科学计数法。
+ * Example:
+ * `forceToStr(123123123) => '123123123'`
+ * `forceToStr(undefined) => '-'`
+ * `forceToStr(undefined, 0) => '0'`
+ * @param value
+ * @param defaultValue
+ * @returns
+ */
+export function forceToStr(value: any, defaultValue = '-'): string {
+  return `\u200b${value ?? defaultValue ?? '-'}`; // \t \u200c u200d 也可以
+}
+
+/**
+ * 转换 data 为可导出的 csv 数据
+ * Example:
+ * `transferCSVData([{ prop: 'name' }, { prop: 'age' }], [{ name: '张三', age: 15 }]) => 可以导出的字符数据`
+ * `transferCSVData([{ label: '姓名', prop: 'name' }, { label: '年龄', prop: 'age' }], [{ name: '张三', age: 15 }]) => 可以导出的字符数据`
+ * @param fields
+ * @param data
+ * @returns
+ */
+export function transferCSVData(fields: { label?: string; prop: string }[], data: any[]): string {
+  const keys = fields.map((field) => field.prop);
+  let result = `${fields.map((field) => forceToStr(field.label ?? field.prop ?? 'unknown')).join(',')}\n`;
+  for (let i = 0; i < data.length; i++) {
+    const item = data[i] ?? {};
+    result += keys.map((key) => forceToStr(item[key])).join(',') + '\n';
+  }
+  return encodeURIComponent(result);
+}
+
+// eslint-disable-next-line spellcheck/spell-checker
+/**
+ * 导出数据为文件
+ * Example:
+ * `exportFile(data) => 导出 txt 文件`
+ * `exportFile(data, 'csv-导出文件测试', 'csv') => 导出 csv 文件`
+ * `exportFile('http://a.biugle.cn/img/cdn/dev/avatar/1.png', 'test', 'png') => 导出 png 文件`
+ * @param data
+ * @param fileName
+ * @param fileType
+ * @returns
+ */
+export function exportFile(data: string, fileName?: string, fileType = 'txt'): void {
+  if (isUrl(data)) {
+    // eslint-disable-next-line spellcheck/spell-checker
+    download(data, `${fileName ?? formatDate(new Date(), 'yyyy-mm-dd-hhiiss')}.${fileType}`);
+    return;
+  }
+  // eslint-disable-next-line spellcheck/spell-checker
+  const uri = `data:${getContentType(fileType)};charset=utf-8,\ufeff${data}`; // 加入特殊字符确保 utf-8
+  // U+FEFF 是一个零宽度非断字符（Zero Width No-Break Space），也称为“字节顺序标记（Byte Order Mark，BOM）”。
+  // eslint-disable-next-line spellcheck/spell-checker
+  download(uri, `${fileName ?? formatDate(new Date(), 'yyyy-mm-dd-hhiiss')}.${fileType}`);
 }
