@@ -70,6 +70,7 @@ module.exports = {
           'debounce',
           'pathname',
           'minify',
+          'biugle',
           'charset',
           'unmount',
           'poweroff',

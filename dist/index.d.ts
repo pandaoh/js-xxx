@@ -13,6 +13,7 @@ export * from './Promise';
 export * from './Request';
 export * from './Storage';
 export * from './String';
+export * from './Toast';
 export * from './Tools';
 export * from './Types';
 export * from './WebSocket';

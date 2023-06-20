@@ -1,12 +1,16 @@
 js-xxx
 
-# js-xxx - v1.6.9
+# js-xxx - v1.7.0
 
 ## Table of contents
 
 ### Enumerations
 
 - [HttpMethod](enums/HttpMethod.md)
+
+### Type Aliases
+
+- [ToastOptions](README.md#toastoptions)
 
 ### Variables
 
@@ -116,6 +120,7 @@ js-xxx
 - [getWebSocket](README.md#getwebsocket)
 - [getWeekInfo](README.md#getweekinfo)
 - [globalError](README.md#globalerror)
+- [hideToast](README.md#hidetoast)
 - [html2str](README.md#html2str)
 - [inRange](README.md#inrange)
 - [initNotification](README.md#initnotification)
@@ -193,6 +198,7 @@ js-xxx
 - [setWsBinaryType](README.md#setwsbinarytype)
 - [sha1](README.md#sha1)
 - [sha256](README.md#sha256)
+- [showToast](README.md#showtoast)
 - [showVar](README.md#showvar)
 - [shuffleArray](README.md#shufflearray)
 - [sleep](README.md#sleep)
@@ -227,6 +233,28 @@ js-xxx
 - [watermark](README.md#watermark)
 - [xAjax](README.md#xajax)
 - [xFetch](README.md#xfetch)
+
+## Type Aliases
+
+### ToastOptions
+
+Ƭ **ToastOptions**: `Object`
+
+Toast Options Type
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `background?` | `string` |
+| `color?` | `string` |
+| `content` | `string` |
+| `delay?` | `number` |
+| `fontSize?` | `string` |
+| `iconSize?` | `string` |
+| `parent?` | `string` |
+| `position?` | `string` |
+| `type?` | ``"info"`` \| ``"success"`` \| ``"error"`` \| ``"warning"`` \| ``"loading"`` \| ``"default"`` |
 
 ## Variables
 
@@ -2505,6 +2533,25 @@ Example: `globalError((message, source, lineNo, colNo, error) => console.log('�
 
 ___
 
+### hideToast
+
+▸ **hideToast**(`toast`): `void`
+
+隐藏 toast
+Example: `const toast = showToast({ content: '这是一个演示 Toast' }); => hideToast(toast);`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `toast` | `any` |
+
+#### Returns
+
+`void`
+
+___
+
 ### html2str
 
 ▸ **html2str**(`value`): `string` \| ``null``
@@ -4136,6 +4183,26 @@ Example: `sha256("value") => 加密后的字符串`
 #### Returns
 
 `string`
+
+___
+
+### showToast
+
+▸ **showToast**(`options`): `HTMLDivElement`
+
+显示 Toast
+`export function showToast(options: ToastOptions);`
+Example: `showToast({ type: 'success', content: '这是一个演示 Toast' }); => 显示 success 类型的 toast`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `options` | [`ToastOptions`](README.md#toastoptions) |
+
+#### Returns
+
+`HTMLDivElement`
 
 ___
 
