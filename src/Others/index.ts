@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:53:39
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-06-15 13:56:38
+ * @LastEditTime: 2023-06-20 18:17:50
  * @Description: 因项目需要常用函数，不管任何项目，都放到一起。注意甄别，没有复用意义的函数就不要添加了。
  * @FilePath: \js-xxx\src\Others\index.ts
  */
@@ -277,6 +277,53 @@ export function bindMoreClick(fn: any, times = 3, delay = 300) {
       }, delay);
     }
   };
+}
+
+/**
+ * 设置长按事件
+ * Example: `addLongPress(document.querySelector('.img-btn'), (event) => console.log('addLongPress'), 3000); => 长按会触发事件`
+ * @param element
+ * @param callback
+ * @param duration
+ * @returns
+ */
+export function addLongPress(element: any, callback: any, duration = 2500) {
+  if (!element) {
+    return;
+  }
+
+  let timer: any;
+
+  function start() {
+    if (timer) return;
+    timer = setTimeout(() => {
+      callback && callback();
+    }, duration);
+  }
+
+  function end() {
+    clearTimeout(timer);
+    timer = null;
+  }
+
+  function handleEvent(event: any) {
+    if (event.type === 'mousedown' || event.type === 'touchstart') {
+      start();
+    } else {
+      end();
+    }
+  }
+
+  element.addEventListener('mousedown', handleEvent);
+  element.addEventListener('touchstart', handleEvent);
+  element.addEventListener('mouseup', handleEvent);
+  element.addEventListener('mouseout', handleEvent);
+  element.addEventListener('touchend', handleEvent);
+  element.addEventListener('touchcancel', handleEvent);
+
+  element.addEventListener('contextmenu', (event: any) => {
+    event.preventDefault();
+  });
 }
 
 /**

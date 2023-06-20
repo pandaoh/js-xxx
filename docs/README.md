@@ -1,6 +1,6 @@
 js-xxx
 
-# js-xxx - v1.7.0
+# js-xxx - v1.7.1
 
 ## Table of contents
 
@@ -23,6 +23,7 @@ js-xxx
 - [Speaker](README.md#speaker)
 - [abs](README.md#abs)
 - [add](README.md#add)
+- [addLongPress](README.md#addlongpress)
 - [all](README.md#all)
 - [any](README.md#any)
 - [appendLink](README.md#appendlink)
@@ -394,6 +395,27 @@ Example:
 #### Returns
 
 `number`
+
+___
+
+### addLongPress
+
+▸ **addLongPress**(`element`, `callback`, `duration?`): `void`
+
+设置长按事件
+Example: `addLongPress(document.querySelector('.img-btn'), (event) => console.log('addLongPress'), 3000); => 长按会触发事件`
+
+#### Parameters
+
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `element` | `any` | `undefined` |
+| `callback` | `any` | `undefined` |
+| `duration` | `number` | `2500` |
+
+#### Returns
+
+`void`
 
 ___
 
