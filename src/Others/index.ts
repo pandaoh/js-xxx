@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:53:39
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-06-20 18:17:50
+ * @LastEditTime: 2023-06-21 10:31:46
  * @Description: 因项目需要常用函数，不管任何项目，都放到一起。注意甄别，没有复用意义的函数就不要添加了。
  * @FilePath: \js-xxx\src\Others\index.ts
  */
@@ -280,46 +280,65 @@ export function bindMoreClick(fn: any, times = 3, delay = 300) {
 }
 
 /**
- * 设置长按事件
- * Example: `addLongPress(document.querySelector('.img-btn'), (event) => console.log('addLongPress'), 3000); => 长按会触发事件`
+ * 设置长按事件-支持加入单击事件
+ * Example: `addLongPressEvent(document.querySelector('.img-btn'), (event) => console.log('addLongPressEvent'), 3000); => 长按会触发事件`
  * @param element
- * @param callback
+ * @param longPressCallback
  * @param duration
+ * @param clickCallback
  * @returns
  */
-export function addLongPress(element: any, callback: any, duration = 2500) {
+export function addLongPressEvent(element: any, longPressCallback: any, duration = 2500, clickCallback?: any) {
   if (!element) {
     return;
   }
 
   let timer: any;
+  let longPressTriggered = false;
 
-  function start() {
+  const events = [
+    { name: 'mousedown', handler: handleStart },
+    { name: 'mouseup', handler: handleEnd },
+    { name: 'mouseout', handler: handleEnd },
+    { name: 'touchstart', handler: handleStart },
+    { name: 'touchend', handler: handleEnd },
+    { name: 'touchcancel', handler: handleEnd },
+    { name: 'click', handler: handleClick },
+  ];
+
+  function handleStart(event: any) {
+    start(event);
+  }
+
+  function handleEnd() {
+    end();
+  }
+
+  function handleClick(event: any) {
+    if (!longPressTriggered) {
+      clickCallback && clickCallback(event);
+    }
+  }
+
+  function start(event: any) {
     if (timer) return;
     timer = setTimeout(() => {
-      callback && callback();
+      longPressTriggered = true;
+      longPressCallback && longPressCallback(event);
     }, duration);
   }
 
   function end() {
     clearTimeout(timer);
     timer = null;
+    setTimeout(() => {
+      longPressTriggered = false;
+    }, 0);
   }
 
-  function handleEvent(event: any) {
-    if (event.type === 'mousedown' || event.type === 'touchstart') {
-      start();
-    } else {
-      end();
-    }
+  for (const { name, handler } of events) {
+    element.addEventListener(name, handler);
   }
-
-  element.addEventListener('mousedown', handleEvent);
-  element.addEventListener('touchstart', handleEvent);
-  element.addEventListener('mouseup', handleEvent);
-  element.addEventListener('mouseout', handleEvent);
-  element.addEventListener('touchend', handleEvent);
-  element.addEventListener('touchcancel', handleEvent);
 
   element.addEventListener('contextmenu', (event: any) => {
     event.preventDefault();

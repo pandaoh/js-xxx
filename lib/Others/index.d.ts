@@ -74,14 +74,15 @@ export declare function onClick2MoreClick(delay?: number, ...events: Array<any>)
  */
 export declare function bindMoreClick(fn: any, times?: number, delay?: number): (...args: any[]) => void;
 /**
- * 设置长按事件
- * Example: `addLongPress(document.querySelector('.img-btn'), (event) => console.log('addLongPress'), 3000); => 长按会触发事件`
+ * 设置长按事件-支持加入单击事件
+ * Example: `addLongPressEvent(document.querySelector('.img-btn'), (event) => console.log('addLongPressEvent'), 3000); => 长按会触发事件`
  * @param element
- * @param callback
+ * @param longPressCallback
  * @param duration
+ * @param clickCallback
  * @returns
  */
-export declare function addLongPress(element: any, callback: any, duration?: number): void;
+export declare function addLongPressEvent(element: any, longPressCallback: any, duration?: number, clickCallback?: any): void;
 /**
  * 触发某个键盘按键事件
  * Example: `emitKeyboardEvent('keydown', 108) => 小键盘回车事件`
