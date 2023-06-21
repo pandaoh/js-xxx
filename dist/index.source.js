@@ -11511,6 +11511,7 @@
     function bindMoreClick(fn, times, delay) {
         if (times === void 0) { times = 3; }
         if (delay === void 0) { delay = 300; }
+        times = times - 1; // count 从 0 开始
         var timer = null;
         var lastTime = 0;
         var count = 0;

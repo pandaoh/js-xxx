@@ -261,6 +261,7 @@ export function onClick2MoreClick(delay = 300, ...events: Array<any>): any {
  * @returns
  */
 export function bindMoreClick(fn: any, times = 3, delay = 300) {
+  times = times - 1; // count 从 0 开始
   let timer: any = null;
   let lastTime = 0;
   let count = 0;
