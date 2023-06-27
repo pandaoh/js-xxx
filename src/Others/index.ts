@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:53:39
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-06-21 10:31:46
+ * @LastEditTime: 2023-06-27 15:25:34
  * @Description: 因项目需要常用函数，不管任何项目，都放到一起。注意甄别，没有复用意义的函数就不要添加了。
  * @FilePath: \js-xxx\src\Others\index.ts
  */
@@ -812,9 +812,20 @@ export function log(...args: any[]): void {
     //     new Date(),
     //   )}]===>', 'color:#1890FF;font-size:10px;margin-right:5px', ...JSON.parse('${JSON.stringify(args)}'));`,
     // );
+    const formattedArgs = args.map((arg) => {
+      // eslint-disable-next-line no-prototype-builtins
+      if (typeof arg === 'object' && arg !== null && arg.hasOwnProperty('toJSON')) {
+        return arg.toJSON();
+      } else {
+        return arg;
+      }
+    }); // 确保对象中的 JSON 字符串不会干扰 JavaScript 解析器。
     const code = `console.log('%c日志[${formatDate(
       new Date(),
-    )}]===>', 'color:#1890FF;font-size:10px;margin-right:5px', ...JSON.parse('${JSON.stringify(args)}'));`;
+    )}]===>\\n', 'color:#1890FF;font-size:10px;margin-right:5px', ...${JSON.stringify(formattedArgs).replace(
+      /</g,
+      '\\u003c', // 防止 xss
+    )});`;
     const fn = new Function(code);
     fn();
   } catch (e) {
@@ -839,7 +850,9 @@ export function logVar(value: any, logLevel = 'info'): string {
   // const varName = Object.keys({ value })[0];
   const varType = getType(value);
   console.log(`%c[${logLevel.toUpperCase()}] %c(${varType}):`, `color:${logColors};`, 'font-weight:bold;', value);
-  return `\n[${logLevel.toUpperCase()}] (${varType}) ${value} -----Log Date: ${formatDate(new Date())}\n`;
+  return `\n[${logLevel.toUpperCase()}] (${varType}) 【${JSON.stringify(value)}】 ~Log Date<${formatDate(
+    new Date(),
+  )}>\n`;
 }
 
 /**
