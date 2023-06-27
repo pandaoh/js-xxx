@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-06-04 16:30:04
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-13 18:33:15
+ * @LastEditTime: 2023-06-27 17:48:39
  * @Description: localStorage 与 sessionStorage
  * @FilePath: \js-xxx\src\Storage\index.ts
  */
@@ -77,7 +77,7 @@ function _tempGet(key: string, storeType: 'L' | 'S'): any {
 
 /**
  * 获取 localStorage
- * Example: `localStorageGet("key") => 处理过后的 value，不需要再 decode`
+ * Example: `localStorageGet("key") => 处理过后的 value，不需要再 decode 。`
  * @param key 存储 key
  * @returns
  */
@@ -98,7 +98,7 @@ export function localStorageSet(key: string, value: any): boolean {
 
 /**
  * 获取 sessionStorage
- * Example: `sessionStorageGet("key") => 处理过后的 value，不需要再 decode`
+ * Example: `sessionStorageGet("key") => 处理过后的 value，不需要再 decode 。`
  * @param key 存储 key
  * @returns
  */
@@ -115,4 +115,44 @@ export function sessionStorageGet(key: string): any {
  */
 export function sessionStorageSet(key: string, value: any): boolean {
   return _tempSet(key, value, 'S');
+}
+
+/**
+ * 获取 localStorage 对象值
+ * Example: `getLocalObj("key") => 处理过后的 value，不需要再 decode，且有默认值 {}。`
+ * @param key 存储 key
+ * @returns
+ */
+export function getLocalObj(key: string): any {
+  return _tempGet(key, 'L') ?? {};
+}
+
+/**
+ * 获取 sessionStorage 对象值
+ * Example: `getSessionObj("key") => 处理过后的 value，不需要再 decode，且有默认值 {}。`
+ * @param key 存储 key
+ * @returns
+ */
+export function getSessionObj(key: string): any {
+  return _tempGet(key, 'S') ?? {};
+}
+
+/**
+ * 获取 localStorage 数组值
+ * Example: `getLocalArr("key") => 处理过后的 value，不需要再 decode，且有默认值 []。`
+ * @param key 存储 key
+ * @returns
+ */
+export function getLocalArr(key: string): any[] {
+  return _tempGet(key, 'L') ?? [];
+}
+
+/**
+ * 获取 sessionStorage 数组值
+ * Example: `getSessionArr("key") => 处理过后的 value，不需要再 decode，且有默认值 []。`
+ * @param key 存储 key
+ * @returns
+ */
+export function getSessionArr(key: string): any[] {
+  return _tempGet(key, 'S') ?? [];
 }

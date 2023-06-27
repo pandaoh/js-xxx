@@ -1,6 +1,6 @@
 js-xxx
 
-# js-xxx - v1.7.2
+# js-xxx - v1.7.3
 
 ## Table of contents
 
@@ -96,6 +96,8 @@ js-xxx
 - [getDateTime](README.md#getdatetime)
 - [getKey](README.md#getkey)
 - [getLastVar](README.md#getlastvar)
+- [getLocalArr](README.md#getlocalarr)
+- [getLocalObj](README.md#getlocalobj)
 - [getMonthDays](README.md#getmonthdays)
 - [getMonthDaysCount](README.md#getmonthdayscount)
 - [getMonthInfo](README.md#getmonthinfo)
@@ -107,6 +109,8 @@ js-xxx
 - [getRandVar](README.md#getrandvar)
 - [getScrollPercent](README.md#getscrollpercent)
 - [getSearchParams](README.md#getsearchparams)
+- [getSessionArr](README.md#getsessionarr)
+- [getSessionObj](README.md#getsessionobj)
 - [getSize](README.md#getsize)
 - [getStyleByName](README.md#getstylebyname)
 - [getTimeAndStr](README.md#gettimeandstr)
@@ -2049,6 +2053,44 @@ Example:
 
 ___
 
+### getLocalArr
+
+▸ **getLocalArr**(`key`): `any`[]
+
+获取 localStorage 数组值
+Example: `getLocalArr("key") => 处理过后的 value，不需要再 decode，且有默认值 []。`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `key` | `string` | 存储 key |
+
+#### Returns
+
+`any`[]
+
+___
+
+### getLocalObj
+
+▸ **getLocalObj**(`key`): `any`
+
+获取 localStorage 对象值
+Example: `getLocalObj("key") => 处理过后的 value，不需要再 decode，且有默认值 {}。`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `key` | `string` | 存储 key |
+
+#### Returns
+
+`any`
+
+___
+
 ### getMonthDays
 
 ▸ **getMonthDays**(`date?`): `number`
@@ -2273,6 +2315,44 @@ Example:
 | Name | Type |
 | :------ | :------ |
 | `url?` | `string` |
+
+#### Returns
+
+`any`
+
+___
+
+### getSessionArr
+
+▸ **getSessionArr**(`key`): `any`[]
+
+获取 sessionStorage 数组值
+Example: `getSessionArr("key") => 处理过后的 value，不需要再 decode，且有默认值 []。`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `key` | `string` | 存储 key |
+
+#### Returns
+
+`any`[]
+
+___
+
+### getSessionObj
+
+▸ **getSessionObj**(`key`): `any`
+
+获取 sessionStorage 对象值
+Example: `getSessionObj("key") => 处理过后的 value，不需要再 decode，且有默认值 {}。`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `key` | `string` | 存储 key |
 
 #### Returns
 
@@ -3440,7 +3520,7 @@ ___
 ▸ **localStorageGet**(`key`): `any`
 
 获取 localStorage
-Example: `localStorageGet("key") => 处理过后的 value，不需要再 decode`
+Example: `localStorageGet("key") => 处理过后的 value，不需要再 decode 。`
 
 #### Parameters
 
@@ -4055,7 +4135,7 @@ ___
 ▸ **sessionStorageGet**(`key`): `any`
 
 获取 sessionStorage
-Example: `sessionStorageGet("key") => 处理过后的 value，不需要再 decode`
+Example: `sessionStorageGet("key") => 处理过后的 value，不需要再 decode 。`
 
 #### Parameters
 

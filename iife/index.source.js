@@ -12216,7 +12216,7 @@ var $xxx = (function (exports) {
      * @Author: HxB
      * @Date: 2022-06-04 16:30:04
      * @LastEditors: DoubleAm
-     * @LastEditTime: 2023-03-13 18:33:15
+     * @LastEditTime: 2023-06-27 17:48:39
      * @Description: localStorage 与 sessionStorage
      * @FilePath: \js-xxx\src\Storage\index.ts
      */
@@ -12287,7 +12287,7 @@ var $xxx = (function (exports) {
     }
     /**
      * 获取 localStorage
-     * Example: `localStorageGet("key") => 处理过后的 value，不需要再 decode`
+     * Example: `localStorageGet("key") => 处理过后的 value，不需要再 decode 。`
      * @param key 存储 key
      * @returns
      */
@@ -12306,7 +12306,7 @@ var $xxx = (function (exports) {
     }
     /**
      * 获取 sessionStorage
-     * Example: `sessionStorageGet("key") => 处理过后的 value，不需要再 decode`
+     * Example: `sessionStorageGet("key") => 处理过后的 value，不需要再 decode 。`
      * @param key 存储 key
      * @returns
      */
@@ -12322,6 +12322,46 @@ var $xxx = (function (exports) {
      */
     function sessionStorageSet(key, value) {
         return _tempSet(key, value, 'S');
+    }
+    /**
+     * 获取 localStorage 对象值
+     * Example: `getLocalObj("key") => 处理过后的 value，不需要再 decode，且有默认值 {}。`
+     * @param key 存储 key
+     * @returns
+     */
+    function getLocalObj(key) {
+        var _a;
+        return (_a = _tempGet(key, 'L')) !== null && _a !== void 0 ? _a : {};
+    }
+    /**
+     * 获取 sessionStorage 对象值
+     * Example: `getSessionObj("key") => 处理过后的 value，不需要再 decode，且有默认值 {}。`
+     * @param key 存储 key
+     * @returns
+     */
+    function getSessionObj(key) {
+        var _a;
+        return (_a = _tempGet(key, 'S')) !== null && _a !== void 0 ? _a : {};
+    }
+    /**
+     * 获取 localStorage 数组值
+     * Example: `getLocalArr("key") => 处理过后的 value，不需要再 decode，且有默认值 []。`
+     * @param key 存储 key
+     * @returns
+     */
+    function getLocalArr(key) {
+        var _a;
+        return (_a = _tempGet(key, 'L')) !== null && _a !== void 0 ? _a : [];
+    }
+    /**
+     * 获取 sessionStorage 数组值
+     * Example: `getSessionArr("key") => 处理过后的 value，不需要再 decode，且有默认值 []。`
+     * @param key 存储 key
+     * @returns
+     */
+    function getSessionArr(key) {
+        var _a;
+        return (_a = _tempGet(key, 'S')) !== null && _a !== void 0 ? _a : [];
     }
 
     /* eslint-disable indent */
@@ -12607,6 +12647,8 @@ var $xxx = (function (exports) {
     exports.getDateTime = getDateTime;
     exports.getKey = getKey;
     exports.getLastVar = getLastVar;
+    exports.getLocalArr = getLocalArr;
+    exports.getLocalObj = getLocalObj;
     exports.getMonthDays = getMonthDays;
     exports.getMonthDaysCount = getMonthDaysCount;
     exports.getMonthInfo = getMonthInfo;
@@ -12618,6 +12660,8 @@ var $xxx = (function (exports) {
     exports.getRandVar = getRandVar;
     exports.getScrollPercent = getScrollPercent;
     exports.getSearchParams = getSearchParams;
+    exports.getSessionArr = getSessionArr;
+    exports.getSessionObj = getSessionObj;
     exports.getSize = getSize;
     exports.getStyleByName = getStyleByName;
     exports.getTimeAndStr = getTimeAndStr;
