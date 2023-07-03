@@ -8875,7 +8875,7 @@ var $xxx = (function (exports) {
         return (_a = WEEKS_INFO[Number(n) - 1]) !== null && _a !== void 0 ? _a : WEEKS_INFO;
     }
     /**
-     * 获取星期信息
+     * 获取月份信息
      * Example:
      * `getMonthInfo() => MONTH_INFO`
      * `getMonthInfo('0') => MONTH_INFO`

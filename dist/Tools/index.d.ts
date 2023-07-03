@@ -460,7 +460,7 @@ export declare function getWeekInfo(n: string | number): {
     others: string;
 }[];
 /**
- * 获取星期信息
+ * 获取月份信息
  * Example:
  * `getMonthInfo() => MONTH_INFO`
  * `getMonthInfo('0') => MONTH_INFO`

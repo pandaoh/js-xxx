@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-06-12 18:05:09
+ * @LastEditTime: 2023-07-03 14:51:36
  * @Description: 工具函数
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
@@ -1475,7 +1475,7 @@ export function getWeekInfo(n: string | number):
 }
 
 /**
- * 获取星期信息
+ * 获取月份信息
  * Example:
  * `getMonthInfo() => MONTH_INFO`
  * `getMonthInfo('0') => MONTH_INFO`

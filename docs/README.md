@@ -2134,7 +2134,7 @@ ___
 
 ▸ **getMonthInfo**(`n`): { `abbr`: `string` ; `id`: `number` ; `key`: `string` ; `name`: `string` ; `others`: `string`  } \| { `abbr`: `string` ; `id`: `number` ; `key`: `string` ; `name`: `string` ; `others`: `string`  }[]
 
-获取星期信息
+获取月份信息
 Example:
 `getMonthInfo() => MONTH_INFO`
 `getMonthInfo('0') => MONTH_INFO`
