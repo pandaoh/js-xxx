@@ -232,6 +232,19 @@ export declare function log(...args: any[]): void;
  */
 export declare function logVar(value: any, logLevel?: string): string;
 /**
+ * 强制转换扫描字符串的特殊字符
+ * `/(=)|(<)|(>)|(&)|(%)|(#)|(@)|(~)/g`
+ * Example:
+ * `transferScanStr('=900182201234500') => '900182201234500'`
+ * `transferScanStr('=<E5433000') => 'E5433000'`
+ * `transferScanStr('@123') => '123'`
+ * `transferScanStr('#test~') => 'test'`
+ * `transferScanStr(undefined) => ''`
+ * @param value
+ * @returns
+ */
+export declare function transferScanStr(value: string): string;
+/**
  * 强制转化为字符串，避免导出表格显示科学计数法。
  * Example:
  * `forceToStr(123123123) => '123123123'`

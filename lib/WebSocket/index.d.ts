@@ -20,13 +20,13 @@ export declare function initWebSocket(options: {
 /**
  * 发送消息
  * Example:
- * `sendWsMessage({ type: 'login', data: { username: 'admin', password: '123456' }}, true) => true/false`
- * `sendWsMessage('testMsg') => true/false`
+ * `sendWsMsg({ type: 'login', data: { username: 'admin', password: '123456' }}, true) => true/false`
+ * `sendWsMsg('testMsg') => true/false`
  * @param message 消息
  * @param isJSONEncode 是否 JSON 序列化
  * @returns
  */
-export declare function sendWsMessage(message: any, isJSONEncode?: boolean): boolean;
+export declare function sendWsMsg(message: any, isJSONEncode?: boolean): boolean;
 /**
  * 关闭 websocket
  * Example: `closeWebSocket() => true/false`
@@ -34,16 +34,16 @@ export declare function sendWsMessage(message: any, isJSONEncode?: boolean): boo
  */
 export declare function closeWebSocket(): boolean;
 /**
- * 获取 websocket 实例
- * Example: `getWebSocket() => [websocket object]`
- * @returns
- */
-export declare function getWebSocket(): WebSocket | undefined;
-/**
  * 设置 websocket binaryType default: 'blob'
  * Example: `setWsBinaryType() => true/false`
  * @param binaryType BinaryType 二进制类型 default: 'arraybuffer'
  * @returns
  */
 export declare function setWsBinaryType(binaryType?: any): boolean;
+/**
+ * 获取 websocket 实例
+ * Example: `getWebSocket() => [websocket object]`
+ * @returns
+ */
+export declare function getWebSocket(): WebSocket | undefined;
 //# sourceMappingURL=index.d.ts.map

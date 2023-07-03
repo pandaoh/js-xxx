@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-14 11:18:41
+ * @LastEditTime: 2023-07-03 14:43:39
  * @Description: websocket
  * @FilePath: \js-xxx\src\WebSocket\index.ts
  */
@@ -52,7 +52,7 @@ export function initWebSocket(options: {
   xWebSocket.onclose = function () {
     /* 未超时就继续连接 */
     if (xWebSocketTimer) {
-      initWebSocket(options);
+      initWebSocket(options); // 记得重新赋值
       return;
     }
 
@@ -64,26 +64,32 @@ export function initWebSocket(options: {
       times--;
       setTimeout(() => {
         options.reconnect?.onReconnect?.(xWebSocket, options);
-        initWebSocket({ ...options, reconnect: { ...options.reconnect, times: times } });
+        initWebSocket({ ...options, reconnect: { ...options.reconnect, times: times } }); // 记得重新赋值
       }, options.reconnect?.delay ?? 1000);
     }
   };
-  {
-    /* empty */
-  }
+
+  // @ts-ignore
+  xWebSocket.sendWsMsg = sendWsMsg;
+  // @ts-ignore
+  xWebSocket.closeWebSocket = closeWebSocket;
+  // @ts-ignore
+  xWebSocket.setWsBinaryType = setWsBinaryType;
+
+  // xWebSocket.readyState == 1 正常状态
   return xWebSocket;
 }
 
 /**
  * 发送消息
  * Example:
- * `sendWsMessage({ type: 'login', data: { username: 'admin', password: '123456' }}, true) => true/false`
- * `sendWsMessage('testMsg') => true/false`
+ * `sendWsMsg({ type: 'login', data: { username: 'admin', password: '123456' }}, true) => true/false`
+ * `sendWsMsg('testMsg') => true/false`
  * @param message 消息
  * @param isJSONEncode 是否 JSON 序列化
  * @returns
  */
-export function sendWsMessage(message: any, isJSONEncode = false): boolean {
+export function sendWsMsg(message: any, isJSONEncode = false): boolean {
   if (!xWebSocket) {
     return false;
   }
@@ -105,15 +111,6 @@ export function closeWebSocket(): boolean {
 }
 
 /**
- * 获取 websocket 实例
- * Example: `getWebSocket() => [websocket object]`
- * @returns
- */
-export function getWebSocket(): WebSocket | undefined {
-  return xWebSocket;
-}
-
-/**
  * 设置 websocket binaryType default: 'blob'
  * Example: `setWsBinaryType() => true/false`
  * @param binaryType BinaryType 二进制类型 default: 'arraybuffer'
@@ -127,4 +124,15 @@ export function setWsBinaryType(binaryType: any = 'arraybuffer'): boolean {
   return true;
 }
 
-// 使用 grpc 记得 buffer2obj 和 obj2buffer
+// eslint-disable-next-line spellcheck/spell-checker
+// 使用 grpc 或 protobuf 记得 buffer2obj 和 obj2buffer
+// 使用专用工具进行封装与解析
+
+/**
+ * 获取 websocket 实例
+ * Example: `getWebSocket() => [websocket object]`
+ * @returns
+ */
+export function getWebSocket(): WebSocket | undefined {
+  return xWebSocket;
+}

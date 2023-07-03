@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:53:39
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-06-27 15:25:34
+ * @LastEditTime: 2023-07-03 14:46:35
  * @Description: 因项目需要常用函数，不管任何项目，都放到一起。注意甄别，没有复用意义的函数就不要添加了。
  * @FilePath: \js-xxx\src\Others\index.ts
  */
@@ -853,6 +853,25 @@ export function logVar(value: any, logLevel = 'info'): string {
   return `\n[${logLevel.toUpperCase()}] (${varType}) 【${JSON.stringify(value)}】 ~Log Date<${formatDate(
     new Date(),
   )}>\n`;
+}
+
+/**
+ * 强制转换扫描字符串的特殊字符
+ * `/(=)|(<)|(>)|(&)|(%)|(#)|(@)|(~)/g`
+ * Example:
+ * `transferScanStr('=900182201234500') => '900182201234500'`
+ * `transferScanStr('=<E5433000') => 'E5433000'`
+ * `transferScanStr('@123') => '123'`
+ * `transferScanStr('#test~') => 'test'`
+ * `transferScanStr(undefined) => ''`
+ * @param value
+ * @returns
+ */
+export function transferScanStr(value: string): string {
+  if (!value) {
+    return '';
+  }
+  return `${value}`.replace(/(=)|(<)|(>)|(&)|(%)|(#)|(@)|(~)/g, '');
 }
 
 /**

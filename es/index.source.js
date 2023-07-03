@@ -12039,6 +12039,24 @@ function logVar(value, logLevel) {
     return "\n[".concat(logLevel.toUpperCase(), "] (").concat(varType, ") \u3010").concat(JSON.stringify(value), "\u3011 ~Log Date<").concat(formatDate(new Date()), ">\n");
 }
 /**
+ * 强制转换扫描字符串的特殊字符
+ * `/(=)|(<)|(>)|(&)|(%)|(#)|(@)|(~)/g`
+ * Example:
+ * `transferScanStr('=900182201234500') => '900182201234500'`
+ * `transferScanStr('=<E5433000') => 'E5433000'`
+ * `transferScanStr('@123') => '123'`
+ * `transferScanStr('#test~') => 'test'`
+ * `transferScanStr(undefined) => ''`
+ * @param value
+ * @returns
+ */
+function transferScanStr(value) {
+    if (!value) {
+        return '';
+    }
+    return "".concat(value).replace(/(=)|(<)|(>)|(&)|(%)|(#)|(@)|(~)/g, '');
+}
+/**
  * 强制转化为字符串，避免导出表格显示科学计数法。
  * Example:
  * `forceToStr(123123123) => '123123123'`
@@ -12456,7 +12474,7 @@ function hideToast(toast) {
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-14 11:18:41
+ * @LastEditTime: 2023-07-03 14:43:39
  * @Description: websocket
  * @FilePath: \js-xxx\src\WebSocket\index.ts
  */
@@ -12495,7 +12513,7 @@ function initWebSocket(options) {
         var _a, _b, _c, _d, _e;
         /* 未超时就继续连接 */
         if (xWebSocketTimer) {
-            initWebSocket(options);
+            initWebSocket(options); // 记得重新赋值
             return;
         }
         (_a = options === null || options === void 0 ? void 0 : options.onClose) === null || _a === void 0 ? void 0 : _a.call(options, xWebSocket, options);
@@ -12506,22 +12524,29 @@ function initWebSocket(options) {
             setTimeout(function () {
                 var _a, _b;
                 (_b = (_a = options.reconnect) === null || _a === void 0 ? void 0 : _a.onReconnect) === null || _b === void 0 ? void 0 : _b.call(_a, xWebSocket, options);
-                initWebSocket(__assign(__assign({}, options), { reconnect: __assign(__assign({}, options.reconnect), { times: times }) }));
+                initWebSocket(__assign(__assign({}, options), { reconnect: __assign(__assign({}, options.reconnect), { times: times }) })); // 记得重新赋值
             }, (_e = (_d = options.reconnect) === null || _d === void 0 ? void 0 : _d.delay) !== null && _e !== void 0 ? _e : 1000);
         }
     };
+    // @ts-ignore
+    xWebSocket.sendWsMsg = sendWsMsg;
+    // @ts-ignore
+    xWebSocket.closeWebSocket = closeWebSocket;
+    // @ts-ignore
+    xWebSocket.setWsBinaryType = setWsBinaryType;
+    // xWebSocket.readyState == 1 正常状态
     return xWebSocket;
 }
 /**
  * 发送消息
  * Example:
- * `sendWsMessage({ type: 'login', data: { username: 'admin', password: '123456' }}, true) => true/false`
- * `sendWsMessage('testMsg') => true/false`
+ * `sendWsMsg({ type: 'login', data: { username: 'admin', password: '123456' }}, true) => true/false`
+ * `sendWsMsg('testMsg') => true/false`
  * @param message 消息
  * @param isJSONEncode 是否 JSON 序列化
  * @returns
  */
-function sendWsMessage(message, isJSONEncode) {
+function sendWsMsg(message, isJSONEncode) {
     if (isJSONEncode === void 0) { isJSONEncode = false; }
     if (!xWebSocket) {
         return false;
@@ -12542,14 +12567,6 @@ function closeWebSocket() {
     return true;
 }
 /**
- * 获取 websocket 实例
- * Example: `getWebSocket() => [websocket object]`
- * @returns
- */
-function getWebSocket() {
-    return xWebSocket;
-}
-/**
  * 设置 websocket binaryType default: 'blob'
  * Example: `setWsBinaryType() => true/false`
  * @param binaryType BinaryType 二进制类型 default: 'arraybuffer'
@@ -12563,6 +12580,16 @@ function setWsBinaryType(binaryType) {
     xWebSocket.binaryType = binaryType;
     return true;
 }
-// 使用 grpc 记得 buffer2obj 和 obj2buffer
+// eslint-disable-next-line spellcheck/spell-checker
+// 使用 grpc 或 protobuf 记得 buffer2obj 和 obj2buffer
+// 使用专用工具进行封装与解析
+/**
+ * 获取 websocket 实例
+ * Example: `getWebSocket() => [websocket object]`
+ * @returns
+ */
+function getWebSocket() {
+    return xWebSocket;
+}
 
-export { CONTENT_TYPES, H5Resize, HttpMethod, Logger, Speaker, abs, add, addLongPressEvent, all, any, appendLink, appendScript, arrObj2objArr, arraySet, arraySort, atob, average, banConsole, base64Decode, base64Encode, bindMoreClick, btoa, calcDate, calcFontSize, camelCase, catchPromise, checkFileExt, checkIdCard, checkVersion, closeFullscreen, closeWebSocket, compareDate, contains, copyContent, copyToClipboard, countdown, curryIt, data2Arr, data2Obj, dataTo, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitKeyboardEvent, empty, encrypt, exportFile, findChildren, findParents, float, forEach, forceToStr, formatBytes, formatDate, formatFormData, formatJSON, formatNumber, formatRh, formatURLSearchParams, get1Var, getAge, getAnimal, getBSColor, getBaseURL, getBloodGroup, getConstellation, getContentType, getCookie, getCron, getCryptoJS, getDateDifference, getDateList, getDateTime, getKey, getLastVar, getLocalArr, getLocalObj, getMonthDays, getMonthDaysCount, getMonthInfo, getPercentage, getQueryString, getRandColor, getRandNum, getRandStr, getRandVar, getScrollPercent, getSearchParams, getSessionArr, getSessionObj, getSize, getStyleByName, getTimeAndStr, getTimeCode, getType, getUTCTime, getUUID, getUserAgent, getV, getVar, getViewportSize, getWebSocket, getWeekInfo, globalError, hideToast, html2str, inRange, initNotification, initWebSocket, insertAfter, intersection, isAppleDevice, isArr, isArrayBuffer, isBlob, isBool, isBrowser, isCarCode, isChar, isDarkMode, isDate, isDecimal, isElement, isEmail, isEqual, isFn, isHttp, isInteger, isIpAddress, isIpv4, isIpv6, isJSON, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPhoneNum, isPromise, isRhNegative, isStr, isStrongPassWord, isUndef, isUrl, isWeekday, jsonClone, localStorageGet, localStorageSet, log, logRunTime, logVar, marquee, maskString, md5, mergeObj, ms, offDefaultEvent, onClick2MoreClick, openFile, openFullscreen, px2rem, qsParse, qsStringify, removeCookie, repeat, retry, rip, round, scrollToBottom, scrollToTop, scrollXTo, scrollYTo, sendNotification, sendWsMessage, sessionStorageGet, sessionStorageSet, setCookie, setEventListener, setIcon, setWsBinaryType, sha1, sha256, showToast, showVar, shuffleArray, sleep, slugify, sortBy, sortCallBack, splitCase, stackSticky, str2html, str2unicode, sub, throttle, timeSince, times, to, toBool, toNum, toStr, transferCSVData, transferCase, transferFileToBase64, transferIdCard, transferMoney, trim, truncate, unicode2str, union, unique, uuid, versionUpgrade, waitUntil, watermark, xAjax, xFetch };
+export { CONTENT_TYPES, H5Resize, HttpMethod, Logger, Speaker, abs, add, addLongPressEvent, all, any, appendLink, appendScript, arrObj2objArr, arraySet, arraySort, atob, average, banConsole, base64Decode, base64Encode, bindMoreClick, btoa, calcDate, calcFontSize, camelCase, catchPromise, checkFileExt, checkIdCard, checkVersion, closeFullscreen, closeWebSocket, compareDate, contains, copyContent, copyToClipboard, countdown, curryIt, data2Arr, data2Obj, dataTo, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitKeyboardEvent, empty, encrypt, exportFile, findChildren, findParents, float, forEach, forceToStr, formatBytes, formatDate, formatFormData, formatJSON, formatNumber, formatRh, formatURLSearchParams, get1Var, getAge, getAnimal, getBSColor, getBaseURL, getBloodGroup, getConstellation, getContentType, getCookie, getCron, getCryptoJS, getDateDifference, getDateList, getDateTime, getKey, getLastVar, getLocalArr, getLocalObj, getMonthDays, getMonthDaysCount, getMonthInfo, getPercentage, getQueryString, getRandColor, getRandNum, getRandStr, getRandVar, getScrollPercent, getSearchParams, getSessionArr, getSessionObj, getSize, getStyleByName, getTimeAndStr, getTimeCode, getType, getUTCTime, getUUID, getUserAgent, getV, getVar, getViewportSize, getWebSocket, getWeekInfo, globalError, hideToast, html2str, inRange, initNotification, initWebSocket, insertAfter, intersection, isAppleDevice, isArr, isArrayBuffer, isBlob, isBool, isBrowser, isCarCode, isChar, isDarkMode, isDate, isDecimal, isElement, isEmail, isEqual, isFn, isHttp, isInteger, isIpAddress, isIpv4, isIpv6, isJSON, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPhoneNum, isPromise, isRhNegative, isStr, isStrongPassWord, isUndef, isUrl, isWeekday, jsonClone, localStorageGet, localStorageSet, log, logRunTime, logVar, marquee, maskString, md5, mergeObj, ms, offDefaultEvent, onClick2MoreClick, openFile, openFullscreen, px2rem, qsParse, qsStringify, removeCookie, repeat, retry, rip, round, scrollToBottom, scrollToTop, scrollXTo, scrollYTo, sendNotification, sendWsMsg, sessionStorageGet, sessionStorageSet, setCookie, setEventListener, setIcon, setWsBinaryType, sha1, sha256, showToast, showVar, shuffleArray, sleep, slugify, sortBy, sortCallBack, splitCase, stackSticky, str2html, str2unicode, sub, throttle, timeSince, times, to, toBool, toNum, toStr, transferCSVData, transferCase, transferFileToBase64, transferIdCard, transferMoney, transferScanStr, trim, truncate, unicode2str, union, unique, uuid, versionUpgrade, waitUntil, watermark, xAjax, xFetch };

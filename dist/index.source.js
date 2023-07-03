@@ -12045,6 +12045,24 @@
         return "\n[".concat(logLevel.toUpperCase(), "] (").concat(varType, ") \u3010").concat(JSON.stringify(value), "\u3011 ~Log Date<").concat(formatDate(new Date()), ">\n");
     }
     /**
+     * 强制转换扫描字符串的特殊字符
+     * `/(=)|(<)|(>)|(&)|(%)|(#)|(@)|(~)/g`
+     * Example:
+     * `transferScanStr('=900182201234500') => '900182201234500'`
+     * `transferScanStr('=<E5433000') => 'E5433000'`
+     * `transferScanStr('@123') => '123'`
+     * `transferScanStr('#test~') => 'test'`
+     * `transferScanStr(undefined) => ''`
+     * @param value
+     * @returns
+     */
+    function transferScanStr(value) {
+        if (!value) {
+            return '';
+        }
+        return "".concat(value).replace(/(=)|(<)|(>)|(&)|(%)|(#)|(@)|(~)/g, '');
+    }
+    /**
      * 强制转化为字符串，避免导出表格显示科学计数法。
      * Example:
      * `forceToStr(123123123) => '123123123'`
@@ -12462,7 +12480,7 @@
      * @Author: HxB
      * @Date: 2022-04-26 14:10:35
      * @LastEditors: DoubleAm
-     * @LastEditTime: 2023-03-14 11:18:41
+     * @LastEditTime: 2023-07-03 14:43:39
      * @Description: websocket
      * @FilePath: \js-xxx\src\WebSocket\index.ts
      */
@@ -12501,7 +12519,7 @@
             var _a, _b, _c, _d, _e;
             /* 未超时就继续连接 */
             if (xWebSocketTimer) {
-                initWebSocket(options);
+                initWebSocket(options); // 记得重新赋值
                 return;
             }
             (_a = options === null || options === void 0 ? void 0 : options.onClose) === null || _a === void 0 ? void 0 : _a.call(options, xWebSocket, options);
@@ -12512,22 +12530,29 @@
                 setTimeout(function () {
                     var _a, _b;
                     (_b = (_a = options.reconnect) === null || _a === void 0 ? void 0 : _a.onReconnect) === null || _b === void 0 ? void 0 : _b.call(_a, xWebSocket, options);
-                    initWebSocket(__assign(__assign({}, options), { reconnect: __assign(__assign({}, options.reconnect), { times: times }) }));
+                    initWebSocket(__assign(__assign({}, options), { reconnect: __assign(__assign({}, options.reconnect), { times: times }) })); // 记得重新赋值
                 }, (_e = (_d = options.reconnect) === null || _d === void 0 ? void 0 : _d.delay) !== null && _e !== void 0 ? _e : 1000);
             }
         };
+        // @ts-ignore
+        xWebSocket.sendWsMsg = sendWsMsg;
+        // @ts-ignore
+        xWebSocket.closeWebSocket = closeWebSocket;
+        // @ts-ignore
+        xWebSocket.setWsBinaryType = setWsBinaryType;
+        // xWebSocket.readyState == 1 正常状态
         return xWebSocket;
     }
     /**
      * 发送消息
      * Example:
-     * `sendWsMessage({ type: 'login', data: { username: 'admin', password: '123456' }}, true) => true/false`
-     * `sendWsMessage('testMsg') => true/false`
+     * `sendWsMsg({ type: 'login', data: { username: 'admin', password: '123456' }}, true) => true/false`
+     * `sendWsMsg('testMsg') => true/false`
      * @param message 消息
      * @param isJSONEncode 是否 JSON 序列化
      * @returns
      */
-    function sendWsMessage(message, isJSONEncode) {
+    function sendWsMsg(message, isJSONEncode) {
         if (isJSONEncode === void 0) { isJSONEncode = false; }
         if (!xWebSocket) {
             return false;
@@ -12548,14 +12573,6 @@
         return true;
     }
     /**
-     * 获取 websocket 实例
-     * Example: `getWebSocket() => [websocket object]`
-     * @returns
-     */
-    function getWebSocket() {
-        return xWebSocket;
-    }
-    /**
      * 设置 websocket binaryType default: 'blob'
      * Example: `setWsBinaryType() => true/false`
      * @param binaryType BinaryType 二进制类型 default: 'arraybuffer'
@@ -12569,7 +12586,17 @@
         xWebSocket.binaryType = binaryType;
         return true;
     }
-    // 使用 grpc 记得 buffer2obj 和 obj2buffer
+    // eslint-disable-next-line spellcheck/spell-checker
+    // 使用 grpc 或 protobuf 记得 buffer2obj 和 obj2buffer
+    // 使用专用工具进行封装与解析
+    /**
+     * 获取 websocket 实例
+     * Example: `getWebSocket() => [websocket object]`
+     * @returns
+     */
+    function getWebSocket() {
+        return xWebSocket;
+    }
 
     exports.CONTENT_TYPES = CONTENT_TYPES;
     exports.H5Resize = H5Resize;
@@ -12748,7 +12775,7 @@
     exports.scrollXTo = scrollXTo;
     exports.scrollYTo = scrollYTo;
     exports.sendNotification = sendNotification;
-    exports.sendWsMessage = sendWsMessage;
+    exports.sendWsMsg = sendWsMsg;
     exports.sessionStorageGet = sessionStorageGet;
     exports.sessionStorageSet = sessionStorageSet;
     exports.setCookie = setCookie;
@@ -12781,6 +12808,7 @@
     exports.transferFileToBase64 = transferFileToBase64;
     exports.transferIdCard = transferIdCard;
     exports.transferMoney = transferMoney;
+    exports.transferScanStr = transferScanStr;
     exports.trim = trim;
     exports.truncate = truncate;
     exports.unicode2str = unicode2str;

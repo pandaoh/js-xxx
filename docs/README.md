@@ -1,6 +1,6 @@
 js-xxx
 
-# js-xxx - v1.7.3
+# js-xxx - v1.7.4
 
 ## Table of contents
 
@@ -194,7 +194,7 @@ js-xxx
 - [scrollXTo](README.md#scrollxto)
 - [scrollYTo](README.md#scrollyto)
 - [sendNotification](README.md#sendnotification)
-- [sendWsMessage](README.md#sendwsmessage)
+- [sendWsMsg](README.md#sendwsmsg)
 - [sessionStorageGet](README.md#sessionstorageget)
 - [sessionStorageSet](README.md#sessionstorageset)
 - [setCookie](README.md#setcookie)
@@ -227,6 +227,7 @@ js-xxx
 - [transferFileToBase64](README.md#transferfiletobase64)
 - [transferIdCard](README.md#transferidcard)
 - [transferMoney](README.md#transfermoney)
+- [transferScanStr](README.md#transferscanstr)
 - [trim](README.md#trim)
 - [truncate](README.md#truncate)
 - [unicode2str](README.md#unicode2str)
@@ -4108,14 +4109,14 @@ Example: `sendNotification('测试通知', '测试标题', {...options}) => 发�
 
 ___
 
-### sendWsMessage
+### sendWsMsg
 
-▸ **sendWsMessage**(`message`, `isJSONEncode?`): `boolean`
+▸ **sendWsMsg**(`message`, `isJSONEncode?`): `boolean`
 
 发送消息
 Example:
-`sendWsMessage({ type: 'login', data: { username: 'admin', password: '123456' }}, true) => true/false`
-`sendWsMessage('testMsg') => true/false`
+`sendWsMsg({ type: 'login', data: { username: 'admin', password: '123456' }}, true) => true/false`
+`sendWsMsg('testMsg') => true/false`
 
 #### Parameters
 
@@ -4815,6 +4816,31 @@ Example:
 | Name | Type |
 | :------ | :------ |
 | `n` | `number` |
+
+#### Returns
+
+`string`
+
+___
+
+### transferScanStr
+
+▸ **transferScanStr**(`value`): `string`
+
+强制转换扫描字符串的特殊字符
+`/(=)|(<)|(>)|(&)|(%)|(#)|(@)|(~)/g`
+Example:
+`transferScanStr('=900182201234500') => '900182201234500'`
+`transferScanStr('=<E5433000') => 'E5433000'`
+`transferScanStr('@123') => '123'`
+`transferScanStr('#test~') => 'test'`
+`transferScanStr(undefined) => ''`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `string` |
 
 #### Returns
 
