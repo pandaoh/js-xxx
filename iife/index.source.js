@@ -12387,7 +12387,7 @@ var $xxx = (function (exports) {
      * @Author: HxB
      * @Date: 2022-06-16 15:37:27
      * @LastEditors: DoubleAm
-     * @LastEditTime: 2023-06-21 12:15:26
+     * @LastEditTime: 2023-07-11 15:27:45
      * @Description: 自定义 toast
      * @FilePath: \js-xxx\src\Toast\index.ts
      */
@@ -12467,10 +12467,40 @@ var $xxx = (function (exports) {
      * @returns
      */
     function hideToast(toast) {
-        toast.classList.toggle('biugle-toast-hide');
+        var _a;
+        (_a = toast === null || toast === void 0 ? void 0 : toast.classList) === null || _a === void 0 ? void 0 : _a.toggle('biugle-toast-hide');
         setTimeout(function () {
-            toast.remove();
+            toast === null || toast === void 0 ? void 0 : toast.remove();
         }, 500);
+    }
+    /**
+     * 快速展示 Toast
+     * Example: `const myToast = Toast('这是一个快速演示 Toast'); => hideToast(myToast);`
+     * @param msg
+     * @param type
+     * @returns
+     */
+    function Toast(msg, type) {
+        if (type === void 0) { type = 'info'; }
+        if (!msg) {
+            return;
+        }
+        return showToast({
+            content: msg,
+            type: type !== null && type !== void 0 ? type : 'default',
+        });
+    }
+    /**
+     * 快速展示 Loading
+     * Example: `const myLoading = Loading(msg?); => hideToast(myLoading);`
+     * @param msg
+     * @returns
+     */
+    function Loading(msg) {
+        return showToast({
+            content: msg !== null && msg !== void 0 ? msg : '...',
+            type: 'loading',
+        });
     }
 
     /*
@@ -12597,8 +12627,10 @@ var $xxx = (function (exports) {
 
     exports.CONTENT_TYPES = CONTENT_TYPES;
     exports.H5Resize = H5Resize;
+    exports.Loading = Loading;
     exports.Logger = Logger;
     exports.Speaker = Speaker;
+    exports.Toast = Toast;
     exports.abs = abs;
     exports.add = add;
     exports.addLongPressEvent = addLongPressEvent;

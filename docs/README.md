@@ -1,6 +1,6 @@
 js-xxx
 
-# js-xxx - v1.7.4
+# js-xxx - v1.7.5
 
 ## Table of contents
 
@@ -19,8 +19,10 @@ js-xxx
 ### Functions
 
 - [H5Resize](README.md#h5resize)
+- [Loading](README.md#loading)
 - [Logger](README.md#logger)
 - [Speaker](README.md#speaker)
+- [Toast](README.md#toast)
 - [abs](README.md#abs)
 - [add](README.md#add)
 - [addLongPressEvent](README.md#addlongpressevent)
@@ -297,6 +299,25 @@ Example: `H5Resize(()=>{ console.log('downCb'); }, ()=>{ console.log('upCb'); })
 
 ___
 
+### Loading
+
+▸ **Loading**(`msg`): `any`
+
+快速展示 Loading
+Example: `const myLoading = Loading(msg?); => hideToast(myLoading);`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `msg` | `string` |
+
+#### Returns
+
+`any`
+
+___
+
 ### Logger
 
 ▸ **Logger**(): `Object`
@@ -357,6 +378,26 @@ Example:
 | `setVolume` | (`volume`: `number`) => `void` |
 | `speak` | () => `void` |
 | `stop` | () => `void` |
+
+___
+
+### Toast
+
+▸ **Toast**(`msg`, `type?`): `any`
+
+快速展示 Toast
+Example: `const myToast = Toast('这是一个快速演示 Toast'); => hideToast(myToast);`
+
+#### Parameters
+
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `msg` | `string` | `undefined` |
+| `type` | ``"default"`` \| ``"info"`` \| ``"success"`` \| ``"warning"`` \| ``"error"`` \| ``"loading"`` | `'info'` |
+
+#### Returns
+
+`any`
 
 ___
 

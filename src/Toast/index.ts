@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-06-16 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-06-21 12:15:26
+ * @LastEditTime: 2023-07-11 15:27:45
  * @Description: 自定义 toast
  * @FilePath: \js-xxx\src\Toast\index.ts
  */
@@ -108,8 +108,41 @@ export const showToast = (function () {
  * @returns
  */
 export function hideToast(toast: any) {
-  toast.classList.toggle('biugle-toast-hide');
+  toast?.classList?.toggle('biugle-toast-hide');
   setTimeout(() => {
-    toast.remove();
+    toast?.remove();
   }, 500);
+}
+
+/**
+ * 快速展示 Toast
+ * Example: `const myToast = Toast('这是一个快速演示 Toast'); => hideToast(myToast);`
+ * @param msg
+ * @param type
+ * @returns
+ */
+export function Toast(
+  msg: string,
+  type: 'info' | 'success' | 'error' | 'warning' | 'loading' | 'default' = 'info',
+): any {
+  if (!msg) {
+    return;
+  }
+  return showToast({
+    content: msg,
+    type: type ?? 'default',
+  });
+}
+
+/**
+ * 快速展示 Loading
+ * Example: `const myLoading = Loading(msg?); => hideToast(myLoading);`
+ * @param msg
+ * @returns
+ */
+export function Loading(msg: string): any {
+  return showToast({
+    content: msg ?? '...',
+    type: 'loading',
+  });
 }

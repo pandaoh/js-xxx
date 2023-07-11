@@ -1,4 +1,4 @@
-<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>marquee | js-xxx - v1.7.5</title><meta name="description" content="Documentation for js-xxx"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/search.js" id="tsd-search-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
+<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>Toast | js-xxx - v1.7.5</title><meta name="description" content="Documentation for js-xxx"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/search.js" id="tsd-search-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
 <div class="tsd-toolbar-contents container">
 <div class="table-cell" id="tsd-search" data-base="..">
 <div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M15.7824 13.833L12.6666 10.7177C12.5259 10.5771 12.3353 10.499 12.1353 10.499H11.6259C12.4884 9.39596 13.001 8.00859 13.001 6.49937C13.001 2.90909 10.0914 0 6.50048 0C2.90959 0 0 2.90909 0 6.49937C0 10.0896 2.90959 12.9987 6.50048 12.9987C8.00996 12.9987 9.39756 12.4863 10.5008 11.6239V12.1332C10.5008 12.3332 10.5789 12.5238 10.7195 12.6644L13.8354 15.7797C14.1292 16.0734 14.6042 16.0734 14.8948 15.7797L15.7793 14.8954C16.0731 14.6017 16.0731 14.1267 15.7824 13.833ZM6.50048 10.499C4.29094 10.499 2.50018 8.71165 2.50018 6.49937C2.50018 4.29021 4.28781 2.49976 6.50048 2.49976C8.71001 2.49976 10.5008 4.28708 10.5008 6.49937C10.5008 8.70852 8.71314 10.499 6.50048 10.499Z" fill="var(--color-text)"></path></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div>
@@ -13,40 +13,23 @@
 <div class="tsd-page-title">
 <ul class="tsd-breadcrumb">
 <li><a href="../index.html">js-xxx</a></li>
-<li><a href="marquee.html">marquee</a></li></ul>
-<h1>Function marquee</h1></div>
+<li><a href="Toast.html">Toast</a></li></ul>
+<h1>Function Toast</h1></div>
 <section class="tsd-panel">
 <ul class="tsd-signatures">
-<li class="tsd-signature tsd-anchor-link" id="marquee"><span class="tsd-kind-call-signature">marquee</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">selector</span>, <span class="tsd-kind-parameter">options</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#marquee" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" id="icon-anchor-a"></path><path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" id="icon-anchor-b"></path><path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" id="icon-anchor-c"></path></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="Toast"><span class="tsd-kind-call-signature">Toast</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">msg</span>, <span class="tsd-kind-parameter">type</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><a href="#Toast" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" id="icon-anchor-a"></path><path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" id="icon-anchor-b"></path><path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" id="icon-anchor-c"></path></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>给元素设置 marquee 内容滚动效果，支持来回滚动，正常跑马灯，无限无缝滚动。
-一般来说设置两层，滚动的区间就是父元素的大小。
-若 #demo 高度小于 container，除非 loopType 设置 infinite，否则不会有动画。
-<code>&lt;div class=&quot;demo-container&quot;&gt;&lt;div id=&quot;#demo&quot;&gt;...span.items...&lt;/div&gt;&lt;/div&gt;</code>
-Example:
-<code>marquee(&#39;#demo&#39;) =&gt; 默认横向正常滚动(loopType=normal)</code>
-<code>marquee(&#39;.demo-y&#39;, {direction: &#39;Y&#39;, loopType: &#39;infinite&#39;, speed: 3}) =&gt; Y 轴无限无缝滚动，speed &gt; 0 越小速度越快。</code>
-<code>marquee(&#39;.demo-x&#39;, {direction: &#39;X&#39;, loopType: &#39;origin&#39;, speed: 3, style: &#39;animation-delay:2s;&#39;, parentStyle: &#39;color:red;&#39;}) =&gt; X 轴无限来回滚动</code></p>
+<div class="tsd-comment tsd-typography"><p>快速展示 Toast
+Example: <code>const myToast = Toast(&#39;这是一个快速演示 Toast&#39;); =&gt; hideToast(myToast);</code></p>
 </div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
 <li>
-<h5><span class="tsd-kind-parameter">selector</span>: <span class="tsd-signature-type">string</span></h5></li>
+<h5><span class="tsd-kind-parameter">msg</span>: <span class="tsd-signature-type">string</span></h5></li>
 <li>
-<h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-parameter">options</span>: <span class="tsd-signature-symbol">{ </span><br/><span>    </span><span class="tsd-kind-property">direction</span><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">&quot;X&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;Y&quot;</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">loopType</span><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">&quot;infinite&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;normal&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;origin&quot;</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">parentStyle</span><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">speed</span><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">style</span><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span></h5>
-<ul class="tsd-parameters">
-<li class="tsd-parameter">
-<h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-property">direction</span><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">&quot;X&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;Y&quot;</span></h5></li>
-<li class="tsd-parameter">
-<h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-property">loop<wbr/>Type</span><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">&quot;infinite&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;normal&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;origin&quot;</span></h5></li>
-<li class="tsd-parameter">
-<h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-property">parent<wbr/>Style</span><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5></li>
-<li class="tsd-parameter">
-<h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-property">speed</span><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span></h5></li>
-<li class="tsd-parameter">
-<h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-property">style</span><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5></li></ul></li></ul></div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4></li></ul></section></div>
+<h5><span class="tsd-kind-parameter">type</span>: <span class="tsd-signature-type">&quot;default&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;info&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;success&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;warning&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;error&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;loading&quot;</span><span class="tsd-signature-symbol"> = &#39;info&#39;</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4></li></ul></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
@@ -72,7 +55,7 @@ Example:
 <li><a href="Loading.html"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg><span>Loading</span></a></li>
 <li><a href="Logger.html"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg><span>Logger</span></a></li>
 <li><a href="Speaker.html"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg><span>Speaker</span></a></li>
-<li><a href="Toast.html"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg><span>Toast</span></a></li>
+<li><a href="Toast.html" class="current"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg><span>Toast</span></a></li>
 <li><a href="abs.html"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg><span>abs</span></a></li>
 <li><a href="add.html"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg><span>add</span></a></li>
 <li><a href="addLongPressEvent.html"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg><span>add<wbr/>Long<wbr/>Press<wbr/>Event</span></a></li>
@@ -224,7 +207,7 @@ Example:
 <li><a href="log.html"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg><span>log</span></a></li>
 <li><a href="logRunTime.html"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg><span>log<wbr/>Run<wbr/>Time</span></a></li>
 <li><a href="logVar.html"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg><span>log<wbr/>Var</span></a></li>
-<li><a href="marquee.html" class="current"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg><span>marquee</span></a></li>
+<li><a href="marquee.html"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg><span>marquee</span></a></li>
 <li><a href="maskString.html"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg><span>mask<wbr/>String</span></a></li>
 <li><a href="md5.html"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg><span>md5</span></a></li>
 <li><a href="mergeObj.html"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-64-path"></use><use href="#icon-64-text"></use></svg><span>merge<wbr/>Obj</span></a></li>

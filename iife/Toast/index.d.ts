@@ -27,4 +27,19 @@ export declare const showToast: (options: ToastOptions) => HTMLDivElement;
  * @returns
  */
 export declare function hideToast(toast: any): void;
+/**
+ * 快速展示 Toast
+ * Example: `const myToast = Toast('这是一个快速演示 Toast'); => hideToast(myToast);`
+ * @param msg
+ * @param type
+ * @returns
+ */
+export declare function Toast(msg: string, type?: 'info' | 'success' | 'error' | 'warning' | 'loading' | 'default'): any;
+/**
+ * 快速展示 Loading
+ * Example: `const myLoading = Loading(msg?); => hideToast(myLoading);`
+ * @param msg
+ * @returns
+ */
+export declare function Loading(msg: string): any;
 //# sourceMappingURL=index.d.ts.map
