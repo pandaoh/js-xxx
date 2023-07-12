@@ -1,6 +1,6 @@
 js-xxx
 
-# js-xxx - v1.7.5
+# js-xxx - v1.7.6
 
 ## Table of contents
 
@@ -303,7 +303,7 @@ ___
 
 ▸ **Loading**(`msg`): `any`
 
-快速展示 Loading
+Loading Toast 不会自动关闭
 Example: `const myLoading = Loading(msg?); => hideToast(myLoading);`
 
 #### Parameters
@@ -2680,16 +2680,16 @@ ___
 
 ### hideToast
 
-▸ **hideToast**(`toast`): `void`
+▸ **hideToast**(`toast?`): `void`
 
-隐藏 toast
+隐藏 toast 不传值关闭所有 toast
 Example: `const toast = showToast({ content: '这是一个演示 Toast' }); => hideToast(toast);`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `toast` | `any` |
+| `toast?` | `any` |
 
 #### Returns
 

@@ -21,12 +21,12 @@ export declare type ToastOptions = {
  */
 export declare const showToast: (options: ToastOptions) => HTMLDivElement;
 /**
- * 隐藏 toast
+ * 隐藏 toast 不传值关闭所有 toast
  * Example: `const toast = showToast({ content: '这是一个演示 Toast' }); => hideToast(toast);`
  * @param toast
  * @returns
  */
-export declare function hideToast(toast: any): void;
+export declare function hideToast(toast?: any): void;
 /**
  * 快速展示 Toast
  * Example: `const myToast = Toast('这是一个快速演示 Toast'); => hideToast(myToast);`
@@ -36,7 +36,7 @@ export declare function hideToast(toast: any): void;
  */
 export declare function Toast(msg: string, type?: 'info' | 'success' | 'error' | 'warning' | 'loading' | 'default'): any;
 /**
- * 快速展示 Loading
+ * Loading Toast 不会自动关闭
  * Example: `const myLoading = Loading(msg?); => hideToast(myLoading);`
  * @param msg
  * @returns

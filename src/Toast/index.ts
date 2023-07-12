@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-06-16 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-07-11 15:27:45
+ * @LastEditTime: 2023-07-12 10:27:31
  * @Description: 自定义 toast
  * @FilePath: \js-xxx\src\Toast\index.ts
  */
@@ -102,12 +102,17 @@ export const showToast = (function () {
 })();
 
 /**
- * 隐藏 toast
+ * 隐藏 toast 不传值关闭所有 toast
  * Example: `const toast = showToast({ content: '这是一个演示 Toast' }); => hideToast(toast);`
  * @param toast
  * @returns
  */
-export function hideToast(toast: any) {
+export function hideToast(toast?: any) {
+  if (!toast) {
+    const toasts = document.querySelectorAll('.biugle-toast');
+    toasts?.forEach((toast) => toast && hideToast(toast));
+    return;
+  }
   toast?.classList?.toggle('biugle-toast-hide');
   setTimeout(() => {
     toast?.remove();
@@ -135,7 +140,7 @@ export function Toast(
 }
 
 /**
- * 快速展示 Loading
+ * Loading Toast 不会自动关闭
  * Example: `const myLoading = Loading(msg?); => hideToast(myLoading);`
  * @param msg
  * @returns

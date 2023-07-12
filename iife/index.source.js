@@ -12387,7 +12387,7 @@ var $xxx = (function (exports) {
      * @Author: HxB
      * @Date: 2022-06-16 15:37:27
      * @LastEditors: DoubleAm
-     * @LastEditTime: 2023-07-11 15:27:45
+     * @LastEditTime: 2023-07-12 10:27:31
      * @Description: 自定义 toast
      * @FilePath: \js-xxx\src\Toast\index.ts
      */
@@ -12461,13 +12461,18 @@ var $xxx = (function (exports) {
         };
     })();
     /**
-     * 隐藏 toast
+     * 隐藏 toast 不传值关闭所有 toast
      * Example: `const toast = showToast({ content: '这是一个演示 Toast' }); => hideToast(toast);`
      * @param toast
      * @returns
      */
     function hideToast(toast) {
         var _a;
+        if (!toast) {
+            var toasts = document.querySelectorAll('.biugle-toast');
+            toasts === null || toasts === void 0 ? void 0 : toasts.forEach(function (toast) { return toast && hideToast(toast); });
+            return;
+        }
         (_a = toast === null || toast === void 0 ? void 0 : toast.classList) === null || _a === void 0 ? void 0 : _a.toggle('biugle-toast-hide');
         setTimeout(function () {
             toast === null || toast === void 0 ? void 0 : toast.remove();
@@ -12491,7 +12496,7 @@ var $xxx = (function (exports) {
         });
     }
     /**
-     * 快速展示 Loading
+     * Loading Toast 不会自动关闭
      * Example: `const myLoading = Loading(msg?); => hideToast(myLoading);`
      * @param msg
      * @returns
