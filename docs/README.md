@@ -1,6 +1,6 @@
 js-xxx
 
-# js-xxx - v1.8.0
+# js-xxx - v1.8.1
 
 ## Table of contents
 
