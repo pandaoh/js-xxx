@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:54:41
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-05-31 14:06:49
+ * @LastEditTime: 2023-07-17 14:17:22
  * @Description: 时间相关函数
  * @FilePath: \js-xxx\src\Date\index.ts
  */
@@ -232,6 +232,18 @@ export function getMonthDays(date?: string | Date): number {
   curDate.setMonth(curMonth + 1);
   curDate.setDate(0);
   return curDate.getDate();
+}
+
+/**
+ * 获取日期所在的年份中的天数
+ * Example: `getDayInYear('2023/06/23') => 174`
+ * @param date 日期
+ * @returns
+ */
+export function getDayInYear(date?: string | Date): number {
+  date = date ? new Date(date) : new Date();
+  // @ts-ignore
+  return Math.floor((date - new Date(date.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
 }
 
 /**

@@ -59,6 +59,13 @@ export declare function isWeekday(date?: string | Date): boolean;
  */
 export declare function getMonthDays(date?: string | Date): number;
 /**
+ * 获取日期所在的年份中的天数
+ * Example: `getDayInYear('2023/06/23') => 174`
+ * @param date 日期
+ * @returns
+ */
+export declare function getDayInYear(date?: string | Date): number;
+/**
  * 获取月份天数
  * Example: `getMonthDayCount(new Date()) => 30`
  * @param date 日期

@@ -615,6 +615,18 @@ var $xxx = (function (exports) {
             document.cookie = key + '=' + cVal + ';expires=' + exp.toUTCString() + ';path=/';
         }
     }
+    /**
+     * Clear Cookie
+     * Example: `clearCookies() => 删除所有的 Cookie`
+     * @returns
+     */
+    function clearCookies() {
+        document.cookie
+            .split(';')
+            .forEach(function (cookie) {
+            return (document.cookie = cookie.replace(/^ +/, '').replace(/=.*/, "=;expires=".concat(new Date(0).toUTCString(), ";path=/")));
+        });
+    }
 
     var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -7911,7 +7923,7 @@ var $xxx = (function (exports) {
     function getTimeAndStr(len, radix) {
         if (len === void 0) { len = 5; }
         if (radix === void 0) { radix = 36; }
-        // Number('xxxx') // 超大 string 转 number 结果不准确 玄学
+        // Number('xxx') // 超大 string 转 number 结果不准确 玄学
         return len === 0 ? "".concat(getTimeCode()) : Number("".concat(getRandStr(len)).concat(Date.now())).toString(radix); // new Date().getTime()
     }
     // eslint-disable-next-line spellcheck/spell-checker
@@ -8356,6 +8368,30 @@ var $xxx = (function (exports) {
         }
         catch (e) {
             return false;
+        }
+    }
+    /**
+     * 反转数组或者字符串
+     * Example:
+     * `inversion([1, 2, 3]) => [3, 2, 1]`
+     * `inversion('123') => '321'`
+     * `inversion() => undefined`
+     * `inversion(true) => true`
+     * @param value
+     * @returns
+     */
+    function inversion(value) {
+        var _a, _b, _c;
+        try {
+            if (Array.isArray(value)) {
+                return value.reverse();
+            }
+            else {
+                return (_c = (_b = (_a = value === null || value === void 0 ? void 0 : value.split('')) === null || _a === void 0 ? void 0 : _a.reverse()) === null || _b === void 0 ? void 0 : _b.join('')) !== null && _c !== void 0 ? _c : value;
+            }
+        }
+        catch (e) {
+            return value;
         }
     }
     /**
@@ -9685,6 +9721,17 @@ var $xxx = (function (exports) {
         return curDate.getDate();
     }
     /**
+     * 获取日期所在的年份中的天数
+     * Example: `getDayInYear('2023/06/23') => 174`
+     * @param date 日期
+     * @returns
+     */
+    function getDayInYear(date) {
+        date = date ? new Date(date) : new Date();
+        // @ts-ignore
+        return Math.floor((date - new Date(date.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
+    }
+    /**
      * 获取月份天数
      * Example: `getMonthDayCount(new Date()) => 30`
      * @param date 日期
@@ -10418,7 +10465,7 @@ var $xxx = (function (exports) {
      * @Author: HxB
      * @Date: 2022-04-26 16:24:34
      * @LastEditors: DoubleAm
-     * @LastEditTime: 2023-03-22 11:48:55
+     * @LastEditTime: 2023-07-17 14:09:07
      * @Description: 数学常用函数
      * @FilePath: \js-xxx\src\Math\index.ts
      */
@@ -10555,6 +10602,17 @@ var $xxx = (function (exports) {
      */
     function abs(value) {
         return Math.abs(value);
+    }
+    /**
+     * 检查一个数字是否偶数
+     * Example:
+     * `isEven(-2) => true`
+     * `isEven(1) => false`
+     * @param value
+     * @returns
+     */
+    function isEven(value) {
+        return value % 2 === 0;
     }
     /**
      * 去尾法获取数值
@@ -11344,6 +11402,15 @@ var $xxx = (function (exports) {
         if (navigator.clipboard) {
             navigator.clipboard.writeText(text);
         }
+    }
+    /**
+     * 获取鼠标选中内容
+     * Example: `getSelectText()`
+     * @returns
+     */
+    function getSelectText() {
+        var _a;
+        return (_a = window === null || window === void 0 ? void 0 : window.getSelection()) === null || _a === void 0 ? void 0 : _a.toString();
     }
     /**
      * 获取浏览器信息
@@ -12657,6 +12724,7 @@ var $xxx = (function (exports) {
     exports.checkFileExt = checkFileExt;
     exports.checkIdCard = checkIdCard;
     exports.checkVersion = checkVersion;
+    exports.clearCookies = clearCookies;
     exports.closeFullscreen = closeFullscreen;
     exports.closeWebSocket = closeWebSocket;
     exports.compareDate = compareDate;
@@ -12706,6 +12774,7 @@ var $xxx = (function (exports) {
     exports.getDateDifference = getDateDifference;
     exports.getDateList = getDateList;
     exports.getDateTime = getDateTime;
+    exports.getDayInYear = getDayInYear;
     exports.getKey = getKey;
     exports.getLastVar = getLastVar;
     exports.getLocalArr = getLocalArr;
@@ -12721,6 +12790,7 @@ var $xxx = (function (exports) {
     exports.getRandVar = getRandVar;
     exports.getScrollPercent = getScrollPercent;
     exports.getSearchParams = getSearchParams;
+    exports.getSelectText = getSelectText;
     exports.getSessionArr = getSessionArr;
     exports.getSessionObj = getSessionObj;
     exports.getSize = getSize;
@@ -12744,6 +12814,7 @@ var $xxx = (function (exports) {
     exports.initWebSocket = initWebSocket;
     exports.insertAfter = insertAfter;
     exports.intersection = intersection;
+    exports.inversion = inversion;
     exports.isAppleDevice = isAppleDevice;
     exports.isArr = isArr;
     exports.isArrayBuffer = isArrayBuffer;
@@ -12758,6 +12829,7 @@ var $xxx = (function (exports) {
     exports.isElement = isElement;
     exports.isEmail = isEmail;
     exports.isEqual = isEqual;
+    exports.isEven = isEven;
     exports.isFn = isFn;
     exports.isHttp = isHttp;
     exports.isInteger = isInteger;

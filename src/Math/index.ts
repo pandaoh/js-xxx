@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 16:24:34
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-22 11:48:55
+ * @LastEditTime: 2023-07-17 14:09:07
  * @Description: 数学常用函数
  * @FilePath: \js-xxx\src\Math\index.ts
  */
@@ -144,6 +144,18 @@ export function average(...args: any[]) {
  */
 export function abs(value: number): number {
   return Math.abs(value);
+}
+
+/**
+ * 检查一个数字是否偶数
+ * Example:
+ * `isEven(-2) => true`
+ * `isEven(1) => false`
+ * @param value
+ * @returns
+ */
+export function isEven(value: number): boolean {
+  return value % 2 === 0;
 }
 
 /**

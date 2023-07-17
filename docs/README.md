@@ -1,6 +1,6 @@
 js-xxx
 
-# js-xxx - v1.8.1
+# js-xxx - v1.8.5
 
 ## Table of contents
 
@@ -47,6 +47,7 @@ js-xxx
 - [checkFileExt](README.md#checkfileext)
 - [checkIdCard](README.md#checkidcard)
 - [checkVersion](README.md#checkversion)
+- [clearCookies](README.md#clearcookies)
 - [closeFullscreen](README.md#closefullscreen)
 - [closeWebSocket](README.md#closewebsocket)
 - [compareDate](README.md#comparedate)
@@ -96,6 +97,7 @@ js-xxx
 - [getDateDifference](README.md#getdatedifference)
 - [getDateList](README.md#getdatelist)
 - [getDateTime](README.md#getdatetime)
+- [getDayInYear](README.md#getdayinyear)
 - [getKey](README.md#getkey)
 - [getLastVar](README.md#getlastvar)
 - [getLocalArr](README.md#getlocalarr)
@@ -111,6 +113,7 @@ js-xxx
 - [getRandVar](README.md#getrandvar)
 - [getScrollPercent](README.md#getscrollpercent)
 - [getSearchParams](README.md#getsearchparams)
+- [getSelectText](README.md#getselecttext)
 - [getSessionArr](README.md#getsessionarr)
 - [getSessionObj](README.md#getsessionobj)
 - [getSize](README.md#getsize)
@@ -134,6 +137,7 @@ js-xxx
 - [initWebSocket](README.md#initwebsocket)
 - [insertAfter](README.md#insertafter)
 - [intersection](README.md#intersection)
+- [inversion](README.md#inversion)
 - [isAppleDevice](README.md#isappledevice)
 - [isArr](README.md#isarr)
 - [isArrayBuffer](README.md#isarraybuffer)
@@ -148,6 +152,7 @@ js-xxx
 - [isElement](README.md#iselement)
 - [isEmail](README.md#isemail)
 - [isEqual](README.md#isequal)
+- [isEven](README.md#iseven)
 - [isFn](README.md#isfn)
 - [isHttp](README.md#ishttp)
 - [isInteger](README.md#isinteger)
@@ -942,6 +947,19 @@ Example:
 #### Returns
 
 ``-1`` \| ``1`` \| ``0``
+
+___
+
+### clearCookies
+
+▸ **clearCookies**(): `void`
+
+Clear Cookie
+Example: `clearCookies() => 删除所有的 Cookie`
+
+#### Returns
+
+`void`
 
 ___
 
@@ -2052,6 +2070,25 @@ Example: `getDateTime(new Date()) => time stamp`
 
 ___
 
+### getDayInYear
+
+▸ **getDayInYear**(`date?`): `number`
+
+获取日期所在的年份中的天数
+Example: `getDayInYear('2023/06/23') => 174`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `date?` | `string` \| `Date` | 日期 |
+
+#### Returns
+
+`number`
+
+___
+
 ### getKey
 
 ▸ **getKey**(`size?`, `prefix?`): `string`
@@ -2361,6 +2398,19 @@ Example:
 #### Returns
 
 `any`
+
+___
+
+### getSelectText
+
+▸ **getSelectText**(): `undefined` \| `string`
+
+获取鼠标选中内容
+Example: `getSelectText()`
+
+#### Returns
+
+`undefined` \| `string`
 
 ___
 
@@ -2825,6 +2875,29 @@ Example:
 
 ___
 
+### inversion
+
+▸ **inversion**(`value`): `any`
+
+反转数组或者字符串
+Example:
+`inversion([1, 2, 3]) => [3, 2, 1]`
+`inversion('123') => '321'`
+`inversion() => undefined`
+`inversion(true) => true`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `any` |
+
+#### Returns
+
+`any`
+
+___
+
 ### isAppleDevice
 
 ▸ **isAppleDevice**(): `boolean`
@@ -3105,6 +3178,27 @@ Example:
 | :------ | :------ |
 | `obj1` | `any` |
 | `obj2` | `any` |
+
+#### Returns
+
+`boolean`
+
+___
+
+### isEven
+
+▸ **isEven**(`value`): `boolean`
+
+检查一个数字是否偶数
+Example:
+`isEven(-2) => true`
+`isEven(1) => false`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `value` | `number` |
 
 #### Returns
 

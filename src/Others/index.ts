@@ -89,6 +89,15 @@ export function copyToClipboard(text: string) {
 }
 
 /**
+ * 获取鼠标选中内容
+ * Example: `getSelectText()`
+ * @returns
+ */
+export function getSelectText() {
+  return window?.getSelection()?.toString();
+}
+
+/**
  * 获取浏览器信息
  * Example: `getUserAgent() => { browserName: 'Chrome', browserVersion: '102.0.0.0', osName: 'Windows', osVersion: '10.0', deviceName: '' }`
  * @returns

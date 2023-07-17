@@ -57,6 +57,15 @@ export declare function average(...args: any[]): number;
  */
 export declare function abs(value: number): number;
 /**
+ * 检查一个数字是否偶数
+ * Example:
+ * `isEven(-2) => true`
+ * `isEven(1) => false`
+ * @param value
+ * @returns
+ */
+export declare function isEven(value: number): boolean;
+/**
  * 去尾法获取数值
  * Example:
  * `float(1.135, 0, true) => '1'`

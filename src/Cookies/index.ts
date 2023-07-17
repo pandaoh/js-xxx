@@ -48,3 +48,17 @@ export function removeCookie(key: string) {
     document.cookie = key + '=' + cVal + ';expires=' + exp.toUTCString() + ';path=/';
   }
 }
+
+/**
+ * Clear Cookie
+ * Example: `clearCookies() => 删除所有的 Cookie`
+ * @returns
+ */
+export function clearCookies() {
+  document.cookie
+    .split(';')
+    .forEach(
+      (cookie) =>
+        (document.cookie = cookie.replace(/^ +/, '').replace(/=.*/, `=;expires=${new Date(0).toUTCString()};path=/`)),
+    );
+}

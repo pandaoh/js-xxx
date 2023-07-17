@@ -270,6 +270,17 @@ export declare function showVar(value: any): any;
  */
 export declare function contains(value: any[], target: any): boolean;
 /**
+ * 反转数组或者字符串
+ * Example:
+ * `inversion([1, 2, 3]) => [3, 2, 1]`
+ * `inversion('123') => '321'`
+ * `inversion() => undefined`
+ * `inversion(true) => true`
+ * @param value
+ * @returns
+ */
+export declare function inversion(value: any): any;
+/**
  * 直到某个函数返回 toBool(true) 的结果(执行完成)
  * Example:
  * `let a = 5;`

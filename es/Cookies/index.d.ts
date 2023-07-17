@@ -21,4 +21,10 @@ export declare function setCookie(key: string, value: any, expires: number): voi
  * @returns
  */
 export declare function removeCookie(key: string): void;
+/**
+ * Clear Cookie
+ * Example: `clearCookies() => 删除所有的 Cookie`
+ * @returns
+ */
+export declare function clearCookies(): void;
 //# sourceMappingURL=index.d.ts.map

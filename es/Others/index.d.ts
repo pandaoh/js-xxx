@@ -21,6 +21,12 @@ export declare function setIcon(iconLink: string): void;
  */
 export declare function copyToClipboard(text: string): void;
 /**
+ * 获取鼠标选中内容
+ * Example: `getSelectText()`
+ * @returns
+ */
+export declare function getSelectText(): string | undefined;
+/**
  * 获取浏览器信息
  * Example: `getUserAgent() => { browserName: 'Chrome', browserVersion: '102.0.0.0', osName: 'Windows', osVersion: '10.0', deviceName: '' }`
  * @returns

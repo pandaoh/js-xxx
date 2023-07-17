@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-07-03 14:51:36
+ * @LastEditTime: 2023-07-17 14:27:34
  * @Description: 工具函数
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
@@ -472,7 +472,7 @@ export function getRandStr(len = 8): string {
  * @returns
  */
 export function getTimeAndStr(len = 5, radix: number | undefined = 36): string {
-  // Number('xxxx') // 超大 string 转 number 结果不准确 玄学
+  // Number('xxx') // 超大 string 转 number 结果不准确 玄学
   return len === 0 ? `${getTimeCode()}` : Number(`${getRandStr(len)}${Date.now()}`).toString(radix); // new Date().getTime()
 }
 
@@ -942,6 +942,28 @@ export function contains(value: any[], target: any): boolean {
     return temp.includes(JSON.stringify(target));
   } catch (e) {
     return false;
+  }
+}
+
+/**
+ * 反转数组或者字符串
+ * Example:
+ * `inversion([1, 2, 3]) => [3, 2, 1]`
+ * `inversion('123') => '321'`
+ * `inversion() => undefined`
+ * `inversion(true) => true`
+ * @param value
+ * @returns
+ */
+export function inversion(value: any): any {
+  try {
+    if (Array.isArray(value)) {
+      return value.reverse();
+    } else {
+      return value?.split('')?.reverse()?.join('') ?? value;
+    }
+  } catch (e) {
+    return value;
   }
 }
 
