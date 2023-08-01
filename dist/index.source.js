@@ -9061,7 +9061,7 @@
      * @Author: HxB
      * @Date: 2022-04-26 15:45:48
      * @LastEditors: DoubleAm
-     * @LastEditTime: 2023-03-14 11:05:42
+     * @LastEditTime: 2023-08-01 11:21:40
      * @Description: 字符串常用函数
      * @FilePath: \js-xxx\src\String\index.ts
      */
@@ -9332,6 +9332,9 @@
      */
     function isChar(value, hasChinese) {
         if (hasChinese === void 0) { hasChinese = false; }
+        if (!value) {
+            return false;
+        }
         var regChar = hasChinese
             ? /^[a-zA-Z\u4E00-\u9FA5]([a-zA-Z0-9_\u4E00-\u9FA5]{5,17})$/
             : /^[a-zA-Z]([a-zA-Z0-9_\u4E00-\u9FA5]{5,17})$/;
