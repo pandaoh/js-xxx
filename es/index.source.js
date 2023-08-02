@@ -12301,12 +12301,11 @@ function catchPromise(promiseHandler, errorHandler) {
  * @Author: HxB
  * @Date: 2022-06-04 16:30:04
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-06-27 17:48:39
+ * @LastEditTime: 2023-08-02 11:01:13
  * @Description: localStorage 与 sessionStorage
  * @FilePath: \js-xxx\src\Storage\index.ts
  */
 // 加密与过期设置参考 https://juejin.cn/post/7104301566857445412
-// 可以利用提供的加密函数手动绝对是否加密一些关键数据
 function _tempSet(key, value, storeType) {
     try {
         var newVal = void 0;
@@ -12447,6 +12446,30 @@ function getLocalArr(key) {
 function getSessionArr(key) {
     var _a;
     return (_a = _tempGet(key, 'S')) !== null && _a !== void 0 ? _a : [];
+}
+/**
+ * 获取 Storage 加密数据
+ * Example: `getDecodeStorage("key") => 处理过后的 value，不需要再 decode 和解密。`
+ * @param key 存储 key
+ * @param isLocal 是否 localStorage
+ * @returns
+ */
+function getDecodeStorage(key, isLocal) {
+    if (isLocal === void 0) { isLocal = true; }
+    var data = _tempGet(md5(key), isLocal ? 'L' : 'S');
+    return data === null || data === undefined ? data : decrypt(data);
+}
+/**
+ * 设置 Storage 加密数据
+ * Example: `setEncodeStorage("key", "value") => 存储时不需要处理数据，自动加密，value === null|undefined 清除数据。(boolean)`
+ * @param key 存储 key
+ * @param value 存储 value 字符串，value === null|undefined 清除数据。
+ * @param isLocal 是否 localStorage
+ * @returns
+ */
+function setEncodeStorage(key, value, isLocal) {
+    if (isLocal === void 0) { isLocal = true; }
+    return _tempSet(md5(key), value === null || value === undefined ? value : encrypt(value), isLocal ? 'L' : 'S');
 }
 
 /* eslint-disable indent */
@@ -12694,4 +12717,4 @@ function getWebSocket() {
     return xWebSocket;
 }
 
-export { CONTENT_TYPES, H5Resize, HttpMethod, Loading, Logger, Speaker, Toast, abs, add, addLongPressEvent, all, any, appendLink, appendScript, arrObj2objArr, arraySet, arraySort, atob, average, banConsole, base64Decode, base64Encode, bindMoreClick, btoa, calcDate, calcFontSize, camelCase, catchPromise, checkFileExt, checkIdCard, checkVersion, clearCookies, closeFullscreen, closeWebSocket, compareDate, contains, copyContent, copyToClipboard, countdown, curryIt, data2Arr, data2Obj, dataTo, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitKeyboardEvent, empty, encrypt, exportFile, findChildren, findParents, float, forEach, forceToStr, formatBytes, formatDate, formatFormData, formatJSON, formatNumber, formatRh, formatURLSearchParams, get1Var, getAge, getAnimal, getBSColor, getBaseURL, getBloodGroup, getConstellation, getContentType, getCookie, getCron, getCryptoJS, getDateDifference, getDateList, getDateTime, getDayInYear, getKey, getLastVar, getLocalArr, getLocalObj, getMonthDays, getMonthDaysCount, getMonthInfo, getPercentage, getQueryString, getRandColor, getRandNum, getRandStr, getRandVar, getScrollPercent, getSearchParams, getSelectText, getSessionArr, getSessionObj, getSize, getStyleByName, getTimeAndStr, getTimeCode, getType, getUTCTime, getUUID, getUserAgent, getV, getVar, getViewportSize, getWebSocket, getWeekInfo, globalError, hideToast, html2str, inRange, initNotification, initWebSocket, insertAfter, intersection, inversion, isAppleDevice, isArr, isArrayBuffer, isBlob, isBool, isBrowser, isCarCode, isChar, isDarkMode, isDate, isDecimal, isElement, isEmail, isEqual, isEven, isFn, isHttp, isInteger, isIpAddress, isIpv4, isIpv6, isJSON, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPhoneNum, isPromise, isRhNegative, isStr, isStrongPassWord, isUndef, isUrl, isWeekday, jsonClone, localStorageGet, localStorageSet, log, logRunTime, logVar, marquee, maskString, md5, mergeObj, ms, offDefaultEvent, onClick2MoreClick, openFile, openFullscreen, px2rem, qsParse, qsStringify, removeCookie, repeat, retry, rip, round, scrollToBottom, scrollToTop, scrollXTo, scrollYTo, sendNotification, sendWsMsg, sessionStorageGet, sessionStorageSet, setCookie, setEventListener, setIcon, setWsBinaryType, sha1, sha256, showToast, showVar, shuffleArray, sleep, slugify, sortBy, sortCallBack, splitCase, stackSticky, str2html, str2unicode, sub, throttle, timeSince, times, to, toBool, toNum, toStr, transferCSVData, transferCase, transferFileToBase64, transferIdCard, transferMoney, transferScanStr, trim, truncate, unicode2str, union, unique, uuid, versionUpgrade, waitUntil, watermark, xAjax, xFetch };
+export { CONTENT_TYPES, H5Resize, HttpMethod, Loading, Logger, Speaker, Toast, abs, add, addLongPressEvent, all, any, appendLink, appendScript, arrObj2objArr, arraySet, arraySort, atob, average, banConsole, base64Decode, base64Encode, bindMoreClick, btoa, calcDate, calcFontSize, camelCase, catchPromise, checkFileExt, checkIdCard, checkVersion, clearCookies, closeFullscreen, closeWebSocket, compareDate, contains, copyContent, copyToClipboard, countdown, curryIt, data2Arr, data2Obj, dataTo, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitKeyboardEvent, empty, encrypt, exportFile, findChildren, findParents, float, forEach, forceToStr, formatBytes, formatDate, formatFormData, formatJSON, formatNumber, formatRh, formatURLSearchParams, get1Var, getAge, getAnimal, getBSColor, getBaseURL, getBloodGroup, getConstellation, getContentType, getCookie, getCron, getCryptoJS, getDateDifference, getDateList, getDateTime, getDayInYear, getDecodeStorage, getKey, getLastVar, getLocalArr, getLocalObj, getMonthDays, getMonthDaysCount, getMonthInfo, getPercentage, getQueryString, getRandColor, getRandNum, getRandStr, getRandVar, getScrollPercent, getSearchParams, getSelectText, getSessionArr, getSessionObj, getSize, getStyleByName, getTimeAndStr, getTimeCode, getType, getUTCTime, getUUID, getUserAgent, getV, getVar, getViewportSize, getWebSocket, getWeekInfo, globalError, hideToast, html2str, inRange, initNotification, initWebSocket, insertAfter, intersection, inversion, isAppleDevice, isArr, isArrayBuffer, isBlob, isBool, isBrowser, isCarCode, isChar, isDarkMode, isDate, isDecimal, isElement, isEmail, isEqual, isEven, isFn, isHttp, isInteger, isIpAddress, isIpv4, isIpv6, isJSON, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPhoneNum, isPromise, isRhNegative, isStr, isStrongPassWord, isUndef, isUrl, isWeekday, jsonClone, localStorageGet, localStorageSet, log, logRunTime, logVar, marquee, maskString, md5, mergeObj, ms, offDefaultEvent, onClick2MoreClick, openFile, openFullscreen, px2rem, qsParse, qsStringify, removeCookie, repeat, retry, rip, round, scrollToBottom, scrollToTop, scrollXTo, scrollYTo, sendNotification, sendWsMsg, sessionStorageGet, sessionStorageSet, setCookie, setEncodeStorage, setEventListener, setIcon, setWsBinaryType, sha1, sha256, showToast, showVar, shuffleArray, sleep, slugify, sortBy, sortCallBack, splitCase, stackSticky, str2html, str2unicode, sub, throttle, timeSince, times, to, toBool, toNum, toStr, transferCSVData, transferCase, transferFileToBase64, transferIdCard, transferMoney, transferScanStr, trim, truncate, unicode2str, union, unique, uuid, versionUpgrade, waitUntil, watermark, xAjax, xFetch };

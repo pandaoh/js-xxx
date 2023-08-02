@@ -12304,12 +12304,11 @@ var $xxx = (function (exports) {
      * @Author: HxB
      * @Date: 2022-06-04 16:30:04
      * @LastEditors: DoubleAm
-     * @LastEditTime: 2023-06-27 17:48:39
+     * @LastEditTime: 2023-08-02 11:01:13
      * @Description: localStorage 与 sessionStorage
      * @FilePath: \js-xxx\src\Storage\index.ts
      */
     // 加密与过期设置参考 https://juejin.cn/post/7104301566857445412
-    // 可以利用提供的加密函数手动绝对是否加密一些关键数据
     function _tempSet(key, value, storeType) {
         try {
             var newVal = void 0;
@@ -12450,6 +12449,30 @@ var $xxx = (function (exports) {
     function getSessionArr(key) {
         var _a;
         return (_a = _tempGet(key, 'S')) !== null && _a !== void 0 ? _a : [];
+    }
+    /**
+     * 获取 Storage 加密数据
+     * Example: `getDecodeStorage("key") => 处理过后的 value，不需要再 decode 和解密。`
+     * @param key 存储 key
+     * @param isLocal 是否 localStorage
+     * @returns
+     */
+    function getDecodeStorage(key, isLocal) {
+        if (isLocal === void 0) { isLocal = true; }
+        var data = _tempGet(md5(key), isLocal ? 'L' : 'S');
+        return data === null || data === undefined ? data : decrypt(data);
+    }
+    /**
+     * 设置 Storage 加密数据
+     * Example: `setEncodeStorage("key", "value") => 存储时不需要处理数据，自动加密，value === null|undefined 清除数据。(boolean)`
+     * @param key 存储 key
+     * @param value 存储 value 字符串，value === null|undefined 清除数据。
+     * @param isLocal 是否 localStorage
+     * @returns
+     */
+    function setEncodeStorage(key, value, isLocal) {
+        if (isLocal === void 0) { isLocal = true; }
+        return _tempSet(md5(key), value === null || value === undefined ? value : encrypt(value), isLocal ? 'L' : 'S');
     }
 
     /* eslint-disable indent */
@@ -12778,6 +12801,7 @@ var $xxx = (function (exports) {
     exports.getDateList = getDateList;
     exports.getDateTime = getDateTime;
     exports.getDayInYear = getDayInYear;
+    exports.getDecodeStorage = getDecodeStorage;
     exports.getKey = getKey;
     exports.getLastVar = getLastVar;
     exports.getLocalArr = getLocalArr;
@@ -12885,6 +12909,7 @@ var $xxx = (function (exports) {
     exports.sessionStorageGet = sessionStorageGet;
     exports.sessionStorageSet = sessionStorageSet;
     exports.setCookie = setCookie;
+    exports.setEncodeStorage = setEncodeStorage;
     exports.setEventListener = setEventListener;
     exports.setIcon = setIcon;
     exports.setWsBinaryType = setWsBinaryType;

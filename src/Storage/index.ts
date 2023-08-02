@@ -2,14 +2,15 @@
  * @Author: HxB
  * @Date: 2022-06-04 16:30:04
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-06-27 17:48:39
+ * @LastEditTime: 2023-08-02 11:01:13
  * @Description: localStorage 与 sessionStorage
  * @FilePath: \js-xxx\src\Storage\index.ts
  */
 import { getType, isJSON } from '@/Types';
 import { isDecimal, isInteger } from '@/Number';
+import { decrypt, encrypt, md5 } from '@/Crypto';
+
 // 加密与过期设置参考 https://juejin.cn/post/7104301566857445412
-// 可以利用提供的加密函数手动绝对是否加密一些关键数据
 
 function _tempSet(key: string, value: any, storeType: 'L' | 'S'): boolean {
   try {
@@ -155,4 +156,28 @@ export function getLocalArr(key: string): any[] {
  */
 export function getSessionArr(key: string): any[] {
   return _tempGet(key, 'S') ?? [];
+}
+
+/**
+ * 获取 Storage 加密数据
+ * Example: `getDecodeStorage("key") => 处理过后的 value，不需要再 decode 和解密。`
+ * @param key 存储 key
+ * @param isLocal 是否 localStorage
+ * @returns
+ */
+export function getDecodeStorage(key: string, isLocal = true): any {
+  const data = _tempGet(md5(key), isLocal ? 'L' : 'S');
+  return data === null || data === undefined ? data : decrypt(data);
+}
+
+/**
+ * 设置 Storage 加密数据
+ * Example: `setEncodeStorage("key", "value") => 存储时不需要处理数据，自动加密，value === null|undefined 清除数据。(boolean)`
+ * @param key 存储 key
+ * @param value 存储 value 字符串，value === null|undefined 清除数据。
+ * @param isLocal 是否 localStorage
+ * @returns
+ */
+export function setEncodeStorage(key: string, value: string, isLocal = true): boolean {
+  return _tempSet(md5(key), value === null || value === undefined ? value : encrypt(value), isLocal ? 'L' : 'S');
 }

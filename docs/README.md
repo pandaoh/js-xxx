@@ -1,6 +1,6 @@
 js-xxx
 
-# js-xxx - v1.8.5
+# js-xxx - v1.9.0
 
 ## Table of contents
 
@@ -98,6 +98,7 @@ js-xxx
 - [getDateList](README.md#getdatelist)
 - [getDateTime](README.md#getdatetime)
 - [getDayInYear](README.md#getdayinyear)
+- [getDecodeStorage](README.md#getdecodestorage)
 - [getKey](README.md#getkey)
 - [getLastVar](README.md#getlastvar)
 - [getLocalArr](README.md#getlocalarr)
@@ -205,6 +206,7 @@ js-xxx
 - [sessionStorageGet](README.md#sessionstorageget)
 - [sessionStorageSet](README.md#sessionstorageset)
 - [setCookie](README.md#setcookie)
+- [setEncodeStorage](README.md#setencodestorage)
 - [setEventListener](README.md#seteventlistener)
 - [setIcon](README.md#seticon)
 - [setWsBinaryType](README.md#setwsbinarytype)
@@ -2086,6 +2088,26 @@ Example: `getDayInYear('2023/06/23') => 174`
 #### Returns
 
 `number`
+
+___
+
+### getDecodeStorage
+
+▸ **getDecodeStorage**(`key`, `isLocal?`): `any`
+
+获取 Storage 加密数据
+Example: `getDecodeStorage("key") => 处理过后的 value，不需要再 decode 和解密。`
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `key` | `string` | `undefined` | 存储 key |
+| `isLocal` | `boolean` | `true` | 是否 localStorage |
+
+#### Returns
+
+`any`
 
 ___
 
@@ -4323,6 +4345,27 @@ Example: `setCookie('name', 'value', 1) => 设置 name 对应的 Cookie 值`
 #### Returns
 
 `void`
+
+___
+
+### setEncodeStorage
+
+▸ **setEncodeStorage**(`key`, `value`, `isLocal?`): `boolean`
+
+设置 Storage 加密数据
+Example: `setEncodeStorage("key", "value") => 存储时不需要处理数据，自动加密，value === null|undefined 清除数据。(boolean)`
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `key` | `string` | `undefined` | 存储 key |
+| `value` | `string` | `undefined` | 存储 value 字符串，value === null\|undefined 清除数据。 |
+| `isLocal` | `boolean` | `true` | 是否 localStorage |
+
+#### Returns
+
+`boolean`
 
 ___
 
