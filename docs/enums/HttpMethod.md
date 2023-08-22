@@ -2,7 +2,7 @@
 
 # Enumeration: HttpMethod
 
-Http Method
+Http Methods
 
 ## Table of contents
 

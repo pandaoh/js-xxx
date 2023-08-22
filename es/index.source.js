@@ -7533,13 +7533,13 @@ function getCryptoJS() {
  * @Author: HxB
  * @Date: 2022-08-15 15:54:41
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-22 13:51:53
+ * @LastEditTime: 2023-08-22 15:37:18
  * @Description: 常用共用的一些常量
  * @FilePath: \js-xxx\src\Data\index.ts
  */
 /**
  * @enum
- * Http Method
+ * Http Methods
  */
 var HttpMethod;
 (function (HttpMethod) {

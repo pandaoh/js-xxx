@@ -1,6 +1,6 @@
 /**
  * @enum
- * Http Method
+ * Http Methods
  */
 export declare enum HttpMethod {
     GET = "GET",
