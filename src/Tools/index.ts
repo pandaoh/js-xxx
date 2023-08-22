@@ -3,237 +3,29 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-07-17 14:27:34
+ * @LastEditTime: 2023-08-22 14:29:26
  * @Description: 工具函数
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
-import { arraySet } from '@/Array';
-import { getType, isPromise, isStr, toBool, toNum } from '@/Types';
-
-/**
- * 根据年份求生肖，年 % 12 。
- */
-const ANIMALS: string[] = ['猴', '鸡', '狗', '猪', '鼠', '牛', '虎', '兔', '龙', '蛇', '马', '羊'];
-
-/**
- * 根据日期获取星座
- */
-const CONSTELLATION: any = {
-  Capricorn: { cn: '魔羯', en: 'Capricorn', date: '12.22-1.19' },
-  Aquarius: { cn: '水瓶', en: 'Aquarius', date: '1.20-2.18' },
-  Pisces: { cn: '双鱼', en: 'Pisces', date: '2.19-3.20' },
-  Aries: { cn: '白羊', en: 'Aries', date: '3.21-4.19' },
-  Taurus: { cn: '金牛', en: 'Taurus', date: '4.20-5.20' },
-  Gemini: { cn: '双子', en: 'Gemini', date: '5.21-6.21' },
-  Cancer: { cn: '巨蟹', en: 'Cancer', date: '6.22-7.22' },
-  Leo: { cn: '狮子', en: 'Leo', date: '7.23-8.22' },
-  Virgo: { cn: '处女', en: 'Virgo', date: '8.23-9.22' },
-  Libra: { cn: '天秤', en: 'Libra', date: '9.23-10.23' },
-  Scorpio: { cn: '天蝎', en: 'Scorpio', date: '10.24-11.22' },
-  Sagittarius: { cn: '射手', en: 'Sagittarius', date: '11.23-12.21' },
-};
-
-/**
- * 星期数据
- */
-const WEEKS_INFO: {
-  key: string;
-  name: string;
-  abbr: string;
-  id: number;
-  others: string;
-}[] = [
-  {
-    key: 'Monday',
-    name: '星期一',
-    abbr: 'Mon',
-    id: 1,
-    others: 'Day of the Moon.(月亮日)',
-  },
-  {
-    key: 'Tuesday',
-    name: '星期二',
-    abbr: 'Tues',
-    id: 2,
-    others: 'Day of the Mars.(火星日)',
-  },
-  {
-    key: 'Wednesday',
-    name: '星期三',
-    abbr: 'Wed',
-    id: 3,
-    others: 'Day of the Mercury.(水星日)',
-  },
-  {
-    key: 'Thursday',
-    name: '星期四',
-    abbr: 'Thur',
-    id: 4,
-    others: 'Day of Jupiter.(木星日)',
-  },
-  {
-    key: 'Friday',
-    name: '星期五',
-    abbr: 'Fri',
-    id: 5,
-    others: 'Day of Venus.(金星日)',
-  },
-  {
-    key: 'Saturday',
-    name: '星期六',
-    abbr: 'Sat',
-    id: 6,
-    others: 'Day of Saturn.(土星日)',
-  },
-  {
-    key: 'Sunday',
-    name: '星期日',
-    abbr: 'Sun',
-    id: 7,
-    others: 'Day of the Sun.(太阳日)',
-  },
-];
-
-/**
- * 月份信息
- */
-const MONTH_INFO: {
-  key: string;
-  name: string;
-  abbr: string;
-  id: number;
-  others: string;
-}[] = [
-  {
-    key: 'January',
-    name: '一月',
-    abbr: 'Jan',
-    id: 1,
-    others: '寅.虎',
-  },
-  {
-    key: 'February',
-    name: '二月',
-    abbr: 'Feb',
-    id: 2,
-    others: '卯.兔',
-  },
-  {
-    key: 'March',
-    name: '三月',
-    abbr: 'March',
-    id: 3,
-    others: '辰.龙',
-  },
-  {
-    key: 'April',
-    name: '四月',
-    abbr: 'Apr',
-    id: 4,
-    others: '巳.蛇',
-  },
-  {
-    key: 'May',
-    name: '五月',
-    abbr: 'May',
-    id: 5,
-    others: '午.马',
-  },
-  {
-    key: 'June',
-    name: '六月',
-    abbr: 'Jun',
-    id: 6,
-    others: '未.羊',
-  },
-  {
-    key: 'July',
-    name: '七月',
-    abbr: 'Jul',
-    id: 7,
-    others: '申.猴',
-  },
-  {
-    key: 'August',
-    name: '八月',
-    abbr: 'Aug',
-    id: 8,
-    others: '酉.鸡',
-  },
-  {
-    key: 'September',
-    name: '九月',
-    abbr: 'Sept',
-    id: 9,
-    others: '戌.狗',
-  },
-  {
-    key: 'October',
-    name: '十月',
-    abbr: 'Oct',
-    id: 10,
-    others: '亥.猪',
-  },
-  {
-    key: 'November',
-    name: '十一月',
-    abbr: 'Nov',
-    id: 11,
-    others: '子.鼠',
-  },
-  {
-    key: 'December',
-    name: '十二月',
-    abbr: 'Dec',
-    id: 12,
-    others: '丑.牛',
-  },
-];
-
-/**
- * 身份证省份
- */
-const ID_CARD_PROVINCE: { [prop: string]: string } = {
-  '11': '北京',
-  '12': '天津',
-  '13': '河北',
-  '14': '山西',
-  '15': '内蒙古',
-  '21': '辽宁',
-  '22': '吉林',
-  '23': '黑龙江',
-  '31': '上海',
-  '32': '江苏',
-  '33': '浙江',
-  '34': '安徽',
-  '35': '福建',
-  '36': '江西',
-  '37': '山东',
-  '41': '河南',
-  '42': '湖北',
-  '43': '湖南',
-  '44': '广东',
-  '45': '广西',
-  '46': '海南',
-  '50': '重庆',
-  '51': '四川',
-  '52': '贵州',
-  '53': '云南',
-  '54': '西藏',
-  '61': '陕西',
-  '62': '甘肃',
-  '63': '青海',
-  '64': '宁夏',
-  '65': '新疆',
-  '71': '台湾',
-  '81': '香港',
-  '82': '澳门',
-  '91': '国外',
-};
+import { arraySet, arraySort } from '@/Array';
+import {
+  ANIMALS,
+  BASE_CHAR_LOW,
+  BASE_CHAR_UP,
+  BASE_NUMBER,
+  CONSTELLATION,
+  ID_CARD_PROVINCE,
+  MAN,
+  MONTHS,
+  WEEKS,
+  WOMAN,
+} from '@/Data';
+import { getType, isArr, isObj, isPromise, isStr, toBool, toNum } from '@/Types';
 
 /**
  * 获取 16 位可读时间戳
- * Example: `getTimeCode() => '2036551026042022'`
+ * @example
+ * getTimeCode(); // '2036551026042022'
  * @returns
  */
 export function getTimeCode(): string {
@@ -249,18 +41,18 @@ export function getTimeCode(): string {
 
 /**
  * 判断值是否为空
- * Example:
- * `empty('') => true`
- * `empty(null) => true`
- * `empty('null') => true`
- * `empty('undefined') => true`
- * `empty(undefined) => true`
- * `empty(0) => false`
- * `empty('0') => false`
- * `empty(NaN) => true`
- * `empty('NaN') => true`
- * `empty({}) => true`
- * `empty([]) => true`
+ * @example
+ * empty(''); // true
+ * empty(null); // true
+ * empty('null'); // true
+ * empty('undefined'); // true
+ * empty(undefined); // true
+ * empty(0); // false
+ * empty('0'); // false
+ * empty(NaN); // true
+ * empty('NaN'); // true
+ * empty({}); // true
+ * empty([]); // true
  * @param variable 变量
  * @returns
  */
@@ -291,9 +83,9 @@ export function empty(variable: any): boolean {
 
 /**
  * 获取对象/数组第一个值
- * Example:
- * `get1Var([1, 2]) => 1`
- * `get1Var({a: 2,b: 1}) => 2`
+ * @example
+ * get1Var([1, 2]); // 1
+ * get1Var({a: 2,b: 1}); // 2
  * @param data 源数据
  * @returns
  */
@@ -309,9 +101,9 @@ export function get1Var(data: any): any {
 
 /**
  * 获取数组或对象随机数据
- * Example:
- * `getRandVar({ a: 1, b: 3 }) => 1`
- * `getRandomVar([1, 2, 3, 4], 2) => [2, 4]`
+ * @example
+ * getRandVar({ a: 1, b: 3 }); // 1
+ * getRandomVar([1, 2, 3, 4], 2); // [2, 4]
  * @param value
  * @param count
  * @returns
@@ -336,9 +128,9 @@ export function getRandVar(value: any, count = 1): any | any[] {
 
 /**
  * 获取对象/数组最后一个值(对象为 Object.keys 的顺序)
- * Example:
- * `getLastVar([1, 2]) => 2`
- * `getLastVar({a: 2, b: 1}) => b`
+ * @example
+ * getLastVar([1, 2]); // 2
+ * getLastVar({a: 2, b: 1}); // b
  * @param data 源数据
  * @returns
  */
@@ -356,7 +148,8 @@ export function getLastVar(data: any): any {
 
 /**
  * 防抖函数-最后一次有效（抢购）
- * Example: `debounce(() => {}, 1000) => 防抖执行`
+ * @example
+ * debounce(() => {}, 1000); // 防抖执行
  * @param fn 执行的函数
  * @param delay 延迟时间
  * @returns
@@ -375,7 +168,8 @@ export function debounce(fn: any, delay = 1000) {
 
 /**
  * 节流函数-第一次有效（游戏开枪间隔）
- * Example: `throttle(() => {}, 1000) => 节流执行`
+ * @example
+ * throttle(() => {}, 1000); // 节流执行
  * @param fn 执行的函数
  * @param delay 延迟时间
  * @returns
@@ -397,7 +191,8 @@ export function throttle(fn: any, delay = 2000) {
 /**
  * 函数柯里化
  * 是把接受多个参数的函数变换成接受一个单一参数(最初函数的第一个参数)的函数，并且返回接受余下的参数且返回结果的新函数的技术。
- * Example: `curryIt(function (a, b, c) {return a + b + c})(1)(2)(3) => 6`
+ * @example
+ * curryIt(function (a, b, c) {return a + b + c})(1)(2)(3); // 6
  * @param fn
  * @returns
  */
@@ -421,14 +216,15 @@ export function curryIt(fn: any) {
 
 /**
  * 全局捕获异常
- * Example: `globalError((message, source, lineNo, colNo, error) => console.log('全局捕获异常'), false) => '全局捕获异常'`
+ * @example
+ * globalError((message, source, lineNo, colNo, error) => console.log('全局捕获异常'), false); // '全局捕获异常'
  * @param {any} fn (message, source, lineNo, colNo, error)
  * @param {boolean} notShowConsole 是否不回显控制台
  * @returns
  */
 export function globalError(fn: any, notShowConsole = true) {
   window.onerror = function (message, source, lineNo, colNo, error) {
-    notShowConsole && console.log('js-xxx:globalError', { message, source, lineNo, colNo, error });
+    notShowConsole && console.log('js-xxx:globalError--->', { message, source, lineNo, colNo, error });
     fn.call(this, message, source, lineNo, colNo, error);
     return notShowConsole; // return true 不在控制台报错
   };
@@ -436,7 +232,8 @@ export function globalError(fn: any, notShowConsole = true) {
 
 /**
  * 获取随机数字
- * Example: `getRandNum(1, 10) => 1~10 之间的随机数，闭区间。`
+ * @example
+ * getRandNum(1, 10); // 1~10 之间的随机数，闭区间。
  * @param min 最小值
  * @param max 最大值
  * @returns
@@ -447,7 +244,8 @@ export function getRandNum(min = 0, max = 10): number {
 
 /**
  * 获取随机颜色
- * Example: `getRandColor() => '#xxxxxx'`
+ * @example
+ * getRandColor(); // '#xxxxxx'
  * @returns
  */
 export function getRandColor(): string {
@@ -456,7 +254,8 @@ export function getRandColor(): string {
 
 /**
  * 获取随机数字字符串
- * Example: `getRandStr(6) => 'xxxxxx'`
+ * @example
+ * getRandStr(6); // 'xxxxxx'
  * @param len 长度
  * @returns
  */
@@ -466,27 +265,28 @@ export function getRandStr(len = 8): string {
 
 /**
  * 获取简单的唯一字符串(时间戳+随机数+进制转换)
- * Example: `getTimeAndStr(5, 36) => 'xxxxxx'`
+ * @example
+ * getTimeAndStr(5, 36); // 'xxxxxx'
  * @param len 随机字符的长度
  * @param radix 结果以此进行进制转换
  * @returns
  */
 export function getTimeAndStr(len = 5, radix: number | undefined = 36): string {
-  // Number('xxx') // 超大 string 转 number 结果不准确 玄学
+  // Number('xxx'); // 超大 string 转 number 结果不准确 玄学
   return len === 0 ? `${getTimeCode()}` : Number(`${getRandStr(len)}${Date.now()}`).toString(radix); // new Date().getTime()
 }
 
 // eslint-disable-next-line spellcheck/spell-checker
 /**
  * 获取简单的 UUID
- * Example: `getUUID() => 'ghijklmn'`
+ * @example
+ * getUUID(); // 'ghijklmn'
  * @param length 指定位数
- * @param radix 指定字符
+ * @param chars 指定字符
  * @returns
  */
 export function getUUID(length: number, chars: string | any[]): string {
-  // eslint-disable-next-line spellcheck/spell-checker
-  chars = chars || '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  chars = chars || `${BASE_NUMBER}${BASE_CHAR_LOW}${BASE_CHAR_UP}`;
   length = length || 8;
   let result = '';
   for (let i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
@@ -496,10 +296,10 @@ export function getUUID(length: number, chars: string | any[]): string {
 // eslint-disable-next-line spellcheck/spell-checker
 /**
  * 获取 bootstrap 颜色
- * Example:
- * `getBSColor() => '#6c757d'`
- * `getBSColor('red') => '#dc3545'`
- * `getBSColor('warning') => '#ffc107'`
+ * @example
+ * getBSColor(); // '#6c757d'
+ * getBSColor('red'); // '#dc3545'
+ * getBSColor('warning'); // '#ffc107'
  * @param key color name
  * @returns
  */
@@ -549,7 +349,8 @@ export function getBSColor(key = 'default'): string {
 
 /**
  * 获取 V4 版本 UUID
- * Example: `uuid() => '7b72e264-61fe-426e-b95f-35d4e61c5742'`
+ * @example
+ * uuid(); // '7b72e264-61fe-426e-b95f-35d4e61c5742'
  * @returns
  */
 export function uuid(): string {
@@ -560,9 +361,10 @@ export function uuid(): string {
   // 外部
   // const hexBytes = [];
   // for (let i = 0; i < 256; i++) {
-  //   hexBytes[i] = (i + 0x100).toString(16).substr(1);
+  //   hexBytes[i] = (i + 0x100).toString(16).substring(1);
   // }
 
+  // eslint-disable-next-line spellcheck/spell-checker
   // const ret = new Uint8Array(16);
   // for (let i = 0; i < 16; i++) ret[i] = getRandNum(0, 255);
 
@@ -597,9 +399,9 @@ export function uuid(): string {
 
 /**
  * 获取带前缀的唯一 key
- * Example:
- * `getKey() => 'M2rmCcGpXCa5MTdN4Kks5'`
- * `getKey(2, 'test-') => test-aK'`
+ * @example
+ * getKey(); // 'M2rmCcGpXCa5MTdN4Kks5'
+ * getKey(2, 'test-'); // test-aK'
  * @param size
  * @param prefix
  * @returns
@@ -627,10 +429,10 @@ export function getKey(size = 21, prefix = ''): string {
 
 /**
  * 获取任意变量长度
- * Example:
- * `getSize([]) => 0`
- * `getSize({a: 1, b: 2}) => 2`
- * `getSize(null) => 0`
+ * @example
+ * getSize([]); // 0
+ * getSize({a: 1, b: 2}); // 2
+ * getSize(null); // 0
  * @param value
  * @returns
  */
@@ -647,7 +449,8 @@ export function getSize(value: any): number {
 
 /**
  * 在浏览器中打开文件选择框
- * Example: `openFile({ multiple: true, accept: '.txt' }).then(fileList => console.log(fileList));`
+ * @example
+ * openFile({ multiple: true, accept: '.txt' }).then(fileList => console.log(fileList));
  * @param options
  * @returns
  */
@@ -676,7 +479,8 @@ export function openFile(options?: { accept?: string; multiple?: boolean }): Pro
 
 /**
  * 开启全屏
- * Example: `openFullscreen() => 开启全屏`
+ * @example
+ * openFullscreen(); // 开启全屏
  * @param element
  * @returns
  */
@@ -694,7 +498,8 @@ export function openFullscreen(element: any = document.body) {
 
 /**
  * 关闭全屏
- * Example: `closeFullscreen() => 关闭全屏`
+ * @example
+ * closeFullscreen(); // 关闭全屏
  * @param
  * @returns
  */
@@ -718,9 +523,9 @@ export function closeFullscreen() {
 
 /**
  * 获取数组或对象交集
- * Example:
- * `intersection([1, 2, 2, 3, 3], [1, 2, 4, 5]) => [1, 2]`
- * `intersection({a: 1, b: 2}, {a: 1, c: 3, b: 4}) => {a: 1}`
+ * @example
+ * intersection([1, 2, 2, 3, 3], [1, 2, 4, 5]); // [1, 2]
+ * intersection({a: 1, b: 2}, {a: 1, c: 3, b: 4}); // {a: 1}
  * @param paramA
  * @param paramB
  * @returns
@@ -753,9 +558,9 @@ export function intersection(paramA: any, paramB: any): any {
 
 /**
  * 获取数组或对象并集
- * Example:
- * `union([1, 2, 2, 3, 3], [1, 2, 4, 5]) => [1, 2, 3, 4, 5]`
- * `union({a: 1, b: 2}, {a: 1, c: 3, b: 4}) => {a: 1, c: 3, b: 2}`
+ * @example
+ * union([1, 2, 2, 3, 3], [1, 2, 4, 5]); // [1, 2, 3, 4, 5]
+ * union({a: 1, b: 2}, {a: 1, c: 3, b: 4}); // {a: 1, c: 3, b: 2}
  * @param paramA
  * @param paramB
  * @returns
@@ -777,9 +582,9 @@ export function union(paramA: any, paramB: any): any {
 
 /**
  * 获取数组或对象不同值集合
- * Example:
- * `difference([1, 2, 2, 3, 3], [1, 2, 4, 5]) => [3]`
- * `difference({a: 1, b: 2}, {a: 1, c: 3, b: 4}) => {b: 2}`
+ * @example
+ * difference([1, 2, 2, 3, 3], [1, 2, 4, 5]); // [3]
+ * difference({a: 1, b: 2}, {a: 1, c: 3, b: 4}); // {b: 2}
  * @param paramA
  * @param paramB
  * @returns
@@ -806,9 +611,9 @@ export function difference(paramA: any, paramB: any): any {
 
 /**
  * JSON 转字符串式克隆
- * Example:
- * `jsonClone([1, 2, 2, 3, 3]) => [1, 2, 2, 3, 3]`
- * `jsonClone({a: 1, b: 2}) => {a: 1, b: 2}`
+ * @example
+ * jsonClone([1, 2, 2, 3, 3]); // [1, 2, 2, 3, 3]
+ * jsonClone({a: 1, b: 2}); // {a: 1, b: 2}
  * @param value
  * @returns
  */
@@ -822,12 +627,12 @@ export function jsonClone(value: any): any {
 
 /**
  * 打印某个函数运行时间
- * Example:
- * `logRunTime(() => [1, 2, 3].reduce(...))`
- * `logRunTime(() => [1, 2, 3].reduce(...), 'timeKey')`
- * `logRunTime(async () => { await fun1(); await fun2(); })`
- * `logRunTime($promiseReturnFunction)`
- * `logRunTime(new Promise((resolve, reject) => { setTimeout(() => resolve('test'), 1000) }))`
+ * @example
+ * logRunTime(() => [1, 2, 3].reduce(...));
+ * logRunTime(() => [1, 2, 3].reduce(...), 'timeKey');
+ * logRunTime(async () => { await fun1(); await fun2(); });
+ * logRunTime($promiseReturnFunction);
+ * logRunTime(new Promise((resolve, reject) => { setTimeout(() => resolve('test'), 1000) }));
  * @param fn
  * @param timeKey
  * @returns
@@ -860,9 +665,9 @@ export function logRunTime(fn: any, timeKey: string): void {
 
 /**
  * 打印日志工具类
- * Example:
- * `const {log, warning, success, danger, dark, primary, info} = Logger()`
- * `log(1, new Date, 'test', [1, 2, 3], {log})`
+ * @example
+ * const {log, warning, success, danger, dark, primary, info} = Logger();
+ * log(1, new Date, 'test', [1, 2, 3], {log});
  * @returns
  */
 export function Logger(): {
@@ -880,7 +685,7 @@ export function Logger(): {
     value: any,
     type: 'warning' | 'info' | 'danger' | 'primary' | 'success' | 'default' | 'dark' = 'default',
   ): void {
-    console.log('\n%c==========> ', `color:${getBSColor(type)}`, value, '\n');
+    console.log('\n%c----------> ', `color:${getBSColor(type)}`, value, '\n');
   }
   interface LogFn {
     (...args: any[]): void;
@@ -911,9 +716,9 @@ export function Logger(): {
 
 /**
  * 在页面上显示某个值
- * Example:
- * `showVar([1, 2, 2, 3, 3]) => 显示序列化之后的数据`
- * `showVar({a: 1, b: 2}) => 显示序列化之后的数据`
+ * @example
+ * showVar([1, 2, 2, 3, 3]); // 显示序列化之后的数据
+ * showVar({a: 1, b: 2}); // 显示序列化之后的数据
  * @param value
  * @returns
  */
@@ -921,37 +726,100 @@ export function showVar(value: any): any {
   try {
     alert(JSON.stringify(value, null, 2) ?? 'undefined');
   } catch (e) {
-    console.log('js-xxx:showVarError===>', value);
+    console.log('js-xxx:showVarError--->', value);
   }
 }
 
 /**
  * 检测某个数组是否包含某个值
- * Example:
- * `contains([1, 2, 2, 3, 3], 3) => true`
- * `contains([1, 2, 2, 3, 3], '3') => false`
- * `contains([{a: 1, b: 2}, {a: 2, b: 3}], {a: 2, b: 3}) => true`
- * `contains([[1, 2], [3, 4]], [1, 3]) => false`
+ * @example
+ * contains([1, 2, 2, 3, 3], 3); // true
+ * contains([1, 2, 2, 3, 3], '3'); // false
+ * contains(['test1', 'test2'],'test'); // false
+ * contains([{a: 1, b: 2}, {a: 2, b: 3}], {a: 2, b: 3}); // true
+ * contains([{a: 1, b: 2}, {a: 2, b: 3}], {b: 3, a: 2}); // true
+ * contains([[1, 2], [3, 4]], [4, 3]); // true
+ * contains([[1, 2], [3, 4]], [3, 4]); // true
+ * contains([[1, 2], [3, 4]], [1, 3]); // false
  * @param value
  * @param target
  * @returns
  */
 export function contains(value: any[], target: any): boolean {
   try {
-    const temp = value.map((item) => JSON.stringify(item));
-    return temp.includes(JSON.stringify(target));
+    const _isComplex = isArr(target) || isObj(target);
+    if (_isComplex) {
+      const temp = value.map((item) => JSON.stringify(getSortVar(item)));
+      return temp.includes(JSON.stringify(getSortVar(target)));
+    } else {
+      const temp = value.map((item) => JSON.stringify(item));
+      return temp.includes(JSON.stringify(target));
+    }
   } catch (e) {
     return false;
   }
 }
 
 /**
+ * 两个数值是否有相同的值（交集）
+ * @example
+ * same(['admin','manager','user','viewer','guest'], ['admin','user']); // true
+ * same(['admin','manager','user','viewer','guest'], 'admin'); // true
+ * same('admin', ['admin','user']); // true
+ * same('admin', 'admin'); // true
+ * same('admin', 'admins'); // false
+ * same('admins', 'admin'); // false
+ * @param valueA
+ * @param valueB
+ * @returns
+ */
+export function same(valueA: any[] | string, valueB: any[] | string): boolean {
+  try {
+    if (!Array.isArray(valueA)) {
+      valueA = [valueA];
+    }
+    if (!Array.isArray(valueB)) {
+      valueB = [valueB];
+    }
+    return valueA.some((value) => valueB.includes(value));
+  } catch (e) {
+    return false;
+  }
+}
+
+/**
+ * 获取排序转换后的数组或对象（仅支持单层简单结构）
+ * @example
+ * getSortVar({ b: 3, a: 2 }); // { a: 2, b: 3 }
+ * getSortVar({ a: 2, b: 3 }); // { a: 2, b: 3 }
+ * getSortVar([1, 3, 2]); // [1, 2, 3]
+ * @param value
+ * @returns
+ */
+export function getSortVar(value: any): any {
+  try {
+    if (Array.isArray(value)) {
+      value = arraySort(value);
+    } else {
+      const _temp: any = {};
+      arraySort(Object.keys(value)).forEach((key: string) => {
+        _temp[key] = value[key];
+      });
+      value = _temp;
+    }
+    return value;
+  } catch (e) {
+    return value;
+  }
+}
+
+/**
  * 反转数组或者字符串
- * Example:
- * `inversion([1, 2, 3]) => [3, 2, 1]`
- * `inversion('123') => '321'`
- * `inversion() => undefined`
- * `inversion(true) => true`
+ * @example
+ * inversion([1, 2, 3]); // [3, 2, 1]
+ * inversion('123'); // '321'
+ * inversion(); // undefined
+ * inversion(true); // true
  * @param value
  * @returns
  */
@@ -969,10 +837,10 @@ export function inversion(value: any): any {
 
 /**
  * 直到某个函数返回 toBool(true) 的结果(执行完成)
- * Example:
- * `let a = 5;`
- * `setTimeout(() => (a = 10), 5000);`
- * `waitUntil(() => a === 10).then(() => { console.log(a) });`
+ * @example
+ * let a = 5;
+ * setTimeout(() => (a = 10), 5000);
+ * waitUntil(() => a === 10).then(() => { console.log(a) });
  * @param condition
  * @param timeout
  * @param interval
@@ -1009,15 +877,15 @@ export function waitUntil(condition: any, timeout = 0, interval = 250): Promise<
 
 /**
  * 毫秒转换
- * Example:
- * `ms('1s') => 1000`
- * `ms('1m') => 60000`
- * `ms('1.5h') => 5400000`
- * `ms('1d') => 86400000`
- * `ms('1y') => 31557600000`
- * `ms('1000') => 1000`
- * `ms(1500) => '1.5s'`
- * `ms(60000) => '1m'`
+ * @example
+ * ms('1s'); // 1000
+ * ms('1m'); // 60000
+ * ms('1.5h'); // 5400000
+ * ms('1d'); // 86400000
+ * ms('1y'); // 31557600000
+ * ms('1000'); // 1000
+ * ms(1500); // '1.5s'
+ * ms(60000); // '1m'
  * @param str
  * @returns
  */
@@ -1055,9 +923,9 @@ export function ms(str: any): string | number {
 
 /**
  * 文件流或内容转 Base64
- * Example:
- * `transferFileToBase64(file, 'application/pdf;charset=utf-8', (res) => console.log({ res })) => result object`
- * `transferFileToBase64('test', 'text/plain', (res) => console.log({ res })) => result object`
+ * @example
+ * transferFileToBase64(file, 'application/pdf;charset=utf-8', (res) => console.log({ res })); // result object
+ * transferFileToBase64('test', 'text/plain', (res) => console.log({ res })); // result object
  * @param content BlobPart | any
  * @param contentType
  * @param callBack
@@ -1081,11 +949,11 @@ export function transferFileToBase64(content: any, contentType: string, callBack
 /**
  * 检查是否为 idCard string 身份证
  * 支持 15 、 18 位
- * Example:
- * `checkIdCard('350424870506202') => true`
- * `checkIdCard('003424870506202') => false`
- * `checkIdCard('415106199801012130') => true`
- * `checkIdCard('123123123123123222') => false`
+ * @example
+ * checkIdCard('350424870506202'); // true
+ * checkIdCard('003424870506202'); // false
+ * checkIdCard('415106199801012130'); // true
+ * checkIdCard('123123123123123222'); // false
  * @param value
  * @returns
  */
@@ -1099,10 +967,10 @@ export function checkIdCard(value: string): boolean {
 
 /**
  * 获取年龄
- * Example:
- * `getAge('1998-9-28') => 24`
- * `getAge('1998-6-8', '2023-7') => 25`
- * `getAge('2023') => -1`
+ * @example
+ * getAge('1998-9-28'); // 24
+ * getAge('1998-6-8', '2023-7'); // 25
+ * getAge('2023'); // -1
  * @param birthday
  * @param targetDate
  * @returns
@@ -1113,10 +981,10 @@ export function getAge(birthday: any, targetDate?: any): number {
 
 /**
  * 获取生肖
- * Example:
- * `getAnimal('1998') => '虎'`
- * `getAnimal('1998-6-8') => '虎'`
- * `getAnimal('2023') => '兔'`
+ * @example
+ * getAnimal('1998'); // '虎'
+ * getAnimal('1998-6-8'); // '虎'
+ * getAnimal('2023'); // '兔'
  * @param date
  * @returns
  */
@@ -1126,10 +994,12 @@ export function getAnimal(date: any): string {
 
 /**
  * 身份证解析
- * Example:
- * `transferIdCard('350424870506202') => {"age":35,"year":"1987","idCard":"350424870506202","sex":"女","constellation":{"cn":"金牛","en":"Taurus","date":"4.20-5.20"},"gender":0,"province":"福建","animal":"兔","birthday":"1987-05-06"}`
- * `transferIdCard('415106199801012130') => {"age":24,"year":"1998","idCard":"415106199801012130","sex":"男","constellation":{"cn":"魔羯","en":"Capricorn","date":"12.22-1.19"},"gender":1,"province":"河南","animal":"虎","birthday":"1998-01-01"}`
- * `transferIdCard('xxxxx') => {}`
+ * @example
+ * transferIdCard('350424870506202');
+ * // {"age":35,"year":"1987","idCard":"350424870506202","sex":"女","constellation":{"cn":"金牛","en":"Taurus","date":"4.20-5.20"},"gender":0,"province":"福建","animal":"兔","birthday":"1987-05-06"}
+ * transferIdCard('415106199801012130');
+ * // {"age":24,"year":"1998","idCard":"415106199801012130","sex":"男","constellation":{"cn":"魔羯","en":"Capricorn","date":"12.22-1.19"},"gender":1,"province":"河南","animal":"虎","birthday":"1998-01-01"}
+ * transferIdCard('xxxxx'); // {}
  * @param idCard
  * @returns
  */
@@ -1156,7 +1026,7 @@ export function transferIdCard(idCard: string): any {
     idCard,
     sex,
     constellation,
-    gender: sex === '男' ? 1 : 0,
+    gender: sex === '男' ? MAN : WOMAN,
     province,
     animal,
     birthday,
@@ -1165,9 +1035,9 @@ export function transferIdCard(idCard: string): any {
 
 /**
  * 金额转中文
- * Example:
- * `transferMoney(900) => '玖佰元整'`
- * `transferMoney(852.5) => '捌佰伍拾贰元伍角'`
+ * @example
+ * transferMoney(900); // '玖佰元整'
+ * transferMoney(852.5); // '捌佰伍拾贰元伍角'
  * @param n
  * @returns
  */
@@ -1205,10 +1075,31 @@ export function transferMoney(n: number): string {
 }
 
 /**
+ * 格式化金额，展示位银行金额格式。
+ * @example
+ * formatMoney(90000); // '90,000.00'
+ * formatMoney(852.1314, 2); // '852.13'
+ * @param longData
+ * @param length
+ * @returns
+ */
+export function formatMoney(longData: string | number, length: number) {
+  length = length > 0 && length <= 20 ? length : 2;
+  longData = parseFloat((longData + '').replace(/[^\d\.-]/g, '')).toFixed(length) + '';
+  const l = longData.split('.')[0].split('').reverse(),
+    r = longData.split('.')[1];
+  let t = '';
+  for (let i = 0; i < l.length; i++) {
+    t += l[i] + ((i + 1) % 3 == 0 && i + 1 != l.length ? ',' : '');
+  }
+  return t.split('').reverse().join('') + '.' + r;
+}
+
+/**
  * TTS 语音，可以在现代浏览器直接运行。
- * Example:
- * `const mySpeaker = Speaker()`
- * `mySpeaker.setText('你好，这是一条测试语音！hello'); mySpeaker.speak();`
+ * @example
+ * const mySpeaker = Speaker();
+ * mySpeaker.setText('你好，这是一条测试语音！hello'); mySpeaker.speak();
  * @param text 内容
  * @param lang 语言
  * @param volume 音量 [0, 1]
@@ -1260,7 +1151,8 @@ export function Speaker(text: string, lang = 'zh-CN', volume = 1, pitch = 1, rat
 
 /**
  * 页面灰白屏幕
- * Example: `rip() => 页面灰白`
+ * @example
+ * rip(); // 页面灰白
  * @returns
  */
 export function rip(): void {
@@ -1272,10 +1164,10 @@ export function rip(): void {
 // eslint-disable-next-line spellcheck/spell-checker
 /**
  * 获取星座
- * Example:
- * `getConstellation('11-24') => { cn: '射手', en: 'Sagittarius', date: '11.23-12.21' }`
- * `getConstellation('xxx') => {cn: '未知', en: 'unknown', date: 'xxx'}`
- * `getConstellation(new Date('2022-11-24')) => { cn: '射手', en: 'Sagittarius', date: '11.23-12.21' }`
+ * @example
+ * getConstellation('11-24'); // { cn: '射手', en: 'Sagittarius', date: '11.23-12.21' }
+ * getConstellation('xxx'); // {cn: '未知', en: 'unknown', date: 'xxx'}
+ * getConstellation(new Date('2022-11-24')); // { cn: '射手', en: 'Sagittarius', date: '11.23-12.21' }
  * @param date
  * @returns
  */
@@ -1388,7 +1280,8 @@ export function getConstellation(date: any): { cn: string; en: string; date: any
 /**
  * 设置监听函数
  * 返回取消该监听的函数 return cancel
- * Example: `setEventListener('resize', () => { console.log('resize'); }) => cancel 当前 listener 的 function`
+ * @example
+ * setEventListener('resize', () => { console.log('resize'); }); // cancel 当前 listener 的 function
  * @param eventKey
  * @param foo
  * @param once 是否只触发一次
@@ -1408,7 +1301,8 @@ export function setEventListener(eventKey: string, foo: any, once = false, dom: 
 /**
  * H5 软键盘缩回/弹起回调
  * return cancel listener of H5Resize
- * Example: `H5Resize(()=>{ console.log('downCb'); }, ()=>{ console.log('upCb'); }) => do something`
+ * @example
+ * H5Resize(()=>{ console.log('downCb'); }, ()=>{ console.log('upCb'); }); // do something
  * @param downCb
  * @param upCb
  * @returns
@@ -1439,7 +1333,8 @@ export function H5Resize(downCb: any, upCb: any): any {
  * 防君子不防小人
  * 监听页面大小变化没必要
  * 监听编辑 dom 事件 reload 也算了
- * Example: `banConsole() => 返回取消禁用的 function`
+ * @example
+ * banConsole(); // 返回取消禁用的 function
  * @returns
  */
 export function banConsole(): any {
@@ -1460,14 +1355,14 @@ export function banConsole(): any {
 
 /**
  * 获取星期信息
- * Example:
- * `getWeekInfo() => WEEKS_INFO`
- * `getWeekInfo('0') => WEEKS_INFO`
- * `getWeekInfo('ALL') => WEEKS_INFO`
- * `getWeekInfo('all') => WEEKS_INFO`
- * `getWeekInfo('unknown') => WEEKS_INFO`
- * `getWeekInfo(1) => 星期一相关信息`
- * `getWeekInfo(8) => WEEKS_INFO`
+ * @example
+ * getWeekInfo(); // WEEKS_INFO
+ * getWeekInfo('0'); // WEEKS_INFO
+ * getWeekInfo('ALL'); // WEEKS_INFO
+ * getWeekInfo('all'); // WEEKS_INFO
+ * getWeekInfo('unknown'); // WEEKS_INFO
+ * getWeekInfo(1); // 星期一相关信息
+ * getWeekInfo(8); // WEEKS_INFO
  * @param n
  * @returns
  */
@@ -1487,25 +1382,25 @@ export function getWeekInfo(n: string | number):
       others: string;
     }[] {
   if (n === 'all' || n === 'ALL') {
-    return WEEKS_INFO;
+    return WEEKS;
   }
   // @ts-ignore
   if (!n || !Number.isInteger(n) || n < 1 || n > 7) {
-    return WEEKS_INFO;
+    return WEEKS;
   }
-  return WEEKS_INFO[Number(n) - 1] ?? WEEKS_INFO;
+  return WEEKS[Number(n) - 1] ?? WEEKS;
 }
 
 /**
  * 获取月份信息
- * Example:
- * `getMonthInfo() => MONTH_INFO`
- * `getMonthInfo('0') => MONTH_INFO`
- * `getMonthInfo('ALL') => MONTH_INFO`
- * `getMonthInfo('all') => MONTH_INFO`
- * `getMonthInfo('unknown') => MONTH_INFO`
- * `getMonthInfo(1) => 一月相关信息`
- * `getMonthInfo(13) => MONTH_INFO`
+ * @example
+ * getMonthInfo(); // MONTH_INFO
+ * getMonthInfo('0'); // MONTH_INFO
+ * getMonthInfo('ALL'); // MONTH_INFO
+ * getMonthInfo('all'); // MONTH_INFO
+ * getMonthInfo('unknown'); // MONTH_INFO
+ * getMonthInfo(1); // 一月相关信息
+ * getMonthInfo(13); // MONTH_INFO
  * @param n
  * @returns
  */
@@ -1525,23 +1420,23 @@ export function getMonthInfo(n: string | number):
       others: string;
     }[] {
   if (n === 'all' || n === 'ALL') {
-    return MONTH_INFO;
+    return MONTHS;
   }
   // @ts-ignore
   if (!n || !Number.isInteger(n) || n < 1 || n > 12) {
-    return MONTH_INFO;
+    return MONTHS;
   }
-  return MONTH_INFO[Number(n) - 1] ?? MONTH_INFO;
+  return MONTHS[Number(n) - 1] ?? MONTHS;
 }
 
 /**
  * 判断两个值是否相等
- * Example:
- * `isEqual([1, 2, 3], [1, 2, 3]) => true`
- * `isEqual({a: 1, b: 2}, {a: 1, b: 2}) => true`
- * `isEqual({}, {}) => true`
- * `isEqual(1, 1) => true`
- * `isEqual(1, '1') => false`
+ * @example
+ * isEqual([1, 2, 3], [1, 2, 3]); // true
+ * isEqual({a: 1, b: 2}, {a: 1, b: 2}); // true
+ * isEqual({}, {}); // true
+ * isEqual(1, 1); // true
+ * isEqual(1, '1'); // false
  * @param obj1
  * @param obj2
  * @returns
@@ -1589,11 +1484,11 @@ export function isEqual(obj1: any, obj2: any): boolean {
 
 /**
  * 遍历数组或对象，并对每个元素执行回调函数，支持中途 break 和 continue 。
- * Example:
- * `forEach([1, 2, 3], (item, index) => console.log(item, index));`
- * `forEach([1, 2, 3], (item, index) => item * 2, true); => [2, 4, 6]`
- * `forEach({a: 1, b: 2}, (value, key) => console.log(value, key));`
- * `forEach({a: 1, b: 2}, (value, key) => value * 2, true); => {a: 2, b: 4}`
+ * @example
+ * forEach([1, 2, 3], (item, index) => console.log(item, index));
+ * forEach([1, 2, 3], (item, index) => item * 2, true); // [2, 4, 6]
+ * forEach({a: 1, b: 2}, (value, key) => console.log(value, key));
+ * forEach({a: 1, b: 2}, (value, key) => value * 2, true); // {a: 2, b: 4}
  * @param data 要遍历的数据，可以是数组或对象。
  * @param callback 回调函数
  * @param hasReturn 是否返回一个新值

@@ -1,6 +1,7 @@
 export * from './Array';
 export * from './Cookies';
 export * from './Crypto';
+export * from './Data';
 export * from './Date';
 export * from './Dom';
 export * from './Form';

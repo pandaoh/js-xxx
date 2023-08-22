@@ -1,0 +1,28 @@
+.tsd-signature {
+  font-size: larger;
+  font-weight: 600;
+}
+
+.tsd-comment code {
+  display: block;
+  margin: 5px;
+  padding: 5px 10px;
+  color: #17a2b8;
+  word-break: break-all;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.tsd-signature-type {
+  color: #dc3545;
+}
+
+.tsd-comment p {
+  padding: 0 1px;
+}
+
+#tsd-search-field {
+  color: #007bff;
+  font-size: larger;
+  font-weight: 600;
+}

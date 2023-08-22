@@ -3,6 +3,7 @@
     "src/index.ts"
   ],
   "out": "html",
+  "customCss": "./docs.custom.css",
   "readme": "none",
   "includeVersion": true,
   "disableSources": true

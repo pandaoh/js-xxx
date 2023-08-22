@@ -2,17 +2,17 @@
  * @Author: HxB
  * @Date: 2022-04-26 16:24:47
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-13 15:41:51
+ * @LastEditTime: 2023-08-22 11:02:45
  * @Description: 常用数字相关函数
  * @FilePath: \js-xxx\src\Number\index.ts
  */
 
 /**
  * 四舍五入
- * Example:
- * `round(1.2345, 2) => 1.23`
- * `round(0.355, 2) => 0.36`
- * `const toFixed = (n, fixed) => ~~(Math.pow(10, fixed) * n) / Math.pow(10, fixed)`;
+ * `const toFixed = (n, fixed) => ~~(Math.pow(10, fixed) * n) / Math.pow(10, fixed);`
+ * @example
+ * round(1.2345, 2); // 1.23
+ * round(0.355, 2); // 0.36
  * @param number 浮点数
  * @param d 保留小数位
  * @returns
@@ -53,7 +53,7 @@ export function round(number: any, d: number): number | undefined {
     }
     if (flag) {
       // 如果首位 0 未产生进位，去掉多余的 0 。
-      tempStr = tempStr.substr(1);
+      tempStr = tempStr.substring(1);
     }
     return parseFloat((pm + tempStr).replace(/\.$/, '')); // 返回浮点数，以防万一去掉结尾的小数点（.）。
   }
@@ -61,9 +61,9 @@ export function round(number: any, d: number): number | undefined {
 
 /**
  * 是否整数(严格匹配)
- * Example:
- * `isInteger('0') => true`
- * `isInteger('-0', '+') => false`
+ * @example
+ * isInteger('0'); // true
+ * isInteger('-0', '+'); // false
  * @returns
  */
 export function isInteger(value: string, type?: '-' | '+'): boolean {
@@ -78,11 +78,11 @@ export function isInteger(value: string, type?: '-' | '+'): boolean {
 
 /**
  * 是否小数(严格匹配)
- * Example:
- * `isDecimal('0.0') => true`
- * `isDecimal('0.0', '+', true) => false`
- * `isDecimal('-0.1', '+') => false`
- * `isDecimal('-0.10', '-') => true`
+ * @example
+ * isDecimal('0.0'); // true
+ * isDecimal('0.0', '+', true); // false
+ * isDecimal('-0.1', '+'); // false
+ * isDecimal('-0.10', '-'); // true
  * @returns
  */
 export function isDecimal(value: string, type?: '-' | '+', noLastZero = false): boolean {
@@ -102,7 +102,8 @@ export function isDecimal(value: string, type?: '-' | '+', noLastZero = false): 
 
 /**
  * 数字人性化显示
- * Example: `formatNumber('12312300') => '12,312,300'`
+ * @example
+ * formatNumber('12312300'); // '12,312,300'
  * @param value
  * @returns
  */

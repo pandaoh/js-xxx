@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:54:41
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-13 18:30:58
+ * @LastEditTime: 2023-08-22 09:56:42
  * @Description: 加密相关函数 依赖 crypto-js
  * @FilePath: \js-xxx\src\Crypto\index.ts
  */
@@ -18,9 +18,9 @@ const SECRET_KEY_REG = /^[0-9a-fA-F]{16}$/i;
 /**
  * 加密函数
  * 防君子不防小人，也可以通过后台获取密钥。
- * Example:
- * `encrypt("value") => 加密后的字符串`
- * `encrypt("value", "1234567887654321","1234567887654321") => 自定义密钥加密后的字符串`
+ * @example
+ * encrypt("value"); // 加密后的字符串
+ * encrypt("value", "1234567887654321","1234567887654321"); // 自定义密钥加密后的字符串
  * @param data 需要加密的数据
  * @param secretKey [可选] 十六位十六进制数作为密钥
  * @param secretIv [可选] 十六位十六进制数作为密钥偏移量
@@ -58,10 +58,10 @@ export function encrypt(data: any, secretKey?: string, secretIv?: string): strin
 /**
  * 解密函数
  * 防君子不防小人，也可以通过后台获取密钥。
- * Example:
- * `decrypt("加密后的字符串") => 解密后的字符串`
- * `decrypt("加密后的字符串", true) => 解密后的字符串并转换为 JSON 对象`
- * `decrypt("加密后的字符串", "1234567887654321","1234567887654321") => 自定义密钥解密后的字符串`
+ * @example
+ * decrypt("加密后的字符串"); // 解密后的字符串
+ * decrypt("加密后的字符串", true); // 解密后的字符串并转换为 JSON 对象
+ * decrypt("加密后的字符串", "1234567887654321","1234567887654321"); // 自定义密钥解密后的字符串
  * @param dataStr 加密后的字符串
  * @param jsonDecode 是否需要解析成 json
  * @param secretKey [可选] 十六位十六进制数作为密钥
@@ -94,7 +94,8 @@ export function decrypt(dataStr: string, jsonDecode = false, secretKey?: string,
 
 /**
  * md5 加密函数
- * Example: `md5("value") => 加密后的字符串`
+ * @example
+ * md5("value"); // 加密后的字符串
  * @param str 需要加密的字符串
  * @returns
  */
@@ -104,7 +105,8 @@ export function md5(str: string): string {
 
 /**
  * sha1 加密函数
- * Example: `sha1("value") => 加密后的字符串`
+ * @example
+ * sha1("value"); // 加密后的字符串
  * @param str 需要加密的字符串
  * @returns
  */
@@ -114,7 +116,8 @@ export function sha1(str: string): string {
 
 /**
  * sha256 加密函数
- * Example: `sha256("value") => 加密后的字符串`
+ * @example
+ * sha256("value"); // 加密后的字符串
  * @param str 需要加密的字符串
  * @returns
  */
@@ -124,11 +127,11 @@ export function sha256(str: string): string {
 
 /**
  * base64 加密函数
- * 使用 url 中时建议使用 encodeURIComponent 再次编码，因为单独 + 号在 url 中会被解析成空格。
- * 使用 encodeURIComponent 会把 + 解析为 %2B 与空格 %20 区分
- * Example:
- * `base64Encode("value") => 加密后的字符串`
- * `base64Encode("value", true) => 加密后的字符串并替换 +/=`
+ * `使用 url 中时建议使用 encodeURIComponent 再次编码，因为单独 + 号在 url 中会被解析成空格。`
+ * `使用 encodeURIComponent 会把 + 解析为 %2B 与空格 %20 区分`
+ * @example
+ * base64Encode("value"); // 加密后的字符串
+ * base64Encode("value", true); // 加密后的字符串并替换 +/=
  * @param str 需要加密的字符串
  * @param replaceChar 是否替换结果字符串中的特殊字符 '+/='，适用于 url 编码。
  * @returns
@@ -140,7 +143,8 @@ export function base64Encode(str: string, replaceChar = false): string {
 
 /**
  * base64 解密函数
- * Example: `base64Decode("加密后的字符串") => 解密后的字符串`
+ * @example
+ * base64Decode("加密后的字符串"); // 解密后的字符串
  * @param str 需要加密的字符串
  * @returns
  */
@@ -150,9 +154,9 @@ export function base64Decode(str: string): string {
 
 /**
  * 获取 CryptoJS
- * Example:
- * `getCryptoJS() => CryptoJS`
- * `getCryptoJS().MD5(str).toString() => md5 加密后的字符串`
+ * @example
+ * getCryptoJS(); // CryptoJS
+ * getCryptoJS().MD5(str).toString(); // md5 加密后的字符串
  * @returns
  */
 export function getCryptoJS(): typeof CryptoJS {

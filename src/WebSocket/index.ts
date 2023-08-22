@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-07-03 14:43:39
+ * @LastEditTime: 2023-08-22 14:07:22
  * @Description: websocket
  * @FilePath: \js-xxx\src\WebSocket\index.ts
  */
@@ -13,7 +13,8 @@ let xWebSocketTimer: any;
 // eslint-disable-next-line spellcheck/spell-checker
 /**
  * 初始化 websocket
- * Example: `initWebSocket({ url: 'ws://localhost:8080/ws', timeout: 30000, onOpen: () => {}, onMessage: () => {}, onClose: () => {}, onError: () => {}, reconnect: {} })`
+ * @example
+ * initWebSocket({ url: 'ws://localhost:8080/ws', timeout: 30000, onOpen: () => {}, onMessage: () => {}, onClose: () => {}, onError: () => {}, reconnect: {} })
  * @param options `{url, onOpen, onMessage, onClose, onError, timeout, reconnect: {times, delay, onReconnect} | boolean} WebSocket 配置`
  * @returns {WebSocket}
  */
@@ -82,9 +83,9 @@ export function initWebSocket(options: {
 
 /**
  * 发送消息
- * Example:
- * `sendWsMsg({ type: 'login', data: { username: 'admin', password: '123456' }}, true) => true/false`
- * `sendWsMsg('testMsg') => true/false`
+ * @example
+ * sendWsMsg({ type: 'login', data: { username: 'admin', password: '123456' }}, true); // true/false
+ * sendWsMsg('testMsg'); // true/false
  * @param message 消息
  * @param isJSONEncode 是否 JSON 序列化
  * @returns
@@ -99,7 +100,8 @@ export function sendWsMsg(message: any, isJSONEncode = false): boolean {
 
 /**
  * 关闭 websocket
- * Example: `closeWebSocket() => true/false`
+ * @example
+ * closeWebSocket(); // true/false
  * @returns
  */
 export function closeWebSocket(): boolean {
@@ -112,8 +114,9 @@ export function closeWebSocket(): boolean {
 
 /**
  * 设置 websocket binaryType default: 'blob'
- * Example: `setWsBinaryType() => true/false`
- * @param binaryType BinaryType 二进制类型 default: 'arraybuffer'
+ * @example
+ * setWsBinaryType(); // true/false
+ * @param binaryType `BinaryType 二进制类型 default: 'arraybuffer'`
  * @returns
  */
 export function setWsBinaryType(binaryType: any = 'arraybuffer'): boolean {
@@ -130,7 +133,8 @@ export function setWsBinaryType(binaryType: any = 'arraybuffer'): boolean {
 
 /**
  * 获取 websocket 实例
- * Example: `getWebSocket() => [websocket object]`
+ * @example
+ * getWebSocket(); // [websocket object]
  * @returns
  */
 export function getWebSocket(): WebSocket | undefined {

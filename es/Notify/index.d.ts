@@ -1,12 +1,14 @@
 /**
  * 初始化 Notification
- * Example: `initNotification() => true||false`
+ * @example
+ * initNotification(); // true||false
  * @returns
  */
 export declare function initNotification(): boolean;
 /**
  * 发送 Notification
- * Example: `sendNotification('测试通知', '测试标题', {...options}) => 发送成功/失败`
+ * @example
+ * sendNotification('测试通知', '测试标题', {...options}); // 发送成功/失败
  * @returns
  */
 export declare function sendNotification(msg: string, title?: string, options?: {

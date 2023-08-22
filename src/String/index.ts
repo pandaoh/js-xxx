@@ -1,18 +1,21 @@
+/* eslint-disable max-lines */
 /*
  * @Author: HxB
  * @Date: 2022-04-26 15:45:48
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-01 11:21:40
+ * @LastEditTime: 2023-08-22 14:15:11
  * @Description: 字符串常用函数
  * @FilePath: \js-xxx\src\String\index.ts
  */
+import { BASE_CHAR_LOW, BASE_CHAR_UP, BASE_NUMBER, PY_MAPS } from '@/Data';
 import { union } from '@/Tools';
-import { isUndef } from '@/Types';
+import { isStr, isUndef } from '@/Types';
 
 // eslint-disable-next-line spellcheck/spell-checker, zob/comment
 /**
  * 字符转 unicode
- * Example: `unicode2str("我是老A") => '\\u6211\\u662f\\u8001a'`
+ * @example
+ * unicode2str("我是老A"); // '\\u6211\\u662f\\u8001a'
  * @param value 中文字符串
  * @returns
  */
@@ -23,7 +26,8 @@ export function unicode2str(value: string): string {
 // eslint-disable-next-line spellcheck/spell-checker, zob/comment
 /**
  * unicode 转字符
- * Example: `str2unicode("\\u6211\\u662f\\u8001a") => '我是老a'`
+ * @example
+ * str2unicode("\\u6211\\u662f\\u8001a"); // '我是老a'
  * @param value unicode 字符串
  * @returns
  */
@@ -34,7 +38,8 @@ export function str2unicode(value: string): string {
 /**
  * 去除字符串空格
  * 可选值：0|ba：去除前后空格，1|b：去除前空格，2|a：去除后空格，3|all：去除所有空格，4|pro：去除所有空格，中间的空格保留一个。
- * Example: `trim('  a  b  ', 4) => 'a b'`
+ * @example
+ * trim('  a  b  ', 4); // 'a b'
  * @param str 字符串
  * @param type 类型，默认为 0|ba，错误 type 会返回原字符串。
  * @returns
@@ -63,13 +68,14 @@ export function trim(str: string, type: number | string = 0): string {
 
 // eslint-disable-next-line spellcheck/spell-checker
 /**
- * base64 编码 btoa(binary to ascii)(not support unicode)
- * 使用 url 中时建议使用 encodeURIComponent 再次编码，因为单独 + 号在 url 中会被解析成空格。
- * 使用 encodeURIComponent 会把 + 解析为 %2B 与空格 %20 区分
+ * base64 编码
+ * `btoa(binary to ascii)(not support unicode)`
+ * `使用 url 中时建议使用 encodeURIComponent 再次编码，因为单独 + 号在 url 中会被解析成空格。`
+ * `使用 encodeURIComponent 会把 + 解析为 %2B 与空格 %20 区分`
  * `btoa(encodeURIComponent(str))`
- * Example:
- * `btoa('我是 leo') => '5oiR5pivIGxlbw=='`
- * `btoa('我是 leo', true) => '5oiR5pivIGxlbw'`
+ * @example
+ * btoa('我是 leo'); // '5oiR5pivIGxlbw=='
+ * btoa('我是 leo', true); // '5oiR5pivIGxlbw'
  * @param str 字符串
  * @param replaceChar 是否替换结果字符串中的特殊字符 '+/='，适用于 url 编码。
  * @returns
@@ -82,11 +88,12 @@ export function btoa(str: string, replaceChar = false): string {
 
 // eslint-disable-next-line spellcheck/spell-checker
 /**
- * base64 解码 atob(ascii to binary)(not support unicode)
+ * base64 解码
+ * `atob(ascii to binary)(not support unicode)`
  * `decodeURIComponent(atob(encodeStr))`
- * Example:
- * `atob('5oiR5pivIGxlbw==') => '我是 leo'`
- * `atob('5oiR5pivIGxlbw') => '我是 leo'`
+ * @example
+ * atob('5oiR5pivIGxlbw=='); // '我是 leo'
+ * atob('5oiR5pivIGxlbw'); // '我是 leo'
  * @param str base64 加密后的字符串
  * @returns
  */
@@ -104,14 +111,14 @@ export function atob(str: string): string {
 // eslint-disable-next-line spellcheck/spell-checker, zob/comment
 /**
  * 字符串脱敏(biugle 自定义规则)
- * Example:
- * `maskString(undefined) => '-'`
- * `maskString('13579246810') => '135****6810'`
- * `maskString('王小二') => '王***二'`
- * `maskString('123456789') => '123****89'`
- * `maskString('130223199809282927') => '13022********927'`
- * `maskString('广东省深圳市龙华区') => 广东省****华区'`
- * `maskString('广东省深圳市福田区福田保税区xxx小区xxx单元x栋x楼xxx号') => '广东省深圳市福田区******xx号'`
+ * @example
+ * maskString(undefined); // '-'
+ * maskString('13579246810'); // '135****6810'
+ * maskString('王小二'); // '王***二'
+ * maskString('123456789'); // '123****89'
+ * maskString('130223199809282927'); // '13022********927'
+ * maskString('广东省深圳市龙华区'); // 广东省****华区'
+ * maskString('广东省深圳市福田区福田保税区xxx小区xxx单元x栋x楼xxx号'); // '广东省深圳市福田区******xx号'
  * @param str
  * @returns
  */
@@ -147,10 +154,10 @@ export function maskString(str: string): string {
 
 /**
  * 改变字符串大小写
- * Example:
- * `transferCase('red', 'upper'|1) => 'RED'`
- * `transferCase('red', 'lower'|2) => 'red'`
- * `transferCase('red', 'first'|3) => 'Red'`
+ * @example
+ * transferCase('red', 'upper'|1); // 'RED'
+ * transferCase('red', 'lower'|2); // 'red'
+ * transferCase('red', 'first'|3); // 'Red'
  * @param str
  * @param type
  * @returns
@@ -173,13 +180,13 @@ export function transferCase(str: string, type: 1 | 2 | 3 | 'upper' | 'lower' | 
 
 /**
  * 按照普遍的特殊字符分割字符串
- * Example:
- * `splitCase('foo-bar') => ['foo', 'bar']`
- * `splitCase('foo_bar') => ['foo', 'bar']`
- * `splitCase('foo bar') => ['foo', 'bar']`
- * `splitCase('foo.bar') => ['foo', 'bar']`
- * `splitCase('fooBar') => ['foo', 'bar']`
- * `splitCase('foo-Bar') => ['foo', 'bar']`
+ * @example
+ * splitCase('foo-bar'); // ['foo', 'bar']
+ * splitCase('foo_bar'); // ['foo', 'bar']
+ * splitCase('foo bar'); // ['foo', 'bar']
+ * splitCase('foo.bar'); // ['foo', 'bar']
+ * splitCase('fooBar'); // ['foo', 'bar']
+ * splitCase('foo-Bar'); // ['foo', 'bar']
  * @param str
  * @returns
  */
@@ -194,11 +201,11 @@ export function splitCase(str: string): string[] {
 
 /**
  * 字符串转驼峰
- * Example:
- * `camelCase('foo-bar') => 'fooBar'`
- * `camelCase('foo_bar') => 'fooBar'`
- * `camelCase('foo bar') => 'fooBar'`
- * `camelCase('foo.bar') => 'fooBar'`
+ * @example
+ * camelCase('foo-bar'); // 'fooBar'
+ * camelCase('foo_bar'); // 'fooBar'
+ * camelCase('foo bar'); // 'fooBar'
+ * camelCase('foo.bar'); // 'fooBar'
  * @param str
  * @returns
  */
@@ -218,9 +225,9 @@ export function camelCase(str: string) {
 
 /**
  * 字符串 repeat
- * Example:
- * `repeat('*') => '*'`
- * `repeat('*', 3) => '***'`
+ * @example
+ * repeat('*'); // '*'
+ * repeat('*', 3); // '***'
  * @param str
  * @returns
  */
@@ -240,9 +247,9 @@ export function repeat(str: string, n = 1): string {
 
 /**
  * 检查是否为 url string
- * Example:
- * `isUrl('http://www.example.com?foo=bar&param=test') => true`
- * `isUrl(http://www) => false`
+ * @example
+ * isUrl('http://www.example.com?foo=bar&param=test'); // true
+ * isUrl(http://www); // false
  * @param value
  * @returns
  */
@@ -253,9 +260,9 @@ export function isUrl(value: string): boolean {
 
 /**
  * 检查是否为 email string 邮箱
- * Example:
- * `isEmail('test@qq.com') => true`
- * `isEmail('@qq.com') => false`
+ * @example
+ * isEmail('test@qq.com'); // true
+ * isEmail('@qq.com'); // false
  * @param value
  * @returns
  */
@@ -265,14 +272,14 @@ export function isEmail(value: string): boolean {
 }
 
 /**
- * 检查是否为 phoneNum string 手机号
- * Example:
- * `isPhoneNum('13579246810') => true`
- * `isPhoneNum('12345678910') => false`
+ * 检查是否为 string 手机号
+ * @example
+ * isMobile('13579246810'); // true
+ * isMobile('12345678910'); // false
  * @param value
  * @returns
  */
-export function isPhoneNum(value: string): boolean {
+export function isMobile(value: string): boolean {
   const regPhoneNum = /^(0|86|17951)?(1[3-9][0-9])[0-9]{8}$/;
   return regPhoneNum.test(value);
 }
@@ -280,16 +287,16 @@ export function isPhoneNum(value: string): boolean {
 // eslint-disable-next-line zob/comment
 /**
  * 检查是否为 char string 用户名规范(字母数字下划线或中文)
- * Example:
- * `isChar('test123@qq.com') => false`
- * `isChar('_test123_qq_com') => false`
- * `isChar('test123_qq_com') => true`
- * `isChar('我test123_qq_com') => false`
- * `isChar('我test123_qq_com', true) => true`
+ * @example
+ * isAccount('test123@qq.com'); // false
+ * isAccount('_test123_qq_com'); // false
+ * isAccount('test123_qq_com'); // true
+ * isAccount('我test123_qq_com'); // false
+ * isAccount('我test123_qq_com', true); // true
  * @param value
  * @returns
  */
-export function isChar(value: string, hasChinese = false): boolean {
+export function isAccount(value: string, hasChinese = false): boolean {
   if (!value) {
     return false;
   }
@@ -301,9 +308,9 @@ export function isChar(value: string, hasChinese = false): boolean {
 
 /**
  * 检查密码强度是否足够
- * Example:
- * `isStrongPassWord('test@qq.com') => false`
- * `isStrongPassWord('test@qq.com123') => true`
+ * @example
+ * isStrongPassWord('test@qq.com'); // false
+ * isStrongPassWord('test@qq.com123'); // true
  * @param value
  * @returns
  */
@@ -315,13 +322,13 @@ export function isStrongPassWord(value: string): boolean {
 // eslint-disable-next-line zob/comment
 /**
  * 检查是否为 carCode string 车牌号
- * Example:
- * `isCarCode('粤B68928') => true`
- * `isCarCode('粤-B68928') => true`
- * `isCarCode('粤 B68928') => true`
- * `isCarCode('粤B.68928') => true`
- * `isCarCode('粤B 68928') => true`
- * `isCarCode('广东 B12345') => false`
+ * @example
+ * isCarCode('粤B68928'); // true
+ * isCarCode('粤-B68928'); // true
+ * isCarCode('粤 B68928'); // true
+ * isCarCode('粤B.68928'); // true
+ * isCarCode('粤B 68928'); // true
+ * isCarCode('广东 B12345'); // false
  * @param value
  * @returns
  */
@@ -333,11 +340,11 @@ export function isCarCode(value: string): boolean {
 
 /**
  * 检查是否为 ipv4 string
- * Example:
- * `isIpv4('127.0.0.1') => true`
- * `isIpv4('255.255.255.0') => true`
- * `isIpv4('255.255.255.2555') => false`
- * `isIpv4('255.255.255.2555.255') => false`
+ * @example
+ * isIpv4('127.0.0.1'); // true
+ * isIpv4('255.255.255.0'); // true
+ * isIpv4('255.255.255.2555'); // false
+ * isIpv4('255.255.255.2555.255'); // false
  * @param value
  * @returns
  */
@@ -349,14 +356,14 @@ export function isIpv4(value: string): boolean {
 // eslint-disable-next-line spellcheck/spell-checker
 /**
  * 检查是否为 ipv6 string
- * Example:
- * `isIpv6('::1') => true`
- * `isIpv6('127.0.0.1') => false`
- * `isIpv6('2000:0000:0000:0000:0001:2345:6789:abcd') => true`
- * `isIpv6('2001:DB8:0:0:8:800:200C:417A') => true`
- * `isIpv6('2001:DB8::8:800:200C:417A') => false 暂不兼容缩写`
- * `isIpv6('2001:DB8:0:0:8:800:200C:417A:123') => false`
- * `isIpv6('2000:0000:0000:0000:0001:2345:6789:abcd:1') => false`
+ * @example
+ * isIpv6('::1'); // true
+ * isIpv6('127.0.0.1'); // false
+ * isIpv6('2000:0000:0000:0000:0001:2345:6789:abcd'); // true
+ * isIpv6('2001:DB8:0:0:8:800:200C:417A'); // true
+ * isIpv6('2001:DB8::8:800:200C:417A'); // false 暂不兼容缩写
+ * isIpv6('2001:DB8:0:0:8:800:200C:417A:123'); // false
+ * isIpv6('2000:0000:0000:0000:0001:2345:6789:abcd:1'); // false
  * @param value
  * @returns
  */
@@ -368,11 +375,11 @@ export function isIpv6(value: string): boolean {
 
 /**
  * 检查是否为 ip string
- * Example:
- * `isIpAddress('::1') => true`
- * `isIpAddress('127.0.0.1') => true`
- * `isIpAddress('2001:DB8:0:0:8:800:200C:417A') => true`
- * `isIpAddress('255.255.255.123.123') => false`
+ * @example
+ * isIpAddress('::1'); // true
+ * isIpAddress('127.0.0.1'); // true
+ * isIpAddress('2001:DB8:0:0:8:800:200C:417A'); // true
+ * isIpAddress('255.255.255.123.123'); // false
  * @param value
  * @returns
  */
@@ -383,9 +390,9 @@ export function isIpAddress(value: string): boolean {
 // eslint-disable-next-line spellcheck/spell-checker
 /**
  * 检查是否为 file.ext string 文件扩展名
- * Example:
- * `checkFileExt(['png', 'jpg'], 'test.jpg') => true`
- * `checkFileExt(['png', 'jpg'], 'test.jpg.txt') => false`
+ * @example
+ * checkFileExt(['png', 'jpg'], 'test.jpg'); // true
+ * checkFileExt(['png', 'jpg'], 'test.jpg.txt'); // false
  * @param value
  * @returns
  */
@@ -396,11 +403,11 @@ export function checkFileExt(arr: string[], value: string): boolean {
 
 /**
  * 检查是否为 http 协议，1 是，-1 为 https，0 啥也不是。
- * Example:
- * `isHttp('http://test.com') => 1`
- * `isHttp('http:test.com') => 0`
- * `isHttp('https://test.com') => -1`
- * `isHttp('12345') => 0`
+ * @example
+ * isHttp('http://test.com'); // 1
+ * isHttp('http:test.com'); // 0
+ * isHttp('https://test.com'); // -1
+ * isHttp('12345'); // 0
  * @param value
  * @returns
  */
@@ -410,10 +417,10 @@ export function isHttp(value: string): -1 | 1 | 0 {
 }
 
 /**
- * Slug 化字符串 => URL
- * Example:
- * `slugify('I LOVE OQM') => 'I_LOVE_OQM'`
- * `slugify('I LOVE OQM', { ' ': '-' }) => 'I-LOVE-OQM'`
+ * Slug 化字符串 URL
+ * @example
+ * slugify('I LOVE OQM'); // 'I_LOVE_OQM'
+ * slugify('I LOVE OQM', { ' ': '-' }); // 'I-LOVE-OQM'
  * @param str
  * @param replacement
  * @returns
@@ -444,9 +451,9 @@ export function slugify(str: string, replacement?: { [index: string]: string }):
 
 /**
  * 截取字符串，使其长度为指定值，包含省略符。
- * Example:
- * `truncate('HXB HXB HXB HXB HXB HXB', 12) => 'HXB HXB H...'`
- * `truncate('OQM-OQM-OQM-OQM-OQM-OQM', 10, { ellipsis: '～', separator: '-' }) => 'OQM-OQM～'`
+ * @example
+ * truncate('HXB HXB HXB HXB HXB HXB', 12); // 'HXB HXB H...'
+ * truncate('OQM-OQM-OQM-OQM-OQM-OQM', 10, { ellipsis: '～', separator: '-' }); // 'OQM-OQM～'
  * @param txt
  * @param width
  * @param options
@@ -492,14 +499,14 @@ export function truncate(
 
 /**
  * 格式化 JSON 字符串
- * Example:
- * `formatJSON({ a: 123, b: 456 }, null, 2) => '{\n  "a": 123,\n  "b": 456\n}'`
- * `formatJSON('123', null, 2) => '"123"'`
- * `formatJSON(123, null, 2) => '123'`
- * `formatJSON(null, null, 2) => 'null'`
- * `formatJSON(true, null, 2) => 'true'`
- * `formatJSON(undefined, null, 2) => 'undefined'`
- * `formatJSON(new Date(), null, 2) => '"2023-03-02T10:02:42.019Z"'`
+ * @example
+ * formatJSON({ a: 123, b: 456 }, null, 2); // '{\n  "a": 123,\n  "b": 456\n}'
+ * formatJSON('123', null, 2); // '"123"'
+ * formatJSON(123, null, 2); // '123'
+ * formatJSON(null, null, 2); // 'null'
+ * formatJSON(true, null, 2); // 'true'
+ * formatJSON(undefined, null, 2); // 'undefined'
+ * formatJSON(new Date(), null, 2); // '"2023-03-02T10:02:42.019Z"'
  * @param value
  * @returns
  */
@@ -509,4 +516,387 @@ export function formatJSON(value: any): string {
   } catch (e) {
     return `${value}`;
   }
+}
+
+/**
+ * 检查是否为 QQ 号
+ * @example
+ * isQQ('1005760694'); // true
+ * isQQ('123456789101'); // false
+ * @param value
+ * @returns
+ */
+export function isQQ(value: string): boolean {
+  const reg = /^[1-9][0-9]{4,10}$/;
+  return reg.test(value);
+}
+
+/**
+ * 是否全为英文
+ * @example
+ * isEnglish('Aa'); // true
+ * isEnglish('a1'); // false
+ * @param value
+ * @returns
+ */
+export function isEnglish(value: string): boolean {
+  const reg = /^[a-zA-Z]+$/;
+  return reg.test(value);
+}
+
+/**
+ * 是否全为英文
+ * @example
+ * hasSpecialChar('Aa('); // true
+ * hasSpecialChar('a1'); // false
+ * @param value
+ * @returns
+ */
+export function hasSpecialChar(value: string): boolean {
+  if (value) {
+    // 英文符号
+    const containSpecialForEnglish = RegExp(
+      // eslint-disable-next-line no-useless-escape
+      /[(\s)(\`)(\~)(\!)(\@)(\#)(\$)(\%)(\^)(\&)(\*)(\()(\))(\-)(\_)(\+)(\=)(\[)(\])(\{)(\})(\|)(\\)(\;)(\:)(\')(\")(\,)(\.)(\/)(\<)(\>)(\?)(\)]+/,
+    );
+    // 中文符号
+    const containSpecialForChinese = RegExp(
+      // eslint-disable-next-line no-useless-escape
+      /[(\·)(\~)(\！)(\￥)(\%)(\……)(\&)(\*)(\（)(\）)(\——)(\【)(\】)(\；)(\：)(\”)(\“)(\’)(\，)(\《)(\。)(\》)(\？)(\、)(\‘)(\’)]+/,
+    );
+    return containSpecialForEnglish.test(value) || containSpecialForChinese.test(value);
+  }
+  return false;
+}
+
+/**
+ * 判断数据是否为座机号(固定电话)
+ * @example
+ * isTel('0731-24722145'); // true
+ * isTel('13579246810'); // false
+ * @param value
+ * @returns
+ */
+export function isTel(value: string): boolean {
+  if (value.match(/^(([0\+]\d{2,3}-)?(0\d{2,3})-)(\d{7,8})(-(\d{3,}))?$/) == null) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+/**
+ * 是否全为中文
+ * @example
+ * isChinese('呜呜呜'); // true
+ * isChinese('我 1'); // false
+ * @param value
+ * @returns
+ */
+export function isChinese(value: string): boolean {
+  return /^[\u4E00-\u9FA5]*$/.test(value);
+}
+
+/**
+ * 判断变量是否定义
+ * @example
+ * isDefined(a); // false
+ * isDefined(window); // true
+ * @param value
+ * @returns
+ */
+export function isDefined(varName: any): boolean {
+  return typeof varName !== 'undefined';
+}
+
+/**
+ * 判断是否为统一社会信用代码
+ * @example
+ * isCreditCode('9144030071526726XG'); // true
+ * isCreditCode('12312312312'); // false
+ * @param value
+ * @returns
+ */
+export function isCreditCode(value: string): boolean {
+  const reg = /^[0-9A-Z]+$/;
+  // 18 位校验及大写校验
+  if (value.length != 18 || reg.test(value) == false) {
+    return false;
+  } else {
+    let AnCode; // 统一社会信用代码的每一个值
+    let AnCodeValue; // 统一社会信用代码每一个值的权重
+    let total = 0;
+    const weightedFactors = [1, 3, 9, 27, 19, 26, 16, 17, 20, 29, 25, 13, 8, 24, 10, 30, 28]; // 加权因子
+    const str = `${BASE_NUMBER}ABCDEFGHJKLMNPQRTUWXY`;
+    // 不用 I 、 O 、 S 、 V 、 Z
+    for (let i = 0; i < value.length - 1; i++) {
+      AnCode = value.substring(i, i + 1); // ?
+      AnCodeValue = str.indexOf(AnCode);
+      total = total + AnCodeValue * weightedFactors[i];
+      // 权重与加权因子相乘之和
+    }
+    let logicCheckCode: any = 31 - (total % 31);
+    if (logicCheckCode == 31) {
+      logicCheckCode = 0;
+    }
+    const Str = '0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F,G,H,J,K,L,M,N,P,Q,R,T,U,W,X,Y';
+    const Array_Str = Str.split(',');
+    logicCheckCode = Array_Str[logicCheckCode];
+
+    const checkCode = value.substring(17, 18);
+    if (logicCheckCode != checkCode) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/**
+ * 判断是否为银行卡号
+ * @example
+ * isBankCard('6217003810026896707'); // true
+ * isBankCard('12312312312'); // false
+ * @param value
+ * @returns
+ */
+export function isBankCard(value: string): boolean {
+  if ('' == value.trim() || undefined == value) {
+    return false;
+  }
+  const lastNum: any = value.substring(value.length - 1); // 取出最后一位
+
+  const first15Num = value.substring(0, value.length - 1); // 前 15 或 18 位
+  const newArr = [];
+  for (let i = first15Num.length - 1; i > -1; i--) {
+    // 前 15 或 18 位倒序存进数组
+    newArr.push(first15Num.substring(i, i + 1)); // ?
+  }
+  const arrJiShu: any = []; // 奇数位*2 的积 < 9
+  const arrJiShu2: any = []; // 奇数位*2 的积 > 9
+  const arrOuShu: any = []; // 偶数位数组
+  for (let j = 0; j < newArr.length; j++) {
+    if ((j + 1) % 2 == 1) {
+      // 奇数位
+      if (parseInt(newArr[j]) * 2 < 9) {
+        arrJiShu.push(parseInt(newArr[j]) * 2);
+      } else {
+        arrJiShu2.push(parseInt(newArr[j]) * 2);
+      }
+    } else {
+      // 偶数位
+      arrOuShu.push(newArr[j]);
+    }
+  }
+
+  const jsShuChild1: any = []; // 奇数位*2 > 9 的分割之后的数组个位数
+  const jsShuChild2: any = []; // 奇数位*2 > 9 的分割之后的数组十位数
+  for (let h = 0; h < arrJiShu2.length; h++) {
+    jsShuChild1.push(parseInt(arrJiShu2[h]) % 10);
+    jsShuChild2.push(parseInt(arrJiShu2[h]) / 10);
+  }
+
+  let sumJiShu: any = 0; // 奇数位*2 < 9 的数组之和
+  let sumOuShu: any = 0; // 偶数位数组之和
+  let sumJiShuChild1: any = 0; // 奇数位*2 > 9 的分割之后的数组个位数之和
+  let sumJiShuChild2: any = 0; // 奇数位*2 > 9 的分割之后的数组十位数之和
+  let sumTotal: any = 0;
+  for (let m = 0; m < arrJiShu.length; m++) {
+    sumJiShu = sumJiShu + parseInt(arrJiShu[m]);
+  }
+
+  for (let n = 0; n < arrOuShu.length; n++) {
+    sumOuShu = sumOuShu + parseInt(arrOuShu[n]);
+  }
+
+  for (let p = 0; p < jsShuChild1.length; p++) {
+    sumJiShuChild1 = sumJiShuChild1 + parseInt(jsShuChild1[p]);
+    sumJiShuChild2 = sumJiShuChild2 + parseInt(jsShuChild2[p]);
+  }
+  // 计算总和
+  sumTotal = parseInt(sumJiShu) + parseInt(sumOuShu) + parseInt(sumJiShuChild1) + parseInt(sumJiShuChild2);
+
+  // 计算 LuhM 值
+  const k = parseInt(sumTotal) % 10 == 0 ? 10 : parseInt(sumTotal) % 10;
+  const LuhM = 10 - k;
+
+  if (lastNum == LuhM) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+/**
+ * 生成一个指定长度的随机数
+ * @example
+ * randomStr(2); // 43
+ * randomStr(5); // 77192
+ * @param length
+ * @returns
+ */
+export function randomStr(length: number): string {
+  let result,
+    tmp,
+    flag = true;
+  if (length) {
+    while (flag) {
+      tmp = Math.random();
+      if (tmp > 0.1) {
+        result = Math.floor(tmp * Math.pow(10, length));
+        flag = false;
+        return `${result}`;
+      }
+    }
+  } else {
+    while (flag) {
+      tmp = Math.random();
+      if (tmp > 0.1) {
+        result = Math.floor(tmp * Math.pow(10, 5));
+        flag = false;
+        return `${result}`;
+      }
+    }
+  }
+  return `${Math.random()}`;
+}
+
+/**
+ * 计算并生成一个普通 uuid
+ * @example
+ * getUuid(10, 16); // '8D00C29539'
+ * getUuid(5); // '5xRc5'
+ * @param len
+ * @param radix
+ * @returns
+ */
+export function getUuid(len: number, radix: number) {
+  let i, r;
+  const chars = `${BASE_NUMBER}${BASE_CHAR_UP}${BASE_CHAR_LOW}`.split('');
+  const uuid = [];
+  i = void 0;
+  radix = radix || chars.length;
+  if (len) {
+    i = 0;
+    while (i < len) {
+      uuid[i] = chars[0 | (Math.random() * radix)];
+      i++;
+    }
+  } else {
+    r = void 0;
+    uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';
+    uuid[14] = '4';
+    i = 0;
+    while (i < 36) {
+      if (!uuid[i]) {
+        r = 0 | (Math.random() * 16);
+        uuid[i] = chars[i === 19 ? (r & 0x3) | 0x8 : r];
+      }
+      i++;
+    }
+  }
+  return uuid.join('');
+}
+
+/**
+ * 密码强度等级检测(-1~5)
+ * @example
+ * checkPassWordLevel('123'); // -1
+ * checkPassWordLevel('123456'); // 1
+ * checkPassWordLevel('12345678'); // 2
+ * checkPassWordLevel('12345678.'); // 3
+ * checkPassWordLevel('123456789654321.'); // 4
+ * checkPassWordLevel('123456789654321.H'); // 5
+ * @param passWord
+ * @returns
+ */
+export function checkPassWordLevel(passWord: string) {
+  const a = /[^ \f\n\r\t\v\da-zA-Z]/,
+    b = /\d/,
+    c = /[a-zA-Z]/;
+  const d = /^[^ \f\n\r\t\v\da-zA-Z]+$/,
+    e = /^\d+$/,
+    f = /^[a-zA-Z]+$/;
+  if (6 <= passWord.length) {
+    if (a.test(passWord) && b.test(passWord) && c.test(passWord)) {
+      if (8 > passWord.length) {
+        return 2;
+      }
+      if (12 > passWord.length) {
+        return 3;
+      }
+      if (15 > passWord.length) {
+        return 4;
+      }
+      if (15 <= passWord.length) {
+        return 5;
+      }
+    }
+    if (
+      (a.test(passWord) && b.test(passWord)) ||
+      (a.test(passWord) && c.test(passWord)) ||
+      (b.test(passWord) && c.test(passWord))
+    ) {
+      if (8 > passWord.length) {
+        return 2;
+      }
+      if (12 > passWord.length) {
+        return 3;
+      }
+      if (15 > passWord.length) {
+        return 4;
+      }
+      if (15 <= passWord.length) {
+        return 4;
+      }
+    }
+    if (d.test(passWord) || e.test(passWord) || f.test(passWord)) {
+      if (8 <= passWord.length) {
+        return 2;
+      }
+    }
+    return 1;
+  }
+  return -1;
+}
+
+/**
+ * 获取汉字拼音或首字母
+ * @example
+ * getPinYin('你好'); // 'NiHao'
+ * getPinYin('你好', true); // 'NH'
+ * getPinYin('贺'); // 'He'
+ * @param str
+ * @param extractFirst
+ * @returns
+ */
+export function getPinYin(str: string, extractFirst = false) {
+  let i,
+    tmp,
+    key,
+    result = '',
+    flag,
+    firstChar;
+
+  for (i = 0; i < str.length; i++) {
+    tmp = str.substring(i, i + 1);
+    flag = false;
+    for (key in PY_MAPS) {
+      if (isStr(PY_MAPS[key]) && PY_MAPS[key].indexOf(tmp) != -1) {
+        firstChar = key.substring(0, 1).toUpperCase();
+
+        if (true == extractFirst) {
+          result += firstChar;
+        } else {
+          result += firstChar + key.substring(1, key.length).toLowerCase(); // ?
+        }
+
+        flag = true;
+        break;
+      }
+    }
+    if (!flag) {
+      result += tmp;
+    }
+  }
+  return result;
 }

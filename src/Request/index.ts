@@ -2,120 +2,19 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:15:37
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-03-14 11:08:18
+ * @LastEditTime: 2023-08-22 13:45:23
  * @Description: 请求相关函数
  * @FilePath: \js-xxx\src\Request\index.ts
  */
+import { CONTENT_TYPES, HttpMethod } from '@/Data';
 import { getType, isObj, toBool } from '@/Types';
 
 /**
- * content types
- */
-export const CONTENT_TYPES: { [propName: string]: string } = {
-  '7z': 'application/octet-stream',
-  avi: 'video/x-msvideo',
-  bmp: 'image/bmp',
-  css: 'text/css',
-  csv: 'text/csv',
-  conf: 'text/plain',
-  class: 'application/x-java',
-  docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-  doc: 'application/msword',
-  dv: 'video/dv',
-  dwg: 'image/vnd.dwg',
-  exe: 'application/x-msdownload',
-  fig: 'image/x-xfig',
-  flac: 'audio/x-flac',
-  flv: 'video/x-flv',
-  gif: 'image/gif',
-  html: 'text/html',
-  ico: 'image/x-icon',
-  ini: 'text/plain',
-  jpeg: 'image/jpeg',
-  jpg: 'image/jpg',
-  js: 'text/javascript',
-  jsonp: 'application/jsonp',
-  json: 'application/json',
-  log: 'text/plain',
-  lock: 'text/plain',
-  m4a: 'audio/mp4',
-  mkv: 'video/x-matroska',
-  mp3: 'audio/mpeg',
-  mp4: 'video/mp4',
-  m4v: 'video/mp4',
-  moov: 'video/quicktime',
-  mov: 'video/quicktime',
-  movie: 'video/x-sgi-movie',
-  md: 'text/plain',
-  ogg: 'video/x-theora+ogg',
-  oga: 'audio/ogg',
-  ppk: 'text/plain',
-  php: 'application/x-php',
-  py: 'text/x-python',
-  png: 'image/png',
-  pptx: 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
-  ppt: 'application/vnd.ms-powerpoint',
-  pdf: 'application/pdf',
-  reg: 'text/x-ms-regedit',
-  rar: 'application/octet-stream',
-  so: 'application/x-sharedlib',
-  svg: 'image/svg+xml',
-  sql: 'text/x-sql',
-  'tar.gz': 'application/x-compressed-tar',
-  tgz: 'application/x-compressed-tar',
-  ttf: 'application/x-font-ttf',
-  tif: 'image/tiff',
-  txt: 'text/plain',
-  ts: 'text/plain',
-  tsx: 'text/plain',
-  jsx: 'text/plain',
-  vue: 'text/plain',
-  scss: 'text/plain',
-  less: 'text/plain',
-  uri: 'text/x-uri',
-  url: 'text/x-uri',
-  wav: 'audio/x-wav',
-  wbmp: 'image/vnd.wap.wbmp',
-  webm: 'video/webm',
-  wmv: 'video/x-ms-wmv',
-  xls: 'application/vnd.ms-excel',
-  xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-  xhtml: 'application/xhtml+xml',
-  xml: 'application/xml',
-  xmind: 'application/octet-stream',
-  yml: 'text/plain',
-  yaml: 'text/plain',
-  zip: 'application/x-zip-compressed',
-  binary: 'application/octet-stream',
-  form: 'application/x-www-form-urlencoded',
-  file: 'multipart/form-data',
-  utf8: 'charset=utf-8',
-};
-
-/**
- * Http Method
- */
-export enum HttpMethod {
-  GET = 'GET',
-  POST = 'POST',
-  PUT = 'PUT',
-  PATCH = 'PATCH',
-  DELETE = 'DELETE',
-  OPTIONS = 'OPTIONS',
-  get = 'GET',
-  post = 'POST',
-  put = 'PUT',
-  patch = 'PATCH',
-  delete = 'DELETE',
-  options = 'OPTIONS',
-}
-
-/**
  * 对象转 queryString 暂时只支持两层数据，第二层对象与与数组值不能为引用类型。
- * Example:
- * `qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3] }) => 'start=0&count=20&obj[a]=1&arr[]=1&arr[]=2&arr[]=3'`
- * `qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3] }, { arr2str: true }) => 'start=0&count=20&obj[a]=1&arr=1,2,3'`
- * `qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3], str: '1' }, { hasIndex: true }) => 'start=0&count=20&obj[a]=1&arr[0]=1&arr[1]=2&arr[2]=3&str=1'`
+ * @example
+ * qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3] }); // 'start=0&count=20&obj[a]=1&arr[]=1&arr[]=2&arr[]=3'
+ * qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3] }, { arr2str: true }); // 'start=0&count=20&obj[a]=1&arr=1,2,3'
+ * qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3], str: '1' }, { hasIndex: true }); // 'start=0&count=20&obj[a]=1&arr[0]=1&arr[1]=2&arr[2]=3&str=1'
  * @param obj 源数据
  * @returns
  */
@@ -160,10 +59,10 @@ export function qsStringify(
 }
 
 /**
- * 获取 query string 参数
- * Example:
- * `qsParse('start=0&count=20&x=1&x=2&x=3', 'x') => [1, 2, 3]`
- * `qsParse('start=0&count=20&x=1&x=2&x=3') => { start: '0', count: '20', x: [1, 2, 3], '/': 'start=0&count=20&x=1&x=2&x=3' }`
+ * 获取 query string 参数对象
+ * @example
+ * qsParse('start=0&count=20&x=1&x=2&x=3', 'x'); // [1, 2, 3]
+ * qsParse('start=0&count=20&x=1&x=2&x=3'); // { start: '0', count: '20', x: [1, 2, 3], '/': 'start=0&count=20&x=1&x=2&x=3' }
  * @param url query string
  * @param key 参数名
  * @returns
@@ -196,10 +95,10 @@ export function qsParse(url?: string, key?: string): any {
 
 /**
  * 获取不带任何参数或片段标识符的当前 URL
- * Example:
- * `getBaseURL('https://test.com/index?name=leo&org=biugle#test') => 'https://test.com/index'`
- * `getBaseURL('') => ''`
- * `getBaseURL() => 当前页面 BaseURL`
+ * @example
+ * getBaseURL('https://test.com/index?name=leo&org=biugle#test'); // 'https://test.com/index'
+ * getBaseURL(''); // ''
+ * getBaseURL(); // 当前页面 BaseURL
  * @param url
  * @returns
  */
@@ -210,10 +109,10 @@ export function getBaseURL(url?: string): string {
 
 /**
  * 获取 url 查询参数字符串
- * Example:
- * `getQueryString('https://test.com/index?name=leo&org=biugle#test') => 'name=leo&org=biugle'`
- * `getQueryString('') => ''`
- * `getQueryString() => 当前页面 QueryString 字符串部分`
+ * @example
+ * getQueryString('https://test.com/index?name=leo&org=biugle#test'); // 'name=leo&org=biugle'
+ * getQueryString(''); // ''
+ * getQueryString(); // 当前页面 QueryString 字符串部分
  * @param url
  * @returns
  */
@@ -223,10 +122,10 @@ export function getQueryString(url?: string): any {
 
 /**
  * 获取查询参数对象
- * Example:
- * `getSearchParams('https://test.com/index?name=leo&org=biugle#test') => {name: 'leo', org: 'biugle'}`
- * `getSearchParams('') => {}`
- * `getSearchParams() => 当前页面 SearchParams 对象`
+ * @example
+ * getSearchParams('https://test.com/index?name=leo&org=biugle#test'); // {name: 'leo', org: 'biugle'}
+ * getSearchParams(''); // {}
+ * getSearchParams(); // 当前页面 SearchParams 对象
  * @param url
  * @returns
  */
@@ -241,9 +140,9 @@ export function getSearchParams(url?: string): any {
 
 /**
  * ajax 简单封装
- * Example:
- * `xAjax('get', 'https://test.cn', { params: { test: 123, hello: 456 }, success: (data) => console.log('success', data), fail: (error) => console.log('fail', error) }) => ajax`
- * `xAjax('POST', 'https://test.cn', { contentType: 'application/json', data: { test: 123 }, success: (data) => console.log('success', data), fail: (error) => console.log('fail', error) }) => ajax`
+ * @example
+ * xAjax('get', 'https://test.cn', { params: { test: 123, hello: 456 }, success: (data) => console.log('success', data), fail: (error) => console.log('fail', error) }); // ajax
+ * xAjax('POST', 'https://test.cn', { contentType: 'application/json', data: { test: 123 }, success: (data) => console.log('success', data), fail: (error) => console.log('fail', error) }); // ajax
  * @param method
  * @param url
  * @param options
@@ -307,9 +206,9 @@ export function xAjax(
 
 /**
  * fetch 简单封装
- * Example:
- * `xFetch('get', 'https://test.cn', { params: { test: 123, hello: 456 } }).then(res => res.json()).then(data => console.log(data)) => fetchXPromise`
- * `xFetch('POST', 'https://test.cn', { contentType: 'application/json', data: { test: 123 } }).catch(error => console.log(error)) => fetchXPromise`
+ * @example
+ * xFetch('get', 'https://test.cn', { params: { test: 123, hello: 456 } }).then(res => res.json()).then(data => console.log(data)); // fetchXPromise
+ * xFetch('POST', 'https://test.cn', { contentType: 'application/json', data: { test: 123 } }).catch(error => console.log(error)); // fetchXPromise
  * @param method
  * @param url
  * @param options
@@ -343,11 +242,11 @@ export function xFetch(
 // eslint-disable-next-line spellcheck/spell-checker
 /**
  * 获取常见的 content-type
- * Example:
- * `getContentType('form') => 'application/x-www-form-urlencoded'`
- * `getContentType('file') => 'multipart/form-data'`
- * `getContentType('pdf') => 'application/pdf'`
- * `getContentType('unknown') => 'application/octet-stream'`
+ * @example
+ * getContentType('form'); // 'application/x-www-form-urlencoded'
+ * getContentType('file'); // 'multipart/form-data'
+ * getContentType('pdf'); // 'application/pdf'
+ * getContentType('unknown'); // 'application/octet-stream'
  * @param fileType
  * @returns
  */
