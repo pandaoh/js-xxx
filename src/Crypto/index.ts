@@ -24,7 +24,7 @@ const SECRET_KEY_REG = /^[0-9a-fA-F]{16}$/i;
  * @param data 需要加密的数据
  * @param secretKey [可选] 十六位十六进制数作为密钥
  * @param secretIv [可选] 十六位十六进制数作为密钥偏移量
- * @returns {string}
+ * @returns
  */
 export function encrypt(data: any, secretKey?: string, secretIv?: string): string {
   if (!data) {
@@ -66,7 +66,7 @@ export function encrypt(data: any, secretKey?: string, secretIv?: string): strin
  * @param jsonDecode 是否需要解析成 json
  * @param secretKey [可选] 十六位十六进制数作为密钥
  * @param secretIv [可选] 十六位十六进制数作为密钥偏移量
- * @returns {string}
+ * @returns
  */
 export function decrypt(dataStr: string, jsonDecode = false, secretKey?: string, secretIv?: string): string {
   if (!dataStr) {

@@ -25,7 +25,7 @@ export function getType(variable: any): string {
  * toStr({}); /// '{}'
  * toStr([1, 2]); /// '[1,2]'
  * toStr(null); /// ''
- * @param value
+ * @param value 值
  * @returns
  */
 export function toStr(value: any): string {
@@ -44,7 +44,7 @@ export function toStr(value: any): string {
  * toNum({}); /// 0
  * toNum([2]); /// 2
  * toNum('-123'); /// -123
- * @param value
+ * @param value 值
  * @returns
  */
 export function toNum(value: any): number {
@@ -66,8 +66,8 @@ export function toNum(value: any): number {
  * toBool('undefined'); /// false
  * toBool('NaN'); /// false
  * toBool(null); /// false
- * @param value
- * @param falseList
+ * @param value 值
+ * @param falseList 判断为 false 的值列表
  * @returns
  */
 export function toBool(value: any, falseList: any[] = []): boolean {
@@ -106,7 +106,7 @@ export function isJSON(str: any): boolean {
  * @example
  * isBool(true); /// true
  * isBool(null); /// false
- * @param value
+ * @param value 值
  * @returns
  */
 export function isBool(value: any): boolean {
@@ -118,7 +118,7 @@ export function isBool(value: any): boolean {
  * @example
  * isDate(new Date()); /// true
  * isDate(null); /// false
- * @param value
+ * @param value 值
  * @returns
  */
 export function isDate(value: any): boolean {
@@ -130,7 +130,7 @@ export function isDate(value: any): boolean {
  * @example
  * isStr('test'); /// true
  * isStr(null); /// false
- * @param value
+ * @param value 值
  * @returns
  */
 export function isStr(value: any): boolean {
@@ -142,7 +142,7 @@ export function isStr(value: any): boolean {
  * @example
  * isUndef(undefined); /// true
  * isUndef(null); /// false
- * @param value
+ * @param value 值
  * @returns
  */
 export function isUndef(value: any): boolean {
@@ -154,7 +154,7 @@ export function isUndef(value: any): boolean {
  * @example
  * isNull(undefined); /// false
  * isNull(null); /// true
- * @param value
+ * @param value 值
  * @returns
  */
 export function isNull(value: any): boolean {
@@ -166,7 +166,7 @@ export function isNull(value: any): boolean {
  * @example
  * isNum(NaN); /// false
  * isNum(1); /// true
- * @param value
+ * @param value 值
  * @returns
  */
 export function isNum(value: any): boolean {
@@ -178,7 +178,7 @@ export function isNum(value: any): boolean {
  * @example
  * isArr([]); /// true
  * isArr({}); /// false
- * @param value
+ * @param value 值
  * @returns
  */
 export function isArr(value: any): boolean {
@@ -190,7 +190,7 @@ export function isArr(value: any): boolean {
  * @example
  * isObj({}); /// true
  * isObj(null); /// false
- * @param value
+ * @param value 值
  * @returns
  */
 export function isObj(value: any): boolean {
@@ -203,7 +203,7 @@ export function isObj(value: any): boolean {
  * isElement(document.body); /// true
  * isElement(document); /// false
  * isElement({}); /// false
- * @param value
+ * @param value 值
  * @returns
  */
 export function isElement(value: any): boolean {
@@ -217,7 +217,7 @@ export function isElement(value: any): boolean {
  * isFn(async function(){}); /// true
  * isFn(new Promise((resolve, reject) => resolve()); /// false
  * isFn({}); /// false
- * @param value
+ * @param value 值
  * @returns
  */
 export function isFn(value: any): boolean {
@@ -231,7 +231,7 @@ export function isFn(value: any): boolean {
  * isPromise(function(){}); /// false
  * isPromise(async function(){}); /// false
  * isPromise(new Promise((resolve, reject) => resolve())); /// true
- * @param value
+ * @param value 值
  * @returns
  */
 export function isPromise(value: any): boolean {
@@ -243,7 +243,7 @@ export function isPromise(value: any): boolean {
  * @example
  * isNaN(1); /// false
  * isNaN(NaN); /// true
- * @param value
+ * @param value 值
  * @returns
  */
 export function isNaN(value: any): boolean {
@@ -255,7 +255,7 @@ export function isNaN(value: any): boolean {
  * @example
  * isBlob(new Blob()); /// true
  * isBlob(null); /// false
- * @param value
+ * @param value 值
  * @returns
  */
 export function isBlob(value: any): boolean {
@@ -267,7 +267,7 @@ export function isBlob(value: any): boolean {
  * @example
  * isArrayBuffer(new ArrayBuffer()); /// true
  * isArrayBuffer(null); /// false
- * @param value
+ * @param value 值
  * @returns
  */
 export function isArrayBuffer(value: any): boolean {

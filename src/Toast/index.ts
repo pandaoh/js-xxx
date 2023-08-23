@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-06-16 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-22 13:54:36
+ * @LastEditTime: 2023-08-23 11:47:31
  * @Description: 自定义 toast
  * @FilePath: \js-xxx\src\Toast\index.ts
  */
@@ -32,7 +32,7 @@ export type ToastOptions = {
  * `export function showToast(options: ToastOptions);`
  * @example
  * showToast({ type: 'success', content: '这是一个演示 Toast' }); /// 显示 success 类型的 toast
- * @param options
+ * @param options 显示配置
  * @returns
  */
 export const showToast = (function () {
@@ -97,7 +97,7 @@ export const showToast = (function () {
  * 隐藏 toast 不传值关闭所有 toast
  * @example
  * const toast = showToast({ content: '这是一个演示 Toast' }); /// hideToast(toast);
- * @param toast
+ * @param toast toast 实例
  * @returns
  */
 export function hideToast(toast?: any) {
@@ -116,8 +116,8 @@ export function hideToast(toast?: any) {
  * 快速展示 Toast
  * @example
  * const myToast = Toast('这是一个快速演示 Toast'); /// hideToast(myToast);
- * @param msg
- * @param type
+ * @param msg 内容
+ * @param type 类型
  * @returns
  */
 export function Toast(
@@ -137,7 +137,7 @@ export function Toast(
  * Loading Toast 不会自动关闭
  * @example
  * const myLoading = Loading(msg?); /// hideToast(myLoading);
- * @param msg
+ * @param msg 内容
  * @returns
  */
 export function Loading(msg: string): any {

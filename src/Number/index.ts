@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 16:24:47
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-23 09:51:50
+ * @LastEditTime: 2023-08-23 11:29:02
  * @Description: 常用数字相关函数
  * @FilePath: \js-xxx\src\Number\index.ts
  */
@@ -111,7 +111,7 @@ export function isDecimal(value: string, type?: '-' | '+', noLastZero = false): 
  * 数字人性化显示
  * @example
  * formatNumber('12312300'); /// '12,312,300'
- * @param value
+ * @param value 数值
  * @returns
  */
 export function formatNumber(value: string | number): string {

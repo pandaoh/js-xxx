@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-22 14:23:45
+ * @LastEditTime: 2023-08-23 12:24:34
  * @Description: 利用 dom 的一些函数
  * @FilePath: \js-xxx\src\Dom\index.ts
  */
@@ -107,7 +107,7 @@ export function copyContent(targetDom: any, addMsg: any = null) {
  * @example
  * scrollToTop('body'); /// 滚动到顶部
  * @param elementSelector 指定元素选择器
- * @param to ('start'|'end')[default: 'start']
+ * @param to `('start'|'end')[default: 'start']`
  * @returns
  */
 export function scrollToTop(elementSelector: string, to: 'start' | 'end' = 'start') {
@@ -424,8 +424,8 @@ export function downloadContent(name: string, content: any) {
  * marquee('#demo'); /// 默认横向正常滚动(loopType=normal)
  * marquee('.demo-y', {direction: 'Y', loopType: 'infinite', speed: 3}); /// Y 轴无限无缝滚动，speed > 0 越小速度越快。
  * marquee('.demo-x', {direction: 'X', loopType: 'origin', speed: 3, style: 'animation-delay:2s;', parentStyle: 'color:red;'}); /// X 轴无限来回滚动
- * @param selector
- * @param options
+ * @param selector 选择器字符串
+ * @param options 动画配置
  * @returns
  */
 export function marquee(
@@ -493,8 +493,8 @@ export function marquee(
  * @example
  * stackSticky('.stack', 'top'); /// 所有 .stack 元素自动在 top 上堆叠
  * stackSticky('.stack', 'left'); /// 所有 .stack 元素自动在 left 上堆叠
- * @param selectors
- * @param direction
+ * @param selectors 选择器字符串
+ * @param direction 堆叠方向
  * @returns
  */
 export function stackSticky(selectors: string, direction = 'top'): void {
@@ -567,7 +567,7 @@ export function calcFontSize(clientRatio = 16 / 9, contentCenter = false, offset
  * px 转 rem
  * @example
  * px2rem(30); /// 转化后的 rem
- * @param px
+ * @param px 像素值
  * @returns
  */
 export function px2rem(px: number) {

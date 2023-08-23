@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-23 09:56:42
+ * @LastEditTime: 2023-08-23 11:20:28
  * @Description: websocket
  * @FilePath: \js-xxx\src\WebSocket\index.ts
  */
@@ -16,7 +16,7 @@ let xWebSocketTimer: any;
  * @example
  * initWebSocket({ url: 'ws://localhost:8080/ws', timeout: 30000, onOpen: () => {}, onMessage: () => {}, onClose: () => {}, onError: () => {}, reconnect: {} })
  * @param options `{url, onOpen, onMessage, onClose, onError, timeout, reconnect: {times, delay, onReconnect} | boolean} WebSocket 配置`
- * @returns {WebSocket}
+ * @returns
  */
 export function initWebSocket(options: {
   url: string;
@@ -66,7 +66,7 @@ export function initWebSocket(options: {
       times--;
       setTimeout(() => {
         options.reconnect?.onReconnect?.(xWebSocket, options);
-        // 记得重新赋值
+        // 重新赋值
         xWebSocket = initWebSocket({ ...options, reconnect: { ...options.reconnect, times: times } });
       }, options.reconnect?.delay ?? 1000);
     }
@@ -89,7 +89,7 @@ export function initWebSocket(options: {
  * sendWsMsg({ type: 'login', data: { username: 'admin', password: '123456' }}, true); /// true/false
  * sendWsMsg('testMsg'); /// true/false
  * @param message 消息
- * @param isJSONEncode 是否 JSON 序列化
+ * @param isJSONEncode 是否对数据 JSON 序列化
  * @returns
  */
 export function sendWsMsg(message: any, isJSONEncode = false): boolean {

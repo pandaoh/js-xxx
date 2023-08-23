@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:53:39
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-23 10:39:03
+ * @LastEditTime: 2023-08-23 11:39:43
  * @Description: 因项目需要常用函数，不管任何项目，都放到一起。注意甄别，没有复用意义的函数就不要添加了。
  * @FilePath: \js-xxx\src\Others\index.ts
  */
@@ -243,8 +243,8 @@ export function isAppleDevice(): boolean {
  * Author: WuXingHeng
  * @example
  * dom.onclick = onClick2MoreClick(300, clickOneCallBack, clickTwoCallBack, clickThreeCallBack, clickFourCallBack); /// void
- * @param {number} delay
- * @param {Array} events
+ * @param delay 点击间隔
+ * @param events 事件多击 rest 参数
  * @returns
  */
 export function onClick2MoreClick(delay = 300, ...events: Array<any>): any {
@@ -273,9 +273,9 @@ export function onClick2MoreClick(delay = 300, ...events: Array<any>): any {
  * 单独绑定多击事件
  * @example
  * dom.onclick = bindMoreClick(moreClickCallBack, 4, 500); /// 绑定 4 击事件
- * @param fn
- * @param times
- * @param delay
+ * @param fn 触发方法
+ * @param times 几次点击触发
+ * @param delay 点击间隔
  * @returns
  */
 export function bindMoreClick(fn: any, times = 3, delay = 300) {
@@ -303,10 +303,10 @@ export function bindMoreClick(fn: any, times = 3, delay = 300) {
  * 设置长按事件-支持加入单击事件
  * @example
  * addLongPressEvent(document.querySelector('.img-btn'), (event); /// console.log('addLongPressEvent'), 3000); /// 长按会触发事件
- * @param element
- * @param longPressCallback
- * @param duration
- * @param clickCallback
+ * @param element 需要绑定事件的元素
+ * @param longPressCallback 长按事件函数
+ * @param duration 长按时间
+ * @param clickCallback 单击事件函数(可选)
  * @returns
  */
 export function addLongPressEvent(element: any, longPressCallback: any, duration = 2500, clickCallback?: any) {
@@ -418,9 +418,9 @@ export function disableConflictEvent(event: any) {
  * checkVersion('1.0.1-rc', '1.0.0', '-rc'); /// 1
  * checkVersion('1.0.0', '1.0.1'); /// -1
  * checkVersion('1.0.0', '1.0.0'); /// 0
- * @param targetVersion
- * @param currentVersion
- * @param testStr default(-rc)
+ * @param targetVersion 目标版本
+ * @param currentVersion 当前版本
+ * @param testStr 需要替换的字符串 default(-rc)
  * @returns
  */
 export function checkVersion(targetVersion: string, currentVersion: string, testStr = '-rc'): -1 | 1 | 0 {
@@ -543,7 +543,7 @@ export function isRhNegative(input: string): boolean {
  * 获取血型枚举信息
  * @example
  * getBloodGroup('A'); /// { value: 'A', label: 'A 型', color: '#1890FF', lower: 'a', upper: 'A' }
- * @param bloodGroup
+ * @param bloodGroup 血型
  * @returns
  */
 export function getBloodGroup(bloodGroup: string): {
@@ -611,8 +611,8 @@ export function getBloodGroup(bloodGroup: string): {
  * dataTo('.class_name', 'xxx'); /// xxx 会填入到类名为 class-name 的元素中
  * dataTo('.class.name', 'xxx'); /// xxx 会填入到类名为 class-name 的元素中
  * dataTo('#id.name', 'xxx'); /// xxx 会填入到 id 名为 id-name 的元素中
- * @param key
- * @param value
+ * @param key key 值
+ * @param value value 值
  * @returns
  */
 export function dataTo(key: string, value: any): void {
@@ -637,9 +637,9 @@ export function dataTo(key: string, value: any): void {
  * watermark(document.body, 'My Watermark'); /// 在 body 中生成水印
  * watermark(document.body, 'My Watermark', { fontSize: 120, color: 'red', repeat: false, angle: 0 }); /// 在 body 中生成水印
  * watermark(document.body, 'My Watermark', { fontSize: 20, color: 'red', repeat: true, angle: 90 }); /// 在 body 中生成水印
- * @param dom
- * @param text
- * @param options
+ * @param dom 需要生成水印的 dom
+ * @param text 水印内容
+ * @param options 样式配置
  * @returns
  */
 export function watermark(dom: any, text: string, options: any = {}) {
@@ -718,7 +718,7 @@ export function watermark(dom: any, text: string, options: any = {}) {
  * getCron({ day: '1-5' }); /// '* * 1-5 * * '
  * getCron({ day: '1,5' }); /// '* * 1,5 * * '
  * getCron({ day: '1/5' }); /// '* * 1/5 * * '
- * @param options
+ * @param options cron 配置
  * @returns
  */
 export function getCron({ minute = '*', hour = '*', day = '*', month = '*', week = '*' } = {}) {
@@ -831,7 +831,7 @@ export function getCron({ minute = '*', hour = '*', day = '*', month = '*', week
  * @example
  * log([1, 2, 2, 3, 3], {a: 1, b: 2}, 'test', true); /// 打印数据
  * log('danger'); /// 打印数据
- * @param args
+ * @param args 打印数据 rest 参数
  * @returns
  */
 export function log(...args: any[]): void {
@@ -872,8 +872,8 @@ export function log(...args: any[]): void {
  * logVar([1, 2, 2, 3, 3]); /// 打印数据
  * logVar({a: 1, b: 2}, 'danger'); /// 打印数据
  * logVar({a: 1, b: 2}, 'success'); /// 打印数据
- * @param value
- * @param logLevel
+ * @param value 打印的值
+ * @param logLevel 日志等级
  * @returns
  */
 export function logVar(value: any, logLevel = 'info'): string {
@@ -895,7 +895,7 @@ export function logVar(value: any, logLevel = 'info'): string {
  * transferScanStr('@123'); /// '123'
  * transferScanStr('#test~'); /// 'test'
  * transferScanStr(undefined); /// ''
- * @param value
+ * @param value 值
  * @returns
  */
 export function transferScanStr(value: string): string {
@@ -911,8 +911,8 @@ export function transferScanStr(value: string): string {
  * forceToStr(123123123); /// '123123123'
  * forceToStr(undefined); /// '-'
  * forceToStr(undefined, 0); /// '0'
- * @param value
- * @param defaultValue
+ * @param value 值
+ * @param defaultValue 默认值
  * @returns
  */
 export function forceToStr(value: any, defaultValue = '-'): string {
@@ -925,8 +925,8 @@ export function forceToStr(value: any, defaultValue = '-'): string {
  * @example
  * transferCSVData([{ prop: 'name' }, { prop: 'age' }], [{ name: '张三', age: 15 }]); /// 可以导出的字符数据
  * transferCSVData([{ label: '姓名', prop: 'name' }, { label: '年龄', prop: 'age' }], [{ name: '张三', age: 15 }]); /// 可以导出的字符数据
- * @param fields
- * @param data
+ * @param fields 导出的栏位
+ * @param data 数据
  * @returns
  */
 export function transferCSVData(fields: { label?: string; prop: string }[], data: any[]): string {
@@ -946,9 +946,9 @@ export function transferCSVData(fields: { label?: string; prop: string }[], data
  * exportFile(data); /// 导出 txt 文件
  * exportFile(data, 'csv-导出文件测试', 'csv'); /// 导出 csv 文件
  * exportFile('http://a.biugle.cn/img/cdn/dev/avatar/1.png', 'test', 'png'); /// 导出 png 文件
- * @param data
- * @param fileName
- * @param fileType
+ * @param data 数据
+ * @param fileName 文件名
+ * @param fileType 文件类型
  * @returns
  */
 export function exportFile(data: string, fileName?: string, fileType = 'txt'): void {

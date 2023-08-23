@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-23 09:45:16
+ * @LastEditTime: 2023-08-23 12:20:55
  * @Description: 工具函数
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
@@ -111,8 +111,8 @@ export function get1Var(data: any): any {
  * @example
  * getRandVar({ a: 1, b: 3 }); /// 1
  * getRandomVar([1, 2, 3, 4], 2); /// [2, 4]
- * @param value
- * @param count
+ * @param value 值
+ * @param count 获取数据量
  * @returns
  */
 export function getRandVar(value: any, count = 1): any | any[] {
@@ -200,7 +200,7 @@ export function throttle(fn: any, delay = 2000) {
  * 是把接受多个参数的函数变换成接受一个单一参数(最初函数的第一个参数)的函数，并且返回接受余下的参数且返回结果的新函数的技术。
  * @example
  * curryIt(function (a, b, c) {return a + b + c})(1)(2)(3); /// 6
- * @param fn
+ * @param fn 函数
  * @returns
  */
 export function curryIt(fn: any) {
@@ -225,8 +225,8 @@ export function curryIt(fn: any) {
  * 全局捕获异常
  * @example
  * globalError((message, source, lineNo, colNo, error) => console.log('全局捕获异常'), false); /// '全局捕获异常'
- * @param {any} fn (message, source, lineNo, colNo, error)
- * @param {boolean} notShowConsole 是否不回显控制台
+ * @param fn (message, source, lineNo, colNo, error)
+ * @param notShowConsole 是否不回显控制台
  * @returns
  */
 export function globalError(fn: any, notShowConsole = true) {
@@ -413,8 +413,8 @@ export function uuid(): string {
  * @example
  * getKey(); /// 'M2rmCcGpXCa5MTdN4Kks5'
  * getKey(2, 'test-'); /// test-aK'
- * @param size
- * @param prefix
+ * @param size 指定长度
+ * @param prefix 前缀
  * @returns
  */
 export function getKey(size = 21, prefix = ''): string {
@@ -444,7 +444,7 @@ export function getKey(size = 21, prefix = ''): string {
  * getSize([]); /// 0
  * getSize({a: 1, b: 2}); /// 2
  * getSize(null); /// 0
- * @param value
+ * @param value 值
  * @returns
  */
 export function getSize(value: any): number {
@@ -462,7 +462,7 @@ export function getSize(value: any): number {
  * 在浏览器中打开文件选择框
  * @example
  * openFile({ multiple: true, accept: '.txt' }).then(fileList => console.log(fileList));
- * @param options
+ * @param options 打开配置
  * @returns
  */
 export function openFile(options?: { accept?: string; multiple?: boolean }): Promise<any> {
@@ -492,7 +492,7 @@ export function openFile(options?: { accept?: string; multiple?: boolean }): Pro
  * 开启全屏
  * @example
  * openFullscreen(); /// 开启全屏
- * @param element
+ * @param element 元素
  * @returns
  */
 export function openFullscreen(element: any = document.body) {
@@ -511,7 +511,6 @@ export function openFullscreen(element: any = document.body) {
  * 关闭全屏
  * @example
  * closeFullscreen(); /// 关闭全屏
- * @param
  * @returns
  */
 export function closeFullscreen() {
@@ -537,8 +536,8 @@ export function closeFullscreen() {
  * @example
  * intersection([1, 2, 2, 3, 3], [1, 2, 4, 5]); /// [1, 2]
  * intersection({a: 1, b: 2}, {a: 1, c: 3, b: 4}); /// {a: 1}
- * @param paramA
- * @param paramB
+ * @param paramA 值 A
+ * @param paramB 值 B
  * @returns
  */
 export function intersection(paramA: any, paramB: any): any {
@@ -572,8 +571,8 @@ export function intersection(paramA: any, paramB: any): any {
  * @example
  * union([1, 2, 2, 3, 3], [1, 2, 4, 5]); /// [1, 2, 3, 4, 5]
  * union({a: 1, b: 2}, {a: 1, c: 3, b: 4}); /// {a: 1, c: 3, b: 2}
- * @param paramA
- * @param paramB
+ * @param paramA 值 A，若冲突以此值为准。
+ * @param paramB 值 B
  * @returns
  */
 export function union(paramA: any, paramB: any): any {
@@ -597,8 +596,8 @@ export function union(paramA: any, paramB: any): any {
  * @example
  * difference([1, 2, 2, 3, 3], [1, 2, 4, 5]); /// [3]
  * difference({a: 1, b: 2}, {a: 1, c: 3, b: 4}); /// {b: 2}
- * @param paramA
- * @param paramB
+ * @param paramA 值 A，若冲突以此值为准。
+ * @param paramB 值 B
  * @returns
  */
 export function difference(paramA: any, paramB: any): any {
@@ -627,7 +626,7 @@ export function difference(paramA: any, paramB: any): any {
  * @example
  * jsonClone([1, 2, 2, 3, 3]); /// [1, 2, 2, 3, 3]
  * jsonClone({a: 1, b: 2}); /// {a: 1, b: 2}
- * @param value
+ * @param value 值
  * @returns
  */
 export function jsonClone(value: any): any {
@@ -646,8 +645,8 @@ export function jsonClone(value: any): any {
  * logRunTime(async () => { await fun1(); await fun2(); });
  * logRunTime($promiseReturnFunction);
  * logRunTime(new Promise((resolve, reject) => { setTimeout(() => resolve('test'), 1000) }));
- * @param fn
- * @param timeKey
+ * @param fn 方法函数
+ * @param timeKey 打印关键 key
  * @returns
  */
 export function logRunTime(fn: any, timeKey: string): void {
@@ -732,7 +731,7 @@ export function Logger(): {
  * @example
  * showVar([1, 2, 2, 3, 3]); /// 显示序列化之后的数据
  * showVar({a: 1, b: 2}); /// 显示序列化之后的数据
- * @param value
+ * @param value 值
  * @returns
  */
 export function showVar(value: any): any {
@@ -754,8 +753,8 @@ export function showVar(value: any): any {
  * contains([[1, 2], [3, 4]], [4, 3]); /// true
  * contains([[1, 2], [3, 4]], [3, 4]); /// true
  * contains([[1, 2], [3, 4]], [1, 3]); /// false
- * @param value
- * @param target
+ * @param value 值
+ * @param target 目标值
  * @returns
  */
 export function contains(value: any[], target: any): boolean {
@@ -782,8 +781,8 @@ export function contains(value: any[], target: any): boolean {
  * same('admin', 'admin'); /// true
  * same('admin', 'admins'); /// false
  * same('admins', 'admin'); /// false
- * @param valueA
- * @param valueB
+ * @param valueA 值 A
+ * @param valueB 值 B
  * @returns
  */
 export function same(valueA: any[] | string, valueB: any[] | string): boolean {
@@ -806,7 +805,7 @@ export function same(valueA: any[] | string, valueB: any[] | string): boolean {
  * getSortVar({ b: 3, a: 2 }); /// { a: 2, b: 3 }
  * getSortVar({ a: 2, b: 3 }); /// { a: 2, b: 3 }
  * getSortVar([1, 3, 2]); /// [1, 2, 3]
- * @param value
+ * @param value 值
  * @returns
  */
 export function getSortVar(value: any): any {
@@ -833,7 +832,7 @@ export function getSortVar(value: any): any {
  * inversion('123'); /// '321'
  * inversion(); /// undefined
  * inversion(true); /// true
- * @param value
+ * @param value 值
  * @returns
  */
 export function inversion(value: any): any {
@@ -854,9 +853,9 @@ export function inversion(value: any): any {
  * let a = 5;
  * setTimeout(() => (a = 10), 5000);
  * waitUntil(() => a === 10).then(() => { console.log(a) });
- * @param condition
- * @param timeout
- * @param interval
+ * @param condition 函数
+ * @param timeout 超时
+ * @param interval 执行间隔
  * @returns
  */
 export function waitUntil(condition: any, timeout = 0, interval = 250): Promise<any> {
@@ -899,7 +898,7 @@ export function waitUntil(condition: any, timeout = 0, interval = 250): Promise<
  * ms('1000'); /// 1000
  * ms(1500); /// '1.5s'
  * ms(60000); /// '1m'
- * @param str
+ * @param str 值
  * @returns
  */
 export function ms(str: any): string | number {
@@ -939,9 +938,9 @@ export function ms(str: any): string | number {
  * @example
  * transferFileToBase64(file, 'application/pdf;charset=utf-8', (res) => console.log({ res })); /// result object
  * transferFileToBase64('test', 'text/plain', (res) => console.log({ res })); /// result object
- * @param content BlobPart | any
- * @param contentType
- * @param callBack
+ * @param content BlobPart | any 内容
+ * @param contentType 内容类型
+ * @param callBack 回调函数
  * @returns
  */
 export function transferFileToBase64(content: any, contentType: string, callBack: any): void {
@@ -967,7 +966,7 @@ export function transferFileToBase64(content: any, contentType: string, callBack
  * checkIdCard('003424870506202'); /// false
  * checkIdCard('415106199801012130'); /// true
  * checkIdCard('123123123123123222'); /// false
- * @param value
+ * @param value 字符串值
  * @returns
  */
 export function checkIdCard(value: string): boolean {
@@ -984,8 +983,8 @@ export function checkIdCard(value: string): boolean {
  * getAge('1998-9-28'); /// 24
  * getAge('1998-6-8', '2023-7'); /// 25
  * getAge('2023'); /// -1
- * @param birthday
- * @param targetDate
+ * @param birthday 生日
+ * @param targetDate 目标日期
  * @returns
  */
 export function getAge(birthday: any, targetDate?: any): number {
@@ -998,7 +997,7 @@ export function getAge(birthday: any, targetDate?: any): number {
  * getAnimal('1998'); /// '虎'
  * getAnimal('1998-6-8'); /// '虎'
  * getAnimal('2023'); /// '兔'
- * @param date
+ * @param date 日期
  * @returns
  */
 export function getAnimal(date: any): string {
@@ -1013,7 +1012,7 @@ export function getAnimal(date: any): string {
  * transferIdCard('415106199801012130');
  * /// {"age":24,"year":"1998","idCard":"415106199801012130","sex":"男","constellation":{"cn":"魔羯","en":"Capricorn","date":"12.22-1.19"},"gender":1,"province":"河南","animal":"虎","birthday":"1998-01-01"}
  * transferIdCard('xxxxx'); /// {}
- * @param idCard
+ * @param idCard 字符串值
  * @returns
  */
 export function transferIdCard(idCard: string): any {
@@ -1051,7 +1050,7 @@ export function transferIdCard(idCard: string): any {
  * @example
  * transferMoney(900); /// '玖佰元整'
  * transferMoney(852.5); /// '捌佰伍拾贰元伍角'
- * @param n
+ * @param n 数值
  * @returns
  */
 export function transferMoney(n: number): string {
@@ -1092,8 +1091,8 @@ export function transferMoney(n: number): string {
  * @example
  * formatMoney(90000); /// '90,000.00'
  * formatMoney(852.1314, 2); /// '852.13'
- * @param longData
- * @param length
+ * @param longData 数值
+ * @param length 精度
  * @returns
  */
 export function formatMoney(longData: string | number, length: number) {
@@ -1181,7 +1180,7 @@ export function rip(): void {
  * getConstellation('11-24'); /// { cn: '射手', en: 'Sagittarius', date: '11.23-12.21' }
  * getConstellation('xxx'); /// {cn: '未知', en: 'unknown', date: 'xxx'}
  * getConstellation(new Date('2022-11-24')); /// { cn: '射手', en: 'Sagittarius', date: '11.23-12.21' }
- * @param date
+ * @param date 日期
  * @returns
  */
 export function getConstellation(date: any): { cn: string; en: string; date: any } {
@@ -1295,8 +1294,8 @@ export function getConstellation(date: any): { cn: string; en: string; date: any
  * 返回取消该监听的函数 return cancel
  * @example
  * setEventListener('resize', () => { console.log('resize'); }); /// cancel 当前 listener 的 function
- * @param eventKey
- * @param foo
+ * @param eventKey 事件 key
+ * @param foo 函数
  * @param once 是否只触发一次
  * @param dom document.querySelector<HTMLDivElement>('.xxx')
  * @returns
@@ -1316,8 +1315,8 @@ export function setEventListener(eventKey: string, foo: any, once = false, dom: 
  * return cancel listener of H5Resize
  * @example
  * H5Resize(()=>{ console.log('downCb'); }, ()=>{ console.log('upCb'); }); /// do something
- * @param downCb
- * @param upCb
+ * @param downCb 缩回回调
+ * @param upCb 弹起回调
  * @returns
  */
 export function H5Resize(downCb: any, upCb: any): any {
@@ -1376,7 +1375,7 @@ export function banConsole(): any {
  * getWeekInfo('unknown'); /// WEEKS_INFO
  * getWeekInfo(1); /// 星期一相关信息
  * getWeekInfo(8); /// WEEKS_INFO
- * @param n
+ * @param n 值
  * @returns
  */
 export function getWeekInfo(n: string | number):
@@ -1414,7 +1413,7 @@ export function getWeekInfo(n: string | number):
  * getMonthInfo('unknown'); /// MONTH_INFO
  * getMonthInfo(1); /// 一月相关信息
  * getMonthInfo(13); /// MONTH_INFO
- * @param n
+ * @param n 值
  * @returns
  */
 export function getMonthInfo(n: string | number):
@@ -1450,8 +1449,8 @@ export function getMonthInfo(n: string | number):
  * isEqual({}, {}); /// true
  * isEqual(1, 1); /// true
  * isEqual(1, '1'); /// false
- * @param obj1
- * @param obj2
+ * @param obj1 值 1
+ * @param obj2 值 2
  * @returns
  */
 export function isEqual(obj1: any, obj2: any): boolean {

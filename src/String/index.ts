@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:45:48
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-23 09:52:55
+ * @LastEditTime: 2023-08-23 11:45:39
  * @Description: 字符串常用函数
  * @FilePath: \js-xxx\src\String\index.ts
  */
@@ -37,7 +37,7 @@ export function str2unicode(value: string): string {
 
 /**
  * 去除字符串空格
- * 可选值：0|ba：去除前后空格，1|b：去除前空格，2|a：去除后空格，3|all：去除所有空格，4|pro：去除所有空格，中间的空格保留一个。
+ * `可选值：0|ba：去除前后空格，1|b：去除前空格，2|a：去除后空格，3|all：去除所有空格，4|pro：去除所有空格，中间的空格保留一个。`
  * @example
  * trim('  a  b  ', 4); /// 'a b'
  * @param str 字符串
@@ -120,7 +120,7 @@ export function atob(str: string): string {
  * maskString('130223199809282927'); /// '13022********927'
  * maskString('广东省深圳市龙华区'); /// 广东省****华区'
  * maskString('广东省深圳市福田区福田保税区xxx小区xxx单元x栋x楼xxx号'); /// '广东省深圳市福田区******xx号'
- * @param str
+ * @param str 字符串
  * @returns
  */
 export function maskString(str: string): string {
@@ -159,8 +159,8 @@ export function maskString(str: string): string {
  * transferCase('red', 'upper'|1); /// 'RED'
  * transferCase('red', 'lower'|2); /// 'red'
  * transferCase('red', 'first'|3); /// 'Red'
- * @param str
- * @param type
+ * @param str 字符串
+ * @param type 目标类型
  * @returns
  */
 export function transferCase(str: string, type: 1 | 2 | 3 | 'upper' | 'lower' | 'first') {
@@ -188,7 +188,7 @@ export function transferCase(str: string, type: 1 | 2 | 3 | 'upper' | 'lower' | 
  * splitCase('foo.bar'); /// ['foo', 'bar']
  * splitCase('fooBar'); /// ['foo', 'bar']
  * splitCase('foo-Bar'); /// ['foo', 'bar']
- * @param str
+ * @param str 字符串
  * @returns
  */
 export function splitCase(str: string): string[] {
@@ -207,7 +207,7 @@ export function splitCase(str: string): string[] {
  * camelCase('foo_bar'); /// 'fooBar'
  * camelCase('foo bar'); /// 'fooBar'
  * camelCase('foo.bar'); /// 'fooBar'
- * @param str
+ * @param str 字符串
  * @returns
  */
 export function camelCase(str: string) {
@@ -229,7 +229,7 @@ export function camelCase(str: string) {
  * @example
  * repeat('*'); /// '*'
  * repeat('*', 3); /// '***'
- * @param str
+ * @param str 字符串
  * @returns
  */
 export function repeat(str: string, n = 1): string {
@@ -251,7 +251,7 @@ export function repeat(str: string, n = 1): string {
  * @example
  * isUrl('http://www.example.com?foo=bar&param=test'); /// true
  * isUrl(http://www); /// false
- * @param value
+ * @param value 字符串值
  * @returns
  */
 export function isUrl(value: string): boolean {
@@ -264,7 +264,7 @@ export function isUrl(value: string): boolean {
  * @example
  * isEmail('test@qq.com'); /// true
  * isEmail('@qq.com'); /// false
- * @param value
+ * @param value 字符串值
  * @returns
  */
 export function isEmail(value: string): boolean {
@@ -277,7 +277,7 @@ export function isEmail(value: string): boolean {
  * @example
  * isMobile('13579246810'); /// true
  * isMobile('12345678910'); /// false
- * @param value
+ * @param value 字符串值
  * @returns
  */
 export function isMobile(value: string): boolean {
@@ -294,7 +294,7 @@ export function isMobile(value: string): boolean {
  * isAccount('test123_qq_com'); /// true
  * isAccount('我test123_qq_com'); /// false
  * isAccount('我test123_qq_com', true); /// true
- * @param value
+ * @param value 字符串值
  * @returns
  */
 export function isAccount(value: string, hasChinese = false): boolean {
@@ -312,7 +312,7 @@ export function isAccount(value: string, hasChinese = false): boolean {
  * @example
  * isStrongPassWord('test@qq.com'); /// false
  * isStrongPassWord('test@qq.com123'); /// true
- * @param value
+ * @param value 字符串值
  * @returns
  */
 export function isStrongPassWord(value: string): boolean {
@@ -330,7 +330,7 @@ export function isStrongPassWord(value: string): boolean {
  * isCarCode('粤B.68928'); /// true
  * isCarCode('粤B 68928'); /// true
  * isCarCode('广东 B12345'); /// false
- * @param value
+ * @param value 字符串值
  * @returns
  */
 export function isCarCode(value: string): boolean {
@@ -346,7 +346,7 @@ export function isCarCode(value: string): boolean {
  * isIpv4('255.255.255.0'); /// true
  * isIpv4('255.255.255.2555'); /// false
  * isIpv4('255.255.255.2555.255'); /// false
- * @param value
+ * @param value 字符串值
  * @returns
  */
 export function isIpv4(value: string): boolean {
@@ -365,7 +365,7 @@ export function isIpv4(value: string): boolean {
  * isIpv6('2001:DB8::8:800:200C:417A'); /// false 暂不兼容缩写
  * isIpv6('2001:DB8:0:0:8:800:200C:417A:123'); /// false
  * isIpv6('2000:0000:0000:0000:0001:2345:6789:abcd:1'); /// false
- * @param value
+ * @param value 字符串值
  * @returns
  */
 export function isIpv6(value: string): boolean {
@@ -381,7 +381,7 @@ export function isIpv6(value: string): boolean {
  * isIpAddress('127.0.0.1'); /// true
  * isIpAddress('2001:DB8:0:0:8:800:200C:417A'); /// true
  * isIpAddress('255.255.255.123.123'); /// false
- * @param value
+ * @param value 字符串值
  * @returns
  */
 export function isIpAddress(value: string): boolean {
@@ -394,7 +394,7 @@ export function isIpAddress(value: string): boolean {
  * @example
  * checkFileExt(['png', 'jpg'], 'test.jpg'); /// true
  * checkFileExt(['png', 'jpg'], 'test.jpg.txt'); /// false
- * @param value
+ * @param value 字符串值
  * @returns
  */
 export function checkFileExt(arr: string[], value: string): boolean {
@@ -409,7 +409,7 @@ export function checkFileExt(arr: string[], value: string): boolean {
  * isHttp('http:test.com'); /// 0
  * isHttp('https://test.com'); /// -1
  * isHttp('12345'); /// 0
- * @param value
+ * @param value 字符串值
  * @returns
  */
 export function isHttp(value: string): -1 | 1 | 0 {
@@ -422,8 +422,8 @@ export function isHttp(value: string): -1 | 1 | 0 {
  * @example
  * slugify('I LOVE OQM'); /// 'I_LOVE_OQM'
  * slugify('I LOVE OQM', { ' ': '-' }); /// 'I-LOVE-OQM'
- * @param str
- * @param replacement
+ * @param str 字符串值
+ * @param replacement 替换字符串映射
  * @returns
  */
 export function slugify(str: string, replacement?: { [index: string]: string }): string {
@@ -455,9 +455,9 @@ export function slugify(str: string, replacement?: { [index: string]: string }):
  * @example
  * truncate('HXB HXB HXB HXB HXB HXB', 12); /// 'HXB HXB H...'
  * truncate('OQM-OQM-OQM-OQM-OQM-OQM', 10, { ellipsis: '～', separator: '-' }); /// 'OQM-OQM～'
- * @param txt
- * @param width
- * @param options
+ * @param txt 字符串值
+ * @param width 指定长度
+ * @param options 截取配置
  * @returns
  */
 export function truncate(
@@ -510,7 +510,7 @@ export function truncate(
  * formatJSON(true, null, 2); /// 'true'
  * formatJSON(undefined, null, 2); /// 'undefined'
  * formatJSON(new Date(), null, 2); /// '"2023-03-02T10:02:42.019Z"'
- * @param value
+ * @param value 值
  * @returns
  */
 export function formatJSON(value: any): string {
@@ -526,7 +526,7 @@ export function formatJSON(value: any): string {
  * @example
  * isQQ('1005760694'); /// true
  * isQQ('123456789101'); /// false
- * @param value
+ * @param value 字符串值
  * @returns
  */
 export function isQQ(value: string): boolean {
@@ -539,7 +539,7 @@ export function isQQ(value: string): boolean {
  * @example
  * isEnglish('Aa'); /// true
  * isEnglish('a1'); /// false
- * @param value
+ * @param value 字符串值
  * @returns
  */
 export function isEnglish(value: string): boolean {
@@ -552,7 +552,7 @@ export function isEnglish(value: string): boolean {
  * @example
  * hasSpecialChar('Aa('); /// true
  * hasSpecialChar('a1'); /// false
- * @param value
+ * @param value 字符串值
  * @returns
  */
 export function hasSpecialChar(value: string): boolean {
@@ -577,7 +577,7 @@ export function hasSpecialChar(value: string): boolean {
  * @example
  * isTel('0731-24722145'); /// true
  * isTel('13579246810'); /// false
- * @param value
+ * @param value 字符串值
  * @returns
  */
 export function isTel(value: string): boolean {
@@ -593,7 +593,7 @@ export function isTel(value: string): boolean {
  * @example
  * isChinese('呜呜呜'); /// true
  * isChinese('我 1'); /// false
- * @param value
+ * @param value 字符串值
  * @returns
  */
 export function isChinese(value: string): boolean {
@@ -605,7 +605,7 @@ export function isChinese(value: string): boolean {
  * @example
  * isDefined(a); /// false
  * isDefined(window); /// true
- * @param value
+ * @param value 字符串值
  * @returns
  */
 export function isDefined(varName: any): boolean {
@@ -617,7 +617,7 @@ export function isDefined(varName: any): boolean {
  * @example
  * isCreditCode('9144030071526726XG'); /// true
  * isCreditCode('12312312312'); /// false
- * @param value
+ * @param value 字符串值
  * @returns
  */
 export function isCreditCode(value: string): boolean {
@@ -662,7 +662,7 @@ export function isCreditCode(value: string): boolean {
  * @example
  * isBankCard('6217003810026896707'); /// true
  * isBankCard('12312312312'); /// false
- * @param value
+ * @param value 字符串值
  * @returns
  */
 export function isBankCard(value: string): boolean {
@@ -748,7 +748,7 @@ export function isBankCard(value: string): boolean {
  * @example
  * randomStr(2); /// 43
  * randomStr(5); /// 77192
- * @param length
+ * @param length 指定长度
  * @returns
  */
 export function randomStr(length: number): string {
@@ -782,8 +782,8 @@ export function randomStr(length: number): string {
  * @example
  * getUuid(10, 16); /// '8D00C29539'
  * getUuid(5); /// '5xRc5'
- * @param len
- * @param radix
+ * @param len 指定长度
+ * @param radix 目标进制转换
  * @returns
  */
 export function getUuid(len: number, radix: number) {
@@ -823,7 +823,7 @@ export function getUuid(len: number, radix: number) {
  * checkPassWordLevel('12345678.'); /// 3
  * checkPassWordLevel('123456789654321.'); /// 4
  * checkPassWordLevel('123456789654321.H'); /// 5
- * @param passWord
+ * @param passWord 字符串值-密码
  * @returns
  */
 export function checkPassWordLevel(passWord: string) {
@@ -882,8 +882,8 @@ export function checkPassWordLevel(passWord: string) {
  * getPinYin('你好'); /// 'NiHao'
  * getPinYin('你好', true); /// 'NH'
  * getPinYin('贺'); /// 'He'
- * @param str
- * @param extractFirst
+ * @param str 字符串值
+ * @param extractFirst 是否只获取首字母
  * @returns
  */
 export function getPinYin(str: string, extractFirst = false) {

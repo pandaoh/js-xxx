@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:54:41
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-23 09:50:15
+ * @LastEditTime: 2023-08-23 11:23:56
  * @Description: 时间相关函数
  * @FilePath: \js-xxx\src\Date\index.ts
  */
@@ -360,8 +360,8 @@ export function getUTCTime(timezone = 0): Date {
  * @example
  * compareDate('2023-1-1'); /// 1
  * compareDate('2023-1-1 12:00:00', '2023-1-2 12:00:00'); /// -1
- * @param dateA
- * @param dateB
+ * @param dateA 时间 A
+ * @param dateB 时间 B
  * @returns
  */
 export function compareDate(dateA: any, dateB?: any): -1 | 1 | 0 {
@@ -381,9 +381,9 @@ export function compareDate(dateA: any, dateB?: any): -1 | 1 | 0 {
  * 倒计时
  * @example
  * console.time('test'); countdown(10, (x) => console.log('--->', x), () => console.timeEnd('test')); /// test: 10023.636962890625 ms
- * @param seconds
- * @param callback
- * @param finishCallBack
+ * @param seconds 秒数
+ * @param callback 回调函数
+ * @param finishCallBack 完成回调函数
  * @returns
  */
 export function countdown(seconds: number, callback?: any, finishCallBack?: any): any {
@@ -408,8 +408,8 @@ export function countdown(seconds: number, callback?: any, finishCallBack?: any)
  * @example
  * transferSeconds(1234); /// '00:20:34'
  * transferSeconds(1234, true); /// {h: '00', i: 20, s: 34}
- * @param duration
- * @param returnObj
+ * @param duration 时间/秒
+ * @param returnObj 是否返回对象
  * @returns
  */
 export function transferSeconds(duration: number, returnObj = false): string | any {

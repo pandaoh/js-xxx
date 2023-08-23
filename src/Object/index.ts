@@ -139,8 +139,8 @@ export function deepClone(data: any, hash = new WeakMap()): any {
  * const a = { a: 1 };
  * a.__proto__.x = 1;
  * hasKey(a, 'x'); /// true;
- * @param obj
- * @param key
+ * @param obj 对象
+ * @param key 需要判断的 key
  * @returns
  */
 export function hasKey(obj: any, key: string): boolean {

@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 11:52:01
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-22 14:28:38
+ * @LastEditTime: 2023-08-23 11:22:47
  * @Description: 数组常用函数
  * @FilePath: \js-xxx\src\Array\index.ts
  */
@@ -54,8 +54,8 @@ export function data2Arr(sourceData: { [key: string]: any }[], key: string): any
  * @example
  * const data = [{ id: 1, name: '张三', score: 98, remark: '语文成绩' }, { id: 3, name: '王五', score: 98 }, { id: 3, name: '王五', score: 99, remark: '最后一条有效成绩' }, { id: 2, name: '李四', score: 100 }];
  * arrObj2objArr(data, 'id'); /// {"id": [1, 2, 3], "name": ["张三", "李四", "王五"], "score": [98, 100, 99], "remark": ["语文成绩", null, "最后一条有效成绩"]}
- * @param data
- * @param key
+ * @param data 源数据
+ * @param key 用于转换的 key
  * @returns
  */
 export function arrObj2objArr(data: { [key: string]: any }[], key: string): { [key: string]: any[] } {
