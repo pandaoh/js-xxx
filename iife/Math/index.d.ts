@@ -43,7 +43,7 @@ export declare function sub(sub1: number | string, sub2: number | string): numbe
  * @example
  * average(1, 2, 3, 4); /// 2.5
  * average(1, 2, 3, 4.123); /// 2.53075
- * @param args
+ * @param args 需要计算的数...
  * @returns
  */
 export declare function average(...args: any[]): number;
@@ -52,7 +52,7 @@ export declare function average(...args: any[]): number;
  * @example
  * abs(-1); /// 1
  * abs(1); /// 1
- * @param value
+ * @param value 数值
  * @returns
  */
 export declare function abs(value: number): number;
@@ -61,7 +61,7 @@ export declare function abs(value: number): number;
  * @example
  * isEven(-2); /// true
  * isEven(1); /// false
- * @param value
+ * @param value 数值
  * @returns
  */
 export declare function isEven(value: number): boolean;
@@ -73,22 +73,22 @@ export declare function isEven(value: number): boolean;
  * float(1.135, 1); /// 1.1
  * float(1.135, 4); /// 1.135
  * float(1.135, 4, true); /// '1.1350'
- * @param value
- * @param d
- * @param isStr
+ * @param value 数值
+ * @param d 精度
+ * @param isStr 是否返回字符串
  * @returns
  */
 export declare function float(value: number, d?: number, isStr?: boolean): number | string;
 /**
- * 判断一个数是否在指定范围
+ * 判断一个数是否在指定范围（闭区间）
  * @example
  * inRange(null, 0, 3); /// false
  * inRange(0, 0, 3); /// true
  * inRange(3, 0, 3); /// true
  * inRange(5, 0, 3); /// false
- * @param value
- * @param min
- * @param max
+ * @param value 数值
+ * @param min 最小值
+ * @param max 最大值
  * @returns
  */
 export declare function inRange(value: any, min: number, max: number): boolean;
@@ -100,9 +100,9 @@ export declare function inRange(value: any, min: number, max: number): boolean;
  * getPercentage(17, 1020, 2); /// 1.67
  * getPercentage(1020, null, 2); /// 0
  * getPercentage(0, 1020, 2, { float: false, suffix: true }); /// '0%'
- * @param value
- * @param total
- * @param options
+ * @param value 数值
+ * @param total 总数
+ * @param options 配置
  * @returns
  */
 export declare function getPercentage(value: any, total: any, decimals?: number, options?: {
@@ -115,7 +115,7 @@ export declare function getPercentage(value: any, total: any, decimals?: number,
  * maskNumber(10000123111); /// '100.00 亿'
  * maskNumber(12345); /// '1.2 万'
  * maskNumber(123); /// '123'
- * @param value
+ * @param value 数值
  * @returns
  */
 export declare function maskNumber(value: number): string;
@@ -124,9 +124,9 @@ export declare function maskNumber(value: number): string;
  * @example
  * transferNumber(100); /// '1100100'
  * transferNumber(1100100, 2, 10); /// 100
- * @param number
- * @param from
- * @param to
+ * @param number 数值
+ * @param from 原进制
+ * @param to 目标进制
  * @returns
  */
 export declare function transferNumber(number: number, from?: number, to?: number): string | number;

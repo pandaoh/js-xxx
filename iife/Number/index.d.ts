@@ -31,7 +31,7 @@ export declare function isDecimal(value: string, type?: '-' | '+', noLastZero?: 
  * 数字人性化显示
  * @example
  * formatNumber('12312300'); /// '12,312,300'
- * @param value
+ * @param value 数值
  * @returns
  */
 export declare function formatNumber(value: string | number): string;

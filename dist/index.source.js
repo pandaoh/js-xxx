@@ -132,7 +132,7 @@
      * toStr({}); /// '{}'
      * toStr([1, 2]); /// '[1,2]'
      * toStr(null); /// ''
-     * @param value
+     * @param value 值
      * @returns
      */
     function toStr(value) {
@@ -150,7 +150,7 @@
      * toNum({}); /// 0
      * toNum([2]); /// 2
      * toNum('-123'); /// -123
-     * @param value
+     * @param value 值
      * @returns
      */
     function toNum(value) {
@@ -171,8 +171,8 @@
      * toBool('undefined'); /// false
      * toBool('NaN'); /// false
      * toBool(null); /// false
-     * @param value
-     * @param falseList
+     * @param value 值
+     * @param falseList 判断为 false 的值列表
      * @returns
      */
     function toBool(value, falseList) {
@@ -211,7 +211,7 @@
      * @example
      * isBool(true); /// true
      * isBool(null); /// false
-     * @param value
+     * @param value 值
      * @returns
      */
     function isBool(value) {
@@ -222,7 +222,7 @@
      * @example
      * isDate(new Date()); /// true
      * isDate(null); /// false
-     * @param value
+     * @param value 值
      * @returns
      */
     function isDate(value) {
@@ -233,7 +233,7 @@
      * @example
      * isStr('test'); /// true
      * isStr(null); /// false
-     * @param value
+     * @param value 值
      * @returns
      */
     function isStr(value) {
@@ -244,7 +244,7 @@
      * @example
      * isUndef(undefined); /// true
      * isUndef(null); /// false
-     * @param value
+     * @param value 值
      * @returns
      */
     function isUndef(value) {
@@ -255,7 +255,7 @@
      * @example
      * isNull(undefined); /// false
      * isNull(null); /// true
-     * @param value
+     * @param value 值
      * @returns
      */
     function isNull(value) {
@@ -266,7 +266,7 @@
      * @example
      * isNum(NaN); /// false
      * isNum(1); /// true
-     * @param value
+     * @param value 值
      * @returns
      */
     function isNum(value) {
@@ -277,7 +277,7 @@
      * @example
      * isArr([]); /// true
      * isArr({}); /// false
-     * @param value
+     * @param value 值
      * @returns
      */
     function isArr(value) {
@@ -288,7 +288,7 @@
      * @example
      * isObj({}); /// true
      * isObj(null); /// false
-     * @param value
+     * @param value 值
      * @returns
      */
     function isObj(value) {
@@ -300,7 +300,7 @@
      * isElement(document.body); /// true
      * isElement(document); /// false
      * isElement({}); /// false
-     * @param value
+     * @param value 值
      * @returns
      */
     function isElement(value) {
@@ -313,7 +313,7 @@
      * isFn(async function(){}); /// true
      * isFn(new Promise((resolve, reject) => resolve()); /// false
      * isFn({}); /// false
-     * @param value
+     * @param value 值
      * @returns
      */
     function isFn(value) {
@@ -326,7 +326,7 @@
      * isPromise(function(){}); /// false
      * isPromise(async function(){}); /// false
      * isPromise(new Promise((resolve, reject) => resolve())); /// true
-     * @param value
+     * @param value 值
      * @returns
      */
     function isPromise(value) {
@@ -337,7 +337,7 @@
      * @example
      * isNaN(1); /// false
      * isNaN(NaN); /// true
-     * @param value
+     * @param value 值
      * @returns
      */
     function isNaN$1(value) {
@@ -348,7 +348,7 @@
      * @example
      * isBlob(new Blob()); /// true
      * isBlob(null); /// false
-     * @param value
+     * @param value 值
      * @returns
      */
     function isBlob(value) {
@@ -359,7 +359,7 @@
      * @example
      * isArrayBuffer(new ArrayBuffer()); /// true
      * isArrayBuffer(null); /// false
-     * @param value
+     * @param value 值
      * @returns
      */
     function isArrayBuffer(value) {
@@ -411,8 +411,8 @@
      * @example
      * const data = [{ id: 1, name: '张三', score: 98, remark: '语文成绩' }, { id: 3, name: '王五', score: 98 }, { id: 3, name: '王五', score: 99, remark: '最后一条有效成绩' }, { id: 2, name: '李四', score: 100 }];
      * arrObj2objArr(data, 'id'); /// {"id": [1, 2, 3], "name": ["张三", "李四", "王五"], "score": [98, 100, 99], "remark": ["语文成绩", null, "最后一条有效成绩"]}
-     * @param data
-     * @param key
+     * @param data 源数据
+     * @param key 用于转换的 key
      * @returns
      */
     function arrObj2objArr(data, key) {
@@ -7402,7 +7402,7 @@
      * @param data 需要加密的数据
      * @param secretKey [可选] 十六位十六进制数作为密钥
      * @param secretIv [可选] 十六位十六进制数作为密钥偏移量
-     * @returns {string}
+     * @returns
      */
     function encrypt(data, secretKey, secretIv) {
         if (!data) {
@@ -7444,7 +7444,7 @@
      * @param jsonDecode 是否需要解析成 json
      * @param secretKey [可选] 十六位十六进制数作为密钥
      * @param secretIv [可选] 十六位十六进制数作为密钥偏移量
-     * @returns {string}
+     * @returns
      */
     function decrypt(dataStr, jsonDecode, secretKey, secretIv) {
         if (jsonDecode === void 0) { jsonDecode = false; }
@@ -8491,8 +8491,8 @@
      * @example
      * getRandVar({ a: 1, b: 3 }); /// 1
      * getRandomVar([1, 2, 3, 4], 2); /// [2, 4]
-     * @param value
-     * @param count
+     * @param value 值
+     * @param count 获取数据量
      * @returns
      */
     function getRandVar(value, count) {
@@ -8575,7 +8575,7 @@
      * 是把接受多个参数的函数变换成接受一个单一参数(最初函数的第一个参数)的函数，并且返回接受余下的参数且返回结果的新函数的技术。
      * @example
      * curryIt(function (a, b, c) {return a + b + c})(1)(2)(3); /// 6
-     * @param fn
+     * @param fn 函数
      * @returns
      */
     function curryIt(fn) {
@@ -8600,8 +8600,8 @@
      * 全局捕获异常
      * @example
      * globalError((message, source, lineNo, colNo, error) => console.log('全局捕获异常'), false); /// '全局捕获异常'
-     * @param {any} fn (message, source, lineNo, colNo, error)
-     * @param {boolean} notShowConsole 是否不回显控制台
+     * @param fn (message, source, lineNo, colNo, error)
+     * @param notShowConsole 是否不回显控制台
      * @returns
      */
     function globalError(fn, notShowConsole) {
@@ -8784,8 +8784,8 @@
      * @example
      * getKey(); /// 'M2rmCcGpXCa5MTdN4Kks5'
      * getKey(2, 'test-'); /// test-aK'
-     * @param size
-     * @param prefix
+     * @param size 指定长度
+     * @param prefix 前缀
      * @returns
      */
     function getKey(size, prefix) {
@@ -8812,7 +8812,7 @@
      * getSize([]); /// 0
      * getSize({a: 1, b: 2}); /// 2
      * getSize(null); /// 0
-     * @param value
+     * @param value 值
      * @returns
      */
     function getSize(value) {
@@ -8830,7 +8830,7 @@
      * 在浏览器中打开文件选择框
      * @example
      * openFile({ multiple: true, accept: '.txt' }).then(fileList => console.log(fileList));
-     * @param options
+     * @param options 打开配置
      * @returns
      */
     function openFile(options) {
@@ -8859,7 +8859,7 @@
      * 开启全屏
      * @example
      * openFullscreen(); /// 开启全屏
-     * @param element
+     * @param element 元素
      * @returns
      */
     function openFullscreen(element) {
@@ -8881,7 +8881,6 @@
      * 关闭全屏
      * @example
      * closeFullscreen(); /// 关闭全屏
-     * @param
      * @returns
      */
     function closeFullscreen() {
@@ -8909,8 +8908,8 @@
      * @example
      * intersection([1, 2, 2, 3, 3], [1, 2, 4, 5]); /// [1, 2]
      * intersection({a: 1, b: 2}, {a: 1, c: 3, b: 4}); /// {a: 1}
-     * @param paramA
-     * @param paramB
+     * @param paramA 值 A
+     * @param paramB 值 B
      * @returns
      */
     function intersection(paramA, paramB) {
@@ -8943,8 +8942,8 @@
      * @example
      * union([1, 2, 2, 3, 3], [1, 2, 4, 5]); /// [1, 2, 3, 4, 5]
      * union({a: 1, b: 2}, {a: 1, c: 3, b: 4}); /// {a: 1, c: 3, b: 2}
-     * @param paramA
-     * @param paramB
+     * @param paramA 值 A，若冲突以此值为准。
+     * @param paramB 值 B
      * @returns
      */
     function union(paramA, paramB) {
@@ -8965,8 +8964,8 @@
      * @example
      * difference([1, 2, 2, 3, 3], [1, 2, 4, 5]); /// [3]
      * difference({a: 1, b: 2}, {a: 1, c: 3, b: 4}); /// {b: 2}
-     * @param paramA
-     * @param paramB
+     * @param paramA 值 A，若冲突以此值为准。
+     * @param paramB 值 B
      * @returns
      */
     function difference(paramA, paramB) {
@@ -8996,7 +8995,7 @@
      * @example
      * jsonClone([1, 2, 2, 3, 3]); /// [1, 2, 2, 3, 3]
      * jsonClone({a: 1, b: 2}); /// {a: 1, b: 2}
-     * @param value
+     * @param value 值
      * @returns
      */
     function jsonClone(value) {
@@ -9015,8 +9014,8 @@
      * logRunTime(async () => { await fun1(); await fun2(); });
      * logRunTime($promiseReturnFunction);
      * logRunTime(new Promise((resolve, reject) => { setTimeout(() => resolve('test'), 1000) }));
-     * @param fn
-     * @param timeKey
+     * @param fn 方法函数
+     * @param timeKey 打印关键 key
      * @returns
      */
     function logRunTime(fn, timeKey) {
@@ -9081,7 +9080,7 @@
      * @example
      * showVar([1, 2, 2, 3, 3]); /// 显示序列化之后的数据
      * showVar({a: 1, b: 2}); /// 显示序列化之后的数据
-     * @param value
+     * @param value 值
      * @returns
      */
     function showVar(value) {
@@ -9104,8 +9103,8 @@
      * contains([[1, 2], [3, 4]], [4, 3]); /// true
      * contains([[1, 2], [3, 4]], [3, 4]); /// true
      * contains([[1, 2], [3, 4]], [1, 3]); /// false
-     * @param value
-     * @param target
+     * @param value 值
+     * @param target 目标值
      * @returns
      */
     function contains(value, target) {
@@ -9133,8 +9132,8 @@
      * same('admin', 'admin'); /// true
      * same('admin', 'admins'); /// false
      * same('admins', 'admin'); /// false
-     * @param valueA
-     * @param valueB
+     * @param valueA 值 A
+     * @param valueB 值 B
      * @returns
      */
     function same(valueA, valueB) {
@@ -9157,7 +9156,7 @@
      * getSortVar({ b: 3, a: 2 }); /// { a: 2, b: 3 }
      * getSortVar({ a: 2, b: 3 }); /// { a: 2, b: 3 }
      * getSortVar([1, 3, 2]); /// [1, 2, 3]
-     * @param value
+     * @param value 值
      * @returns
      */
     function getSortVar(value) {
@@ -9185,7 +9184,7 @@
      * inversion('123'); /// '321'
      * inversion(); /// undefined
      * inversion(true); /// true
-     * @param value
+     * @param value 值
      * @returns
      */
     function inversion(value) {
@@ -9208,9 +9207,9 @@
      * let a = 5;
      * setTimeout(() => (a = 10), 5000);
      * waitUntil(() => a === 10).then(() => { console.log(a) });
-     * @param condition
-     * @param timeout
-     * @param interval
+     * @param condition 函数
+     * @param timeout 超时
+     * @param interval 执行间隔
      * @returns
      */
     function waitUntil(condition, timeout, interval) {
@@ -9256,7 +9255,7 @@
      * ms('1000'); /// 1000
      * ms(1500); /// '1.5s'
      * ms(60000); /// '1m'
-     * @param str
+     * @param str 值
      * @returns
      */
     function ms(str) {
@@ -9292,9 +9291,9 @@
      * @example
      * transferFileToBase64(file, 'application/pdf;charset=utf-8', (res) => console.log({ res })); /// result object
      * transferFileToBase64('test', 'text/plain', (res) => console.log({ res })); /// result object
-     * @param content BlobPart | any
-     * @param contentType
-     * @param callBack
+     * @param content BlobPart | any 内容
+     * @param contentType 内容类型
+     * @param callBack 回调函数
      * @returns
      */
     function transferFileToBase64(content, contentType, callBack) {
@@ -9319,7 +9318,7 @@
      * checkIdCard('003424870506202'); /// false
      * checkIdCard('415106199801012130'); /// true
      * checkIdCard('123123123123123222'); /// false
-     * @param value
+     * @param value 字符串值
      * @returns
      */
     function checkIdCard(value) {
@@ -9333,8 +9332,8 @@
      * getAge('1998-9-28'); /// 24
      * getAge('1998-6-8', '2023-7'); /// 25
      * getAge('2023'); /// -1
-     * @param birthday
-     * @param targetDate
+     * @param birthday 生日
+     * @param targetDate 目标日期
      * @returns
      */
     function getAge(birthday, targetDate) {
@@ -9346,7 +9345,7 @@
      * getAnimal('1998'); /// '虎'
      * getAnimal('1998-6-8'); /// '虎'
      * getAnimal('2023'); /// '兔'
-     * @param date
+     * @param date 日期
      * @returns
      */
     function getAnimal(date) {
@@ -9360,7 +9359,7 @@
      * transferIdCard('415106199801012130');
      * /// {"age":24,"year":"1998","idCard":"415106199801012130","sex":"男","constellation":{"cn":"魔羯","en":"Capricorn","date":"12.22-1.19"},"gender":1,"province":"河南","animal":"虎","birthday":"1998-01-01"}
      * transferIdCard('xxxxx'); /// {}
-     * @param idCard
+     * @param idCard 字符串值
      * @returns
      */
     function transferIdCard(idCard) {
@@ -9395,7 +9394,7 @@
      * @example
      * transferMoney(900); /// '玖佰元整'
      * transferMoney(852.5); /// '捌佰伍拾贰元伍角'
-     * @param n
+     * @param n 数值
      * @returns
      */
     function transferMoney(n) {
@@ -9433,8 +9432,8 @@
      * @example
      * formatMoney(90000); /// '90,000.00'
      * formatMoney(852.1314, 2); /// '852.13'
-     * @param longData
-     * @param length
+     * @param longData 数值
+     * @param length 精度
      * @returns
      */
     function formatMoney(longData, length) {
@@ -9521,7 +9520,7 @@
      * getConstellation('11-24'); /// { cn: '射手', en: 'Sagittarius', date: '11.23-12.21' }
      * getConstellation('xxx'); /// {cn: '未知', en: 'unknown', date: 'xxx'}
      * getConstellation(new Date('2022-11-24')); /// { cn: '射手', en: 'Sagittarius', date: '11.23-12.21' }
-     * @param date
+     * @param date 日期
      * @returns
      */
     function getConstellation(date) {
@@ -9648,8 +9647,8 @@
      * 返回取消该监听的函数 return cancel
      * @example
      * setEventListener('resize', () => { console.log('resize'); }); /// cancel 当前 listener 的 function
-     * @param eventKey
-     * @param foo
+     * @param eventKey 事件 key
+     * @param foo 函数
      * @param once 是否只触发一次
      * @param dom document.querySelector<HTMLDivElement>('.xxx')
      * @returns
@@ -9670,8 +9669,8 @@
      * return cancel listener of H5Resize
      * @example
      * H5Resize(()=>{ console.log('downCb'); }, ()=>{ console.log('upCb'); }); /// do something
-     * @param downCb
-     * @param upCb
+     * @param downCb 缩回回调
+     * @param upCb 弹起回调
      * @returns
      */
     function H5Resize(downCb, upCb) {
@@ -9729,7 +9728,7 @@
      * getWeekInfo('unknown'); /// WEEKS_INFO
      * getWeekInfo(1); /// 星期一相关信息
      * getWeekInfo(8); /// WEEKS_INFO
-     * @param n
+     * @param n 值
      * @returns
      */
     function getWeekInfo(n) {
@@ -9753,7 +9752,7 @@
      * getMonthInfo('unknown'); /// MONTH_INFO
      * getMonthInfo(1); /// 一月相关信息
      * getMonthInfo(13); /// MONTH_INFO
-     * @param n
+     * @param n 值
      * @returns
      */
     function getMonthInfo(n) {
@@ -9775,8 +9774,8 @@
      * isEqual({}, {}); /// true
      * isEqual(1, 1); /// true
      * isEqual(1, '1'); /// false
-     * @param obj1
-     * @param obj2
+     * @param obj1 值 1
+     * @param obj2 值 2
      * @returns
      */
     function isEqual(obj1, obj2) {
@@ -9912,7 +9911,7 @@
     }
     /**
      * 去除字符串空格
-     * 可选值：0|ba：去除前后空格，1|b：去除前空格，2|a：去除后空格，3|all：去除所有空格，4|pro：去除所有空格，中间的空格保留一个。
+     * `可选值：0|ba：去除前后空格，1|b：去除前空格，2|a：去除后空格，3|all：去除所有空格，4|pro：去除所有空格，中间的空格保留一个。`
      * @example
      * trim('  a  b  ', 4); /// 'a b'
      * @param str 字符串
@@ -9994,7 +9993,7 @@
      * maskString('130223199809282927'); /// '13022********927'
      * maskString('广东省深圳市龙华区'); /// 广东省****华区'
      * maskString('广东省深圳市福田区福田保税区xxx小区xxx单元x栋x楼xxx号'); /// '广东省深圳市福田区******xx号'
-     * @param str
+     * @param str 字符串
      * @returns
      */
     function maskString(str) {
@@ -10032,8 +10031,8 @@
      * transferCase('red', 'upper'|1); /// 'RED'
      * transferCase('red', 'lower'|2); /// 'red'
      * transferCase('red', 'first'|3); /// 'Red'
-     * @param str
-     * @param type
+     * @param str 字符串
+     * @param type 目标类型
      * @returns
      */
     function transferCase(str, type) {
@@ -10060,7 +10059,7 @@
      * splitCase('foo.bar'); /// ['foo', 'bar']
      * splitCase('fooBar'); /// ['foo', 'bar']
      * splitCase('foo-Bar'); /// ['foo', 'bar']
-     * @param str
+     * @param str 字符串
      * @returns
      */
     function splitCase(str) {
@@ -10077,7 +10076,7 @@
      * camelCase('foo_bar'); /// 'fooBar'
      * camelCase('foo bar'); /// 'fooBar'
      * camelCase('foo.bar'); /// 'fooBar'
-     * @param str
+     * @param str 字符串
      * @returns
      */
     function camelCase(str) {
@@ -10095,7 +10094,7 @@
      * @example
      * repeat('*'); /// '*'
      * repeat('*', 3); /// '***'
-     * @param str
+     * @param str 字符串
      * @returns
      */
     function repeat(str, n) {
@@ -10116,7 +10115,7 @@
      * @example
      * isUrl('http://www.example.com?foo=bar&param=test'); /// true
      * isUrl(http://www); /// false
-     * @param value
+     * @param value 字符串值
      * @returns
      */
     function isUrl(value) {
@@ -10128,7 +10127,7 @@
      * @example
      * isEmail('test@qq.com'); /// true
      * isEmail('@qq.com'); /// false
-     * @param value
+     * @param value 字符串值
      * @returns
      */
     function isEmail(value) {
@@ -10140,7 +10139,7 @@
      * @example
      * isMobile('13579246810'); /// true
      * isMobile('12345678910'); /// false
-     * @param value
+     * @param value 字符串值
      * @returns
      */
     function isMobile(value) {
@@ -10156,7 +10155,7 @@
      * isAccount('test123_qq_com'); /// true
      * isAccount('我test123_qq_com'); /// false
      * isAccount('我test123_qq_com', true); /// true
-     * @param value
+     * @param value 字符串值
      * @returns
      */
     function isAccount(value, hasChinese) {
@@ -10174,7 +10173,7 @@
      * @example
      * isStrongPassWord('test@qq.com'); /// false
      * isStrongPassWord('test@qq.com123'); /// true
-     * @param value
+     * @param value 字符串值
      * @returns
      */
     function isStrongPassWord(value) {
@@ -10191,7 +10190,7 @@
      * isCarCode('粤B.68928'); /// true
      * isCarCode('粤B 68928'); /// true
      * isCarCode('广东 B12345'); /// false
-     * @param value
+     * @param value 字符串值
      * @returns
      */
     function isCarCode(value) {
@@ -10205,7 +10204,7 @@
      * isIpv4('255.255.255.0'); /// true
      * isIpv4('255.255.255.2555'); /// false
      * isIpv4('255.255.255.2555.255'); /// false
-     * @param value
+     * @param value 字符串值
      * @returns
      */
     function isIpv4(value) {
@@ -10223,7 +10222,7 @@
      * isIpv6('2001:DB8::8:800:200C:417A'); /// false 暂不兼容缩写
      * isIpv6('2001:DB8:0:0:8:800:200C:417A:123'); /// false
      * isIpv6('2000:0000:0000:0000:0001:2345:6789:abcd:1'); /// false
-     * @param value
+     * @param value 字符串值
      * @returns
      */
     function isIpv6(value) {
@@ -10239,7 +10238,7 @@
      * isIpAddress('127.0.0.1'); /// true
      * isIpAddress('2001:DB8:0:0:8:800:200C:417A'); /// true
      * isIpAddress('255.255.255.123.123'); /// false
-     * @param value
+     * @param value 字符串值
      * @returns
      */
     function isIpAddress(value) {
@@ -10251,7 +10250,7 @@
      * @example
      * checkFileExt(['png', 'jpg'], 'test.jpg'); /// true
      * checkFileExt(['png', 'jpg'], 'test.jpg.txt'); /// false
-     * @param value
+     * @param value 字符串值
      * @returns
      */
     function checkFileExt(arr, value) {
@@ -10265,7 +10264,7 @@
      * isHttp('http:test.com'); /// 0
      * isHttp('https://test.com'); /// -1
      * isHttp('12345'); /// 0
-     * @param value
+     * @param value 字符串值
      * @returns
      */
     function isHttp(value) {
@@ -10277,8 +10276,8 @@
      * @example
      * slugify('I LOVE OQM'); /// 'I_LOVE_OQM'
      * slugify('I LOVE OQM', { ' ': '-' }); /// 'I-LOVE-OQM'
-     * @param str
-     * @param replacement
+     * @param str 字符串值
+     * @param replacement 替换字符串映射
      * @returns
      */
     function slugify(str, replacement) {
@@ -10304,9 +10303,9 @@
      * @example
      * truncate('HXB HXB HXB HXB HXB HXB', 12); /// 'HXB HXB H...'
      * truncate('OQM-OQM-OQM-OQM-OQM-OQM', 10, { ellipsis: '～', separator: '-' }); /// 'OQM-OQM～'
-     * @param txt
-     * @param width
-     * @param options
+     * @param txt 字符串值
+     * @param width 指定长度
+     * @param options 截取配置
      * @returns
      */
     function truncate(txt, width, options) {
@@ -10343,7 +10342,7 @@
      * formatJSON(true, null, 2); /// 'true'
      * formatJSON(undefined, null, 2); /// 'undefined'
      * formatJSON(new Date(), null, 2); /// '"2023-03-02T10:02:42.019Z"'
-     * @param value
+     * @param value 值
      * @returns
      */
     function formatJSON(value) {
@@ -10360,7 +10359,7 @@
      * @example
      * isQQ('1005760694'); /// true
      * isQQ('123456789101'); /// false
-     * @param value
+     * @param value 字符串值
      * @returns
      */
     function isQQ(value) {
@@ -10372,7 +10371,7 @@
      * @example
      * isEnglish('Aa'); /// true
      * isEnglish('a1'); /// false
-     * @param value
+     * @param value 字符串值
      * @returns
      */
     function isEnglish(value) {
@@ -10384,7 +10383,7 @@
      * @example
      * hasSpecialChar('Aa('); /// true
      * hasSpecialChar('a1'); /// false
-     * @param value
+     * @param value 字符串值
      * @returns
      */
     function hasSpecialChar(value) {
@@ -10406,7 +10405,7 @@
      * @example
      * isTel('0731-24722145'); /// true
      * isTel('13579246810'); /// false
-     * @param value
+     * @param value 字符串值
      * @returns
      */
     function isTel(value) {
@@ -10422,7 +10421,7 @@
      * @example
      * isChinese('呜呜呜'); /// true
      * isChinese('我 1'); /// false
-     * @param value
+     * @param value 字符串值
      * @returns
      */
     function isChinese(value) {
@@ -10433,7 +10432,7 @@
      * @example
      * isDefined(a); /// false
      * isDefined(window); /// true
-     * @param value
+     * @param value 字符串值
      * @returns
      */
     function isDefined(varName) {
@@ -10444,7 +10443,7 @@
      * @example
      * isCreditCode('9144030071526726XG'); /// true
      * isCreditCode('12312312312'); /// false
-     * @param value
+     * @param value 字符串值
      * @returns
      */
     function isCreditCode(value) {
@@ -10488,7 +10487,7 @@
      * @example
      * isBankCard('6217003810026896707'); /// true
      * isBankCard('12312312312'); /// false
-     * @param value
+     * @param value 字符串值
      * @returns
      */
     function isBankCard(value) {
@@ -10569,7 +10568,7 @@
      * @example
      * randomStr(2); /// 43
      * randomStr(5); /// 77192
-     * @param length
+     * @param length 指定长度
      * @returns
      */
     function randomStr(length) {
@@ -10601,8 +10600,8 @@
      * @example
      * getUuid(10, 16); /// '8D00C29539'
      * getUuid(5); /// '5xRc5'
-     * @param len
-     * @param radix
+     * @param len 指定长度
+     * @param radix 目标进制转换
      * @returns
      */
     function getUuid(len, radix) {
@@ -10642,7 +10641,7 @@
      * checkPassWordLevel('12345678.'); /// 3
      * checkPassWordLevel('123456789654321.'); /// 4
      * checkPassWordLevel('123456789654321.H'); /// 5
-     * @param passWord
+     * @param passWord 字符串值-密码
      * @returns
      */
     function checkPassWordLevel(passWord) {
@@ -10694,8 +10693,8 @@
      * getPinYin('你好'); /// 'NiHao'
      * getPinYin('你好', true); /// 'NH'
      * getPinYin('贺'); /// 'He'
-     * @param str
-     * @param extractFirst
+     * @param str 字符串值
+     * @param extractFirst 是否只获取首字母
      * @returns
      */
     function getPinYin(str, extractFirst) {
@@ -10739,7 +10738,7 @@
         if (getType(date) === 'string') {
             // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
             // @ts-ignore
-            date.replace(/-/g, '/');
+            date = date.replace(/-/g, '/');
         }
         date = date ? new Date(date) : new Date();
         var o = {
@@ -10774,8 +10773,11 @@
      * @returns
      */
     function calcDate(date, calcStrOrArr) {
-        // 虽然 win 浏览器两种符号都可以，但是需兼容 ios
-        // date.replace(/-/g, '/');。
+        if (getType(date) === 'string') {
+            // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
+            // @ts-ignore
+            date = date.replace(/-/g, '/');
+        }
         var oldDate = date ? new Date(date) : new Date();
         if (Array.isArray(calcStrOrArr)) {
             calcStrOrArr.forEach(function (calcStr) {
@@ -10831,6 +10833,16 @@
      */
     function getDateDifference(oldDate, nowDate, type) {
         if (type === void 0) { type = 'all'; }
+        if (getType(oldDate) === 'string') {
+            // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
+            // @ts-ignore
+            oldDate = oldDate.replace(/-/g, '/');
+        }
+        if (getType(nowDate) === 'string') {
+            // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
+            // @ts-ignore
+            nowDate = nowDate.replace(/-/g, '/');
+        }
         oldDate = new Date(oldDate);
         nowDate = nowDate ? new Date(nowDate) : new Date();
         var diffTime = nowDate.getTime() - oldDate.getTime();
@@ -10869,16 +10881,19 @@
     function timeSince(date, longAgo, formatter) {
         if (longAgo === void 0) { longAgo = false; }
         if (formatter === void 0) { formatter = 'yyyy-mm-dd hh:ii:ss'; }
-        // 虽然 win 浏览器两种符号都可以，但是需兼容 ios 。
-        // date.replace(/-/g, '/');
+        if (getType(date) === 'string') {
+            // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
+            // @ts-ignore
+            date = date.replace(/-/g, '/');
+        }
         date = date ? new Date(date) : new Date();
-        var dateTS = new Date(date).getTime();
+        var dateTS = date.getTime();
         var seconds = Math.floor((new Date().getTime() - dateTS) / 1000);
         var interval = Math.floor(seconds / (24 * 3600));
         if (longAgo) {
             interval = Math.floor(seconds / (30 * 24 * 3600));
             if (interval >= 4) {
-                return formatDate(new Date(dateTS), formatter);
+                return formatDate(date, formatter);
             }
             if (interval >= 1) {
                 return interval + ' 月前';
@@ -10889,7 +10904,7 @@
             }
         }
         if (interval >= 8) {
-            return formatDate(new Date(dateTS), formatter);
+            return formatDate(date, formatter);
         }
         interval = Math.floor(seconds / (24 * 3600));
         if (interval >= 1) {
@@ -10913,6 +10928,11 @@
      * @returns
      */
     function isWeekday(date) {
+        if (getType(date) === 'string') {
+            // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
+            // @ts-ignore
+            date = date.replace(/-/g, '/');
+        }
         date = date ? new Date(date) : new Date();
         return date.getDay() % 6 !== 0;
     }
@@ -10924,6 +10944,11 @@
      * @returns
      */
     function getMonthDays(date) {
+        if (getType(date) === 'string') {
+            // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
+            // @ts-ignore
+            date = date.replace(/-/g, '/');
+        }
         var curDate = date ? new Date(date) : new Date();
         var curMonth = curDate.getMonth();
         curDate.setMonth(curMonth + 1);
@@ -10938,6 +10963,11 @@
      * @returns
      */
     function getDayInYear(date) {
+        if (getType(date) === 'string') {
+            // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
+            // @ts-ignore
+            date = date.replace(/-/g, '/');
+        }
         date = date ? new Date(date) : new Date();
         // @ts-ignore
         return Math.floor((date - new Date(date.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
@@ -10950,6 +10980,11 @@
      * @returns
      */
     function getMonthDaysCount(date) {
+        if (getType(date) === 'string') {
+            // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
+            // @ts-ignore
+            date = date.replace(/-/g, '/');
+        }
         date = date ? new Date(date) : new Date();
         var fullYear = date.getFullYear();
         var month = date.getMonth();
@@ -10982,6 +11017,11 @@
     function getDateList(n, type, date) {
         if (type === void 0) { type = 'day'; }
         if (date === void 0) { date = new Date(); }
+        if (getType(date) === 'string') {
+            // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
+            // @ts-ignore
+            date = date.replace(/-/g, '/');
+        }
         // 包含当天
         var myDate = calcDate(new Date(date), "".concat(n > 0 ? n - 1 : n + 1, " ").concat(type));
         var dateArray = [];
@@ -11011,6 +11051,11 @@
      * @returns
      */
     function getDateTime(date) {
+        if (getType(date) === 'string') {
+            // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
+            // @ts-ignore
+            date = date.replace(/-/g, '/');
+        }
         date = date ? new Date(date) : new Date();
         return date.getTime();
     }
@@ -11043,11 +11088,21 @@
      * @example
      * compareDate('2023-1-1'); /// 1
      * compareDate('2023-1-1 12:00:00', '2023-1-2 12:00:00'); /// -1
-     * @param dateA
-     * @param dateB
+     * @param dateA 时间 A
+     * @param dateB 时间 B
      * @returns
      */
     function compareDate(dateA, dateB) {
+        if (getType(dateA) === 'string') {
+            // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
+            // @ts-ignore
+            dateA = dateA.replace(/-/g, '/');
+        }
+        if (getType(dateB) === 'string') {
+            // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
+            // @ts-ignore
+            dateB = dateB.replace(/-/g, '/');
+        }
         dateA = dateA ? new Date(dateA) : new Date();
         dateB = dateB ? new Date(dateB) : new Date();
         var result = dateA.getTime() - dateB.getTime();
@@ -11063,9 +11118,9 @@
      * 倒计时
      * @example
      * console.time('test'); countdown(10, (x) => console.log('--->', x), () => console.timeEnd('test')); /// test: 10023.636962890625 ms
-     * @param seconds
-     * @param callback
-     * @param finishCallBack
+     * @param seconds 秒数
+     * @param callback 回调函数
+     * @param finishCallBack 完成回调函数
      * @returns
      */
     function countdown(seconds, callback, finishCallBack) {
@@ -11090,8 +11145,8 @@
      * @example
      * transferSeconds(1234); /// '00:20:34'
      * transferSeconds(1234, true); /// {h: '00', i: 20, s: 34}
-     * @param duration
-     * @param returnObj
+     * @param duration 时间/秒
+     * @param returnObj 是否返回对象
      * @returns
      */
     function transferSeconds(duration, returnObj) {
@@ -11135,7 +11190,7 @@
      * @Author: HxB
      * @Date: 2022-04-26 15:37:27
      * @LastEditors: DoubleAm
-     * @LastEditTime: 2023-08-22 14:23:45
+     * @LastEditTime: 2023-08-23 12:24:34
      * @Description: 利用 dom 的一些函数
      * @FilePath: \js-xxx\src\Dom\index.ts
      */
@@ -11235,7 +11290,7 @@
      * @example
      * scrollToTop('body'); /// 滚动到顶部
      * @param elementSelector 指定元素选择器
-     * @param to ('start'|'end')[default: 'start']
+     * @param to `('start'|'end')[default: 'start']`
      * @returns
      */
     function scrollToTop(elementSelector, to) {
@@ -11542,8 +11597,8 @@
      * marquee('#demo'); /// 默认横向正常滚动(loopType=normal)
      * marquee('.demo-y', {direction: 'Y', loopType: 'infinite', speed: 3}); /// Y 轴无限无缝滚动，speed > 0 越小速度越快。
      * marquee('.demo-x', {direction: 'X', loopType: 'origin', speed: 3, style: 'animation-delay:2s;', parentStyle: 'color:red;'}); /// X 轴无限来回滚动
-     * @param selector
-     * @param options
+     * @param selector 选择器字符串
+     * @param options 动画配置
      * @returns
      */
     function marquee(selector, options) {
@@ -11592,8 +11647,8 @@
      * @example
      * stackSticky('.stack', 'top'); /// 所有 .stack 元素自动在 top 上堆叠
      * stackSticky('.stack', 'left'); /// 所有 .stack 元素自动在 left 上堆叠
-     * @param selectors
-     * @param direction
+     * @param selectors 选择器字符串
+     * @param direction 堆叠方向
      * @returns
      */
     function stackSticky(selectors, direction) {
@@ -11667,7 +11722,7 @@
      * px 转 rem
      * @example
      * px2rem(30); /// 转化后的 rem
-     * @param px
+     * @param px 像素值
      * @returns
      */
     function px2rem(px) {
@@ -11746,7 +11801,7 @@
      * @Author: HxB
      * @Date: 2022-04-26 16:24:34
      * @LastEditors: DoubleAm
-     * @LastEditTime: 2023-08-23 09:50:24
+     * @LastEditTime: 2023-08-23 11:28:54
      * @Description: 数学常用函数
      * @FilePath: \js-xxx\src\Math\index.ts
      */
@@ -11861,7 +11916,7 @@
      * @example
      * average(1, 2, 3, 4); /// 2.5
      * average(1, 2, 3, 4.123); /// 2.53075
-     * @param args
+     * @param args 需要计算的数...
      * @returns
      */
     function average() {
@@ -11880,7 +11935,7 @@
      * @example
      * abs(-1); /// 1
      * abs(1); /// 1
-     * @param value
+     * @param value 数值
      * @returns
      */
     function abs(value) {
@@ -11891,7 +11946,7 @@
      * @example
      * isEven(-2); /// true
      * isEven(1); /// false
-     * @param value
+     * @param value 数值
      * @returns
      */
     function isEven(value) {
@@ -11905,9 +11960,9 @@
      * float(1.135, 1); /// 1.1
      * float(1.135, 4); /// 1.135
      * float(1.135, 4, true); /// '1.1350'
-     * @param value
-     * @param d
-     * @param isStr
+     * @param value 数值
+     * @param d 精度
+     * @param isStr 是否返回字符串
      * @returns
      */
     function float(value, d, isStr) {
@@ -11919,15 +11974,15 @@
         return isStr ? res : Number(res);
     }
     /**
-     * 判断一个数是否在指定范围
+     * 判断一个数是否在指定范围（闭区间）
      * @example
      * inRange(null, 0, 3); /// false
      * inRange(0, 0, 3); /// true
      * inRange(3, 0, 3); /// true
      * inRange(5, 0, 3); /// false
-     * @param value
-     * @param min
-     * @param max
+     * @param value 数值
+     * @param min 最小值
+     * @param max 最大值
      * @returns
      */
     function inRange(value, min, max) {
@@ -11953,9 +12008,9 @@
      * getPercentage(17, 1020, 2); /// 1.67
      * getPercentage(1020, null, 2); /// 0
      * getPercentage(0, 1020, 2, { float: false, suffix: true }); /// '0%'
-     * @param value
-     * @param total
-     * @param options
+     * @param value 数值
+     * @param total 总数
+     * @param options 配置
      * @returns
      */
     function getPercentage(value, total, decimals, options) {
@@ -11988,7 +12043,7 @@
      * maskNumber(10000123111); /// '100.00 亿'
      * maskNumber(12345); /// '1.2 万'
      * maskNumber(123); /// '123'
-     * @param value
+     * @param value 数值
      * @returns
      */
     function maskNumber(value) {
@@ -12055,9 +12110,9 @@
      * @example
      * transferNumber(100); /// '1100100'
      * transferNumber(1100100, 2, 10); /// 100
-     * @param number
-     * @param from
-     * @param to
+     * @param number 数值
+     * @param from 原进制
+     * @param to 目标进制
      * @returns
      */
     function transferNumber(number, from, to) {
@@ -12160,7 +12215,7 @@
      * @Author: HxB
      * @Date: 2022-04-26 16:24:47
      * @LastEditors: DoubleAm
-     * @LastEditTime: 2023-08-23 09:51:50
+     * @LastEditTime: 2023-08-23 11:29:02
      * @Description: 常用数字相关函数
      * @FilePath: \js-xxx\src\Number\index.ts
      */
@@ -12266,7 +12321,7 @@
      * 数字人性化显示
      * @example
      * formatNumber('12312300'); /// '12,312,300'
-     * @param value
+     * @param value 数值
      * @returns
      */
     function formatNumber(value) {
@@ -12416,8 +12471,8 @@
      * const a = { a: 1 };
      * a.__proto__.x = 1;
      * hasKey(a, 'x'); /// true;
-     * @param obj
-     * @param key
+     * @param obj 对象
+     * @param key 需要判断的 key
      * @returns
      */
     function hasKey(obj, key) {
@@ -12518,7 +12573,7 @@
      * getBaseURL('https://test.com/index?name=leo&org=biugle#test'); /// 'https://test.com/index'
      * getBaseURL(''); /// ''
      * getBaseURL(); /// 当前页面 BaseURL
-     * @param url
+     * @param url 地址/链接
      * @returns
      */
     function getBaseURL(url) {
@@ -12531,7 +12586,7 @@
      * getQueryString('https://test.com/index?name=leo&org=biugle#test'); /// 'name=leo&org=biugle'
      * getQueryString(''); /// ''
      * getQueryString(); /// 当前页面 QueryString 字符串部分
-     * @param url
+     * @param url 地址/链接
      * @returns
      */
     function getQueryString(url) {
@@ -12539,12 +12594,12 @@
         return toBool(url) ? (_d = (_c = (_b = (_a = url === null || url === void 0 ? void 0 : url.split('?')) === null || _a === void 0 ? void 0 : _a[1]) === null || _b === void 0 ? void 0 : _b.split('#')) === null || _c === void 0 ? void 0 : _c[0]) !== null && _d !== void 0 ? _d : '' : (_e = window.location.search) === null || _e === void 0 ? void 0 : _e.replace('?', '');
     }
     /**
-     * 获取查询参数对象
+     * 获取查询地址/链接中的参数对象
      * @example
      * getSearchParams('https://test.com/index?name=leo&org=biugle#test'); /// {name: 'leo', org: 'biugle'}
      * getSearchParams(''); /// {}
      * getSearchParams(); /// 当前页面 SearchParams 对象
-     * @param url
+     * @param url 地址/链接
      * @returns
      */
     function getSearchParams(url) {
@@ -12571,9 +12626,9 @@
      * @example
      * xAjax('get', 'https://test.cn', { params: { test: 123, hello: 456 }, success: (data) => console.log('success', data), fail: (error) => console.log('fail', error) }); /// ajax
      * xAjax('POST', 'https://test.cn', { contentType: 'application/json', data: { test: 123 }, success: (data) => console.log('success', data), fail: (error) => console.log('fail', error) }); /// ajax
-     * @param method
-     * @param url
-     * @param options
+     * @param method Http Method
+     * @param url 地址/链接
+     * @param options 请求配置
      * @returns
      */
     function xAjax(method, url, options) {
@@ -12624,9 +12679,9 @@
      * @example
      * xFetch('get', 'https://test.cn', { params: { test: 123, hello: 456 } }).then(res => res.json()).then(data => console.log(data)); /// fetchXPromise
      * xFetch('POST', 'https://test.cn', { contentType: 'application/json', data: { test: 123 } }).catch(error => console.log(error)); /// fetchXPromise
-     * @param method
-     * @param url
-     * @param options
+     * @param method Http Method
+     * @param url 地址/链接
+     * @param options 请求配置
      * @returns
      */
     function xFetch(method, url, options) {
@@ -12653,7 +12708,7 @@
      * getContentType('file'); /// 'multipart/form-data'
      * getContentType('pdf'); /// 'application/pdf'
      * getContentType('unknown'); /// 'application/octet-stream'
-     * @param fileType
+     * @param fileType 文件类型
      * @returns
      */
     function getContentType(fileType) {
@@ -12867,8 +12922,8 @@
      * Author: WuXingHeng
      * @example
      * dom.onclick = onClick2MoreClick(300, clickOneCallBack, clickTwoCallBack, clickThreeCallBack, clickFourCallBack); /// void
-     * @param {number} delay
-     * @param {Array} events
+     * @param delay 点击间隔
+     * @param events 事件多击 rest 参数
      * @returns
      */
     function onClick2MoreClick(delay) {
@@ -12905,9 +12960,9 @@
      * 单独绑定多击事件
      * @example
      * dom.onclick = bindMoreClick(moreClickCallBack, 4, 500); /// 绑定 4 击事件
-     * @param fn
-     * @param times
-     * @param delay
+     * @param fn 触发方法
+     * @param times 几次点击触发
+     * @param delay 点击间隔
      * @returns
      */
     function bindMoreClick(fn, times, delay) {
@@ -12940,10 +12995,10 @@
      * 设置长按事件-支持加入单击事件
      * @example
      * addLongPressEvent(document.querySelector('.img-btn'), (event); /// console.log('addLongPressEvent'), 3000); /// 长按会触发事件
-     * @param element
-     * @param longPressCallback
-     * @param duration
-     * @param clickCallback
+     * @param element 需要绑定事件的元素
+     * @param longPressCallback 长按事件函数
+     * @param duration 长按时间
+     * @param clickCallback 单击事件函数(可选)
      * @returns
      */
     function addLongPressEvent(element, longPressCallback, duration, clickCallback) {
@@ -13058,9 +13113,9 @@
      * checkVersion('1.0.1-rc', '1.0.0', '-rc'); /// 1
      * checkVersion('1.0.0', '1.0.1'); /// -1
      * checkVersion('1.0.0', '1.0.0'); /// 0
-     * @param targetVersion
-     * @param currentVersion
-     * @param testStr default(-rc)
+     * @param targetVersion 目标版本
+     * @param currentVersion 当前版本
+     * @param testStr 需要替换的字符串 default(-rc)
      * @returns
      */
     function checkVersion(targetVersion, currentVersion, testStr) {
@@ -13162,7 +13217,7 @@
      * 获取血型枚举信息
      * @example
      * getBloodGroup('A'); /// { value: 'A', label: 'A 型', color: '#1890FF', lower: 'a', upper: 'A' }
-     * @param bloodGroup
+     * @param bloodGroup 血型
      * @returns
      */
     function getBloodGroup(bloodGroup) {
@@ -13215,8 +13270,8 @@
      * dataTo('.class_name', 'xxx'); /// xxx 会填入到类名为 class-name 的元素中
      * dataTo('.class.name', 'xxx'); /// xxx 会填入到类名为 class-name 的元素中
      * dataTo('#id.name', 'xxx'); /// xxx 会填入到 id 名为 id-name 的元素中
-     * @param key
-     * @param value
+     * @param key key 值
+     * @param value value 值
      * @returns
      */
     function dataTo(key, value) {
@@ -13241,9 +13296,9 @@
      * watermark(document.body, 'My Watermark'); /// 在 body 中生成水印
      * watermark(document.body, 'My Watermark', { fontSize: 120, color: 'red', repeat: false, angle: 0 }); /// 在 body 中生成水印
      * watermark(document.body, 'My Watermark', { fontSize: 20, color: 'red', repeat: true, angle: 90 }); /// 在 body 中生成水印
-     * @param dom
-     * @param text
-     * @param options
+     * @param dom 需要生成水印的 dom
+     * @param text 水印内容
+     * @param options 样式配置
      * @returns
      */
     function watermark(dom, text, options) {
@@ -13303,7 +13358,7 @@
      * getCron({ day: '1-5' }); /// '* * 1-5 * * '
      * getCron({ day: '1,5' }); /// '* * 1,5 * * '
      * getCron({ day: '1/5' }); /// '* * 1/5 * * '
-     * @param options
+     * @param options cron 配置
      * @returns
      */
     function getCron(_a) {
@@ -13406,7 +13461,7 @@
      * @example
      * log([1, 2, 2, 3, 3], {a: 1, b: 2}, 'test', true); /// 打印数据
      * log('danger'); /// 打印数据
-     * @param args
+     * @param args 打印数据 rest 参数
      * @returns
      */
     function log() {
@@ -13448,8 +13503,8 @@
      * logVar([1, 2, 2, 3, 3]); /// 打印数据
      * logVar({a: 1, b: 2}, 'danger'); /// 打印数据
      * logVar({a: 1, b: 2}, 'success'); /// 打印数据
-     * @param value
-     * @param logLevel
+     * @param value 打印的值
+     * @param logLevel 日志等级
      * @returns
      */
     function logVar(value, logLevel) {
@@ -13469,7 +13524,7 @@
      * transferScanStr('@123'); /// '123'
      * transferScanStr('#test~'); /// 'test'
      * transferScanStr(undefined); /// ''
-     * @param value
+     * @param value 值
      * @returns
      */
     function transferScanStr(value) {
@@ -13484,8 +13539,8 @@
      * forceToStr(123123123); /// '123123123'
      * forceToStr(undefined); /// '-'
      * forceToStr(undefined, 0); /// '0'
-     * @param value
-     * @param defaultValue
+     * @param value 值
+     * @param defaultValue 默认值
      * @returns
      */
     function forceToStr(value, defaultValue) {
@@ -13499,8 +13554,8 @@
      * @example
      * transferCSVData([{ prop: 'name' }, { prop: 'age' }], [{ name: '张三', age: 15 }]); /// 可以导出的字符数据
      * transferCSVData([{ label: '姓名', prop: 'name' }, { label: '年龄', prop: 'age' }], [{ name: '张三', age: 15 }]); /// 可以导出的字符数据
-     * @param fields
-     * @param data
+     * @param fields 导出的栏位
+     * @param data 数据
      * @returns
      */
     function transferCSVData(fields, data) {
@@ -13523,9 +13578,9 @@
      * exportFile(data); /// 导出 txt 文件
      * exportFile(data, 'csv-导出文件测试', 'csv'); /// 导出 csv 文件
      * exportFile('http://a.biugle.cn/img/cdn/dev/avatar/1.png', 'test', 'png'); /// 导出 png 文件
-     * @param data
-     * @param fileName
-     * @param fileType
+     * @param data 数据
+     * @param fileName 文件名
+     * @param fileType 文件类型
      * @returns
      */
     function exportFile(data, fileName, fileType) {
@@ -13848,7 +13903,7 @@
      * `export function showToast(options: ToastOptions);`
      * @example
      * showToast({ type: 'success', content: '这是一个演示 Toast' }); /// 显示 success 类型的 toast
-     * @param options
+     * @param options 显示配置
      * @returns
      */
     var showToast = (function () {
@@ -13906,7 +13961,7 @@
      * 隐藏 toast 不传值关闭所有 toast
      * @example
      * const toast = showToast({ content: '这是一个演示 Toast' }); /// hideToast(toast);
-     * @param toast
+     * @param toast toast 实例
      * @returns
      */
     function hideToast(toast) {
@@ -13925,8 +13980,8 @@
      * 快速展示 Toast
      * @example
      * const myToast = Toast('这是一个快速演示 Toast'); /// hideToast(myToast);
-     * @param msg
-     * @param type
+     * @param msg 内容
+     * @param type 类型
      * @returns
      */
     function Toast(msg, type) {
@@ -13943,7 +13998,7 @@
      * Loading Toast 不会自动关闭
      * @example
      * const myLoading = Loading(msg?); /// hideToast(myLoading);
-     * @param msg
+     * @param msg 内容
      * @returns
      */
     function Loading(msg) {
@@ -13957,7 +14012,7 @@
      * @Author: HxB
      * @Date: 2022-04-26 14:10:35
      * @LastEditors: DoubleAm
-     * @LastEditTime: 2023-08-23 09:56:42
+     * @LastEditTime: 2023-08-23 11:20:28
      * @Description: websocket
      * @FilePath: \js-xxx\src\WebSocket\index.ts
      */
@@ -13970,7 +14025,7 @@
      * @example
      * initWebSocket({ url: 'ws://localhost:8080/ws', timeout: 30000, onOpen: () => {}, onMessage: () => {}, onClose: () => {}, onError: () => {}, reconnect: {} })
      * @param options `{url, onOpen, onMessage, onClose, onError, timeout, reconnect: {times, delay, onReconnect} | boolean} WebSocket 配置`
-     * @returns {WebSocket}
+     * @returns
      */
     function initWebSocket(options) {
         var _a;
@@ -14009,7 +14064,7 @@
                 setTimeout(function () {
                     var _a, _b;
                     (_b = (_a = options.reconnect) === null || _a === void 0 ? void 0 : _a.onReconnect) === null || _b === void 0 ? void 0 : _b.call(_a, xWebSocket, options);
-                    // 记得重新赋值
+                    // 重新赋值
                     xWebSocket = initWebSocket(__assign(__assign({}, options), { reconnect: __assign(__assign({}, options.reconnect), { times: times }) }));
                 }, (_e = (_d = options.reconnect) === null || _d === void 0 ? void 0 : _d.delay) !== null && _e !== void 0 ? _e : 1000);
             }
@@ -14029,7 +14084,7 @@
      * sendWsMsg({ type: 'login', data: { username: 'admin', password: '123456' }}, true); /// true/false
      * sendWsMsg('testMsg'); /// true/false
      * @param message 消息
-     * @param isJSONEncode 是否 JSON 序列化
+     * @param isJSONEncode 是否对数据 JSON 序列化
      * @returns
      */
     function sendWsMsg(message, isJSONEncode) {

@@ -13,7 +13,7 @@ export declare function getType(variable: any): string;
  * toStr({}); /// '{}'
  * toStr([1, 2]); /// '[1,2]'
  * toStr(null); /// ''
- * @param value
+ * @param value 值
  * @returns
  */
 export declare function toStr(value: any): string;
@@ -23,7 +23,7 @@ export declare function toStr(value: any): string;
  * toNum({}); /// 0
  * toNum([2]); /// 2
  * toNum('-123'); /// -123
- * @param value
+ * @param value 值
  * @returns
  */
 export declare function toNum(value: any): number;
@@ -41,8 +41,8 @@ export declare function toNum(value: any): number;
  * toBool('undefined'); /// false
  * toBool('NaN'); /// false
  * toBool(null); /// false
- * @param value
- * @param falseList
+ * @param value 值
+ * @param falseList 判断为 false 的值列表
  * @returns
  */
 export declare function toBool(value: any, falseList?: any[]): boolean;
@@ -61,7 +61,7 @@ export declare function isJSON(str: any): boolean;
  * @example
  * isBool(true); /// true
  * isBool(null); /// false
- * @param value
+ * @param value 值
  * @returns
  */
 export declare function isBool(value: any): boolean;
@@ -70,7 +70,7 @@ export declare function isBool(value: any): boolean;
  * @example
  * isDate(new Date()); /// true
  * isDate(null); /// false
- * @param value
+ * @param value 值
  * @returns
  */
 export declare function isDate(value: any): boolean;
@@ -79,7 +79,7 @@ export declare function isDate(value: any): boolean;
  * @example
  * isStr('test'); /// true
  * isStr(null); /// false
- * @param value
+ * @param value 值
  * @returns
  */
 export declare function isStr(value: any): boolean;
@@ -88,7 +88,7 @@ export declare function isStr(value: any): boolean;
  * @example
  * isUndef(undefined); /// true
  * isUndef(null); /// false
- * @param value
+ * @param value 值
  * @returns
  */
 export declare function isUndef(value: any): boolean;
@@ -97,7 +97,7 @@ export declare function isUndef(value: any): boolean;
  * @example
  * isNull(undefined); /// false
  * isNull(null); /// true
- * @param value
+ * @param value 值
  * @returns
  */
 export declare function isNull(value: any): boolean;
@@ -106,7 +106,7 @@ export declare function isNull(value: any): boolean;
  * @example
  * isNum(NaN); /// false
  * isNum(1); /// true
- * @param value
+ * @param value 值
  * @returns
  */
 export declare function isNum(value: any): boolean;
@@ -115,7 +115,7 @@ export declare function isNum(value: any): boolean;
  * @example
  * isArr([]); /// true
  * isArr({}); /// false
- * @param value
+ * @param value 值
  * @returns
  */
 export declare function isArr(value: any): boolean;
@@ -124,7 +124,7 @@ export declare function isArr(value: any): boolean;
  * @example
  * isObj({}); /// true
  * isObj(null); /// false
- * @param value
+ * @param value 值
  * @returns
  */
 export declare function isObj(value: any): boolean;
@@ -134,7 +134,7 @@ export declare function isObj(value: any): boolean;
  * isElement(document.body); /// true
  * isElement(document); /// false
  * isElement({}); /// false
- * @param value
+ * @param value 值
  * @returns
  */
 export declare function isElement(value: any): boolean;
@@ -145,7 +145,7 @@ export declare function isElement(value: any): boolean;
  * isFn(async function(){}); /// true
  * isFn(new Promise((resolve, reject) => resolve()); /// false
  * isFn({}); /// false
- * @param value
+ * @param value 值
  * @returns
  */
 export declare function isFn(value: any): boolean;
@@ -155,7 +155,7 @@ export declare function isFn(value: any): boolean;
  * isPromise(function(){}); /// false
  * isPromise(async function(){}); /// false
  * isPromise(new Promise((resolve, reject) => resolve())); /// true
- * @param value
+ * @param value 值
  * @returns
  */
 export declare function isPromise(value: any): boolean;
@@ -164,7 +164,7 @@ export declare function isPromise(value: any): boolean;
  * @example
  * isNaN(1); /// false
  * isNaN(NaN); /// true
- * @param value
+ * @param value 值
  * @returns
  */
 export declare function isNaN(value: any): boolean;
@@ -173,7 +173,7 @@ export declare function isNaN(value: any): boolean;
  * @example
  * isBlob(new Blob()); /// true
  * isBlob(null); /// false
- * @param value
+ * @param value 值
  * @returns
  */
 export declare function isBlob(value: any): boolean;
@@ -182,7 +182,7 @@ export declare function isBlob(value: any): boolean;
  * @example
  * isArrayBuffer(new ArrayBuffer()); /// true
  * isArrayBuffer(null); /// false
- * @param value
+ * @param value 值
  * @returns
  */
 export declare function isArrayBuffer(value: any): boolean;

@@ -114,8 +114,8 @@ export declare function getUTCTime(timezone?: number): Date;
  * @example
  * compareDate('2023-1-1'); /// 1
  * compareDate('2023-1-1 12:00:00', '2023-1-2 12:00:00'); /// -1
- * @param dateA
- * @param dateB
+ * @param dateA 时间 A
+ * @param dateB 时间 B
  * @returns
  */
 export declare function compareDate(dateA: any, dateB?: any): -1 | 1 | 0;
@@ -123,9 +123,9 @@ export declare function compareDate(dateA: any, dateB?: any): -1 | 1 | 0;
  * 倒计时
  * @example
  * console.time('test'); countdown(10, (x) => console.log('--->', x), () => console.timeEnd('test')); /// test: 10023.636962890625 ms
- * @param seconds
- * @param callback
- * @param finishCallBack
+ * @param seconds 秒数
+ * @param callback 回调函数
+ * @param finishCallBack 完成回调函数
  * @returns
  */
 export declare function countdown(seconds: number, callback?: any, finishCallBack?: any): any;
@@ -134,8 +134,8 @@ export declare function countdown(seconds: number, callback?: any, finishCallBac
  * @example
  * transferSeconds(1234); /// '00:20:34'
  * transferSeconds(1234, true); /// {h: '00', i: 20, s: 34}
- * @param duration
- * @param returnObj
+ * @param duration 时间/秒
+ * @param returnObj 是否返回对象
  * @returns
  */
 export declare function transferSeconds(duration: number, returnObj?: boolean): string | any;

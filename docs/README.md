@@ -577,10 +577,10 @@ H5Resize(()=>{ console.log('downCb'); }, ()=>{ console.log('upCb'); }); /// do s
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `downCb` | `any` |
-| `upCb` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `downCb` | `any` | 缩回回调 |
+| `upCb` | `any` | 弹起回调 |
 
 #### Returns
 
@@ -602,9 +602,9 @@ const myLoading = Loading(msg?); /// hideToast(myLoading);
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `msg` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `msg` | `string` | 内容 |
 
 #### Returns
 
@@ -697,10 +697,10 @@ const myToast = Toast('这是一个快速演示 Toast'); /// hideToast(myToast);
 
 #### Parameters
 
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `msg` | `string` | `undefined` |
-| `type` | ``"default"`` \| ``"info"`` \| ``"success"`` \| ``"warning"`` \| ``"error"`` \| ``"loading"`` | `'info'` |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `msg` | `string` | `undefined` | 内容 |
+| `type` | ``"default"`` \| ``"info"`` \| ``"success"`` \| ``"warning"`` \| ``"error"`` \| ``"loading"`` | `'info'` | 类型 |
 
 #### Returns
 
@@ -723,9 +723,9 @@ abs(1); /// 1
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `number` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `number` | 数值 |
 
 #### Returns
 
@@ -773,12 +773,12 @@ addLongPressEvent(document.querySelector('.img-btn'), (event); /// console.log('
 
 #### Parameters
 
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `element` | `any` | `undefined` |
-| `longPressCallback` | `any` | `undefined` |
-| `duration` | `number` | `2500` |
-| `clickCallback?` | `any` | `undefined` |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `element` | `any` | `undefined` | 需要绑定事件的元素 |
+| `longPressCallback` | `any` | `undefined` | 长按事件函数 |
+| `duration` | `number` | `2500` | 长按时间 |
+| `clickCallback?` | `any` | `undefined` | 单击事件函数(可选) |
 
 #### Returns
 
@@ -903,10 +903,10 @@ arrObj2objArr(data, 'id'); /// {"id": [1, 2, 3], "name": ["张三", "李四", "�
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `data` | { `[key: string]`: `any`;  }[] |
-| `key` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `data` | { `[key: string]`: `any`;  }[] | 源数据 |
+| `key` | `string` | 用于转换的 key |
 
 #### Returns
 
@@ -1013,9 +1013,9 @@ average(1, 2, 3, 4.123); /// 2.53075
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `...args` | `any`[] |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `...args` | `any`[] | 需要计算的数... |
 
 #### Returns
 
@@ -1111,11 +1111,11 @@ dom.onclick = bindMoreClick(moreClickCallBack, 4, 500); /// 绑定 4 击事件
 
 #### Parameters
 
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `fn` | `any` | `undefined` |
-| `times` | `number` | `3` |
-| `delay` | `number` | `300` |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `fn` | `any` | `undefined` | 触发方法 |
+| `times` | `number` | `3` | 几次点击触发 |
+| `delay` | `number` | `300` | 点击间隔 |
 
 #### Returns
 
@@ -1243,9 +1243,9 @@ camelCase('foo.bar'); /// 'fooBar'
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `str` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `str` | `string` | 字符串 |
 
 #### Returns
 
@@ -1293,10 +1293,10 @@ checkFileExt(['png', 'jpg'], 'test.jpg.txt'); /// false
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `arr` | `string`[] |
-| `value` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `arr` | `string`[] | - |
+| `value` | `string` | 字符串值 |
 
 #### Returns
 
@@ -1322,9 +1322,9 @@ checkIdCard('123123123123123222'); /// false
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `string` | 字符串值 |
 
 #### Returns
 
@@ -1351,9 +1351,9 @@ checkPassWordLevel('123456789654321.H'); /// 5
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `passWord` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `passWord` | `string` | 字符串值-密码 |
 
 #### Returns
 
@@ -1379,9 +1379,9 @@ checkVersion('1.0.0', '1.0.0'); /// 0
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `targetVersion` | `string` | `undefined` |  |
-| `currentVersion` | `string` | `undefined` |  |
-| `testStr` | `string` | `'-rc'` | default(-rc) |
+| `targetVersion` | `string` | `undefined` | 目标版本 |
+| `currentVersion` | `string` | `undefined` | 当前版本 |
+| `testStr` | `string` | `'-rc'` | 需要替换的字符串 default(-rc) |
 
 #### Returns
 
@@ -1459,10 +1459,10 @@ compareDate('2023-1-1 12:00:00', '2023-1-2 12:00:00'); /// -1
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `dateA` | `any` |
-| `dateB?` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `dateA` | `any` | 时间 A |
+| `dateB?` | `any` | 时间 B |
 
 #### Returns
 
@@ -1491,10 +1491,10 @@ contains([[1, 2], [3, 4]], [1, 3]); /// false
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `any`[] |
-| `target` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `any`[] | 值 |
+| `target` | `any` | 目标值 |
 
 #### Returns
 
@@ -1565,11 +1565,11 @@ console.time('test'); countdown(10, (x) => console.log('--->', x), () => console
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `seconds` | `number` |
-| `callback?` | `any` |
-| `finishCallBack?` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `seconds` | `number` | 秒数 |
+| `callback?` | `any` | 回调函数 |
+| `finishCallBack?` | `any` | 完成回调函数 |
 
 #### Returns
 
@@ -1592,9 +1592,9 @@ curryIt(function (a, b, c) {return a + b + c})(1)(2)(3); /// 6
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `fn` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `fn` | `any` | 函数 |
 
 #### Returns
 
@@ -1684,10 +1684,10 @@ dataTo('#id.name', 'xxx'); /// xxx 会填入到 id 名为 id-name 的元素中
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `key` | `string` |
-| `value` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `key` | `string` | key 值 |
+| `value` | `any` | value 值 |
 
 #### Returns
 
@@ -1800,10 +1800,10 @@ difference({a: 1, b: 2}, {a: 1, c: 3, b: 4}); /// {b: 2}
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `paramA` | `any` |
-| `paramB` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `paramA` | `any` | 值 A，若冲突以此值为准。 |
+| `paramB` | `any` | 值 B |
 
 #### Returns
 
@@ -2016,11 +2016,11 @@ exportFile('http://a.biugle.cn/img/cdn/dev/avatar/1.png', 'test', 'png'); /// �
 
 #### Parameters
 
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `data` | `string` | `undefined` |
-| `fileName?` | `string` | `undefined` |
-| `fileType` | `string` | `'txt'` |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `data` | `string` | `undefined` | 数据 |
+| `fileName?` | `string` | `undefined` | 文件名 |
+| `fileType` | `string` | `'txt'` | 文件类型 |
 
 #### Returns
 
@@ -2122,11 +2122,11 @@ float(1.135, 4, true); /// '1.1350'
 
 #### Parameters
 
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `value` | `number` | `undefined` |
-| `d` | `number` | `0` |
-| `isStr` | `boolean` | `false` |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `value` | `number` | `undefined` | 数值 |
+| `d` | `number` | `0` | 精度 |
+| `isStr` | `boolean` | `false` | 是否返回字符串 |
 
 #### Returns
 
@@ -2179,10 +2179,10 @@ forceToStr(undefined, 0); /// '0'
 
 #### Parameters
 
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `value` | `any` | `undefined` |
-| `defaultValue` | `string` | `'-'` |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `value` | `any` | `undefined` | 值 |
+| `defaultValue` | `string` | `'-'` | 默认值 |
 
 #### Returns
 
@@ -2287,9 +2287,9 @@ formatJSON(new Date(), null, 2); /// '"2023-03-02T10:02:42.019Z"'
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `any` | 值 |
 
 #### Returns
 
@@ -2312,10 +2312,10 @@ formatMoney(852.1314, 2); /// '852.13'
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `longData` | `string` \| `number` |
-| `length` | `number` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `longData` | `string` \| `number` | 数值 |
+| `length` | `number` | 精度 |
 
 #### Returns
 
@@ -2337,9 +2337,9 @@ formatNumber('12312300'); /// '12,312,300'
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `string` \| `number` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `string` \| `number` | 数值 |
 
 #### Returns
 
@@ -2446,10 +2446,10 @@ getAge('2023'); /// -1
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `birthday` | `any` |
-| `targetDate?` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `birthday` | `any` | 生日 |
+| `targetDate?` | `any` | 目标日期 |
 
 #### Returns
 
@@ -2473,9 +2473,9 @@ getAnimal('2023'); /// '兔'
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `date` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `date` | `any` | 日期 |
 
 #### Returns
 
@@ -2525,9 +2525,9 @@ getBaseURL(); /// 当前页面 BaseURL
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `url?` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `url?` | `string` | 地址/链接 |
 
 #### Returns
 
@@ -2549,9 +2549,9 @@ getBloodGroup('A'); /// { value: 'A', label: 'A 型', color: '#1890FF', lower: '
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `bloodGroup` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `bloodGroup` | `string` | 血型 |
 
 #### Returns
 
@@ -2583,9 +2583,9 @@ getConstellation(new Date('2022-11-24')); /// { cn: '射手', en: 'Sagittarius',
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `date` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `date` | `any` | 日期 |
 
 #### Returns
 
@@ -2616,9 +2616,9 @@ getContentType('unknown'); /// 'application/octet-stream'
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `fileType` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `fileType` | `string` | 文件类型 |
 
 #### Returns
 
@@ -2674,14 +2674,14 @@ getCron({ day: '1/5' }); /// '* * 1/5 * * '
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `options` | `Object` |
-| `options.day` | `undefined` \| `string` |
-| `options.hour` | `undefined` \| `string` |
-| `options.minute` | `undefined` \| `string` |
-| `options.month` | `undefined` \| `string` |
-| `options.week` | `undefined` \| `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `options` | `Object` | cron 配置 |
+| `options.day` | `undefined` \| `string` | - |
+| `options.hour` | `undefined` \| `string` | - |
+| `options.minute` | `undefined` \| `string` | - |
+| `options.month` | `undefined` \| `string` | - |
+| `options.week` | `undefined` \| `string` | - |
 
 #### Returns
 
@@ -2853,10 +2853,10 @@ getKey(2, 'test-'); /// test-aK'
 
 #### Parameters
 
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `size` | `number` | `21` |
-| `prefix` | `string` | `''` |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `size` | `number` | `21` | 指定长度 |
+| `prefix` | `string` | `''` | 前缀 |
 
 #### Returns
 
@@ -3005,9 +3005,9 @@ getMonthInfo(13); /// MONTH_INFO
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `n` | `string` \| `number` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `n` | `string` \| `number` | 值 |
 
 #### Returns
 
@@ -3033,14 +3033,14 @@ getPercentage(0, 1020, 2, { float: false, suffix: true }); /// '0%'
 
 #### Parameters
 
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `value` | `any` | `undefined` |
-| `total` | `any` | `undefined` |
-| `decimals` | `number` | `0` |
-| `options` | `Object` | `undefined` |
-| `options.float` | `boolean` | `false` |
-| `options.suffix` | `boolean` | `false` |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `value` | `any` | `undefined` | 数值 |
+| `total` | `any` | `undefined` | 总数 |
+| `decimals` | `number` | `0` | - |
+| `options` | `Object` | `undefined` | 配置 |
+| `options.float` | `boolean` | `false` | - |
+| `options.suffix` | `boolean` | `false` | - |
 
 #### Returns
 
@@ -3064,10 +3064,10 @@ getPinYin('贺'); /// 'He'
 
 #### Parameters
 
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `str` | `string` | `undefined` |
-| `extractFirst` | `boolean` | `false` |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `str` | `string` | `undefined` | 字符串值 |
+| `extractFirst` | `boolean` | `false` | 是否只获取首字母 |
 
 #### Returns
 
@@ -3091,9 +3091,9 @@ getQueryString(); /// 当前页面 QueryString 字符串部分
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `url?` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `url?` | `string` | 地址/链接 |
 
 #### Returns
 
@@ -3183,10 +3183,10 @@ getRandomVar([1, 2, 3, 4], 2); /// [2, 4]
 
 #### Parameters
 
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `value` | `any` | `undefined` |
-| `count` | `number` | `1` |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `value` | `any` | `undefined` | 值 |
+| `count` | `number` | `1` | 获取数据量 |
 
 #### Returns
 
@@ -3223,7 +3223,7 @@ ___
 
 ▸ **getSearchParams**(`url?`): `any`
 
-获取查询参数对象
+获取查询地址/链接中的参数对象
 
 **`Example`**
 
@@ -3235,9 +3235,9 @@ getSearchParams(); /// 当前页面 SearchParams 对象
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `url?` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `url?` | `string` | 地址/链接 |
 
 #### Returns
 
@@ -3327,9 +3327,9 @@ getSize(null); /// 0
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `any` | 值 |
 
 #### Returns
 
@@ -3353,9 +3353,9 @@ getSortVar([1, 3, 2]); /// [1, 2, 3]
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `any` | 值 |
 
 #### Returns
 
@@ -3546,10 +3546,10 @@ getUuid(5); /// '5xRc5'
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `len` | `number` |
-| `radix` | `number` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `len` | `number` | 指定长度 |
+| `radix` | `number` | 目标进制转换 |
 
 #### Returns
 
@@ -3670,9 +3670,9 @@ getWeekInfo(8); /// WEEKS_INFO
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `n` | `string` \| `number` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `n` | `string` \| `number` | 值 |
 
 #### Returns
 
@@ -3723,10 +3723,10 @@ hasKey(a, 'x'); /// true;
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `obj` | `any` |
-| `key` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `obj` | `any` | 对象 |
+| `key` | `string` | 需要判断的 key |
 
 #### Returns
 
@@ -3749,9 +3749,9 @@ hasSpecialChar('a1'); /// false
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `string` | 字符串值 |
 
 #### Returns
 
@@ -3773,9 +3773,9 @@ const toast = showToast({ content: '这是一个演示 Toast' }); /// hideToast(
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `toast?` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `toast?` | `any` | toast 实例 |
 
 #### Returns
 
@@ -3811,7 +3811,7 @@ ___
 
 ▸ **inRange**(`value`, `min`, `max`): `boolean`
 
-判断一个数是否在指定范围
+判断一个数是否在指定范围（闭区间）
 
 **`Example`**
 
@@ -3824,11 +3824,11 @@ inRange(5, 0, 3); /// false
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `any` |
-| `min` | `number` |
-| `max` | `number` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `any` | 数值 |
+| `min` | `number` | 最小值 |
+| `max` | `number` | 最大值 |
 
 #### Returns
 
@@ -3928,10 +3928,10 @@ intersection({a: 1, b: 2}, {a: 1, c: 3, b: 4}); /// {a: 1}
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `paramA` | `any` |
-| `paramB` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `paramA` | `any` | 值 A |
+| `paramB` | `any` | 值 B |
 
 #### Returns
 
@@ -3956,9 +3956,9 @@ inversion(true); /// true
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `any` | 值 |
 
 #### Returns
 
@@ -3984,10 +3984,10 @@ isAccount('我test123_qq_com', true); /// true
 
 #### Parameters
 
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `value` | `string` | `undefined` |
-| `hasChinese` | `boolean` | `false` |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `value` | `string` | `undefined` | 字符串值 |
+| `hasChinese` | `boolean` | `false` | - |
 
 #### Returns
 
@@ -4028,9 +4028,9 @@ isArr({}); /// false
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `any` | 值 |
 
 #### Returns
 
@@ -4053,9 +4053,9 @@ isArrayBuffer(null); /// false
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `any` | 值 |
 
 #### Returns
 
@@ -4078,9 +4078,9 @@ isBankCard('12312312312'); /// false
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `string` | 字符串值 |
 
 #### Returns
 
@@ -4103,9 +4103,9 @@ isBlob(null); /// false
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `any` | 值 |
 
 #### Returns
 
@@ -4128,9 +4128,9 @@ isBool(null); /// false
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `any` | 值 |
 
 #### Returns
 
@@ -4175,9 +4175,9 @@ isCarCode('广东 B12345'); /// false
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `string` | 字符串值 |
 
 #### Returns
 
@@ -4200,9 +4200,9 @@ isChinese('我 1'); /// false
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `string` | 字符串值 |
 
 #### Returns
 
@@ -4225,9 +4225,9 @@ isCreditCode('12312312312'); /// false
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `string` | 字符串值 |
 
 #### Returns
 
@@ -4268,9 +4268,9 @@ isDate(null); /// false
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `any` | 值 |
 
 #### Returns
 
@@ -4348,9 +4348,9 @@ isElement({}); /// false
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `any` | 值 |
 
 #### Returns
 
@@ -4373,9 +4373,9 @@ isEmail('@qq.com'); /// false
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `string` | 字符串值 |
 
 #### Returns
 
@@ -4398,9 +4398,9 @@ isEnglish('a1'); /// false
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `string` | 字符串值 |
 
 #### Returns
 
@@ -4426,10 +4426,10 @@ isEqual(1, '1'); /// false
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `obj1` | `any` |
-| `obj2` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `obj1` | `any` | 值 1 |
+| `obj2` | `any` | 值 2 |
 
 #### Returns
 
@@ -4452,9 +4452,9 @@ isEven(1); /// false
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `number` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `number` | 数值 |
 
 #### Returns
 
@@ -4479,9 +4479,9 @@ isFn({}); /// false
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `any` | 值 |
 
 #### Returns
 
@@ -4506,9 +4506,9 @@ isHttp('12345'); /// 0
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `string` | 字符串值 |
 
 #### Returns
 
@@ -4559,9 +4559,9 @@ isIpAddress('255.255.255.123.123'); /// false
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `string` | 字符串值 |
 
 #### Returns
 
@@ -4586,9 +4586,9 @@ isIpv4('255.255.255.2555.255'); /// false
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `string` | 字符串值 |
 
 #### Returns
 
@@ -4616,9 +4616,9 @@ isIpv6('2000:0000:0000:0000:0001:2345:6789:abcd:1'); /// false
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `string` | 字符串值 |
 
 #### Returns
 
@@ -4667,9 +4667,9 @@ isMobile('12345678910'); /// false
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `string` | 字符串值 |
 
 #### Returns
 
@@ -4692,9 +4692,9 @@ isNaN(NaN); /// true
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `any` | 值 |
 
 #### Returns
 
@@ -4735,9 +4735,9 @@ isNull(null); /// true
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `any` | 值 |
 
 #### Returns
 
@@ -4760,9 +4760,9 @@ isNum(1); /// true
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `any` | 值 |
 
 #### Returns
 
@@ -4785,9 +4785,9 @@ isObj(null); /// false
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `any` | 值 |
 
 #### Returns
 
@@ -4811,9 +4811,9 @@ isPromise(new Promise((resolve, reject) => resolve())); /// true
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `any` | 值 |
 
 #### Returns
 
@@ -4836,9 +4836,9 @@ isQQ('123456789101'); /// false
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `string` | 字符串值 |
 
 #### Returns
 
@@ -4885,9 +4885,9 @@ isStr(null); /// false
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `any` | 值 |
 
 #### Returns
 
@@ -4910,9 +4910,9 @@ isStrongPassWord('test@qq.com123'); /// true
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `string` | 字符串值 |
 
 #### Returns
 
@@ -4935,9 +4935,9 @@ isTel('13579246810'); /// false
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `string` | 字符串值 |
 
 #### Returns
 
@@ -4960,9 +4960,9 @@ isUndef(null); /// false
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `any` | 值 |
 
 #### Returns
 
@@ -4985,9 +4985,9 @@ isUrl(http://www); /// false
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `string` | 字符串值 |
 
 #### Returns
 
@@ -5034,9 +5034,9 @@ jsonClone({a: 1, b: 2}); /// {a: 1, b: 2}
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `any` | 值 |
 
 #### Returns
 
@@ -5108,9 +5108,9 @@ log('danger'); /// 打印数据
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `...args` | `any`[] |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `...args` | `any`[] | 打印数据 rest 参数 |
 
 #### Returns
 
@@ -5136,10 +5136,10 @@ logRunTime(new Promise((resolve, reject) => { setTimeout(() => resolve('test'), 
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `fn` | `any` |
-| `timeKey` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `fn` | `any` | 方法函数 |
+| `timeKey` | `string` | 打印关键 key |
 
 #### Returns
 
@@ -5165,10 +5165,10 @@ logVar({a: 1, b: 2}, 'success'); /// 打印数据
 
 #### Parameters
 
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `value` | `any` | `undefined` |
-| `logLevel` | `string` | `'info'` |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `value` | `any` | `undefined` | 打印的值 |
+| `logLevel` | `string` | `'info'` | 日志等级 |
 
 #### Returns
 
@@ -5195,15 +5195,15 @@ marquee('.demo-x', {direction: 'X', loopType: 'origin', speed: 3, style: 'animat
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `selector` | `string` |
-| `options?` | `Object` |
-| `options.direction?` | ``"X"`` \| ``"Y"`` |
-| `options.loopType?` | ``"infinite"`` \| ``"normal"`` \| ``"origin"`` |
-| `options.parentStyle?` | `string` |
-| `options.speed?` | `number` |
-| `options.style?` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `selector` | `string` | 选择器字符串 |
+| `options?` | `Object` | 动画配置 |
+| `options.direction?` | ``"X"`` \| ``"Y"`` | - |
+| `options.loopType?` | ``"infinite"`` \| ``"normal"`` \| ``"origin"`` | - |
+| `options.parentStyle?` | `string` | - |
+| `options.speed?` | `number` | - |
+| `options.style?` | `string` | - |
 
 #### Returns
 
@@ -5227,9 +5227,9 @@ maskNumber(123); /// '123'
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `number` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `number` | 数值 |
 
 #### Returns
 
@@ -5257,9 +5257,9 @@ maskString('广东省深圳市福田区福田保税区xxx小区xxx单元x栋x楼
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `str` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `str` | `string` | 字符串 |
 
 #### Returns
 
@@ -5340,9 +5340,9 @@ ms(60000); /// '1m'
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `str` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `str` | `any` | 值 |
 
 #### Returns
 
@@ -5389,10 +5389,10 @@ dom.onclick = onClick2MoreClick(300, clickOneCallBack, clickTwoCallBack, clickTh
 
 #### Parameters
 
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `delay` | `number` | `300` |
-| `...events` | `any`[] | `undefined` |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `delay` | `number` | `300` | 点击间隔 |
+| `...events` | `any`[] | `undefined` | 事件多击 rest 参数 |
 
 #### Returns
 
@@ -5414,11 +5414,11 @@ openFile({ multiple: true, accept: '.txt' }).then(fileList => console.log(fileLi
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `options?` | `Object` |
-| `options.accept?` | `string` |
-| `options.multiple?` | `boolean` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `options?` | `Object` | 打开配置 |
+| `options.accept?` | `string` | - |
+| `options.multiple?` | `boolean` | - |
 
 #### Returns
 
@@ -5440,9 +5440,9 @@ openFullscreen(); /// 开启全屏
 
 #### Parameters
 
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `element` | `any` | `document.body` |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `element` | `any` | `document.body` | 元素 |
 
 #### Returns
 
@@ -5464,9 +5464,9 @@ px2rem(30); /// 转化后的 rem
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `px` | `number` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `px` | `number` | 像素值 |
 
 #### Returns
 
@@ -5546,9 +5546,9 @@ randomStr(5); /// 77192
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `length` | `number` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `length` | `number` | 指定长度 |
 
 #### Returns
 
@@ -5595,10 +5595,10 @@ repeat('*', 3); /// '***'
 
 #### Parameters
 
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `str` | `string` | `undefined` |
-| `n` | `number` | `1` |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `str` | `string` | `undefined` | 字符串 |
+| `n` | `number` | `1` | - |
 
 #### Returns
 
@@ -5696,10 +5696,10 @@ same('admins', 'admin'); /// false
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `valueA` | `string` \| `any`[] |
-| `valueB` | `string` \| `any`[] |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `valueA` | `string` \| `any`[] | 值 A |
+| `valueB` | `string` \| `any`[] | 值 B |
 
 #### Returns
 
@@ -5738,19 +5738,17 @@ ___
 
 滚动到顶部
 `平滑滚动 css：`scroll-behavior: smooth;`
-
-**`Example`**
-
-```ts
+@example
 scrollToTop('body'); /// 滚动到顶部
-```
+@param elementSelector 指定元素选择器
+@param to `('start'|'end')[default: 'start']`
 
 #### Parameters
 
-| Name | Type | Default value | Description |
-| :------ | :------ | :------ | :------ |
-| `elementSelector` | `string` | `undefined` | 指定元素选择器 |
-| `to` | ``"start"`` \| ``"end"`` | `'start'` | ('start'\|'end')[default: 'start'] |
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `elementSelector` | `string` | `undefined` |
+| `to` | ``"start"`` \| ``"end"`` | `'start'` |
 
 #### Returns
 
@@ -5858,7 +5856,7 @@ sendWsMsg('testMsg'); /// true/false
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
 | `message` | `any` | `undefined` | 消息 |
-| `isJSONEncode` | `boolean` | `false` | 是否 JSON 序列化 |
+| `isJSONEncode` | `boolean` | `false` | 是否对数据 JSON 序列化 |
 
 #### Returns
 
@@ -5984,8 +5982,8 @@ setEventListener('resize', () => { console.log('resize'); }); /// cancel 当前 
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `eventKey` | `string` | `undefined` |  |
-| `foo` | `any` | `undefined` |  |
+| `eventKey` | `string` | `undefined` | 事件 key |
+| `foo` | `any` | `undefined` | 函数 |
 | `once` | `boolean` | `false` | 是否只触发一次 |
 | `dom` | `any` | `window` | document.querySelector<HTMLDivElement>('.xxx') |
 
@@ -6106,9 +6104,9 @@ showToast({ type: 'success', content: '这是一个演示 Toast' }); /// 显示 
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `options` | [`ToastOptions`](README.md#toastoptions) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `options` | [`ToastOptions`](README.md#toastoptions) | 显示配置 |
 
 #### Returns
 
@@ -6131,9 +6129,9 @@ showVar({a: 1, b: 2}); /// 显示序列化之后的数据
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `any` | 值 |
 
 #### Returns
 
@@ -6204,10 +6202,10 @@ slugify('I LOVE OQM', { ' ': '-' }); /// 'I-LOVE-OQM'
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `str` | `string` |
-| `replacement?` | `Object` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `str` | `string` | 字符串值 |
+| `replacement?` | `Object` | 替换字符串映射 |
 
 #### Returns
 
@@ -6290,9 +6288,9 @@ splitCase('foo-Bar'); /// ['foo', 'bar']
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `str` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `str` | `string` | 字符串 |
 
 #### Returns
 
@@ -6315,10 +6313,10 @@ stackSticky('.stack', 'left'); /// 所有 .stack 元素自动在 left 上堆叠
 
 #### Parameters
 
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `selectors` | `string` | `undefined` |
-| `direction` | `string` | `'top'` |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `selectors` | `string` | `undefined` | 选择器字符串 |
+| `direction` | `string` | `'top'` | 堆叠方向 |
 
 #### Returns
 
@@ -6534,10 +6532,10 @@ toBool(null); /// false
 
 #### Parameters
 
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `value` | `any` | `undefined` |
-| `falseList` | `any`[] | `[]` |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `value` | `any` | `undefined` | 值 |
+| `falseList` | `any`[] | `[]` | 判断为 false 的值列表 |
 
 #### Returns
 
@@ -6561,9 +6559,9 @@ toNum('-123'); /// -123
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `any` | 值 |
 
 #### Returns
 
@@ -6587,9 +6585,9 @@ toStr(null); /// ''
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `any` | 值 |
 
 #### Returns
 
@@ -6612,10 +6610,10 @@ transferCSVData([{ label: '姓名', prop: 'name' }, { label: '年龄', prop: 'ag
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `fields` | { `label?`: `string` ; `prop`: `string`  }[] |
-| `data` | `any`[] |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `fields` | { `label?`: `string` ; `prop`: `string`  }[] | 导出的栏位 |
+| `data` | `any`[] | 数据 |
 
 #### Returns
 
@@ -6639,10 +6637,10 @@ transferCase('red', 'first'|3); /// 'Red'
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `str` | `string` |
-| `type` | ``1`` \| ``2`` \| ``3`` \| ``"upper"`` \| ``"lower"`` \| ``"first"`` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `str` | `string` | 字符串 |
+| `type` | ``1`` \| ``2`` \| ``3`` \| ``"upper"`` \| ``"lower"`` \| ``"first"`` | 目标类型 |
 
 #### Returns
 
@@ -6667,9 +6665,9 @@ transferFileToBase64('test', 'text/plain', (res) => console.log({ res })); /// r
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `content` | `any` | BlobPart \| any |
-| `contentType` | `string` |  |
-| `callBack` | `any` |  |
+| `content` | `any` | BlobPart \| any 内容 |
+| `contentType` | `string` | 内容类型 |
+| `callBack` | `any` | 回调函数 |
 
 #### Returns
 
@@ -6695,9 +6693,9 @@ transferIdCard('xxxxx'); /// {}
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `idCard` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `idCard` | `string` | 字符串值 |
 
 #### Returns
 
@@ -6720,9 +6718,9 @@ transferMoney(852.5); /// '捌佰伍拾贰元伍角'
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `n` | `number` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `n` | `number` | 数值 |
 
 #### Returns
 
@@ -6745,11 +6743,11 @@ transferNumber(1100100, 2, 10); /// 100
 
 #### Parameters
 
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `number` | `number` | `undefined` |
-| `from` | `number` | `10` |
-| `to` | `number` | `2` |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `number` | `number` | `undefined` | 数值 |
+| `from` | `number` | `10` | 原进制 |
+| `to` | `number` | `2` | 目标进制 |
 
 #### Returns
 
@@ -6776,9 +6774,9 @@ transferScanStr(undefined); /// ''
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `value` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `string` | 值 |
 
 #### Returns
 
@@ -6801,10 +6799,10 @@ transferSeconds(1234, true); /// {h: '00', i: 20, s: 34}
 
 #### Parameters
 
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `duration` | `number` | `undefined` |
-| `returnObj` | `boolean` | `false` |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `duration` | `number` | `undefined` | 时间/秒 |
+| `returnObj` | `boolean` | `false` | 是否返回对象 |
 
 #### Returns
 
@@ -6817,7 +6815,7 @@ ___
 ▸ **trim**(`str`, `type?`): `string`
 
 去除字符串空格
-可选值：0|ba：去除前后空格，1|b：去除前空格，2|a：去除后空格，3|all：去除所有空格，4|pro：去除所有空格，中间的空格保留一个。
+`可选值：0|ba：去除前后空格，1|b：去除前空格，2|a：去除后空格，3|all：去除所有空格，4|pro：去除所有空格，中间的空格保留一个。`
 
 **`Example`**
 
@@ -6853,13 +6851,13 @@ truncate('OQM-OQM-OQM-OQM-OQM-OQM', 10, { ellipsis: '～', separator: '-' }); //
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `txt` | `string` |
-| `width` | `number` |
-| `options?` | `Object` |
-| `options.ellipsis?` | `string` |
-| `options.separator?` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `txt` | `string` | 字符串值 |
+| `width` | `number` | 指定长度 |
+| `options?` | `Object` | 截取配置 |
+| `options.ellipsis?` | `string` | - |
+| `options.separator?` | `string` | - |
 
 #### Returns
 
@@ -6906,10 +6904,10 @@ union({a: 1, b: 2}, {a: 1, c: 3, b: 4}); /// {a: 1, c: 3, b: 2}
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `paramA` | `any` |
-| `paramB` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `paramA` | `any` | 值 A，若冲突以此值为准。 |
+| `paramB` | `any` | 值 B |
 
 #### Returns
 
@@ -7005,11 +7003,11 @@ waitUntil(() => a === 10).then(() => { console.log(a) });
 
 #### Parameters
 
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `condition` | `any` | `undefined` |
-| `timeout` | `number` | `0` |
-| `interval` | `number` | `250` |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `condition` | `any` | `undefined` | 函数 |
+| `timeout` | `number` | `0` | 超时 |
+| `interval` | `number` | `250` | 执行间隔 |
 
 #### Returns
 
@@ -7034,11 +7032,11 @@ watermark(document.body, 'My Watermark', { fontSize: 20, color: 'red', repeat: t
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `dom` | `any` |
-| `text` | `string` |
-| `options` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `dom` | `any` | 需要生成水印的 dom |
+| `text` | `string` | 水印内容 |
+| `options` | `any` | 样式配置 |
 
 #### Returns
 
@@ -7061,19 +7059,19 @@ xAjax('POST', 'https://test.cn', { contentType: 'application/json', data: { test
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `method` | `string` |
-| `url` | `string` |
-| `options?` | `Object` |
-| `options.async?` | `boolean` |
-| `options.contentType?` | `string` |
-| `options.data?` | `any` |
-| `options.fail?` | `any` |
-| `options.params?` | `any` |
-| `options.raw?` | `boolean` |
-| `options.success?` | `any` |
-| `options.withCredentials?` | `boolean` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `method` | `string` | Http Method |
+| `url` | `string` | 地址/链接 |
+| `options?` | `Object` | 请求配置 |
+| `options.async?` | `boolean` | - |
+| `options.contentType?` | `string` | - |
+| `options.data?` | `any` | - |
+| `options.fail?` | `any` | - |
+| `options.params?` | `any` | - |
+| `options.raw?` | `boolean` | - |
+| `options.success?` | `any` | - |
+| `options.withCredentials?` | `boolean` | - |
 
 #### Returns
 
@@ -7096,15 +7094,15 @@ xFetch('POST', 'https://test.cn', { contentType: 'application/json', data: { tes
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `method` | `string` |
-| `url` | `string` |
-| `options?` | `Object` |
-| `options.contentType?` | `string` |
-| `options.data?` | `any` |
-| `options.params?` | `any` |
-| `options.raw?` | `boolean` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `method` | `string` | Http Method |
+| `url` | `string` | 地址/链接 |
+| `options?` | `Object` | 请求配置 |
+| `options.contentType?` | `string` | - |
+| `options.data?` | `any` | - |
+| `options.params?` | `any` | - |
+| `options.raw?` | `boolean` | - |
 
 #### Returns
 

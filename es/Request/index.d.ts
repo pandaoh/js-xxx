@@ -30,7 +30,7 @@ export declare function qsParse(url?: string, key?: string): any;
  * getBaseURL('https://test.com/index?name=leo&org=biugle#test'); /// 'https://test.com/index'
  * getBaseURL(''); /// ''
  * getBaseURL(); /// 当前页面 BaseURL
- * @param url
+ * @param url 地址/链接
  * @returns
  */
 export declare function getBaseURL(url?: string): string;
@@ -40,17 +40,17 @@ export declare function getBaseURL(url?: string): string;
  * getQueryString('https://test.com/index?name=leo&org=biugle#test'); /// 'name=leo&org=biugle'
  * getQueryString(''); /// ''
  * getQueryString(); /// 当前页面 QueryString 字符串部分
- * @param url
+ * @param url 地址/链接
  * @returns
  */
 export declare function getQueryString(url?: string): any;
 /**
- * 获取查询参数对象
+ * 获取查询地址/链接中的参数对象
  * @example
  * getSearchParams('https://test.com/index?name=leo&org=biugle#test'); /// {name: 'leo', org: 'biugle'}
  * getSearchParams(''); /// {}
  * getSearchParams(); /// 当前页面 SearchParams 对象
- * @param url
+ * @param url 地址/链接
  * @returns
  */
 export declare function getSearchParams(url?: string): any;
@@ -59,9 +59,9 @@ export declare function getSearchParams(url?: string): any;
  * @example
  * xAjax('get', 'https://test.cn', { params: { test: 123, hello: 456 }, success: (data) => console.log('success', data), fail: (error) => console.log('fail', error) }); /// ajax
  * xAjax('POST', 'https://test.cn', { contentType: 'application/json', data: { test: 123 }, success: (data) => console.log('success', data), fail: (error) => console.log('fail', error) }); /// ajax
- * @param method
- * @param url
- * @param options
+ * @param method Http Method
+ * @param url 地址/链接
+ * @param options 请求配置
  * @returns
  */
 export declare function xAjax(method: string | HttpMethod, url: string, options?: {
@@ -79,9 +79,9 @@ export declare function xAjax(method: string | HttpMethod, url: string, options?
  * @example
  * xFetch('get', 'https://test.cn', { params: { test: 123, hello: 456 } }).then(res => res.json()).then(data => console.log(data)); /// fetchXPromise
  * xFetch('POST', 'https://test.cn', { contentType: 'application/json', data: { test: 123 } }).catch(error => console.log(error)); /// fetchXPromise
- * @param method
- * @param url
- * @param options
+ * @param method Http Method
+ * @param url 地址/链接
+ * @param options 请求配置
  * @returns
  */
 export declare function xFetch(method: string | HttpMethod, url: string, options?: {
@@ -97,7 +97,7 @@ export declare function xFetch(method: string | HttpMethod, url: string, options
  * getContentType('file'); /// 'multipart/form-data'
  * getContentType('pdf'); /// 'application/pdf'
  * getContentType('unknown'); /// 'application/octet-stream'
- * @param fileType
+ * @param fileType 文件类型
  * @returns
  */
 export declare function getContentType(fileType: string): string;

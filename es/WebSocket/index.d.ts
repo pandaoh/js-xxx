@@ -3,7 +3,7 @@
  * @example
  * initWebSocket({ url: 'ws://localhost:8080/ws', timeout: 30000, onOpen: () => {}, onMessage: () => {}, onClose: () => {}, onError: () => {}, reconnect: {} })
  * @param options `{url, onOpen, onMessage, onClose, onError, timeout, reconnect: {times, delay, onReconnect} | boolean} WebSocket 配置`
- * @returns {WebSocket}
+ * @returns
  */
 export declare function initWebSocket(options: {
     url: string;
@@ -24,7 +24,7 @@ export declare function initWebSocket(options: {
  * sendWsMsg({ type: 'login', data: { username: 'admin', password: '123456' }}, true); /// true/false
  * sendWsMsg('testMsg'); /// true/false
  * @param message 消息
- * @param isJSONEncode 是否 JSON 序列化
+ * @param isJSONEncode 是否对数据 JSON 序列化
  * @returns
  */
 export declare function sendWsMsg(message: any, isJSONEncode?: boolean): boolean;

@@ -8,7 +8,7 @@ import CryptoJS from 'crypto-js';
  * @param data 需要加密的数据
  * @param secretKey [可选] 十六位十六进制数作为密钥
  * @param secretIv [可选] 十六位十六进制数作为密钥偏移量
- * @returns {string}
+ * @returns
  */
 export declare function encrypt(data: any, secretKey?: string, secretIv?: string): string;
 /**
@@ -22,7 +22,7 @@ export declare function encrypt(data: any, secretKey?: string, secretIv?: string
  * @param jsonDecode 是否需要解析成 json
  * @param secretKey [可选] 十六位十六进制数作为密钥
  * @param secretIv [可选] 十六位十六进制数作为密钥偏移量
- * @returns {string}
+ * @returns
  */
 export declare function decrypt(dataStr: string, jsonDecode?: boolean, secretKey?: string, secretIv?: string): string;
 /**

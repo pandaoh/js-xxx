@@ -46,7 +46,7 @@ export declare function copyContent(targetDom: any, addMsg?: any): any;
  * @example
  * scrollToTop('body'); /// 滚动到顶部
  * @param elementSelector 指定元素选择器
- * @param to ('start'|'end')[default: 'start']
+ * @param to `('start'|'end')[default: 'start']`
  * @returns
  */
 export declare function scrollToTop(elementSelector: string, to?: 'start' | 'end'): void;
@@ -175,8 +175,8 @@ export declare function downloadContent(name: string, content: any): void;
  * marquee('#demo'); /// 默认横向正常滚动(loopType=normal)
  * marquee('.demo-y', {direction: 'Y', loopType: 'infinite', speed: 3}); /// Y 轴无限无缝滚动，speed > 0 越小速度越快。
  * marquee('.demo-x', {direction: 'X', loopType: 'origin', speed: 3, style: 'animation-delay:2s;', parentStyle: 'color:red;'}); /// X 轴无限来回滚动
- * @param selector
- * @param options
+ * @param selector 选择器字符串
+ * @param options 动画配置
  * @returns
  */
 export declare function marquee(selector: string, options?: {
@@ -191,8 +191,8 @@ export declare function marquee(selector: string, options?: {
  * @example
  * stackSticky('.stack', 'top'); /// 所有 .stack 元素自动在 top 上堆叠
  * stackSticky('.stack', 'left'); /// 所有 .stack 元素自动在 left 上堆叠
- * @param selectors
- * @param direction
+ * @param selectors 选择器字符串
+ * @param direction 堆叠方向
  * @returns
  */
 export declare function stackSticky(selectors: string, direction?: string): void;
@@ -212,7 +212,7 @@ export declare function calcFontSize(clientRatio: number | undefined, contentCen
  * px 转 rem
  * @example
  * px2rem(30); /// 转化后的 rem
- * @param px
+ * @param px 像素值
  * @returns
  */
 export declare function px2rem(px: number): number;
