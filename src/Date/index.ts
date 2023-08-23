@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:54:41
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-23 11:23:56
+ * @LastEditTime: 2023-08-23 13:42:50
  * @Description: 时间相关函数
  * @FilePath: \js-xxx\src\Date\index.ts
  */
@@ -26,7 +26,7 @@ export function formatDate(
   if (getType(date) === 'string') {
     // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
     // @ts-ignore
-    date.replace(/-/g, '/');
+    date = date.replace(/-/g, '/');
   }
   date = date ? new Date(date) : new Date();
   const o: any = {
@@ -62,8 +62,11 @@ export function formatDate(
  * @returns
  */
 export function calcDate(date: string | Date, calcStrOrArr: string | string[]): Date {
-  // 虽然 win 浏览器两种符号都可以，但是需兼容 ios
-  // date.replace(/-/g, '/');。
+  if (getType(date) === 'string') {
+    // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
+    // @ts-ignore
+    date = date.replace(/-/g, '/');
+  }
   let oldDate = date ? new Date(date) : new Date();
   if (Array.isArray(calcStrOrArr)) {
     calcStrOrArr.forEach((calcStr) => {
@@ -140,6 +143,16 @@ export function getDateDifference(
     | 'SECOND'
     | 'SECONDS' = 'all',
 ): number | { days: number; hours: number; minutes: number; seconds: number } {
+  if (getType(oldDate) === 'string') {
+    // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
+    // @ts-ignore
+    oldDate = oldDate.replace(/-/g, '/');
+  }
+  if (getType(nowDate) === 'string') {
+    // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
+    // @ts-ignore
+    nowDate = nowDate.replace(/-/g, '/');
+  }
   oldDate = new Date(oldDate);
   nowDate = nowDate ? new Date(nowDate) : new Date();
   const diffTime = nowDate.getTime() - oldDate.getTime();
@@ -177,16 +190,19 @@ export function getDateDifference(
  * @returns
  */
 export function timeSince(date?: string | Date, longAgo = false, formatter = 'yyyy-mm-dd hh:ii:ss') {
-  // 虽然 win 浏览器两种符号都可以，但是需兼容 ios 。
-  // date.replace(/-/g, '/');
+  if (getType(date) === 'string') {
+    // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
+    // @ts-ignore
+    date = date.replace(/-/g, '/');
+  }
   date = date ? new Date(date) : new Date();
-  const dateTS = new Date(date).getTime();
+  const dateTS = date.getTime();
   const seconds = Math.floor((new Date().getTime() - dateTS) / 1000);
   let interval = Math.floor(seconds / (24 * 3600));
   if (longAgo) {
     interval = Math.floor(seconds / (30 * 24 * 3600));
     if (interval >= 4) {
-      return formatDate(new Date(dateTS), formatter);
+      return formatDate(date, formatter);
     }
     if (interval >= 1) {
       return interval + ' 月前';
@@ -197,7 +213,7 @@ export function timeSince(date?: string | Date, longAgo = false, formatter = 'yy
     }
   }
   if (interval >= 8) {
-    return formatDate(new Date(dateTS), formatter);
+    return formatDate(date, formatter);
   }
   interval = Math.floor(seconds / (24 * 3600));
   if (interval >= 1) {
@@ -222,6 +238,11 @@ export function timeSince(date?: string | Date, longAgo = false, formatter = 'yy
  * @returns
  */
 export function isWeekday(date?: string | Date): boolean {
+  if (getType(date) === 'string') {
+    // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
+    // @ts-ignore
+    date = date.replace(/-/g, '/');
+  }
   date = date ? new Date(date) : new Date();
   return date.getDay() % 6 !== 0;
 }
@@ -234,6 +255,11 @@ export function isWeekday(date?: string | Date): boolean {
  * @returns
  */
 export function getMonthDays(date?: string | Date): number {
+  if (getType(date) === 'string') {
+    // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
+    // @ts-ignore
+    date = date.replace(/-/g, '/');
+  }
   const curDate = date ? new Date(date) : new Date();
   const curMonth = curDate.getMonth();
   curDate.setMonth(curMonth + 1);
@@ -249,6 +275,11 @@ export function getMonthDays(date?: string | Date): number {
  * @returns
  */
 export function getDayInYear(date?: string | Date): number {
+  if (getType(date) === 'string') {
+    // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
+    // @ts-ignore
+    date = date.replace(/-/g, '/');
+  }
   date = date ? new Date(date) : new Date();
   // @ts-ignore
   return Math.floor((date - new Date(date.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
@@ -262,6 +293,11 @@ export function getDayInYear(date?: string | Date): number {
  * @returns
  */
 export function getMonthDaysCount(date?: string | Date): number {
+  if (getType(date) === 'string') {
+    // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
+    // @ts-ignore
+    date = date.replace(/-/g, '/');
+  }
   date = date ? new Date(date) : new Date();
   const fullYear = date.getFullYear();
   const month = date.getMonth();
@@ -296,6 +332,11 @@ export function getDateList(
   type: 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second' = 'day',
   date: any = new Date(),
 ): string[] {
+  if (getType(date) === 'string') {
+    // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
+    // @ts-ignore
+    date = date.replace(/-/g, '/');
+  }
   // 包含当天
   let myDate = calcDate(new Date(date), `${n > 0 ? n - 1 : n + 1} ${type}`);
   const dateArray = [];
@@ -326,6 +367,11 @@ export function getDateList(
  * @returns
  */
 export function getDateTime(date?: string | Date): number {
+  if (getType(date) === 'string') {
+    // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
+    // @ts-ignore
+    date = date.replace(/-/g, '/');
+  }
   date = date ? new Date(date) : new Date();
   return date.getTime();
 }
@@ -365,6 +411,16 @@ export function getUTCTime(timezone = 0): Date {
  * @returns
  */
 export function compareDate(dateA: any, dateB?: any): -1 | 1 | 0 {
+  if (getType(dateA) === 'string') {
+    // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
+    // @ts-ignore
+    dateA = dateA.replace(/-/g, '/');
+  }
+  if (getType(dateB) === 'string') {
+    // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
+    // @ts-ignore
+    dateB = dateB.replace(/-/g, '/');
+  }
   dateA = dateA ? new Date(dateA) : new Date();
   dateB = dateB ? new Date(dateB) : new Date();
   const result = dateA.getTime() - dateB.getTime();
