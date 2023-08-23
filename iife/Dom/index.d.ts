@@ -42,7 +42,7 @@ export declare function offDefaultEvent(event: any): boolean;
 export declare function copyContent(targetDom: any, addMsg?: any): any;
 /**
  * 滚动到顶部
- * `平滑滚动 css：`scroll-behavior: smooth;`
+ * `平滑滚动 css：scroll-behavior: smooth;`
  * @example
  * scrollToTop('body'); /// 滚动到顶部
  * @param elementSelector 指定元素选择器
@@ -52,7 +52,7 @@ export declare function copyContent(targetDom: any, addMsg?: any): any;
 export declare function scrollToTop(elementSelector: string, to?: 'start' | 'end'): void;
 /**
  * 滚动到底部
- * `平滑滚动 css：`scroll-behavior: smooth;`
+ * `平滑滚动 css：scroll-behavior: smooth;`
  * @example
  * scrollToBottom('body'); /// 滚动到底部
  * @param elementSelector 指定元素选择器

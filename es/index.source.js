@@ -11184,7 +11184,7 @@ function transferSeconds(duration, returnObj) {
  * @Author: HxB
  * @Date: 2022-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-23 12:24:34
+ * @LastEditTime: 2023-08-23 14:09:32
  * @Description: 利用 dom 的一些函数
  * @FilePath: \js-xxx\src\Dom\index.ts
  */
@@ -11280,7 +11280,7 @@ function copyContent(targetDom, addMsg) {
 }
 /**
  * 滚动到顶部
- * `平滑滚动 css：`scroll-behavior: smooth;`
+ * `平滑滚动 css：scroll-behavior: smooth;`
  * @example
  * scrollToTop('body'); /// 滚动到顶部
  * @param elementSelector 指定元素选择器
@@ -11296,7 +11296,7 @@ function scrollToTop(elementSelector, to) {
 }
 /**
  * 滚动到底部
- * `平滑滚动 css：`scroll-behavior: smooth;`
+ * `平滑滚动 css：scroll-behavior: smooth;`
  * @example
  * scrollToBottom('body'); /// 滚动到底部
  * @param elementSelector 指定元素选择器
@@ -14006,7 +14006,7 @@ function Loading(msg) {
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-23 11:20:28
+ * @LastEditTime: 2023-08-23 14:11:20
  * @Description: websocket
  * @FilePath: \js-xxx\src\WebSocket\index.ts
  */
@@ -14103,7 +14103,7 @@ function closeWebSocket() {
     return true;
 }
 /**
- * 设置 websocket binaryType default: 'blob'
+ * `设置 websocket binaryType default: 'blob'`
  * @example
  * setWsBinaryType(); /// true/false
  * @param binaryType `BinaryType 二进制类型 default: 'arraybuffer'`

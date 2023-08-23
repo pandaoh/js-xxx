@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-23 11:20:28
+ * @LastEditTime: 2023-08-23 14:11:20
  * @Description: websocket
  * @FilePath: \js-xxx\src\WebSocket\index.ts
  */
@@ -115,7 +115,7 @@ export function closeWebSocket(): boolean {
 }
 
 /**
- * 设置 websocket binaryType default: 'blob'
+ * `设置 websocket binaryType default: 'blob'`
  * @example
  * setWsBinaryType(); /// true/false
  * @param binaryType `BinaryType 二进制类型 default: 'arraybuffer'`

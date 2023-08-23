@@ -5712,7 +5712,7 @@ ___
 ▸ **scrollToBottom**(`elementSelector`): `void`
 
 滚动到底部
-`平滑滚动 css：`scroll-behavior: smooth;`
+`平滑滚动 css：scroll-behavior: smooth;`
 
 **`Example`**
 
@@ -5737,18 +5737,20 @@ ___
 ▸ **scrollToTop**(`elementSelector`, `to?`): `void`
 
 滚动到顶部
-`平滑滚动 css：`scroll-behavior: smooth;`
-@example
+`平滑滚动 css：scroll-behavior: smooth;`
+
+**`Example`**
+
+```ts
 scrollToTop('body'); /// 滚动到顶部
-@param elementSelector 指定元素选择器
-@param to `('start'|'end')[default: 'start']`
+```
 
 #### Parameters
 
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `elementSelector` | `string` | `undefined` |
-| `to` | ``"start"`` \| ``"end"`` | `'start'` |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `elementSelector` | `string` | `undefined` | 指定元素选择器 |
+| `to` | ``"start"`` \| ``"end"`` | `'start'` | `('start'\|'end')[default: 'start']` |
 
 #### Returns
 
@@ -6021,7 +6023,7 @@ ___
 
 ▸ **setWsBinaryType**(`binaryType?`): `boolean`
 
-设置 websocket binaryType default: 'blob'
+`设置 websocket binaryType default: 'blob'`
 
 **`Example`**
 

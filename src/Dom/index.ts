@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-23 12:24:34
+ * @LastEditTime: 2023-08-23 14:09:32
  * @Description: 利用 dom 的一些函数
  * @FilePath: \js-xxx\src\Dom\index.ts
  */
@@ -103,7 +103,7 @@ export function copyContent(targetDom: any, addMsg: any = null) {
 
 /**
  * 滚动到顶部
- * `平滑滚动 css：`scroll-behavior: smooth;`
+ * `平滑滚动 css：scroll-behavior: smooth;`
  * @example
  * scrollToTop('body'); /// 滚动到顶部
  * @param elementSelector 指定元素选择器
@@ -119,7 +119,7 @@ export function scrollToTop(elementSelector: string, to: 'start' | 'end' = 'star
 
 /**
  * 滚动到底部
- * `平滑滚动 css：`scroll-behavior: smooth;`
+ * `平滑滚动 css：scroll-behavior: smooth;`
  * @example
  * scrollToBottom('body'); /// 滚动到底部
  * @param elementSelector 指定元素选择器

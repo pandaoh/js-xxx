@@ -36,7 +36,7 @@ export declare function sendWsMsg(message: any, isJSONEncode?: boolean): boolean
  */
 export declare function closeWebSocket(): boolean;
 /**
- * 设置 websocket binaryType default: 'blob'
+ * `设置 websocket binaryType default: 'blob'`
  * @example
  * setWsBinaryType(); /// true/false
  * @param binaryType `BinaryType 二进制类型 default: 'arraybuffer'`
