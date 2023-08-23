@@ -3,13 +3,7 @@
   "exclude": ["node_modules", "es", "lib", "dist", "docs", "iife"],
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "ES2015",
-      "ESNext",
-      "dom",
-      "es5",
-      "es6"
-    ],
+    "lib": ["ES2015", "ESNext", "dom", "es5", "es6"],
     "module": "ES2015",
     "moduleResolution": "node",
     "baseUrl": "./",

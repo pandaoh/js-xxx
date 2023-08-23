@@ -1,0 +1,16 @@
+# 编辑器配置
+# .editorconfig
+# http://editorconfig.org
+root = true # 是否是顶级配置文件，设置为 true 的时候才会停止搜索 .editorconfig 文件，一般我们项目只设置一个。
+
+[*]
+charset = utf-8 # 编码格式
+end_of_line = crlf # 换行符类型
+indent_size = 2 # 缩进大小
+indent_style = space # 缩进方式
+insert_final_newline = true # 是否让文件以空行结束
+max_line_length = 120 # 最大行宽
+trim_trailing_whitespace = true # 是否删除行尾空格
+
+[*.md]
+max_line_length = 120

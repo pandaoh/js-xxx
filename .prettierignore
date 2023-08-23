@@ -1,3 +1,8 @@
 /*
 !/*.js
 !/src/
+!docs.custom.css
+!tsconfig.json
+!typedoc.json
+!/demo/
+!/*.md
