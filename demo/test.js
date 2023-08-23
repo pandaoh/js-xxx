@@ -2,16 +2,18 @@
  * @Author: HxB
  * @Date: 2022-04-26 16:08:25
  * @LastEditors: DoubleAm
- * @LastEditTime: 2022-06-15 18:29:21
+ * @LastEditTime: 2023-08-23 10:53:05
  * @Description: 测试文件
  * @FilePath: \js-xxx\demo\test.js
  */
-const { base64Decode, base64Encode, mergeObj, getTimeAndStr, qsStringify } = require('../dist/index.js');
+
+// node .\demo\test.js
+// nodemon .\demo\test.js
+
+const { base64Decode, base64Encode, md5, sha1, sha256, encrypt, decrypt, mergeObj, getTimeAndStr, qsStringify, getCryptoJS } = require('../dist/index.js');
 // import { base64Decode, base64Encode, mergeObj, getTimeAndStr, qsStringify } from '../dist/index.js';
 // const { base64Decode, base64Encode, mergeObj, getTimeAndStr, qsStringify } = require('js-xxx');
 // import { base64Decode, base64Encode, mergeObj, getTimeAndStr, qsStringify } from 'js-xxx';
-
-const { Base64Decode, Base64Encode, md5, sha1, sha256, decrypt, encrypt, getCryptoJS } = require('../dist/index.js');
 
 console.log(
   base64Encode('我是老A'),
@@ -21,12 +23,12 @@ console.log(
   qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3], str: '1' }, { hasIndex: true })
 );
 
-let base64 = Base64Encode('我是老A');
+let base64 = base64Encode('我是老A');
 console.log('base64加密', base64);
-console.log('base64解密', Base64Decode(base64));
-let base64Replace = Base64Encode('我是老A', true);
+console.log('base64解密', base64Decode(base64));
+let base64Replace = base64Encode('我是老A', true);
 console.log('base64加密替换+/=', base64Replace);
-console.log('base64替换+/=解密', Base64Decode(base64Replace));
+console.log('base64替换+/=解密', base64Decode(base64Replace));
 let md5Str = md5('我是老A');
 console.log('md5加密', md5Str);
 let sha1Str = sha1('我是老A');

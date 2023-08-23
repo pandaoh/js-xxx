@@ -11,7 +11,7 @@ import { getRandStr } from '@/Tools';
 /**
  * 初始化 Notification
  * @example
- * initNotification(); // true||false
+ * initNotification(); /// true||false
  * @returns
  */
 export function initNotification(): boolean {
@@ -43,7 +43,7 @@ export function initNotification(): boolean {
 /**
  * 发送 Notification
  * @example
- * sendNotification('测试通知', '测试标题', {...options}); // 发送成功/失败
+ * sendNotification('测试通知', '测试标题', {...options}); /// 发送成功/失败
  * @returns
  */
 export function sendNotification(

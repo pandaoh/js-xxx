@@ -118,8 +118,8 @@
     /**
      * 获取变量类型
      * @example
-     * getType(1); // 'number'
-     * getType(async function(){}); // 'asyncfunction'
+     * getType(1); /// 'number'
+     * getType(async function(){}); /// 'asyncfunction'
      * @param variable 变量
      * @returns
      */
@@ -129,9 +129,9 @@
     /**
      * 任意值转换为字符串
      * @example
-     * toStr({}); // '{}'
-     * toStr([1, 2]); // '[1,2]'
-     * toStr(null); // ''
+     * toStr({}); /// '{}'
+     * toStr([1, 2]); /// '[1,2]'
+     * toStr(null); /// ''
      * @param value
      * @returns
      */
@@ -147,9 +147,9 @@
     /**
      * 任意值转换为数字
      * @example
-     * toNum({}); // 0
-     * toNum([2]); // 2
-     * toNum('-123'); // -123
+     * toNum({}); /// 0
+     * toNum([2]); /// 2
+     * toNum('-123'); /// -123
      * @param value
      * @returns
      */
@@ -160,17 +160,17 @@
     /**
      * 任意值转换为布尔类型
      * @example
-     * toBool(0); // true
-     * toBool(''); // true
-     * toBool('', [0, '']); // false
-     * toBool(0, [0, '']); // false
-     * toBool('0'); // true
-     * toBool(1); // true
-     * toBool('false'); // false
-     * toBool('null'); // false
-     * toBool('undefined'); // false
-     * toBool('NaN'); // false
-     * toBool(null); // false
+     * toBool(0); /// true
+     * toBool(''); /// true
+     * toBool('', [0, '']); /// false
+     * toBool(0, [0, '']); /// false
+     * toBool('0'); /// true
+     * toBool(1); /// true
+     * toBool('false'); /// false
+     * toBool('null'); /// false
+     * toBool('undefined'); /// false
+     * toBool('NaN'); /// false
+     * toBool(null); /// false
      * @param value
      * @param falseList
      * @returns
@@ -191,9 +191,9 @@
     /**
      * 检查字符串是否为有效的 JSON
      * @example
-     * isJSON('{"name":"leo", "age":20}'); // true
-     * isJSON('{"name":"leo", age:"20"}'); // false
-     * isJSON(null); // true
+     * isJSON('{"name":"leo", "age":20}'); /// true
+     * isJSON('{"name":"leo", age:"20"}'); /// false
+     * isJSON(null); /// true
      * @param str 字符串
      * @returns
      */
@@ -209,8 +209,8 @@
     /**
      * 检查是否为 boolean 类型
      * @example
-     * isBool(true); // true
-     * isBool(null); // false
+     * isBool(true); /// true
+     * isBool(null); /// false
      * @param value
      * @returns
      */
@@ -220,8 +220,8 @@
     /**
      * 检查是否 date 类型
      * @example
-     * isDate(new Date()); // true
-     * isDate(null); // false
+     * isDate(new Date()); /// true
+     * isDate(null); /// false
      * @param value
      * @returns
      */
@@ -231,8 +231,8 @@
     /**
      * 检查是否字符串类型
      * @example
-     * isStr('test'); // true
-     * isStr(null); // false
+     * isStr('test'); /// true
+     * isStr(null); /// false
      * @param value
      * @returns
      */
@@ -242,8 +242,8 @@
     /**
      * 检查是否 undefined
      * @example
-     * isUndef(undefined); // true
-     * isUndef(null); // false
+     * isUndef(undefined); /// true
+     * isUndef(null); /// false
      * @param value
      * @returns
      */
@@ -253,8 +253,8 @@
     /**
      * 检查是否 null
      * @example
-     * isNull(undefined); // false
-     * isNull(null); // true
+     * isNull(undefined); /// false
+     * isNull(null); /// true
      * @param value
      * @returns
      */
@@ -264,8 +264,8 @@
     /**
      * 检查是否 number 类型
      * @example
-     * isNum(NaN); // false
-     * isNum(1); // true
+     * isNum(NaN); /// false
+     * isNum(1); /// true
      * @param value
      * @returns
      */
@@ -275,8 +275,8 @@
     /**
      * 检查是否数组
      * @example
-     * isArr([]); // true
-     * isArr({}); // false
+     * isArr([]); /// true
+     * isArr({}); /// false
      * @param value
      * @returns
      */
@@ -286,8 +286,8 @@
     /**
      * 检查是否对象
      * @example
-     * isObj({}); // true
-     * isObj(null); // false
+     * isObj({}); /// true
+     * isObj(null); /// false
      * @param value
      * @returns
      */
@@ -297,9 +297,9 @@
     /**
      * 检查是否为 dom 元素
      * @example
-     * isElement(document.body); // true
-     * isElement(document); // false
-     * isElement({}); // false
+     * isElement(document.body); /// true
+     * isElement(document); /// false
+     * isElement({}); /// false
      * @param value
      * @returns
      */
@@ -309,10 +309,10 @@
     /**
      * 检查是否为 function
      * @example
-     * isFn(function(){}); // true
-     * isFn(async function(){}); // true
-     * isFn(new Promise((resolve, reject) => resolve()); // false
-     * isFn({}); // false
+     * isFn(function(){}); /// true
+     * isFn(async function(){}); /// true
+     * isFn(new Promise((resolve, reject) => resolve()); /// false
+     * isFn({}); /// false
      * @param value
      * @returns
      */
@@ -323,9 +323,9 @@
     /**
      * 检查是否为 Promise
      * @example
-     * isPromise(function(){}); // false
-     * isPromise(async function(){}); // false
-     * isPromise(new Promise((resolve, reject) => resolve())); // true
+     * isPromise(function(){}); /// false
+     * isPromise(async function(){}); /// false
+     * isPromise(new Promise((resolve, reject) => resolve())); /// true
      * @param value
      * @returns
      */
@@ -335,8 +335,8 @@
     /**
      * 检查是否为 NaN
      * @example
-     * isNaN(1); // false
-     * isNaN(NaN); // true
+     * isNaN(1); /// false
+     * isNaN(NaN); /// true
      * @param value
      * @returns
      */
@@ -346,8 +346,8 @@
     /**
      * 检查是否为 Blob
      * @example
-     * isBlob(new Blob()); // true
-     * isBlob(null); // false
+     * isBlob(new Blob()); /// true
+     * isBlob(null); /// false
      * @param value
      * @returns
      */
@@ -357,8 +357,8 @@
     /**
      * 检查是否为 ArrayBuffer
      * @example
-     * isArrayBuffer(new ArrayBuffer()); // true
-     * isArrayBuffer(null); // false
+     * isArrayBuffer(new ArrayBuffer()); /// true
+     * isArrayBuffer(null); /// false
      * @param value
      * @returns
      */
@@ -369,8 +369,8 @@
     /**
      * 数组对象转对象，按照指定的 key 分组。
      * @example
-     * data2Obj([{a: 1, b: 2}, {a: 3}, {b: 1}, {c: 1}], 'a'); // {1: {a: 1, b: 2}, 3: {a: 3}, undefined: {c: 1}}
-     * data2Obj([{a: 1, b: 'b1'}, {a: 3}, {a: 2, b: 'b2'}], 'a', 'b'); // { '1': 'b1', '2': 'b2', '3': undefined }
+     * data2Obj([{a: 1, b: 2}, {a: 3}, {b: 1}, {c: 1}], 'a'); /// {1: {a: 1, b: 2}, 3: {a: 3}, undefined: {c: 1}}
+     * data2Obj([{a: 1, b: 'b1'}, {a: 3}, {a: 2, b: 'b2'}], 'a', 'b'); /// { '1': 'b1', '2': 'b2', '3': undefined }
      * @param sourceData 源数据
      * @param key 分组的 key
      * @param vKey 值的 key，默认为整个值。
@@ -389,7 +389,7 @@
     /**
      * 数组对象转数组值
      * @example
-     * data2Arr([{a: 1, b: 2}, {a: 3}, {b: 1}], 'a'); // [1, 3]
+     * data2Arr([{a: 1, b: 2}, {a: 3}, {b: 1}], 'a'); /// [1, 3]
      * @param sourceData 源数据
      * @param key 取值的 key
      * @returns
@@ -410,7 +410,7 @@
      * 一般图表类插件需要此类转换
      * @example
      * const data = [{ id: 1, name: '张三', score: 98, remark: '语文成绩' }, { id: 3, name: '王五', score: 98 }, { id: 3, name: '王五', score: 99, remark: '最后一条有效成绩' }, { id: 2, name: '李四', score: 100 }];
-     * arrObj2objArr(data, 'id'); // {"id": [1, 2, 3], "name": ["张三", "李四", "王五"], "score": [98, 100, 99], "remark": ["语文成绩", null, "最后一条有效成绩"]}
+     * arrObj2objArr(data, 'id'); /// {"id": [1, 2, 3], "name": ["张三", "李四", "王五"], "score": [98, 100, 99], "remark": ["语文成绩", null, "最后一条有效成绩"]}
      * @param data
      * @param key
      * @returns
@@ -443,7 +443,7 @@
     /**
      * 数组去重
      * @example
-     * arraySet([1, 2, 3, 1, 2, 3]); // [1, 2, 3]
+     * arraySet([1, 2, 3, 1, 2, 3]); /// [1, 2, 3]
      * @param arr 数组
      * @returns
      */
@@ -459,8 +459,8 @@
     /**
      * 数组去重
      * @example
-     * unique([1, 2, 3, 1, 2, 3]); // [1, 2, 3]
-     * unique([{id: 1, value: 'hello'}, {id: 2, value: 'world'}, {id: 2, value: 'world', others: true}], (a, b) => a.id === b.id); // [id1, id2 带 true]
+     * unique([1, 2, 3, 1, 2, 3]); /// [1, 2, 3]
+     * unique([{id: 1, value: 'hello'}, {id: 2, value: 'world'}, {id: 2, value: 'world', others: true}], (a, b) => a.id === b.id); /// [id1, id2 带 true]
      * @param arr 数组
      * @param filter 过滤逻辑
      * @returns
@@ -482,10 +482,10 @@
     /**
      * 返回排序回调函数(支持中文，不支持一级数据与混合类型。)
      * @example
-     * sortCallBack('createDt', true); // 按照 createDt 升序排列
+     * sortCallBack('createDt', true); /// 按照 createDt 升序排列
      * const arr = [{name: '666'}, {name: '333'}]
-     * arr.sort(sortCallBack('name')); // [{name: '333'}, {name: '666'}]
-     * arr.sort(sortCallBack('name', false)); // [{name: '666'}, {name: '333'}]
+     * arr.sort(sortCallBack('name')); /// [{name: '333'}, {name: '666'}]
+     * arr.sort(sortCallBack('name', false)); /// [{name: '666'}, {name: '333'}]
      * @param key 排序的字段
      * @param isAscend 是否升序
      * @returns
@@ -497,7 +497,7 @@
     /**
      * 数组乱序
      * @example
-     * shuffleArray([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]); // [5, 9, 1, 10, 2, 6, 4, 8, 3, 7]
+     * shuffleArray([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]); /// [5, 9, 1, 10, 2, 6, 4, 8, 3, 7]
      * @param arr 数组
      * @returns
      */
@@ -507,14 +507,14 @@
     /**
      * 数组排序(支持多条件排序+中文)
      * @example
-     * arraySort(["a", "3", 1, 2, "b"]); // [1, 2, '3', 'a', 'b']
-     * arraySort(["a", "3", 1, 2, "b"], 'asc'); // [1, 2, '3', 'a', 'b']
-     * arraySort(["a", "3", 1, 2, "b"], false); // ['b', 'a', '3', 2, 1]
-     * arraySort(["a", "3", 1, 2, "b"], 'desc'); // ['b', 'a', '3', 2, 1]
+     * arraySort(["a", "3", 1, 2, "b"]); /// [1, 2, '3', 'a', 'b']
+     * arraySort(["a", "3", 1, 2, "b"], 'asc'); /// [1, 2, '3', 'a', 'b']
+     * arraySort(["a", "3", 1, 2, "b"], false); /// ['b', 'a', '3', 2, 1]
+     * arraySort(["a", "3", 1, 2, "b"], 'desc'); /// ['b', 'a', '3', 2, 1]
      * let arr1 = [{ a: 'a', b: 'b', c: '张三', d: 1 }, { a: 'c', b: 'd', c: '李四', d: 2 }, { a: 'e', b: 'f', c: '王五', d: 3 }];
-     * arraySort(arr1, false, 'a'); // e - c - a
-     * arraySort(arr1, false, ['d', 'c']); // 3 - 2 - 1
-     * arraySort(arr1, 'DESC', ['c']); // 张三 - 王五 - 李四
+     * arraySort(arr1, false, 'a'); /// e - c - a
+     * arraySort(arr1, false, ['d', 'c']); /// 3 - 2 - 1
+     * arraySort(arr1, 'DESC', ['c']); /// 张三 - 王五 - 李四
      * @param arr 数组
      * @param type 类型
      * @param keys 关键字/集合
@@ -550,10 +550,10 @@
     /**
      * 返回排序回调函数(也支持中文、多个字段、混合类型)
      * @example
-     * ['a', '3', 1, 2, 'b'].sort(sortBy('', false)); // ['b', 'a', '3', 2, 1]
-     * ['a', '3', 1, 2, 'b'].sort(sortBy()); // [1, 2, '3', 'a', 'b']
-     * sortBy('createDt'); // 按照 createDt 升序排列
-     * sortBy(['name', 'age'], false); // 按照 name + age 降序排列
+     * ['a', '3', 1, 2, 'b'].sort(sortBy('', false)); /// ['b', 'a', '3', 2, 1]
+     * ['a', '3', 1, 2, 'b'].sort(sortBy()); /// [1, 2, '3', 'a', 'b']
+     * sortBy('createDt'); /// 按照 createDt 升序排列
+     * sortBy(['name', 'age'], false); /// 按照 name + age 降序排列
      * @param keys 排序的字段/集合
      * @param isAscend 是否升序
      * @returns
@@ -576,9 +576,9 @@
     /**
      * 填充数组空值，取前后值得中间数。
      * @example
-     * fillArrVar([1, undefined, 3, undefined, 4]); // [1, 2, 3, 3.5, 4]
-     * fillArrVar([1, undefined, 3, undefined, 4], 0); //  [1, 2, 3, 4, 4]
-     * fillArrVar([1, undefined, 3, undefined, 10.55], 2); // [1, 2, 3, 6.78, 10.55]
+     * fillArrVar([1, undefined, 3, undefined, 4]); /// [1, 2, 3, 3.5, 4]
+     * fillArrVar([1, undefined, 3, undefined, 4], 0); ///  [1, 2, 3, 4, 4]
+     * fillArrVar([1, undefined, 3, undefined, 10.55], 2); /// [1, 2, 3, 6.78, 10.55]
      * @param arr 数组
      * @param length 保留小数位
      * @returns
@@ -621,7 +621,7 @@
     /**
      * Get Cookie
      * @example
-     * getCookie('name'); // 获取 name 对应的 Cookie 值
+     * getCookie('name'); /// 获取 name 对应的 Cookie 值
      * @param key Cookie key
      * @returns
      */
@@ -633,22 +633,25 @@
     /**
      * Set Cookie
      * @example
-     * setCookie('name', 'value', 1); // 设置 name 对应的 Cookie 值
+     * setCookie('name', 'value', 1); /// 设置 name 对应的 Cookie 值
      * @param key Cookie key
      * @param value Cookie value
      * @param expires Cookie expires
      * @returns
      */
     function setCookie(key, value, expires) {
-        expires = expires || 30; // 没有设置有效期，默认有效期是 30 天。
-        var exp = new Date(); // 获取当前日期
-        exp.setTime(exp.getTime() + expires * 24 * 60 * 60 * 1000); // 设置过期日期
+        // 没有设置有效期，默认有效期是 30 天。
+        expires = expires || 30;
+        // 获取当前日期
+        var exp = new Date();
+        // 设置过期日期
+        exp.setTime(exp.getTime() + expires * 24 * 60 * 60 * 1000);
         document.cookie = key + '=' + escape(value) + ';expires=' + exp.toUTCString() + ';path=/';
     }
     /**
      * Remove Cookie
      * @example
-     * removeCookie('name'); // 删除 name 对应的 Cookie
+     * removeCookie('name'); /// 删除 name 对应的 Cookie
      * @param key Cookie key
      * @returns
      */
@@ -663,7 +666,7 @@
     /**
      * Clear Cookie
      * @example
-     * clearCookies(); // 删除所有的 Cookie
+     * clearCookies(); /// 删除所有的 Cookie
      * @returns
      */
     function clearCookies() {
@@ -7394,8 +7397,8 @@
      * 加密函数
      * 防君子不防小人，也可以通过后台获取密钥。
      * @example
-     * encrypt("value"); // 加密后的字符串
-     * encrypt("value", "1234567887654321","1234567887654321"); // 自定义密钥加密后的字符串
+     * encrypt("value"); /// 加密后的字符串
+     * encrypt("value", "1234567887654321","1234567887654321"); /// 自定义密钥加密后的字符串
      * @param data 需要加密的数据
      * @param secretKey [可选] 十六位十六进制数作为密钥
      * @param secretIv [可选] 十六位十六进制数作为密钥偏移量
@@ -7434,9 +7437,9 @@
      * 解密函数
      * 防君子不防小人，也可以通过后台获取密钥。
      * @example
-     * decrypt("加密后的字符串"); // 解密后的字符串
-     * decrypt("加密后的字符串", true); // 解密后的字符串并转换为 JSON 对象
-     * decrypt("加密后的字符串", "1234567887654321","1234567887654321"); // 自定义密钥解密后的字符串
+     * decrypt("加密后的字符串"); /// 解密后的字符串
+     * decrypt("加密后的字符串", true); /// 解密后的字符串并转换为 JSON 对象
+     * decrypt("加密后的字符串", "1234567887654321","1234567887654321"); /// 自定义密钥解密后的字符串
      * @param dataStr 加密后的字符串
      * @param jsonDecode 是否需要解析成 json
      * @param secretKey [可选] 十六位十六进制数作为密钥
@@ -7470,7 +7473,7 @@
     /**
      * md5 加密函数
      * @example
-     * md5("value"); // 加密后的字符串
+     * md5("value"); /// 加密后的字符串
      * @param str 需要加密的字符串
      * @returns
      */
@@ -7480,7 +7483,7 @@
     /**
      * sha1 加密函数
      * @example
-     * sha1("value"); // 加密后的字符串
+     * sha1("value"); /// 加密后的字符串
      * @param str 需要加密的字符串
      * @returns
      */
@@ -7490,7 +7493,7 @@
     /**
      * sha256 加密函数
      * @example
-     * sha256("value"); // 加密后的字符串
+     * sha256("value"); /// 加密后的字符串
      * @param str 需要加密的字符串
      * @returns
      */
@@ -7502,8 +7505,8 @@
      * `使用 url 中时建议使用 encodeURIComponent 再次编码，因为单独 + 号在 url 中会被解析成空格。`
      * `使用 encodeURIComponent 会把 + 解析为 %2B 与空格 %20 区分`
      * @example
-     * base64Encode("value"); // 加密后的字符串
-     * base64Encode("value", true); // 加密后的字符串并替换 +/=
+     * base64Encode("value"); /// 加密后的字符串
+     * base64Encode("value", true); /// 加密后的字符串并替换 +/=
      * @param str 需要加密的字符串
      * @param replaceChar 是否替换结果字符串中的特殊字符 '+/='，适用于 url 编码。
      * @returns
@@ -7516,7 +7519,7 @@
     /**
      * base64 解密函数
      * @example
-     * base64Decode("加密后的字符串"); // 解密后的字符串
+     * base64Decode("加密后的字符串"); /// 解密后的字符串
      * @param str 需要加密的字符串
      * @returns
      */
@@ -7526,8 +7529,8 @@
     /**
      * 获取 CryptoJS
      * @example
-     * getCryptoJS(); // CryptoJS
-     * getCryptoJS().MD5(str).toString(); // md5 加密后的字符串
+     * getCryptoJS(); /// CryptoJS
+     * getCryptoJS().MD5(str).toString(); /// md5 加密后的字符串
      * @returns
      */
     function getCryptoJS() {
@@ -8405,7 +8408,7 @@
     /**
      * 获取 16 位可读时间戳
      * @example
-     * getTimeCode(); // '2036551026042022'
+     * getTimeCode(); /// '2036551026042022'
      * @returns
      */
     function getTimeCode() {
@@ -8421,49 +8424,56 @@
     /**
      * 判断值是否为空
      * @example
-     * empty(''); // true
-     * empty(null); // true
-     * empty('null'); // true
-     * empty('undefined'); // true
-     * empty(undefined); // true
-     * empty(0); // false
-     * empty('0'); // false
-     * empty(NaN); // true
-     * empty('NaN'); // true
-     * empty({}); // true
-     * empty([]); // true
+     * empty(''); /// true
+     * empty(null); /// true
+     * empty('null'); /// true
+     * empty('undefined'); /// true
+     * empty(undefined); /// true
+     * empty(0); /// false
+     * empty('0'); /// false
+     * empty(NaN); /// true
+     * empty('NaN'); /// true
+     * empty({}); /// true
+     * empty([]); /// true
      * @param variable 变量
      * @returns
      */
     function empty(variable) {
         if (typeof variable === 'boolean') {
-            return false; // 此处函数定义布尔型不算空
+            // 此处函数定义布尔型不算空
+            return false;
         }
         if (variable === 'null') {
-            return true; // 检验字符串类型的 null
+            // 检验字符串类型的 null
+            return true;
         }
         if (variable === 'undefined') {
-            return true; // 检验字符串类型的 undefined
+            // 检验字符串类型的 undefined
+            return true;
         }
         if (variable === 'NaN') {
-            return true; // 检验字符串类型的 NaN
+            // 检验字符串类型的 NaN
+            return true;
         }
         if (!variable && variable !== 0 && variable !== '0') {
-            return true; // 检验 undefined 和 null "" NaN
+            // 检验 undefined 和 null "" NaN
+            return true;
         }
         if (Array.isArray(variable) && variable.length === 0) {
-            return true; // 检验空数组
+            // 检验空数组
+            return true;
         }
         if (Object.prototype.toString.call(variable) === '[object Object]' && Object.keys(variable).length === 0) {
-            return true; // 检验空对象，仅判断普通对象，不考虑字符串对象、时间、等等。
+            // 检验空对象，仅判断普通对象，不考虑字符串对象、时间、等等。
+            return true;
         }
         return false;
     }
     /**
      * 获取对象/数组第一个值
      * @example
-     * get1Var([1, 2]); // 1
-     * get1Var({a: 2,b: 1}); // 2
+     * get1Var([1, 2]); /// 1
+     * get1Var({a: 2,b: 1}); /// 2
      * @param data 源数据
      * @returns
      */
@@ -8479,8 +8489,8 @@
     /**
      * 获取数组或对象随机数据
      * @example
-     * getRandVar({ a: 1, b: 3 }); // 1
-     * getRandomVar([1, 2, 3, 4], 2); // [2, 4]
+     * getRandVar({ a: 1, b: 3 }); /// 1
+     * getRandomVar([1, 2, 3, 4], 2); /// [2, 4]
      * @param value
      * @param count
      * @returns
@@ -8501,8 +8511,8 @@
     /**
      * 获取对象/数组最后一个值(对象为 Object.keys 的顺序)
      * @example
-     * getLastVar([1, 2]); // 2
-     * getLastVar({a: 2, b: 1}); // b
+     * getLastVar([1, 2]); /// 2
+     * getLastVar({a: 2, b: 1}); /// b
      * @param data 源数据
      * @returns
      */
@@ -8520,7 +8530,7 @@
     /**
      * 防抖函数-最后一次有效（抢购）
      * @example
-     * debounce(() => {}, 1000); // 防抖执行
+     * debounce(() => {}, 1000); /// 防抖执行
      * @param fn 执行的函数
      * @param delay 延迟时间
      * @returns
@@ -8540,7 +8550,7 @@
     /**
      * 节流函数-第一次有效（游戏开枪间隔）
      * @example
-     * throttle(() => {}, 1000); // 节流执行
+     * throttle(() => {}, 1000); /// 节流执行
      * @param fn 执行的函数
      * @param delay 延迟时间
      * @returns
@@ -8564,7 +8574,7 @@
      * 函数柯里化
      * 是把接受多个参数的函数变换成接受一个单一参数(最初函数的第一个参数)的函数，并且返回接受余下的参数且返回结果的新函数的技术。
      * @example
-     * curryIt(function (a, b, c) {return a + b + c})(1)(2)(3); // 6
+     * curryIt(function (a, b, c) {return a + b + c})(1)(2)(3); /// 6
      * @param fn
      * @returns
      */
@@ -8589,7 +8599,7 @@
     /**
      * 全局捕获异常
      * @example
-     * globalError((message, source, lineNo, colNo, error) => console.log('全局捕获异常'), false); // '全局捕获异常'
+     * globalError((message, source, lineNo, colNo, error) => console.log('全局捕获异常'), false); /// '全局捕获异常'
      * @param {any} fn (message, source, lineNo, colNo, error)
      * @param {boolean} notShowConsole 是否不回显控制台
      * @returns
@@ -8599,13 +8609,14 @@
         window.onerror = function (message, source, lineNo, colNo, error) {
             notShowConsole && console.log('js-xxx:globalError--->', { message: message, source: source, lineNo: lineNo, colNo: colNo, error: error });
             fn.call(this, message, source, lineNo, colNo, error);
-            return notShowConsole; // return true 不在控制台报错
+            // return true 不在控制台报错
+            return notShowConsole;
         };
     }
     /**
      * 获取随机数字
      * @example
-     * getRandNum(1, 10); // 1~10 之间的随机数，闭区间。
+     * getRandNum(1, 10); /// 1~10 之间的随机数，闭区间。
      * @param min 最小值
      * @param max 最大值
      * @returns
@@ -8618,7 +8629,7 @@
     /**
      * 获取随机颜色
      * @example
-     * getRandColor(); // '#xxxxxx'
+     * getRandColor(); /// '#xxxxxx'
      * @returns
      */
     function getRandColor() {
@@ -8627,7 +8638,7 @@
     /**
      * 获取随机数字字符串
      * @example
-     * getRandStr(6); // 'xxxxxx'
+     * getRandStr(6); /// 'xxxxxx'
      * @param len 长度
      * @returns
      */
@@ -8638,7 +8649,7 @@
     /**
      * 获取简单的唯一字符串(时间戳+随机数+进制转换)
      * @example
-     * getTimeAndStr(5, 36); // 'xxxxxx'
+     * getTimeAndStr(5, 36); /// 'xxxxxx'
      * @param len 随机字符的长度
      * @param radix 结果以此进行进制转换
      * @returns
@@ -8646,14 +8657,16 @@
     function getTimeAndStr(len, radix) {
         if (len === void 0) { len = 5; }
         if (radix === void 0) { radix = 36; }
-        // Number('xxx'); // 超大 string 转 number 结果不准确 玄学
-        return len === 0 ? "".concat(getTimeCode()) : Number("".concat(getRandStr(len)).concat(Date.now())).toString(radix); // new Date().getTime()
+        // Number('xxx');
+        // 超大 string 转 number 结果不准确 玄学
+        // new Date().getTime()
+        return len === 0 ? "".concat(getTimeCode()) : Number("".concat(getRandStr(len)).concat(Date.now())).toString(radix);
     }
     // eslint-disable-next-line spellcheck/spell-checker
     /**
      * 获取简单的 UUID
      * @example
-     * getUUID(); // 'ghijklmn'
+     * getUUID(); /// 'ghijklmn'
      * @param length 指定位数
      * @param chars 指定字符
      * @returns
@@ -8670,9 +8683,9 @@
     /**
      * 获取 bootstrap 颜色
      * @example
-     * getBSColor(); // '#6c757d'
-     * getBSColor('red'); // '#dc3545'
-     * getBSColor('warning'); // '#ffc107'
+     * getBSColor(); /// '#6c757d'
+     * getBSColor('red'); /// '#dc3545'
+     * getBSColor('warning'); /// '#ffc107'
      * @param key color name
      * @returns
      */
@@ -8723,13 +8736,14 @@
     /**
      * 获取 V4 版本 UUID
      * @example
-     * uuid(); // '7b72e264-61fe-426e-b95f-35d4e61c5742'
+     * uuid(); /// '7b72e264-61fe-426e-b95f-35d4e61c5742'
      * @returns
      */
     function uuid() {
         var tempUrl = URL.createObjectURL(new Blob());
         var uuid = tempUrl.toString();
-        URL.revokeObjectURL(tempUrl); // 释放这个 url
+        // 释放这个 url
+        URL.revokeObjectURL(tempUrl);
         return uuid.substring(uuid.lastIndexOf('/') + 1);
         // 外部
         // const hexBytes = [];
@@ -8768,8 +8782,8 @@
     /**
      * 获取带前缀的唯一 key
      * @example
-     * getKey(); // 'M2rmCcGpXCa5MTdN4Kks5'
-     * getKey(2, 'test-'); // test-aK'
+     * getKey(); /// 'M2rmCcGpXCa5MTdN4Kks5'
+     * getKey(2, 'test-'); /// test-aK'
      * @param size
      * @param prefix
      * @returns
@@ -8795,9 +8809,9 @@
     /**
      * 获取任意变量长度
      * @example
-     * getSize([]); // 0
-     * getSize({a: 1, b: 2}); // 2
-     * getSize(null); // 0
+     * getSize([]); /// 0
+     * getSize({a: 1, b: 2}); /// 2
+     * getSize(null); /// 0
      * @param value
      * @returns
      */
@@ -8844,7 +8858,7 @@
     /**
      * 开启全屏
      * @example
-     * openFullscreen(); // 开启全屏
+     * openFullscreen(); /// 开启全屏
      * @param element
      * @returns
      */
@@ -8866,7 +8880,7 @@
     /**
      * 关闭全屏
      * @example
-     * closeFullscreen(); // 关闭全屏
+     * closeFullscreen(); /// 关闭全屏
      * @param
      * @returns
      */
@@ -8893,8 +8907,8 @@
     /**
      * 获取数组或对象交集
      * @example
-     * intersection([1, 2, 2, 3, 3], [1, 2, 4, 5]); // [1, 2]
-     * intersection({a: 1, b: 2}, {a: 1, c: 3, b: 4}); // {a: 1}
+     * intersection([1, 2, 2, 3, 3], [1, 2, 4, 5]); /// [1, 2]
+     * intersection({a: 1, b: 2}, {a: 1, c: 3, b: 4}); /// {a: 1}
      * @param paramA
      * @param paramB
      * @returns
@@ -8927,8 +8941,8 @@
     /**
      * 获取数组或对象并集
      * @example
-     * union([1, 2, 2, 3, 3], [1, 2, 4, 5]); // [1, 2, 3, 4, 5]
-     * union({a: 1, b: 2}, {a: 1, c: 3, b: 4}); // {a: 1, c: 3, b: 2}
+     * union([1, 2, 2, 3, 3], [1, 2, 4, 5]); /// [1, 2, 3, 4, 5]
+     * union({a: 1, b: 2}, {a: 1, c: 3, b: 4}); /// {a: 1, c: 3, b: 2}
      * @param paramA
      * @param paramB
      * @returns
@@ -8949,8 +8963,8 @@
     /**
      * 获取数组或对象不同值集合
      * @example
-     * difference([1, 2, 2, 3, 3], [1, 2, 4, 5]); // [3]
-     * difference({a: 1, b: 2}, {a: 1, c: 3, b: 4}); // {b: 2}
+     * difference([1, 2, 2, 3, 3], [1, 2, 4, 5]); /// [3]
+     * difference({a: 1, b: 2}, {a: 1, c: 3, b: 4}); /// {b: 2}
      * @param paramA
      * @param paramB
      * @returns
@@ -8966,7 +8980,8 @@
         if (isObj) {
             for (var key in paramA) {
                 if (paramB[key] != paramA[key]) {
-                    result[key] = paramA[key]; // 以前一个为准
+                    // 以前一个为准
+                    result[key] = paramA[key];
                 }
             }
         }
@@ -8979,8 +8994,8 @@
     /**
      * JSON 转字符串式克隆
      * @example
-     * jsonClone([1, 2, 2, 3, 3]); // [1, 2, 2, 3, 3]
-     * jsonClone({a: 1, b: 2}); // {a: 1, b: 2}
+     * jsonClone([1, 2, 2, 3, 3]); /// [1, 2, 2, 3, 3]
+     * jsonClone({a: 1, b: 2}); /// {a: 1, b: 2}
      * @param value
      * @returns
      */
@@ -9064,8 +9079,8 @@
     /**
      * 在页面上显示某个值
      * @example
-     * showVar([1, 2, 2, 3, 3]); // 显示序列化之后的数据
-     * showVar({a: 1, b: 2}); // 显示序列化之后的数据
+     * showVar([1, 2, 2, 3, 3]); /// 显示序列化之后的数据
+     * showVar({a: 1, b: 2}); /// 显示序列化之后的数据
      * @param value
      * @returns
      */
@@ -9081,14 +9096,14 @@
     /**
      * 检测某个数组是否包含某个值
      * @example
-     * contains([1, 2, 2, 3, 3], 3); // true
-     * contains([1, 2, 2, 3, 3], '3'); // false
-     * contains(['test1', 'test2'],'test'); // false
-     * contains([{a: 1, b: 2}, {a: 2, b: 3}], {a: 2, b: 3}); // true
-     * contains([{a: 1, b: 2}, {a: 2, b: 3}], {b: 3, a: 2}); // true
-     * contains([[1, 2], [3, 4]], [4, 3]); // true
-     * contains([[1, 2], [3, 4]], [3, 4]); // true
-     * contains([[1, 2], [3, 4]], [1, 3]); // false
+     * contains([1, 2, 2, 3, 3], 3); /// true
+     * contains([1, 2, 2, 3, 3], '3'); /// false
+     * contains(['test1', 'test2'],'test'); /// false
+     * contains([{a: 1, b: 2}, {a: 2, b: 3}], {a: 2, b: 3}); /// true
+     * contains([{a: 1, b: 2}, {a: 2, b: 3}], {b: 3, a: 2}); /// true
+     * contains([[1, 2], [3, 4]], [4, 3]); /// true
+     * contains([[1, 2], [3, 4]], [3, 4]); /// true
+     * contains([[1, 2], [3, 4]], [1, 3]); /// false
      * @param value
      * @param target
      * @returns
@@ -9112,12 +9127,12 @@
     /**
      * 两个数值是否有相同的值（交集）
      * @example
-     * same(['admin','manager','user','viewer','guest'], ['admin','user']); // true
-     * same(['admin','manager','user','viewer','guest'], 'admin'); // true
-     * same('admin', ['admin','user']); // true
-     * same('admin', 'admin'); // true
-     * same('admin', 'admins'); // false
-     * same('admins', 'admin'); // false
+     * same(['admin','manager','user','viewer','guest'], ['admin','user']); /// true
+     * same(['admin','manager','user','viewer','guest'], 'admin'); /// true
+     * same('admin', ['admin','user']); /// true
+     * same('admin', 'admin'); /// true
+     * same('admin', 'admins'); /// false
+     * same('admins', 'admin'); /// false
      * @param valueA
      * @param valueB
      * @returns
@@ -9139,9 +9154,9 @@
     /**
      * 获取排序转换后的数组或对象（仅支持单层简单结构）
      * @example
-     * getSortVar({ b: 3, a: 2 }); // { a: 2, b: 3 }
-     * getSortVar({ a: 2, b: 3 }); // { a: 2, b: 3 }
-     * getSortVar([1, 3, 2]); // [1, 2, 3]
+     * getSortVar({ b: 3, a: 2 }); /// { a: 2, b: 3 }
+     * getSortVar({ a: 2, b: 3 }); /// { a: 2, b: 3 }
+     * getSortVar([1, 3, 2]); /// [1, 2, 3]
      * @param value
      * @returns
      */
@@ -9166,10 +9181,10 @@
     /**
      * 反转数组或者字符串
      * @example
-     * inversion([1, 2, 3]); // [3, 2, 1]
-     * inversion('123'); // '321'
-     * inversion(); // undefined
-     * inversion(true); // true
+     * inversion([1, 2, 3]); /// [3, 2, 1]
+     * inversion('123'); /// '321'
+     * inversion(); /// undefined
+     * inversion(true); /// true
      * @param value
      * @returns
      */
@@ -9233,14 +9248,14 @@
     /**
      * 毫秒转换
      * @example
-     * ms('1s'); // 1000
-     * ms('1m'); // 60000
-     * ms('1.5h'); // 5400000
-     * ms('1d'); // 86400000
-     * ms('1y'); // 31557600000
-     * ms('1000'); // 1000
-     * ms(1500); // '1.5s'
-     * ms(60000); // '1m'
+     * ms('1s'); /// 1000
+     * ms('1m'); /// 60000
+     * ms('1.5h'); /// 5400000
+     * ms('1d'); /// 86400000
+     * ms('1y'); /// 31557600000
+     * ms('1000'); /// 1000
+     * ms(1500); /// '1.5s'
+     * ms(60000); /// '1m'
      * @param str
      * @returns
      */
@@ -9275,8 +9290,8 @@
     /**
      * 文件流或内容转 Base64
      * @example
-     * transferFileToBase64(file, 'application/pdf;charset=utf-8', (res) => console.log({ res })); // result object
-     * transferFileToBase64('test', 'text/plain', (res) => console.log({ res })); // result object
+     * transferFileToBase64(file, 'application/pdf;charset=utf-8', (res) => console.log({ res })); /// result object
+     * transferFileToBase64('test', 'text/plain', (res) => console.log({ res })); /// result object
      * @param content BlobPart | any
      * @param contentType
      * @param callBack
@@ -9300,10 +9315,10 @@
      * 检查是否为 idCard string 身份证
      * 支持 15 、 18 位
      * @example
-     * checkIdCard('350424870506202'); // true
-     * checkIdCard('003424870506202'); // false
-     * checkIdCard('415106199801012130'); // true
-     * checkIdCard('123123123123123222'); // false
+     * checkIdCard('350424870506202'); /// true
+     * checkIdCard('003424870506202'); /// false
+     * checkIdCard('415106199801012130'); /// true
+     * checkIdCard('123123123123123222'); /// false
      * @param value
      * @returns
      */
@@ -9315,9 +9330,9 @@
     /**
      * 获取年龄
      * @example
-     * getAge('1998-9-28'); // 24
-     * getAge('1998-6-8', '2023-7'); // 25
-     * getAge('2023'); // -1
+     * getAge('1998-9-28'); /// 24
+     * getAge('1998-6-8', '2023-7'); /// 25
+     * getAge('2023'); /// -1
      * @param birthday
      * @param targetDate
      * @returns
@@ -9328,9 +9343,9 @@
     /**
      * 获取生肖
      * @example
-     * getAnimal('1998'); // '虎'
-     * getAnimal('1998-6-8'); // '虎'
-     * getAnimal('2023'); // '兔'
+     * getAnimal('1998'); /// '虎'
+     * getAnimal('1998-6-8'); /// '虎'
+     * getAnimal('2023'); /// '兔'
      * @param date
      * @returns
      */
@@ -9341,10 +9356,10 @@
      * 身份证解析
      * @example
      * transferIdCard('350424870506202');
-     * // {"age":35,"year":"1987","idCard":"350424870506202","sex":"女","constellation":{"cn":"金牛","en":"Taurus","date":"4.20-5.20"},"gender":0,"province":"福建","animal":"兔","birthday":"1987-05-06"}
+     * /// {"age":35,"year":"1987","idCard":"350424870506202","sex":"女","constellation":{"cn":"金牛","en":"Taurus","date":"4.20-5.20"},"gender":0,"province":"福建","animal":"兔","birthday":"1987-05-06"}
      * transferIdCard('415106199801012130');
-     * // {"age":24,"year":"1998","idCard":"415106199801012130","sex":"男","constellation":{"cn":"魔羯","en":"Capricorn","date":"12.22-1.19"},"gender":1,"province":"河南","animal":"虎","birthday":"1998-01-01"}
-     * transferIdCard('xxxxx'); // {}
+     * /// {"age":24,"year":"1998","idCard":"415106199801012130","sex":"男","constellation":{"cn":"魔羯","en":"Capricorn","date":"12.22-1.19"},"gender":1,"province":"河南","animal":"虎","birthday":"1998-01-01"}
+     * transferIdCard('xxxxx'); /// {}
      * @param idCard
      * @returns
      */
@@ -9378,8 +9393,8 @@
     /**
      * 金额转中文
      * @example
-     * transferMoney(900); // '玖佰元整'
-     * transferMoney(852.5); // '捌佰伍拾贰元伍角'
+     * transferMoney(900); /// '玖佰元整'
+     * transferMoney(852.5); /// '捌佰伍拾贰元伍角'
      * @param n
      * @returns
      */
@@ -9416,8 +9431,8 @@
     /**
      * 格式化金额，展示位银行金额格式。
      * @example
-     * formatMoney(90000); // '90,000.00'
-     * formatMoney(852.1314, 2); // '852.13'
+     * formatMoney(90000); /// '90,000.00'
+     * formatMoney(852.1314, 2); /// '852.13'
      * @param longData
      * @param length
      * @returns
@@ -9491,7 +9506,7 @@
     /**
      * 页面灰白屏幕
      * @example
-     * rip(); // 页面灰白
+     * rip(); /// 页面灰白
      * @returns
      */
     function rip() {
@@ -9503,9 +9518,9 @@
     /**
      * 获取星座
      * @example
-     * getConstellation('11-24'); // { cn: '射手', en: 'Sagittarius', date: '11.23-12.21' }
-     * getConstellation('xxx'); // {cn: '未知', en: 'unknown', date: 'xxx'}
-     * getConstellation(new Date('2022-11-24')); // { cn: '射手', en: 'Sagittarius', date: '11.23-12.21' }
+     * getConstellation('11-24'); /// { cn: '射手', en: 'Sagittarius', date: '11.23-12.21' }
+     * getConstellation('xxx'); /// {cn: '未知', en: 'unknown', date: 'xxx'}
+     * getConstellation(new Date('2022-11-24')); /// { cn: '射手', en: 'Sagittarius', date: '11.23-12.21' }
      * @param date
      * @returns
      */
@@ -9632,7 +9647,7 @@
      * 设置监听函数
      * 返回取消该监听的函数 return cancel
      * @example
-     * setEventListener('resize', () => { console.log('resize'); }); // cancel 当前 listener 的 function
+     * setEventListener('resize', () => { console.log('resize'); }); /// cancel 当前 listener 的 function
      * @param eventKey
      * @param foo
      * @param once 是否只触发一次
@@ -9654,7 +9669,7 @@
      * H5 软键盘缩回/弹起回调
      * return cancel listener of H5Resize
      * @example
-     * H5Resize(()=>{ console.log('downCb'); }, ()=>{ console.log('upCb'); }); // do something
+     * H5Resize(()=>{ console.log('downCb'); }, ()=>{ console.log('upCb'); }); /// do something
      * @param downCb
      * @param upCb
      * @returns
@@ -9685,7 +9700,7 @@
      * 监听页面大小变化没必要
      * 监听编辑 dom 事件 reload 也算了
      * @example
-     * banConsole(); // 返回取消禁用的 function
+     * banConsole(); /// 返回取消禁用的 function
      * @returns
      */
     function banConsole() {
@@ -9707,13 +9722,13 @@
     /**
      * 获取星期信息
      * @example
-     * getWeekInfo(); // WEEKS_INFO
-     * getWeekInfo('0'); // WEEKS_INFO
-     * getWeekInfo('ALL'); // WEEKS_INFO
-     * getWeekInfo('all'); // WEEKS_INFO
-     * getWeekInfo('unknown'); // WEEKS_INFO
-     * getWeekInfo(1); // 星期一相关信息
-     * getWeekInfo(8); // WEEKS_INFO
+     * getWeekInfo(); /// WEEKS_INFO
+     * getWeekInfo('0'); /// WEEKS_INFO
+     * getWeekInfo('ALL'); /// WEEKS_INFO
+     * getWeekInfo('all'); /// WEEKS_INFO
+     * getWeekInfo('unknown'); /// WEEKS_INFO
+     * getWeekInfo(1); /// 星期一相关信息
+     * getWeekInfo(8); /// WEEKS_INFO
      * @param n
      * @returns
      */
@@ -9731,13 +9746,13 @@
     /**
      * 获取月份信息
      * @example
-     * getMonthInfo(); // MONTH_INFO
-     * getMonthInfo('0'); // MONTH_INFO
-     * getMonthInfo('ALL'); // MONTH_INFO
-     * getMonthInfo('all'); // MONTH_INFO
-     * getMonthInfo('unknown'); // MONTH_INFO
-     * getMonthInfo(1); // 一月相关信息
-     * getMonthInfo(13); // MONTH_INFO
+     * getMonthInfo(); /// MONTH_INFO
+     * getMonthInfo('0'); /// MONTH_INFO
+     * getMonthInfo('ALL'); /// MONTH_INFO
+     * getMonthInfo('all'); /// MONTH_INFO
+     * getMonthInfo('unknown'); /// MONTH_INFO
+     * getMonthInfo(1); /// 一月相关信息
+     * getMonthInfo(13); /// MONTH_INFO
      * @param n
      * @returns
      */
@@ -9755,11 +9770,11 @@
     /**
      * 判断两个值是否相等
      * @example
-     * isEqual([1, 2, 3], [1, 2, 3]); // true
-     * isEqual({a: 1, b: 2}, {a: 1, b: 2}); // true
-     * isEqual({}, {}); // true
-     * isEqual(1, 1); // true
-     * isEqual(1, '1'); // false
+     * isEqual([1, 2, 3], [1, 2, 3]); /// true
+     * isEqual({a: 1, b: 2}, {a: 1, b: 2}); /// true
+     * isEqual({}, {}); /// true
+     * isEqual(1, 1); /// true
+     * isEqual(1, '1'); /// false
      * @param obj1
      * @param obj2
      * @returns
@@ -9820,9 +9835,9 @@
      * 遍历数组或对象，并对每个元素执行回调函数，支持中途 break 和 continue 。
      * @example
      * forEach([1, 2, 3], (item, index) => console.log(item, index));
-     * forEach([1, 2, 3], (item, index) => item * 2, true); // [2, 4, 6]
+     * forEach([1, 2, 3], (item, index) => item * 2, true); /// [2, 4, 6]
      * forEach({a: 1, b: 2}, (value, key) => console.log(value, key));
-     * forEach({a: 1, b: 2}, (value, key) => value * 2, true); // {a: 2, b: 4}
+     * forEach({a: 1, b: 2}, (value, key) => value * 2, true); /// {a: 2, b: 4}
      * @param data 要遍历的数据，可以是数组或对象。
      * @param callback 回调函数
      * @param hasReturn 是否返回一个新值
@@ -9877,7 +9892,7 @@
     /**
      * 字符转 unicode
      * @example
-     * unicode2str("我是老A"); // '\\u6211\\u662f\\u8001a'
+     * unicode2str("我是老A"); /// '\\u6211\\u662f\\u8001a'
      * @param value 中文字符串
      * @returns
      */
@@ -9888,7 +9903,7 @@
     /**
      * unicode 转字符
      * @example
-     * str2unicode("\\u6211\\u662f\\u8001a"); // '我是老a'
+     * str2unicode("\\u6211\\u662f\\u8001a"); /// '我是老a'
      * @param value unicode 字符串
      * @returns
      */
@@ -9899,7 +9914,7 @@
      * 去除字符串空格
      * 可选值：0|ba：去除前后空格，1|b：去除前空格，2|a：去除后空格，3|all：去除所有空格，4|pro：去除所有空格，中间的空格保留一个。
      * @example
-     * trim('  a  b  ', 4); // 'a b'
+     * trim('  a  b  ', 4); /// 'a b'
      * @param str 字符串
      * @param type 类型，默认为 0|ba，错误 type 会返回原字符串。
      * @returns
@@ -9921,7 +9936,8 @@
                 return (str = str.replace(/\s/g, ''));
             case 4:
             case 'pro':
-                return (str = str.replace(/(^\s*)|(\s*$)|\s(?=\s)/g, '')); // 去除前后空格并将中间的单个空格保留，多个空格变为一个空格。
+                // 去除前后空格并将中间的单个空格保留，多个空格变为一个空格。
+                return (str = str.replace(/(^\s*)|(\s*$)|\s(?=\s)/g, ''));
             default:
                 return str;
         }
@@ -9934,8 +9950,8 @@
      * `使用 encodeURIComponent 会把 + 解析为 %2B 与空格 %20 区分`
      * `btoa(encodeURIComponent(str))`
      * @example
-     * btoa('我是 leo'); // '5oiR5pivIGxlbw=='
-     * btoa('我是 leo', true); // '5oiR5pivIGxlbw'
+     * btoa('我是 leo'); /// '5oiR5pivIGxlbw=='
+     * btoa('我是 leo', true); /// '5oiR5pivIGxlbw'
      * @param str 字符串
      * @param replaceChar 是否替换结果字符串中的特殊字符 '+/='，适用于 url 编码。
      * @returns
@@ -9952,8 +9968,8 @@
      * `atob(ascii to binary)(not support unicode)`
      * `decodeURIComponent(atob(encodeStr))`
      * @example
-     * atob('5oiR5pivIGxlbw=='); // '我是 leo'
-     * atob('5oiR5pivIGxlbw'); // '我是 leo'
+     * atob('5oiR5pivIGxlbw=='); /// '我是 leo'
+     * atob('5oiR5pivIGxlbw'); /// '我是 leo'
      * @param str base64 加密后的字符串
      * @returns
      */
@@ -9971,13 +9987,13 @@
     /**
      * 字符串脱敏(biugle 自定义规则)
      * @example
-     * maskString(undefined); // '-'
-     * maskString('13579246810'); // '135****6810'
-     * maskString('王小二'); // '王***二'
-     * maskString('123456789'); // '123****89'
-     * maskString('130223199809282927'); // '13022********927'
-     * maskString('广东省深圳市龙华区'); // 广东省****华区'
-     * maskString('广东省深圳市福田区福田保税区xxx小区xxx单元x栋x楼xxx号'); // '广东省深圳市福田区******xx号'
+     * maskString(undefined); /// '-'
+     * maskString('13579246810'); /// '135****6810'
+     * maskString('王小二'); /// '王***二'
+     * maskString('123456789'); /// '123****89'
+     * maskString('130223199809282927'); /// '13022********927'
+     * maskString('广东省深圳市龙华区'); /// 广东省****华区'
+     * maskString('广东省深圳市福田区福田保税区xxx小区xxx单元x栋x楼xxx号'); /// '广东省深圳市福田区******xx号'
      * @param str
      * @returns
      */
@@ -10013,9 +10029,9 @@
     /**
      * 改变字符串大小写
      * @example
-     * transferCase('red', 'upper'|1); // 'RED'
-     * transferCase('red', 'lower'|2); // 'red'
-     * transferCase('red', 'first'|3); // 'Red'
+     * transferCase('red', 'upper'|1); /// 'RED'
+     * transferCase('red', 'lower'|2); /// 'red'
+     * transferCase('red', 'first'|3); /// 'Red'
      * @param str
      * @param type
      * @returns
@@ -10038,12 +10054,12 @@
     /**
      * 按照普遍的特殊字符分割字符串
      * @example
-     * splitCase('foo-bar'); // ['foo', 'bar']
-     * splitCase('foo_bar'); // ['foo', 'bar']
-     * splitCase('foo bar'); // ['foo', 'bar']
-     * splitCase('foo.bar'); // ['foo', 'bar']
-     * splitCase('fooBar'); // ['foo', 'bar']
-     * splitCase('foo-Bar'); // ['foo', 'bar']
+     * splitCase('foo-bar'); /// ['foo', 'bar']
+     * splitCase('foo_bar'); /// ['foo', 'bar']
+     * splitCase('foo bar'); /// ['foo', 'bar']
+     * splitCase('foo.bar'); /// ['foo', 'bar']
+     * splitCase('fooBar'); /// ['foo', 'bar']
+     * splitCase('foo-Bar'); /// ['foo', 'bar']
      * @param str
      * @returns
      */
@@ -10057,10 +10073,10 @@
     /**
      * 字符串转驼峰
      * @example
-     * camelCase('foo-bar'); // 'fooBar'
-     * camelCase('foo_bar'); // 'fooBar'
-     * camelCase('foo bar'); // 'fooBar'
-     * camelCase('foo.bar'); // 'fooBar'
+     * camelCase('foo-bar'); /// 'fooBar'
+     * camelCase('foo_bar'); /// 'fooBar'
+     * camelCase('foo bar'); /// 'fooBar'
+     * camelCase('foo.bar'); /// 'fooBar'
      * @param str
      * @returns
      */
@@ -10077,8 +10093,8 @@
     /**
      * 字符串 repeat
      * @example
-     * repeat('*'); // '*'
-     * repeat('*', 3); // '***'
+     * repeat('*'); /// '*'
+     * repeat('*', 3); /// '***'
      * @param str
      * @returns
      */
@@ -10098,8 +10114,8 @@
     /**
      * 检查是否为 url string
      * @example
-     * isUrl('http://www.example.com?foo=bar&param=test'); // true
-     * isUrl(http://www); // false
+     * isUrl('http://www.example.com?foo=bar&param=test'); /// true
+     * isUrl(http://www); /// false
      * @param value
      * @returns
      */
@@ -10110,8 +10126,8 @@
     /**
      * 检查是否为 email string 邮箱
      * @example
-     * isEmail('test@qq.com'); // true
-     * isEmail('@qq.com'); // false
+     * isEmail('test@qq.com'); /// true
+     * isEmail('@qq.com'); /// false
      * @param value
      * @returns
      */
@@ -10122,8 +10138,8 @@
     /**
      * 检查是否为 string 手机号
      * @example
-     * isMobile('13579246810'); // true
-     * isMobile('12345678910'); // false
+     * isMobile('13579246810'); /// true
+     * isMobile('12345678910'); /// false
      * @param value
      * @returns
      */
@@ -10135,11 +10151,11 @@
     /**
      * 检查是否为 char string 用户名规范(字母数字下划线或中文)
      * @example
-     * isAccount('test123@qq.com'); // false
-     * isAccount('_test123_qq_com'); // false
-     * isAccount('test123_qq_com'); // true
-     * isAccount('我test123_qq_com'); // false
-     * isAccount('我test123_qq_com', true); // true
+     * isAccount('test123@qq.com'); /// false
+     * isAccount('_test123_qq_com'); /// false
+     * isAccount('test123_qq_com'); /// true
+     * isAccount('我test123_qq_com'); /// false
+     * isAccount('我test123_qq_com', true); /// true
      * @param value
      * @returns
      */
@@ -10156,8 +10172,8 @@
     /**
      * 检查密码强度是否足够
      * @example
-     * isStrongPassWord('test@qq.com'); // false
-     * isStrongPassWord('test@qq.com123'); // true
+     * isStrongPassWord('test@qq.com'); /// false
+     * isStrongPassWord('test@qq.com123'); /// true
      * @param value
      * @returns
      */
@@ -10169,12 +10185,12 @@
     /**
      * 检查是否为 carCode string 车牌号
      * @example
-     * isCarCode('粤B68928'); // true
-     * isCarCode('粤-B68928'); // true
-     * isCarCode('粤 B68928'); // true
-     * isCarCode('粤B.68928'); // true
-     * isCarCode('粤B 68928'); // true
-     * isCarCode('广东 B12345'); // false
+     * isCarCode('粤B68928'); /// true
+     * isCarCode('粤-B68928'); /// true
+     * isCarCode('粤 B68928'); /// true
+     * isCarCode('粤B.68928'); /// true
+     * isCarCode('粤B 68928'); /// true
+     * isCarCode('广东 B12345'); /// false
      * @param value
      * @returns
      */
@@ -10185,10 +10201,10 @@
     /**
      * 检查是否为 ipv4 string
      * @example
-     * isIpv4('127.0.0.1'); // true
-     * isIpv4('255.255.255.0'); // true
-     * isIpv4('255.255.255.2555'); // false
-     * isIpv4('255.255.255.2555.255'); // false
+     * isIpv4('127.0.0.1'); /// true
+     * isIpv4('255.255.255.0'); /// true
+     * isIpv4('255.255.255.2555'); /// false
+     * isIpv4('255.255.255.2555.255'); /// false
      * @param value
      * @returns
      */
@@ -10200,13 +10216,13 @@
     /**
      * 检查是否为 ipv6 string
      * @example
-     * isIpv6('::1'); // true
-     * isIpv6('127.0.0.1'); // false
-     * isIpv6('2000:0000:0000:0000:0001:2345:6789:abcd'); // true
-     * isIpv6('2001:DB8:0:0:8:800:200C:417A'); // true
-     * isIpv6('2001:DB8::8:800:200C:417A'); // false 暂不兼容缩写
-     * isIpv6('2001:DB8:0:0:8:800:200C:417A:123'); // false
-     * isIpv6('2000:0000:0000:0000:0001:2345:6789:abcd:1'); // false
+     * isIpv6('::1'); /// true
+     * isIpv6('127.0.0.1'); /// false
+     * isIpv6('2000:0000:0000:0000:0001:2345:6789:abcd'); /// true
+     * isIpv6('2001:DB8:0:0:8:800:200C:417A'); /// true
+     * isIpv6('2001:DB8::8:800:200C:417A'); /// false 暂不兼容缩写
+     * isIpv6('2001:DB8:0:0:8:800:200C:417A:123'); /// false
+     * isIpv6('2000:0000:0000:0000:0001:2345:6789:abcd:1'); /// false
      * @param value
      * @returns
      */
@@ -10219,10 +10235,10 @@
     /**
      * 检查是否为 ip string
      * @example
-     * isIpAddress('::1'); // true
-     * isIpAddress('127.0.0.1'); // true
-     * isIpAddress('2001:DB8:0:0:8:800:200C:417A'); // true
-     * isIpAddress('255.255.255.123.123'); // false
+     * isIpAddress('::1'); /// true
+     * isIpAddress('127.0.0.1'); /// true
+     * isIpAddress('2001:DB8:0:0:8:800:200C:417A'); /// true
+     * isIpAddress('255.255.255.123.123'); /// false
      * @param value
      * @returns
      */
@@ -10233,8 +10249,8 @@
     /**
      * 检查是否为 file.ext string 文件扩展名
      * @example
-     * checkFileExt(['png', 'jpg'], 'test.jpg'); // true
-     * checkFileExt(['png', 'jpg'], 'test.jpg.txt'); // false
+     * checkFileExt(['png', 'jpg'], 'test.jpg'); /// true
+     * checkFileExt(['png', 'jpg'], 'test.jpg.txt'); /// false
      * @param value
      * @returns
      */
@@ -10245,10 +10261,10 @@
     /**
      * 检查是否为 http 协议，1 是，-1 为 https，0 啥也不是。
      * @example
-     * isHttp('http://test.com'); // 1
-     * isHttp('http:test.com'); // 0
-     * isHttp('https://test.com'); // -1
-     * isHttp('12345'); // 0
+     * isHttp('http://test.com'); /// 1
+     * isHttp('http:test.com'); /// 0
+     * isHttp('https://test.com'); /// -1
+     * isHttp('12345'); /// 0
      * @param value
      * @returns
      */
@@ -10259,8 +10275,8 @@
     /**
      * Slug 化字符串 URL
      * @example
-     * slugify('I LOVE OQM'); // 'I_LOVE_OQM'
-     * slugify('I LOVE OQM', { ' ': '-' }); // 'I-LOVE-OQM'
+     * slugify('I LOVE OQM'); /// 'I_LOVE_OQM'
+     * slugify('I LOVE OQM', { ' ': '-' }); /// 'I-LOVE-OQM'
      * @param str
      * @param replacement
      * @returns
@@ -10286,8 +10302,8 @@
     /**
      * 截取字符串，使其长度为指定值，包含省略符。
      * @example
-     * truncate('HXB HXB HXB HXB HXB HXB', 12); // 'HXB HXB H...'
-     * truncate('OQM-OQM-OQM-OQM-OQM-OQM', 10, { ellipsis: '～', separator: '-' }); // 'OQM-OQM～'
+     * truncate('HXB HXB HXB HXB HXB HXB', 12); /// 'HXB HXB H...'
+     * truncate('OQM-OQM-OQM-OQM-OQM-OQM', 10, { ellipsis: '～', separator: '-' }); /// 'OQM-OQM～'
      * @param txt
      * @param width
      * @param options
@@ -10320,13 +10336,13 @@
     /**
      * 格式化 JSON 字符串
      * @example
-     * formatJSON({ a: 123, b: 456 }, null, 2); // '{\n  "a": 123,\n  "b": 456\n}'
-     * formatJSON('123', null, 2); // '"123"'
-     * formatJSON(123, null, 2); // '123'
-     * formatJSON(null, null, 2); // 'null'
-     * formatJSON(true, null, 2); // 'true'
-     * formatJSON(undefined, null, 2); // 'undefined'
-     * formatJSON(new Date(), null, 2); // '"2023-03-02T10:02:42.019Z"'
+     * formatJSON({ a: 123, b: 456 }, null, 2); /// '{\n  "a": 123,\n  "b": 456\n}'
+     * formatJSON('123', null, 2); /// '"123"'
+     * formatJSON(123, null, 2); /// '123'
+     * formatJSON(null, null, 2); /// 'null'
+     * formatJSON(true, null, 2); /// 'true'
+     * formatJSON(undefined, null, 2); /// 'undefined'
+     * formatJSON(new Date(), null, 2); /// '"2023-03-02T10:02:42.019Z"'
      * @param value
      * @returns
      */
@@ -10342,8 +10358,8 @@
     /**
      * 检查是否为 QQ 号
      * @example
-     * isQQ('1005760694'); // true
-     * isQQ('123456789101'); // false
+     * isQQ('1005760694'); /// true
+     * isQQ('123456789101'); /// false
      * @param value
      * @returns
      */
@@ -10354,8 +10370,8 @@
     /**
      * 是否全为英文
      * @example
-     * isEnglish('Aa'); // true
-     * isEnglish('a1'); // false
+     * isEnglish('Aa'); /// true
+     * isEnglish('a1'); /// false
      * @param value
      * @returns
      */
@@ -10366,8 +10382,8 @@
     /**
      * 是否全为英文
      * @example
-     * hasSpecialChar('Aa('); // true
-     * hasSpecialChar('a1'); // false
+     * hasSpecialChar('Aa('); /// true
+     * hasSpecialChar('a1'); /// false
      * @param value
      * @returns
      */
@@ -10388,8 +10404,8 @@
     /**
      * 判断数据是否为座机号(固定电话)
      * @example
-     * isTel('0731-24722145'); // true
-     * isTel('13579246810'); // false
+     * isTel('0731-24722145'); /// true
+     * isTel('13579246810'); /// false
      * @param value
      * @returns
      */
@@ -10404,8 +10420,8 @@
     /**
      * 是否全为中文
      * @example
-     * isChinese('呜呜呜'); // true
-     * isChinese('我 1'); // false
+     * isChinese('呜呜呜'); /// true
+     * isChinese('我 1'); /// false
      * @param value
      * @returns
      */
@@ -10415,8 +10431,8 @@
     /**
      * 判断变量是否定义
      * @example
-     * isDefined(a); // false
-     * isDefined(window); // true
+     * isDefined(a); /// false
+     * isDefined(window); /// true
      * @param value
      * @returns
      */
@@ -10426,8 +10442,8 @@
     /**
      * 判断是否为统一社会信用代码
      * @example
-     * isCreditCode('9144030071526726XG'); // true
-     * isCreditCode('12312312312'); // false
+     * isCreditCode('9144030071526726XG'); /// true
+     * isCreditCode('12312312312'); /// false
      * @param value
      * @returns
      */
@@ -10438,16 +10454,17 @@
             return false;
         }
         else {
-            var AnCode = // 统一社会信用代码的每一个值
-             void 0; // 统一社会信用代码的每一个值
-            var AnCodeValue = // 统一社会信用代码每一个值的权重
-             void 0; // 统一社会信用代码每一个值的权重
+            // 统一社会信用代码的每一个值
+            var AnCode = void 0;
+            // 统一社会信用代码每一个值的权重
+            var AnCodeValue = void 0;
             var total = 0;
-            var weightedFactors = [1, 3, 9, 27, 19, 26, 16, 17, 20, 29, 25, 13, 8, 24, 10, 30, 28]; // 加权因子
-            var str = "".concat(BASE_NUMBER, "ABCDEFGHJKLMNPQRTUWXY");
+            // 加权因子
+            var weightedFactors = [1, 3, 9, 27, 19, 26, 16, 17, 20, 29, 25, 13, 8, 24, 10, 30, 28];
             // 不用 I 、 O 、 S 、 V 、 Z
+            var str = "".concat(BASE_NUMBER, "ABCDEFGHJKLMNPQRTUWXY");
             for (var i = 0; i < value.length - 1; i++) {
-                AnCode = value.substring(i, i + 1); // ?
+                AnCode = value.substring(i, i + 1);
                 AnCodeValue = str.indexOf(AnCode);
                 total = total + AnCodeValue * weightedFactors[i];
                 // 权重与加权因子相乘之和
@@ -10469,8 +10486,8 @@
     /**
      * 判断是否为银行卡号
      * @example
-     * isBankCard('6217003810026896707'); // true
-     * isBankCard('12312312312'); // false
+     * isBankCard('6217003810026896707'); /// true
+     * isBankCard('12312312312'); /// false
      * @param value
      * @returns
      */
@@ -10478,16 +10495,21 @@
         if ('' == value.trim() || undefined == value) {
             return false;
         }
-        var lastNum = value.substring(value.length - 1); // 取出最后一位
-        var first15Num = value.substring(0, value.length - 1); // 前 15 或 18 位
+        // 取出最后一位
+        var lastNum = value.substring(value.length - 1);
+        // 前 15 或 18 位
+        var first15Num = value.substring(0, value.length - 1);
         var newArr = [];
         for (var i = first15Num.length - 1; i > -1; i--) {
             // 前 15 或 18 位倒序存进数组
-            newArr.push(first15Num.substring(i, i + 1)); // ?
+            newArr.push(first15Num.substring(i, i + 1));
         }
-        var arrJiShu = []; // 奇数位*2 的积 < 9
-        var arrJiShu2 = []; // 奇数位*2 的积 > 9
-        var arrOuShu = []; // 偶数位数组
+        // 奇数位*2 的积 < 9
+        var arrJiShu = [];
+        // 奇数位*2 的积 > 9
+        var arrJiShu2 = [];
+        // 偶数位数组
+        var arrOuShu = [];
         for (var j = 0; j < newArr.length; j++) {
             if ((j + 1) % 2 == 1) {
                 // 奇数位
@@ -10503,16 +10525,22 @@
                 arrOuShu.push(newArr[j]);
             }
         }
-        var jsShuChild1 = []; // 奇数位*2 > 9 的分割之后的数组个位数
-        var jsShuChild2 = []; // 奇数位*2 > 9 的分割之后的数组十位数
+        // 奇数位*2 > 9 的分割之后的数组个位数
+        var jsShuChild1 = [];
+        // 奇数位*2 > 9 的分割之后的数组十位数
+        var jsShuChild2 = [];
         for (var h = 0; h < arrJiShu2.length; h++) {
             jsShuChild1.push(parseInt(arrJiShu2[h]) % 10);
             jsShuChild2.push(parseInt(arrJiShu2[h]) / 10);
         }
-        var sumJiShu = 0; // 奇数位*2 < 9 的数组之和
-        var sumOuShu = 0; // 偶数位数组之和
-        var sumJiShuChild1 = 0; // 奇数位*2 > 9 的分割之后的数组个位数之和
-        var sumJiShuChild2 = 0; // 奇数位*2 > 9 的分割之后的数组十位数之和
+        // 奇数位*2 < 9 的数组之和
+        var sumJiShu = 0;
+        // 偶数位数组之和
+        var sumOuShu = 0;
+        // 奇数位*2 > 9 的分割之后的数组个位数之和
+        var sumJiShuChild1 = 0;
+        // 奇数位*2 > 9 的分割之后的数组十位数之和
+        var sumJiShuChild2 = 0;
         var sumTotal = 0;
         for (var m = 0; m < arrJiShu.length; m++) {
             sumJiShu = sumJiShu + parseInt(arrJiShu[m]);
@@ -10539,8 +10567,8 @@
     /**
      * 生成一个指定长度的随机数
      * @example
-     * randomStr(2); // 43
-     * randomStr(5); // 77192
+     * randomStr(2); /// 43
+     * randomStr(5); /// 77192
      * @param length
      * @returns
      */
@@ -10571,8 +10599,8 @@
     /**
      * 计算并生成一个普通 uuid
      * @example
-     * getUuid(10, 16); // '8D00C29539'
-     * getUuid(5); // '5xRc5'
+     * getUuid(10, 16); /// '8D00C29539'
+     * getUuid(5); /// '5xRc5'
      * @param len
      * @param radix
      * @returns
@@ -10608,12 +10636,12 @@
     /**
      * 密码强度等级检测(-1~5)
      * @example
-     * checkPassWordLevel('123'); // -1
-     * checkPassWordLevel('123456'); // 1
-     * checkPassWordLevel('12345678'); // 2
-     * checkPassWordLevel('12345678.'); // 3
-     * checkPassWordLevel('123456789654321.'); // 4
-     * checkPassWordLevel('123456789654321.H'); // 5
+     * checkPassWordLevel('123'); /// -1
+     * checkPassWordLevel('123456'); /// 1
+     * checkPassWordLevel('12345678'); /// 2
+     * checkPassWordLevel('12345678.'); /// 3
+     * checkPassWordLevel('123456789654321.'); /// 4
+     * checkPassWordLevel('123456789654321.H'); /// 5
      * @param passWord
      * @returns
      */
@@ -10663,9 +10691,9 @@
     /**
      * 获取汉字拼音或首字母
      * @example
-     * getPinYin('你好'); // 'NiHao'
-     * getPinYin('你好', true); // 'NH'
-     * getPinYin('贺'); // 'He'
+     * getPinYin('你好'); /// 'NiHao'
+     * getPinYin('你好', true); /// 'NH'
+     * getPinYin('贺'); /// 'He'
      * @param str
      * @param extractFirst
      * @returns
@@ -10683,7 +10711,7 @@
                         result += firstChar;
                     }
                     else {
-                        result += firstChar + key.substring(1, key.length).toLowerCase(); // ?
+                        result += firstChar + key.substring(1, key.length).toLowerCase();
                     }
                     flag = true;
                     break;
@@ -10699,7 +10727,7 @@
     /**
      * 时间格式化
      * @example
-     * formatDate(new Date(), 'yyyy-mm-dd hh:ii:ss Q S W', ['星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']); // '2022-04-26 11:33:53 2 123 星期二'
+     * formatDate(new Date(), 'yyyy-mm-dd hh:ii:ss Q S W', ['星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']); /// '2022-04-26 11:33:53 2 123 星期二'
      * @param date 时间
      * @param fmt 格式化模板 'yyyy-mm-dd hh:ii:ss'
      * @param weeks 星期对应数组 [7, 1, 2, 3, 4, 5, 6]
@@ -10709,8 +10737,9 @@
         if (fmt === void 0) { fmt = 'yyyy-mm-dd hh:ii:ss'; }
         if (weeks === void 0) { weeks = [7, 1, 2, 3, 4, 5, 6]; }
         if (getType(date) === 'string') {
+            // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
             // @ts-ignore
-            date.replace(/-/g, '/'); // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
+            date.replace(/-/g, '/');
         }
         date = date ? new Date(date) : new Date();
         var o = {
@@ -10728,7 +10757,8 @@
         }
         for (var k in o) {
             if (new RegExp('(' + k + ')').test(fmt)) {
-                fmt = fmt.replace(RegExp.$1, RegExp.$1.length === 1 ? o[k] : "00".concat(o[k]).substring("".concat(o[k]).length)); // `${o[k]}`.padStart(RegExp.$1.length, 0) 也可以实现
+                // `${o[k]}`.padStart(RegExp.$1.length, 0) 也可以实现
+                fmt = fmt.replace(RegExp.$1, RegExp.$1.length === 1 ? o[k] : "00".concat(o[k]).substring("".concat(o[k]).length));
             }
         }
         return fmt;
@@ -10736,15 +10766,16 @@
     /**
      * 时间计算
      * @example
-     * calcDate(new Date(), '-1 days'); // date object
-     * calcDate(new Date(), '-1 DAYS'); // date object
-     * calcDate(new Date(), ['-1 day', '+1 year', '-2 month', '2 weeks', '1 hour', '-3 minute', '45 seconds']); // date object
+     * calcDate(new Date(), '-1 days'); /// date object
+     * calcDate(new Date(), '-1 DAYS'); /// date object
+     * calcDate(new Date(), ['-1 day', '+1 year', '-2 month', '2 weeks', '1 hour', '-3 minute', '45 seconds']); /// date object
      * @param date 时间
      * @param calcStrOrArr '1 days' or ['-1 day', '3 month']
      * @returns
      */
     function calcDate(date, calcStrOrArr) {
-        // date.replace(/-/g, '/'); // 虽然 win 浏览器两种符号都可以，但是需兼容 ios 。
+        // 虽然 win 浏览器两种符号都可以，但是需兼容 ios
+        // date.replace(/-/g, '/');。
         var oldDate = date ? new Date(date) : new Date();
         if (Array.isArray(calcStrOrArr)) {
             calcStrOrArr.forEach(function (calcStr) {
@@ -10791,8 +10822,8 @@
     /**
      * 两个时间差距计算
      * @example
-     * getDateDifference(new Date('2022-05-01'), new Date(), 'day'); // 37
-     * getDateDifference(new Date('2022-05-01'), new Date(), 'all'); // {days: 37, hours: 8, minutes: 46, seconds: 47}
+     * getDateDifference(new Date('2022-05-01'), new Date(), 'day'); /// 37
+     * getDateDifference(new Date('2022-05-01'), new Date(), 'all'); /// {days: 37, hours: 8, minutes: 46, seconds: 47}
      * @param oldDate 久远一点的时间
      * @param nowDate 近一点的时间，默认当前时间。
      * @param type 计算方式，默认计算差距的精确天数、时分秒。
@@ -10829,7 +10860,7 @@
     /**
      * 人性化时间
      * @example
-     * timeSince(new Date()); // '刚刚'
+     * timeSince(new Date()); /// '刚刚'
      * @param date 时间/string
      * @param longAgo 是否显示周月甚至更久
      * @param formatter 正常显示时的时间显示格式
@@ -10838,7 +10869,8 @@
     function timeSince(date, longAgo, formatter) {
         if (longAgo === void 0) { longAgo = false; }
         if (formatter === void 0) { formatter = 'yyyy-mm-dd hh:ii:ss'; }
-        // date.replace(/-/g, '/'); // 虽然 win 浏览器两种符号都可以，但是需兼容 ios 。
+        // 虽然 win 浏览器两种符号都可以，但是需兼容 ios 。
+        // date.replace(/-/g, '/');
         date = date ? new Date(date) : new Date();
         var dateTS = new Date(date).getTime();
         var seconds = Math.floor((new Date().getTime() - dateTS) / 1000);
@@ -10876,7 +10908,7 @@
     /**
      * 检查所提供的日期是否为工作日
      * @example
-     * isWorkDay(new Date()); // true
+     * isWorkDay(new Date()); /// true
      * @param date 日期
      * @returns
      */
@@ -10887,7 +10919,7 @@
     /**
      * 获取月份天数
      * @example
-     * getMonthDays(new Date()); // 30
+     * getMonthDays(new Date()); /// 30
      * @param date 日期
      * @returns
      */
@@ -10901,7 +10933,7 @@
     /**
      * 获取日期所在的年份中的天数
      * @example
-     * getDayInYear('2023/06/23'); // 174
+     * getDayInYear('2023/06/23'); /// 174
      * @param date 日期
      * @returns
      */
@@ -10913,7 +10945,7 @@
     /**
      * 获取月份天数
      * @example
-     * getMonthDayCount(new Date()); // 30
+     * getMonthDayCount(new Date()); /// 30
      * @param date 日期
      * @returns
      */
@@ -10922,23 +10954,26 @@
         var fullYear = date.getFullYear();
         var month = date.getMonth();
         if ((fullYear % 4 == 0 && fullYear % 100 != 0) || fullYear % 400 == 0) {
-            var monthDayCount = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; // 闰年
-            return monthDayCount[month]; // 当前月的天数
+            // 闰年
+            var monthDayCount = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+            // 当前月的天数
+            return monthDayCount[month];
         }
         else {
-            //
-            var monthDayCount = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; // 平年
-            return monthDayCount[month]; // 当前月的天数
+            // 平年
+            var monthDayCount = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+            // 当前月的天数
+            return monthDayCount[month];
         }
     }
     /**
      * 获取指定日期数目的数组
      * @example
-     * getDateList(7, 'day'); // 得到今天到未来 7 天的日期数组
-     * getDateList(-7, 'day'); // 得到今天到之前 7 天的日期数组
-     * getDateList(7, 'year'); // 得到今年到未来 7 年的日期数组
-     * getDateList(7, 'month'); // 得到本月到未来 7 个月的日期数组
-     * getDateList(7, 'day', '2023-02-01'); // 得到 2023-02-01 日到未来 7 天的日期数组
+     * getDateList(7, 'day'); /// 得到今天到未来 7 天的日期数组
+     * getDateList(-7, 'day'); /// 得到今天到之前 7 天的日期数组
+     * getDateList(7, 'year'); /// 得到今年到未来 7 年的日期数组
+     * getDateList(7, 'month'); /// 得到本月到未来 7 个月的日期数组
+     * getDateList(7, 'day', '2023-02-01'); /// 得到 2023-02-01 日到未来 7 天的日期数组
      * @param n 数目
      * @param type 类型
      * @param date 日期
@@ -10947,7 +10982,8 @@
     function getDateList(n, type, date) {
         if (type === void 0) { type = 'day'; }
         if (date === void 0) { date = new Date(); }
-        var myDate = calcDate(new Date(date), "".concat(n > 0 ? n - 1 : n + 1, " ").concat(type)); // 包含当天
+        // 包含当天
+        var myDate = calcDate(new Date(date), "".concat(n > 0 ? n - 1 : n + 1, " ").concat(type));
         var dateArray = [];
         var dateTemp;
         var flag = n > 0 ? -1 : 1;
@@ -10970,7 +11006,7 @@
     /**
      * 获取日期时间戳
      * @example
-     * getDateTime(new Date()); // time stamp
+     * getDateTime(new Date()); /// time stamp
      * @param date 日期
      * @returns
      */
@@ -10982,7 +11018,7 @@
      * 获取标准时间 UTC
      * 适用于本地时间不准确或者获取其他时区时间的情况
      * @example
-     * getUTCTime(8); // 中国标准时间
+     * getUTCTime(8); /// 中国标准时间
      * @param timezone 时区数字，东八区为 8，西八区为 -8 。
      * @returns
      */
@@ -11005,8 +11041,8 @@
      * 时间大小比较
      * -1(A<B), 1(A>B), 0(A=B)
      * @example
-     * compareDate('2023-1-1'); // 1
-     * compareDate('2023-1-1 12:00:00', '2023-1-2 12:00:00'); // -1
+     * compareDate('2023-1-1'); /// 1
+     * compareDate('2023-1-1 12:00:00', '2023-1-2 12:00:00'); /// -1
      * @param dateA
      * @param dateB
      * @returns
@@ -11026,7 +11062,7 @@
     /**
      * 倒计时
      * @example
-     * console.time('test'); countdown(10, (x) => console.log('--->', x), () => console.timeEnd('test')); // test: 10023.636962890625 ms
+     * console.time('test'); countdown(10, (x) => console.log('--->', x), () => console.timeEnd('test')); /// test: 10023.636962890625 ms
      * @param seconds
      * @param callback
      * @param finishCallBack
@@ -11052,8 +11088,8 @@
     /**
      * 转换音视频时长，把秒数转换为 hh:ii:ss 格式。
      * @example
-     * transferSeconds(1234); // '00:20:34'
-     * transferSeconds(1234, true); // {h: '00', i: 20, s: 34}
+     * transferSeconds(1234); /// '00:20:34'
+     * transferSeconds(1234, true); /// {h: '00', i: 20, s: 34}
      * @param duration
      * @param returnObj
      * @returns
@@ -11107,7 +11143,7 @@
     /**
      * 字符串转实体字符
      * @example
-     * str2html('<>&"'); // '&lt;&gt;&amp;&quot;'
+     * str2html('<>&"'); /// '&lt;&gt;&amp;&quot;'
      * @param str 字符串
      * @returns
      */
@@ -11120,7 +11156,7 @@
     /**
      * 实体字符转字符串
      * @example
-     * html2str('&lt;&gt;&amp;&quot;'); // '<>&"'
+     * html2str('&lt;&gt;&amp;&quot;'); /// '<>&"'
      * @param value 实体字符串
      * @returns
      */
@@ -11150,7 +11186,7 @@
     /**
      * 阻止冒泡事件&阻止默认行为&阻止事件捕获
      * @example
-     * offDefaultEvent(event); // 阻止冒泡事件&阻止默认行为&阻止事件捕获
+     * offDefaultEvent(event); /// 阻止冒泡事件&阻止默认行为&阻止事件捕获
      * @param event 事件
      * @returns
      */
@@ -11165,7 +11201,7 @@
     /**
      * 添加指定元素复制事件
      * @example
-     * copyContent(document.getElementById('copy')); // 复制 #copy 的内容成功
+     * copyContent(document.getElementById('copy')); /// 复制 #copy 的内容成功
      * @param targetDom 目标内容元素
      * @param addMsg 复制后增加内容
      * @returns
@@ -11197,7 +11233,7 @@
      * 滚动到顶部
      * `平滑滚动 css：`scroll-behavior: smooth;`
      * @example
-     * scrollToTop('body'); // 滚动到顶部
+     * scrollToTop('body'); /// 滚动到顶部
      * @param elementSelector 指定元素选择器
      * @param to ('start'|'end')[default: 'start']
      * @returns
@@ -11213,7 +11249,7 @@
      * 滚动到底部
      * `平滑滚动 css：`scroll-behavior: smooth;`
      * @example
-     * scrollToBottom('body'); // 滚动到底部
+     * scrollToBottom('body'); /// 滚动到底部
      * @param elementSelector 指定元素选择器
      * @returns
      */
@@ -11226,9 +11262,9 @@
     /**
      * Y 轴滚动到指定位置
      * @example
-     *  `scrollYTo(0); // 滚动到顶部
-     *  `scrollYTo('start', null, document.documentElement); // 滚动到顶部
-     *  `scrollYTo('end', (percent) => console.log(percent), document.querySelector('body')); // 滚动到底部
+     *  `scrollYTo(0); /// 滚动到顶部
+     *  `scrollYTo('start', null, document.documentElement); /// 滚动到顶部
+     *  `scrollYTo('end', (percent) => console.log(percent), document.querySelector('body')); /// 滚动到底部
      * @param targetVal 'start' | 'end' | number
      * @param callback 回调
      * @param dom 元素对象
@@ -11288,9 +11324,9 @@
     /**
      * X 轴滚动到指定位置
      * @example
-     *  `scrollXTo(0); // 滚动到左侧
-     *  `scrollXTo('start', null, document.documentElement); // 滚动到左侧
-     *  `scrollXTo('end', (percent) => console.log(percent), document.querySelector('body')); // 滚动到右侧
+     *  `scrollXTo(0); /// 滚动到左侧
+     *  `scrollXTo('start', null, document.documentElement); /// 滚动到左侧
+     *  `scrollXTo('end', (percent) => console.log(percent), document.querySelector('body')); /// 滚动到右侧
      * @param targetVal 'start' | 'end' | number
      * @param callback 回调
      * @param dom 元素对象
@@ -11319,7 +11355,7 @@
     /**
      * 获取滚动条百分比
      * @example
-     * getScrollPercent(document.documentElement, 'Y'); // 0.581134549876
+     * getScrollPercent(document.documentElement, 'Y'); /// 0.581134549876
      * @param direction X/Y 轴的进度条
      * @param dom 元素
      * @returns
@@ -11348,7 +11384,7 @@
     /**
      * 找元素的第 n 级父元素
      * @example
-     * findParents(document.getElementById('test'), 3); // #test 的第三个父元素
+     * findParents(document.getElementById('test'), 3); /// #test 的第三个父元素
      * @param element 指定元素
      * @param n 第几个
      * @returns
@@ -11363,7 +11399,7 @@
     /**
      * 找元素的所有子元素，解决浏览器兼容问题。
      * @example
-     * findChildren(document.getElementById('test')); // #test 的所有子元素数组
+     * findChildren(document.getElementById('test')); /// #test 的所有子元素数组
      * @param element 指定元素
      * @returns
      */
@@ -11379,7 +11415,7 @@
     /**
      * 获取窗口尺寸
      * @example
-     * getViewportSize(); // { width: 1280, height: 649 }
+     * getViewportSize(); /// { width: 1280, height: 649 }
      * @returns
      */
     function getViewportSize() {
@@ -11410,7 +11446,7 @@
     /**
      * 获取任一元素的 style 任意属性
      * @example
-     * getStyle(document.getElementById('test'), 'width'); // #test 的 width 属性
+     * getStyle(document.getElementById('test'), 'width'); /// #test 的 width 属性
      * @param element 指定元素
      * @param name 属性名称
      * @returns
@@ -11421,7 +11457,7 @@
     /**
      * 添加 link 标签
      * @example
-     * appendLink('favicon', 'favicon'); // 添加一个 link 标签
+     * appendLink('favicon', 'favicon'); /// 添加一个 link 标签
      * @param linkUrl 链接地址
      * @param rel 类型
      * @returns
@@ -11437,7 +11473,7 @@
     /**
      * 添加 script 标签
      * @example
-     * appendScript('./test.js'); // 添加一个 script 标签
+     * appendScript('./test.js'); /// 添加一个 script 标签
      * @param scriptUrl 脚本地址
      * @param async 是否异步
      * @param defer 是否延迟加载
@@ -11456,7 +11492,7 @@
     /**
      * 下载一个链接文档
      * @example
-     * download('https://xxx.com/xxx', 'xxx'); // 下载后端返回的流
+     * download('https://xxx.com/xxx', 'xxx'); /// 下载后端返回的流
      * @param link 链接
      * @param name 文件名称(可选，默认以链接最好一段作为名称，填写时可不带后缀自动识别，写了后缀会以写的后缀为准。)
      * @returns
@@ -11476,8 +11512,8 @@
     /**
      * 在浏览器中自定义下载一些内容
      * @example
-     * downloadContent('test.txt', 'test txt content'); // 下载返回的流
-     * downloadContent('test.json', JSON.stringify({content: 'test json'})); // 下载返回的流
+     * downloadContent('test.txt', 'test txt content'); /// 下载返回的流
+     * downloadContent('test.json', JSON.stringify({content: 'test json'})); /// 下载返回的流
      * @param name 文件名称(需带后缀)，默认 txt 。
      * @param content 内容 BlobPart | any
      * @returns
@@ -11503,9 +11539,9 @@
      * 若 #demo 高度小于 container，除非 loopType 设置 infinite，否则不会有动画。
      * <div class="demo-container"><div id="#demo">...span.items...</div></div>
      * @example
-     * marquee('#demo'); // 默认横向正常滚动(loopType=normal)
-     * marquee('.demo-y', {direction: 'Y', loopType: 'infinite', speed: 3}); // Y 轴无限无缝滚动，speed > 0 越小速度越快。
-     * marquee('.demo-x', {direction: 'X', loopType: 'origin', speed: 3, style: 'animation-delay:2s;', parentStyle: 'color:red;'}); // X 轴无限来回滚动
+     * marquee('#demo'); /// 默认横向正常滚动(loopType=normal)
+     * marquee('.demo-y', {direction: 'Y', loopType: 'infinite', speed: 3}); /// Y 轴无限无缝滚动，speed > 0 越小速度越快。
+     * marquee('.demo-x', {direction: 'X', loopType: 'origin', speed: 3, style: 'animation-delay:2s;', parentStyle: 'color:red;'}); /// X 轴无限来回滚动
      * @param selector
      * @param options
      * @returns
@@ -11554,8 +11590,8 @@
     /**
      * 自动堆叠
      * @example
-     * stackSticky('.stack', 'top'); // 所有 .stack 元素自动在 top 上堆叠
-     * stackSticky('.stack', 'left'); // 所有 .stack 元素自动在 left 上堆叠
+     * stackSticky('.stack', 'top'); /// 所有 .stack 元素自动在 top 上堆叠
+     * stackSticky('.stack', 'left'); /// 所有 .stack 元素自动在 left 上堆叠
      * @param selectors
      * @param direction
      * @returns
@@ -11594,9 +11630,9 @@
     /**
      * 自动计算 font-size 并设置
      * @example
-     * calcFontSize(); // 按 16/9 计算并设置
-     * calcFontSize(16/10, true); // 按 16/10 计算并设置内容居中
-     * calcFontSize(16/10, true, 'body'); // 按 16/10 计算并设置 body 偏移使得内容居中
+     * calcFontSize(); /// 按 16/9 计算并设置
+     * calcFontSize(16/10, true); /// 按 16/10 计算并设置内容居中
+     * calcFontSize(16/10, true, 'body'); /// 按 16/10 计算并设置 body 偏移使得内容居中
      * @param clientRatio 屏幕比例
      * @param contentCenter 内容是否居中
      * @param offsetSelector 偏移元素选择器，默认设置 html 根节点偏移。
@@ -11630,7 +11666,7 @@
     /**
      * px 转 rem
      * @example
-     * px2rem(30); // 转化后的 rem
+     * px2rem(30); /// 转化后的 rem
      * @param px
      * @returns
      */
@@ -11650,7 +11686,7 @@
     /**
      * 对象转 FormData 格式
      * @example
-     * formatFormData({a: 1, b: 2}); // FormData
+     * formatFormData({a: 1, b: 2}); /// FormData
      * @param obj 源数据
      * @param hasBrackets 是否带括号
      * @param hasIndex 是否带 index
@@ -11678,9 +11714,9 @@
     /**
      * 对象转 URLSearchParams 字符串
      * @example
-     * formatURLSearchParams({a: 1, b: 2, c: [1, 2]}); // a=1&b=2&c=1&c=2
-     * formatURLSearchParams({a: 1, b: 2, c: [1, 2]}, true); // a=1&b=2&c[]=1&c[]=2
-     * formatURLSearchParams({a: 1, b: 2, c: [1, 2]}, true, true); // a=1&b=2&c[0]=1&c[1]=2
+     * formatURLSearchParams({a: 1, b: 2, c: [1, 2]}); /// a=1&b=2&c=1&c=2
+     * formatURLSearchParams({a: 1, b: 2, c: [1, 2]}, true); /// a=1&b=2&c[]=1&c[]=2
+     * formatURLSearchParams({a: 1, b: 2, c: [1, 2]}, true, true); /// a=1&b=2&c[0]=1&c[1]=2
      * @param obj 源数据
      * @param hasBrackets 是否带括号
      * @param hasIndex 是否带 index
@@ -11710,15 +11746,15 @@
      * @Author: HxB
      * @Date: 2022-04-26 16:24:34
      * @LastEditors: DoubleAm
-     * @LastEditTime: 2023-08-22 11:00:55
+     * @LastEditTime: 2023-08-23 09:50:24
      * @Description: 数学常用函数
      * @FilePath: \js-xxx\src\Math\index.ts
      */
     /**
      * 除法函数
      * @example
-     * div(1, 2); // 0.5
-     * div(0.55, 100); // 0.0055
+     * div(1, 2); /// 0.5
+     * div(0.55, 100); /// 0.0055
      * @param div1 被除数
      * @param div2 除数
      * @returns
@@ -11727,7 +11763,8 @@
         var div1FloatLen = 0, div2FloatLen = 0;
         var tempDiv1 = div1.toString(), tempDiv2 = div2.toString();
         try {
-            div1FloatLen = tempDiv1.split('.')[1].length; // 获取小数长度
+            // 获取小数长度
+            div1FloatLen = tempDiv1.split('.')[1].length;
         }
         catch (e) {
             /* empty */
@@ -11738,13 +11775,14 @@
         catch (e) {
             /* empty */
         }
-        return times(Number(tempDiv1.replace('.', '')) / Number(tempDiv2.replace('.', '')), Math.pow(10, div2FloatLen - div1FloatLen)); // 转换整数计算再使用科学计数法转换小数位
+        // 转换整数计算再使用科学计数法转换小数位
+        return times(Number(tempDiv1.replace('.', '')) / Number(tempDiv2.replace('.', '')), Math.pow(10, div2FloatLen - div1FloatLen));
     }
     /**
      * 乘法函数
      * @example
-     * times(1, 2); // 2
-     * times(0.55, 100); // 55
+     * times(1, 2); /// 2
+     * times(0.55, 100); /// 55
      * @param mul1 被乘数
      * @param mul2 乘数
      * @returns
@@ -11769,8 +11807,8 @@
     /**
      * 加法函数
      * @example
-     * add(1, 2); // 3
-     * add(0.1, 0.2); // 0.3
+     * add(1, 2); /// 3
+     * add(0.1, 0.2); /// 0.3
      * @param add1 被加数
      * @param add2 加数
      * @returns
@@ -11795,8 +11833,8 @@
     /**
      * 减法函数
      * @example
-     * sub(1, 2); // -1
-     * sub(0.55, 0.1); // 0.45
+     * sub(1, 2); /// -1
+     * sub(0.55, 0.1); /// 0.45
      * @param sub1 被减数
      * @param sub2 减数
      * @returns
@@ -11821,8 +11859,8 @@
     /**
      * 获取平均数
      * @example
-     * average(1, 2, 3, 4); // 2.5
-     * average(1, 2, 3, 4.123); // 2.53075
+     * average(1, 2, 3, 4); /// 2.5
+     * average(1, 2, 3, 4.123); /// 2.53075
      * @param args
      * @returns
      */
@@ -11840,8 +11878,8 @@
     /**
      * 获取绝对值
      * @example
-     * abs(-1); // 1
-     * abs(1); // 1
+     * abs(-1); /// 1
+     * abs(1); /// 1
      * @param value
      * @returns
      */
@@ -11851,8 +11889,8 @@
     /**
      * 检查一个数字是否偶数
      * @example
-     * isEven(-2); // true
-     * isEven(1); // false
+     * isEven(-2); /// true
+     * isEven(1); /// false
      * @param value
      * @returns
      */
@@ -11862,11 +11900,11 @@
     /**
      * 去尾法获取数值
      * @example
-     * float(1.135, 0, true); // '1'
-     * float(1.135, 2, true); // '1.13'
-     * float(1.135, 1); // 1.1
-     * float(1.135, 4); // 1.135
-     * float(1.135, 4, true); // '1.1350'
+     * float(1.135, 0, true); /// '1'
+     * float(1.135, 2, true); /// '1.13'
+     * float(1.135, 1); /// 1.1
+     * float(1.135, 4); /// 1.135
+     * float(1.135, 4, true); /// '1.1350'
      * @param value
      * @param d
      * @param isStr
@@ -11883,10 +11921,10 @@
     /**
      * 判断一个数是否在指定范围
      * @example
-     * inRange(null, 0, 3); // false
-     * inRange(0, 0, 3); // true
-     * inRange(3, 0, 3); // true
-     * inRange(5, 0, 3); // false
+     * inRange(null, 0, 3); /// false
+     * inRange(0, 0, 3); /// true
+     * inRange(3, 0, 3); /// true
+     * inRange(5, 0, 3); /// false
      * @param value
      * @param min
      * @param max
@@ -11910,11 +11948,11 @@
     /**
      * 获取百分比
      * @example
-     * getPercentage(102, 1020, 2); // 10
-     * getPercentage(102, 1020, 2, { float: true, suffix: true }); // '10.00%'
-     * getPercentage(17, 1020, 2); // 1.67
-     * getPercentage(1020, null, 2); // 0
-     * getPercentage(0, 1020, 2, { float: false, suffix: true }); // '0%'
+     * getPercentage(102, 1020, 2); /// 10
+     * getPercentage(102, 1020, 2, { float: true, suffix: true }); /// '10.00%'
+     * getPercentage(17, 1020, 2); /// 1.67
+     * getPercentage(1020, null, 2); /// 0
+     * getPercentage(0, 1020, 2, { float: false, suffix: true }); /// '0%'
      * @param value
      * @param total
      * @param options
@@ -11947,9 +11985,9 @@
     /**
      * 转换数字为大致数字描述
      * @example
-     * maskNumber(10000123111); // '100.00 亿'
-     * maskNumber(12345); // '1.2 万'
-     * maskNumber(123); // '123'
+     * maskNumber(10000123111); /// '100.00 亿'
+     * maskNumber(12345); /// '1.2 万'
+     * maskNumber(123); /// '123'
      * @param value
      * @returns
      */
@@ -12015,8 +12053,8 @@
     /**
      * 提供进制转换，最大为 64 进制。
      * @example
-     * transferNumber(100); // '1100100'
-     * transferNumber(1100100, 2, 10); // 100
+     * transferNumber(100); /// '1100100'
+     * transferNumber(1100100, 2, 10); /// 100
      * @param number
      * @param from
      * @param to
@@ -12057,7 +12095,7 @@
     /**
      * 初始化 Notification
      * @example
-     * initNotification(); // true||false
+     * initNotification(); /// true||false
      * @returns
      */
     function initNotification() {
@@ -12086,7 +12124,7 @@
     /**
      * 发送 Notification
      * @example
-     * sendNotification('测试通知', '测试标题', {...options}); // 发送成功/失败
+     * sendNotification('测试通知', '测试标题', {...options}); /// 发送成功/失败
      * @returns
      */
     function sendNotification(msg, title, options) {
@@ -12122,7 +12160,7 @@
      * @Author: HxB
      * @Date: 2022-04-26 16:24:47
      * @LastEditors: DoubleAm
-     * @LastEditTime: 2023-08-22 11:02:45
+     * @LastEditTime: 2023-08-23 09:51:50
      * @Description: 常用数字相关函数
      * @FilePath: \js-xxx\src\Number\index.ts
      */
@@ -12130,14 +12168,15 @@
      * 四舍五入
      * `const toFixed = (n, fixed) => ~~(Math.pow(10, fixed) * n) / Math.pow(10, fixed);`
      * @example
-     * round(1.2345, 2); // 1.23
-     * round(0.355, 2); // 0.36
+     * round(1.2345, 2); /// 1.23
+     * round(0.355, 2); /// 0.36
      * @param number 浮点数
      * @param d 保留小数位
      * @returns
      */
     function round(number, d) {
-        var tempNum = number + ''; // example-0.155
+        // example-0.155
+        var tempNum = number + '';
         d = !d ? 0 : d;
         if (d == 0) {
             // 保留 0 位小数直接取整就好了
@@ -12146,15 +12185,18 @@
         if (tempNum.indexOf('.') === -1) {
             tempNum += '.';
         }
-        tempNum += new Array(d + 1).join('0'); // -0.15500
+        // -0.15500
+        tempNum += new Array(d + 1).join('0');
         if (new RegExp('^(-|\\+)?(\\d+(\\.\\d{0,' + (d + 1) + '})?)\\d*$').test(tempNum)) {
             //  【/^(-|\+)?(\d+(\.\d{0,3})?)\d*$/】
             var tempStr = '0' + RegExp.$2, 
             // eslint-disable-next-line prefer-const
-            pm = RegExp.$1, a = RegExp.$3.length, flag = true; // tempStr：数值部分（0.155）加 0 是为了防止产生进位，pm：正负号（-），a：小数点+小数（.155）长度为上一条正则表达式得出的结果（此处为{0,3}），flag：首位 0 是否未产生进位。
+            pm = RegExp.$1, a = RegExp.$3.length, flag = true;
+            // tempStr：数值部分（0.155）加 0 是为了防止产生进位，pm：正负号（-），a：小数点+小数（.155）长度为上一条正则表达式得出的结果（此处为{0,3}），flag：首位 0 是否未产生进位。
             if (a == d + 1 + 1) {
                 // 一个 1 为小数点，一个 1 为需要多一位数字才能判断，此处判断是否有足够的数字来得出结果。
-                a = tempStr.match(/\d/g); // ["0", "0", "1", "5", "5"]
+                a = tempStr.match(/\d/g);
+                // ["0", "0", "1", "5", "5"]
                 var aLen = a.length;
                 if (parseInt(a[aLen - 1]) > 4) {
                     // 保留小数的后一位是否大于 4
@@ -12162,26 +12204,29 @@
                         a[i] = parseInt(a[i]) + 1;
                         if (a[i] == 10) {
                             a[i] = 0;
-                            flag = i != 1; // 判断首位 0 是否未产生进位，false 为产生了进位，后续不裁剪首位 0（因为 i==1 时，首位 0 发生了变化，0 变为 1）。
+                            flag = i != 1;
+                            // 判断首位 0 是否未产生进位，false 为产生了进位，后续不裁剪首位 0（因为 i==1 时，首位 0 发生了变化，0 变为 1）。
                         }
                         else
                             break;
                     }
                 }
-                tempStr = a.join('').replace(new RegExp('(\\d+)(\\d{' + d + '})\\d$'), '$1.$2'); // 【/(\d+)(\d{2})\d$/】$1 至少包含一个数字，$2 必须为保留的小数位，结尾必须有一个数字，所以如果 00155，d=2,结果为 00.15，若 d=1，则结果为 001.5 。
+                tempStr = a.join('').replace(new RegExp('(\\d+)(\\d{' + d + '})\\d$'), '$1.$2');
+                // 【/(\d+)(\d{2})\d$/】$1 至少包含一个数字，$2 必须为保留的小数位，结尾必须有一个数字，所以如果 00155，d=2,结果为 00.15，若 d=1，则结果为 001.5 。
             }
             if (flag) {
                 // 如果首位 0 未产生进位，去掉多余的 0 。
                 tempStr = tempStr.substring(1);
             }
-            return parseFloat((pm + tempStr).replace(/\.$/, '')); // 返回浮点数，以防万一去掉结尾的小数点（.）。
+            // 返回浮点数，以防万一去掉结尾的小数点（.）。
+            return parseFloat((pm + tempStr).replace(/\.$/, ''));
         }
     }
     /**
      * 是否整数(严格匹配)
      * @example
-     * isInteger('0'); // true
-     * isInteger('-0', '+'); // false
+     * isInteger('0'); /// true
+     * isInteger('-0', '+'); /// false
      * @returns
      */
     function isInteger(value, type) {
@@ -12196,10 +12241,10 @@
     /**
      * 是否小数(严格匹配)
      * @example
-     * isDecimal('0.0'); // true
-     * isDecimal('0.0', '+', true); // false
-     * isDecimal('-0.1', '+'); // false
-     * isDecimal('-0.10', '-'); // true
+     * isDecimal('0.0'); /// true
+     * isDecimal('0.0', '+', true); /// false
+     * isDecimal('-0.1', '+'); /// false
+     * isDecimal('-0.10', '-'); /// true
      * @returns
      */
     function isDecimal(value, type, noLastZero) {
@@ -12220,7 +12265,7 @@
     /**
      * 数字人性化显示
      * @example
-     * formatNumber('12312300'); // '12,312,300'
+     * formatNumber('12312300'); /// '12,312,300'
      * @param value
      * @returns
      */
@@ -12244,7 +12289,7 @@
     /**
      * 获取多级对象值
      * @example
-     * getV('默认值', {name: {children: [123, 456]}}, 'name', 'children', '0'); // 123
+     * getV('默认值', {name: {children: [123, 456]}}, 'name', 'children', '0'); /// 123
      * @param defaultResult 默认值
      * @param args 需要获取的多级 rest 参数
      * @returns
@@ -12262,8 +12307,8 @@
     /**
      * 获取多级对象值通过字符串 keys
      * @example
-     * getVar({name: {children: [123, 456]}}, 'name.children.1', '默认值'); // 456
-     * getVar([1, 2, 3, 4], '100', '默认值'); // '默认值'
+     * getVar({name: {children: [123, 456]}}, 'name.children.1', '默认值'); /// 456
+     * getVar([1, 2, 3, 4], '100', '默认值'); /// '默认值'
      * @param data 源数据
      * @param keys 多级对象字符串
      * @param defaultResult 默认值
@@ -12284,8 +12329,8 @@
     /**
      * 合并对象
      * @example
-     * mergeObj({name: 1, oldValue: 2}, {name: 3, value: 4}, []); // {name: 1, oldValue: 2, value: 4}
-     * mergeObj({name: 1, oldValue: 2}, {name: 3, value: 4}, ['name'], true); // {name: 3, value: 4}
+     * mergeObj({name: 1, oldValue: 2}, {name: 3, value: 4}, []); /// {name: 1, oldValue: 2, value: 4}
+     * mergeObj({name: 1, oldValue: 2}, {name: 3, value: 4}, ['name'], true); /// {name: 3, value: 4}
      * @param oldObj 源对象
      * @param newObj 要合并的对象
      * @param keys 要覆盖的属性 key，不指定时以源对象为准，指定时以新对象为准。
@@ -12317,7 +12362,7 @@
      * 深拷贝
      * @link https://juejin.cn/post/7075351322014253064
      * @example
-     * deepClone({a: 1, b: {c: 2}}); // 新的 {a: 1, b: {c: 2}}
+     * deepClone({a: 1, b: {c: 2}}); /// 新的 {a: 1, b: {c: 2}}
      * @param data 源数据
      * @param hash hash 存储，避免循环引用。
      * @returns
@@ -12366,11 +12411,11 @@
     /**
      * 对象包含某个 key 或者属性
      * @example
-     * hasKey({ a: 1 }, 'a'); // true
-     * hasKey({ a: 1 }, 'b'); // false
+     * hasKey({ a: 1 }, 'a'); /// true
+     * hasKey({ a: 1 }, 'b'); /// false
      * const a = { a: 1 };
      * a.__proto__.x = 1;
-     * hasKey(a, 'x'); // true;
+     * hasKey(a, 'x'); /// true;
      * @param obj
      * @param key
      * @returns
@@ -12393,9 +12438,9 @@
     /**
      * 对象转 queryString 暂时只支持两层数据，第二层对象与与数组值不能为引用类型。
      * @example
-     * qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3] }); // 'start=0&count=20&obj[a]=1&arr[]=1&arr[]=2&arr[]=3'
-     * qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3] }, { arr2str: true }); // 'start=0&count=20&obj[a]=1&arr=1,2,3'
-     * qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3], str: '1' }, { hasIndex: true }); // 'start=0&count=20&obj[a]=1&arr[0]=1&arr[1]=2&arr[2]=3&str=1'
+     * qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3] }); /// 'start=0&count=20&obj[a]=1&arr[]=1&arr[]=2&arr[]=3'
+     * qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3] }, { arr2str: true }); /// 'start=0&count=20&obj[a]=1&arr=1,2,3'
+     * qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3], str: '1' }, { hasIndex: true }); /// 'start=0&count=20&obj[a]=1&arr[0]=1&arr[1]=2&arr[2]=3&str=1'
      * @param obj 源数据
      * @returns
      */
@@ -12436,8 +12481,8 @@
     /**
      * 获取 query string 参数对象
      * @example
-     * qsParse('start=0&count=20&x=1&x=2&x=3', 'x'); // [1, 2, 3]
-     * qsParse('start=0&count=20&x=1&x=2&x=3'); // { start: '0', count: '20', x: [1, 2, 3], '/': 'start=0&count=20&x=1&x=2&x=3' }
+     * qsParse('start=0&count=20&x=1&x=2&x=3', 'x'); /// [1, 2, 3]
+     * qsParse('start=0&count=20&x=1&x=2&x=3'); /// { start: '0', count: '20', x: [1, 2, 3], '/': 'start=0&count=20&x=1&x=2&x=3' }
      * @param url query string
      * @param key 参数名
      * @returns
@@ -12470,9 +12515,9 @@
     /**
      * 获取不带任何参数或片段标识符的当前 URL
      * @example
-     * getBaseURL('https://test.com/index?name=leo&org=biugle#test'); // 'https://test.com/index'
-     * getBaseURL(''); // ''
-     * getBaseURL(); // 当前页面 BaseURL
+     * getBaseURL('https://test.com/index?name=leo&org=biugle#test'); /// 'https://test.com/index'
+     * getBaseURL(''); /// ''
+     * getBaseURL(); /// 当前页面 BaseURL
      * @param url
      * @returns
      */
@@ -12483,9 +12528,9 @@
     /**
      * 获取 url 查询参数字符串
      * @example
-     * getQueryString('https://test.com/index?name=leo&org=biugle#test'); // 'name=leo&org=biugle'
-     * getQueryString(''); // ''
-     * getQueryString(); // 当前页面 QueryString 字符串部分
+     * getQueryString('https://test.com/index?name=leo&org=biugle#test'); /// 'name=leo&org=biugle'
+     * getQueryString(''); /// ''
+     * getQueryString(); /// 当前页面 QueryString 字符串部分
      * @param url
      * @returns
      */
@@ -12496,9 +12541,9 @@
     /**
      * 获取查询参数对象
      * @example
-     * getSearchParams('https://test.com/index?name=leo&org=biugle#test'); // {name: 'leo', org: 'biugle'}
-     * getSearchParams(''); // {}
-     * getSearchParams(); // 当前页面 SearchParams 对象
+     * getSearchParams('https://test.com/index?name=leo&org=biugle#test'); /// {name: 'leo', org: 'biugle'}
+     * getSearchParams(''); /// {}
+     * getSearchParams(); /// 当前页面 SearchParams 对象
      * @param url
      * @returns
      */
@@ -12524,8 +12569,8 @@
     /**
      * ajax 简单封装
      * @example
-     * xAjax('get', 'https://test.cn', { params: { test: 123, hello: 456 }, success: (data) => console.log('success', data), fail: (error) => console.log('fail', error) }); // ajax
-     * xAjax('POST', 'https://test.cn', { contentType: 'application/json', data: { test: 123 }, success: (data) => console.log('success', data), fail: (error) => console.log('fail', error) }); // ajax
+     * xAjax('get', 'https://test.cn', { params: { test: 123, hello: 456 }, success: (data) => console.log('success', data), fail: (error) => console.log('fail', error) }); /// ajax
+     * xAjax('POST', 'https://test.cn', { contentType: 'application/json', data: { test: 123 }, success: (data) => console.log('success', data), fail: (error) => console.log('fail', error) }); /// ajax
      * @param method
      * @param url
      * @param options
@@ -12577,8 +12622,8 @@
     /**
      * fetch 简单封装
      * @example
-     * xFetch('get', 'https://test.cn', { params: { test: 123, hello: 456 } }).then(res => res.json()).then(data => console.log(data)); // fetchXPromise
-     * xFetch('POST', 'https://test.cn', { contentType: 'application/json', data: { test: 123 } }).catch(error => console.log(error)); // fetchXPromise
+     * xFetch('get', 'https://test.cn', { params: { test: 123, hello: 456 } }).then(res => res.json()).then(data => console.log(data)); /// fetchXPromise
+     * xFetch('POST', 'https://test.cn', { contentType: 'application/json', data: { test: 123 } }).catch(error => console.log(error)); /// fetchXPromise
      * @param method
      * @param url
      * @param options
@@ -12604,10 +12649,10 @@
     /**
      * 获取常见的 content-type
      * @example
-     * getContentType('form'); // 'application/x-www-form-urlencoded'
-     * getContentType('file'); // 'multipart/form-data'
-     * getContentType('pdf'); // 'application/pdf'
-     * getContentType('unknown'); // 'application/octet-stream'
+     * getContentType('form'); /// 'application/x-www-form-urlencoded'
+     * getContentType('file'); /// 'multipart/form-data'
+     * getContentType('pdf'); /// 'application/pdf'
+     * getContentType('unknown'); /// 'application/octet-stream'
      * @param fileType
      * @returns
      */
@@ -12617,13 +12662,6 @@
     }
 
     /* eslint-disable max-lines, indent */
-    /**
-     * 验证 Cron 字段是否有效的辅助函数
-     * @param field
-     * @param min
-     * @param max
-     * @returns
-     */
     function _isValidCronField(field, min, max) {
         var regex = new RegExp('^\\d+|\\*/\\d+|[\\d,-]+/[\\d,-]+$');
         if (!regex.test(field)) {
@@ -12642,7 +12680,7 @@
     /**
      * 文件大小格式化
      * @example
-     * formatBytes(1024); // '1.00 KB'
+     * formatBytes(1024); /// '1.00 KB'
      * @param bytes 文件大小 bytes
      * @param precision 精度
      * @returns
@@ -12703,7 +12741,7 @@
     /**
      * 获取浏览器信息
      * @example
-     * getUserAgent(); // { browserName: 'Chrome', browserVersion: '102.0.0.0', osName: 'Windows', osVersion: '10.0', deviceName: '' }
+     * getUserAgent(); /// { browserName: 'Chrome', browserVersion: '102.0.0.0', osName: 'Windows', osVersion: '10.0', deviceName: '' }
      * @returns
      */
     function getUserAgent() {
@@ -12725,11 +12763,16 @@
         };
         var userAgentStr = navigator.userAgent;
         var userAgentObj = {
+            // 浏览器名称
             browserName: '',
+            // 浏览器版本
             browserVersion: '',
+            // 操作系统名称
             osName: '',
+            // 操作系统版本
             osVersion: '',
-            deviceName: '', // 设备名称
+            // 设备名称
+            deviceName: '',
         };
         for (var key in browserReg) {
             if (browserReg[key].test(userAgentStr)) {
@@ -12783,7 +12826,7 @@
     /**
      * 判断当前运行环境是否为 Node.js
      * @example
-     * isNode(); // true
+     * isNode(); /// true
      * @returns
      */
     function isNode() {
@@ -12792,7 +12835,7 @@
     /**
      * 判断当前运行环境是否为浏览器
      * @example
-     * isBrowser(); // true
+     * isBrowser(); /// true
      * @returns
      */
     function isBrowser() {
@@ -12801,7 +12844,7 @@
     /**
      * 检测黑暗模式
      * @example
-     * isDarkMode(); // true
+     * isDarkMode(); /// true
      * @returns
      */
     function isDarkMode() {
@@ -12812,7 +12855,7 @@
     /**
      * 是否苹果设备
      * @example
-     * isAppleDevice(); // true
+     * isAppleDevice(); /// true
      * @returns
      */
     function isAppleDevice() {
@@ -12823,7 +12866,7 @@
      * 单击事件转换为多击事件
      * Author: WuXingHeng
      * @example
-     * dom.onclick = onClick2MoreClick(300, clickOneCallBack, clickTwoCallBack, clickThreeCallBack, clickFourCallBack); // void
+     * dom.onclick = onClick2MoreClick(300, clickOneCallBack, clickTwoCallBack, clickThreeCallBack, clickFourCallBack); /// void
      * @param {number} delay
      * @param {Array} events
      * @returns
@@ -12861,7 +12904,7 @@
     /**
      * 单独绑定多击事件
      * @example
-     * dom.onclick = bindMoreClick(moreClickCallBack, 4, 500); // 绑定 4 击事件
+     * dom.onclick = bindMoreClick(moreClickCallBack, 4, 500); /// 绑定 4 击事件
      * @param fn
      * @param times
      * @param delay
@@ -12870,7 +12913,8 @@
     function bindMoreClick(fn, times, delay) {
         if (times === void 0) { times = 3; }
         if (delay === void 0) { delay = 300; }
-        times = times - 1; // count 从 0 开始
+        // count 从 0 开始
+        times = times - 1;
         var timer = null;
         var lastTime = 0;
         var count = 0;
@@ -12895,7 +12939,7 @@
     /**
      * 设置长按事件-支持加入单击事件
      * @example
-     * addLongPressEvent(document.querySelector('.img-btn'), (event); // console.log('addLongPressEvent'), 3000); // 长按会触发事件
+     * addLongPressEvent(document.querySelector('.img-btn'), (event); /// console.log('addLongPressEvent'), 3000); /// 长按会触发事件
      * @param element
      * @param longPressCallback
      * @param duration
@@ -12965,7 +13009,7 @@
     /**
      * 触发某个键盘按键事件
      * @example
-     * emitKeyboardEvent('keydown', 108); // 小键盘回车事件
+     * emitKeyboardEvent('keydown', 108); /// 小键盘回车事件
      * @param eventType 事件类型
      * @param keyCode 触发键盘 code
      * @returns
@@ -12983,8 +13027,8 @@
     /**
      * 禁用冲突事件，条码枪、关闭窗口快捷键等。
      * @example
-     * document.addEventListener('keydown', disableConflictEvent); // 进入页面后禁用冲突事件
-     * document.removeEventListener('keydown', disableConflictEvent); // 退出页面后关闭监听
+     * document.addEventListener('keydown', disableConflictEvent); /// 进入页面后禁用冲突事件
+     * document.removeEventListener('keydown', disableConflictEvent); /// 退出页面后关闭监听
      * @param event 触发事件
      * @returns
      */
@@ -13005,14 +13049,15 @@
             // ctrl+f4 关闭窗口快捷键
             event.preventDefault();
         }
-        return false; // true 防止此事件被进一步传播;false 允许此事件继续传播;
+        // true 防止此事件被进一步传播; false 允许此事件继续传播;
+        return false;
     }
     /**
      * 版本号比对算法
      * @example
-     * checkVersion('1.0.1-rc', '1.0.0', '-rc'); // 1
-     * checkVersion('1.0.0', '1.0.1'); // -1
-     * checkVersion('1.0.0', '1.0.0'); // 0
+     * checkVersion('1.0.1-rc', '1.0.0', '-rc'); /// 1
+     * checkVersion('1.0.0', '1.0.1'); /// -1
+     * checkVersion('1.0.0', '1.0.0'); /// 0
      * @param targetVersion
      * @param currentVersion
      * @param testStr default(-rc)
@@ -13039,10 +13084,10 @@
     /**
      * 版本号升级算法
      * @example
-     * versionUpgrade('0.0.1'); // '0.0.2'
-     * versionUpgrade('0.0.0.9'); // '0.0.0.10'
-     * versionUpgrade('0.0.0.9', 9); // '0.0.1.0'
-     * versionUpgrade('0.0.9.9', 9); // '0.1.0.0'
+     * versionUpgrade('0.0.1'); /// '0.0.2'
+     * versionUpgrade('0.0.0.9'); /// '0.0.0.10'
+     * versionUpgrade('0.0.0.9', 9); /// '0.0.1.0'
+     * versionUpgrade('0.0.9.9', 9); /// '0.1.0.0'
      * @param version 版本号
      * @param maxVersionCode 最大版本号
      * @returns
@@ -13075,8 +13120,8 @@
     /**
      * 处理 rh 血型
      * @example
-     * formatRh('**d**'); // '阴性'
-     * formatRh('**d**', { format: [true, false], default: false }); // true
+     * formatRh('**d**'); /// '阴性'
+     * formatRh('**d**', { format: [true, false], default: false }); /// true
      * @param input 输入值
      * @param options 处理配置
      * @returns
@@ -13106,7 +13151,7 @@
     /**
      * 是否阴性血
      * @example
-     * isRhNegative('**d**'); // true
+     * isRhNegative('**d**'); /// true
      * @param input 输入值
      * @returns
      */
@@ -13116,7 +13161,7 @@
     /**
      * 获取血型枚举信息
      * @example
-     * getBloodGroup('A'); // { value: 'A', label: 'A 型', color: '#1890FF', lower: 'a', upper: 'A' }
+     * getBloodGroup('A'); /// { value: 'A', label: 'A 型', color: '#1890FF', lower: 'a', upper: 'A' }
      * @param bloodGroup
      * @returns
      */
@@ -13165,11 +13210,11 @@
     /**
      * 填对应值到对应的 dom 中
      * @example
-     * dataTo('.className', 'xxx'); // xxx 会填入到类名为 class-name 的元素中
-     * dataTo('.class-name', 'xxx'); // xxx 会填入到类名为 class-name 的元素中
-     * dataTo('.class_name', 'xxx'); // xxx 会填入到类名为 class-name 的元素中
-     * dataTo('.class.name', 'xxx'); // xxx 会填入到类名为 class-name 的元素中
-     * dataTo('#id.name', 'xxx'); // xxx 会填入到 id 名为 id-name 的元素中
+     * dataTo('.className', 'xxx'); /// xxx 会填入到类名为 class-name 的元素中
+     * dataTo('.class-name', 'xxx'); /// xxx 会填入到类名为 class-name 的元素中
+     * dataTo('.class_name', 'xxx'); /// xxx 会填入到类名为 class-name 的元素中
+     * dataTo('.class.name', 'xxx'); /// xxx 会填入到类名为 class-name 的元素中
+     * dataTo('#id.name', 'xxx'); /// xxx 会填入到 id 名为 id-name 的元素中
      * @param key
      * @param value
      * @returns
@@ -13193,9 +13238,9 @@
      * 给对应 dom 生成水印
      * @example
      * watermark(document.body, 'My Watermark', { fontSize: 20, opacity: 0.5, angle: -30, color: 'red', fontFamily: 'Arial', repeat: true, backgroundOpacity: 0.05 });
-     * watermark(document.body, 'My Watermark'); // 在 body 中生成水印
-     * watermark(document.body, 'My Watermark', { fontSize: 120, color: 'red', repeat: false, angle: 0 }); // 在 body 中生成水印
-     * watermark(document.body, 'My Watermark', { fontSize: 20, color: 'red', repeat: true, angle: 90 }); // 在 body 中生成水印
+     * watermark(document.body, 'My Watermark'); /// 在 body 中生成水印
+     * watermark(document.body, 'My Watermark', { fontSize: 120, color: 'red', repeat: false, angle: 0 }); /// 在 body 中生成水印
+     * watermark(document.body, 'My Watermark', { fontSize: 20, color: 'red', repeat: true, angle: 90 }); /// 在 body 中生成水印
      * @param dom
      * @param text
      * @param options
@@ -13247,28 +13292,33 @@
     /**
      * 获取 cron 表达式
      * @example
-     * getCron(); // '* * * * *'
-     * getCron({ minute: '30', hour: '1', day: '10'}); // '30 1 10 * *'
-     * getCron({  week: '?' }); // '* * * * ?'
-     * getCron({ week: '*' }); // '* * * * *'
-     * getCron({ week: 0 }); // '* * * * 0'
-     * getCron({ week: '0' }); // '* * * * 0'
-     * getCron({ week: '7' }); // '* * * * 0'
-     * getCron({ week: 'SUN,天,日,六,6,5' }); // '* * * * 0,5,6'
-     * getCron({ day: '1-5' }); // '* * 1-5 * * '
-     * getCron({ day: '1,5' }); // '* * 1,5 * * '
-     * getCron({ day: '1/5' }); // '* * 1/5 * * '
+     * getCron(); /// '* * * * *'
+     * getCron({ minute: '30', hour: '1', day: '10'}); /// '30 1 10 * *'
+     * getCron({  week: '?' }); /// '* * * * ?'
+     * getCron({ week: '*' }); /// '* * * * *'
+     * getCron({ week: 0 }); /// '* * * * 0'
+     * getCron({ week: '0' }); /// '* * * * 0'
+     * getCron({ week: '7' }); /// '* * * * 0'
+     * getCron({ week: 'SUN,天,日,六,6,5' }); /// '* * * * 0,5,6'
+     * getCron({ day: '1-5' }); /// '* * 1-5 * * '
+     * getCron({ day: '1,5' }); /// '* * 1,5 * * '
+     * getCron({ day: '1/5' }); /// '* * 1/5 * * '
      * @param options
      * @returns
      */
     function getCron(_a) {
         var _b = _a === void 0 ? {} : _a, _c = _b.minute, minute = _c === void 0 ? '*' : _c, _d = _b.hour, hour = _d === void 0 ? '*' : _d, _e = _b.day, day = _e === void 0 ? '*' : _e, _f = _b.month, month = _f === void 0 ? '*' : _f, _g = _b.week, week = _g === void 0 ? '*' : _g;
         var limits = [
+            // 分钟 (0-59)
             [0, 59],
+            // 小时 (0-23)
             [0, 23],
+            // 日期 (1-31)
             [1, 31],
+            // 月份 (1-12)
             [1, 12],
-            [0, 7], // 星期 (0-7 或 SUN-SAT)
+            // 星期 (0-7 或 SUN-SAT)
+            [0, 7],
         ];
         var weekField = week;
         // 将星期转换为 0-7 格式
@@ -13354,8 +13404,8 @@
     /**
      * 在页面上打印数据，我们打包通常会设置清除 console，使用此函数打印关键信息就不会被清除啦。
      * @example
-     * log([1, 2, 2, 3, 3], {a: 1, b: 2}, 'test', true); // 打印数据
-     * log('danger'); // 打印数据
+     * log([1, 2, 2, 3, 3], {a: 1, b: 2}, 'test', true); /// 打印数据
+     * log('danger'); /// 打印数据
      * @param args
      * @returns
      */
@@ -13370,6 +13420,7 @@
             //     new Date(),
             //   )}]----->', 'color:#1890FF;font-size:10px;margin-right:5px', ...JSON.parse('${JSON.stringify(args)}'));`,
             // );
+            // 确保对象中的 JSON 字符串不会干扰 JavaScript 解析器。
             var formattedArgs = args.map(function (arg) {
                 // eslint-disable-next-line no-prototype-builtins
                 if (typeof arg === 'object' && arg !== null && arg.hasOwnProperty('toJSON')) {
@@ -13378,8 +13429,10 @@
                 else {
                     return arg;
                 }
-            }); // 确保对象中的 JSON 字符串不会干扰 JavaScript 解析器。
-            var code = "console.log('%c\u65E5\u5FD7[".concat(formatDate(new Date()), "]----->\\n', 'color:#1890FF;font-size:10px;margin-right:5px', ...").concat(JSON.stringify(formattedArgs).replace(/</g, '\\u003c'), ");");
+            });
+            var code = "console.log('%c\u65E5\u5FD7[".concat(formatDate(new Date()), "]----->\\n', 'color:#1890FF;font-size:10px;margin-right:5px', ...").concat(JSON.stringify(formattedArgs).replace(/</g, 
+            // 防止 xss
+            '\\u003c'), ");");
             var fn = new Function(code);
             fn();
         }
@@ -13392,9 +13445,9 @@
      * 且有更好的可读性与日志标识
      * 每次打印会返回日志字符串，可以统一收集写入到文件保存，或者上传到服务器。
      * @example
-     * logVar([1, 2, 2, 3, 3]); // 打印数据
-     * logVar({a: 1, b: 2}, 'danger'); // 打印数据
-     * logVar({a: 1, b: 2}, 'success'); // 打印数据
+     * logVar([1, 2, 2, 3, 3]); /// 打印数据
+     * logVar({a: 1, b: 2}, 'danger'); /// 打印数据
+     * logVar({a: 1, b: 2}, 'success'); /// 打印数据
      * @param value
      * @param logLevel
      * @returns
@@ -13411,11 +13464,11 @@
      * 强制转换扫描字符串的特殊字符
      * `/(=)|(<)|(>)|(&)|(%)|(#)|(@)|(~)/g`
      * @example
-     * transferScanStr('=900182201234500'); // '900182201234500'
-     * transferScanStr('=<E5433000'); // 'E5433000'
-     * transferScanStr('@123'); // '123'
-     * transferScanStr('#test~'); // 'test'
-     * transferScanStr(undefined); // ''
+     * transferScanStr('=900182201234500'); /// '900182201234500'
+     * transferScanStr('=<E5433000'); /// 'E5433000'
+     * transferScanStr('@123'); /// '123'
+     * transferScanStr('#test~'); /// 'test'
+     * transferScanStr(undefined); /// ''
      * @param value
      * @returns
      */
@@ -13428,9 +13481,9 @@
     /**
      * 强制转化为字符串，避免导出表格显示科学计数法。
      * @example
-     * forceToStr(123123123); // '123123123'
-     * forceToStr(undefined); // '-'
-     * forceToStr(undefined, 0); // '0'
+     * forceToStr(123123123); /// '123123123'
+     * forceToStr(undefined); /// '-'
+     * forceToStr(undefined, 0); /// '0'
      * @param value
      * @param defaultValue
      * @returns
@@ -13438,13 +13491,14 @@
     function forceToStr(value, defaultValue) {
         var _a;
         if (defaultValue === void 0) { defaultValue = '-'; }
-        return "\u200B".concat((_a = value !== null && value !== void 0 ? value : defaultValue) !== null && _a !== void 0 ? _a : '-'); // \t \u200c u200d 也可以
+        // \t \u200c u200d 也可以
+        return "\u200B".concat((_a = value !== null && value !== void 0 ? value : defaultValue) !== null && _a !== void 0 ? _a : '-');
     }
     /**
      * 转换 data 为可导出的 csv 数据
      * @example
-     * transferCSVData([{ prop: 'name' }, { prop: 'age' }], [{ name: '张三', age: 15 }]); // 可以导出的字符数据
-     * transferCSVData([{ label: '姓名', prop: 'name' }, { label: '年龄', prop: 'age' }], [{ name: '张三', age: 15 }]); // 可以导出的字符数据
+     * transferCSVData([{ prop: 'name' }, { prop: 'age' }], [{ name: '张三', age: 15 }]); /// 可以导出的字符数据
+     * transferCSVData([{ label: '姓名', prop: 'name' }, { label: '年龄', prop: 'age' }], [{ name: '张三', age: 15 }]); /// 可以导出的字符数据
      * @param fields
      * @param data
      * @returns
@@ -13466,9 +13520,9 @@
     /**
      * 导出数据为文件
      * @example
-     * exportFile(data); // 导出 txt 文件
-     * exportFile(data, 'csv-导出文件测试', 'csv'); // 导出 csv 文件
-     * exportFile('http://a.biugle.cn/img/cdn/dev/avatar/1.png', 'test', 'png'); // 导出 png 文件
+     * exportFile(data); /// 导出 txt 文件
+     * exportFile(data, 'csv-导出文件测试', 'csv'); /// 导出 csv 文件
+     * exportFile('http://a.biugle.cn/img/cdn/dev/avatar/1.png', 'test', 'png'); /// 导出 png 文件
      * @param data
      * @param fileName
      * @param fileType
@@ -13481,8 +13535,9 @@
             download(data, "".concat(fileName !== null && fileName !== void 0 ? fileName : formatDate(new Date(), 'yyyy-mm-dd-hhiiss'), ".").concat(fileType));
             return;
         }
+        // 加入特殊字符确保 utf-8
         // eslint-disable-next-line spellcheck/spell-checker
-        var uri = "data:".concat(getContentType(fileType), ";charset=utf-8,\uFEFF").concat(data); // 加入特殊字符确保 utf-8
+        var uri = "data:".concat(getContentType(fileType), ";charset=utf-8,\uFEFF").concat(data);
         // U+FEFF 是一个零宽度非断字符（Zero Width No-Break Space），也称为“字节顺序标记（Byte Order Mark，BOM）”。
         // eslint-disable-next-line spellcheck/spell-checker
         download(uri, "".concat(fileName !== null && fileName !== void 0 ? fileName : formatDate(new Date(), 'yyyy-mm-dd-hhiiss'), ".").concat(fileType));
@@ -13499,7 +13554,7 @@
     /**
      * 睡眠
      * @example
-     * await sleep(1000); // 等待 1000 毫秒再执行后面的
+     * await sleep(1000); /// 等待 1000 毫秒再执行后面的
      * @param milliseconds 睡眠时间
      * @returns
      */
@@ -13510,7 +13565,7 @@
      * 参考了 to.js，扩展 Promise 用来直接帮助执行且处理异常。
      * promise 报错不会阻断后面的 Promise，适用于多个 await Promise 情况。
      * @example
-     * to(Promise.resolve(1)); // Promise.resolve(1)
+     * to(Promise.resolve(1)); /// Promise.resolve(1)
      * @param promise promise
      * @param res 成功回调
      * @param rej 失败回调
@@ -13530,7 +13585,7 @@
     /**
      * Promise 重试
      * @example
-     * retry(() => Promise.reject(new Error('error')), 3); // Promise.reject(new Error('error')) 执行 3 次
+     * retry(() => Promise.reject(new Error('error')), 3); /// Promise.reject(new Error('error')) 执行 3 次
      * @param promise promise
      * @param count 次数
      * @param delay 延迟时间
@@ -13571,7 +13626,7 @@
     /**
      * 同步执行 promise，已做错误处理。
      * @example
-     * await all(...promise array); // [...result array]
+     * await all(...promise array); /// [...result array]
      * @param promises promises
      * @param errorHandler errorHandler
      * @returns
@@ -13582,7 +13637,7 @@
     /**
      * 同步执行多个 promise，返回最先成功的结果，已做错误处理。
      * @example
-     * await any(...promise array); // success result
+     * await any(...promise array); /// success result
      * @param promises promises
      * @param errorHandler errorHandler
      * @returns
@@ -13593,7 +13648,7 @@
     /**
      * New 一个自带错误处理的 Promise，适用于只处理成功情况，不关注失败的 Promise，省去写 catch 的时间与空间。
      * @example
-     * new catchPromise(resolve, reject, rejectHandler); // Promise
+     * new catchPromise(resolve, reject, rejectHandler); /// Promise
      * @param promiseHandler promiseHandler
      * @param errorHandler errorHandler
      * @returns
@@ -13677,7 +13732,7 @@
     /**
      * 获取 localStorage
      * @example
-     * localStorageGet("key"); // 处理过后的 value，不需要再 decode 。
+     * localStorageGet("key"); /// 处理过后的 value，不需要再 decode 。
      * @param key 存储 key
      * @returns
      */
@@ -13687,7 +13742,7 @@
     /**
      * 设置 localStorage
      * @example
-     * localStorageSet("key", "value"); // 存储时不需要处理数据，value === null|undefined 清除数据。(boolean)
+     * localStorageSet("key", "value"); /// 存储时不需要处理数据，value === null|undefined 清除数据。(boolean)
      * @param key 存储 key
      * @param value 存储 value，value === null|undefined 清除数据。
      * @returns
@@ -13698,7 +13753,7 @@
     /**
      * 获取 sessionStorage
      * @example
-     * sessionStorageGet("key"); // 处理过后的 value，不需要再 decode 。
+     * sessionStorageGet("key"); /// 处理过后的 value，不需要再 decode 。
      * @param key 存储 key
      * @returns
      */
@@ -13708,7 +13763,7 @@
     /**
      * 设置 sessionStorage
      * @example
-     * sessionStorageSet("key", "value"); // 存储时不需要处理数据，value === null|undefined 清除数据。
+     * sessionStorageSet("key", "value"); /// 存储时不需要处理数据，value === null|undefined 清除数据。
      * @param key 存储 key
      * @param value 存储 value，value === null|undefined 清除数据。
      * @returns
@@ -13719,7 +13774,7 @@
     /**
      * 获取 localStorage 对象值
      * @example
-     * getLocalObj("key"); // 处理过后的 value，不需要再 decode，且有默认值 {}。
+     * getLocalObj("key"); /// 处理过后的 value，不需要再 decode，且有默认值 {}。
      * @param key 存储 key
      * @returns
      */
@@ -13730,7 +13785,7 @@
     /**
      * 获取 sessionStorage 对象值
      * @example
-     * getSessionObj("key"); // 处理过后的 value，不需要再 decode，且有默认值 {}。
+     * getSessionObj("key"); /// 处理过后的 value，不需要再 decode，且有默认值 {}。
      * @param key 存储 key
      * @returns
      */
@@ -13741,7 +13796,7 @@
     /**
      * 获取 localStorage 数组值
      * @example
-     * getLocalArr("key"); // 处理过后的 value，不需要再 decode，且有默认值 []。
+     * getLocalArr("key"); /// 处理过后的 value，不需要再 decode，且有默认值 []。
      * @param key 存储 key
      * @returns
      */
@@ -13752,7 +13807,7 @@
     /**
      * 获取 sessionStorage 数组值
      * @example
-     * getSessionArr("key"); // 处理过后的 value，不需要再 decode，且有默认值 []。
+     * getSessionArr("key"); /// 处理过后的 value，不需要再 decode，且有默认值 []。
      * @param key 存储 key
      * @returns
      */
@@ -13763,7 +13818,7 @@
     /**
      * 获取 Storage 加密数据
      * @example
-     * getDecodeStorage("key"); // 处理过后的 value，不需要再 decode 和解密。
+     * getDecodeStorage("key"); /// 处理过后的 value，不需要再 decode 和解密。
      * @param key 存储 key
      * @param isLocal 是否 localStorage
      * @returns
@@ -13776,7 +13831,7 @@
     /**
      * 设置 Storage 加密数据
      * @example
-     * setEncodeStorage("key", "value"); // 存储时不需要处理数据，自动加密，value === null|undefined 清除数据。(boolean)
+     * setEncodeStorage("key", "value"); /// 存储时不需要处理数据，自动加密，value === null|undefined 清除数据。(boolean)
      * @param key 存储 key
      * @param value 存储 value 字符串，value === null|undefined 清除数据。
      * @param isLocal 是否 localStorage
@@ -13792,7 +13847,7 @@
      * 显示 Toast
      * `export function showToast(options: ToastOptions);`
      * @example
-     * showToast({ type: 'success', content: '这是一个演示 Toast' }); // 显示 success 类型的 toast
+     * showToast({ type: 'success', content: '这是一个演示 Toast' }); /// 显示 success 类型的 toast
      * @param options
      * @returns
      */
@@ -13850,7 +13905,7 @@
     /**
      * 隐藏 toast 不传值关闭所有 toast
      * @example
-     * const toast = showToast({ content: '这是一个演示 Toast' }); // hideToast(toast);
+     * const toast = showToast({ content: '这是一个演示 Toast' }); /// hideToast(toast);
      * @param toast
      * @returns
      */
@@ -13869,7 +13924,7 @@
     /**
      * 快速展示 Toast
      * @example
-     * const myToast = Toast('这是一个快速演示 Toast'); // hideToast(myToast);
+     * const myToast = Toast('这是一个快速演示 Toast'); /// hideToast(myToast);
      * @param msg
      * @param type
      * @returns
@@ -13887,7 +13942,7 @@
     /**
      * Loading Toast 不会自动关闭
      * @example
-     * const myLoading = Loading(msg?); // hideToast(myLoading);
+     * const myLoading = Loading(msg?); /// hideToast(myLoading);
      * @param msg
      * @returns
      */
@@ -13902,7 +13957,7 @@
      * @Author: HxB
      * @Date: 2022-04-26 14:10:35
      * @LastEditors: DoubleAm
-     * @LastEditTime: 2023-08-22 14:07:22
+     * @LastEditTime: 2023-08-23 09:56:42
      * @Description: websocket
      * @FilePath: \js-xxx\src\WebSocket\index.ts
      */
@@ -13942,7 +13997,8 @@
             var _a, _b, _c, _d, _e;
             /* 未超时就继续连接 */
             if (xWebSocketTimer) {
-                initWebSocket(options); // 记得重新赋值
+                // 记得重新赋值
+                xWebSocket = initWebSocket(options);
                 return;
             }
             (_a = options === null || options === void 0 ? void 0 : options.onClose) === null || _a === void 0 ? void 0 : _a.call(options, xWebSocket, options);
@@ -13953,7 +14009,8 @@
                 setTimeout(function () {
                     var _a, _b;
                     (_b = (_a = options.reconnect) === null || _a === void 0 ? void 0 : _a.onReconnect) === null || _b === void 0 ? void 0 : _b.call(_a, xWebSocket, options);
-                    initWebSocket(__assign(__assign({}, options), { reconnect: __assign(__assign({}, options.reconnect), { times: times }) })); // 记得重新赋值
+                    // 记得重新赋值
+                    xWebSocket = initWebSocket(__assign(__assign({}, options), { reconnect: __assign(__assign({}, options.reconnect), { times: times }) }));
                 }, (_e = (_d = options.reconnect) === null || _d === void 0 ? void 0 : _d.delay) !== null && _e !== void 0 ? _e : 1000);
             }
         };
@@ -13969,8 +14026,8 @@
     /**
      * 发送消息
      * @example
-     * sendWsMsg({ type: 'login', data: { username: 'admin', password: '123456' }}, true); // true/false
-     * sendWsMsg('testMsg'); // true/false
+     * sendWsMsg({ type: 'login', data: { username: 'admin', password: '123456' }}, true); /// true/false
+     * sendWsMsg('testMsg'); /// true/false
      * @param message 消息
      * @param isJSONEncode 是否 JSON 序列化
      * @returns
@@ -13986,7 +14043,7 @@
     /**
      * 关闭 websocket
      * @example
-     * closeWebSocket(); // true/false
+     * closeWebSocket(); /// true/false
      * @returns
      */
     function closeWebSocket() {
@@ -13999,7 +14056,7 @@
     /**
      * 设置 websocket binaryType default: 'blob'
      * @example
-     * setWsBinaryType(); // true/false
+     * setWsBinaryType(); /// true/false
      * @param binaryType `BinaryType 二进制类型 default: 'arraybuffer'`
      * @returns
      */
@@ -14017,7 +14074,7 @@
     /**
      * 获取 websocket 实例
      * @example
-     * getWebSocket(); // [websocket object]
+     * getWebSocket(); /// [websocket object]
      * @returns
      */
     function getWebSocket() {

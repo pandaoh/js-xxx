@@ -17,12 +17,12 @@ export declare function initWebSocket(options: {
         delay?: number;
         onReconnect?: any;
     };
-}): WebSocket | undefined;
+}): WebSocket;
 /**
  * 发送消息
  * @example
- * sendWsMsg({ type: 'login', data: { username: 'admin', password: '123456' }}, true); // true/false
- * sendWsMsg('testMsg'); // true/false
+ * sendWsMsg({ type: 'login', data: { username: 'admin', password: '123456' }}, true); /// true/false
+ * sendWsMsg('testMsg'); /// true/false
  * @param message 消息
  * @param isJSONEncode 是否 JSON 序列化
  * @returns
@@ -31,14 +31,14 @@ export declare function sendWsMsg(message: any, isJSONEncode?: boolean): boolean
 /**
  * 关闭 websocket
  * @example
- * closeWebSocket(); // true/false
+ * closeWebSocket(); /// true/false
  * @returns
  */
 export declare function closeWebSocket(): boolean;
 /**
  * 设置 websocket binaryType default: 'blob'
  * @example
- * setWsBinaryType(); // true/false
+ * setWsBinaryType(); /// true/false
  * @param binaryType `BinaryType 二进制类型 default: 'arraybuffer'`
  * @returns
  */
@@ -46,7 +46,7 @@ export declare function setWsBinaryType(binaryType?: any): boolean;
 /**
  * 获取 websocket 实例
  * @example
- * getWebSocket(); // [websocket object]
+ * getWebSocket(); /// [websocket object]
  * @returns
  */
 export declare function getWebSocket(): WebSocket | undefined;

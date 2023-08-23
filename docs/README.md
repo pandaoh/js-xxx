@@ -1,6 +1,6 @@
 js-xxx
 
-# js-xxx - v2.0.0
+# js-xxx - v2.0.1
 
 ## Table of contents
 
@@ -572,7 +572,7 @@ return cancel listener of H5Resize
 **`Example`**
 
 ```ts
-H5Resize(()=>{ console.log('downCb'); }, ()=>{ console.log('upCb'); }); // do something
+H5Resize(()=>{ console.log('downCb'); }, ()=>{ console.log('upCb'); }); /// do something
 ```
 
 #### Parameters
@@ -597,7 +597,7 @@ Loading Toast 不会自动关闭
 **`Example`**
 
 ```ts
-const myLoading = Loading(msg?); // hideToast(myLoading);
+const myLoading = Loading(msg?); /// hideToast(myLoading);
 ```
 
 #### Parameters
@@ -692,7 +692,7 @@ ___
 **`Example`**
 
 ```ts
-const myToast = Toast('这是一个快速演示 Toast'); // hideToast(myToast);
+const myToast = Toast('这是一个快速演示 Toast'); /// hideToast(myToast);
 ```
 
 #### Parameters
@@ -717,8 +717,8 @@ ___
 **`Example`**
 
 ```ts
-abs(-1); // 1
-abs(1); // 1
+abs(-1); /// 1
+abs(1); /// 1
 ```
 
 #### Parameters
@@ -742,8 +742,8 @@ ___
 **`Example`**
 
 ```ts
-add(1, 2); // 3
-add(0.1, 0.2); // 0.3
+add(1, 2); /// 3
+add(0.1, 0.2); /// 0.3
 ```
 
 #### Parameters
@@ -768,7 +768,7 @@ ___
 **`Example`**
 
 ```ts
-addLongPressEvent(document.querySelector('.img-btn'), (event); // console.log('addLongPressEvent'), 3000); // 长按会触发事件
+addLongPressEvent(document.querySelector('.img-btn'), (event); /// console.log('addLongPressEvent'), 3000); /// 长按会触发事件
 ```
 
 #### Parameters
@@ -795,7 +795,7 @@ ___
 **`Example`**
 
 ```ts
-await all(...promise array); // [...result array]
+await all(...promise array); /// [...result array]
 ```
 
 #### Parameters
@@ -820,7 +820,7 @@ ___
 **`Example`**
 
 ```ts
-await any(...promise array); // success result
+await any(...promise array); /// success result
 ```
 
 #### Parameters
@@ -845,7 +845,7 @@ ___
 **`Example`**
 
 ```ts
-appendLink('favicon', 'favicon'); // 添加一个 link 标签
+appendLink('favicon', 'favicon'); /// 添加一个 link 标签
 ```
 
 #### Parameters
@@ -870,7 +870,7 @@ ___
 **`Example`**
 
 ```ts
-appendScript('./test.js'); // 添加一个 script 标签
+appendScript('./test.js'); /// 添加一个 script 标签
 ```
 
 #### Parameters
@@ -898,7 +898,7 @@ ___
 
 ```ts
 const data = [{ id: 1, name: '张三', score: 98, remark: '语文成绩' }, { id: 3, name: '王五', score: 98 }, { id: 3, name: '王五', score: 99, remark: '最后一条有效成绩' }, { id: 2, name: '李四', score: 100 }];
-arrObj2objArr(data, 'id'); // {"id": [1, 2, 3], "name": ["张三", "李四", "王五"], "score": [98, 100, 99], "remark": ["语文成绩", null, "最后一条有效成绩"]}
+arrObj2objArr(data, 'id'); /// {"id": [1, 2, 3], "name": ["张三", "李四", "王五"], "score": [98, 100, 99], "remark": ["语文成绩", null, "最后一条有效成绩"]}
 ```
 
 #### Parameters
@@ -923,7 +923,7 @@ ___
 **`Example`**
 
 ```ts
-arraySet([1, 2, 3, 1, 2, 3]); // [1, 2, 3]
+arraySet([1, 2, 3, 1, 2, 3]); /// [1, 2, 3]
 ```
 
 #### Parameters
@@ -947,14 +947,14 @@ ___
 **`Example`**
 
 ```ts
-arraySort(["a", "3", 1, 2, "b"]); // [1, 2, '3', 'a', 'b']
-arraySort(["a", "3", 1, 2, "b"], 'asc'); // [1, 2, '3', 'a', 'b']
-arraySort(["a", "3", 1, 2, "b"], false); // ['b', 'a', '3', 2, 1]
-arraySort(["a", "3", 1, 2, "b"], 'desc'); // ['b', 'a', '3', 2, 1]
+arraySort(["a", "3", 1, 2, "b"]); /// [1, 2, '3', 'a', 'b']
+arraySort(["a", "3", 1, 2, "b"], 'asc'); /// [1, 2, '3', 'a', 'b']
+arraySort(["a", "3", 1, 2, "b"], false); /// ['b', 'a', '3', 2, 1]
+arraySort(["a", "3", 1, 2, "b"], 'desc'); /// ['b', 'a', '3', 2, 1]
 let arr1 = [{ a: 'a', b: 'b', c: '张三', d: 1 }, { a: 'c', b: 'd', c: '李四', d: 2 }, { a: 'e', b: 'f', c: '王五', d: 3 }];
-arraySort(arr1, false, 'a'); // e - c - a
-arraySort(arr1, false, ['d', 'c']); // 3 - 2 - 1
-arraySort(arr1, 'DESC', ['c']); // 张三 - 王五 - 李四
+arraySort(arr1, false, 'a'); /// e - c - a
+arraySort(arr1, false, ['d', 'c']); /// 3 - 2 - 1
+arraySort(arr1, 'DESC', ['c']); /// 张三 - 王五 - 李四
 ```
 
 #### Parameters
@@ -982,8 +982,8 @@ base64 解码
 **`Example`**
 
 ```ts
-atob('5oiR5pivIGxlbw=='); // '我是 leo'
-atob('5oiR5pivIGxlbw'); // '我是 leo'
+atob('5oiR5pivIGxlbw=='); /// '我是 leo'
+atob('5oiR5pivIGxlbw'); /// '我是 leo'
 ```
 
 #### Parameters
@@ -1007,8 +1007,8 @@ ___
 **`Example`**
 
 ```ts
-average(1, 2, 3, 4); // 2.5
-average(1, 2, 3, 4.123); // 2.53075
+average(1, 2, 3, 4); /// 2.5
+average(1, 2, 3, 4.123); /// 2.53075
 ```
 
 #### Parameters
@@ -1036,7 +1036,7 @@ windows
 **`Example`**
 
 ```ts
-banConsole(); // 返回取消禁用的 function
+banConsole(); /// 返回取消禁用的 function
 ```
 
 #### Returns
@@ -1054,7 +1054,7 @@ base64 解密函数
 **`Example`**
 
 ```ts
-base64Decode("加密后的字符串"); // 解密后的字符串
+base64Decode("加密后的字符串"); /// 解密后的字符串
 ```
 
 #### Parameters
@@ -1080,8 +1080,8 @@ base64 加密函数
 **`Example`**
 
 ```ts
-base64Encode("value"); // 加密后的字符串
-base64Encode("value", true); // 加密后的字符串并替换 +/=
+base64Encode("value"); /// 加密后的字符串
+base64Encode("value", true); /// 加密后的字符串并替换 +/=
 ```
 
 #### Parameters
@@ -1106,7 +1106,7 @@ ___
 **`Example`**
 
 ```ts
-dom.onclick = bindMoreClick(moreClickCallBack, 4, 500); // 绑定 4 击事件
+dom.onclick = bindMoreClick(moreClickCallBack, 4, 500); /// 绑定 4 击事件
 ```
 
 #### Parameters
@@ -1148,8 +1148,8 @@ base64 编码
 **`Example`**
 
 ```ts
-btoa('我是 leo'); // '5oiR5pivIGxlbw=='
-btoa('我是 leo', true); // '5oiR5pivIGxlbw'
+btoa('我是 leo'); /// '5oiR5pivIGxlbw=='
+btoa('我是 leo', true); /// '5oiR5pivIGxlbw'
 ```
 
 #### Parameters
@@ -1174,9 +1174,9 @@ ___
 **`Example`**
 
 ```ts
-calcDate(new Date(), '-1 days'); // date object
-calcDate(new Date(), '-1 DAYS'); // date object
-calcDate(new Date(), ['-1 day', '+1 year', '-2 month', '2 weeks', '1 hour', '-3 minute', '45 seconds']); // date object
+calcDate(new Date(), '-1 days'); /// date object
+calcDate(new Date(), '-1 DAYS'); /// date object
+calcDate(new Date(), ['-1 day', '+1 year', '-2 month', '2 weeks', '1 hour', '-3 minute', '45 seconds']); /// date object
 ```
 
 #### Parameters
@@ -1201,9 +1201,9 @@ ___
 **`Example`**
 
 ```ts
-calcFontSize(); // 按 16/9 计算并设置
-calcFontSize(16/10, true); // 按 16/10 计算并设置内容居中
-calcFontSize(16/10, true, 'body'); // 按 16/10 计算并设置 body 偏移使得内容居中
+calcFontSize(); /// 按 16/9 计算并设置
+calcFontSize(16/10, true); /// 按 16/10 计算并设置内容居中
+calcFontSize(16/10, true, 'body'); /// 按 16/10 计算并设置 body 偏移使得内容居中
 ```
 
 #### Parameters
@@ -1235,10 +1235,10 @@ ___
 **`Example`**
 
 ```ts
-camelCase('foo-bar'); // 'fooBar'
-camelCase('foo_bar'); // 'fooBar'
-camelCase('foo bar'); // 'fooBar'
-camelCase('foo.bar'); // 'fooBar'
+camelCase('foo-bar'); /// 'fooBar'
+camelCase('foo_bar'); /// 'fooBar'
+camelCase('foo bar'); /// 'fooBar'
+camelCase('foo.bar'); /// 'fooBar'
 ```
 
 #### Parameters
@@ -1262,7 +1262,7 @@ New 一个自带错误处理的 Promise，适用于只处理成功情况，不�
 **`Example`**
 
 ```ts
-new catchPromise(resolve, reject, rejectHandler); // Promise
+new catchPromise(resolve, reject, rejectHandler); /// Promise
 ```
 
 #### Parameters
@@ -1287,8 +1287,8 @@ ___
 **`Example`**
 
 ```ts
-checkFileExt(['png', 'jpg'], 'test.jpg'); // true
-checkFileExt(['png', 'jpg'], 'test.jpg.txt'); // false
+checkFileExt(['png', 'jpg'], 'test.jpg'); /// true
+checkFileExt(['png', 'jpg'], 'test.jpg.txt'); /// false
 ```
 
 #### Parameters
@@ -1314,10 +1314,10 @@ ___
 **`Example`**
 
 ```ts
-checkIdCard('350424870506202'); // true
-checkIdCard('003424870506202'); // false
-checkIdCard('415106199801012130'); // true
-checkIdCard('123123123123123222'); // false
+checkIdCard('350424870506202'); /// true
+checkIdCard('003424870506202'); /// false
+checkIdCard('415106199801012130'); /// true
+checkIdCard('123123123123123222'); /// false
 ```
 
 #### Parameters
@@ -1341,12 +1341,12 @@ ___
 **`Example`**
 
 ```ts
-checkPassWordLevel('123'); // -1
-checkPassWordLevel('123456'); // 1
-checkPassWordLevel('12345678'); // 2
-checkPassWordLevel('12345678.'); // 3
-checkPassWordLevel('123456789654321.'); // 4
-checkPassWordLevel('123456789654321.H'); // 5
+checkPassWordLevel('123'); /// -1
+checkPassWordLevel('123456'); /// 1
+checkPassWordLevel('12345678'); /// 2
+checkPassWordLevel('12345678.'); /// 3
+checkPassWordLevel('123456789654321.'); /// 4
+checkPassWordLevel('123456789654321.H'); /// 5
 ```
 
 #### Parameters
@@ -1370,9 +1370,9 @@ ___
 **`Example`**
 
 ```ts
-checkVersion('1.0.1-rc', '1.0.0', '-rc'); // 1
-checkVersion('1.0.0', '1.0.1'); // -1
-checkVersion('1.0.0', '1.0.0'); // 0
+checkVersion('1.0.1-rc', '1.0.0', '-rc'); /// 1
+checkVersion('1.0.0', '1.0.1'); /// -1
+checkVersion('1.0.0', '1.0.0'); /// 0
 ```
 
 #### Parameters
@@ -1398,7 +1398,7 @@ Clear Cookie
 **`Example`**
 
 ```ts
-clearCookies(); // 删除所有的 Cookie
+clearCookies(); /// 删除所有的 Cookie
 ```
 
 #### Returns
@@ -1416,7 +1416,7 @@ ___
 **`Example`**
 
 ```ts
-closeFullscreen(); // 关闭全屏
+closeFullscreen(); /// 关闭全屏
 ```
 
 #### Returns
@@ -1434,7 +1434,7 @@ ___
 **`Example`**
 
 ```ts
-closeWebSocket(); // true/false
+closeWebSocket(); /// true/false
 ```
 
 #### Returns
@@ -1453,8 +1453,8 @@ ___
 **`Example`**
 
 ```ts
-compareDate('2023-1-1'); // 1
-compareDate('2023-1-1 12:00:00', '2023-1-2 12:00:00'); // -1
+compareDate('2023-1-1'); /// 1
+compareDate('2023-1-1 12:00:00', '2023-1-2 12:00:00'); /// -1
 ```
 
 #### Parameters
@@ -1479,14 +1479,14 @@ ___
 **`Example`**
 
 ```ts
-contains([1, 2, 2, 3, 3], 3); // true
-contains([1, 2, 2, 3, 3], '3'); // false
-contains(['test1', 'test2'],'test'); // false
-contains([{a: 1, b: 2}, {a: 2, b: 3}], {a: 2, b: 3}); // true
-contains([{a: 1, b: 2}, {a: 2, b: 3}], {b: 3, a: 2}); // true
-contains([[1, 2], [3, 4]], [4, 3]); // true
-contains([[1, 2], [3, 4]], [3, 4]); // true
-contains([[1, 2], [3, 4]], [1, 3]); // false
+contains([1, 2, 2, 3, 3], 3); /// true
+contains([1, 2, 2, 3, 3], '3'); /// false
+contains(['test1', 'test2'],'test'); /// false
+contains([{a: 1, b: 2}, {a: 2, b: 3}], {a: 2, b: 3}); /// true
+contains([{a: 1, b: 2}, {a: 2, b: 3}], {b: 3, a: 2}); /// true
+contains([[1, 2], [3, 4]], [4, 3]); /// true
+contains([[1, 2], [3, 4]], [3, 4]); /// true
+contains([[1, 2], [3, 4]], [1, 3]); /// false
 ```
 
 #### Parameters
@@ -1511,7 +1511,7 @@ ___
 **`Example`**
 
 ```ts
-copyContent(document.getElementById('copy')); // 复制 #copy 的内容成功
+copyContent(document.getElementById('copy')); /// 复制 #copy 的内容成功
 ```
 
 #### Parameters
@@ -1560,7 +1560,7 @@ ___
 **`Example`**
 
 ```ts
-console.time('test'); countdown(10, (x) => console.log('--->', x), () => console.timeEnd('test')); // test: 10023.636962890625 ms
+console.time('test'); countdown(10, (x) => console.log('--->', x), () => console.timeEnd('test')); /// test: 10023.636962890625 ms
 ```
 
 #### Parameters
@@ -1587,7 +1587,7 @@ ___
 **`Example`**
 
 ```ts
-curryIt(function (a, b, c) {return a + b + c})(1)(2)(3); // 6
+curryIt(function (a, b, c) {return a + b + c})(1)(2)(3); /// 6
 ```
 
 #### Parameters
@@ -1623,7 +1623,7 @@ ___
 **`Example`**
 
 ```ts
-data2Arr([{a: 1, b: 2}, {a: 3}, {b: 1}], 'a'); // [1, 3]
+data2Arr([{a: 1, b: 2}, {a: 3}, {b: 1}], 'a'); /// [1, 3]
 ```
 
 #### Parameters
@@ -1648,8 +1648,8 @@ ___
 **`Example`**
 
 ```ts
-data2Obj([{a: 1, b: 2}, {a: 3}, {b: 1}, {c: 1}], 'a'); // {1: {a: 1, b: 2}, 3: {a: 3}, undefined: {c: 1}}
-data2Obj([{a: 1, b: 'b1'}, {a: 3}, {a: 2, b: 'b2'}], 'a', 'b'); // { '1': 'b1', '2': 'b2', '3': undefined }
+data2Obj([{a: 1, b: 2}, {a: 3}, {b: 1}, {c: 1}], 'a'); /// {1: {a: 1, b: 2}, 3: {a: 3}, undefined: {c: 1}}
+data2Obj([{a: 1, b: 'b1'}, {a: 3}, {a: 2, b: 'b2'}], 'a', 'b'); /// { '1': 'b1', '2': 'b2', '3': undefined }
 ```
 
 #### Parameters
@@ -1675,11 +1675,11 @@ ___
 **`Example`**
 
 ```ts
-dataTo('.className', 'xxx'); // xxx 会填入到类名为 class-name 的元素中
-dataTo('.class-name', 'xxx'); // xxx 会填入到类名为 class-name 的元素中
-dataTo('.class_name', 'xxx'); // xxx 会填入到类名为 class-name 的元素中
-dataTo('.class.name', 'xxx'); // xxx 会填入到类名为 class-name 的元素中
-dataTo('#id.name', 'xxx'); // xxx 会填入到 id 名为 id-name 的元素中
+dataTo('.className', 'xxx'); /// xxx 会填入到类名为 class-name 的元素中
+dataTo('.class-name', 'xxx'); /// xxx 会填入到类名为 class-name 的元素中
+dataTo('.class_name', 'xxx'); /// xxx 会填入到类名为 class-name 的元素中
+dataTo('.class.name', 'xxx'); /// xxx 会填入到类名为 class-name 的元素中
+dataTo('#id.name', 'xxx'); /// xxx 会填入到 id 名为 id-name 的元素中
 ```
 
 #### Parameters
@@ -1704,7 +1704,7 @@ ___
 **`Example`**
 
 ```ts
-debounce(() => {}, 1000); // 防抖执行
+debounce(() => {}, 1000); /// 防抖执行
 ```
 
 #### Parameters
@@ -1736,9 +1736,9 @@ ___
 **`Example`**
 
 ```ts
-decrypt("加密后的字符串"); // 解密后的字符串
-decrypt("加密后的字符串", true); // 解密后的字符串并转换为 JSON 对象
-decrypt("加密后的字符串", "1234567887654321","1234567887654321"); // 自定义密钥解密后的字符串
+decrypt("加密后的字符串"); /// 解密后的字符串
+decrypt("加密后的字符串", true); /// 解密后的字符串并转换为 JSON 对象
+decrypt("加密后的字符串", "1234567887654321","1234567887654321"); /// 自定义密钥解密后的字符串
 ```
 
 #### Parameters
@@ -1769,7 +1769,7 @@ https://juejin.cn/post/7075351322014253064
 **`Example`**
 
 ```ts
-deepClone({a: 1, b: {c: 2}}); // 新的 {a: 1, b: {c: 2}}
+deepClone({a: 1, b: {c: 2}}); /// 新的 {a: 1, b: {c: 2}}
 ```
 
 #### Parameters
@@ -1794,8 +1794,8 @@ ___
 **`Example`**
 
 ```ts
-difference([1, 2, 2, 3, 3], [1, 2, 4, 5]); // [3]
-difference({a: 1, b: 2}, {a: 1, c: 3, b: 4}); // {b: 2}
+difference([1, 2, 2, 3, 3], [1, 2, 4, 5]); /// [3]
+difference({a: 1, b: 2}, {a: 1, c: 3, b: 4}); /// {b: 2}
 ```
 
 #### Parameters
@@ -1820,8 +1820,8 @@ ___
 **`Example`**
 
 ```ts
-document.addEventListener('keydown', disableConflictEvent); // 进入页面后禁用冲突事件
-document.removeEventListener('keydown', disableConflictEvent); // 退出页面后关闭监听
+document.addEventListener('keydown', disableConflictEvent); /// 进入页面后禁用冲突事件
+document.removeEventListener('keydown', disableConflictEvent); /// 退出页面后关闭监听
 ```
 
 #### Parameters
@@ -1845,8 +1845,8 @@ ___
 **`Example`**
 
 ```ts
-div(1, 2); // 0.5
-div(0.55, 100); // 0.0055
+div(1, 2); /// 0.5
+div(0.55, 100); /// 0.0055
 ```
 
 #### Parameters
@@ -1871,7 +1871,7 @@ ___
 **`Example`**
 
 ```ts
-download('https://xxx.com/xxx', 'xxx'); // 下载后端返回的流
+download('https://xxx.com/xxx', 'xxx'); /// 下载后端返回的流
 ```
 
 #### Parameters
@@ -1896,8 +1896,8 @@ ___
 **`Example`**
 
 ```ts
-downloadContent('test.txt', 'test txt content'); // 下载返回的流
-downloadContent('test.json', JSON.stringify({content: 'test json'})); // 下载返回的流
+downloadContent('test.txt', 'test txt content'); /// 下载返回的流
+downloadContent('test.json', JSON.stringify({content: 'test json'})); /// 下载返回的流
 ```
 
 #### Parameters
@@ -1922,7 +1922,7 @@ ___
 **`Example`**
 
 ```ts
-emitKeyboardEvent('keydown', 108); // 小键盘回车事件
+emitKeyboardEvent('keydown', 108); /// 小键盘回车事件
 ```
 
 #### Parameters
@@ -1947,17 +1947,17 @@ ___
 **`Example`**
 
 ```ts
-empty(''); // true
-empty(null); // true
-empty('null'); // true
-empty('undefined'); // true
-empty(undefined); // true
-empty(0); // false
-empty('0'); // false
-empty(NaN); // true
-empty('NaN'); // true
-empty({}); // true
-empty([]); // true
+empty(''); /// true
+empty(null); /// true
+empty('null'); /// true
+empty('undefined'); /// true
+empty(undefined); /// true
+empty(0); /// false
+empty('0'); /// false
+empty(NaN); /// true
+empty('NaN'); /// true
+empty({}); /// true
+empty([]); /// true
 ```
 
 #### Parameters
@@ -1982,8 +1982,8 @@ ___
 **`Example`**
 
 ```ts
-encrypt("value"); // 加密后的字符串
-encrypt("value", "1234567887654321","1234567887654321"); // 自定义密钥加密后的字符串
+encrypt("value"); /// 加密后的字符串
+encrypt("value", "1234567887654321","1234567887654321"); /// 自定义密钥加密后的字符串
 ```
 
 #### Parameters
@@ -2009,9 +2009,9 @@ ___
 **`Example`**
 
 ```ts
-exportFile(data); // 导出 txt 文件
-exportFile(data, 'csv-导出文件测试', 'csv'); // 导出 csv 文件
-exportFile('http://a.biugle.cn/img/cdn/dev/avatar/1.png', 'test', 'png'); // 导出 png 文件
+exportFile(data); /// 导出 txt 文件
+exportFile(data, 'csv-导出文件测试', 'csv'); /// 导出 csv 文件
+exportFile('http://a.biugle.cn/img/cdn/dev/avatar/1.png', 'test', 'png'); /// 导出 png 文件
 ```
 
 #### Parameters
@@ -2037,9 +2037,9 @@ ___
 **`Example`**
 
 ```ts
-fillArrVar([1, undefined, 3, undefined, 4]); // [1, 2, 3, 3.5, 4]
-fillArrVar([1, undefined, 3, undefined, 4], 0); //  [1, 2, 3, 4, 4]
-fillArrVar([1, undefined, 3, undefined, 10.55], 2); // [1, 2, 3, 6.78, 10.55]
+fillArrVar([1, undefined, 3, undefined, 4]); /// [1, 2, 3, 3.5, 4]
+fillArrVar([1, undefined, 3, undefined, 4], 0); ///  [1, 2, 3, 4, 4]
+fillArrVar([1, undefined, 3, undefined, 10.55], 2); /// [1, 2, 3, 6.78, 10.55]
 ```
 
 #### Parameters
@@ -2064,7 +2064,7 @@ ___
 **`Example`**
 
 ```ts
-findChildren(document.getElementById('test')); // #test 的所有子元素数组
+findChildren(document.getElementById('test')); /// #test 的所有子元素数组
 ```
 
 #### Parameters
@@ -2088,7 +2088,7 @@ ___
 **`Example`**
 
 ```ts
-findParents(document.getElementById('test'), 3); // #test 的第三个父元素
+findParents(document.getElementById('test'), 3); /// #test 的第三个父元素
 ```
 
 #### Parameters
@@ -2113,11 +2113,11 @@ ___
 **`Example`**
 
 ```ts
-float(1.135, 0, true); // '1'
-float(1.135, 2, true); // '1.13'
-float(1.135, 1); // 1.1
-float(1.135, 4); // 1.135
-float(1.135, 4, true); // '1.1350'
+float(1.135, 0, true); /// '1'
+float(1.135, 2, true); /// '1.13'
+float(1.135, 1); /// 1.1
+float(1.135, 4); /// 1.135
+float(1.135, 4, true); /// '1.1350'
 ```
 
 #### Parameters
@@ -2144,9 +2144,9 @@ ___
 
 ```ts
 forEach([1, 2, 3], (item, index) => console.log(item, index));
-forEach([1, 2, 3], (item, index) => item * 2, true); // [2, 4, 6]
+forEach([1, 2, 3], (item, index) => item * 2, true); /// [2, 4, 6]
 forEach({a: 1, b: 2}, (value, key) => console.log(value, key));
-forEach({a: 1, b: 2}, (value, key) => value * 2, true); // {a: 2, b: 4}
+forEach({a: 1, b: 2}, (value, key) => value * 2, true); /// {a: 2, b: 4}
 ```
 
 #### Parameters
@@ -2172,9 +2172,9 @@ ___
 **`Example`**
 
 ```ts
-forceToStr(123123123); // '123123123'
-forceToStr(undefined); // '-'
-forceToStr(undefined, 0); // '0'
+forceToStr(123123123); /// '123123123'
+forceToStr(undefined); /// '-'
+forceToStr(undefined, 0); /// '0'
 ```
 
 #### Parameters
@@ -2199,7 +2199,7 @@ ___
 **`Example`**
 
 ```ts
-formatBytes(1024); // '1.00 KB'
+formatBytes(1024); /// '1.00 KB'
 ```
 
 #### Parameters
@@ -2224,7 +2224,7 @@ ___
 **`Example`**
 
 ```ts
-formatDate(new Date(), 'yyyy-mm-dd hh:ii:ss Q S W', ['星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']); // '2022-04-26 11:33:53 2 123 星期二'
+formatDate(new Date(), 'yyyy-mm-dd hh:ii:ss Q S W', ['星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']); /// '2022-04-26 11:33:53 2 123 星期二'
 ```
 
 #### Parameters
@@ -2250,7 +2250,7 @@ ___
 **`Example`**
 
 ```ts
-formatFormData({a: 1, b: 2}); // FormData
+formatFormData({a: 1, b: 2}); /// FormData
 ```
 
 #### Parameters
@@ -2276,13 +2276,13 @@ ___
 **`Example`**
 
 ```ts
-formatJSON({ a: 123, b: 456 }, null, 2); // '{\n  "a": 123,\n  "b": 456\n}'
-formatJSON('123', null, 2); // '"123"'
-formatJSON(123, null, 2); // '123'
-formatJSON(null, null, 2); // 'null'
-formatJSON(true, null, 2); // 'true'
-formatJSON(undefined, null, 2); // 'undefined'
-formatJSON(new Date(), null, 2); // '"2023-03-02T10:02:42.019Z"'
+formatJSON({ a: 123, b: 456 }, null, 2); /// '{\n  "a": 123,\n  "b": 456\n}'
+formatJSON('123', null, 2); /// '"123"'
+formatJSON(123, null, 2); /// '123'
+formatJSON(null, null, 2); /// 'null'
+formatJSON(true, null, 2); /// 'true'
+formatJSON(undefined, null, 2); /// 'undefined'
+formatJSON(new Date(), null, 2); /// '"2023-03-02T10:02:42.019Z"'
 ```
 
 #### Parameters
@@ -2306,8 +2306,8 @@ ___
 **`Example`**
 
 ```ts
-formatMoney(90000); // '90,000.00'
-formatMoney(852.1314, 2); // '852.13'
+formatMoney(90000); /// '90,000.00'
+formatMoney(852.1314, 2); /// '852.13'
 ```
 
 #### Parameters
@@ -2332,7 +2332,7 @@ ___
 **`Example`**
 
 ```ts
-formatNumber('12312300'); // '12,312,300'
+formatNumber('12312300'); /// '12,312,300'
 ```
 
 #### Parameters
@@ -2356,8 +2356,8 @@ ___
 **`Example`**
 
 ```ts
-formatRh('**d**'); // '阴性'
-formatRh('**d**', { format: [true, false], default: false }); // true
+formatRh('**d**'); /// '阴性'
+formatRh('**d**', { format: [true, false], default: false }); /// true
 ```
 
 #### Parameters
@@ -2386,9 +2386,9 @@ ___
 **`Example`**
 
 ```ts
-formatURLSearchParams({a: 1, b: 2, c: [1, 2]}); // a=1&b=2&c=1&c=2
-formatURLSearchParams({a: 1, b: 2, c: [1, 2]}, true); // a=1&b=2&c[]=1&c[]=2
-formatURLSearchParams({a: 1, b: 2, c: [1, 2]}, true, true); // a=1&b=2&c[0]=1&c[1]=2
+formatURLSearchParams({a: 1, b: 2, c: [1, 2]}); /// a=1&b=2&c=1&c=2
+formatURLSearchParams({a: 1, b: 2, c: [1, 2]}, true); /// a=1&b=2&c[]=1&c[]=2
+formatURLSearchParams({a: 1, b: 2, c: [1, 2]}, true, true); /// a=1&b=2&c[0]=1&c[1]=2
 ```
 
 #### Parameters
@@ -2414,8 +2414,8 @@ ___
 **`Example`**
 
 ```ts
-get1Var([1, 2]); // 1
-get1Var({a: 2,b: 1}); // 2
+get1Var([1, 2]); /// 1
+get1Var({a: 2,b: 1}); /// 2
 ```
 
 #### Parameters
@@ -2439,9 +2439,9 @@ ___
 **`Example`**
 
 ```ts
-getAge('1998-9-28'); // 24
-getAge('1998-6-8', '2023-7'); // 25
-getAge('2023'); // -1
+getAge('1998-9-28'); /// 24
+getAge('1998-6-8', '2023-7'); /// 25
+getAge('2023'); /// -1
 ```
 
 #### Parameters
@@ -2466,9 +2466,9 @@ ___
 **`Example`**
 
 ```ts
-getAnimal('1998'); // '虎'
-getAnimal('1998-6-8'); // '虎'
-getAnimal('2023'); // '兔'
+getAnimal('1998'); /// '虎'
+getAnimal('1998-6-8'); /// '虎'
+getAnimal('2023'); /// '兔'
 ```
 
 #### Parameters
@@ -2492,9 +2492,9 @@ ___
 **`Example`**
 
 ```ts
-getBSColor(); // '#6c757d'
-getBSColor('red'); // '#dc3545'
-getBSColor('warning'); // '#ffc107'
+getBSColor(); /// '#6c757d'
+getBSColor('red'); /// '#dc3545'
+getBSColor('warning'); /// '#ffc107'
 ```
 
 #### Parameters
@@ -2518,9 +2518,9 @@ ___
 **`Example`**
 
 ```ts
-getBaseURL('https://test.com/index?name=leo&org=biugle#test'); // 'https://test.com/index'
-getBaseURL(''); // ''
-getBaseURL(); // 当前页面 BaseURL
+getBaseURL('https://test.com/index?name=leo&org=biugle#test'); /// 'https://test.com/index'
+getBaseURL(''); /// ''
+getBaseURL(); /// 当前页面 BaseURL
 ```
 
 #### Parameters
@@ -2544,7 +2544,7 @@ ___
 **`Example`**
 
 ```ts
-getBloodGroup('A'); // { value: 'A', label: 'A 型', color: '#1890FF', lower: 'a', upper: 'A' }
+getBloodGroup('A'); /// { value: 'A', label: 'A 型', color: '#1890FF', lower: 'a', upper: 'A' }
 ```
 
 #### Parameters
@@ -2576,9 +2576,9 @@ ___
 **`Example`**
 
 ```ts
-getConstellation('11-24'); // { cn: '射手', en: 'Sagittarius', date: '11.23-12.21' }
-getConstellation('xxx'); // {cn: '未知', en: 'unknown', date: 'xxx'}
-getConstellation(new Date('2022-11-24')); // { cn: '射手', en: 'Sagittarius', date: '11.23-12.21' }
+getConstellation('11-24'); /// { cn: '射手', en: 'Sagittarius', date: '11.23-12.21' }
+getConstellation('xxx'); /// {cn: '未知', en: 'unknown', date: 'xxx'}
+getConstellation(new Date('2022-11-24')); /// { cn: '射手', en: 'Sagittarius', date: '11.23-12.21' }
 ```
 
 #### Parameters
@@ -2608,10 +2608,10 @@ ___
 **`Example`**
 
 ```ts
-getContentType('form'); // 'application/x-www-form-urlencoded'
-getContentType('file'); // 'multipart/form-data'
-getContentType('pdf'); // 'application/pdf'
-getContentType('unknown'); // 'application/octet-stream'
+getContentType('form'); /// 'application/x-www-form-urlencoded'
+getContentType('file'); /// 'multipart/form-data'
+getContentType('pdf'); /// 'application/pdf'
+getContentType('unknown'); /// 'application/octet-stream'
 ```
 
 #### Parameters
@@ -2635,7 +2635,7 @@ Get Cookie
 **`Example`**
 
 ```ts
-getCookie('name'); // 获取 name 对应的 Cookie 值
+getCookie('name'); /// 获取 name 对应的 Cookie 值
 ```
 
 #### Parameters
@@ -2659,17 +2659,17 @@ ___
 **`Example`**
 
 ```ts
-getCron(); // '* * * * *'
-getCron({ minute: '30', hour: '1', day: '10'}); // '30 1 10 * *'
-getCron({  week: '?' }); // '* * * * ?'
-getCron({ week: '*' }); // '* * * * *'
-getCron({ week: 0 }); // '* * * * 0'
-getCron({ week: '0' }); // '* * * * 0'
-getCron({ week: '7' }); // '* * * * 0'
-getCron({ week: 'SUN,天,日,六,6,5' }); // '* * * * 0,5,6'
-getCron({ day: '1-5' }); // '* * 1-5 * * '
-getCron({ day: '1,5' }); // '* * 1,5 * * '
-getCron({ day: '1/5' }); // '* * 1/5 * * '
+getCron(); /// '* * * * *'
+getCron({ minute: '30', hour: '1', day: '10'}); /// '30 1 10 * *'
+getCron({  week: '?' }); /// '* * * * ?'
+getCron({ week: '*' }); /// '* * * * *'
+getCron({ week: 0 }); /// '* * * * 0'
+getCron({ week: '0' }); /// '* * * * 0'
+getCron({ week: '7' }); /// '* * * * 0'
+getCron({ week: 'SUN,天,日,六,6,5' }); /// '* * * * 0,5,6'
+getCron({ day: '1-5' }); /// '* * 1-5 * * '
+getCron({ day: '1,5' }); /// '* * 1,5 * * '
+getCron({ day: '1/5' }); /// '* * 1/5 * * '
 ```
 
 #### Parameters
@@ -2698,8 +2698,8 @@ ___
 **`Example`**
 
 ```ts
-getCryptoJS(); // CryptoJS
-getCryptoJS().MD5(str).toString(); // md5 加密后的字符串
+getCryptoJS(); /// CryptoJS
+getCryptoJS().MD5(str).toString(); /// md5 加密后的字符串
 ```
 
 #### Returns
@@ -2717,8 +2717,8 @@ ___
 **`Example`**
 
 ```ts
-getDateDifference(new Date('2022-05-01'), new Date(), 'day'); // 37
-getDateDifference(new Date('2022-05-01'), new Date(), 'all'); // {days: 37, hours: 8, minutes: 46, seconds: 47}
+getDateDifference(new Date('2022-05-01'), new Date(), 'day'); /// 37
+getDateDifference(new Date('2022-05-01'), new Date(), 'all'); /// {days: 37, hours: 8, minutes: 46, seconds: 47}
 ```
 
 #### Parameters
@@ -2744,11 +2744,11 @@ ___
 **`Example`**
 
 ```ts
-getDateList(7, 'day'); // 得到今天到未来 7 天的日期数组
-getDateList(-7, 'day'); // 得到今天到之前 7 天的日期数组
-getDateList(7, 'year'); // 得到今年到未来 7 年的日期数组
-getDateList(7, 'month'); // 得到本月到未来 7 个月的日期数组
-getDateList(7, 'day', '2023-02-01'); // 得到 2023-02-01 日到未来 7 天的日期数组
+getDateList(7, 'day'); /// 得到今天到未来 7 天的日期数组
+getDateList(-7, 'day'); /// 得到今天到之前 7 天的日期数组
+getDateList(7, 'year'); /// 得到今年到未来 7 年的日期数组
+getDateList(7, 'month'); /// 得到本月到未来 7 个月的日期数组
+getDateList(7, 'day', '2023-02-01'); /// 得到 2023-02-01 日到未来 7 天的日期数组
 ```
 
 #### Parameters
@@ -2774,7 +2774,7 @@ ___
 **`Example`**
 
 ```ts
-getDateTime(new Date()); // time stamp
+getDateTime(new Date()); /// time stamp
 ```
 
 #### Parameters
@@ -2798,7 +2798,7 @@ ___
 **`Example`**
 
 ```ts
-getDayInYear('2023/06/23'); // 174
+getDayInYear('2023/06/23'); /// 174
 ```
 
 #### Parameters
@@ -2822,7 +2822,7 @@ ___
 **`Example`**
 
 ```ts
-getDecodeStorage("key"); // 处理过后的 value，不需要再 decode 和解密。
+getDecodeStorage("key"); /// 处理过后的 value，不需要再 decode 和解密。
 ```
 
 #### Parameters
@@ -2847,8 +2847,8 @@ ___
 **`Example`**
 
 ```ts
-getKey(); // 'M2rmCcGpXCa5MTdN4Kks5'
-getKey(2, 'test-'); // test-aK'
+getKey(); /// 'M2rmCcGpXCa5MTdN4Kks5'
+getKey(2, 'test-'); /// test-aK'
 ```
 
 #### Parameters
@@ -2873,8 +2873,8 @@ ___
 **`Example`**
 
 ```ts
-getLastVar([1, 2]); // 2
-getLastVar({a: 2, b: 1}); // b
+getLastVar([1, 2]); /// 2
+getLastVar({a: 2, b: 1}); /// b
 ```
 
 #### Parameters
@@ -2898,7 +2898,7 @@ ___
 **`Example`**
 
 ```ts
-getLocalArr("key"); // 处理过后的 value，不需要再 decode，且有默认值 []。
+getLocalArr("key"); /// 处理过后的 value，不需要再 decode，且有默认值 []。
 ```
 
 #### Parameters
@@ -2922,7 +2922,7 @@ ___
 **`Example`**
 
 ```ts
-getLocalObj("key"); // 处理过后的 value，不需要再 decode，且有默认值 {}。
+getLocalObj("key"); /// 处理过后的 value，不需要再 decode，且有默认值 {}。
 ```
 
 #### Parameters
@@ -2946,7 +2946,7 @@ ___
 **`Example`**
 
 ```ts
-getMonthDays(new Date()); // 30
+getMonthDays(new Date()); /// 30
 ```
 
 #### Parameters
@@ -2970,7 +2970,7 @@ ___
 **`Example`**
 
 ```ts
-getMonthDayCount(new Date()); // 30
+getMonthDayCount(new Date()); /// 30
 ```
 
 #### Parameters
@@ -2994,13 +2994,13 @@ ___
 **`Example`**
 
 ```ts
-getMonthInfo(); // MONTH_INFO
-getMonthInfo('0'); // MONTH_INFO
-getMonthInfo('ALL'); // MONTH_INFO
-getMonthInfo('all'); // MONTH_INFO
-getMonthInfo('unknown'); // MONTH_INFO
-getMonthInfo(1); // 一月相关信息
-getMonthInfo(13); // MONTH_INFO
+getMonthInfo(); /// MONTH_INFO
+getMonthInfo('0'); /// MONTH_INFO
+getMonthInfo('ALL'); /// MONTH_INFO
+getMonthInfo('all'); /// MONTH_INFO
+getMonthInfo('unknown'); /// MONTH_INFO
+getMonthInfo(1); /// 一月相关信息
+getMonthInfo(13); /// MONTH_INFO
 ```
 
 #### Parameters
@@ -3024,11 +3024,11 @@ ___
 **`Example`**
 
 ```ts
-getPercentage(102, 1020, 2); // 10
-getPercentage(102, 1020, 2, { float: true, suffix: true }); // '10.00%'
-getPercentage(17, 1020, 2); // 1.67
-getPercentage(1020, null, 2); // 0
-getPercentage(0, 1020, 2, { float: false, suffix: true }); // '0%'
+getPercentage(102, 1020, 2); /// 10
+getPercentage(102, 1020, 2, { float: true, suffix: true }); /// '10.00%'
+getPercentage(17, 1020, 2); /// 1.67
+getPercentage(1020, null, 2); /// 0
+getPercentage(0, 1020, 2, { float: false, suffix: true }); /// '0%'
 ```
 
 #### Parameters
@@ -3057,9 +3057,9 @@ ___
 **`Example`**
 
 ```ts
-getPinYin('你好'); // 'NiHao'
-getPinYin('你好', true); // 'NH'
-getPinYin('贺'); // 'He'
+getPinYin('你好'); /// 'NiHao'
+getPinYin('你好', true); /// 'NH'
+getPinYin('贺'); /// 'He'
 ```
 
 #### Parameters
@@ -3084,9 +3084,9 @@ ___
 **`Example`**
 
 ```ts
-getQueryString('https://test.com/index?name=leo&org=biugle#test'); // 'name=leo&org=biugle'
-getQueryString(''); // ''
-getQueryString(); // 当前页面 QueryString 字符串部分
+getQueryString('https://test.com/index?name=leo&org=biugle#test'); /// 'name=leo&org=biugle'
+getQueryString(''); /// ''
+getQueryString(); /// 当前页面 QueryString 字符串部分
 ```
 
 #### Parameters
@@ -3110,7 +3110,7 @@ ___
 **`Example`**
 
 ```ts
-getRandColor(); // '#xxxxxx'
+getRandColor(); /// '#xxxxxx'
 ```
 
 #### Returns
@@ -3128,7 +3128,7 @@ ___
 **`Example`**
 
 ```ts
-getRandNum(1, 10); // 1~10 之间的随机数，闭区间。
+getRandNum(1, 10); /// 1~10 之间的随机数，闭区间。
 ```
 
 #### Parameters
@@ -3153,7 +3153,7 @@ ___
 **`Example`**
 
 ```ts
-getRandStr(6); // 'xxxxxx'
+getRandStr(6); /// 'xxxxxx'
 ```
 
 #### Parameters
@@ -3177,8 +3177,8 @@ ___
 **`Example`**
 
 ```ts
-getRandVar({ a: 1, b: 3 }); // 1
-getRandomVar([1, 2, 3, 4], 2); // [2, 4]
+getRandVar({ a: 1, b: 3 }); /// 1
+getRandomVar([1, 2, 3, 4], 2); /// [2, 4]
 ```
 
 #### Parameters
@@ -3203,7 +3203,7 @@ ___
 **`Example`**
 
 ```ts
-getScrollPercent(document.documentElement, 'Y'); // 0.581134549876
+getScrollPercent(document.documentElement, 'Y'); /// 0.581134549876
 ```
 
 #### Parameters
@@ -3228,9 +3228,9 @@ ___
 **`Example`**
 
 ```ts
-getSearchParams('https://test.com/index?name=leo&org=biugle#test'); // {name: 'leo', org: 'biugle'}
-getSearchParams(''); // {}
-getSearchParams(); // 当前页面 SearchParams 对象
+getSearchParams('https://test.com/index?name=leo&org=biugle#test'); /// {name: 'leo', org: 'biugle'}
+getSearchParams(''); /// {}
+getSearchParams(); /// 当前页面 SearchParams 对象
 ```
 
 #### Parameters
@@ -3272,7 +3272,7 @@ ___
 **`Example`**
 
 ```ts
-getSessionArr("key"); // 处理过后的 value，不需要再 decode，且有默认值 []。
+getSessionArr("key"); /// 处理过后的 value，不需要再 decode，且有默认值 []。
 ```
 
 #### Parameters
@@ -3296,7 +3296,7 @@ ___
 **`Example`**
 
 ```ts
-getSessionObj("key"); // 处理过后的 value，不需要再 decode，且有默认值 {}。
+getSessionObj("key"); /// 处理过后的 value，不需要再 decode，且有默认值 {}。
 ```
 
 #### Parameters
@@ -3320,9 +3320,9 @@ ___
 **`Example`**
 
 ```ts
-getSize([]); // 0
-getSize({a: 1, b: 2}); // 2
-getSize(null); // 0
+getSize([]); /// 0
+getSize({a: 1, b: 2}); /// 2
+getSize(null); /// 0
 ```
 
 #### Parameters
@@ -3346,9 +3346,9 @@ ___
 **`Example`**
 
 ```ts
-getSortVar({ b: 3, a: 2 }); // { a: 2, b: 3 }
-getSortVar({ a: 2, b: 3 }); // { a: 2, b: 3 }
-getSortVar([1, 3, 2]); // [1, 2, 3]
+getSortVar({ b: 3, a: 2 }); /// { a: 2, b: 3 }
+getSortVar({ a: 2, b: 3 }); /// { a: 2, b: 3 }
+getSortVar([1, 3, 2]); /// [1, 2, 3]
 ```
 
 #### Parameters
@@ -3372,7 +3372,7 @@ ___
 **`Example`**
 
 ```ts
-getStyle(document.getElementById('test'), 'width'); // #test 的 width 属性
+getStyle(document.getElementById('test'), 'width'); /// #test 的 width 属性
 ```
 
 #### Parameters
@@ -3397,7 +3397,7 @@ ___
 **`Example`**
 
 ```ts
-getTimeAndStr(5, 36); // 'xxxxxx'
+getTimeAndStr(5, 36); /// 'xxxxxx'
 ```
 
 #### Parameters
@@ -3422,7 +3422,7 @@ ___
 **`Example`**
 
 ```ts
-getTimeCode(); // '2036551026042022'
+getTimeCode(); /// '2036551026042022'
 ```
 
 #### Returns
@@ -3440,8 +3440,8 @@ ___
 **`Example`**
 
 ```ts
-getType(1); // 'number'
-getType(async function(){}); // 'asyncfunction'
+getType(1); /// 'number'
+getType(async function(){}); /// 'asyncfunction'
 ```
 
 #### Parameters
@@ -3466,7 +3466,7 @@ ___
 **`Example`**
 
 ```ts
-getUTCTime(8); // 中国标准时间
+getUTCTime(8); /// 中国标准时间
 ```
 
 #### Parameters
@@ -3490,7 +3490,7 @@ ___
 **`Example`**
 
 ```ts
-getUUID(); // 'ghijklmn'
+getUUID(); /// 'ghijklmn'
 ```
 
 #### Parameters
@@ -3515,7 +3515,7 @@ ___
 **`Example`**
 
 ```ts
-getUserAgent(); // { browserName: 'Chrome', browserVersion: '102.0.0.0', osName: 'Windows', osVersion: '10.0', deviceName: '' }
+getUserAgent(); /// { browserName: 'Chrome', browserVersion: '102.0.0.0', osName: 'Windows', osVersion: '10.0', deviceName: '' }
 ```
 
 #### Returns
@@ -3540,8 +3540,8 @@ ___
 **`Example`**
 
 ```ts
-getUuid(10, 16); // '8D00C29539'
-getUuid(5); // '5xRc5'
+getUuid(10, 16); /// '8D00C29539'
+getUuid(5); /// '5xRc5'
 ```
 
 #### Parameters
@@ -3566,7 +3566,7 @@ ___
 **`Example`**
 
 ```ts
-getV('默认值', {name: {children: [123, 456]}}, 'name', 'children', '0'); // 123
+getV('默认值', {name: {children: [123, 456]}}, 'name', 'children', '0'); /// 123
 ```
 
 #### Parameters
@@ -3591,8 +3591,8 @@ ___
 **`Example`**
 
 ```ts
-getVar({name: {children: [123, 456]}}, 'name.children.1', '默认值'); // 456
-getVar([1, 2, 3, 4], '100', '默认值'); // '默认值'
+getVar({name: {children: [123, 456]}}, 'name.children.1', '默认值'); /// 456
+getVar([1, 2, 3, 4], '100', '默认值'); /// '默认值'
 ```
 
 #### Parameters
@@ -3618,7 +3618,7 @@ ___
 **`Example`**
 
 ```ts
-getViewportSize(); // { width: 1280, height: 649 }
+getViewportSize(); /// { width: 1280, height: 649 }
 ```
 
 #### Returns
@@ -3641,7 +3641,7 @@ ___
 **`Example`**
 
 ```ts
-getWebSocket(); // [websocket object]
+getWebSocket(); /// [websocket object]
 ```
 
 #### Returns
@@ -3659,13 +3659,13 @@ ___
 **`Example`**
 
 ```ts
-getWeekInfo(); // WEEKS_INFO
-getWeekInfo('0'); // WEEKS_INFO
-getWeekInfo('ALL'); // WEEKS_INFO
-getWeekInfo('all'); // WEEKS_INFO
-getWeekInfo('unknown'); // WEEKS_INFO
-getWeekInfo(1); // 星期一相关信息
-getWeekInfo(8); // WEEKS_INFO
+getWeekInfo(); /// WEEKS_INFO
+getWeekInfo('0'); /// WEEKS_INFO
+getWeekInfo('ALL'); /// WEEKS_INFO
+getWeekInfo('all'); /// WEEKS_INFO
+getWeekInfo('unknown'); /// WEEKS_INFO
+getWeekInfo(1); /// 星期一相关信息
+getWeekInfo(8); /// WEEKS_INFO
 ```
 
 #### Parameters
@@ -3689,7 +3689,7 @@ ___
 **`Example`**
 
 ```ts
-globalError((message, source, lineNo, colNo, error) => console.log('全局捕获异常'), false); // '全局捕获异常'
+globalError((message, source, lineNo, colNo, error) => console.log('全局捕获异常'), false); /// '全局捕获异常'
 ```
 
 #### Parameters
@@ -3714,11 +3714,11 @@ ___
 **`Example`**
 
 ```ts
-hasKey({ a: 1 }, 'a'); // true
-hasKey({ a: 1 }, 'b'); // false
+hasKey({ a: 1 }, 'a'); /// true
+hasKey({ a: 1 }, 'b'); /// false
 const a = { a: 1 };
 a.__proto__.x = 1;
-hasKey(a, 'x'); // true;
+hasKey(a, 'x'); /// true;
 ```
 
 #### Parameters
@@ -3743,8 +3743,8 @@ ___
 **`Example`**
 
 ```ts
-hasSpecialChar('Aa('); // true
-hasSpecialChar('a1'); // false
+hasSpecialChar('Aa('); /// true
+hasSpecialChar('a1'); /// false
 ```
 
 #### Parameters
@@ -3768,7 +3768,7 @@ ___
 **`Example`**
 
 ```ts
-const toast = showToast({ content: '这是一个演示 Toast' }); // hideToast(toast);
+const toast = showToast({ content: '这是一个演示 Toast' }); /// hideToast(toast);
 ```
 
 #### Parameters
@@ -3792,7 +3792,7 @@ ___
 **`Example`**
 
 ```ts
-html2str('&lt;&gt;&amp;&quot;'); // '<>&"'
+html2str('&lt;&gt;&amp;&quot;'); /// '<>&"'
 ```
 
 #### Parameters
@@ -3816,10 +3816,10 @@ ___
 **`Example`**
 
 ```ts
-inRange(null, 0, 3); // false
-inRange(0, 0, 3); // true
-inRange(3, 0, 3); // true
-inRange(5, 0, 3); // false
+inRange(null, 0, 3); /// false
+inRange(0, 0, 3); /// true
+inRange(3, 0, 3); /// true
+inRange(5, 0, 3); /// false
 ```
 
 #### Parameters
@@ -3845,7 +3845,7 @@ ___
 **`Example`**
 
 ```ts
-initNotification(); // true||false
+initNotification(); /// true||false
 ```
 
 #### Returns
@@ -3856,7 +3856,7 @@ ___
 
 ### initWebSocket
 
-▸ **initWebSocket**(`options`): `WebSocket` \| `undefined`
+▸ **initWebSocket**(`options`): `WebSocket`
 
 初始化 websocket
 
@@ -3884,7 +3884,7 @@ initWebSocket({ url: 'ws://localhost:8080/ws', timeout: 30000, onOpen: () => {},
 
 #### Returns
 
-`WebSocket` \| `undefined`
+`WebSocket`
 
 ___
 
@@ -3922,8 +3922,8 @@ ___
 **`Example`**
 
 ```ts
-intersection([1, 2, 2, 3, 3], [1, 2, 4, 5]); // [1, 2]
-intersection({a: 1, b: 2}, {a: 1, c: 3, b: 4}); // {a: 1}
+intersection([1, 2, 2, 3, 3], [1, 2, 4, 5]); /// [1, 2]
+intersection({a: 1, b: 2}, {a: 1, c: 3, b: 4}); /// {a: 1}
 ```
 
 #### Parameters
@@ -3948,10 +3948,10 @@ ___
 **`Example`**
 
 ```ts
-inversion([1, 2, 3]); // [3, 2, 1]
-inversion('123'); // '321'
-inversion(); // undefined
-inversion(true); // true
+inversion([1, 2, 3]); /// [3, 2, 1]
+inversion('123'); /// '321'
+inversion(); /// undefined
+inversion(true); /// true
 ```
 
 #### Parameters
@@ -3975,11 +3975,11 @@ ___
 **`Example`**
 
 ```ts
-isAccount('test123@qq.com'); // false
-isAccount('_test123_qq_com'); // false
-isAccount('test123_qq_com'); // true
-isAccount('我test123_qq_com'); // false
-isAccount('我test123_qq_com', true); // true
+isAccount('test123@qq.com'); /// false
+isAccount('_test123_qq_com'); /// false
+isAccount('test123_qq_com'); /// true
+isAccount('我test123_qq_com'); /// false
+isAccount('我test123_qq_com', true); /// true
 ```
 
 #### Parameters
@@ -4004,7 +4004,7 @@ ___
 **`Example`**
 
 ```ts
-isAppleDevice(); // true
+isAppleDevice(); /// true
 ```
 
 #### Returns
@@ -4022,8 +4022,8 @@ ___
 **`Example`**
 
 ```ts
-isArr([]); // true
-isArr({}); // false
+isArr([]); /// true
+isArr({}); /// false
 ```
 
 #### Parameters
@@ -4047,8 +4047,8 @@ ___
 **`Example`**
 
 ```ts
-isArrayBuffer(new ArrayBuffer()); // true
-isArrayBuffer(null); // false
+isArrayBuffer(new ArrayBuffer()); /// true
+isArrayBuffer(null); /// false
 ```
 
 #### Parameters
@@ -4072,8 +4072,8 @@ ___
 **`Example`**
 
 ```ts
-isBankCard('6217003810026896707'); // true
-isBankCard('12312312312'); // false
+isBankCard('6217003810026896707'); /// true
+isBankCard('12312312312'); /// false
 ```
 
 #### Parameters
@@ -4097,8 +4097,8 @@ ___
 **`Example`**
 
 ```ts
-isBlob(new Blob()); // true
-isBlob(null); // false
+isBlob(new Blob()); /// true
+isBlob(null); /// false
 ```
 
 #### Parameters
@@ -4122,8 +4122,8 @@ ___
 **`Example`**
 
 ```ts
-isBool(true); // true
-isBool(null); // false
+isBool(true); /// true
+isBool(null); /// false
 ```
 
 #### Parameters
@@ -4147,7 +4147,7 @@ ___
 **`Example`**
 
 ```ts
-isBrowser(); // true
+isBrowser(); /// true
 ```
 
 #### Returns
@@ -4165,12 +4165,12 @@ ___
 **`Example`**
 
 ```ts
-isCarCode('粤B68928'); // true
-isCarCode('粤-B68928'); // true
-isCarCode('粤 B68928'); // true
-isCarCode('粤B.68928'); // true
-isCarCode('粤B 68928'); // true
-isCarCode('广东 B12345'); // false
+isCarCode('粤B68928'); /// true
+isCarCode('粤-B68928'); /// true
+isCarCode('粤 B68928'); /// true
+isCarCode('粤B.68928'); /// true
+isCarCode('粤B 68928'); /// true
+isCarCode('广东 B12345'); /// false
 ```
 
 #### Parameters
@@ -4194,8 +4194,8 @@ ___
 **`Example`**
 
 ```ts
-isChinese('呜呜呜'); // true
-isChinese('我 1'); // false
+isChinese('呜呜呜'); /// true
+isChinese('我 1'); /// false
 ```
 
 #### Parameters
@@ -4219,8 +4219,8 @@ ___
 **`Example`**
 
 ```ts
-isCreditCode('9144030071526726XG'); // true
-isCreditCode('12312312312'); // false
+isCreditCode('9144030071526726XG'); /// true
+isCreditCode('12312312312'); /// false
 ```
 
 #### Parameters
@@ -4244,7 +4244,7 @@ ___
 **`Example`**
 
 ```ts
-isDarkMode(); // true
+isDarkMode(); /// true
 ```
 
 #### Returns
@@ -4262,8 +4262,8 @@ ___
 **`Example`**
 
 ```ts
-isDate(new Date()); // true
-isDate(null); // false
+isDate(new Date()); /// true
+isDate(null); /// false
 ```
 
 #### Parameters
@@ -4287,10 +4287,10 @@ ___
 **`Example`**
 
 ```ts
-isDecimal('0.0'); // true
-isDecimal('0.0', '+', true); // false
-isDecimal('-0.1', '+'); // false
-isDecimal('-0.10', '-'); // true
+isDecimal('0.0'); /// true
+isDecimal('0.0', '+', true); /// false
+isDecimal('-0.1', '+'); /// false
+isDecimal('-0.10', '-'); /// true
 ```
 
 #### Parameters
@@ -4316,8 +4316,8 @@ ___
 **`Example`**
 
 ```ts
-isDefined(a); // false
-isDefined(window); // true
+isDefined(a); /// false
+isDefined(window); /// true
 ```
 
 #### Parameters
@@ -4341,9 +4341,9 @@ ___
 **`Example`**
 
 ```ts
-isElement(document.body); // true
-isElement(document); // false
-isElement({}); // false
+isElement(document.body); /// true
+isElement(document); /// false
+isElement({}); /// false
 ```
 
 #### Parameters
@@ -4367,8 +4367,8 @@ ___
 **`Example`**
 
 ```ts
-isEmail('test@qq.com'); // true
-isEmail('@qq.com'); // false
+isEmail('test@qq.com'); /// true
+isEmail('@qq.com'); /// false
 ```
 
 #### Parameters
@@ -4392,8 +4392,8 @@ ___
 **`Example`**
 
 ```ts
-isEnglish('Aa'); // true
-isEnglish('a1'); // false
+isEnglish('Aa'); /// true
+isEnglish('a1'); /// false
 ```
 
 #### Parameters
@@ -4417,11 +4417,11 @@ ___
 **`Example`**
 
 ```ts
-isEqual([1, 2, 3], [1, 2, 3]); // true
-isEqual({a: 1, b: 2}, {a: 1, b: 2}); // true
-isEqual({}, {}); // true
-isEqual(1, 1); // true
-isEqual(1, '1'); // false
+isEqual([1, 2, 3], [1, 2, 3]); /// true
+isEqual({a: 1, b: 2}, {a: 1, b: 2}); /// true
+isEqual({}, {}); /// true
+isEqual(1, 1); /// true
+isEqual(1, '1'); /// false
 ```
 
 #### Parameters
@@ -4446,8 +4446,8 @@ ___
 **`Example`**
 
 ```ts
-isEven(-2); // true
-isEven(1); // false
+isEven(-2); /// true
+isEven(1); /// false
 ```
 
 #### Parameters
@@ -4471,10 +4471,10 @@ ___
 **`Example`**
 
 ```ts
-isFn(function(){}); // true
-isFn(async function(){}); // true
-isFn(new Promise((resolve, reject) => resolve()); // false
-isFn({}); // false
+isFn(function(){}); /// true
+isFn(async function(){}); /// true
+isFn(new Promise((resolve, reject) => resolve()); /// false
+isFn({}); /// false
 ```
 
 #### Parameters
@@ -4498,10 +4498,10 @@ ___
 **`Example`**
 
 ```ts
-isHttp('http://test.com'); // 1
-isHttp('http:test.com'); // 0
-isHttp('https://test.com'); // -1
-isHttp('12345'); // 0
+isHttp('http://test.com'); /// 1
+isHttp('http:test.com'); /// 0
+isHttp('https://test.com'); /// -1
+isHttp('12345'); /// 0
 ```
 
 #### Parameters
@@ -4525,8 +4525,8 @@ ___
 **`Example`**
 
 ```ts
-isInteger('0'); // true
-isInteger('-0', '+'); // false
+isInteger('0'); /// true
+isInteger('-0', '+'); /// false
 ```
 
 #### Parameters
@@ -4551,10 +4551,10 @@ ___
 **`Example`**
 
 ```ts
-isIpAddress('::1'); // true
-isIpAddress('127.0.0.1'); // true
-isIpAddress('2001:DB8:0:0:8:800:200C:417A'); // true
-isIpAddress('255.255.255.123.123'); // false
+isIpAddress('::1'); /// true
+isIpAddress('127.0.0.1'); /// true
+isIpAddress('2001:DB8:0:0:8:800:200C:417A'); /// true
+isIpAddress('255.255.255.123.123'); /// false
 ```
 
 #### Parameters
@@ -4578,10 +4578,10 @@ ___
 **`Example`**
 
 ```ts
-isIpv4('127.0.0.1'); // true
-isIpv4('255.255.255.0'); // true
-isIpv4('255.255.255.2555'); // false
-isIpv4('255.255.255.2555.255'); // false
+isIpv4('127.0.0.1'); /// true
+isIpv4('255.255.255.0'); /// true
+isIpv4('255.255.255.2555'); /// false
+isIpv4('255.255.255.2555.255'); /// false
 ```
 
 #### Parameters
@@ -4605,13 +4605,13 @@ ___
 **`Example`**
 
 ```ts
-isIpv6('::1'); // true
-isIpv6('127.0.0.1'); // false
-isIpv6('2000:0000:0000:0000:0001:2345:6789:abcd'); // true
-isIpv6('2001:DB8:0:0:8:800:200C:417A'); // true
-isIpv6('2001:DB8::8:800:200C:417A'); // false 暂不兼容缩写
-isIpv6('2001:DB8:0:0:8:800:200C:417A:123'); // false
-isIpv6('2000:0000:0000:0000:0001:2345:6789:abcd:1'); // false
+isIpv6('::1'); /// true
+isIpv6('127.0.0.1'); /// false
+isIpv6('2000:0000:0000:0000:0001:2345:6789:abcd'); /// true
+isIpv6('2001:DB8:0:0:8:800:200C:417A'); /// true
+isIpv6('2001:DB8::8:800:200C:417A'); /// false 暂不兼容缩写
+isIpv6('2001:DB8:0:0:8:800:200C:417A:123'); /// false
+isIpv6('2000:0000:0000:0000:0001:2345:6789:abcd:1'); /// false
 ```
 
 #### Parameters
@@ -4635,9 +4635,9 @@ ___
 **`Example`**
 
 ```ts
-isJSON('{"name":"leo", "age":20}'); // true
-isJSON('{"name":"leo", age:"20"}'); // false
-isJSON(null); // true
+isJSON('{"name":"leo", "age":20}'); /// true
+isJSON('{"name":"leo", age:"20"}'); /// false
+isJSON(null); /// true
 ```
 
 #### Parameters
@@ -4661,8 +4661,8 @@ ___
 **`Example`**
 
 ```ts
-isMobile('13579246810'); // true
-isMobile('12345678910'); // false
+isMobile('13579246810'); /// true
+isMobile('12345678910'); /// false
 ```
 
 #### Parameters
@@ -4686,8 +4686,8 @@ ___
 **`Example`**
 
 ```ts
-isNaN(1); // false
-isNaN(NaN); // true
+isNaN(1); /// false
+isNaN(NaN); /// true
 ```
 
 #### Parameters
@@ -4711,7 +4711,7 @@ ___
 **`Example`**
 
 ```ts
-isNode(); // true
+isNode(); /// true
 ```
 
 #### Returns
@@ -4729,8 +4729,8 @@ ___
 **`Example`**
 
 ```ts
-isNull(undefined); // false
-isNull(null); // true
+isNull(undefined); /// false
+isNull(null); /// true
 ```
 
 #### Parameters
@@ -4754,8 +4754,8 @@ ___
 **`Example`**
 
 ```ts
-isNum(NaN); // false
-isNum(1); // true
+isNum(NaN); /// false
+isNum(1); /// true
 ```
 
 #### Parameters
@@ -4779,8 +4779,8 @@ ___
 **`Example`**
 
 ```ts
-isObj({}); // true
-isObj(null); // false
+isObj({}); /// true
+isObj(null); /// false
 ```
 
 #### Parameters
@@ -4804,9 +4804,9 @@ ___
 **`Example`**
 
 ```ts
-isPromise(function(){}); // false
-isPromise(async function(){}); // false
-isPromise(new Promise((resolve, reject) => resolve())); // true
+isPromise(function(){}); /// false
+isPromise(async function(){}); /// false
+isPromise(new Promise((resolve, reject) => resolve())); /// true
 ```
 
 #### Parameters
@@ -4830,8 +4830,8 @@ ___
 **`Example`**
 
 ```ts
-isQQ('1005760694'); // true
-isQQ('123456789101'); // false
+isQQ('1005760694'); /// true
+isQQ('123456789101'); /// false
 ```
 
 #### Parameters
@@ -4855,7 +4855,7 @@ ___
 **`Example`**
 
 ```ts
-isRhNegative('**d**'); // true
+isRhNegative('**d**'); /// true
 ```
 
 #### Parameters
@@ -4879,8 +4879,8 @@ ___
 **`Example`**
 
 ```ts
-isStr('test'); // true
-isStr(null); // false
+isStr('test'); /// true
+isStr(null); /// false
 ```
 
 #### Parameters
@@ -4904,8 +4904,8 @@ ___
 **`Example`**
 
 ```ts
-isStrongPassWord('test@qq.com'); // false
-isStrongPassWord('test@qq.com123'); // true
+isStrongPassWord('test@qq.com'); /// false
+isStrongPassWord('test@qq.com123'); /// true
 ```
 
 #### Parameters
@@ -4929,8 +4929,8 @@ ___
 **`Example`**
 
 ```ts
-isTel('0731-24722145'); // true
-isTel('13579246810'); // false
+isTel('0731-24722145'); /// true
+isTel('13579246810'); /// false
 ```
 
 #### Parameters
@@ -4954,8 +4954,8 @@ ___
 **`Example`**
 
 ```ts
-isUndef(undefined); // true
-isUndef(null); // false
+isUndef(undefined); /// true
+isUndef(null); /// false
 ```
 
 #### Parameters
@@ -4979,8 +4979,8 @@ ___
 **`Example`**
 
 ```ts
-isUrl('http://www.example.com?foo=bar&param=test'); // true
-isUrl(http://www); // false
+isUrl('http://www.example.com?foo=bar&param=test'); /// true
+isUrl(http://www); /// false
 ```
 
 #### Parameters
@@ -5004,7 +5004,7 @@ ___
 **`Example`**
 
 ```ts
-isWorkDay(new Date()); // true
+isWorkDay(new Date()); /// true
 ```
 
 #### Parameters
@@ -5028,8 +5028,8 @@ JSON 转字符串式克隆
 **`Example`**
 
 ```ts
-jsonClone([1, 2, 2, 3, 3]); // [1, 2, 2, 3, 3]
-jsonClone({a: 1, b: 2}); // {a: 1, b: 2}
+jsonClone([1, 2, 2, 3, 3]); /// [1, 2, 2, 3, 3]
+jsonClone({a: 1, b: 2}); /// {a: 1, b: 2}
 ```
 
 #### Parameters
@@ -5053,7 +5053,7 @@ ___
 **`Example`**
 
 ```ts
-localStorageGet("key"); // 处理过后的 value，不需要再 decode 。
+localStorageGet("key"); /// 处理过后的 value，不需要再 decode 。
 ```
 
 #### Parameters
@@ -5077,7 +5077,7 @@ ___
 **`Example`**
 
 ```ts
-localStorageSet("key", "value"); // 存储时不需要处理数据，value === null|undefined 清除数据。(boolean)
+localStorageSet("key", "value"); /// 存储时不需要处理数据，value === null|undefined 清除数据。(boolean)
 ```
 
 #### Parameters
@@ -5102,8 +5102,8 @@ ___
 **`Example`**
 
 ```ts
-log([1, 2, 2, 3, 3], {a: 1, b: 2}, 'test', true); // 打印数据
-log('danger'); // 打印数据
+log([1, 2, 2, 3, 3], {a: 1, b: 2}, 'test', true); /// 打印数据
+log('danger'); /// 打印数据
 ```
 
 #### Parameters
@@ -5158,9 +5158,9 @@ ___
 **`Example`**
 
 ```ts
-logVar([1, 2, 2, 3, 3]); // 打印数据
-logVar({a: 1, b: 2}, 'danger'); // 打印数据
-logVar({a: 1, b: 2}, 'success'); // 打印数据
+logVar([1, 2, 2, 3, 3]); /// 打印数据
+logVar({a: 1, b: 2}, 'danger'); /// 打印数据
+logVar({a: 1, b: 2}, 'success'); /// 打印数据
 ```
 
 #### Parameters
@@ -5188,9 +5188,9 @@ ___
 **`Example`**
 
 ```ts
-marquee('#demo'); // 默认横向正常滚动(loopType=normal)
-marquee('.demo-y', {direction: 'Y', loopType: 'infinite', speed: 3}); // Y 轴无限无缝滚动，speed > 0 越小速度越快。
-marquee('.demo-x', {direction: 'X', loopType: 'origin', speed: 3, style: 'animation-delay:2s;', parentStyle: 'color:red;'}); // X 轴无限来回滚动
+marquee('#demo'); /// 默认横向正常滚动(loopType=normal)
+marquee('.demo-y', {direction: 'Y', loopType: 'infinite', speed: 3}); /// Y 轴无限无缝滚动，speed > 0 越小速度越快。
+marquee('.demo-x', {direction: 'X', loopType: 'origin', speed: 3, style: 'animation-delay:2s;', parentStyle: 'color:red;'}); /// X 轴无限来回滚动
 ```
 
 #### Parameters
@@ -5220,9 +5220,9 @@ ___
 **`Example`**
 
 ```ts
-maskNumber(10000123111); // '100.00 亿'
-maskNumber(12345); // '1.2 万'
-maskNumber(123); // '123'
+maskNumber(10000123111); /// '100.00 亿'
+maskNumber(12345); /// '1.2 万'
+maskNumber(123); /// '123'
 ```
 
 #### Parameters
@@ -5246,13 +5246,13 @@ ___
 **`Example`**
 
 ```ts
-maskString(undefined); // '-'
-maskString('13579246810'); // '135****6810'
-maskString('王小二'); // '王***二'
-maskString('123456789'); // '123****89'
-maskString('130223199809282927'); // '13022********927'
-maskString('广东省深圳市龙华区'); // 广东省****华区'
-maskString('广东省深圳市福田区福田保税区xxx小区xxx单元x栋x楼xxx号'); // '广东省深圳市福田区******xx号'
+maskString(undefined); /// '-'
+maskString('13579246810'); /// '135****6810'
+maskString('王小二'); /// '王***二'
+maskString('123456789'); /// '123****89'
+maskString('130223199809282927'); /// '13022********927'
+maskString('广东省深圳市龙华区'); /// 广东省****华区'
+maskString('广东省深圳市福田区福田保税区xxx小区xxx单元x栋x楼xxx号'); /// '广东省深圳市福田区******xx号'
 ```
 
 #### Parameters
@@ -5276,7 +5276,7 @@ md5 加密函数
 **`Example`**
 
 ```ts
-md5("value"); // 加密后的字符串
+md5("value"); /// 加密后的字符串
 ```
 
 #### Parameters
@@ -5300,8 +5300,8 @@ ___
 **`Example`**
 
 ```ts
-mergeObj({name: 1, oldValue: 2}, {name: 3, value: 4}, []); // {name: 1, oldValue: 2, value: 4}
-mergeObj({name: 1, oldValue: 2}, {name: 3, value: 4}, ['name'], true); // {name: 3, value: 4}
+mergeObj({name: 1, oldValue: 2}, {name: 3, value: 4}, []); /// {name: 1, oldValue: 2, value: 4}
+mergeObj({name: 1, oldValue: 2}, {name: 3, value: 4}, ['name'], true); /// {name: 3, value: 4}
 ```
 
 #### Parameters
@@ -5328,14 +5328,14 @@ ___
 **`Example`**
 
 ```ts
-ms('1s'); // 1000
-ms('1m'); // 60000
-ms('1.5h'); // 5400000
-ms('1d'); // 86400000
-ms('1y'); // 31557600000
-ms('1000'); // 1000
-ms(1500); // '1.5s'
-ms(60000); // '1m'
+ms('1s'); /// 1000
+ms('1m'); /// 60000
+ms('1.5h'); /// 5400000
+ms('1d'); /// 86400000
+ms('1y'); /// 31557600000
+ms('1000'); /// 1000
+ms(1500); /// '1.5s'
+ms(60000); /// '1m'
 ```
 
 #### Parameters
@@ -5359,7 +5359,7 @@ ___
 **`Example`**
 
 ```ts
-offDefaultEvent(event); // 阻止冒泡事件&阻止默认行为&阻止事件捕获
+offDefaultEvent(event); /// 阻止冒泡事件&阻止默认行为&阻止事件捕获
 ```
 
 #### Parameters
@@ -5384,7 +5384,7 @@ Author: WuXingHeng
 **`Example`**
 
 ```ts
-dom.onclick = onClick2MoreClick(300, clickOneCallBack, clickTwoCallBack, clickThreeCallBack, clickFourCallBack); // void
+dom.onclick = onClick2MoreClick(300, clickOneCallBack, clickTwoCallBack, clickThreeCallBack, clickFourCallBack); /// void
 ```
 
 #### Parameters
@@ -5435,7 +5435,7 @@ ___
 **`Example`**
 
 ```ts
-openFullscreen(); // 开启全屏
+openFullscreen(); /// 开启全屏
 ```
 
 #### Parameters
@@ -5459,7 +5459,7 @@ px 转 rem
 **`Example`**
 
 ```ts
-px2rem(30); // 转化后的 rem
+px2rem(30); /// 转化后的 rem
 ```
 
 #### Parameters
@@ -5483,8 +5483,8 @@ ___
 **`Example`**
 
 ```ts
-qsParse('start=0&count=20&x=1&x=2&x=3', 'x'); // [1, 2, 3]
-qsParse('start=0&count=20&x=1&x=2&x=3'); // { start: '0', count: '20', x: [1, 2, 3], '/': 'start=0&count=20&x=1&x=2&x=3' }
+qsParse('start=0&count=20&x=1&x=2&x=3', 'x'); /// [1, 2, 3]
+qsParse('start=0&count=20&x=1&x=2&x=3'); /// { start: '0', count: '20', x: [1, 2, 3], '/': 'start=0&count=20&x=1&x=2&x=3' }
 ```
 
 #### Parameters
@@ -5509,9 +5509,9 @@ ___
 **`Example`**
 
 ```ts
-qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3] }); // 'start=0&count=20&obj[a]=1&arr[]=1&arr[]=2&arr[]=3'
-qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3] }, { arr2str: true }); // 'start=0&count=20&obj[a]=1&arr=1,2,3'
-qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3], str: '1' }, { hasIndex: true }); // 'start=0&count=20&obj[a]=1&arr[0]=1&arr[1]=2&arr[2]=3&str=1'
+qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3] }); /// 'start=0&count=20&obj[a]=1&arr[]=1&arr[]=2&arr[]=3'
+qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3] }, { arr2str: true }); /// 'start=0&count=20&obj[a]=1&arr=1,2,3'
+qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3], str: '1' }, { hasIndex: true }); /// 'start=0&count=20&obj[a]=1&arr[0]=1&arr[1]=2&arr[2]=3&str=1'
 ```
 
 #### Parameters
@@ -5540,8 +5540,8 @@ ___
 **`Example`**
 
 ```ts
-randomStr(2); // 43
-randomStr(5); // 77192
+randomStr(2); /// 43
+randomStr(5); /// 77192
 ```
 
 #### Parameters
@@ -5565,7 +5565,7 @@ Remove Cookie
 **`Example`**
 
 ```ts
-removeCookie('name'); // 删除 name 对应的 Cookie
+removeCookie('name'); /// 删除 name 对应的 Cookie
 ```
 
 #### Parameters
@@ -5589,8 +5589,8 @@ ___
 **`Example`**
 
 ```ts
-repeat('*'); // '*'
-repeat('*', 3); // '***'
+repeat('*'); /// '*'
+repeat('*', 3); /// '***'
 ```
 
 #### Parameters
@@ -5615,7 +5615,7 @@ Promise 重试
 **`Example`**
 
 ```ts
-retry(() => Promise.reject(new Error('error')), 3); // Promise.reject(new Error('error')) 执行 3 次
+retry(() => Promise.reject(new Error('error')), 3); /// Promise.reject(new Error('error')) 执行 3 次
 ```
 
 #### Parameters
@@ -5641,7 +5641,7 @@ ___
 **`Example`**
 
 ```ts
-rip(); // 页面灰白
+rip(); /// 页面灰白
 ```
 
 #### Returns
@@ -5660,8 +5660,8 @@ ___
 **`Example`**
 
 ```ts
-round(1.2345, 2); // 1.23
-round(0.355, 2); // 0.36
+round(1.2345, 2); /// 1.23
+round(0.355, 2); /// 0.36
 ```
 
 #### Parameters
@@ -5686,12 +5686,12 @@ ___
 **`Example`**
 
 ```ts
-same(['admin','manager','user','viewer','guest'], ['admin','user']); // true
-same(['admin','manager','user','viewer','guest'], 'admin'); // true
-same('admin', ['admin','user']); // true
-same('admin', 'admin'); // true
-same('admin', 'admins'); // false
-same('admins', 'admin'); // false
+same(['admin','manager','user','viewer','guest'], ['admin','user']); /// true
+same(['admin','manager','user','viewer','guest'], 'admin'); /// true
+same('admin', ['admin','user']); /// true
+same('admin', 'admin'); /// true
+same('admin', 'admins'); /// false
+same('admins', 'admin'); /// false
 ```
 
 #### Parameters
@@ -5717,7 +5717,7 @@ ___
 **`Example`**
 
 ```ts
-scrollToBottom('body'); // 滚动到底部
+scrollToBottom('body'); /// 滚动到底部
 ```
 
 #### Parameters
@@ -5742,7 +5742,7 @@ ___
 **`Example`**
 
 ```ts
-scrollToTop('body'); // 滚动到顶部
+scrollToTop('body'); /// 滚动到顶部
 ```
 
 #### Parameters
@@ -5767,9 +5767,9 @@ X 轴滚动到指定位置
 **`Example`**
 
 ```ts
-`scrollXTo(0); // 滚动到左侧
- `scrollXTo('start', null, document.documentElement); // 滚动到左侧
- `scrollXTo('end', (percent) => console.log(percent), document.querySelector('body')); // 滚动到右侧
+`scrollXTo(0); /// 滚动到左侧
+ `scrollXTo('start', null, document.documentElement); /// 滚动到左侧
+ `scrollXTo('end', (percent) => console.log(percent), document.querySelector('body')); /// 滚动到右侧
 ```
 
 #### Parameters
@@ -5795,9 +5795,9 @@ Y 轴滚动到指定位置
 **`Example`**
 
 ```ts
-`scrollYTo(0); // 滚动到顶部
- `scrollYTo('start', null, document.documentElement); // 滚动到顶部
- `scrollYTo('end', (percent) => console.log(percent), document.querySelector('body')); // 滚动到底部
+`scrollYTo(0); /// 滚动到顶部
+ `scrollYTo('start', null, document.documentElement); /// 滚动到顶部
+ `scrollYTo('end', (percent) => console.log(percent), document.querySelector('body')); /// 滚动到底部
 ```
 
 #### Parameters
@@ -5823,7 +5823,7 @@ ___
 **`Example`**
 
 ```ts
-sendNotification('测试通知', '测试标题', {...options}); // 发送成功/失败
+sendNotification('测试通知', '测试标题', {...options}); /// 发送成功/失败
 ```
 
 #### Parameters
@@ -5849,8 +5849,8 @@ ___
 **`Example`**
 
 ```ts
-sendWsMsg({ type: 'login', data: { username: 'admin', password: '123456' }}, true); // true/false
-sendWsMsg('testMsg'); // true/false
+sendWsMsg({ type: 'login', data: { username: 'admin', password: '123456' }}, true); /// true/false
+sendWsMsg('testMsg'); /// true/false
 ```
 
 #### Parameters
@@ -5875,7 +5875,7 @@ ___
 **`Example`**
 
 ```ts
-sessionStorageGet("key"); // 处理过后的 value，不需要再 decode 。
+sessionStorageGet("key"); /// 处理过后的 value，不需要再 decode 。
 ```
 
 #### Parameters
@@ -5899,7 +5899,7 @@ ___
 **`Example`**
 
 ```ts
-sessionStorageSet("key", "value"); // 存储时不需要处理数据，value === null|undefined 清除数据。
+sessionStorageSet("key", "value"); /// 存储时不需要处理数据，value === null|undefined 清除数据。
 ```
 
 #### Parameters
@@ -5924,7 +5924,7 @@ Set Cookie
 **`Example`**
 
 ```ts
-setCookie('name', 'value', 1); // 设置 name 对应的 Cookie 值
+setCookie('name', 'value', 1); /// 设置 name 对应的 Cookie 值
 ```
 
 #### Parameters
@@ -5950,7 +5950,7 @@ ___
 **`Example`**
 
 ```ts
-setEncodeStorage("key", "value"); // 存储时不需要处理数据，自动加密，value === null|undefined 清除数据。(boolean)
+setEncodeStorage("key", "value"); /// 存储时不需要处理数据，自动加密，value === null|undefined 清除数据。(boolean)
 ```
 
 #### Parameters
@@ -5977,7 +5977,7 @@ ___
 **`Example`**
 
 ```ts
-setEventListener('resize', () => { console.log('resize'); }); // cancel 当前 listener 的 function
+setEventListener('resize', () => { console.log('resize'); }); /// cancel 当前 listener 的 function
 ```
 
 #### Parameters
@@ -6028,7 +6028,7 @@ ___
 **`Example`**
 
 ```ts
-setWsBinaryType(); // true/false
+setWsBinaryType(); /// true/false
 ```
 
 #### Parameters
@@ -6052,7 +6052,7 @@ sha1 加密函数
 **`Example`**
 
 ```ts
-sha1("value"); // 加密后的字符串
+sha1("value"); /// 加密后的字符串
 ```
 
 #### Parameters
@@ -6076,7 +6076,7 @@ sha256 加密函数
 **`Example`**
 
 ```ts
-sha256("value"); // 加密后的字符串
+sha256("value"); /// 加密后的字符串
 ```
 
 #### Parameters
@@ -6101,7 +6101,7 @@ ___
 **`Example`**
 
 ```ts
-showToast({ type: 'success', content: '这是一个演示 Toast' }); // 显示 success 类型的 toast
+showToast({ type: 'success', content: '这是一个演示 Toast' }); /// 显示 success 类型的 toast
 ```
 
 #### Parameters
@@ -6125,8 +6125,8 @@ ___
 **`Example`**
 
 ```ts
-showVar([1, 2, 2, 3, 3]); // 显示序列化之后的数据
-showVar({a: 1, b: 2}); // 显示序列化之后的数据
+showVar([1, 2, 2, 3, 3]); /// 显示序列化之后的数据
+showVar({a: 1, b: 2}); /// 显示序列化之后的数据
 ```
 
 #### Parameters
@@ -6150,7 +6150,7 @@ ___
 **`Example`**
 
 ```ts
-shuffleArray([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]); // [5, 9, 1, 10, 2, 6, 4, 8, 3, 7]
+shuffleArray([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]); /// [5, 9, 1, 10, 2, 6, 4, 8, 3, 7]
 ```
 
 #### Parameters
@@ -6174,7 +6174,7 @@ ___
 **`Example`**
 
 ```ts
-await sleep(1000); // 等待 1000 毫秒再执行后面的
+await sleep(1000); /// 等待 1000 毫秒再执行后面的
 ```
 
 #### Parameters
@@ -6198,8 +6198,8 @@ Slug 化字符串 URL
 **`Example`**
 
 ```ts
-slugify('I LOVE OQM'); // 'I_LOVE_OQM'
-slugify('I LOVE OQM', { ' ': '-' }); // 'I-LOVE-OQM'
+slugify('I LOVE OQM'); /// 'I_LOVE_OQM'
+slugify('I LOVE OQM', { ' ': '-' }); /// 'I-LOVE-OQM'
 ```
 
 #### Parameters
@@ -6224,10 +6224,10 @@ ___
 **`Example`**
 
 ```ts
-['a', '3', 1, 2, 'b'].sort(sortBy('', false)); // ['b', 'a', '3', 2, 1]
-['a', '3', 1, 2, 'b'].sort(sortBy()); // [1, 2, '3', 'a', 'b']
-sortBy('createDt'); // 按照 createDt 升序排列
-sortBy(['name', 'age'], false); // 按照 name + age 降序排列
+['a', '3', 1, 2, 'b'].sort(sortBy('', false)); /// ['b', 'a', '3', 2, 1]
+['a', '3', 1, 2, 'b'].sort(sortBy()); /// [1, 2, '3', 'a', 'b']
+sortBy('createDt'); /// 按照 createDt 升序排列
+sortBy(['name', 'age'], false); /// 按照 name + age 降序排列
 ```
 
 #### Parameters
@@ -6252,10 +6252,10 @@ ___
 **`Example`**
 
 ```ts
-sortCallBack('createDt', true); // 按照 createDt 升序排列
+sortCallBack('createDt', true); /// 按照 createDt 升序排列
 const arr = [{name: '666'}, {name: '333'}]
-arr.sort(sortCallBack('name')); // [{name: '333'}, {name: '666'}]
-arr.sort(sortCallBack('name', false)); // [{name: '666'}, {name: '333'}]
+arr.sort(sortCallBack('name')); /// [{name: '333'}, {name: '666'}]
+arr.sort(sortCallBack('name', false)); /// [{name: '666'}, {name: '333'}]
 ```
 
 #### Parameters
@@ -6280,12 +6280,12 @@ ___
 **`Example`**
 
 ```ts
-splitCase('foo-bar'); // ['foo', 'bar']
-splitCase('foo_bar'); // ['foo', 'bar']
-splitCase('foo bar'); // ['foo', 'bar']
-splitCase('foo.bar'); // ['foo', 'bar']
-splitCase('fooBar'); // ['foo', 'bar']
-splitCase('foo-Bar'); // ['foo', 'bar']
+splitCase('foo-bar'); /// ['foo', 'bar']
+splitCase('foo_bar'); /// ['foo', 'bar']
+splitCase('foo bar'); /// ['foo', 'bar']
+splitCase('foo.bar'); /// ['foo', 'bar']
+splitCase('fooBar'); /// ['foo', 'bar']
+splitCase('foo-Bar'); /// ['foo', 'bar']
 ```
 
 #### Parameters
@@ -6309,8 +6309,8 @@ ___
 **`Example`**
 
 ```ts
-stackSticky('.stack', 'top'); // 所有 .stack 元素自动在 top 上堆叠
-stackSticky('.stack', 'left'); // 所有 .stack 元素自动在 left 上堆叠
+stackSticky('.stack', 'top'); /// 所有 .stack 元素自动在 top 上堆叠
+stackSticky('.stack', 'left'); /// 所有 .stack 元素自动在 left 上堆叠
 ```
 
 #### Parameters
@@ -6335,7 +6335,7 @@ ___
 **`Example`**
 
 ```ts
-str2html('<>&"'); // '&lt;&gt;&amp;&quot;'
+str2html('<>&"'); /// '&lt;&gt;&amp;&quot;'
 ```
 
 #### Parameters
@@ -6359,7 +6359,7 @@ unicode 转字符
 **`Example`**
 
 ```ts
-str2unicode("\\u6211\\u662f\\u8001a"); // '我是老a'
+str2unicode("\\u6211\\u662f\\u8001a"); /// '我是老a'
 ```
 
 #### Parameters
@@ -6383,8 +6383,8 @@ ___
 **`Example`**
 
 ```ts
-sub(1, 2); // -1
-sub(0.55, 0.1); // 0.45
+sub(1, 2); /// -1
+sub(0.55, 0.1); /// 0.45
 ```
 
 #### Parameters
@@ -6409,7 +6409,7 @@ ___
 **`Example`**
 
 ```ts
-throttle(() => {}, 1000); // 节流执行
+throttle(() => {}, 1000); /// 节流执行
 ```
 
 #### Parameters
@@ -6440,7 +6440,7 @@ ___
 **`Example`**
 
 ```ts
-timeSince(new Date()); // '刚刚'
+timeSince(new Date()); /// '刚刚'
 ```
 
 #### Parameters
@@ -6466,8 +6466,8 @@ ___
 **`Example`**
 
 ```ts
-times(1, 2); // 2
-times(0.55, 100); // 55
+times(1, 2); /// 2
+times(0.55, 100); /// 55
 ```
 
 #### Parameters
@@ -6493,7 +6493,7 @@ promise 报错不会阻断后面的 Promise，适用于多个 await Promise 情�
 **`Example`**
 
 ```ts
-to(Promise.resolve(1)); // Promise.resolve(1)
+to(Promise.resolve(1)); /// Promise.resolve(1)
 ```
 
 #### Parameters
@@ -6519,17 +6519,17 @@ ___
 **`Example`**
 
 ```ts
-toBool(0); // true
-toBool(''); // true
-toBool('', [0, '']); // false
-toBool(0, [0, '']); // false
-toBool('0'); // true
-toBool(1); // true
-toBool('false'); // false
-toBool('null'); // false
-toBool('undefined'); // false
-toBool('NaN'); // false
-toBool(null); // false
+toBool(0); /// true
+toBool(''); /// true
+toBool('', [0, '']); /// false
+toBool(0, [0, '']); /// false
+toBool('0'); /// true
+toBool(1); /// true
+toBool('false'); /// false
+toBool('null'); /// false
+toBool('undefined'); /// false
+toBool('NaN'); /// false
+toBool(null); /// false
 ```
 
 #### Parameters
@@ -6554,9 +6554,9 @@ ___
 **`Example`**
 
 ```ts
-toNum({}); // 0
-toNum([2]); // 2
-toNum('-123'); // -123
+toNum({}); /// 0
+toNum([2]); /// 2
+toNum('-123'); /// -123
 ```
 
 #### Parameters
@@ -6580,9 +6580,9 @@ ___
 **`Example`**
 
 ```ts
-toStr({}); // '{}'
-toStr([1, 2]); // '[1,2]'
-toStr(null); // ''
+toStr({}); /// '{}'
+toStr([1, 2]); /// '[1,2]'
+toStr(null); /// ''
 ```
 
 #### Parameters
@@ -6606,8 +6606,8 @@ ___
 **`Example`**
 
 ```ts
-transferCSVData([{ prop: 'name' }, { prop: 'age' }], [{ name: '张三', age: 15 }]); // 可以导出的字符数据
-transferCSVData([{ label: '姓名', prop: 'name' }, { label: '年龄', prop: 'age' }], [{ name: '张三', age: 15 }]); // 可以导出的字符数据
+transferCSVData([{ prop: 'name' }, { prop: 'age' }], [{ name: '张三', age: 15 }]); /// 可以导出的字符数据
+transferCSVData([{ label: '姓名', prop: 'name' }, { label: '年龄', prop: 'age' }], [{ name: '张三', age: 15 }]); /// 可以导出的字符数据
 ```
 
 #### Parameters
@@ -6632,9 +6632,9 @@ ___
 **`Example`**
 
 ```ts
-transferCase('red', 'upper'|1); // 'RED'
-transferCase('red', 'lower'|2); // 'red'
-transferCase('red', 'first'|3); // 'Red'
+transferCase('red', 'upper'|1); /// 'RED'
+transferCase('red', 'lower'|2); /// 'red'
+transferCase('red', 'first'|3); /// 'Red'
 ```
 
 #### Parameters
@@ -6659,8 +6659,8 @@ ___
 **`Example`**
 
 ```ts
-transferFileToBase64(file, 'application/pdf;charset=utf-8', (res) => console.log({ res })); // result object
-transferFileToBase64('test', 'text/plain', (res) => console.log({ res })); // result object
+transferFileToBase64(file, 'application/pdf;charset=utf-8', (res) => console.log({ res })); /// result object
+transferFileToBase64('test', 'text/plain', (res) => console.log({ res })); /// result object
 ```
 
 #### Parameters
@@ -6687,10 +6687,10 @@ ___
 
 ```ts
 transferIdCard('350424870506202');
-// {"age":35,"year":"1987","idCard":"350424870506202","sex":"女","constellation":{"cn":"金牛","en":"Taurus","date":"4.20-5.20"},"gender":0,"province":"福建","animal":"兔","birthday":"1987-05-06"}
+/// {"age":35,"year":"1987","idCard":"350424870506202","sex":"女","constellation":{"cn":"金牛","en":"Taurus","date":"4.20-5.20"},"gender":0,"province":"福建","animal":"兔","birthday":"1987-05-06"}
 transferIdCard('415106199801012130');
-// {"age":24,"year":"1998","idCard":"415106199801012130","sex":"男","constellation":{"cn":"魔羯","en":"Capricorn","date":"12.22-1.19"},"gender":1,"province":"河南","animal":"虎","birthday":"1998-01-01"}
-transferIdCard('xxxxx'); // {}
+/// {"age":24,"year":"1998","idCard":"415106199801012130","sex":"男","constellation":{"cn":"魔羯","en":"Capricorn","date":"12.22-1.19"},"gender":1,"province":"河南","animal":"虎","birthday":"1998-01-01"}
+transferIdCard('xxxxx'); /// {}
 ```
 
 #### Parameters
@@ -6714,8 +6714,8 @@ ___
 **`Example`**
 
 ```ts
-transferMoney(900); // '玖佰元整'
-transferMoney(852.5); // '捌佰伍拾贰元伍角'
+transferMoney(900); /// '玖佰元整'
+transferMoney(852.5); /// '捌佰伍拾贰元伍角'
 ```
 
 #### Parameters
@@ -6739,8 +6739,8 @@ ___
 **`Example`**
 
 ```ts
-transferNumber(100); // '1100100'
-transferNumber(1100100, 2, 10); // 100
+transferNumber(100); /// '1100100'
+transferNumber(1100100, 2, 10); /// 100
 ```
 
 #### Parameters
@@ -6767,11 +6767,11 @@ ___
 **`Example`**
 
 ```ts
-transferScanStr('=900182201234500'); // '900182201234500'
-transferScanStr('=<E5433000'); // 'E5433000'
-transferScanStr('@123'); // '123'
-transferScanStr('#test~'); // 'test'
-transferScanStr(undefined); // ''
+transferScanStr('=900182201234500'); /// '900182201234500'
+transferScanStr('=<E5433000'); /// 'E5433000'
+transferScanStr('@123'); /// '123'
+transferScanStr('#test~'); /// 'test'
+transferScanStr(undefined); /// ''
 ```
 
 #### Parameters
@@ -6795,8 +6795,8 @@ ___
 **`Example`**
 
 ```ts
-transferSeconds(1234); // '00:20:34'
-transferSeconds(1234, true); // {h: '00', i: 20, s: 34}
+transferSeconds(1234); /// '00:20:34'
+transferSeconds(1234, true); /// {h: '00', i: 20, s: 34}
 ```
 
 #### Parameters
@@ -6822,7 +6822,7 @@ ___
 **`Example`**
 
 ```ts
-trim('  a  b  ', 4); // 'a b'
+trim('  a  b  ', 4); /// 'a b'
 ```
 
 #### Parameters
@@ -6847,8 +6847,8 @@ ___
 **`Example`**
 
 ```ts
-truncate('HXB HXB HXB HXB HXB HXB', 12); // 'HXB HXB H...'
-truncate('OQM-OQM-OQM-OQM-OQM-OQM', 10, { ellipsis: '～', separator: '-' }); // 'OQM-OQM～'
+truncate('HXB HXB HXB HXB HXB HXB', 12); /// 'HXB HXB H...'
+truncate('OQM-OQM-OQM-OQM-OQM-OQM', 10, { ellipsis: '～', separator: '-' }); /// 'OQM-OQM～'
 ```
 
 #### Parameters
@@ -6876,7 +6876,7 @@ ___
 **`Example`**
 
 ```ts
-unicode2str("我是老A"); // '\\u6211\\u662f\\u8001a'
+unicode2str("我是老A"); /// '\\u6211\\u662f\\u8001a'
 ```
 
 #### Parameters
@@ -6900,8 +6900,8 @@ ___
 **`Example`**
 
 ```ts
-union([1, 2, 2, 3, 3], [1, 2, 4, 5]); // [1, 2, 3, 4, 5]
-union({a: 1, b: 2}, {a: 1, c: 3, b: 4}); // {a: 1, c: 3, b: 2}
+union([1, 2, 2, 3, 3], [1, 2, 4, 5]); /// [1, 2, 3, 4, 5]
+union({a: 1, b: 2}, {a: 1, c: 3, b: 4}); /// {a: 1, c: 3, b: 2}
 ```
 
 #### Parameters
@@ -6926,8 +6926,8 @@ ___
 **`Example`**
 
 ```ts
-unique([1, 2, 3, 1, 2, 3]); // [1, 2, 3]
-unique([{id: 1, value: 'hello'}, {id: 2, value: 'world'}, {id: 2, value: 'world', others: true}], (a, b) => a.id === b.id); // [id1, id2 带 true]
+unique([1, 2, 3, 1, 2, 3]); /// [1, 2, 3]
+unique([{id: 1, value: 'hello'}, {id: 2, value: 'world'}, {id: 2, value: 'world', others: true}], (a, b) => a.id === b.id); /// [id1, id2 带 true]
 ```
 
 #### Parameters
@@ -6952,7 +6952,7 @@ ___
 **`Example`**
 
 ```ts
-uuid(); // '7b72e264-61fe-426e-b95f-35d4e61c5742'
+uuid(); /// '7b72e264-61fe-426e-b95f-35d4e61c5742'
 ```
 
 #### Returns
@@ -6970,10 +6970,10 @@ ___
 **`Example`**
 
 ```ts
-versionUpgrade('0.0.1'); // '0.0.2'
-versionUpgrade('0.0.0.9'); // '0.0.0.10'
-versionUpgrade('0.0.0.9', 9); // '0.0.1.0'
-versionUpgrade('0.0.9.9', 9); // '0.1.0.0'
+versionUpgrade('0.0.1'); /// '0.0.2'
+versionUpgrade('0.0.0.9'); /// '0.0.0.10'
+versionUpgrade('0.0.0.9', 9); /// '0.0.1.0'
+versionUpgrade('0.0.9.9', 9); /// '0.1.0.0'
 ```
 
 #### Parameters
@@ -7027,9 +7027,9 @@ ___
 
 ```ts
 watermark(document.body, 'My Watermark', { fontSize: 20, opacity: 0.5, angle: -30, color: 'red', fontFamily: 'Arial', repeat: true, backgroundOpacity: 0.05 });
-watermark(document.body, 'My Watermark'); // 在 body 中生成水印
-watermark(document.body, 'My Watermark', { fontSize: 120, color: 'red', repeat: false, angle: 0 }); // 在 body 中生成水印
-watermark(document.body, 'My Watermark', { fontSize: 20, color: 'red', repeat: true, angle: 90 }); // 在 body 中生成水印
+watermark(document.body, 'My Watermark'); /// 在 body 中生成水印
+watermark(document.body, 'My Watermark', { fontSize: 120, color: 'red', repeat: false, angle: 0 }); /// 在 body 中生成水印
+watermark(document.body, 'My Watermark', { fontSize: 20, color: 'red', repeat: true, angle: 90 }); /// 在 body 中生成水印
 ```
 
 #### Parameters
@@ -7055,8 +7055,8 @@ ajax 简单封装
 **`Example`**
 
 ```ts
-xAjax('get', 'https://test.cn', { params: { test: 123, hello: 456 }, success: (data) => console.log('success', data), fail: (error) => console.log('fail', error) }); // ajax
-xAjax('POST', 'https://test.cn', { contentType: 'application/json', data: { test: 123 }, success: (data) => console.log('success', data), fail: (error) => console.log('fail', error) }); // ajax
+xAjax('get', 'https://test.cn', { params: { test: 123, hello: 456 }, success: (data) => console.log('success', data), fail: (error) => console.log('fail', error) }); /// ajax
+xAjax('POST', 'https://test.cn', { contentType: 'application/json', data: { test: 123 }, success: (data) => console.log('success', data), fail: (error) => console.log('fail', error) }); /// ajax
 ```
 
 #### Parameters
@@ -7090,8 +7090,8 @@ fetch 简单封装
 **`Example`**
 
 ```ts
-xFetch('get', 'https://test.cn', { params: { test: 123, hello: 456 } }).then(res => res.json()).then(data => console.log(data)); // fetchXPromise
-xFetch('POST', 'https://test.cn', { contentType: 'application/json', data: { test: 123 } }).catch(error => console.log(error)); // fetchXPromise
+xFetch('get', 'https://test.cn', { params: { test: 123, hello: 456 } }).then(res => res.json()).then(data => console.log(data)); /// fetchXPromise
+xFetch('POST', 'https://test.cn', { contentType: 'application/json', data: { test: 123 } }).catch(error => console.log(error)); /// fetchXPromise
 ```
 
 #### Parameters

@@ -11,7 +11,7 @@ import { getType } from '@/Types';
 /**
  * 对象转 FormData 格式
  * @example
- * formatFormData({a: 1, b: 2}); // FormData
+ * formatFormData({a: 1, b: 2}); /// FormData
  * @param obj 源数据
  * @param hasBrackets 是否带括号
  * @param hasIndex 是否带 index
@@ -37,9 +37,9 @@ export function formatFormData(obj: any, hasBrackets = false, hasIndex = false):
 /**
  * 对象转 URLSearchParams 字符串
  * @example
- * formatURLSearchParams({a: 1, b: 2, c: [1, 2]}); // a=1&b=2&c=1&c=2
- * formatURLSearchParams({a: 1, b: 2, c: [1, 2]}, true); // a=1&b=2&c[]=1&c[]=2
- * formatURLSearchParams({a: 1, b: 2, c: [1, 2]}, true, true); // a=1&b=2&c[0]=1&c[1]=2
+ * formatURLSearchParams({a: 1, b: 2, c: [1, 2]}); /// a=1&b=2&c=1&c=2
+ * formatURLSearchParams({a: 1, b: 2, c: [1, 2]}, true); /// a=1&b=2&c[]=1&c[]=2
+ * formatURLSearchParams({a: 1, b: 2, c: [1, 2]}, true, true); /// a=1&b=2&c[0]=1&c[1]=2
  * @param obj 源数据
  * @param hasBrackets 是否带括号
  * @param hasIndex 是否带 index

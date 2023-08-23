@@ -79,7 +79,7 @@ function _tempGet(key: string, storeType: 'L' | 'S'): any {
 /**
  * 获取 localStorage
  * @example
- * localStorageGet("key"); // 处理过后的 value，不需要再 decode 。
+ * localStorageGet("key"); /// 处理过后的 value，不需要再 decode 。
  * @param key 存储 key
  * @returns
  */
@@ -90,7 +90,7 @@ export function localStorageGet(key: string): any {
 /**
  * 设置 localStorage
  * @example
- * localStorageSet("key", "value"); // 存储时不需要处理数据，value === null|undefined 清除数据。(boolean)
+ * localStorageSet("key", "value"); /// 存储时不需要处理数据，value === null|undefined 清除数据。(boolean)
  * @param key 存储 key
  * @param value 存储 value，value === null|undefined 清除数据。
  * @returns
@@ -102,7 +102,7 @@ export function localStorageSet(key: string, value: any): boolean {
 /**
  * 获取 sessionStorage
  * @example
- * sessionStorageGet("key"); // 处理过后的 value，不需要再 decode 。
+ * sessionStorageGet("key"); /// 处理过后的 value，不需要再 decode 。
  * @param key 存储 key
  * @returns
  */
@@ -113,7 +113,7 @@ export function sessionStorageGet(key: string): any {
 /**
  * 设置 sessionStorage
  * @example
- * sessionStorageSet("key", "value"); // 存储时不需要处理数据，value === null|undefined 清除数据。
+ * sessionStorageSet("key", "value"); /// 存储时不需要处理数据，value === null|undefined 清除数据。
  * @param key 存储 key
  * @param value 存储 value，value === null|undefined 清除数据。
  * @returns
@@ -125,7 +125,7 @@ export function sessionStorageSet(key: string, value: any): boolean {
 /**
  * 获取 localStorage 对象值
  * @example
- * getLocalObj("key"); // 处理过后的 value，不需要再 decode，且有默认值 {}。
+ * getLocalObj("key"); /// 处理过后的 value，不需要再 decode，且有默认值 {}。
  * @param key 存储 key
  * @returns
  */
@@ -136,7 +136,7 @@ export function getLocalObj(key: string): any {
 /**
  * 获取 sessionStorage 对象值
  * @example
- * getSessionObj("key"); // 处理过后的 value，不需要再 decode，且有默认值 {}。
+ * getSessionObj("key"); /// 处理过后的 value，不需要再 decode，且有默认值 {}。
  * @param key 存储 key
  * @returns
  */
@@ -147,7 +147,7 @@ export function getSessionObj(key: string): any {
 /**
  * 获取 localStorage 数组值
  * @example
- * getLocalArr("key"); // 处理过后的 value，不需要再 decode，且有默认值 []。
+ * getLocalArr("key"); /// 处理过后的 value，不需要再 decode，且有默认值 []。
  * @param key 存储 key
  * @returns
  */
@@ -158,7 +158,7 @@ export function getLocalArr(key: string): any[] {
 /**
  * 获取 sessionStorage 数组值
  * @example
- * getSessionArr("key"); // 处理过后的 value，不需要再 decode，且有默认值 []。
+ * getSessionArr("key"); /// 处理过后的 value，不需要再 decode，且有默认值 []。
  * @param key 存储 key
  * @returns
  */
@@ -169,7 +169,7 @@ export function getSessionArr(key: string): any[] {
 /**
  * 获取 Storage 加密数据
  * @example
- * getDecodeStorage("key"); // 处理过后的 value，不需要再 decode 和解密。
+ * getDecodeStorage("key"); /// 处理过后的 value，不需要再 decode 和解密。
  * @param key 存储 key
  * @param isLocal 是否 localStorage
  * @returns
@@ -182,7 +182,7 @@ export function getDecodeStorage(key: string, isLocal = true): any {
 /**
  * 设置 Storage 加密数据
  * @example
- * setEncodeStorage("key", "value"); // 存储时不需要处理数据，自动加密，value === null|undefined 清除数据。(boolean)
+ * setEncodeStorage("key", "value"); /// 存储时不需要处理数据，自动加密，value === null|undefined 清除数据。(boolean)
  * @param key 存储 key
  * @param value 存储 value 字符串，value === null|undefined 清除数据。
  * @param isLocal 是否 localStorage

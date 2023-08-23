@@ -31,7 +31,7 @@ export type ToastOptions = {
  * 显示 Toast
  * `export function showToast(options: ToastOptions);`
  * @example
- * showToast({ type: 'success', content: '这是一个演示 Toast' }); // 显示 success 类型的 toast
+ * showToast({ type: 'success', content: '这是一个演示 Toast' }); /// 显示 success 类型的 toast
  * @param options
  * @returns
  */
@@ -96,7 +96,7 @@ export const showToast = (function () {
 /**
  * 隐藏 toast 不传值关闭所有 toast
  * @example
- * const toast = showToast({ content: '这是一个演示 Toast' }); // hideToast(toast);
+ * const toast = showToast({ content: '这是一个演示 Toast' }); /// hideToast(toast);
  * @param toast
  * @returns
  */
@@ -115,7 +115,7 @@ export function hideToast(toast?: any) {
 /**
  * 快速展示 Toast
  * @example
- * const myToast = Toast('这是一个快速演示 Toast'); // hideToast(myToast);
+ * const myToast = Toast('这是一个快速演示 Toast'); /// hideToast(myToast);
  * @param msg
  * @param type
  * @returns
@@ -136,7 +136,7 @@ export function Toast(
 /**
  * Loading Toast 不会自动关闭
  * @example
- * const myLoading = Loading(msg?); // hideToast(myLoading);
+ * const myLoading = Loading(msg?); /// hideToast(myLoading);
  * @param msg
  * @returns
  */

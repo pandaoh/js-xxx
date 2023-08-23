@@ -1,7 +1,7 @@
 /**
  * Get Cookie
  * @example
- * getCookie('name'); // 获取 name 对应的 Cookie 值
+ * getCookie('name'); /// 获取 name 对应的 Cookie 值
  * @param key Cookie key
  * @returns
  */
@@ -9,7 +9,7 @@ export declare function getCookie(key: string): any;
 /**
  * Set Cookie
  * @example
- * setCookie('name', 'value', 1); // 设置 name 对应的 Cookie 值
+ * setCookie('name', 'value', 1); /// 设置 name 对应的 Cookie 值
  * @param key Cookie key
  * @param value Cookie value
  * @param expires Cookie expires
@@ -19,7 +19,7 @@ export declare function setCookie(key: string, value: any, expires: number): voi
 /**
  * Remove Cookie
  * @example
- * removeCookie('name'); // 删除 name 对应的 Cookie
+ * removeCookie('name'); /// 删除 name 对应的 Cookie
  * @param key Cookie key
  * @returns
  */
@@ -27,7 +27,7 @@ export declare function removeCookie(key: string): void;
 /**
  * Clear Cookie
  * @example
- * clearCookies(); // 删除所有的 Cookie
+ * clearCookies(); /// 删除所有的 Cookie
  * @returns
  */
 export declare function clearCookies(): void;

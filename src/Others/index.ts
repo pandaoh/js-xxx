@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:53:39
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-22 14:18:14
+ * @LastEditTime: 2023-08-23 10:39:03
  * @Description: 因项目需要常用函数，不管任何项目，都放到一起。注意甄别，没有复用意义的函数就不要添加了。
  * @FilePath: \js-xxx\src\Others\index.ts
  */
@@ -15,13 +15,6 @@ import { getType } from '@/Types';
 import { download } from '@/Dom';
 import { getContentType } from '@/Request';
 
-/**
- * 验证 Cron 字段是否有效的辅助函数
- * @param field
- * @param min
- * @param max
- * @returns
- */
 function _isValidCronField(field: any, min: any, max: any): boolean {
   const regex = new RegExp('^\\d+|\\*/\\d+|[\\d,-]+/[\\d,-]+$');
   if (!regex.test(field)) {
@@ -44,7 +37,7 @@ function _isValidCronField(field: any, min: any, max: any): boolean {
 /**
  * 文件大小格式化
  * @example
- * formatBytes(1024); // '1.00 KB'
+ * formatBytes(1024); /// '1.00 KB'
  * @param bytes 文件大小 bytes
  * @param precision 精度
  * @returns
@@ -104,7 +97,7 @@ export function getSelectText() {
 /**
  * 获取浏览器信息
  * @example
- * getUserAgent(); // { browserName: 'Chrome', browserVersion: '102.0.0.0', osName: 'Windows', osVersion: '10.0', deviceName: '' }
+ * getUserAgent(); /// { browserName: 'Chrome', browserVersion: '102.0.0.0', osName: 'Windows', osVersion: '10.0', deviceName: '' }
  * @returns
  */
 export function getUserAgent(): { browserName: string; browserVersion: string; osName: string; osVersion: string } {
@@ -146,11 +139,16 @@ export function getUserAgent(): { browserName: string; browserVersion: string; o
 
   const userAgentStr: string = navigator.userAgent;
   const userAgentObj = {
-    browserName: '', // 浏览器名称
-    browserVersion: '', // 浏览器版本
-    osName: '', // 操作系统名称
-    osVersion: '', // 操作系统版本
-    deviceName: '', // 设备名称
+    // 浏览器名称
+    browserName: '',
+    // 浏览器版本
+    browserVersion: '',
+    // 操作系统名称
+    osName: '',
+    // 操作系统版本
+    osVersion: '',
+    // 设备名称
+    deviceName: '',
   };
 
   for (const key in browserReg) {
@@ -198,7 +196,7 @@ export function getUserAgent(): { browserName: string; browserVersion: string; o
 /**
  * 判断当前运行环境是否为 Node.js
  * @example
- * isNode(); // true
+ * isNode(); /// true
  * @returns
  */
 export function isNode(): boolean {
@@ -208,7 +206,7 @@ export function isNode(): boolean {
 /**
  * 判断当前运行环境是否为浏览器
  * @example
- * isBrowser(); // true
+ * isBrowser(); /// true
  * @returns
  */
 export function isBrowser(): boolean {
@@ -218,7 +216,7 @@ export function isBrowser(): boolean {
 /**
  * 检测黑暗模式
  * @example
- * isDarkMode(); // true
+ * isDarkMode(); /// true
  * @returns
  */
 export function isDarkMode(): boolean {
@@ -232,7 +230,7 @@ export function isDarkMode(): boolean {
 /**
  * 是否苹果设备
  * @example
- * isAppleDevice(); // true
+ * isAppleDevice(); /// true
  * @returns
  */
 export function isAppleDevice(): boolean {
@@ -244,7 +242,7 @@ export function isAppleDevice(): boolean {
  * 单击事件转换为多击事件
  * Author: WuXingHeng
  * @example
- * dom.onclick = onClick2MoreClick(300, clickOneCallBack, clickTwoCallBack, clickThreeCallBack, clickFourCallBack); // void
+ * dom.onclick = onClick2MoreClick(300, clickOneCallBack, clickTwoCallBack, clickThreeCallBack, clickFourCallBack); /// void
  * @param {number} delay
  * @param {Array} events
  * @returns
@@ -274,14 +272,15 @@ export function onClick2MoreClick(delay = 300, ...events: Array<any>): any {
 /**
  * 单独绑定多击事件
  * @example
- * dom.onclick = bindMoreClick(moreClickCallBack, 4, 500); // 绑定 4 击事件
+ * dom.onclick = bindMoreClick(moreClickCallBack, 4, 500); /// 绑定 4 击事件
  * @param fn
  * @param times
  * @param delay
  * @returns
  */
 export function bindMoreClick(fn: any, times = 3, delay = 300) {
-  times = times - 1; // count 从 0 开始
+  // count 从 0 开始
+  times = times - 1;
   let timer: any = null;
   let lastTime = 0;
   let count = 0;
@@ -303,7 +302,7 @@ export function bindMoreClick(fn: any, times = 3, delay = 300) {
 /**
  * 设置长按事件-支持加入单击事件
  * @example
- * addLongPressEvent(document.querySelector('.img-btn'), (event); // console.log('addLongPressEvent'), 3000); // 长按会触发事件
+ * addLongPressEvent(document.querySelector('.img-btn'), (event); /// console.log('addLongPressEvent'), 3000); /// 长按会触发事件
  * @param element
  * @param longPressCallback
  * @param duration
@@ -370,7 +369,7 @@ export function addLongPressEvent(element: any, longPressCallback: any, duration
 /**
  * 触发某个键盘按键事件
  * @example
- * emitKeyboardEvent('keydown', 108); // 小键盘回车事件
+ * emitKeyboardEvent('keydown', 108); /// 小键盘回车事件
  * @param eventType 事件类型
  * @param keyCode 触发键盘 code
  * @returns
@@ -387,8 +386,8 @@ export function emitKeyboardEvent(eventType: 'keydown' | 'keypress' | 'keyup' = 
 /**
  * 禁用冲突事件，条码枪、关闭窗口快捷键等。
  * @example
- * document.addEventListener('keydown', disableConflictEvent); // 进入页面后禁用冲突事件
- * document.removeEventListener('keydown', disableConflictEvent); // 退出页面后关闭监听
+ * document.addEventListener('keydown', disableConflictEvent); /// 进入页面后禁用冲突事件
+ * document.removeEventListener('keydown', disableConflictEvent); /// 退出页面后关闭监听
  * @param event 触发事件
  * @returns
  */
@@ -409,15 +408,16 @@ export function disableConflictEvent(event: any) {
     // ctrl+f4 关闭窗口快捷键
     event.preventDefault();
   }
-  return false; // true 防止此事件被进一步传播;false 允许此事件继续传播;
+  // true 防止此事件被进一步传播; false 允许此事件继续传播;
+  return false;
 }
 
 /**
  * 版本号比对算法
  * @example
- * checkVersion('1.0.1-rc', '1.0.0', '-rc'); // 1
- * checkVersion('1.0.0', '1.0.1'); // -1
- * checkVersion('1.0.0', '1.0.0'); // 0
+ * checkVersion('1.0.1-rc', '1.0.0', '-rc'); /// 1
+ * checkVersion('1.0.0', '1.0.1'); /// -1
+ * checkVersion('1.0.0', '1.0.0'); /// 0
  * @param targetVersion
  * @param currentVersion
  * @param testStr default(-rc)
@@ -448,10 +448,10 @@ export function checkVersion(targetVersion: string, currentVersion: string, test
 /**
  * 版本号升级算法
  * @example
- * versionUpgrade('0.0.1'); // '0.0.2'
- * versionUpgrade('0.0.0.9'); // '0.0.0.10'
- * versionUpgrade('0.0.0.9', 9); // '0.0.1.0'
- * versionUpgrade('0.0.9.9', 9); // '0.1.0.0'
+ * versionUpgrade('0.0.1'); /// '0.0.2'
+ * versionUpgrade('0.0.0.9'); /// '0.0.0.10'
+ * versionUpgrade('0.0.0.9', 9); /// '0.0.1.0'
+ * versionUpgrade('0.0.9.9', 9); /// '0.1.0.0'
  * @param version 版本号
  * @param maxVersionCode 最大版本号
  * @returns
@@ -483,8 +483,8 @@ export function versionUpgrade(version: string, maxVersionCode = 99): string {
 /**
  * 处理 rh 血型
  * @example
- * formatRh('**d**'); // '阴性'
- * formatRh('**d**', { format: [true, false], default: false }); // true
+ * formatRh('**d**'); /// '阴性'
+ * formatRh('**d**', { format: [true, false], default: false }); /// true
  * @param input 输入值
  * @param options 处理配置
  * @returns
@@ -531,7 +531,7 @@ export function formatRh(
 /**
  * 是否阴性血
  * @example
- * isRhNegative('**d**'); // true
+ * isRhNegative('**d**'); /// true
  * @param input 输入值
  * @returns
  */
@@ -542,7 +542,7 @@ export function isRhNegative(input: string): boolean {
 /**
  * 获取血型枚举信息
  * @example
- * getBloodGroup('A'); // { value: 'A', label: 'A 型', color: '#1890FF', lower: 'a', upper: 'A' }
+ * getBloodGroup('A'); /// { value: 'A', label: 'A 型', color: '#1890FF', lower: 'a', upper: 'A' }
  * @param bloodGroup
  * @returns
  */
@@ -606,11 +606,11 @@ export function getBloodGroup(bloodGroup: string): {
 /**
  * 填对应值到对应的 dom 中
  * @example
- * dataTo('.className', 'xxx'); // xxx 会填入到类名为 class-name 的元素中
- * dataTo('.class-name', 'xxx'); // xxx 会填入到类名为 class-name 的元素中
- * dataTo('.class_name', 'xxx'); // xxx 会填入到类名为 class-name 的元素中
- * dataTo('.class.name', 'xxx'); // xxx 会填入到类名为 class-name 的元素中
- * dataTo('#id.name', 'xxx'); // xxx 会填入到 id 名为 id-name 的元素中
+ * dataTo('.className', 'xxx'); /// xxx 会填入到类名为 class-name 的元素中
+ * dataTo('.class-name', 'xxx'); /// xxx 会填入到类名为 class-name 的元素中
+ * dataTo('.class_name', 'xxx'); /// xxx 会填入到类名为 class-name 的元素中
+ * dataTo('.class.name', 'xxx'); /// xxx 会填入到类名为 class-name 的元素中
+ * dataTo('#id.name', 'xxx'); /// xxx 会填入到 id 名为 id-name 的元素中
  * @param key
  * @param value
  * @returns
@@ -634,9 +634,9 @@ export function dataTo(key: string, value: any): void {
  * 给对应 dom 生成水印
  * @example
  * watermark(document.body, 'My Watermark', { fontSize: 20, opacity: 0.5, angle: -30, color: 'red', fontFamily: 'Arial', repeat: true, backgroundOpacity: 0.05 });
- * watermark(document.body, 'My Watermark'); // 在 body 中生成水印
- * watermark(document.body, 'My Watermark', { fontSize: 120, color: 'red', repeat: false, angle: 0 }); // 在 body 中生成水印
- * watermark(document.body, 'My Watermark', { fontSize: 20, color: 'red', repeat: true, angle: 90 }); // 在 body 中生成水印
+ * watermark(document.body, 'My Watermark'); /// 在 body 中生成水印
+ * watermark(document.body, 'My Watermark', { fontSize: 120, color: 'red', repeat: false, angle: 0 }); /// 在 body 中生成水印
+ * watermark(document.body, 'My Watermark', { fontSize: 20, color: 'red', repeat: true, angle: 90 }); /// 在 body 中生成水印
  * @param dom
  * @param text
  * @param options
@@ -707,27 +707,32 @@ export function watermark(dom: any, text: string, options: any = {}) {
 /**
  * 获取 cron 表达式
  * @example
- * getCron(); // '* * * * *'
- * getCron({ minute: '30', hour: '1', day: '10'}); // '30 1 10 * *'
- * getCron({  week: '?' }); // '* * * * ?'
- * getCron({ week: '*' }); // '* * * * *'
- * getCron({ week: 0 }); // '* * * * 0'
- * getCron({ week: '0' }); // '* * * * 0'
- * getCron({ week: '7' }); // '* * * * 0'
- * getCron({ week: 'SUN,天,日,六,6,5' }); // '* * * * 0,5,6'
- * getCron({ day: '1-5' }); // '* * 1-5 * * '
- * getCron({ day: '1,5' }); // '* * 1,5 * * '
- * getCron({ day: '1/5' }); // '* * 1/5 * * '
+ * getCron(); /// '* * * * *'
+ * getCron({ minute: '30', hour: '1', day: '10'}); /// '30 1 10 * *'
+ * getCron({  week: '?' }); /// '* * * * ?'
+ * getCron({ week: '*' }); /// '* * * * *'
+ * getCron({ week: 0 }); /// '* * * * 0'
+ * getCron({ week: '0' }); /// '* * * * 0'
+ * getCron({ week: '7' }); /// '* * * * 0'
+ * getCron({ week: 'SUN,天,日,六,6,5' }); /// '* * * * 0,5,6'
+ * getCron({ day: '1-5' }); /// '* * 1-5 * * '
+ * getCron({ day: '1,5' }); /// '* * 1,5 * * '
+ * getCron({ day: '1/5' }); /// '* * 1/5 * * '
  * @param options
  * @returns
  */
 export function getCron({ minute = '*', hour = '*', day = '*', month = '*', week = '*' } = {}) {
   const limits = [
-    [0, 59], // 分钟 (0-59)
-    [0, 23], // 小时 (0-23)
-    [1, 31], // 日期 (1-31)
-    [1, 12], // 月份 (1-12)
-    [0, 7], // 星期 (0-7 或 SUN-SAT)
+    // 分钟 (0-59)
+    [0, 59],
+    // 小时 (0-23)
+    [0, 23],
+    // 日期 (1-31)
+    [1, 31],
+    // 月份 (1-12)
+    [1, 12],
+    // 星期 (0-7 或 SUN-SAT)
+    [0, 7],
   ];
 
   let weekField: any = week;
@@ -824,8 +829,8 @@ export function getCron({ minute = '*', hour = '*', day = '*', month = '*', week
 /**
  * 在页面上打印数据，我们打包通常会设置清除 console，使用此函数打印关键信息就不会被清除啦。
  * @example
- * log([1, 2, 2, 3, 3], {a: 1, b: 2}, 'test', true); // 打印数据
- * log('danger'); // 打印数据
+ * log([1, 2, 2, 3, 3], {a: 1, b: 2}, 'test', true); /// 打印数据
+ * log('danger'); /// 打印数据
  * @param args
  * @returns
  */
@@ -836,6 +841,7 @@ export function log(...args: any[]): void {
     //     new Date(),
     //   )}]----->', 'color:#1890FF;font-size:10px;margin-right:5px', ...JSON.parse('${JSON.stringify(args)}'));`,
     // );
+    // 确保对象中的 JSON 字符串不会干扰 JavaScript 解析器。
     const formattedArgs = args.map((arg) => {
       // eslint-disable-next-line no-prototype-builtins
       if (typeof arg === 'object' && arg !== null && arg.hasOwnProperty('toJSON')) {
@@ -843,12 +849,13 @@ export function log(...args: any[]): void {
       } else {
         return arg;
       }
-    }); // 确保对象中的 JSON 字符串不会干扰 JavaScript 解析器。
+    });
     const code = `console.log('%c日志[${formatDate(
       new Date(),
     )}]----->\\n', 'color:#1890FF;font-size:10px;margin-right:5px', ...${JSON.stringify(formattedArgs).replace(
       /</g,
-      '\\u003c', // 防止 xss
+      // 防止 xss
+      '\\u003c',
     )});`;
     const fn = new Function(code);
     fn();
@@ -862,9 +869,9 @@ export function log(...args: any[]): void {
  * 且有更好的可读性与日志标识
  * 每次打印会返回日志字符串，可以统一收集写入到文件保存，或者上传到服务器。
  * @example
- * logVar([1, 2, 2, 3, 3]); // 打印数据
- * logVar({a: 1, b: 2}, 'danger'); // 打印数据
- * logVar({a: 1, b: 2}, 'success'); // 打印数据
+ * logVar([1, 2, 2, 3, 3]); /// 打印数据
+ * logVar({a: 1, b: 2}, 'danger'); /// 打印数据
+ * logVar({a: 1, b: 2}, 'success'); /// 打印数据
  * @param value
  * @param logLevel
  * @returns
@@ -883,11 +890,11 @@ export function logVar(value: any, logLevel = 'info'): string {
  * 强制转换扫描字符串的特殊字符
  * `/(=)|(<)|(>)|(&)|(%)|(#)|(@)|(~)/g`
  * @example
- * transferScanStr('=900182201234500'); // '900182201234500'
- * transferScanStr('=<E5433000'); // 'E5433000'
- * transferScanStr('@123'); // '123'
- * transferScanStr('#test~'); // 'test'
- * transferScanStr(undefined); // ''
+ * transferScanStr('=900182201234500'); /// '900182201234500'
+ * transferScanStr('=<E5433000'); /// 'E5433000'
+ * transferScanStr('@123'); /// '123'
+ * transferScanStr('#test~'); /// 'test'
+ * transferScanStr(undefined); /// ''
  * @param value
  * @returns
  */
@@ -901,22 +908,23 @@ export function transferScanStr(value: string): string {
 /**
  * 强制转化为字符串，避免导出表格显示科学计数法。
  * @example
- * forceToStr(123123123); // '123123123'
- * forceToStr(undefined); // '-'
- * forceToStr(undefined, 0); // '0'
+ * forceToStr(123123123); /// '123123123'
+ * forceToStr(undefined); /// '-'
+ * forceToStr(undefined, 0); /// '0'
  * @param value
  * @param defaultValue
  * @returns
  */
 export function forceToStr(value: any, defaultValue = '-'): string {
-  return `\u200b${value ?? defaultValue ?? '-'}`; // \t \u200c u200d 也可以
+  // \t \u200c u200d 也可以
+  return `\u200b${value ?? defaultValue ?? '-'}`;
 }
 
 /**
  * 转换 data 为可导出的 csv 数据
  * @example
- * transferCSVData([{ prop: 'name' }, { prop: 'age' }], [{ name: '张三', age: 15 }]); // 可以导出的字符数据
- * transferCSVData([{ label: '姓名', prop: 'name' }, { label: '年龄', prop: 'age' }], [{ name: '张三', age: 15 }]); // 可以导出的字符数据
+ * transferCSVData([{ prop: 'name' }, { prop: 'age' }], [{ name: '张三', age: 15 }]); /// 可以导出的字符数据
+ * transferCSVData([{ label: '姓名', prop: 'name' }, { label: '年龄', prop: 'age' }], [{ name: '张三', age: 15 }]); /// 可以导出的字符数据
  * @param fields
  * @param data
  * @returns
@@ -935,9 +943,9 @@ export function transferCSVData(fields: { label?: string; prop: string }[], data
 /**
  * 导出数据为文件
  * @example
- * exportFile(data); // 导出 txt 文件
- * exportFile(data, 'csv-导出文件测试', 'csv'); // 导出 csv 文件
- * exportFile('http://a.biugle.cn/img/cdn/dev/avatar/1.png', 'test', 'png'); // 导出 png 文件
+ * exportFile(data); /// 导出 txt 文件
+ * exportFile(data, 'csv-导出文件测试', 'csv'); /// 导出 csv 文件
+ * exportFile('http://a.biugle.cn/img/cdn/dev/avatar/1.png', 'test', 'png'); /// 导出 png 文件
  * @param data
  * @param fileName
  * @param fileType
@@ -949,8 +957,9 @@ export function exportFile(data: string, fileName?: string, fileType = 'txt'): v
     download(data, `${fileName ?? formatDate(new Date(), 'yyyy-mm-dd-hhiiss')}.${fileType}`);
     return;
   }
+  // 加入特殊字符确保 utf-8
   // eslint-disable-next-line spellcheck/spell-checker
-  const uri = `data:${getContentType(fileType)};charset=utf-8,\ufeff${data}`; // 加入特殊字符确保 utf-8
+  const uri = `data:${getContentType(fileType)};charset=utf-8,\ufeff${data}`;
   // U+FEFF 是一个零宽度非断字符（Zero Width No-Break Space），也称为“字节顺序标记（Byte Order Mark，BOM）”。
   // eslint-disable-next-line spellcheck/spell-checker
   download(uri, `${fileName ?? formatDate(new Date(), 'yyyy-mm-dd-hhiiss')}.${fileType}`);
