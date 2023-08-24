@@ -32,34 +32,6 @@ export declare function insertAfter(newElement: any, targetElement: any): void;
  */
 export declare function offDefaultEvent(event: any): boolean;
 /**
- * 添加指定元素复制事件
- * @example
- * copyContent(document.getElementById('copy')); /// 复制 #copy 的内容成功
- * @param targetDom 目标内容元素
- * @param addMsg 复制后增加内容
- * @returns
- */
-export declare function copyContent(targetDom: any, addMsg?: any): any;
-/**
- * 滚动到顶部
- * `平滑滚动 css：scroll-behavior: smooth;`
- * @example
- * scrollToTop('body'); /// 滚动到顶部
- * @param elementSelector 指定元素选择器
- * @param to `('start'|'end')[default: 'start']`
- * @returns
- */
-export declare function scrollToTop(elementSelector: string, to?: 'start' | 'end'): void;
-/**
- * 滚动到底部
- * `平滑滚动 css：scroll-behavior: smooth;`
- * @example
- * scrollToBottom('body'); /// 滚动到底部
- * @param elementSelector 指定元素选择器
- * @returns
- */
-export declare function scrollToBottom(elementSelector: string): void;
-/**
  * Y 轴滚动到指定位置
  * @example
  *  `scrollYTo(0); /// 滚动到顶部

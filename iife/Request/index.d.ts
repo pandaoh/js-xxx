@@ -15,7 +15,7 @@ export declare function qsStringify(obj: any, options?: {
     hasBrackets?: boolean;
 }): string;
 /**
- * 获取 query string 参数对象
+ * 获取 query string 参数转对象
  * @example
  * qsParse('start=0&count=20&x=1&x=2&x=3', 'x'); /// [1, 2, 3]
  * qsParse('start=0&count=20&x=1&x=2&x=3'); /// { start: '0', count: '20', x: [1, 2, 3], '/': 'start=0&count=20&x=1&x=2&x=3' }

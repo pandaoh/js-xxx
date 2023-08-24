@@ -1,6 +1,6 @@
 js-xxx
 
-# js-xxx - v2.0.1
+# js-xxx - v2.0.5
 
 ## Table of contents
 
@@ -10,7 +10,7 @@ js-xxx
 
 ### Type Aliases
 
-- [ToastOptions](README.md#toastoptions)
+- [xToastOptions](README.md#xtoastoptions)
 
 ### Variables
 
@@ -35,9 +35,7 @@ js-xxx
 
 ### Functions
 
-- [H5Resize](README.md#h5resize)
 - [Loading](README.md#loading)
-- [Logger](README.md#logger)
 - [Speaker](README.md#speaker)
 - [Toast](README.md#toast)
 - [abs](README.md#abs)
@@ -48,18 +46,17 @@ js-xxx
 - [appendLink](README.md#appendlink)
 - [appendScript](README.md#appendscript)
 - [arrObj2objArr](README.md#arrobj2objarr)
-- [arraySet](README.md#arrayset)
+- [arrayFill](README.md#arrayfill)
+- [arrayShuffle](README.md#arrayshuffle)
 - [arraySort](README.md#arraysort)
-- [atob](README.md#atob)
 - [average](README.md#average)
 - [banConsole](README.md#banconsole)
 - [base64Decode](README.md#base64decode)
 - [base64Encode](README.md#base64encode)
 - [bindMoreClick](README.md#bindmoreclick)
-- [btoa](README.md#btoa)
+- [calcCron](README.md#calccron)
 - [calcDate](README.md#calcdate)
 - [calcFontSize](README.md#calcfontsize)
-- [camelCase](README.md#camelcase)
 - [catchPromise](README.md#catchpromise)
 - [checkFileExt](README.md#checkfileext)
 - [checkIdCard](README.md#checkidcard)
@@ -70,7 +67,6 @@ js-xxx
 - [closeWebSocket](README.md#closewebsocket)
 - [compareDate](README.md#comparedate)
 - [contains](README.md#contains)
-- [copyContent](README.md#copycontent)
 - [copyToClipboard](README.md#copytoclipboard)
 - [countdown](README.md#countdown)
 - [curryIt](README.md#curryit)
@@ -89,7 +85,6 @@ js-xxx
 - [empty](README.md#empty)
 - [encrypt](README.md#encrypt)
 - [exportFile](README.md#exportfile)
-- [fillArrVar](README.md#fillarrvar)
 - [findChildren](README.md#findchildren)
 - [findParents](README.md#findparents)
 - [float](README.md#float)
@@ -97,13 +92,9 @@ js-xxx
 - [forceToStr](README.md#forcetostr)
 - [formatBytes](README.md#formatbytes)
 - [formatDate](README.md#formatdate)
-- [formatFormData](README.md#formatformdata)
 - [formatJSON](README.md#formatjson)
-- [formatMoney](README.md#formatmoney)
 - [formatNumber](README.md#formatnumber)
 - [formatRh](README.md#formatrh)
-- [formatURLSearchParams](README.md#formaturlsearchparams)
-- [get1Var](README.md#get1var)
 - [getAge](README.md#getage)
 - [getAnimal](README.md#getanimal)
 - [getBSColor](README.md#getbscolor)
@@ -112,24 +103,25 @@ js-xxx
 - [getConstellation](README.md#getconstellation)
 - [getContentType](README.md#getcontenttype)
 - [getCookie](README.md#getcookie)
-- [getCron](README.md#getcron)
 - [getCryptoJS](README.md#getcryptojs)
 - [getDateDifference](README.md#getdatedifference)
 - [getDateList](README.md#getdatelist)
 - [getDateTime](README.md#getdatetime)
 - [getDayInYear](README.md#getdayinyear)
 - [getDecodeStorage](README.md#getdecodestorage)
+- [getFirstVar](README.md#getfirstvar)
 - [getKey](README.md#getkey)
 - [getLastVar](README.md#getlastvar)
 - [getLocalArr](README.md#getlocalarr)
 - [getLocalObj](README.md#getlocalobj)
-- [getMonthDays](README.md#getmonthdays)
-- [getMonthDaysCount](README.md#getmonthdayscount)
+- [getMonthDayCount](README.md#getmonthdaycount)
 - [getMonthInfo](README.md#getmonthinfo)
 - [getPercentage](README.md#getpercentage)
 - [getPinYin](README.md#getpinyin)
 - [getQueryString](README.md#getquerystring)
 - [getRandColor](README.md#getrandcolor)
+- [getRandDate](README.md#getranddate)
+- [getRandIp](README.md#getrandip)
 - [getRandNum](README.md#getrandnum)
 - [getRandStr](README.md#getrandstr)
 - [getRandVar](README.md#getrandvar)
@@ -138,18 +130,14 @@ js-xxx
 - [getSelectText](README.md#getselecttext)
 - [getSessionArr](README.md#getsessionarr)
 - [getSessionObj](README.md#getsessionobj)
-- [getSize](README.md#getsize)
 - [getSortVar](README.md#getsortvar)
 - [getStyleByName](README.md#getstylebyname)
-- [getTimeAndStr](README.md#gettimeandstr)
 - [getTimeCode](README.md#gettimecode)
 - [getType](README.md#gettype)
 - [getUTCTime](README.md#getutctime)
-- [getUUID](README.md#getuuid)
 - [getUserAgent](README.md#getuseragent)
-- [getUuid](README.md#getuuid-1)
 - [getV](README.md#getv)
-- [getVar](README.md#getvar)
+- [getVarSize](README.md#getvarsize)
 - [getViewportSize](README.md#getviewportsize)
 - [getWebSocket](README.md#getwebsocket)
 - [getWeekInfo](README.md#getweekinfo)
@@ -178,7 +166,6 @@ js-xxx
 - [isDarkMode](README.md#isdarkmode)
 - [isDate](README.md#isdate)
 - [isDecimal](README.md#isdecimal)
-- [isDefined](README.md#isdefined)
 - [isElement](README.md#iselement)
 - [isEmail](README.md#isemail)
 - [isEnglish](README.md#isenglish)
@@ -207,33 +194,29 @@ js-xxx
 - [isUrl](README.md#isurl)
 - [isWeekday](README.md#isweekday)
 - [jsonClone](README.md#jsonclone)
+- [keyBoardResize](README.md#keyboardresize)
 - [localStorageGet](README.md#localstorageget)
 - [localStorageSet](README.md#localstorageset)
 - [log](README.md#log)
 - [logRunTime](README.md#logruntime)
-- [logVar](README.md#logvar)
+- [markNumber](README.md#marknumber)
 - [marquee](README.md#marquee)
-- [maskNumber](README.md#masknumber)
 - [maskString](README.md#maskstring)
 - [md5](README.md#md5)
-- [mergeObj](README.md#mergeobj)
 - [ms](README.md#ms)
 - [offDefaultEvent](README.md#offdefaultevent)
 - [onClick2MoreClick](README.md#onclick2moreclick)
-- [openFile](README.md#openfile)
+- [openFileSelect](README.md#openfileselect)
 - [openFullscreen](README.md#openfullscreen)
 - [px2rem](README.md#px2rem)
 - [qsParse](README.md#qsparse)
 - [qsStringify](README.md#qsstringify)
-- [randomStr](README.md#randomstr)
 - [removeCookie](README.md#removecookie)
 - [repeat](README.md#repeat)
 - [retry](README.md#retry)
 - [rip](README.md#rip)
 - [round](README.md#round)
 - [same](README.md#same)
-- [scrollToBottom](README.md#scrolltobottom)
-- [scrollToTop](README.md#scrolltotop)
 - [scrollXTo](README.md#scrollxto)
 - [scrollYTo](README.md#scrollyto)
 - [sendNotification](README.md#sendnotification)
@@ -249,25 +232,27 @@ js-xxx
 - [sha256](README.md#sha256)
 - [showToast](README.md#showtoast)
 - [showVar](README.md#showvar)
-- [shuffleArray](README.md#shufflearray)
 - [sleep](README.md#sleep)
 - [slugify](README.md#slugify)
 - [sortBy](README.md#sortby)
 - [sortCallBack](README.md#sortcallback)
-- [splitCase](README.md#splitcase)
 - [stackSticky](README.md#stacksticky)
 - [str2html](README.md#str2html)
 - [str2unicode](README.md#str2unicode)
 - [sub](README.md#sub)
+- [textCamelCase](README.md#textcamelcase)
+- [textSplitCase](README.md#textsplitcase)
+- [textTransferCase](README.md#texttransfercase)
 - [throttle](README.md#throttle)
 - [timeSince](README.md#timesince)
 - [times](README.md#times)
 - [to](README.md#to)
 - [toBool](README.md#tobool)
+- [toFormData](README.md#toformdata)
 - [toNum](README.md#tonum)
+- [toQueryString](README.md#toquerystring)
 - [toStr](README.md#tostr)
 - [transferCSVData](README.md#transfercsvdata)
-- [transferCase](README.md#transfercase)
 - [transferFileToBase64](README.md#transferfiletobase64)
 - [transferIdCard](README.md#transferidcard)
 - [transferMoney](README.md#transfermoney)
@@ -288,9 +273,9 @@ js-xxx
 
 ## Type Aliases
 
-### ToastOptions
+### xToastOptions
 
-Ƭ **ToastOptions**: `Object`
+Ƭ **xToastOptions**: `Object`
 
 #### Type declaration
 
@@ -562,32 +547,6 @@ ___
 
 ## Functions
 
-### H5Resize
-
-▸ **H5Resize**(`downCb`, `upCb`): `any`
-
-H5 软键盘缩回/弹起回调
-return cancel listener of H5Resize
-
-**`Example`**
-
-```ts
-H5Resize(()=>{ console.log('downCb'); }, ()=>{ console.log('upCb'); }); /// do something
-```
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `downCb` | `any` | 缩回回调 |
-| `upCb` | `any` | 弹起回调 |
-
-#### Returns
-
-`any`
-
-___
-
 ### Loading
 
 ▸ **Loading**(`msg`): `any`
@@ -597,7 +556,7 @@ Loading Toast 不会自动关闭
 **`Example`**
 
 ```ts
-const myLoading = Loading(msg?); /// hideToast(myLoading);
+const hide = Loading(msg?); /// hide();
 ```
 
 #### Parameters
@@ -612,35 +571,6 @@ const myLoading = Loading(msg?); /// hideToast(myLoading);
 
 ___
 
-### Logger
-
-▸ **Logger**(): `Object`
-
-打印日志工具类
-
-**`Example`**
-
-```ts
-const {log, warning, success, danger, dark, primary, info} = Logger();
-log(1, new Date, 'test', [1, 2, 3], {log});
-```
-
-#### Returns
-
-`Object`
-
-| Name | Type |
-| :------ | :------ |
-| `danger` | (...`args`: `any`[]) => `void` |
-| `dark` | (...`args`: `any`[]) => `void` |
-| `info` | (...`args`: `any`[]) => `void` |
-| `log` | (...`args`: `any`[]) => `void` |
-| `primary` | (...`args`: `any`[]) => `void` |
-| `success` | (...`args`: `any`[]) => `void` |
-| `warning` | (...`args`: `any`[]) => `void` |
-
-___
-
 ### Speaker
 
 ▸ **Speaker**(`text`, `lang?`, `volume?`, `pitch?`, `rate?`): `Object`
@@ -651,7 +581,8 @@ TTS 语音，可以在现代浏览器直接运行。
 
 ```ts
 const mySpeaker = Speaker();
-mySpeaker.setText('你好，这是一条测试语音！hello'); mySpeaker.speak();
+mySpeaker.setText('你好，这是一条测试语音！hello');
+mySpeaker.speak();
 ```
 
 #### Parameters
@@ -692,7 +623,7 @@ ___
 **`Example`**
 
 ```ts
-const myToast = Toast('这是一个快速演示 Toast'); /// hideToast(myToast);
+const hide = Toast('这是一个快速演示 Toast'); /// hide();
 ```
 
 #### Parameters
@@ -700,7 +631,7 @@ const myToast = Toast('这是一个快速演示 Toast'); /// hideToast(myToast);
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
 | `msg` | `string` | `undefined` | 内容 |
-| `type` | ``"default"`` \| ``"info"`` \| ``"success"`` \| ``"warning"`` \| ``"error"`` \| ``"loading"`` | `'info'` | 类型 |
+| `type` | ``"default"`` \| ``"info"`` \| ``"success"`` \| ``"warning"`` \| ``"error"`` \| ``"loading"`` | `'default'` | 类型 |
 
 #### Returns
 
@@ -914,27 +845,54 @@ arrObj2objArr(data, 'id'); /// {"id": [1, 2, 3], "name": ["张三", "李四", "�
 
 ___
 
-### arraySet
+### arrayFill
 
-▸ **arraySet**(`arr`): `string` \| `Iterable`<`any`\> \| ``null`` \| `undefined`
+▸ **arrayFill**(`arr`, `n?`): `number`[]
 
-数组去重
+填充数组空值，取前后值得中间数。
 
 **`Example`**
 
 ```ts
-arraySet([1, 2, 3, 1, 2, 3]); /// [1, 2, 3]
+arrayFill([1, undefined, 3, undefined, 4]); /// [1, 2, 3, 3.5, 4]
+arrayFill([1, undefined, 3, undefined, 4], 0); ///  [1, 2, 3, 4, 4]
+arrayFill([1, undefined, 3, undefined, 10.55], 2); /// [1, 2, 3, 6.78, 10.55]
 ```
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `arr` | `undefined` \| ``null`` \| `string` \| `Iterable`<`any`\> | 数组 |
+| `arr` | `any`[] | 数组 |
+| `n?` | `number` | 保留小数位 |
 
 #### Returns
 
-`string` \| `Iterable`<`any`\> \| ``null`` \| `undefined`
+`number`[]
+
+___
+
+### arrayShuffle
+
+▸ **arrayShuffle**(`arr`): `any`[]
+
+数组乱序
+
+**`Example`**
+
+```ts
+arrayShuffle([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]); /// [5, 9, 1, 10, 2, 6, 4, 8, 3, 7]
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `arr` | `any`[] | 数组 |
+
+#### Returns
+
+`any`[]
 
 ___
 
@@ -968,33 +926,6 @@ arraySort(arr1, 'DESC', ['c']); /// 张三 - 王五 - 李四
 #### Returns
 
 `any`[]
-
-___
-
-### atob
-
-▸ **atob**(`str`): `string`
-
-base64 解码
-`atob(ascii to binary)(not support unicode)`
-`decodeURIComponent(atob(encodeStr))`
-
-**`Example`**
-
-```ts
-atob('5oiR5pivIGxlbw=='); /// '我是 leo'
-atob('5oiR5pivIGxlbw'); /// '我是 leo'
-```
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `str` | `string` | base64 加密后的字符串 |
-
-#### Returns
-
-`string`
 
 ___
 
@@ -1135,29 +1066,38 @@ dom.onclick = bindMoreClick(moreClickCallBack, 4, 500); /// 绑定 4 击事件
 
 ___
 
-### btoa
+### calcCron
 
-▸ **btoa**(`str`, `replaceChar?`): `string`
+▸ **calcCron**(`options?`): `string`
 
-base64 编码
-`btoa(binary to ascii)(not support unicode)`
-`使用 url 中时建议使用 encodeURIComponent 再次编码，因为单独 + 号在 url 中会被解析成空格。`
-`使用 encodeURIComponent 会把 + 解析为 %2B 与空格 %20 区分`
-`btoa(encodeURIComponent(str))`
+生成 cron 表达式
 
 **`Example`**
 
 ```ts
-btoa('我是 leo'); /// '5oiR5pivIGxlbw=='
-btoa('我是 leo', true); /// '5oiR5pivIGxlbw'
+calcCron(); /// '* * * * *'
+calcCron({ minute: '30', hour: '1', day: '10'}); /// '30 1 10 * *'
+calcCron({  week: '?' }); /// '* * * * ?'
+calcCron({ week: '*' }); /// '* * * * *'
+calcCron({ week: 0 }); /// '* * * * 0'
+calcCron({ week: '0' }); /// '* * * * 0'
+calcCron({ week: '7' }); /// '* * * * 0'
+calcCron({ week: 'SUN,天,日,六,6,5' }); /// '* * * * 0,5,6'
+calcCron({ day: '1-5' }); /// '* * 1-5 * * '
+calcCron({ day: '1,5' }); /// '* * 1,5 * * '
+calcCron({ day: '1/5' }); /// '* * 1/5 * * '
 ```
 
 #### Parameters
 
-| Name | Type | Default value | Description |
-| :------ | :------ | :------ | :------ |
-| `str` | `string` | `undefined` | 字符串 |
-| `replaceChar` | `boolean` | `false` | 是否替换结果字符串中的特殊字符 '+/='，适用于 url 编码。 |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `options` | `Object` | cron 配置 |
+| `options.day` | `undefined` \| `string` | - |
+| `options.hour` | `undefined` \| `string` | - |
+| `options.minute` | `undefined` \| `string` | - |
+| `options.month` | `undefined` \| `string` | - |
+| `options.week` | `undefined` \| `string` | - |
 
 #### Returns
 
@@ -1223,33 +1163,6 @@ calcFontSize(16/10, true, 'body'); /// 按 16/10 计算并设置 body 偏移使�
 ##### Returns
 
 `void`
-
-___
-
-### camelCase
-
-▸ **camelCase**(`str`): `string`
-
-字符串转驼峰
-
-**`Example`**
-
-```ts
-camelCase('foo-bar'); /// 'fooBar'
-camelCase('foo_bar'); /// 'fooBar'
-camelCase('foo bar'); /// 'fooBar'
-camelCase('foo.bar'); /// 'fooBar'
-```
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `str` | `string` | 字符串 |
-
-#### Returns
-
-`string`
 
 ___
 
@@ -1499,31 +1412,6 @@ contains([[1, 2], [3, 4]], [1, 3]); /// false
 #### Returns
 
 `boolean`
-
-___
-
-### copyContent
-
-▸ **copyContent**(`targetDom`, `addMsg?`): `any`
-
-添加指定元素复制事件
-
-**`Example`**
-
-```ts
-copyContent(document.getElementById('copy')); /// 复制 #copy 的内容成功
-```
-
-#### Parameters
-
-| Name | Type | Default value | Description |
-| :------ | :------ | :------ | :------ |
-| `targetDom` | `any` | `undefined` | 目标内容元素 |
-| `addMsg` | `any` | `null` | 复制后增加内容 |
-
-#### Returns
-
-`any`
 
 ___
 
@@ -2028,33 +1916,6 @@ exportFile('http://a.biugle.cn/img/cdn/dev/avatar/1.png', 'test', 'png'); /// �
 
 ___
 
-### fillArrVar
-
-▸ **fillArrVar**(`arr`, `length?`): `number`[]
-
-填充数组空值，取前后值得中间数。
-
-**`Example`**
-
-```ts
-fillArrVar([1, undefined, 3, undefined, 4]); /// [1, 2, 3, 3.5, 4]
-fillArrVar([1, undefined, 3, undefined, 4], 0); ///  [1, 2, 3, 4, 4]
-fillArrVar([1, undefined, 3, undefined, 10.55], 2); /// [1, 2, 3, 6.78, 10.55]
-```
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `arr` | `any`[] | 数组 |
-| `length?` | `number` | 保留小数位 |
-
-#### Returns
-
-`number`[]
-
-___
-
 ### findChildren
 
 ▸ **findChildren**(`element`): `any`[]
@@ -2241,32 +2102,6 @@ formatDate(new Date(), 'yyyy-mm-dd hh:ii:ss Q S W', ['星期天', '星期一', '
 
 ___
 
-### formatFormData
-
-▸ **formatFormData**(`obj`, `hasBrackets?`, `hasIndex?`): `FormData`
-
-对象转 FormData 格式
-
-**`Example`**
-
-```ts
-formatFormData({a: 1, b: 2}); /// FormData
-```
-
-#### Parameters
-
-| Name | Type | Default value | Description |
-| :------ | :------ | :------ | :------ |
-| `obj` | `any` | `undefined` | 源数据 |
-| `hasBrackets` | `boolean` | `false` | 是否带括号 |
-| `hasIndex` | `boolean` | `false` | 是否带 index |
-
-#### Returns
-
-`FormData`
-
-___
-
 ### formatJSON
 
 ▸ **formatJSON**(`value`): `string`
@@ -2276,13 +2111,13 @@ ___
 **`Example`**
 
 ```ts
-formatJSON({ a: 123, b: 456 }, null, 2); /// '{\n  "a": 123,\n  "b": 456\n}'
-formatJSON('123', null, 2); /// '"123"'
-formatJSON(123, null, 2); /// '123'
-formatJSON(null, null, 2); /// 'null'
-formatJSON(true, null, 2); /// 'true'
-formatJSON(undefined, null, 2); /// 'undefined'
-formatJSON(new Date(), null, 2); /// '"2023-03-02T10:02:42.019Z"'
+formatJSON({ a: 123, b: 456 }); /// '{\n  "a": 123,\n  "b": 456\n}'
+formatJSON('123'); /// '"123"'
+formatJSON(123); /// '123'
+formatJSON(null); /// 'null'
+formatJSON(true); /// 'true'
+formatJSON(undefined); /// 'undefined'
+formatJSON(new Date()); /// '"2023-03-02T10:02:42.019Z"'
 ```
 
 #### Parameters
@@ -2297,35 +2132,9 @@ formatJSON(new Date(), null, 2); /// '"2023-03-02T10:02:42.019Z"'
 
 ___
 
-### formatMoney
-
-▸ **formatMoney**(`longData`, `length`): `string`
-
-格式化金额，展示位银行金额格式。
-
-**`Example`**
-
-```ts
-formatMoney(90000); /// '90,000.00'
-formatMoney(852.1314, 2); /// '852.13'
-```
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `longData` | `string` \| `number` | 数值 |
-| `length` | `number` | 精度 |
-
-#### Returns
-
-`string`
-
-___
-
 ### formatNumber
 
-▸ **formatNumber**(`value`): `string`
+▸ **formatNumber**(`value`, `n?`): `string`
 
 数字人性化显示
 
@@ -2333,13 +2142,16 @@ ___
 
 ```ts
 formatNumber('12312300'); /// '12,312,300'
+formatNumber(851232.1314); /// '851,232.13'
+formatNumber(851232.1314, 0); /// '851,232'
 ```
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `value` | `string` \| `number` | 数值 |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `value` | `string` \| `number` | `undefined` | 数值 |
+| `n` | `number` | `2` | 精度 |
 
 #### Returns
 
@@ -2374,59 +2186,6 @@ formatRh('**d**', { format: [true, false], default: false }); /// true
 #### Returns
 
 `string` \| `boolean` \| `number`
-
-___
-
-### formatURLSearchParams
-
-▸ **formatURLSearchParams**(`obj`, `hasBrackets?`, `hasIndex?`): `URLSearchParams`
-
-对象转 URLSearchParams 字符串
-
-**`Example`**
-
-```ts
-formatURLSearchParams({a: 1, b: 2, c: [1, 2]}); /// a=1&b=2&c=1&c=2
-formatURLSearchParams({a: 1, b: 2, c: [1, 2]}, true); /// a=1&b=2&c[]=1&c[]=2
-formatURLSearchParams({a: 1, b: 2, c: [1, 2]}, true, true); /// a=1&b=2&c[0]=1&c[1]=2
-```
-
-#### Parameters
-
-| Name | Type | Default value | Description |
-| :------ | :------ | :------ | :------ |
-| `obj` | `any` | `undefined` | 源数据 |
-| `hasBrackets` | `boolean` | `false` | 是否带括号 |
-| `hasIndex` | `boolean` | `false` | 是否带 index |
-
-#### Returns
-
-`URLSearchParams`
-
-___
-
-### get1Var
-
-▸ **get1Var**(`data`): `any`
-
-获取对象/数组第一个值
-
-**`Example`**
-
-```ts
-get1Var([1, 2]); /// 1
-get1Var({a: 2,b: 1}); /// 2
-```
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `data` | `any` | 源数据 |
-
-#### Returns
-
-`any`
 
 ___
 
@@ -2650,45 +2409,6 @@ getCookie('name'); /// 获取 name 对应的 Cookie 值
 
 ___
 
-### getCron
-
-▸ **getCron**(`options?`): `string`
-
-获取 cron 表达式
-
-**`Example`**
-
-```ts
-getCron(); /// '* * * * *'
-getCron({ minute: '30', hour: '1', day: '10'}); /// '30 1 10 * *'
-getCron({  week: '?' }); /// '* * * * ?'
-getCron({ week: '*' }); /// '* * * * *'
-getCron({ week: 0 }); /// '* * * * 0'
-getCron({ week: '0' }); /// '* * * * 0'
-getCron({ week: '7' }); /// '* * * * 0'
-getCron({ week: 'SUN,天,日,六,6,5' }); /// '* * * * 0,5,6'
-getCron({ day: '1-5' }); /// '* * 1-5 * * '
-getCron({ day: '1,5' }); /// '* * 1,5 * * '
-getCron({ day: '1/5' }); /// '* * 1/5 * * '
-```
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `options` | `Object` | cron 配置 |
-| `options.day` | `undefined` \| `string` | - |
-| `options.hour` | `undefined` \| `string` | - |
-| `options.minute` | `undefined` \| `string` | - |
-| `options.month` | `undefined` \| `string` | - |
-| `options.week` | `undefined` \| `string` | - |
-
-#### Returns
-
-`string`
-
-___
-
 ### getCryptoJS
 
 ▸ **getCryptoJS**(): typeof `CryptoJS`
@@ -2838,17 +2558,43 @@ getDecodeStorage("key"); /// 处理过后的 value，不需要再 decode 和解�
 
 ___
 
+### getFirstVar
+
+▸ **getFirstVar**(`data`): `any`
+
+获取对象/数组第一个值
+
+**`Example`**
+
+```ts
+getFirstVar([1, 2]); /// 1
+getFirstVar({a: 2,b: 1}); /// 2
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `data` | `any` | 源数据 |
+
+#### Returns
+
+`any`
+
+___
+
 ### getKey
 
-▸ **getKey**(`size?`, `prefix?`): `string`
+▸ **getKey**(`size?`, `prefix?`, `suffix?`): `string`
 
-获取带前缀的唯一 key
+获取带前/后缀的唯一 key
 
 **`Example`**
 
 ```ts
 getKey(); /// 'M2rmCcGpXCa5MTdN4Kks5'
-getKey(2, 'test-'); /// test-aK'
+getKey(2, 'test'); /// 'test-aK'
+getKey(2, null, 'last'); /// 'aK-last'
 ```
 
 #### Parameters
@@ -2856,7 +2602,8 @@ getKey(2, 'test-'); /// test-aK'
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
 | `size` | `number` | `21` | 指定长度 |
-| `prefix` | `string` | `''` | 前缀 |
+| `prefix?` | `string` | `undefined` | 前缀 |
+| `suffix?` | `string` | `undefined` | - |
 
 #### Returns
 
@@ -2937,33 +2684,9 @@ getLocalObj("key"); /// 处理过后的 value，不需要再 decode，且有默�
 
 ___
 
-### getMonthDays
+### getMonthDayCount
 
-▸ **getMonthDays**(`date?`): `number`
-
-获取月份天数
-
-**`Example`**
-
-```ts
-getMonthDays(new Date()); /// 30
-```
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `date?` | `string` \| `Date` | 日期 |
-
-#### Returns
-
-`number`
-
-___
-
-### getMonthDaysCount
-
-▸ **getMonthDaysCount**(`date?`): `number`
+▸ **getMonthDayCount**(`date?`): `number`
 
 获取月份天数
 
@@ -3119,6 +2842,42 @@ getRandColor(); /// '#xxxxxx'
 
 ___
 
+### getRandDate
+
+▸ **getRandDate**(): `string`
+
+获取随机日期时间
+
+**`Example`**
+
+```ts
+getRandDate(); /// '1923-01-01 01:03:30'
+```
+
+#### Returns
+
+`string`
+
+___
+
+### getRandIp
+
+▸ **getRandIp**(): `string`
+
+获取随机 IP 地址
+
+**`Example`**
+
+```ts
+getRandIp(); /// '89.0.142.86'
+```
+
+#### Returns
+
+`string`
+
+___
+
 ### getRandNum
 
 ▸ **getRandNum**(`min?`, `max?`): `number`
@@ -3146,21 +2905,22 @@ ___
 
 ### getRandStr
 
-▸ **getRandStr**(`len?`): `string`
+▸ **getRandStr**(`length`): `string`
 
-获取随机数字字符串
+生成一个指定长度的随机数字符串
 
 **`Example`**
 
 ```ts
-getRandStr(6); /// 'xxxxxx'
+getRandStr(2); /// '43'
+getRandStr(5); /// '77192'
 ```
 
 #### Parameters
 
-| Name | Type | Default value | Description |
-| :------ | :------ | :------ | :------ |
-| `len` | `number` | `8` | 长度 |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `length` | `number` | 指定长度 |
 
 #### Returns
 
@@ -3178,7 +2938,7 @@ ___
 
 ```ts
 getRandVar({ a: 1, b: 3 }); /// 1
-getRandomVar([1, 2, 3, 4], 2); /// [2, 4]
+getRandVar([1, 2, 3, 4], 2); /// [2, 4]
 ```
 
 #### Parameters
@@ -3311,32 +3071,6 @@ getSessionObj("key"); /// 处理过后的 value，不需要再 decode，且有�
 
 ___
 
-### getSize
-
-▸ **getSize**(`value`): `number`
-
-获取任意变量长度
-
-**`Example`**
-
-```ts
-getSize([]); /// 0
-getSize({a: 1, b: 2}); /// 2
-getSize(null); /// 0
-```
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `value` | `any` | 值 |
-
-#### Returns
-
-`number`
-
-___
-
 ### getSortVar
 
 ▸ **getSortVar**(`value`): `any`
@@ -3385,31 +3119,6 @@ getStyle(document.getElementById('test'), 'width'); /// #test 的 width 属性
 #### Returns
 
 `any`
-
-___
-
-### getTimeAndStr
-
-▸ **getTimeAndStr**(`len?`, `radix?`): `string`
-
-获取简单的唯一字符串(时间戳+随机数+进制转换)
-
-**`Example`**
-
-```ts
-getTimeAndStr(5, 36); /// 'xxxxxx'
-```
-
-#### Parameters
-
-| Name | Type | Default value | Description |
-| :------ | :------ | :------ | :------ |
-| `len` | `number` | `5` | 随机字符的长度 |
-| `radix` | `undefined` \| `number` | `36` | 结果以此进行进制转换 |
-
-#### Returns
-
-`string`
 
 ___
 
@@ -3466,7 +3175,7 @@ ___
 **`Example`**
 
 ```ts
-getUTCTime(8); /// 中国标准时间
+getUTCTime(8); /// 中国标准时间-东八区
 ```
 
 #### Parameters
@@ -3478,31 +3187,6 @@ getUTCTime(8); /// 中国标准时间
 #### Returns
 
 `Date`
-
-___
-
-### getUUID
-
-▸ **getUUID**(`length`, `chars`): `string`
-
-获取简单的 UUID
-
-**`Example`**
-
-```ts
-getUUID(); /// 'ghijklmn'
-```
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `length` | `number` | 指定位数 |
-| `chars` | `string` \| `any`[] | 指定字符 |
-
-#### Returns
-
-`string`
 
 ___
 
@@ -3531,32 +3215,6 @@ getUserAgent(); /// { browserName: 'Chrome', browserVersion: '102.0.0.0', osName
 
 ___
 
-### getUuid
-
-▸ **getUuid**(`len`, `radix`): `string`
-
-计算并生成一个普通 uuid
-
-**`Example`**
-
-```ts
-getUuid(10, 16); /// '8D00C29539'
-getUuid(5); /// '5xRc5'
-```
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `len` | `number` | 指定长度 |
-| `radix` | `number` | 目标进制转换 |
-
-#### Returns
-
-`string`
-
-___
-
 ### getV
 
 ▸ **getV**(`defaultResult`, `...args`): `any`
@@ -3582,30 +3240,29 @@ getV('默认值', {name: {children: [123, 456]}}, 'name', 'children', '0'); /// 
 
 ___
 
-### getVar
+### getVarSize
 
-▸ **getVar**(`data`, `keys`, `defaultResult?`): `any`
+▸ **getVarSize**(`value`): `number`
 
-获取多级对象值通过字符串 keys
+获取任意变量长度
 
 **`Example`**
 
 ```ts
-getVar({name: {children: [123, 456]}}, 'name.children.1', '默认值'); /// 456
-getVar([1, 2, 3, 4], '100', '默认值'); /// '默认值'
+getVarSize([]); /// 0
+getVarSize({a: 1, b: 2}); /// 2
+getVarSize(null); /// 0
 ```
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `data` | `any` | 源数据 |
-| `keys` | `string` | 多级对象字符串 |
-| `defaultResult?` | `any` | 默认值 |
+| `value` | `any` | 值 |
 
 #### Returns
 
-`any`
+`number`
 
 ___
 
@@ -3707,14 +3364,16 @@ ___
 
 ### hasKey
 
-▸ **hasKey**(`obj`, `key`): `boolean`
+▸ **hasKey**(`data`, `key`): `boolean`
 
-对象包含某个 key 或者属性
+对象/数组包含某个 key/index 或者属性
 
 **`Example`**
 
 ```ts
 hasKey({ a: 1 }, 'a'); /// true
+hasKey([0, 1], '0'); /// true
+hasKey([0, 1], 2); /// false
 hasKey({ a: 1 }, 'b'); /// false
 const a = { a: 1 };
 a.__proto__.x = 1;
@@ -3725,7 +3384,7 @@ hasKey(a, 'x'); /// true;
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `obj` | `any` | 对象 |
+| `data` | `any` | 对象 |
 | `key` | `string` | 需要判断的 key |
 
 #### Returns
@@ -3768,7 +3427,7 @@ ___
 **`Example`**
 
 ```ts
-const toast = showToast({ content: '这是一个演示 Toast' }); /// hideToast(toast);
+const $toast = showToast({ content: '这是一个演示 Toast' }); /// hideToast($toast);
 ```
 
 #### Parameters
@@ -4300,31 +3959,6 @@ isDecimal('-0.10', '-'); /// true
 | `value` | `string` | `undefined` |
 | `type?` | ``"-"`` \| ``"+"`` | `undefined` |
 | `noLastZero` | `boolean` | `false` |
-
-#### Returns
-
-`boolean`
-
-___
-
-### isDefined
-
-▸ **isDefined**(`varName`): `boolean`
-
-判断变量是否定义
-
-**`Example`**
-
-```ts
-isDefined(a); /// false
-isDefined(window); /// true
-```
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `varName` | `any` |
 
 #### Returns
 
@@ -5044,6 +4678,32 @@ jsonClone({a: 1, b: 2}); /// {a: 1, b: 2}
 
 ___
 
+### keyBoardResize
+
+▸ **keyBoardResize**(`downCb`, `upCb`): `any`
+
+H5 移动端软键盘缩回/弹起回调
+`return cancel listener of keyBoardResize`
+
+**`Example`**
+
+```ts
+keyBoardResize(()=>{ console.log('downCb'); }, ()=>{ console.log('upCb'); }); /// do something
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `downCb` | `any` | 缩回回调 |
+| `upCb` | `any` | 弹起回调 |
+
+#### Returns
+
+`any`
+
+___
+
 ### localStorageGet
 
 ▸ **localStorageGet**(`key`): `any`
@@ -5095,7 +4755,7 @@ ___
 
 ### log
 
-▸ **log**(`...args`): `void`
+▸ **log**(`...args`): `string`
 
 在页面上打印数据，我们打包通常会设置清除 console，使用此函数打印关键信息就不会被清除啦。
 
@@ -5114,7 +4774,7 @@ log('danger'); /// 打印数据
 
 #### Returns
 
-`void`
+`string`
 
 ___
 
@@ -5139,7 +4799,7 @@ logRunTime(new Promise((resolve, reject) => { setTimeout(() => resolve('test'), 
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `fn` | `any` | 方法函数 |
-| `timeKey` | `string` | 打印关键 key |
+| `timeKey` | `string` | 打印时间记录关键 key |
 
 #### Returns
 
@@ -5147,28 +4807,25 @@ logRunTime(new Promise((resolve, reject) => { setTimeout(() => resolve('test'), 
 
 ___
 
-### logVar
+### markNumber
 
-▸ **logVar**(`value`, `logLevel?`): `string`
+▸ **markNumber**(`value`): `string`
 
-在页面上打印某个值
-且有更好的可读性与日志标识
-每次打印会返回日志字符串，可以统一收集写入到文件保存，或者上传到服务器。
+转换数字为大致数字描述
 
 **`Example`**
 
 ```ts
-logVar([1, 2, 2, 3, 3]); /// 打印数据
-logVar({a: 1, b: 2}, 'danger'); /// 打印数据
-logVar({a: 1, b: 2}, 'success'); /// 打印数据
+markNumber(10000123111); /// '100.00 亿'
+markNumber(12345); /// '1.2 万'
+markNumber(123); /// '123'
 ```
 
 #### Parameters
 
-| Name | Type | Default value | Description |
-| :------ | :------ | :------ | :------ |
-| `value` | `any` | `undefined` | 打印的值 |
-| `logLevel` | `string` | `'info'` | 日志等级 |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `number` | 数值 |
 
 #### Returns
 
@@ -5208,32 +4865,6 @@ marquee('.demo-x', {direction: 'X', loopType: 'origin', speed: 3, style: 'animat
 #### Returns
 
 `void`
-
-___
-
-### maskNumber
-
-▸ **maskNumber**(`value`): `string`
-
-转换数字为大致数字描述
-
-**`Example`**
-
-```ts
-maskNumber(10000123111); /// '100.00 亿'
-maskNumber(12345); /// '1.2 万'
-maskNumber(123); /// '123'
-```
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `value` | `number` | 数值 |
-
-#### Returns
-
-`string`
 
 ___
 
@@ -5288,34 +4919,6 @@ md5("value"); /// 加密后的字符串
 #### Returns
 
 `string`
-
-___
-
-### mergeObj
-
-▸ **mergeObj**(`oldObj`, `newObj`, `keys?`, `noOld?`): `Object`
-
-合并对象
-
-**`Example`**
-
-```ts
-mergeObj({name: 1, oldValue: 2}, {name: 3, value: 4}, []); /// {name: 1, oldValue: 2, value: 4}
-mergeObj({name: 1, oldValue: 2}, {name: 3, value: 4}, ['name'], true); /// {name: 3, value: 4}
-```
-
-#### Parameters
-
-| Name | Type | Default value | Description |
-| :------ | :------ | :------ | :------ |
-| `oldObj` | `Object` | `undefined` | 源对象 |
-| `newObj` | `Object` | `undefined` | 要合并的对象 |
-| `keys?` | `string` \| `string`[] | `undefined` | 要覆盖的属性 key，不指定时以源对象为准，指定时以新对象为准。 |
-| `noOld` | `boolean` | `false` | 新对象中不存在的属性直接删除，默认不删除 false，true 删除。 |
-
-#### Returns
-
-`Object`
 
 ___
 
@@ -5400,16 +5003,16 @@ dom.onclick = onClick2MoreClick(300, clickOneCallBack, clickTwoCallBack, clickTh
 
 ___
 
-### openFile
+### openFileSelect
 
-▸ **openFile**(`options?`): `Promise`<`any`\>
+▸ **openFileSelect**(`options?`): `Promise`<`any`\>
 
 在浏览器中打开文件选择框
 
 **`Example`**
 
 ```ts
-openFile({ multiple: true, accept: '.txt' }).then(fileList => console.log(fileList));
+openFileSelect({ multiple: true, accept: '.txt' }).then(fileList => console.log(fileList));
 ```
 
 #### Parameters
@@ -5478,7 +5081,7 @@ ___
 
 ▸ **qsParse**(`url?`, `key?`): `any`
 
-获取 query string 参数对象
+获取 query string 参数转对象
 
 **`Example`**
 
@@ -5524,31 +5127,6 @@ qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3], str: '1' }, { 
 | `options.hasBrackets?` | `boolean` | - |
 | `options.hasIndex?` | `boolean` | - |
 | `options.urlEncode?` | `boolean` | - |
-
-#### Returns
-
-`string`
-
-___
-
-### randomStr
-
-▸ **randomStr**(`length`): `string`
-
-生成一个指定长度的随机数
-
-**`Example`**
-
-```ts
-randomStr(2); /// 43
-randomStr(5); /// 77192
-```
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `length` | `number` | 指定长度 |
 
 #### Returns
 
@@ -5652,7 +5230,7 @@ ___
 
 ### round
 
-▸ **round**(`number`, `d`): `number` \| `undefined`
+▸ **round**(`number`, `d`): `number`
 
 四舍五入
 `const toFixed = (n, fixed) => ~~(Math.pow(10, fixed) * n) / Math.pow(10, fixed);`
@@ -5662,6 +5240,7 @@ ___
 ```ts
 round(1.2345, 2); /// 1.23
 round(0.355, 2); /// 0.36
+round(1.005, 2); /// 0.36
 ```
 
 #### Parameters
@@ -5673,7 +5252,7 @@ round(0.355, 2); /// 0.36
 
 #### Returns
 
-`number` \| `undefined`
+`number`
 
 ___
 
@@ -5704,57 +5283,6 @@ same('admins', 'admin'); /// false
 #### Returns
 
 `boolean`
-
-___
-
-### scrollToBottom
-
-▸ **scrollToBottom**(`elementSelector`): `void`
-
-滚动到底部
-`平滑滚动 css：scroll-behavior: smooth;`
-
-**`Example`**
-
-```ts
-scrollToBottom('body'); /// 滚动到底部
-```
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `elementSelector` | `string` | 指定元素选择器 |
-
-#### Returns
-
-`void`
-
-___
-
-### scrollToTop
-
-▸ **scrollToTop**(`elementSelector`, `to?`): `void`
-
-滚动到顶部
-`平滑滚动 css：scroll-behavior: smooth;`
-
-**`Example`**
-
-```ts
-scrollToTop('body'); /// 滚动到顶部
-```
-
-#### Parameters
-
-| Name | Type | Default value | Description |
-| :------ | :------ | :------ | :------ |
-| `elementSelector` | `string` | `undefined` | 指定元素选择器 |
-| `to` | ``"start"`` \| ``"end"`` | `'start'` | `('start'\|'end')[default: 'start']` |
-
-#### Returns
-
-`void`
 
 ___
 
@@ -6096,7 +5624,7 @@ ___
 ▸ **showToast**(`options`): `HTMLDivElement`
 
 显示 Toast
-`export function showToast(options: ToastOptions);`
+`export function showToast(options: xToastOptions);`
 
 **`Example`**
 
@@ -6108,7 +5636,7 @@ showToast({ type: 'success', content: '这是一个演示 Toast' }); /// 显示 
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `options` | [`ToastOptions`](README.md#toastoptions) | 显示配置 |
+| `options` | [`xToastOptions`](README.md#xtoastoptions) | 显示配置 |
 
 #### Returns
 
@@ -6141,30 +5669,6 @@ showVar({a: 1, b: 2}); /// 显示序列化之后的数据
 
 ___
 
-### shuffleArray
-
-▸ **shuffleArray**(`arr`): `any`[]
-
-数组乱序
-
-**`Example`**
-
-```ts
-shuffleArray([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]); /// [5, 9, 1, 10, 2, 6, 4, 8, 3, 7]
-```
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `arr` | `any`[] | 数组 |
-
-#### Returns
-
-`any`[]
-
-___
-
 ### sleep
 
 ▸ **sleep**(`milliseconds`): `Promise`<`void`\>
@@ -6193,7 +5697,7 @@ ___
 
 ▸ **slugify**(`str`, `replacement?`): `string`
 
-Slug 化字符串 URL
+Slug 化字符串 URL，将字符串转换为 URL 友好的格式。
 
 **`Example`**
 
@@ -6268,35 +5772,6 @@ arr.sort(sortCallBack('name', false)); /// [{name: '666'}, {name: '333'}]
 #### Returns
 
 `any`
-
-___
-
-### splitCase
-
-▸ **splitCase**(`str`): `string`[]
-
-按照普遍的特殊字符分割字符串
-
-**`Example`**
-
-```ts
-splitCase('foo-bar'); /// ['foo', 'bar']
-splitCase('foo_bar'); /// ['foo', 'bar']
-splitCase('foo bar'); /// ['foo', 'bar']
-splitCase('foo.bar'); /// ['foo', 'bar']
-splitCase('fooBar'); /// ['foo', 'bar']
-splitCase('foo-Bar'); /// ['foo', 'bar']
-```
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `str` | `string` | 字符串 |
-
-#### Returns
-
-`string`[]
 
 ___
 
@@ -6397,6 +5872,89 @@ sub(0.55, 0.1); /// 0.45
 #### Returns
 
 `number`
+
+___
+
+### textCamelCase
+
+▸ **textCamelCase**(`str`): `string`
+
+字符串转驼峰
+
+**`Example`**
+
+```ts
+textCamelCase('foo-bar'); /// 'fooBar'
+textCamelCase('foo_bar'); /// 'fooBar'
+textCamelCase('foo bar'); /// 'fooBar'
+textCamelCase('foo.bar'); /// 'fooBar'
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `str` | `string` | 字符串 |
+
+#### Returns
+
+`string`
+
+___
+
+### textSplitCase
+
+▸ **textSplitCase**(`str`): `string`[]
+
+按照普遍的特殊字符分割字符串
+
+**`Example`**
+
+```ts
+textSplitCase('foo-bar'); /// ['foo', 'bar']
+textSplitCase('foo_bar'); /// ['foo', 'bar']
+textSplitCase('foo bar'); /// ['foo', 'bar']
+textSplitCase('foo.bar'); /// ['foo', 'bar']
+textSplitCase('fooBar'); /// ['foo', 'bar']
+textSplitCase('foo-Bar'); /// ['foo', 'bar']
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `str` | `string` | 字符串 |
+
+#### Returns
+
+`string`[]
+
+___
+
+### textTransferCase
+
+▸ **textTransferCase**(`str`, `type`): `string`
+
+改变字符串大小写
+
+**`Example`**
+
+```ts
+textTransferCase('red', 'upper'|1); /// 'RED'
+textTransferCase('red', 'lower'|2); /// 'red'
+textTransferCase('red', 'first'|3); /// 'Red'
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `str` | `string` | 字符串 |
+| `type` | ``1`` \| ``2`` \| ``3`` \| ``"upper"`` \| ``"lower"`` \| ``"first"`` | 目标类型 |
+
+#### Returns
+
+`string`
 
 ___
 
@@ -6545,6 +6103,32 @@ toBool(null); /// false
 
 ___
 
+### toFormData
+
+▸ **toFormData**(`obj`, `hasBrackets?`, `hasIndex?`): `FormData`
+
+对象转 FormData 格式
+
+**`Example`**
+
+```ts
+toFormData({a: 1, b: 2}); /// FormData
+```
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `obj` | `any` | `undefined` | 源数据 |
+| `hasBrackets` | `boolean` | `false` | 是否带括号 |
+| `hasIndex` | `boolean` | `false` | 是否带 index |
+
+#### Returns
+
+`FormData`
+
+___
+
 ### toNum
 
 ▸ **toNum**(`value`): `number`
@@ -6568,6 +6152,34 @@ toNum('-123'); /// -123
 #### Returns
 
 `number`
+
+___
+
+### toQueryString
+
+▸ **toQueryString**(`obj`, `hasBrackets?`, `hasIndex?`): `URLSearchParams`
+
+对象转 URLSearchParams 字符串
+
+**`Example`**
+
+```ts
+toQueryString({a: 1, b: 2, c: [1, 2]}); /// a=1&b=2&c=1&c=2
+toQueryString({a: 1, b: 2, c: [1, 2]}, true); /// a=1&b=2&c[]=1&c[]=2
+toQueryString({a: 1, b: 2, c: [1, 2]}, true, true); /// a=1&b=2&c[0]=1&c[1]=2
+```
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `obj` | `any` | `undefined` | 源数据 |
+| `hasBrackets` | `boolean` | `false` | 是否带括号 |
+| `hasIndex` | `boolean` | `false` | 是否带 index |
+
+#### Returns
+
+`URLSearchParams`
 
 ___
 
@@ -6616,33 +6228,6 @@ transferCSVData([{ label: '姓名', prop: 'name' }, { label: '年龄', prop: 'ag
 | :------ | :------ | :------ |
 | `fields` | { `label?`: `string` ; `prop`: `string`  }[] | 导出的栏位 |
 | `data` | `any`[] | 数据 |
-
-#### Returns
-
-`string`
-
-___
-
-### transferCase
-
-▸ **transferCase**(`str`, `type`): `string`
-
-改变字符串大小写
-
-**`Example`**
-
-```ts
-transferCase('red', 'upper'|1); /// 'RED'
-transferCase('red', 'lower'|2); /// 'red'
-transferCase('red', 'first'|3); /// 'Red'
-```
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `str` | `string` | 字符串 |
-| `type` | ``1`` \| ``2`` \| ``3`` \| ``"upper"`` \| ``"lower"`` \| ``"first"`` | 目标类型 |
 
 #### Returns
 
@@ -6919,7 +6504,7 @@ ___
 
 ### unique
 
-▸ **unique**(`arr`, `filter`): `any`[]
+▸ **unique**(`arr`, `filter?`): `any`[]
 
 数组去重
 
@@ -6935,7 +6520,7 @@ unique([{id: 1, value: 'hello'}, {id: 2, value: 'world'}, {id: 2, value: 'world'
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `arr` | `any`[] | 数组 |
-| `filter` | `any` | 过滤逻辑 |
+| `filter?` | `any` | 过滤逻辑 |
 
 #### Returns
 

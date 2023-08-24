@@ -25,31 +25,6 @@ export declare function str2unicode(value: string): string;
  */
 export declare function trim(str: string, type?: number | string): string;
 /**
- * base64 编码
- * `btoa(binary to ascii)(not support unicode)`
- * `使用 url 中时建议使用 encodeURIComponent 再次编码，因为单独 + 号在 url 中会被解析成空格。`
- * `使用 encodeURIComponent 会把 + 解析为 %2B 与空格 %20 区分`
- * `btoa(encodeURIComponent(str))`
- * @example
- * btoa('我是 leo'); /// '5oiR5pivIGxlbw=='
- * btoa('我是 leo', true); /// '5oiR5pivIGxlbw'
- * @param str 字符串
- * @param replaceChar 是否替换结果字符串中的特殊字符 '+/='，适用于 url 编码。
- * @returns
- */
-export declare function btoa(str: string, replaceChar?: boolean): string;
-/**
- * base64 解码
- * `atob(ascii to binary)(not support unicode)`
- * `decodeURIComponent(atob(encodeStr))`
- * @example
- * atob('5oiR5pivIGxlbw=='); /// '我是 leo'
- * atob('5oiR5pivIGxlbw'); /// '我是 leo'
- * @param str base64 加密后的字符串
- * @returns
- */
-export declare function atob(str: string): string;
-/**
  * 字符串脱敏(biugle 自定义规则)
  * @example
  * maskString(undefined); /// '-'
@@ -66,38 +41,38 @@ export declare function maskString(str: string): string;
 /**
  * 改变字符串大小写
  * @example
- * transferCase('red', 'upper'|1); /// 'RED'
- * transferCase('red', 'lower'|2); /// 'red'
- * transferCase('red', 'first'|3); /// 'Red'
+ * textTransferCase('red', 'upper'|1); /// 'RED'
+ * textTransferCase('red', 'lower'|2); /// 'red'
+ * textTransferCase('red', 'first'|3); /// 'Red'
  * @param str 字符串
  * @param type 目标类型
  * @returns
  */
-export declare function transferCase(str: string, type: 1 | 2 | 3 | 'upper' | 'lower' | 'first'): string;
+export declare function textTransferCase(str: string, type: 1 | 2 | 3 | 'upper' | 'lower' | 'first'): string;
 /**
  * 按照普遍的特殊字符分割字符串
  * @example
- * splitCase('foo-bar'); /// ['foo', 'bar']
- * splitCase('foo_bar'); /// ['foo', 'bar']
- * splitCase('foo bar'); /// ['foo', 'bar']
- * splitCase('foo.bar'); /// ['foo', 'bar']
- * splitCase('fooBar'); /// ['foo', 'bar']
- * splitCase('foo-Bar'); /// ['foo', 'bar']
+ * textSplitCase('foo-bar'); /// ['foo', 'bar']
+ * textSplitCase('foo_bar'); /// ['foo', 'bar']
+ * textSplitCase('foo bar'); /// ['foo', 'bar']
+ * textSplitCase('foo.bar'); /// ['foo', 'bar']
+ * textSplitCase('fooBar'); /// ['foo', 'bar']
+ * textSplitCase('foo-Bar'); /// ['foo', 'bar']
  * @param str 字符串
  * @returns
  */
-export declare function splitCase(str: string): string[];
+export declare function textSplitCase(str: string): string[];
 /**
  * 字符串转驼峰
  * @example
- * camelCase('foo-bar'); /// 'fooBar'
- * camelCase('foo_bar'); /// 'fooBar'
- * camelCase('foo bar'); /// 'fooBar'
- * camelCase('foo.bar'); /// 'fooBar'
+ * textCamelCase('foo-bar'); /// 'fooBar'
+ * textCamelCase('foo_bar'); /// 'fooBar'
+ * textCamelCase('foo bar'); /// 'fooBar'
+ * textCamelCase('foo.bar'); /// 'fooBar'
  * @param str 字符串
  * @returns
  */
-export declare function camelCase(str: string): string;
+export declare function textCamelCase(str: string): string;
 /**
  * 字符串 repeat
  * @example
@@ -225,7 +200,7 @@ export declare function checkFileExt(arr: string[], value: string): boolean;
  */
 export declare function isHttp(value: string): -1 | 1 | 0;
 /**
- * Slug 化字符串 URL
+ * Slug 化字符串 URL，将字符串转换为 URL 友好的格式。
  * @example
  * slugify('I LOVE OQM'); /// 'I_LOVE_OQM'
  * slugify('I LOVE OQM', { ' ': '-' }); /// 'I-LOVE-OQM'
@@ -253,13 +228,13 @@ export declare function truncate(txt: string, width: number, options?: {
 /**
  * 格式化 JSON 字符串
  * @example
- * formatJSON({ a: 123, b: 456 }, null, 2); /// '{\n  "a": 123,\n  "b": 456\n}'
- * formatJSON('123', null, 2); /// '"123"'
- * formatJSON(123, null, 2); /// '123'
- * formatJSON(null, null, 2); /// 'null'
- * formatJSON(true, null, 2); /// 'true'
- * formatJSON(undefined, null, 2); /// 'undefined'
- * formatJSON(new Date(), null, 2); /// '"2023-03-02T10:02:42.019Z"'
+ * formatJSON({ a: 123, b: 456 }); /// '{\n  "a": 123,\n  "b": 456\n}'
+ * formatJSON('123'); /// '"123"'
+ * formatJSON(123); /// '123'
+ * formatJSON(null); /// 'null'
+ * formatJSON(true); /// 'true'
+ * formatJSON(undefined); /// 'undefined'
+ * formatJSON(new Date()); /// '"2023-03-02T10:02:42.019Z"'
  * @param value 值
  * @returns
  */
@@ -310,15 +285,6 @@ export declare function isTel(value: string): boolean;
  */
 export declare function isChinese(value: string): boolean;
 /**
- * 判断变量是否定义
- * @example
- * isDefined(a); /// false
- * isDefined(window); /// true
- * @param value 字符串值
- * @returns
- */
-export declare function isDefined(varName: any): boolean;
-/**
  * 判断是否为统一社会信用代码
  * @example
  * isCreditCode('9144030071526726XG'); /// true
@@ -336,25 +302,6 @@ export declare function isCreditCode(value: string): boolean;
  * @returns
  */
 export declare function isBankCard(value: string): boolean;
-/**
- * 生成一个指定长度的随机数
- * @example
- * randomStr(2); /// 43
- * randomStr(5); /// 77192
- * @param length 指定长度
- * @returns
- */
-export declare function randomStr(length: number): string;
-/**
- * 计算并生成一个普通 uuid
- * @example
- * getUuid(10, 16); /// '8D00C29539'
- * getUuid(5); /// '5xRc5'
- * @param len 指定长度
- * @param radix 目标进制转换
- * @returns
- */
-export declare function getUuid(len: number, radix: number): string;
 /**
  * 密码强度等级检测(-1~5)
  * @example

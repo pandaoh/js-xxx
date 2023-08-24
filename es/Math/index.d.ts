@@ -112,13 +112,13 @@ export declare function getPercentage(value: any, total: any, decimals?: number,
 /**
  * 转换数字为大致数字描述
  * @example
- * maskNumber(10000123111); /// '100.00 亿'
- * maskNumber(12345); /// '1.2 万'
- * maskNumber(123); /// '123'
+ * markNumber(10000123111); /// '100.00 亿'
+ * markNumber(12345); /// '1.2 万'
+ * markNumber(123); /// '123'
  * @param value 数值
  * @returns
  */
-export declare function maskNumber(value: number): string;
+export declare function markNumber(value: number): string;
 /**
  * 提供进制转换，最大为 64 进制。
  * @example

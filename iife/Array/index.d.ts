@@ -42,21 +42,13 @@ export declare function arrObj2objArr(data: {
 /**
  * 数组去重
  * @example
- * arraySet([1, 2, 3, 1, 2, 3]); /// [1, 2, 3]
- * @param arr 数组
- * @returns
- */
-export declare function arraySet(arr: string | Iterable<any> | null | undefined): string | Iterable<any> | null | undefined;
-/**
- * 数组去重
- * @example
  * unique([1, 2, 3, 1, 2, 3]); /// [1, 2, 3]
  * unique([{id: 1, value: 'hello'}, {id: 2, value: 'world'}, {id: 2, value: 'world', others: true}], (a, b) => a.id === b.id); /// [id1, id2 带 true]
  * @param arr 数组
  * @param filter 过滤逻辑
  * @returns
  */
-export declare function unique(arr: any[], filter: any): any[];
+export declare function unique(arr: any[], filter?: any): any[];
 /**
  * 返回排序回调函数(支持中文，不支持一级数据与混合类型。)
  * @example
@@ -72,11 +64,11 @@ export declare function sortCallBack(key: string, isAscend?: boolean): any;
 /**
  * 数组乱序
  * @example
- * shuffleArray([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]); /// [5, 9, 1, 10, 2, 6, 4, 8, 3, 7]
+ * arrayShuffle([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]); /// [5, 9, 1, 10, 2, 6, 4, 8, 3, 7]
  * @param arr 数组
  * @returns
  */
-export declare function shuffleArray(arr: any[]): any[];
+export declare function arrayShuffle(arr: any[]): any[];
 /**
  * 数组排序(支持多条件排序+中文)
  * @example
@@ -109,12 +101,12 @@ export declare function sortBy(keys?: string | string[], isAscend?: boolean): an
 /**
  * 填充数组空值，取前后值得中间数。
  * @example
- * fillArrVar([1, undefined, 3, undefined, 4]); /// [1, 2, 3, 3.5, 4]
- * fillArrVar([1, undefined, 3, undefined, 4], 0); ///  [1, 2, 3, 4, 4]
- * fillArrVar([1, undefined, 3, undefined, 10.55], 2); /// [1, 2, 3, 6.78, 10.55]
+ * arrayFill([1, undefined, 3, undefined, 4]); /// [1, 2, 3, 3.5, 4]
+ * arrayFill([1, undefined, 3, undefined, 4], 0); ///  [1, 2, 3, 4, 4]
+ * arrayFill([1, undefined, 3, undefined, 10.55], 2); /// [1, 2, 3, 6.78, 10.55]
  * @param arr 数组
- * @param length 保留小数位
+ * @param n 保留小数位
  * @returns
  */
-export declare function fillArrVar(arr: any[], length?: number): number[];
+export declare function arrayFill(arr: any[], n?: number): number[];
 //# sourceMappingURL=index.d.ts.map

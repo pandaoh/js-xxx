@@ -54,14 +54,6 @@ export declare function timeSince(date?: string | Date, longAgo?: boolean, forma
  */
 export declare function isWeekday(date?: string | Date): boolean;
 /**
- * 获取月份天数
- * @example
- * getMonthDays(new Date()); /// 30
- * @param date 日期
- * @returns
- */
-export declare function getMonthDays(date?: string | Date): number;
-/**
  * 获取日期所在的年份中的天数
  * @example
  * getDayInYear('2023/06/23'); /// 174
@@ -69,14 +61,6 @@ export declare function getMonthDays(date?: string | Date): number;
  * @returns
  */
 export declare function getDayInYear(date?: string | Date): number;
-/**
- * 获取月份天数
- * @example
- * getMonthDayCount(new Date()); /// 30
- * @param date 日期
- * @returns
- */
-export declare function getMonthDaysCount(date?: string | Date): number;
 /**
  * 获取指定日期数目的数组
  * @example
@@ -99,15 +83,6 @@ export declare function getDateList(n: number, type?: 'year' | 'month' | 'day' |
  * @returns
  */
 export declare function getDateTime(date?: string | Date): number;
-/**
- * 获取标准时间 UTC
- * 适用于本地时间不准确或者获取其他时区时间的情况
- * @example
- * getUTCTime(8); /// 中国标准时间
- * @param timezone 时区数字，东八区为 8，西八区为 -8 。
- * @returns
- */
-export declare function getUTCTime(timezone?: number): Date;
 /**
  * 时间大小比较
  * -1(A<B), 1(A>B), 0(A=B)
@@ -139,4 +114,21 @@ export declare function countdown(seconds: number, callback?: any, finishCallBac
  * @returns
  */
 export declare function transferSeconds(duration: number, returnObj?: boolean): string | any;
+/**
+ * 获取月份天数
+ * @example
+ * getMonthDayCount(new Date()); /// 30
+ * @param date 日期
+ * @returns
+ */
+export declare function getMonthDayCount(date?: string | Date): number;
+/**
+ * 获取标准时间 UTC
+ * 适用于本地时间不准确或者获取其他时区时间的情况
+ * @example
+ * getUTCTime(8); /// 中国标准时间-东八区
+ * @param timezone 时区数字，东八区为 8，西八区为 -8 。
+ * @returns
+ */
+export declare function getUTCTime(timezone?: number): Date;
 //# sourceMappingURL=index.d.ts.map

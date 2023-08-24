@@ -4,11 +4,12 @@
  * @example
  * round(1.2345, 2); /// 1.23
  * round(0.355, 2); /// 0.36
+ * round(1.005, 2); /// 0.36
  * @param number 浮点数
  * @param d 保留小数位
  * @returns
  */
-export declare function round(number: any, d: number): number | undefined;
+export declare function round(number: any, d: number): number;
 /**
  * 是否整数(严格匹配)
  * @example
@@ -31,8 +32,11 @@ export declare function isDecimal(value: string, type?: '-' | '+', noLastZero?: 
  * 数字人性化显示
  * @example
  * formatNumber('12312300'); /// '12,312,300'
+ * formatNumber(851232.1314); /// '851,232.13'
+ * formatNumber(851232.1314, 0); /// '851,232'
  * @param value 数值
+ * @param n 精度
  * @returns
  */
-export declare function formatNumber(value: string | number): string;
+export declare function formatNumber(value: string | number, n?: number): string;
 //# sourceMappingURL=index.d.ts.map

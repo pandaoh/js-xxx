@@ -207,23 +207,23 @@ export declare function dataTo(key: string, value: any): void;
  */
 export declare function watermark(dom: any, text: string, options?: any): void;
 /**
- * 获取 cron 表达式
+ * 生成 cron 表达式
  * @example
- * getCron(); /// '* * * * *'
- * getCron({ minute: '30', hour: '1', day: '10'}); /// '30 1 10 * *'
- * getCron({  week: '?' }); /// '* * * * ?'
- * getCron({ week: '*' }); /// '* * * * *'
- * getCron({ week: 0 }); /// '* * * * 0'
- * getCron({ week: '0' }); /// '* * * * 0'
- * getCron({ week: '7' }); /// '* * * * 0'
- * getCron({ week: 'SUN,天,日,六,6,5' }); /// '* * * * 0,5,6'
- * getCron({ day: '1-5' }); /// '* * 1-5 * * '
- * getCron({ day: '1,5' }); /// '* * 1,5 * * '
- * getCron({ day: '1/5' }); /// '* * 1/5 * * '
+ * calcCron(); /// '* * * * *'
+ * calcCron({ minute: '30', hour: '1', day: '10'}); /// '30 1 10 * *'
+ * calcCron({  week: '?' }); /// '* * * * ?'
+ * calcCron({ week: '*' }); /// '* * * * *'
+ * calcCron({ week: 0 }); /// '* * * * 0'
+ * calcCron({ week: '0' }); /// '* * * * 0'
+ * calcCron({ week: '7' }); /// '* * * * 0'
+ * calcCron({ week: 'SUN,天,日,六,6,5' }); /// '* * * * 0,5,6'
+ * calcCron({ day: '1-5' }); /// '* * 1-5 * * '
+ * calcCron({ day: '1,5' }); /// '* * 1,5 * * '
+ * calcCron({ day: '1/5' }); /// '* * 1/5 * * '
  * @param options cron 配置
  * @returns
  */
-export declare function getCron({ minute, hour, day, month, week }?: {
+export declare function calcCron({ minute, hour, day, month, week }?: {
     minute?: string | undefined;
     hour?: string | undefined;
     day?: string | undefined;
@@ -238,20 +238,7 @@ export declare function getCron({ minute, hour, day, month, week }?: {
  * @param args 打印数据 rest 参数
  * @returns
  */
-export declare function log(...args: any[]): void;
-/**
- * 在页面上打印某个值
- * 且有更好的可读性与日志标识
- * 每次打印会返回日志字符串，可以统一收集写入到文件保存，或者上传到服务器。
- * @example
- * logVar([1, 2, 2, 3, 3]); /// 打印数据
- * logVar({a: 1, b: 2}, 'danger'); /// 打印数据
- * logVar({a: 1, b: 2}, 'success'); /// 打印数据
- * @param value 打印的值
- * @param logLevel 日志等级
- * @returns
- */
-export declare function logVar(value: any, logLevel?: string): string;
+export declare function log(...args: any[]): string;
 /**
  * 强制转换扫描字符串的特殊字符
  * `/(=)|(<)|(>)|(&)|(%)|(#)|(@)|(~)/g`

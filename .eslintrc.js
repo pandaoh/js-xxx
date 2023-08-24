@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-03-13 15:05:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-23 13:59:20
+ * @LastEditTime: 2023-08-24 10:32:45
  * @Description: eslint 配置文件
  * @FilePath: \js-xxx\.eslintrc.js
  */
@@ -173,6 +173,7 @@ module.exports = {
           'submenu',
           'nodemon',
           'hhiiss',
+          'whitesmoke',
         ],
         skipIfMatch: [
           // http url

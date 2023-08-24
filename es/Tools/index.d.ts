@@ -26,22 +26,12 @@ export declare function empty(variable: any): boolean;
 /**
  * 获取对象/数组第一个值
  * @example
- * get1Var([1, 2]); /// 1
- * get1Var({a: 2,b: 1}); /// 2
+ * getFirstVar([1, 2]); /// 1
+ * getFirstVar({a: 2,b: 1}); /// 2
  * @param data 源数据
  * @returns
  */
-export declare function get1Var(data: any): any;
-/**
- * 获取数组或对象随机数据
- * @example
- * getRandVar({ a: 1, b: 3 }); /// 1
- * getRandomVar([1, 2, 3, 4], 2); /// [2, 4]
- * @param value 值
- * @param count 获取数据量
- * @returns
- */
-export declare function getRandVar(value: any, count?: number): any | any[];
+export declare function getFirstVar(data: any): any;
 /**
  * 获取对象/数组最后一个值(对象为 Object.keys 的顺序)
  * @example
@@ -51,6 +41,16 @@ export declare function getRandVar(value: any, count?: number): any | any[];
  * @returns
  */
 export declare function getLastVar(data: any): any;
+/**
+ * 获取数组或对象随机数据
+ * @example
+ * getRandVar({ a: 1, b: 3 }); /// 1
+ * getRandVar([1, 2, 3, 4], 2); /// [2, 4]
+ * @param value 值
+ * @param count 获取数据量
+ * @returns
+ */
+export declare function getRandVar(value: any, count?: number): any | any[];
 /**
  * 防抖函数-最后一次有效（抢购）
  * @example
@@ -69,15 +69,6 @@ export declare function debounce(fn: any, delay?: number): () => void;
  * @returns
  */
 export declare function throttle(fn: any, delay?: number): () => void;
-/**
- * 函数柯里化
- * 是把接受多个参数的函数变换成接受一个单一参数(最初函数的第一个参数)的函数，并且返回接受余下的参数且返回结果的新函数的技术。
- * @example
- * curryIt(function (a, b, c) {return a + b + c})(1)(2)(3); /// 6
- * @param fn 函数
- * @returns
- */
-export declare function curryIt(fn: any): (arg: any) => any;
 /**
  * 全局捕获异常
  * @example
@@ -104,32 +95,6 @@ export declare function getRandNum(min?: number, max?: number): number;
  */
 export declare function getRandColor(): string;
 /**
- * 获取随机数字字符串
- * @example
- * getRandStr(6); /// 'xxxxxx'
- * @param len 长度
- * @returns
- */
-export declare function getRandStr(len?: number): string;
-/**
- * 获取简单的唯一字符串(时间戳+随机数+进制转换)
- * @example
- * getTimeAndStr(5, 36); /// 'xxxxxx'
- * @param len 随机字符的长度
- * @param radix 结果以此进行进制转换
- * @returns
- */
-export declare function getTimeAndStr(len?: number, radix?: number | undefined): string;
-/**
- * 获取简单的 UUID
- * @example
- * getUUID(); /// 'ghijklmn'
- * @param length 指定位数
- * @param chars 指定字符
- * @returns
- */
-export declare function getUUID(length: number, chars: string | any[]): string;
-/**
  * 获取 bootstrap 颜色
  * @example
  * getBSColor(); /// '#6c757d'
@@ -140,40 +105,23 @@ export declare function getUUID(length: number, chars: string | any[]): string;
  */
 export declare function getBSColor(key?: string): string;
 /**
- * 获取 V4 版本 UUID
- * @example
- * uuid(); /// '7b72e264-61fe-426e-b95f-35d4e61c5742'
- * @returns
- */
-export declare function uuid(): string;
-/**
- * 获取带前缀的唯一 key
- * @example
- * getKey(); /// 'M2rmCcGpXCa5MTdN4Kks5'
- * getKey(2, 'test-'); /// test-aK'
- * @param size 指定长度
- * @param prefix 前缀
- * @returns
- */
-export declare function getKey(size?: number, prefix?: string): string;
-/**
  * 获取任意变量长度
  * @example
- * getSize([]); /// 0
- * getSize({a: 1, b: 2}); /// 2
- * getSize(null); /// 0
+ * getVarSize([]); /// 0
+ * getVarSize({a: 1, b: 2}); /// 2
+ * getVarSize(null); /// 0
  * @param value 值
  * @returns
  */
-export declare function getSize(value: any): number;
+export declare function getVarSize(value: any): number;
 /**
  * 在浏览器中打开文件选择框
  * @example
- * openFile({ multiple: true, accept: '.txt' }).then(fileList => console.log(fileList));
+ * openFileSelect({ multiple: true, accept: '.txt' }).then(fileList => console.log(fileList));
  * @param options 打开配置
  * @returns
  */
-export declare function openFile(options?: {
+export declare function openFileSelect(options?: {
     accept?: string;
     multiple?: boolean;
 }): Promise<any>;
@@ -240,27 +188,10 @@ export declare function jsonClone(value: any): any;
  * logRunTime($promiseReturnFunction);
  * logRunTime(new Promise((resolve, reject) => { setTimeout(() => resolve('test'), 1000) }));
  * @param fn 方法函数
- * @param timeKey 打印关键 key
+ * @param timeKey 打印时间记录关键 key
  * @returns
  */
 export declare function logRunTime(fn: any, timeKey: string): void;
-/**
- * 打印日志工具类
- * @example
- * const {log, warning, success, danger, dark, primary, info} = Logger();
- * log(1, new Date, 'test', [1, 2, 3], {log});
- * @returns
- */
-export declare function Logger(): {
-    log: (...args: any[]) => void;
-    info: (...args: any[]) => void;
-    success: (...args: any[]) => void;
-    warning: (...args: any[]) => void;
-    danger: (...args: any[]) => void;
-    primary: (...args: any[]) => void;
-    dark: (...args: any[]) => void;
-    [key: string]: (...args: any[]) => void;
-};
 /**
  * 在页面上显示某个值
  * @example
@@ -414,20 +345,11 @@ export declare function transferIdCard(idCard: string): any;
  */
 export declare function transferMoney(n: number): string;
 /**
- * 格式化金额，展示位银行金额格式。
- * @example
- * formatMoney(90000); /// '90,000.00'
- * formatMoney(852.1314, 2); /// '852.13'
- * @param longData 数值
- * @param length 精度
- * @returns
- */
-export declare function formatMoney(longData: string | number, length: number): string;
-/**
  * TTS 语音，可以在现代浏览器直接运行。
  * @example
  * const mySpeaker = Speaker();
- * mySpeaker.setText('你好，这是一条测试语音！hello'); mySpeaker.speak();
+ * mySpeaker.setText('你好，这是一条测试语音！hello');
+ * mySpeaker.speak();
  * @param text 内容
  * @param lang 语言
  * @param volume 音量 [0, 1]
@@ -481,15 +403,15 @@ export declare function getConstellation(date: any): {
  */
 export declare function setEventListener(eventKey: string, foo: any, once?: boolean, dom?: any): any;
 /**
- * H5 软键盘缩回/弹起回调
- * return cancel listener of H5Resize
+ * H5 移动端软键盘缩回/弹起回调
+ * `return cancel listener of keyBoardResize`
  * @example
- * H5Resize(()=>{ console.log('downCb'); }, ()=>{ console.log('upCb'); }); /// do something
+ * keyBoardResize(()=>{ console.log('downCb'); }, ()=>{ console.log('upCb'); }); /// do something
  * @param downCb 缩回回调
  * @param upCb 弹起回调
  * @returns
  */
-export declare function H5Resize(downCb: any, upCb: any): any;
+export declare function keyBoardResize(downCb: any, upCb: any): any;
 /**
  * 禁用控制台
  * windows
@@ -579,4 +501,55 @@ export declare function isEqual(obj1: any, obj2: any): boolean;
  * @returns
  */
 export declare function forEach(data: any, callback: (value: any, ik: any) => any | '_break' | '_continue', hasReturn?: boolean): any;
+/**
+ * 获取带前/后缀的唯一 key
+ * @example
+ * getKey(); /// 'M2rmCcGpXCa5MTdN4Kks5'
+ * getKey(2, 'test'); /// 'test-aK'
+ * getKey(2, null, 'last'); /// 'aK-last'
+ * @param size 指定长度
+ * @param prefix 前缀
+ * @param prefix 后缀
+ * @returns
+ */
+export declare function getKey(size?: number, prefix?: string, suffix?: string): string;
+/**
+ * 生成一个指定长度的随机数字符串
+ * @example
+ * getRandStr(2); /// '43'
+ * getRandStr(5); /// '77192'
+ * @param length 指定长度
+ * @returns
+ */
+export declare function getRandStr(length: number): string;
+/**
+ * 获取 V4 版本 UUID
+ * @example
+ * uuid(); /// '7b72e264-61fe-426e-b95f-35d4e61c5742'
+ * @returns
+ */
+export declare function uuid(): string;
+/**
+ * 获取随机日期时间
+ * @example
+ * getRandDate(); /// '1923-01-01 01:03:30'
+ * @returns
+ */
+export declare function getRandDate(): string;
+/**
+ * 获取随机 IP 地址
+ * @example
+ * getRandIp(); /// '89.0.142.86'
+ * @returns
+ */
+export declare function getRandIp(): string;
+/**
+ * 函数柯里化
+ * 是把接受多个参数的函数变换成接受一个单一参数(最初函数的第一个参数)的函数，并且返回接受余下的参数且返回结果的新函数的技术。
+ * @example
+ * curryIt(function (a, b, c) {return a + b + c})(1)(2)(3); /// 6
+ * @param fn 函数
+ * @returns
+ */
+export declare function curryIt(fn: any): (arg: any) => any;
 //# sourceMappingURL=index.d.ts.map
