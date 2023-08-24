@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-23 14:09:32
+ * @LastEditTime: 2023-08-24 15:58:45
  * @Description: 利用 dom 的一些函数
  * @FilePath: \js-xxx\src\Dom\index.ts
  */
@@ -69,67 +69,6 @@ export function offDefaultEvent(event: any) {
     e.stopPropagation();
   }
   return false;
-}
-
-/**
- * 添加指定元素复制事件
- * @example
- * copyContent(document.getElementById('copy')); /// 复制 #copy 的内容成功
- * @param targetDom 目标内容元素
- * @param addMsg 复制后增加内容
- * @returns
- */
-export function copyContent(targetDom: any, addMsg: any = null) {
-  const Msg = !targetDom.innerText ? targetDom.value : targetDom.innerText;
-  const tempDom = document.createElement('input');
-  let info = '复制成功！';
-  tempDom.style.position = 'absolute';
-  tempDom.style.top = '-5201314px';
-  tempDom.style.left = '-5201314px';
-  tempDom.value = Msg;
-  tempDom.value += addMsg === null ? '' : addMsg;
-  document.body.appendChild(tempDom);
-  targetDom.blur();
-  tempDom.select();
-  try {
-    document.execCommand('copy');
-  } catch (err) {
-    info = '浏览器不支持此操作，请手动复制。';
-  }
-  document.body.removeChild(tempDom);
-  console.log('js-xxx:copyContent--->', info);
-  return Msg;
-}
-
-/**
- * 滚动到顶部
- * `平滑滚动 css：scroll-behavior: smooth;`
- * @example
- * scrollToTop('body'); /// 滚动到顶部
- * @param elementSelector 指定元素选择器
- * @param to `('start'|'end')[default: 'start']`
- * @returns
- */
-export function scrollToTop(elementSelector: string, to: 'start' | 'end' = 'start') {
-  const element = document.querySelector(elementSelector);
-  if (element) {
-    element.scrollIntoView({ behavior: 'smooth', block: to });
-  }
-}
-
-/**
- * 滚动到底部
- * `平滑滚动 css：scroll-behavior: smooth;`
- * @example
- * scrollToBottom('body'); /// 滚动到底部
- * @param elementSelector 指定元素选择器
- * @returns
- */
-export function scrollToBottom(elementSelector: string) {
-  const element = document.querySelector(elementSelector);
-  if (element) {
-    element.scrollTop = element.scrollHeight;
-  }
 }
 
 /**

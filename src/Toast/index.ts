@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-06-16 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-23 11:47:31
+ * @LastEditTime: 2023-08-24 14:54:50
  * @Description: 自定义 toast
  * @FilePath: \js-xxx\src\Toast\index.ts
  */
@@ -13,9 +13,9 @@ import { log } from '@/Others';
 
 /**
  * @type
- * Toast Options Type
+ * xToast Options Type
  */
-export type ToastOptions = {
+export type xToastOptions = {
   content: string;
   type?: 'info' | 'success' | 'error' | 'warning' | 'loading' | 'default';
   delay?: number;
@@ -29,7 +29,7 @@ export type ToastOptions = {
 
 /**
  * 显示 Toast
- * `export function showToast(options: ToastOptions);`
+ * `export function showToast(options: xToastOptions);`
  * @example
  * showToast({ type: 'success', content: '这是一个演示 Toast' }); /// 显示 success 类型的 toast
  * @param options 显示配置
@@ -51,7 +51,7 @@ export const showToast = (function () {
   try {
     if (document && !document?.getElementById('biugle-toast-style')) {
       // eslint-disable-next-line spellcheck/spell-checker
-      const style = `.biugle-toast{position:fixed;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;max-width:50%;min-width:180px;padding:10px 15px;border-radius:5px;font-size:${defaultOptions.fontSize};box-shadow:0 3px 8px rgba(0,0,0,0.15);background-color:${defaultOptions.background};color:${defaultOptions.color};opacity:1;transition:opacity 0.5s;}.biugle-toast-hide{opacity:0;}.biugle-toast-icon{width:${defaultOptions.iconSize};height:${defaultOptions.iconSize};background-size:100% 100%;background-repeat:no-repeat;background-position:center center;}.biugle-toast-icon.biugle-default{display:none;}.biugle-toast-content{word-break:break-all;word-wrap:break-word;white-space:pre-wrap;font-weight:400;}.biugle-toast-icon.biugle-loading{animation:biugle-toast-rotate 1s linear infinite;}.biugle-toast-top-center{top:3%;left:50%;transform:translateX(-50%);}.biugle-toast-top-left{top:3%;left:3%;}.biugle-toast-top-right{top:3%;right:3%;}.biugle-toast-bottom-center{bottom:3%;left:50%;transform:translateX(-50%);}.biugle-toast-bottom-left{bottom:3%;left:3%;}.biugle-toast-bottom-right{bottom:3%;right:3%;}.biugle-toast-center{top:50%;left:50%;transform:translate(-50%,-50%);}@keyframes biugle-toast-rotate{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}`;
+      const style = `.biugle-toast{position:fixed;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;max-width:50%;min-width:180px;padding:10px 15px;border-radius:5px;font-size:${defaultOptions.fontSize};box-shadow:0 3px 8px rgba(0,0,0,0.15);background-color:${defaultOptions.background};color:${defaultOptions.color};opacity:1;transition:opacity 0.5s;}.biugle-toast-hide{opacity:0;}.biugle-toast-icon{width:${defaultOptions.iconSize};height:${defaultOptions.iconSize};background-size:100% 100%;background-repeat:no-repeat;background-position:center center;}.biugle-toast-icon.biugle-default{display:none;}.biugle-toast-content{word-break:break-all;word-wrap:break-word;white-space:pre-wrap;font-weight:400;letter-spacing:1.5px;margin:1.1px;padding-left:1.66px;text-align:center;}.biugle-toast-icon.biugle-loading{animation:biugle-toast-rotate 1s linear infinite;}.biugle-toast-top-center{top:3%;left:50%;transform:translateX(-50%);}.biugle-toast-top-left{top:3%;left:3%;}.biugle-toast-top-right{top:3%;right:3%;}.biugle-toast-bottom-center{bottom:3%;left:50%;transform:translateX(-50%);}.biugle-toast-bottom-left{bottom:3%;left:3%;}.biugle-toast-bottom-right{bottom:3%;right:3%;}.biugle-toast-center{top:50%;left:50%;transform:translate(-50%,-50%);}@keyframes biugle-toast-rotate{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}`;
       const styleElement = document.createElement('style');
       styleElement.id = 'biugle-toast-style';
       styleElement.innerHTML = style;
@@ -61,7 +61,7 @@ export const showToast = (function () {
     log({ toastError: e });
   }
 
-  function _createToast(options: ToastOptions) {
+  function _createToast(options: xToastOptions) {
     const toast = document.createElement('div');
     toast.classList.add('biugle-toast', `biugle-toast-${options.position}`);
     toast.style.color = options.color || defaultOptions.color;
@@ -75,8 +75,9 @@ export const showToast = (function () {
     return toast;
   }
 
-  function _showToast(options: ToastOptions) {
-    const newOptions: ToastOptions = Object.assign({}, defaultOptions, options);
+  function _showToast(options: xToastOptions) {
+    // 合并对象配置
+    const newOptions: xToastOptions = Object.assign({}, defaultOptions, options);
     const toast = _createToast(newOptions);
     document.querySelector(newOptions.parent || 'body')?.appendChild(toast);
     if (newOptions.delay && newOptions.type !== 'loading') {
@@ -87,7 +88,7 @@ export const showToast = (function () {
     return toast;
   }
 
-  return function (options: ToastOptions) {
+  return function (options: xToastOptions) {
     const toast = _showToast(options);
     return toast;
   };
@@ -96,7 +97,7 @@ export const showToast = (function () {
 /**
  * 隐藏 toast 不传值关闭所有 toast
  * @example
- * const toast = showToast({ content: '这是一个演示 Toast' }); /// hideToast(toast);
+ * const $toast = showToast({ content: '这是一个演示 Toast' }); /// hideToast($toast);
  * @param toast toast 实例
  * @returns
  */
@@ -115,34 +116,36 @@ export function hideToast(toast?: any) {
 /**
  * 快速展示 Toast
  * @example
- * const myToast = Toast('这是一个快速演示 Toast'); /// hideToast(myToast);
+ * const hide = Toast('这是一个快速演示 Toast'); /// hide();
  * @param msg 内容
  * @param type 类型
  * @returns
  */
 export function Toast(
   msg: string,
-  type: 'info' | 'success' | 'error' | 'warning' | 'loading' | 'default' = 'info',
+  type: 'info' | 'success' | 'error' | 'warning' | 'loading' | 'default' = 'default',
 ): any {
   if (!msg) {
     return;
   }
-  return showToast({
+  const $_toast = showToast({
     content: msg,
     type: type ?? 'default',
   });
+  return () => hideToast($_toast);
 }
 
 /**
  * Loading Toast 不会自动关闭
  * @example
- * const myLoading = Loading(msg?); /// hideToast(myLoading);
+ * const hide = Loading(msg?); /// hide();
  * @param msg 内容
  * @returns
  */
 export function Loading(msg: string): any {
-  return showToast({
+  const $_loading = showToast({
     content: msg ?? '...',
     type: 'loading',
   });
+  return () => hideToast($_loading);
 }

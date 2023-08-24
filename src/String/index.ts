@@ -3,11 +3,11 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:45:48
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-23 11:45:39
+ * @LastEditTime: 2023-08-24 16:40:28
  * @Description: 字符串常用函数
  * @FilePath: \js-xxx\src\String\index.ts
  */
-import { BASE_CHAR_LOW, BASE_CHAR_UP, BASE_NUMBER, PY_MAPS } from '@/Data';
+import { BASE_NUMBER, PY_MAPS } from '@/Data';
 import { union } from '@/Tools';
 import { isStr, isUndef } from '@/Types';
 
@@ -20,7 +20,7 @@ import { isStr, isUndef } from '@/Types';
  * @returns
  */
 export function unicode2str(value: string): string {
-  return escape(value).toLocaleLowerCase().replace(/%u/gi, '\\u');
+  return escape(value).toLowerCase().replace(/%u/gi, '\\u');
 }
 
 // eslint-disable-next-line spellcheck/spell-checker, zob/comment
@@ -65,48 +65,6 @@ export function trim(str: string, type: number | string = 0): string {
     default:
       return str;
   }
-}
-
-// eslint-disable-next-line spellcheck/spell-checker
-/**
- * base64 编码
- * `btoa(binary to ascii)(not support unicode)`
- * `使用 url 中时建议使用 encodeURIComponent 再次编码，因为单独 + 号在 url 中会被解析成空格。`
- * `使用 encodeURIComponent 会把 + 解析为 %2B 与空格 %20 区分`
- * `btoa(encodeURIComponent(str))`
- * @example
- * btoa('我是 leo'); /// '5oiR5pivIGxlbw=='
- * btoa('我是 leo', true); /// '5oiR5pivIGxlbw'
- * @param str 字符串
- * @param replaceChar 是否替换结果字符串中的特殊字符 '+/='，适用于 url 编码。
- * @returns
- */
-export function btoa(str: string, replaceChar = false): string {
-  // btoa(str).replace(/\+\//g, '-_').replace(/=/g, '');
-  const result: string = Buffer.from(str, 'utf-8').toString('base64');
-  return replaceChar ? result.replace(/\+\//g, '-_').replace(/=/g, '') : result;
-}
-
-// eslint-disable-next-line spellcheck/spell-checker
-/**
- * base64 解码
- * `atob(ascii to binary)(not support unicode)`
- * `decodeURIComponent(atob(encodeStr))`
- * @example
- * atob('5oiR5pivIGxlbw=='); /// '我是 leo'
- * atob('5oiR5pivIGxlbw'); /// '我是 leo'
- * @param str base64 加密后的字符串
- * @returns
- */
-export function atob(str: string): string {
-  // let remainder = str.length % 4;
-  // let padlen;
-  // if (remainder) {
-  //   padlen = 4 - remainder;
-  //   str += str.repeat('=', padlen);
-  // }
-  // return atob(str.replace('-_', '+/'));
-  return Buffer.from(str, 'base64').toString('utf8');
 }
 
 // eslint-disable-next-line spellcheck/spell-checker, zob/comment
@@ -156,14 +114,14 @@ export function maskString(str: string): string {
 /**
  * 改变字符串大小写
  * @example
- * transferCase('red', 'upper'|1); /// 'RED'
- * transferCase('red', 'lower'|2); /// 'red'
- * transferCase('red', 'first'|3); /// 'Red'
+ * textTransferCase('red', 'upper'|1); /// 'RED'
+ * textTransferCase('red', 'lower'|2); /// 'red'
+ * textTransferCase('red', 'first'|3); /// 'Red'
  * @param str 字符串
  * @param type 目标类型
  * @returns
  */
-export function transferCase(str: string, type: 1 | 2 | 3 | 'upper' | 'lower' | 'first') {
+export function textTransferCase(str: string, type: 1 | 2 | 3 | 'upper' | 'lower' | 'first') {
   switch (type) {
     case 1:
     case 'upper':
@@ -182,16 +140,16 @@ export function transferCase(str: string, type: 1 | 2 | 3 | 'upper' | 'lower' | 
 /**
  * 按照普遍的特殊字符分割字符串
  * @example
- * splitCase('foo-bar'); /// ['foo', 'bar']
- * splitCase('foo_bar'); /// ['foo', 'bar']
- * splitCase('foo bar'); /// ['foo', 'bar']
- * splitCase('foo.bar'); /// ['foo', 'bar']
- * splitCase('fooBar'); /// ['foo', 'bar']
- * splitCase('foo-Bar'); /// ['foo', 'bar']
+ * textSplitCase('foo-bar'); /// ['foo', 'bar']
+ * textSplitCase('foo_bar'); /// ['foo', 'bar']
+ * textSplitCase('foo bar'); /// ['foo', 'bar']
+ * textSplitCase('foo.bar'); /// ['foo', 'bar']
+ * textSplitCase('fooBar'); /// ['foo', 'bar']
+ * textSplitCase('foo-Bar'); /// ['foo', 'bar']
  * @param str 字符串
  * @returns
  */
-export function splitCase(str: string): string[] {
+export function textSplitCase(str: string): string[] {
   const regUpperCase = /([A-Z])/g;
   const regSeparator = /[_.\- ]+/g;
   const regTrim = /(^-)|(-$)/g;
@@ -203,21 +161,21 @@ export function splitCase(str: string): string[] {
 /**
  * 字符串转驼峰
  * @example
- * camelCase('foo-bar'); /// 'fooBar'
- * camelCase('foo_bar'); /// 'fooBar'
- * camelCase('foo bar'); /// 'fooBar'
- * camelCase('foo.bar'); /// 'fooBar'
+ * textCamelCase('foo-bar'); /// 'fooBar'
+ * textCamelCase('foo_bar'); /// 'fooBar'
+ * textCamelCase('foo bar'); /// 'fooBar'
+ * textCamelCase('foo.bar'); /// 'fooBar'
  * @param str 字符串
  * @returns
  */
-export function camelCase(str: string) {
-  const arr = splitCase(str);
+export function textCamelCase(str: string) {
+  const arr = textSplitCase(str);
 
   let ret = arr[0];
   arr.shift();
 
   arr.forEach((i, idx) => {
-    arr[idx] = transferCase(i, 'first');
+    arr[idx] = textTransferCase(i, 'first');
   });
   ret += arr.join('');
 
@@ -418,7 +376,7 @@ export function isHttp(value: string): -1 | 1 | 0 {
 }
 
 /**
- * Slug 化字符串 URL
+ * Slug 化字符串 URL，将字符串转换为 URL 友好的格式。
  * @example
  * slugify('I LOVE OQM'); /// 'I_LOVE_OQM'
  * slugify('I LOVE OQM', { ' ': '-' }); /// 'I-LOVE-OQM'
@@ -503,13 +461,13 @@ export function truncate(
 /**
  * 格式化 JSON 字符串
  * @example
- * formatJSON({ a: 123, b: 456 }, null, 2); /// '{\n  "a": 123,\n  "b": 456\n}'
- * formatJSON('123', null, 2); /// '"123"'
- * formatJSON(123, null, 2); /// '123'
- * formatJSON(null, null, 2); /// 'null'
- * formatJSON(true, null, 2); /// 'true'
- * formatJSON(undefined, null, 2); /// 'undefined'
- * formatJSON(new Date(), null, 2); /// '"2023-03-02T10:02:42.019Z"'
+ * formatJSON({ a: 123, b: 456 }); /// '{\n  "a": 123,\n  "b": 456\n}'
+ * formatJSON('123'); /// '"123"'
+ * formatJSON(123); /// '123'
+ * formatJSON(null); /// 'null'
+ * formatJSON(true); /// 'true'
+ * formatJSON(undefined); /// 'undefined'
+ * formatJSON(new Date()); /// '"2023-03-02T10:02:42.019Z"'
  * @param value 值
  * @returns
  */
@@ -598,18 +556,6 @@ export function isTel(value: string): boolean {
  */
 export function isChinese(value: string): boolean {
   return /^[\u4E00-\u9FA5]*$/.test(value);
-}
-
-/**
- * 判断变量是否定义
- * @example
- * isDefined(a); /// false
- * isDefined(window); /// true
- * @param value 字符串值
- * @returns
- */
-export function isDefined(varName: any): boolean {
-  return typeof varName !== 'undefined';
 }
 
 /**
@@ -741,77 +687,6 @@ export function isBankCard(value: string): boolean {
   } else {
     return false;
   }
-}
-
-/**
- * 生成一个指定长度的随机数
- * @example
- * randomStr(2); /// 43
- * randomStr(5); /// 77192
- * @param length 指定长度
- * @returns
- */
-export function randomStr(length: number): string {
-  let result,
-    tmp,
-    flag = true;
-  if (length) {
-    while (flag) {
-      tmp = Math.random();
-      if (tmp > 0.1) {
-        result = Math.floor(tmp * Math.pow(10, length));
-        flag = false;
-        return `${result}`;
-      }
-    }
-  } else {
-    while (flag) {
-      tmp = Math.random();
-      if (tmp > 0.1) {
-        result = Math.floor(tmp * Math.pow(10, 5));
-        flag = false;
-        return `${result}`;
-      }
-    }
-  }
-  return `${Math.random()}`;
-}
-
-/**
- * 计算并生成一个普通 uuid
- * @example
- * getUuid(10, 16); /// '8D00C29539'
- * getUuid(5); /// '5xRc5'
- * @param len 指定长度
- * @param radix 目标进制转换
- * @returns
- */
-export function getUuid(len: number, radix: number) {
-  let i, r;
-  const chars = `${BASE_NUMBER}${BASE_CHAR_UP}${BASE_CHAR_LOW}`.split('');
-  const uuid = [];
-  i = void 0;
-  radix = radix || chars.length;
-  if (len) {
-    i = 0;
-    while (i < len) {
-      uuid[i] = chars[0 | (Math.random() * radix)];
-      i++;
-    }
-  } else {
-    r = void 0;
-    uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';
-    uuid[14] = '4';
-    i = 0;
-    while (i < 36) {
-      if (!uuid[i]) {
-        r = 0 | (Math.random() * 16);
-        uuid[i] = chars[i === 19 ? (r & 0x3) | 0x8 : r];
-      }
-      i++;
-    }
-  }
-  return uuid.join('');
 }
 
 /**

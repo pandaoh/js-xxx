@@ -2,13 +2,12 @@
  * @Author: HxB
  * @Date: 2022-04-26 16:24:34
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-23 11:28:54
+ * @LastEditTime: 2023-08-24 17:42:51
  * @Description: 数学常用函数
  * @FilePath: \js-xxx\src\Math\index.ts
  */
 
 import { TRANSFER_STR } from '@/Data';
-import { hasSpecialChar } from '@/String';
 
 /**
  * 除法函数
@@ -256,13 +255,16 @@ export function getPercentage(
 /**
  * 转换数字为大致数字描述
  * @example
- * maskNumber(10000123111); /// '100.00 亿'
- * maskNumber(12345); /// '1.2 万'
- * maskNumber(123); /// '123'
+ * markNumber(10000123111); /// '100.00 亿'
+ * markNumber(12345); /// '1.2 万'
+ * markNumber(123); /// '123'
  * @param value 数值
  * @returns
  */
-export function maskNumber(value: number): string {
+export function markNumber(value: number): string {
+  if (value == undefined) {
+    return '';
+  }
   const newValue = ['', '', ''];
   let fr = 1000;
   let num = 3;
@@ -326,29 +328,31 @@ export function maskNumber(value: number): string {
  * @returns
  */
 export function transferNumber(number: number, from = 10, to = 2) {
-  let tmp,
-    decimal = 0,
-    result = '';
-  if (!number || hasSpecialChar(`${number}`)) {
+  let decimal = 0;
+  let result = '';
+
+  if (!number || `${number}`.split('').some((i) => !TRANSFER_STR.includes(i))) {
     return number;
   }
 
   try {
-    if (from) from = Number(from);
-    if (to) to = Number(to);
+    from = Number(from);
+    to = Number(to);
 
     // 先将其转换为 10 进制
-    tmp = String(number);
+    const tmp = String(number);
     for (let i = 0, j = 1; i < tmp.length; i++, j++) {
       decimal += TRANSFER_STR.indexOf(tmp.charAt(i)) * Math.pow(from, tmp.length - j);
     }
-    if (to == 10 || !to) return decimal;
+    if (to === 10 || !to) {
+      return decimal;
+    }
 
     // 再转换为指定进制
-    while (decimal != 0) {
-      tmp = decimal % to;
-      result = TRANSFER_STR.charAt(tmp) + result;
-      decimal = (decimal - tmp) / to;
+    while (decimal !== 0) {
+      const remainder = decimal % to;
+      result = TRANSFER_STR.charAt(remainder) + result;
+      decimal = Math.floor(decimal / to);
     }
     return result;
   } catch (e) {

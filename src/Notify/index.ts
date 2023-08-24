@@ -2,11 +2,11 @@
  * @Author: HxB
  * @Date: 2022-06-04 20:07:41
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-22 11:01:22
+ * @LastEditTime: 2023-08-24 14:49:16
  * @Description: 系统推送通知 https://developer.mozilla.org/zh-CN/docs/Web/API/Notifications_API
  * @FilePath: \js-xxx\src\Notify\index.ts
  */
-import { getRandStr } from '@/Tools';
+import { getKey } from '@/Tools';
 
 /**
  * 初始化 Notification
@@ -85,7 +85,7 @@ export function sendNotification(
     dir: options?.dir ?? 'auto',
     lang: options?.lang ?? 'zh-CN',
     requireInteraction: options?.requireInteraction ?? false,
-    tag: options?.tag ?? getRandStr(8),
+    tag: options?.tag ?? getKey(8),
     icon: options?.icon ?? 'favicon.ico',
     timestamp: options?.timestamp ?? new Date().getTime(),
     body: msg,

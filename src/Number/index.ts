@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 16:24:47
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-23 11:29:02
+ * @LastEditTime: 2023-08-24 15:22:23
  * @Description: 常用数字相关函数
  * @FilePath: \js-xxx\src\Number\index.ts
  */
@@ -13,11 +13,12 @@
  * @example
  * round(1.2345, 2); /// 1.23
  * round(0.355, 2); /// 0.36
+ * round(1.005, 2); /// 0.36
  * @param number 浮点数
  * @param d 保留小数位
  * @returns
  */
-export function round(number: any, d: number): number | undefined {
+export function round(number: any, d: number): number {
   // example-0.155
   let tempNum: string = number + '';
   d = !d ? 0 : d;
@@ -63,6 +64,8 @@ export function round(number: any, d: number): number | undefined {
     }
     // 返回浮点数，以防万一去掉结尾的小数点（.）。
     return parseFloat((pm + tempStr).replace(/\.$/, ''));
+  } else {
+    return Number(number);
   }
 }
 
@@ -111,12 +114,23 @@ export function isDecimal(value: string, type?: '-' | '+', noLastZero = false): 
  * 数字人性化显示
  * @example
  * formatNumber('12312300'); /// '12,312,300'
+ * formatNumber(851232.1314); /// '851,232.13'
+ * formatNumber(851232.1314, 0); /// '851,232'
  * @param value 数值
+ * @param n 精度
  * @returns
  */
-export function formatNumber(value: string | number): string {
+export function formatNumber(value: string | number, n = 2): string {
   try {
-    return Number(value).toLocaleString();
+    n = n >= 0 && n <= 20 ? n : 2;
+    value = round(parseFloat((value + '').replace(/[^\d\.-]/g, '')), n) + '';
+    const l = value.split('.')[0].split('').reverse(),
+      r = value.split('.')?.[1];
+    let t = '';
+    for (let i = 0; i < l.length; i++) {
+      t += l[i] + ((i + 1) % 3 == 0 && i + 1 != l.length ? ',' : '');
+    }
+    return t.split('').reverse().join('') + (r ? '.' + r : '');
   } catch (e) {
     return `${value}`;
   }

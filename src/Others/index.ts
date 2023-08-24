@@ -3,15 +3,13 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:53:39
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-23 11:39:43
+ * @LastEditTime: 2023-08-24 17:23:09
  * @Description: 因项目需要常用函数，不管任何项目，都放到一起。注意甄别，没有复用意义的函数就不要添加了。
  * @FilePath: \js-xxx\src\Others\index.ts
  */
 
 import { formatDate } from '@/Date';
-import { isUrl, splitCase } from '@/String';
-import { getBSColor } from '@/Tools';
-import { getType } from '@/Types';
+import { isUrl, textSplitCase } from '@/String';
 import { download } from '@/Dom';
 import { getContentType } from '@/Request';
 
@@ -79,8 +77,28 @@ export function setIcon(iconLink: string) {
  * @returns
  */
 export function copyToClipboard(text: string) {
-  if (navigator.clipboard) {
+  if (navigator.clipboard && window.isSecureContext) {
     navigator.clipboard.writeText(text);
+  } else {
+    let info = '复制成功！';
+    const tempInput = document.createElement('input');
+    tempInput.style.position = 'absolute';
+    tempInput.style.top = '-5201314px';
+    tempInput.style.left = '-5201314px';
+    tempInput.value = text;
+    document.body.appendChild(tempInput);
+
+    // 将焦点移动到文档或输入元素上
+    tempInput.focus();
+
+    tempInput.select();
+    try {
+      document.execCommand('copy');
+    } catch (err) {
+      info = '浏览器不支持此操作，请手动复制。';
+    }
+    document.body.removeChild(tempInput);
+    console.log('js-xxx:copyToClipboard--->', info);
   }
 }
 
@@ -619,7 +637,7 @@ export function dataTo(key: string, value: any): void {
   let $dom;
   try {
     key = key.toString();
-    $dom = document.querySelector((['.'].includes(key.charAt(0)) ? key.charAt(0) : '') + splitCase(key).join('-'));
+    $dom = document.querySelector((['.'].includes(key.charAt(0)) ? key.charAt(0) : '') + textSplitCase(key).join('-'));
     if ($dom) {
       $dom.innerHTML = value;
       // @ts-ignore
@@ -705,23 +723,23 @@ export function watermark(dom: any, text: string, options: any = {}) {
 }
 
 /**
- * 获取 cron 表达式
+ * 生成 cron 表达式
  * @example
- * getCron(); /// '* * * * *'
- * getCron({ minute: '30', hour: '1', day: '10'}); /// '30 1 10 * *'
- * getCron({  week: '?' }); /// '* * * * ?'
- * getCron({ week: '*' }); /// '* * * * *'
- * getCron({ week: 0 }); /// '* * * * 0'
- * getCron({ week: '0' }); /// '* * * * 0'
- * getCron({ week: '7' }); /// '* * * * 0'
- * getCron({ week: 'SUN,天,日,六,6,5' }); /// '* * * * 0,5,6'
- * getCron({ day: '1-5' }); /// '* * 1-5 * * '
- * getCron({ day: '1,5' }); /// '* * 1,5 * * '
- * getCron({ day: '1/5' }); /// '* * 1/5 * * '
+ * calcCron(); /// '* * * * *'
+ * calcCron({ minute: '30', hour: '1', day: '10'}); /// '30 1 10 * *'
+ * calcCron({  week: '?' }); /// '* * * * ?'
+ * calcCron({ week: '*' }); /// '* * * * *'
+ * calcCron({ week: 0 }); /// '* * * * 0'
+ * calcCron({ week: '0' }); /// '* * * * 0'
+ * calcCron({ week: '7' }); /// '* * * * 0'
+ * calcCron({ week: 'SUN,天,日,六,6,5' }); /// '* * * * 0,5,6'
+ * calcCron({ day: '1-5' }); /// '* * 1-5 * * '
+ * calcCron({ day: '1,5' }); /// '* * 1,5 * * '
+ * calcCron({ day: '1/5' }); /// '* * 1/5 * * '
  * @param options cron 配置
  * @returns
  */
-export function getCron({ minute = '*', hour = '*', day = '*', month = '*', week = '*' } = {}) {
+export function calcCron({ minute = '*', hour = '*', day = '*', month = '*', week = '*' } = {}) {
   const limits = [
     // 分钟 (0-59)
     [0, 59],
@@ -834,7 +852,7 @@ export function getCron({ minute = '*', hour = '*', day = '*', month = '*', week
  * @param args 打印数据 rest 参数
  * @returns
  */
-export function log(...args: any[]): void {
+export function log(...args: any[]): string {
   try {
     // eval(
     //   `console.log('%c 日志[${formatDate(
@@ -862,28 +880,7 @@ export function log(...args: any[]): void {
   } catch (e) {
     console.log(...args, e);
   }
-}
-
-/**
- * 在页面上打印某个值
- * 且有更好的可读性与日志标识
- * 每次打印会返回日志字符串，可以统一收集写入到文件保存，或者上传到服务器。
- * @example
- * logVar([1, 2, 2, 3, 3]); /// 打印数据
- * logVar({a: 1, b: 2}, 'danger'); /// 打印数据
- * logVar({a: 1, b: 2}, 'success'); /// 打印数据
- * @param value 打印的值
- * @param logLevel 日志等级
- * @returns
- */
-export function logVar(value: any, logLevel = 'info'): string {
-  const logColors = getBSColor(logLevel);
-  // const varName = Object.keys({ value })[0];
-  const varType = getType(value);
-  console.log(`%c[${logLevel.toUpperCase()}] %c(${varType}):`, `color:${logColors};`, 'font-weight:bold;', value);
-  return `\n[${logLevel.toUpperCase()}] (${varType}) 【${JSON.stringify(value)}】 ~Log Date<${formatDate(
-    new Date(),
-  )}>\n`;
+  return `\n[${formatDate(new Date())}] =====>\n (---${JSON.stringify(args)}---)\n`;
 }
 
 /**

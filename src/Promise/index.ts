@@ -56,7 +56,7 @@ export function retry(promise: Promise<any>, count = 0, delay = 0) {
         resolve(res);
       })
       .catch(async (e) => {
-        console.log('js-xxx:toError--->', e);
+        console.log('js-xxx:retryError--->', e);
         if (count > 0) {
           // 此处也可使用 setTimeout 实现
           await sleep(delay);

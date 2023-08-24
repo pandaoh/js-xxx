@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 11:52:01
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-23 11:22:47
+ * @LastEditTime: 2023-08-24 14:41:03
  * @Description: 数组常用函数
  * @FilePath: \js-xxx\src\Array\index.ts
  */
@@ -85,36 +85,21 @@ export function arrObj2objArr(data: { [key: string]: any }[], key: string): { [k
 /**
  * 数组去重
  * @example
- * arraySet([1, 2, 3, 1, 2, 3]); /// [1, 2, 3]
- * @param arr 数组
- * @returns
- */
-export function arraySet(arr: string | Iterable<any> | null | undefined): string | Iterable<any> | null | undefined {
-  if (!Array.isArray(arr)) {
-    return arr;
-  }
-  if (arr.length == 1) {
-    return arr;
-  }
-  return [...new Set(arr)];
-}
-
-/**
- * 数组去重
- * @example
  * unique([1, 2, 3, 1, 2, 3]); /// [1, 2, 3]
  * unique([{id: 1, value: 'hello'}, {id: 2, value: 'world'}, {id: 2, value: 'world', others: true}], (a, b) => a.id === b.id); /// [id1, id2 带 true]
  * @param arr 数组
  * @param filter 过滤逻辑
  * @returns
  */
-export function unique(arr: any[], filter: any) {
+export function unique(arr: any[], filter?: any): any[] {
+  if (arr.length == 1) {
+    return arr;
+  }
   if (!filter) {
     filter = (a: any, b: any) => a === b;
   }
+  const len = arr.length;
   return arr.filter((item, idx, arr) => {
-    const len = arr.length;
-
     while (++idx < len) {
       if (filter(item, arr[idx])) return false;
     }
@@ -142,11 +127,11 @@ export function sortCallBack(key: string, isAscend = true): any {
 /**
  * 数组乱序
  * @example
- * shuffleArray([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]); /// [5, 9, 1, 10, 2, 6, 4, 8, 3, 7]
+ * arrayShuffle([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]); /// [5, 9, 1, 10, 2, 6, 4, 8, 3, 7]
  * @param arr 数组
  * @returns
  */
-export function shuffleArray(arr: any[]) {
+export function arrayShuffle(arr: any[]) {
   return arr.sort(() => Math.random() - 0.5);
 }
 
@@ -227,14 +212,14 @@ export function sortBy(keys?: string | string[], isAscend = true): any {
 /**
  * 填充数组空值，取前后值得中间数。
  * @example
- * fillArrVar([1, undefined, 3, undefined, 4]); /// [1, 2, 3, 3.5, 4]
- * fillArrVar([1, undefined, 3, undefined, 4], 0); ///  [1, 2, 3, 4, 4]
- * fillArrVar([1, undefined, 3, undefined, 10.55], 2); /// [1, 2, 3, 6.78, 10.55]
+ * arrayFill([1, undefined, 3, undefined, 4]); /// [1, 2, 3, 3.5, 4]
+ * arrayFill([1, undefined, 3, undefined, 4], 0); ///  [1, 2, 3, 4, 4]
+ * arrayFill([1, undefined, 3, undefined, 10.55], 2); /// [1, 2, 3, 6.78, 10.55]
  * @param arr 数组
- * @param length 保留小数位
+ * @param n 保留小数位
  * @returns
  */
-export function fillArrVar(arr: any[], length?: number): number[] {
+export function arrayFill(arr: any[], n?: number): number[] {
   const result = [];
 
   for (let i = 0; i < arr.length; i++) {
@@ -256,7 +241,7 @@ export function fillArrVar(arr: any[], length?: number): number[] {
       const nextValue = arr[nextIndex];
       const middleValue = (prevValue + nextValue) / 2;
 
-      result.push(Number(length === undefined ? middleValue : Number(middleValue).toFixed(length)));
+      result.push(Number(n === undefined ? middleValue : Number(middleValue).toFixed(n)));
     } else {
       result.push(arr[i]);
     }

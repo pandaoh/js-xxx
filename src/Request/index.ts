@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:15:37
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-23 11:42:49
+ * @LastEditTime: 2023-08-24 12:25:12
  * @Description: 请求相关函数
  * @FilePath: \js-xxx\src\Request\index.ts
  */
@@ -59,7 +59,7 @@ export function qsStringify(
 }
 
 /**
- * 获取 query string 参数对象
+ * 获取 query string 参数转对象
  * @example
  * qsParse('start=0&count=20&x=1&x=2&x=3', 'x'); /// [1, 2, 3]
  * qsParse('start=0&count=20&x=1&x=2&x=3'); /// { start: '0', count: '20', x: [1, 2, 3], '/': 'start=0&count=20&x=1&x=2&x=3' }

@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:54:41
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-23 13:42:50
+ * @LastEditTime: 2023-08-24 15:36:44
  * @Description: 时间相关函数
  * @FilePath: \js-xxx\src\Date\index.ts
  */
@@ -75,7 +75,7 @@ export function calcDate(date: string | Date, calcStrOrArr: string | string[]): 
   } else {
     const [val, unit] = trim(calcStrOrArr, 'pro').split(' ');
     const newVal = Number(val);
-    const newUnit = unit.toLocaleLowerCase();
+    const newUnit = unit.toLowerCase();
     switch (newUnit) {
       case 'year':
       case 'years':
@@ -156,7 +156,7 @@ export function getDateDifference(
   oldDate = new Date(oldDate);
   nowDate = nowDate ? new Date(nowDate) : new Date();
   const diffTime = nowDate.getTime() - oldDate.getTime();
-  switch ((type as string).toLocaleLowerCase()) {
+  switch ((type as string).toLowerCase()) {
     case 'day':
     case 'days':
       return Math.floor(diffTime / 1000 / 60 / 60 / 24);
@@ -248,26 +248,6 @@ export function isWeekday(date?: string | Date): boolean {
 }
 
 /**
- * 获取月份天数
- * @example
- * getMonthDays(new Date()); /// 30
- * @param date 日期
- * @returns
- */
-export function getMonthDays(date?: string | Date): number {
-  if (getType(date) === 'string') {
-    // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
-    // @ts-ignore
-    date = date.replace(/-/g, '/');
-  }
-  const curDate = date ? new Date(date) : new Date();
-  const curMonth = curDate.getMonth();
-  curDate.setMonth(curMonth + 1);
-  curDate.setDate(0);
-  return curDate.getDate();
-}
-
-/**
  * 获取日期所在的年份中的天数
  * @example
  * getDayInYear('2023/06/23'); /// 174
@@ -283,35 +263,6 @@ export function getDayInYear(date?: string | Date): number {
   date = date ? new Date(date) : new Date();
   // @ts-ignore
   return Math.floor((date - new Date(date.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
-}
-
-/**
- * 获取月份天数
- * @example
- * getMonthDayCount(new Date()); /// 30
- * @param date 日期
- * @returns
- */
-export function getMonthDaysCount(date?: string | Date): number {
-  if (getType(date) === 'string') {
-    // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
-    // @ts-ignore
-    date = date.replace(/-/g, '/');
-  }
-  date = date ? new Date(date) : new Date();
-  const fullYear = date.getFullYear();
-  const month = date.getMonth();
-  if ((fullYear % 4 == 0 && fullYear % 100 != 0) || fullYear % 400 == 0) {
-    // 闰年
-    const monthDayCount = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-    // 当前月的天数
-    return monthDayCount[month];
-  } else {
-    // 平年
-    const monthDayCount = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-    // 当前月的天数
-    return monthDayCount[month];
-  }
 }
 
 /**
@@ -374,30 +325,6 @@ export function getDateTime(date?: string | Date): number {
   }
   date = date ? new Date(date) : new Date();
   return date.getTime();
-}
-
-/**
- * 获取标准时间 UTC
- * 适用于本地时间不准确或者获取其他时区时间的情况
- * @example
- * getUTCTime(8); /// 中国标准时间
- * @param timezone 时区数字，东八区为 8，西八区为 -8 。
- * @returns
- */
-export function getUTCTime(timezone = 0): Date {
-  const d = new Date();
-  const len = d.getTime();
-  // 本地时间与 UTC 时间的时间偏移差
-  const offset = d.getTimezoneOffset() * 60000;
-  // 得到现在的 UTC 时间，各时区 UTC 时间相同。
-  const utcTime = len + offset;
-  // 得到时区标准时间
-  return new Date(utcTime + 3600000 * timezone);
-
-  // 得到 UTC 时间戳
-  // return new Date(utcTime).getTime();
-  // 得到时区时间戳
-  // return new Date(utcTime + 3600000 * timezone).getTime();
 }
 
 /**
@@ -500,4 +427,53 @@ export function transferSeconds(duration: number, returnObj = false): string | a
     res += '00';
   }
   return res;
+}
+
+/**
+ * 获取月份天数
+ * @example
+ * getMonthDayCount(new Date()); /// 30
+ * @param date 日期
+ * @returns
+ */
+export function getMonthDayCount(date?: string | Date): number {
+  if (getType(date) === 'string') {
+    // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
+    // @ts-ignore
+    date = date.replace(/-/g, '/');
+  }
+  date = date ? new Date(date) : new Date();
+  const fullYear = date.getFullYear();
+  const month = date.getMonth();
+  const isLeapYear = (fullYear % 4 === 0 && fullYear % 100 !== 0) || fullYear % 400 === 0;
+
+  const monthDayCount = isLeapYear
+    ? [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31] // 闰年
+    : [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; // 平年
+
+  return monthDayCount[month];
+}
+
+/**
+ * 获取标准时间 UTC
+ * 适用于本地时间不准确或者获取其他时区时间的情况
+ * @example
+ * getUTCTime(8); /// 中国标准时间-东八区
+ * @param timezone 时区数字，东八区为 8，西八区为 -8 。
+ * @returns
+ */
+export function getUTCTime(timezone = 0): Date {
+  const d = new Date();
+  const len = d.getTime();
+  // 本地时间与 UTC 时间的时间偏移差
+  const offset = d.getTimezoneOffset() * 60000;
+  // 得到现在的 UTC 时间，各时区 UTC 时间相同。
+  const utcTime = len + offset;
+  // 得到时区标准时间
+  return new Date(utcTime + 3600000 * timezone);
+
+  // 得到 UTC 时间戳
+  // return new Date(utcTime).getTime();
+  // 得到时区时间戳
+  // return new Date(utcTime + 3600000 * timezone).getTime();
 }

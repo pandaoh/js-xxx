@@ -3,11 +3,11 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-23 12:20:55
+ * @LastEditTime: 2023-08-24 17:36:40
  * @Description: 工具函数
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
-import { arraySet, arraySort } from '@/Array';
+import { unique, arraySort } from '@/Array';
 import {
   ANIMALS,
   BASE_CHAR_LOW,
@@ -91,12 +91,12 @@ export function empty(variable: any): boolean {
 /**
  * 获取对象/数组第一个值
  * @example
- * get1Var([1, 2]); /// 1
- * get1Var({a: 2,b: 1}); /// 2
+ * getFirstVar([1, 2]); /// 1
+ * getFirstVar({a: 2,b: 1}); /// 2
  * @param data 源数据
  * @returns
  */
-export function get1Var(data: any): any {
+export function getFirstVar(data: any): any {
   if (getType(data) !== 'object' && !Array.isArray(data)) {
     return data;
   }
@@ -104,33 +104,6 @@ export function get1Var(data: any): any {
     const result = data[key];
     return result;
   }
-}
-
-/**
- * 获取数组或对象随机数据
- * @example
- * getRandVar({ a: 1, b: 3 }); /// 1
- * getRandomVar([1, 2, 3, 4], 2); /// [2, 4]
- * @param value 值
- * @param count 获取数据量
- * @returns
- */
-export function getRandVar(value: any, count = 1): any | any[] {
-  const sample = Array.isArray(value) ? JSON.parse(JSON.stringify(value)) : Object.values(value);
-  const len = sample.length;
-
-  count = Math.max(Math.min(count, len), 0);
-
-  const last = len - 1;
-
-  const result = [];
-
-  for (let i = 0; i < count; i++) {
-    const rand = getRandNum(i, last);
-    result.push(sample[rand]);
-  }
-
-  return result.length == 1 ? result[0] : result;
 }
 
 /**
@@ -151,6 +124,33 @@ export function getLastVar(data: any): any {
     return newArr.length ? data[newArr[newArr.length - 1]] : undefined;
   }
   return data.length ? data[data.length - 1] : undefined;
+}
+
+/**
+ * 获取数组或对象随机数据
+ * @example
+ * getRandVar({ a: 1, b: 3 }); /// 1
+ * getRandVar([1, 2, 3, 4], 2); /// [2, 4]
+ * @param value 值
+ * @param count 获取数据量
+ * @returns
+ */
+export function getRandVar(value: any, count = 1): any | any[] {
+  const sample = Array.isArray(value) ? JSON.parse(JSON.stringify(value)) : Object.values(value);
+  const len = sample.length;
+
+  count = Math.max(Math.min(count, len), 0);
+
+  const last = len - 1;
+
+  const result = [];
+
+  for (let i = 0; i < count; i++) {
+    const rand = getRandNum(i, last);
+    result.push(sample[rand]);
+  }
+
+  return result.length == 1 ? result[0] : result;
 }
 
 /**
@@ -196,32 +196,6 @@ export function throttle(fn: any, delay = 2000) {
 }
 
 /**
- * 函数柯里化
- * 是把接受多个参数的函数变换成接受一个单一参数(最初函数的第一个参数)的函数，并且返回接受余下的参数且返回结果的新函数的技术。
- * @example
- * curryIt(function (a, b, c) {return a + b + c})(1)(2)(3); /// 6
- * @param fn 函数
- * @returns
- */
-export function curryIt(fn: any) {
-  // 获取预定义函数的参数个数
-  let length = fn.length;
-  // 声明存放参数的数组
-  const args: any[] = [];
-  return function (arg: any) {
-    args.push(arg);
-    length--;
-    if (length <= 0) {
-      // @ts-ignore
-      return fn.apply(this, args);
-    } else {
-      // callee 属性是一个指针，指向拥有这个 arguments 对象的函数。
-      return arguments.callee;
-    }
-  };
-}
-
-/**
  * 全局捕获异常
  * @example
  * globalError((message, source, lineNo, colNo, error) => console.log('全局捕获异常'), false); /// '全局捕获异常'
@@ -258,49 +232,6 @@ export function getRandNum(min = 0, max = 10): number {
  */
 export function getRandColor(): string {
   return '#' + ('00000' + ((Math.random() * 0x1000000) << 0).toString(16)).slice(-6);
-}
-
-/**
- * 获取随机数字字符串
- * @example
- * getRandStr(6); /// 'xxxxxx'
- * @param len 长度
- * @returns
- */
-export function getRandStr(len = 8): string {
-  return (Math.random() * Number('1'.padEnd(len + 1, '0'))).toFixed().slice(0, len);
-}
-
-/**
- * 获取简单的唯一字符串(时间戳+随机数+进制转换)
- * @example
- * getTimeAndStr(5, 36); /// 'xxxxxx'
- * @param len 随机字符的长度
- * @param radix 结果以此进行进制转换
- * @returns
- */
-export function getTimeAndStr(len = 5, radix: number | undefined = 36): string {
-  // Number('xxx');
-  // 超大 string 转 number 结果不准确 玄学
-  // new Date().getTime()
-  return len === 0 ? `${getTimeCode()}` : Number(`${getRandStr(len)}${Date.now()}`).toString(radix);
-}
-
-// eslint-disable-next-line spellcheck/spell-checker
-/**
- * 获取简单的 UUID
- * @example
- * getUUID(); /// 'ghijklmn'
- * @param length 指定位数
- * @param chars 指定字符
- * @returns
- */
-export function getUUID(length: number, chars: string | any[]): string {
-  chars = chars || `${BASE_NUMBER}${BASE_CHAR_LOW}${BASE_CHAR_UP}`;
-  length = length || 8;
-  let result = '';
-  for (let i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
-  return result;
 }
 
 // eslint-disable-next-line spellcheck/spell-checker
@@ -358,96 +289,15 @@ export function getBSColor(key = 'default'): string {
 }
 
 /**
- * 获取 V4 版本 UUID
- * @example
- * uuid(); /// '7b72e264-61fe-426e-b95f-35d4e61c5742'
- * @returns
- */
-export function uuid(): string {
-  const tempUrl = URL.createObjectURL(new Blob());
-  const uuid = tempUrl.toString();
-  // 释放这个 url
-  URL.revokeObjectURL(tempUrl);
-  return uuid.substring(uuid.lastIndexOf('/') + 1);
-  // 外部
-  // const hexBytes = [];
-  // for (let i = 0; i < 256; i++) {
-  //   hexBytes[i] = (i + 0x100).toString(16).substring(1);
-  // }
-
-  // eslint-disable-next-line spellcheck/spell-checker
-  // const ret = new Uint8Array(16);
-  // for (let i = 0; i < 16; i++) ret[i] = getRandNum(0, 255);
-
-  // const b = ret;
-
-  // b[6] = (b[6] & 0x0f) | 0x40;
-  // b[8] = (b[8] & 0x3f) | 0x80;
-
-  // return (
-  //   hexBytes[b[0]] +
-  //   hexBytes[b[1]] +
-  //   hexBytes[b[2]] +
-  //   hexBytes[b[3]] +
-  //   '-' +
-  //   hexBytes[b[4]] +
-  //   hexBytes[b[5]] +
-  //   '-' +
-  //   hexBytes[b[6]] +
-  //   hexBytes[b[7]] +
-  //   '-' +
-  //   hexBytes[b[8]] +
-  //   hexBytes[b[9]] +
-  //   '-' +
-  //   hexBytes[b[10]] +
-  //   hexBytes[b[11]] +
-  //   hexBytes[b[12]] +
-  //   hexBytes[b[13]] +
-  //   hexBytes[b[14]] +
-  //   hexBytes[b[15]]
-  // );
-}
-
-/**
- * 获取带前缀的唯一 key
- * @example
- * getKey(); /// 'M2rmCcGpXCa5MTdN4Kks5'
- * getKey(2, 'test-'); /// test-aK'
- * @param size 指定长度
- * @param prefix 前缀
- * @returns
- */
-export function getKey(size = 21, prefix = ''): string {
-  // 外部
-  // eslint-disable-next-line spellcheck/spell-checker
-  const symbols = 'ModuleSymbhasOwnPr-0123456789ABCDEFGHIJKLNQRTUVWXYZ_cfgijkpqtvxz';
-
-  let id = '';
-
-  const len = symbols.length;
-
-  // eslint-disable-next-line spellcheck/spell-checker
-  const ret = new Uint8Array(size);
-  for (let i = 0; i < size; i++) ret[i] = getRandNum(0, 255);
-
-  const bytes = ret;
-  while (0 < size--) {
-    id += symbols[bytes[size] % len];
-  }
-
-  return prefix + id;
-}
-
-/**
  * 获取任意变量长度
  * @example
- * getSize([]); /// 0
- * getSize({a: 1, b: 2}); /// 2
- * getSize(null); /// 0
+ * getVarSize([]); /// 0
+ * getVarSize({a: 1, b: 2}); /// 2
+ * getVarSize(null); /// 0
  * @param value 值
  * @returns
  */
-export function getSize(value: any): number {
+export function getVarSize(value: any): number {
   if (getType(value) === 'object') {
     return Object.keys(value).length;
   }
@@ -461,11 +311,11 @@ export function getSize(value: any): number {
 /**
  * 在浏览器中打开文件选择框
  * @example
- * openFile({ multiple: true, accept: '.txt' }).then(fileList => console.log(fileList));
+ * openFileSelect({ multiple: true, accept: '.txt' }).then(fileList => console.log(fileList));
  * @param options 打开配置
  * @returns
  */
-export function openFile(options?: { accept?: string; multiple?: boolean }): Promise<any> {
+export function openFileSelect(options?: { accept?: string; multiple?: boolean }): Promise<any> {
   return new Promise((resolve) => {
     const input = document.createElement('input');
     input.style.position = 'fixed';
@@ -560,7 +410,7 @@ export function intersection(paramA: any, paramB: any): any {
         result.push(paramA[key]);
       }
     }
-    result = arraySet(result);
+    result = unique(result);
   }
 
   return jsonClone(result);
@@ -587,7 +437,7 @@ export function union(paramA: any, paramB: any): any {
       ...paramA,
     });
   } else {
-    return jsonClone(arraySet([...paramA, ...paramB]));
+    return jsonClone(unique([...paramA, ...paramB]));
   }
 }
 
@@ -616,7 +466,7 @@ export function difference(paramA: any, paramB: any): any {
     }
   } else {
     result = paramA.filter((item: any) => !paramB.includes(item));
-    result = arraySet(result);
+    result = unique(result);
   }
   return jsonClone(result);
 }
@@ -646,11 +496,11 @@ export function jsonClone(value: any): any {
  * logRunTime($promiseReturnFunction);
  * logRunTime(new Promise((resolve, reject) => { setTimeout(() => resolve('test'), 1000) }));
  * @param fn 方法函数
- * @param timeKey 打印关键 key
+ * @param timeKey 打印时间记录关键 key
  * @returns
  */
 export function logRunTime(fn: any, timeKey: string): void {
-  timeKey = timeKey ?? getKey(5, 'log-run-time-');
+  timeKey = timeKey ?? getKey(5, 'log-run-time');
   const type = getType(fn);
   if (type == 'asyncfunction' || isPromise(fn) || isPromise(fn?.())) {
     if (type == 'promise') {
@@ -673,57 +523,6 @@ export function logRunTime(fn: any, timeKey: string): void {
     fn?.();
     console.timeEnd(timeKey);
   }
-}
-
-/**
- * 打印日志工具类
- * @example
- * const {log, warning, success, danger, dark, primary, info} = Logger();
- * log(1, new Date, 'test', [1, 2, 3], {log});
- * @returns
- */
-export function Logger(): {
-  log: (...args: any[]) => void;
-  info: (...args: any[]) => void;
-  success: (...args: any[]) => void;
-  warning: (...args: any[]) => void;
-  danger: (...args: any[]) => void;
-  primary: (...args: any[]) => void;
-  dark: (...args: any[]) => void;
-  [key: string]: (...args: any[]) => void;
-  // eslint-disable-next-line indent
-} {
-  function _logger(
-    value: any,
-    type: 'warning' | 'info' | 'danger' | 'primary' | 'success' | 'default' | 'dark' = 'default',
-  ): void {
-    console.log('\n%c----------> ', `color:${getBSColor(type)}`, value, '\n');
-  }
-  interface LogFn {
-    (...args: any[]): void;
-  }
-  // @ts-ignore
-  const result: {
-    log: LogFn;
-    info: LogFn;
-    success: LogFn;
-    warning: LogFn;
-    danger: LogFn;
-    primary: LogFn;
-    dark: LogFn;
-    [key: string]: LogFn;
-  } = {};
-  ['warning', 'info', 'danger', 'primary', 'success', 'dark', 'log'].forEach((type: string) => {
-    // @ts-ignore
-    result[type] = (...args: any[]) => {
-      const printType = type == 'log' ? 'default' : type;
-      args.forEach((val) => {
-        // @ts-ignore
-        _logger(val, printType);
-      });
-    };
-  });
-  return result;
 }
 
 /**
@@ -1087,31 +886,11 @@ export function transferMoney(n: number): string {
 }
 
 /**
- * 格式化金额，展示位银行金额格式。
- * @example
- * formatMoney(90000); /// '90,000.00'
- * formatMoney(852.1314, 2); /// '852.13'
- * @param longData 数值
- * @param length 精度
- * @returns
- */
-export function formatMoney(longData: string | number, length: number) {
-  length = length > 0 && length <= 20 ? length : 2;
-  longData = parseFloat((longData + '').replace(/[^\d\.-]/g, '')).toFixed(length) + '';
-  const l = longData.split('.')[0].split('').reverse(),
-    r = longData.split('.')[1];
-  let t = '';
-  for (let i = 0; i < l.length; i++) {
-    t += l[i] + ((i + 1) % 3 == 0 && i + 1 != l.length ? ',' : '');
-  }
-  return t.split('').reverse().join('') + '.' + r;
-}
-
-/**
  * TTS 语音，可以在现代浏览器直接运行。
  * @example
  * const mySpeaker = Speaker();
- * mySpeaker.setText('你好，这是一条测试语音！hello'); mySpeaker.speak();
+ * mySpeaker.setText('你好，这是一条测试语音！hello');
+ * mySpeaker.speak();
  * @param text 内容
  * @param lang 语言
  * @param volume 音量 [0, 1]
@@ -1311,15 +1090,15 @@ export function setEventListener(eventKey: string, foo: any, once = false, dom: 
 }
 
 /**
- * H5 软键盘缩回/弹起回调
- * return cancel listener of H5Resize
+ * H5 移动端软键盘缩回/弹起回调
+ * `return cancel listener of keyBoardResize`
  * @example
- * H5Resize(()=>{ console.log('downCb'); }, ()=>{ console.log('upCb'); }); /// do something
+ * keyBoardResize(()=>{ console.log('downCb'); }, ()=>{ console.log('upCb'); }); /// do something
  * @param downCb 缩回回调
  * @param upCb 弹起回调
  * @returns
  */
-export function H5Resize(downCb: any, upCb: any): any {
+export function keyBoardResize(downCb: any, upCb: any): any {
   // 当软件键盘弹起会改变当前 window.innerHeight
   // 监听这个值变化 [downCb 缩回的回调、 upCb 弹起的回调]
   const clientHeight = window.innerHeight;
@@ -1327,7 +1106,7 @@ export function H5Resize(downCb: any, upCb: any): any {
   downCb = typeof downCb === 'function' ? downCb : function () {};
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   upCb = typeof upCb === 'function' ? upCb : function () {};
-  const H5ResizeFoo = () => {
+  const H5KeyBoardResizeFoo = () => {
     const height = window.innerHeight;
     if (height === clientHeight) {
       downCb();
@@ -1336,7 +1115,7 @@ export function H5Resize(downCb: any, upCb: any): any {
       upCb();
     }
   };
-  return setEventListener('resize', H5ResizeFoo);
+  return setEventListener('resize', H5KeyBoardResizeFoo);
 }
 
 /**
@@ -1546,4 +1325,172 @@ export function forEach(data: any, callback: (value: any, ik: any) => any | '_br
     }
   }
   return hasReturn && !isBreak ? result : undefined;
+}
+
+/**
+ * 获取带前/后缀的唯一 key
+ * @example
+ * getKey(); /// 'M2rmCcGpXCa5MTdN4Kks5'
+ * getKey(2, 'test'); /// 'test-aK'
+ * getKey(2, null, 'last'); /// 'aK-last'
+ * @param size 指定长度
+ * @param prefix 前缀
+ * @param prefix 后缀
+ * @returns
+ */
+export function getKey(size = 21, prefix?: string, suffix?: string): string {
+  const symbols = `${BASE_NUMBER}${BASE_CHAR_LOW}${BASE_CHAR_UP}`;
+  const len = symbols.length;
+  // eslint-disable-next-line spellcheck/spell-checker
+  const ret = new Uint8Array(size);
+
+  for (let i = 0; i < size; i++) {
+    ret[i] = getRandNum(0, 255);
+  }
+
+  let id = '';
+  while (size--) {
+    id += symbols[ret[size] % len];
+  }
+  prefix = !prefix ? '' : prefix + '-';
+  suffix = !suffix ? '' : '-' + suffix;
+
+  return prefix + id + suffix;
+}
+
+/**
+ * 生成一个指定长度的随机数字符串
+ * @example
+ * getRandStr(2); /// '43'
+ * getRandStr(5); /// '77192'
+ * @param length 指定长度
+ * @returns
+ */
+export function getRandStr(length: number): string {
+  let result = '';
+  const characters = `${BASE_NUMBER}`;
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    result += characters.charAt(length != 1 && i == 0 && randomIndex == 0 ? randomIndex + 1 : randomIndex);
+  }
+  return result;
+}
+
+/**
+ * 获取 V4 版本 UUID
+ * @example
+ * uuid(); /// '7b72e264-61fe-426e-b95f-35d4e61c5742'
+ * @returns
+ */
+export function uuid(): string {
+  // // 创建临时 URL 对象
+  // const tempUrl = URL.createObjectURL(new Blob());
+  // // 将 URL 转换为字符串
+  // const uuid = tempUrl.toString();
+  // // 释放这个 URL
+  // URL.revokeObjectURL(tempUrl);
+  // // 提取 URL 字符串中最后一个斜杠后的部分作为 UUID
+  // return uuid.substring(uuid.lastIndexOf('/') + 1);
+
+  // 下面是生成符合 UUID 标准的代码，被注释掉了
+  const hexBytes = [];
+  for (let i = 0; i < 256; i++) {
+    hexBytes[i] = (i + 0x100).toString(16).substring(1);
+  }
+
+  // eslint-disable-next-line spellcheck/spell-checker
+  const ret = new Uint8Array(16);
+  for (let i = 0; i < 16; i++) ret[i] = getRandNum(0, 255);
+
+  const b = ret;
+
+  b[6] = (b[6] & 0x0f) | 0x40;
+  b[8] = (b[8] & 0x3f) | 0x80;
+
+  return (
+    hexBytes[b[0]] +
+    hexBytes[b[1]] +
+    hexBytes[b[2]] +
+    hexBytes[b[3]] +
+    '-' +
+    hexBytes[b[4]] +
+    hexBytes[b[5]] +
+    '-' +
+    hexBytes[b[6]] +
+    hexBytes[b[7]] +
+    '-' +
+    hexBytes[b[8]] +
+    hexBytes[b[9]] +
+    '-' +
+    hexBytes[b[10]] +
+    hexBytes[b[11]] +
+    hexBytes[b[12]] +
+    hexBytes[b[13]] +
+    hexBytes[b[14]] +
+    hexBytes[b[15]]
+  );
+}
+
+/**
+ * 获取随机日期时间
+ * @example
+ * getRandDate(); /// '1923-01-01 01:03:30'
+ * @returns
+ */
+export function getRandDate(): string {
+  const year = getRandNum(1970, new Date().getFullYear());
+  const month = getRandNum(1, 12);
+  const day = getRandNum(1, 28);
+  const hours = getRandNum(0, 23);
+  const minutes = getRandNum(0, 59);
+  const seconds = getRandNum(0, 59);
+
+  const formattedMonth = `${month}`.padStart(2, '0');
+  const formattedDay = `${day}`.padStart(2, '0');
+  const formattedHours = `${hours}`.padStart(2, '0');
+  const formattedMinutes = `${minutes}`.padStart(2, '0');
+  const formattedSeconds = `${seconds}`.padStart(2, '0');
+
+  return `${year}-${formattedMonth}-${formattedDay} ${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+}
+
+/**
+ * 获取随机 IP 地址
+ * @example
+ * getRandIp(); /// '89.0.142.86'
+ * @returns
+ */
+export function getRandIp(): string {
+  const segment1 = getRandNum(1, 255);
+  const segment2 = getRandNum(0, 255);
+  const segment3 = getRandNum(0, 255);
+  const segment4 = getRandNum(1, 255);
+
+  return `${segment1}.${segment2}.${segment3}.${segment4}`;
+}
+
+/**
+ * 函数柯里化
+ * 是把接受多个参数的函数变换成接受一个单一参数(最初函数的第一个参数)的函数，并且返回接受余下的参数且返回结果的新函数的技术。
+ * @example
+ * curryIt(function (a, b, c) {return a + b + c})(1)(2)(3); /// 6
+ * @param fn 函数
+ * @returns
+ */
+export function curryIt(fn: any) {
+  // 获取预定义函数的参数个数
+  let length = fn.length;
+  // 声明存放参数的数组
+  const args: any[] = [];
+  return function (arg: any) {
+    args.push(arg);
+    length--;
+    if (length <= 0) {
+      // @ts-ignore
+      return fn.apply(this, args);
+    } else {
+      // callee 属性是一个指针，指向拥有这个 arguments 对象的函数。
+      return arguments.callee;
+    }
+  };
 }
