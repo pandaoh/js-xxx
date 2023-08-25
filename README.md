@@ -6,7 +6,7 @@
 
 * [GitHub](https://github.com/pandaoh/js-xxx)
 * [Npm](https://www.npmjs.com/package/js-xxx)
-* [Docs-在线文档](https://pandaoh.github.io/js-xxx/html/)
+* [Docs-在线文档](https://pandaoh.github.io/js-xxx/html/) `已引入 (js-xxx)，可直接在控制台调试。`
 
 ## Install-安装
 
