@@ -8,29 +8,6 @@
  */
 export declare function formatBytes(bytes: number, precision?: number): string;
 /**
- * 设置网页 icon
- * @example
- * setIcon('/favicon.ico')
- * @param iconLink icon 链接
- * @returns
- */
-export declare function setIcon(iconLink: string): void;
-/**
- * 复制到剪贴板
- * @example
- * copyToClipboard('hello world')
- * @param text 内容文本
- * @returns
- */
-export declare function copyToClipboard(text: string): void;
-/**
- * 获取鼠标选中内容
- * @example
- * getSelectText()
- * @returns
- */
-export declare function getSelectText(): string | undefined;
-/**
  * 获取浏览器信息
  * @example
  * getUserAgent(); /// { browserName: 'Chrome', browserVersion: '102.0.0.0', osName: 'Windows', osVersion: '10.0', deviceName: '' }
@@ -70,55 +47,6 @@ export declare function isDarkMode(): boolean;
  * @returns
  */
 export declare function isAppleDevice(): boolean;
-/**
- * 单击事件转换为多击事件
- * Author: WuXingHeng
- * @example
- * dom.onclick = onClick2MoreClick(300, clickOneCallBack, clickTwoCallBack, clickThreeCallBack, clickFourCallBack); /// void
- * @param delay 点击间隔
- * @param events 事件多击 rest 参数
- * @returns
- */
-export declare function onClick2MoreClick(delay?: number, ...events: Array<any>): any;
-/**
- * 单独绑定多击事件
- * @example
- * dom.onclick = bindMoreClick(moreClickCallBack, 4, 500); /// 绑定 4 击事件
- * @param fn 触发方法
- * @param times 几次点击触发
- * @param delay 点击间隔
- * @returns
- */
-export declare function bindMoreClick(fn: any, times?: number, delay?: number): (...args: any[]) => void;
-/**
- * 设置长按事件-支持加入单击事件
- * @example
- * addLongPressEvent(document.querySelector('.img-btn'), (event); /// console.log('addLongPressEvent'), 3000); /// 长按会触发事件
- * @param element 需要绑定事件的元素
- * @param longPressCallback 长按事件函数
- * @param duration 长按时间
- * @param clickCallback 单击事件函数(可选)
- * @returns
- */
-export declare function addLongPressEvent(element: any, longPressCallback: any, duration?: number, clickCallback?: any): void;
-/**
- * 触发某个键盘按键事件
- * @example
- * emitKeyboardEvent('keydown', 108); /// 小键盘回车事件
- * @param eventType 事件类型
- * @param keyCode 触发键盘 code
- * @returns
- */
-export declare function emitKeyboardEvent(eventType?: 'keydown' | 'keypress' | 'keyup', keyCode?: number): void;
-/**
- * 禁用冲突事件，条码枪、关闭窗口快捷键等。
- * @example
- * document.addEventListener('keydown', disableConflictEvent); /// 进入页面后禁用冲突事件
- * document.removeEventListener('keydown', disableConflictEvent); /// 退出页面后关闭监听
- * @param event 触发事件
- * @returns
- */
-export declare function disableConflictEvent(event: any): boolean;
 /**
  * 版本号比对算法
  * @example
@@ -181,32 +109,6 @@ export declare function getBloodGroup(bloodGroup: string): {
     upper: string;
 };
 /**
- * 填对应值到对应的 dom 中
- * @example
- * dataTo('.className', 'xxx'); /// xxx 会填入到类名为 class-name 的元素中
- * dataTo('.class-name', 'xxx'); /// xxx 会填入到类名为 class-name 的元素中
- * dataTo('.class_name', 'xxx'); /// xxx 会填入到类名为 class-name 的元素中
- * dataTo('.class.name', 'xxx'); /// xxx 会填入到类名为 class-name 的元素中
- * dataTo('#id.name', 'xxx'); /// xxx 会填入到 id 名为 id-name 的元素中
- * @param key key 值
- * @param value value 值
- * @returns
- */
-export declare function dataTo(key: string, value: any): void;
-/**
- * 给对应 dom 生成水印
- * @example
- * watermark(document.body, 'My Watermark', { fontSize: 20, opacity: 0.5, angle: -30, color: 'red', fontFamily: 'Arial', repeat: true, backgroundOpacity: 0.05 });
- * watermark(document.body, 'My Watermark'); /// 在 body 中生成水印
- * watermark(document.body, 'My Watermark', { fontSize: 120, color: 'red', repeat: false, angle: 0 }); /// 在 body 中生成水印
- * watermark(document.body, 'My Watermark', { fontSize: 20, color: 'red', repeat: true, angle: 90 }); /// 在 body 中生成水印
- * @param dom 需要生成水印的 dom
- * @param text 水印内容
- * @param options 样式配置
- * @returns
- */
-export declare function watermark(dom: any, text: string, options?: any): void;
-/**
  * 生成 cron 表达式
  * @example
  * calcCron(); /// '* * * * *'
@@ -239,19 +141,6 @@ export declare function calcCron({ minute, hour, day, month, week }?: {
  * @returns
  */
 export declare function log(...args: any[]): string;
-/**
- * 强制转换扫描字符串的特殊字符
- * `/(=)|(<)|(>)|(&)|(%)|(#)|(@)|(~)/g`
- * @example
- * transferScanStr('=900182201234500'); /// '900182201234500'
- * transferScanStr('=<E5433000'); /// 'E5433000'
- * transferScanStr('@123'); /// '123'
- * transferScanStr('#test~'); /// 'test'
- * transferScanStr(undefined); /// ''
- * @param value 值
- * @returns
- */
-export declare function transferScanStr(value: string): string;
 /**
  * 强制转化为字符串，避免导出表格显示科学计数法。
  * @example

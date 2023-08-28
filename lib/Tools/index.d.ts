@@ -126,21 +126,6 @@ export declare function openFileSelect(options?: {
     multiple?: boolean;
 }): Promise<any>;
 /**
- * 开启全屏
- * @example
- * openFullscreen(); /// 开启全屏
- * @param element 元素
- * @returns
- */
-export declare function openFullscreen(element?: any): void;
-/**
- * 关闭全屏
- * @example
- * closeFullscreen(); /// 关闭全屏
- * @returns
- */
-export declare function closeFullscreen(): void;
-/**
  * 获取数组或对象交集
  * @example
  * intersection([1, 2, 2, 3, 3], [1, 2, 4, 5]); /// [1, 2]
@@ -543,6 +528,19 @@ export declare function getRandDate(): string;
  * @returns
  */
 export declare function getRandIp(): string;
+/**
+ * 给对应 dom 生成水印
+ * @example
+ * watermark(document.body, 'My Watermark', { fontSize: 20, opacity: 0.5, angle: -30, color: 'red', fontFamily: 'Arial', repeat: true, backgroundOpacity: 0.05 });
+ * watermark(document.body, 'My Watermark'); /// 在 body 中生成水印
+ * watermark(document.body, 'My Watermark', { fontSize: 120, color: 'red', repeat: false, angle: 0 }); /// 在 body 中生成水印
+ * watermark(document.body, 'My Watermark', { fontSize: 20, color: 'red', repeat: true, angle: 90 }); /// 在 body 中生成水印
+ * @param dom 需要生成水印的 dom
+ * @param text 水印内容
+ * @param options 样式配置
+ * @returns
+ */
+export declare function watermark(dom: any, text: string, options?: any): void;
 /**
  * -函数柯里化-
  * 是把接受多个参数的函数变换成接受一个单一参数(最初函数的第一个参数)的函数，并且返回接受余下的参数且返回结果的新函数的技术。

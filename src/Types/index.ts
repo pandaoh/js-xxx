@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-22 14:06:04
+ * @LastEditTime: 2023-08-28 14:35:36
  * @Description: 类型校验等函数
  * @FilePath: \js-xxx\src\Types\index.ts
  */

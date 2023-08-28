@@ -1,13 +1,58 @@
+/* eslint-disable max-lines */
 /*
  * @Author: HxB
  * @Date: 2022-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-24 15:58:45
+ * @LastEditTime: 2023-08-28 14:33:06
  * @Description: 利用 dom 的一些函数
  * @FilePath: \js-xxx\src\Dom\index.ts
  */
 
+import { textSplitCase } from '@/String';
 import { setEventListener } from '@/Tools';
+
+/**
+ * 开启全屏
+ * @example
+ * openFullscreen(); /// 开启全屏
+ * @param element 元素
+ * @returns
+ */
+export function openFullscreen(element: any = document.body) {
+  if (element.requestFullscreen) {
+    element.requestFullscreen();
+  } else if (element.mozRequestFullScreen) {
+    element.mozRequestFullScreen();
+  } else if (element.msRequestFullscreen) {
+    element.msRequestFullscreen();
+  } else if (element.webkitRequestFullscreen) {
+    element.webkitRequestFullScreen();
+  }
+}
+
+/**
+ * 关闭全屏
+ * @example
+ * closeFullscreen(); /// 关闭全屏
+ * @returns
+ */
+export function closeFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+    // @ts-ignore
+  } else if (document.msExitFullscreen) {
+    // @ts-ignore
+    document.msExitFullscreen();
+    // @ts-ignore
+  } else if (document.mozCancelFullScreen) {
+    // @ts-ignore
+    document.mozCancelFullScreen();
+    // @ts-ignore
+  } else if (document.webkitExitFullscreen) {
+    // @ts-ignore
+    document.webkitExitFullscreen();
+  }
+}
 
 // eslint-disable-next-line spellcheck/spell-checker
 /**
@@ -512,4 +557,268 @@ export function calcFontSize(clientRatio = 16 / 9, contentCenter = false, offset
 export function px2rem(px: number) {
   const htmlFontSize = parseFloat(window.getComputedStyle(document.documentElement).fontSize);
   return px / htmlFontSize;
+}
+
+/**
+ * 填对应值到对应的 dom 中
+ * @example
+ * dataTo('.className', 'xxx'); /// xxx 会填入到类名为 class-name 的元素中
+ * dataTo('.class-name', 'xxx'); /// xxx 会填入到类名为 class-name 的元素中
+ * dataTo('.class_name', 'xxx'); /// xxx 会填入到类名为 class-name 的元素中
+ * dataTo('.class.name', 'xxx'); /// xxx 会填入到类名为 class-name 的元素中
+ * dataTo('#id.name', 'xxx'); /// xxx 会填入到 id 名为 id-name 的元素中
+ * @param key key 值
+ * @param value value 值
+ * @returns
+ */
+export function dataTo(key: string, value: any): void {
+  let $dom;
+  try {
+    key = key.toString();
+    $dom = document.querySelector((['.'].includes(key.charAt(0)) ? key.charAt(0) : '') + textSplitCase(key).join('-'));
+    if ($dom) {
+      $dom.innerHTML = value;
+      // @ts-ignore
+      $dom.value = value;
+    }
+  } catch (e) {
+    console.log('js-xxx:dataToError--->', e, { key, value, $dom });
+  }
+}
+
+// eslint-disable-next-line spellcheck/spell-checker
+/**
+ * 单击事件转换为多击事件
+ * Author: WuXingHeng
+ * @example
+ * dom.onclick = onClick2MoreClick(300, clickOneCallBack, clickTwoCallBack, clickThreeCallBack, clickFourCallBack); /// void
+ * @param delay 点击间隔
+ * @param events 事件多击 rest 参数
+ * @returns
+ */
+export function onClick2MoreClick(delay = 300, ...events: Array<any>): any {
+  let timer: any = null;
+  let lastTime = 0;
+  let count = 0;
+  // click 事件传递的参数 args
+  return (...args: any[]) => {
+    clearTimeout(timer);
+    const currentTime = new Date().getTime();
+    count = currentTime - lastTime < delay ? count + 1 : 0;
+    lastTime = new Date().getTime();
+    events.forEach((event, i) => {
+      if (i === count) {
+        timer = setTimeout(() => {
+          count = 0;
+          lastTime = 0;
+          event(...args);
+        }, delay);
+      }
+    });
+  };
+}
+
+/**
+ * 单独绑定多击事件
+ * @example
+ * dom.onclick = bindMoreClick(moreClickCallBack, 4, 500); /// 绑定 4 击事件
+ * @param fn 触发方法
+ * @param times 几次点击触发
+ * @param delay 点击间隔
+ * @returns
+ */
+export function bindMoreClick(fn: any, times = 3, delay = 300) {
+  // count 从 0 开始
+  times = times - 1;
+  let timer: any = null;
+  let lastTime = 0;
+  let count = 0;
+  return (...args: any[]) => {
+    clearTimeout(timer);
+    const currentTime = new Date().getTime();
+    count = currentTime - lastTime < delay ? count + 1 : 0;
+    lastTime = new Date().getTime();
+    if (count === times) {
+      timer = setTimeout(() => {
+        count = 0;
+        lastTime = 0;
+        fn(...args);
+      }, delay);
+    }
+  };
+}
+
+/**
+ * 设置网页 icon
+ * @example
+ * setIcon('/favicon.ico')
+ * @param iconLink icon 链接
+ * @returns
+ */
+export function setIcon(iconLink: string) {
+  const dom: any = document.querySelector('head [rel="icon"]');
+  if (dom) {
+    dom.setAttribute('href', iconLink);
+    dom.setAttribute('rel', 'icon');
+  } else {
+    const iconDom = document.createElement('link');
+    iconDom.setAttribute('rel', 'icon');
+    iconDom.setAttribute('href', iconLink);
+    document.querySelector('head')?.appendChild(iconDom);
+  }
+}
+
+/**
+ * 复制到剪贴板
+ * @example
+ * copyToClipboard('hello world')
+ * @param text 内容文本
+ * @returns
+ */
+export function copyToClipboard(text: string) {
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(text);
+  } else {
+    let info = '复制成功！';
+    const tempInput = document.createElement('input');
+    tempInput.style.position = 'absolute';
+    tempInput.style.top = '-5201314px';
+    tempInput.style.left = '-5201314px';
+    tempInput.value = text;
+    document.body.appendChild(tempInput);
+
+    // 将焦点移动到文档或输入元素上
+    tempInput.focus();
+
+    tempInput.select();
+    try {
+      document.execCommand('copy');
+    } catch (err) {
+      info = '浏览器不支持此操作，请手动复制。';
+    }
+    document.body.removeChild(tempInput);
+    console.log('js-xxx:copyToClipboard--->', info);
+  }
+}
+
+/**
+ * 获取鼠标选中内容
+ * @example
+ * getSelectText()
+ * @returns
+ */
+export function getSelectText() {
+  return window?.getSelection()?.toString();
+}
+/**
+ * 设置长按事件-支持加入单击事件
+ * @example
+ * addLongPressEvent(document.querySelector('.img-btn'), (event); /// console.log('addLongPressEvent'), 3000); /// 长按会触发事件
+ * @param element 需要绑定事件的元素
+ * @param longPressCallback 长按事件函数
+ * @param duration 长按时间
+ * @param clickCallback 单击事件函数(可选)
+ * @returns
+ */
+export function addLongPressEvent(element: any, longPressCallback: any, duration = 2500, clickCallback?: any) {
+  if (!element) {
+    return;
+  }
+
+  let timer: any;
+  let longPressTriggered = false;
+
+  const events = [
+    { name: 'mousedown', handler: handleStart },
+    { name: 'mouseup', handler: handleEnd },
+    { name: 'mouseout', handler: handleEnd },
+    { name: 'touchstart', handler: handleStart },
+    { name: 'touchend', handler: handleEnd },
+    { name: 'touchcancel', handler: handleEnd },
+    { name: 'click', handler: handleClick },
+  ];
+
+  function handleStart(event: any) {
+    start(event);
+  }
+
+  function handleEnd() {
+    end();
+  }
+
+  function handleClick(event: any) {
+    if (!longPressTriggered) {
+      clickCallback && clickCallback(event);
+    }
+  }
+
+  function start(event: any) {
+    if (timer) return;
+    timer = setTimeout(() => {
+      longPressTriggered = true;
+      longPressCallback && longPressCallback(event);
+    }, duration);
+  }
+
+  function end() {
+    clearTimeout(timer);
+    timer = null;
+    setTimeout(() => {
+      longPressTriggered = false;
+    }, 0);
+  }
+
+  for (const { name, handler } of events) {
+    element.addEventListener(name, handler);
+  }
+
+  element.addEventListener('contextmenu', (event: any) => {
+    event.preventDefault();
+  });
+}
+
+/**
+ * 触发某个键盘按键事件
+ * @example
+ * emitKeyboardEvent('keydown', 108); /// 小键盘回车事件
+ * @param eventType 事件类型
+ * @param keyCode 触发键盘 code
+ * @returns
+ */
+export function emitKeyboardEvent(eventType: 'keydown' | 'keypress' | 'keyup' = 'keydown', keyCode = 13): void {
+  const myEvent = new KeyboardEvent(eventType, {
+    bubbles: true,
+    cancelable: true,
+    keyCode: keyCode,
+  });
+  document.body.dispatchEvent(myEvent);
+}
+
+/**
+ * 禁用冲突事件，条码枪、关闭窗口快捷键等。
+ * @example
+ * document.addEventListener('keydown', disableConflictEvent); /// 进入页面后禁用冲突事件
+ * document.removeEventListener('keydown', disableConflictEvent); /// 退出页面后关闭监听
+ * @param event 触发事件
+ * @returns
+ */
+export function disableConflictEvent(event: any) {
+  const keyCode = event.keyCode || event.which || event.charCode;
+  const ctrlKey = event.ctrlKey || event.metaKey;
+  const altKey = event.altKey;
+  if (ctrlKey && keyCode == 74) {
+    // ctrl+j 禁用条码枪触发事件
+    event.preventDefault();
+    emitKeyboardEvent();
+  }
+  if (altKey && keyCode == 115) {
+    // alt+f4 关闭窗口快捷键
+    event.preventDefault();
+  }
+  if (ctrlKey && keyCode == 115) {
+    // ctrl+f4 关闭窗口快捷键
+    event.preventDefault();
+  }
+  // true 防止此事件被进一步传播; false 允许此事件继续传播;
+  return false;
 }

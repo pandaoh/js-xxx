@@ -326,4 +326,17 @@ export declare function checkPassWordLevel(passWord: string): 1 | 2 | 3 | 4 | 5 
  * @returns
  */
 export declare function getPinYin(str: string, extractFirst?: boolean): string;
+/**
+ * 强制转换扫描字符串的特殊字符
+ * `/(=)|(<)|(>)|(&)|(%)|(#)|(@)|(~)/g`
+ * @example
+ * transferScanStr('=900182201234500'); /// '900182201234500'
+ * transferScanStr('=<E5433000'); /// 'E5433000'
+ * transferScanStr('@123'); /// '123'
+ * transferScanStr('#test~'); /// 'test'
+ * transferScanStr(undefined); /// ''
+ * @param value 值
+ * @returns
+ */
+export declare function transferScanStr(value: string): string;
 //# sourceMappingURL=index.d.ts.map

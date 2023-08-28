@@ -26,3 +26,30 @@
   font-size: larger;
   font-weight: 600;
 }
+
+/* js-xxx */
+.tsd-theme-toggle::after,
+.tsd-accordion-details::after,
+.tsd-index-accordion::after {
+  display: block;
+  margin: 10px 5px;
+  letter-spacing: 1px;
+  color: #28a745;
+  font-size: smaller;
+}
+
+.tsd-theme-toggle::after {
+  content: 'This library (js-xxx) has been introduced on this page, and you can directly open the console for debugging.';
+}
+
+.tsd-accordion-details::after {
+  content: '本页面已引入此库 (js-xxx)，可直接打开控制台调试。';
+}
+
+.tsd-index-accordion::after {
+  content: "$xxx.log('Hello LeoHe!')";
+  color: #ffc107;
+  font-size: inherit;
+  font-style: italic;
+  font-weight: 500;
+}

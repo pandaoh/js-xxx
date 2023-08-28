@@ -105,7 +105,7 @@ function __spreadArray(to, from, pack) {
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-22 14:06:04
+ * @LastEditTime: 2023-08-28 14:35:36
  * @Description: 类型校验等函数
  * @FilePath: \js-xxx\src\Types\index.ts
  */
@@ -8702,54 +8702,6 @@ function openFileSelect(options) {
     });
 }
 /**
- * 开启全屏
- * @example
- * openFullscreen(); /// 开启全屏
- * @param element 元素
- * @returns
- */
-function openFullscreen(element) {
-    if (element === void 0) { element = document.body; }
-    if (element.requestFullscreen) {
-        element.requestFullscreen();
-    }
-    else if (element.mozRequestFullScreen) {
-        element.mozRequestFullScreen();
-    }
-    else if (element.msRequestFullscreen) {
-        element.msRequestFullscreen();
-    }
-    else if (element.webkitRequestFullscreen) {
-        element.webkitRequestFullScreen();
-    }
-}
-/**
- * 关闭全屏
- * @example
- * closeFullscreen(); /// 关闭全屏
- * @returns
- */
-function closeFullscreen() {
-    if (document.exitFullscreen) {
-        document.exitFullscreen();
-        // @ts-ignore
-    }
-    else if (document.msExitFullscreen) {
-        // @ts-ignore
-        document.msExitFullscreen();
-        // @ts-ignore
-    }
-    else if (document.mozCancelFullScreen) {
-        // @ts-ignore
-        document.mozCancelFullScreen();
-        // @ts-ignore
-    }
-    else if (document.webkitExitFullscreen) {
-        // @ts-ignore
-        document.webkitExitFullscreen();
-    }
-}
-/**
  * 获取数组或对象交集
  * @example
  * intersection([1, 2, 2, 3, 3], [1, 2, 4, 5]); /// [1, 2]
@@ -9810,6 +9762,61 @@ function getRandIp() {
     return "".concat(segment1, ".").concat(segment2, ".").concat(segment3, ".").concat(segment4);
 }
 /**
+ * 给对应 dom 生成水印
+ * @example
+ * watermark(document.body, 'My Watermark', { fontSize: 20, opacity: 0.5, angle: -30, color: 'red', fontFamily: 'Arial', repeat: true, backgroundOpacity: 0.05 });
+ * watermark(document.body, 'My Watermark'); /// 在 body 中生成水印
+ * watermark(document.body, 'My Watermark', { fontSize: 120, color: 'red', repeat: false, angle: 0 }); /// 在 body 中生成水印
+ * watermark(document.body, 'My Watermark', { fontSize: 20, color: 'red', repeat: true, angle: 90 }); /// 在 body 中生成水印
+ * @param dom 需要生成水印的 dom
+ * @param text 水印内容
+ * @param options 样式配置
+ * @returns
+ */
+function watermark(dom, text, options) {
+    if (options === void 0) { options = {}; }
+    var _a = options.fontSize, fontSize = _a === void 0 ? 16 : _a, _b = options.opacity, opacity = _b === void 0 ? 0.3 : _b, _c = options.angle, angle = _c === void 0 ? -45 : _c, _d = options.color, color = _d === void 0 ? '#000' : _d, _e = options.fontFamily, fontFamily = _e === void 0 ? 'Arial' : _e, _f = options.repeat, repeat = _f === void 0 ? true : _f, _g = options.backgroundOpacity, backgroundOpacity = _g === void 0 ? 0.05 : _g;
+    var canvas = document.createElement('canvas');
+    var ctx = canvas.getContext('2d');
+    ctx.font = "".concat(fontSize, "px ").concat(fontFamily);
+    var textWidth = ctx.measureText(text).width;
+    var textHeight = fontSize;
+    var canvasWidth = angle % 180 == 0
+        ? textWidth * 2
+        : angle % 90 == 0
+            ? textHeight * 2
+            : (Math.abs(textWidth * Math.cos((angle * Math.PI) / 180)) +
+                Math.abs(textHeight * Math.sin((angle * Math.PI) / 180))) *
+                2;
+    var canvasHeight = angle % 180 == 0
+        ? textHeight * 2
+        : angle % 90 == 0
+            ? textWidth * 2
+            : (Math.abs(textHeight * Math.cos((angle * Math.PI) / 180)) +
+                Math.abs(textWidth * Math.sin((angle * Math.PI) / 180))) *
+                2;
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
+    ctx.font = "".concat(fontSize, "px ").concat(fontFamily);
+    ctx.fillStyle = color;
+    ctx.globalAlpha = opacity;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    var centerX = canvasWidth / 2;
+    var centerY = canvasHeight / 2;
+    ctx.translate(centerX, centerY);
+    ctx.rotate((angle * Math.PI) / 180);
+    ctx.fillText(text, 0, 0);
+    ctx.rotate((-angle * Math.PI) / 180);
+    ctx.translate(-centerX, -centerY);
+    var backgroundImage = "url(".concat(canvas.toDataURL('image/png'), ")");
+    dom.style.backgroundImage = backgroundImage;
+    dom.style.backgroundRepeat = repeat ? 'repeat' : 'no-repeat';
+    dom.style.backgroundSize = "".concat(dom.clientWidth === canvasWidth ? canvasWidth : dom.clientWidth / Math.ceil(dom.clientWidth / canvasWidth), "px ").concat(dom.clientHeight === canvasHeight ? canvasHeight : dom.clientHeight / Math.ceil(dom.clientHeight / canvasHeight), "px");
+    dom.style.backgroundColor = "rgba(0, 0, 0, ".concat(backgroundOpacity, ")");
+    dom.style.backgroundPosition = 'center';
+}
+/**
  * -函数柯里化-
  * 是把接受多个参数的函数变换成接受一个单一参数(最初函数的第一个参数)的函数，并且返回接受余下的参数且返回结果的新函数的技术。
  * @example
@@ -10551,6 +10558,24 @@ function getPinYin(str, extractFirst) {
     }
     return result;
 }
+/**
+ * 强制转换扫描字符串的特殊字符
+ * `/(=)|(<)|(>)|(&)|(%)|(#)|(@)|(~)/g`
+ * @example
+ * transferScanStr('=900182201234500'); /// '900182201234500'
+ * transferScanStr('=<E5433000'); /// 'E5433000'
+ * transferScanStr('@123'); /// '123'
+ * transferScanStr('#test~'); /// 'test'
+ * transferScanStr(undefined); /// ''
+ * @param value 值
+ * @returns
+ */
+function transferScanStr(value) {
+    if (!value) {
+        return '';
+    }
+    return "".concat(value).replace(/(=)|(<)|(>)|(&)|(%)|(#)|(@)|(~)/g, '');
+}
 
 /**
  * 时间格式化
@@ -10989,14 +11014,55 @@ function getUTCTime(timezone) {
     // return new Date(utcTime + 3600000 * timezone).getTime();
 }
 
-/*
- * @Author: HxB
- * @Date: 2022-04-26 15:37:27
- * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-24 15:58:45
- * @Description: 利用 dom 的一些函数
- * @FilePath: \js-xxx\src\Dom\index.ts
+/* eslint-disable max-lines */
+/**
+ * 开启全屏
+ * @example
+ * openFullscreen(); /// 开启全屏
+ * @param element 元素
+ * @returns
  */
+function openFullscreen(element) {
+    if (element === void 0) { element = document.body; }
+    if (element.requestFullscreen) {
+        element.requestFullscreen();
+    }
+    else if (element.mozRequestFullScreen) {
+        element.mozRequestFullScreen();
+    }
+    else if (element.msRequestFullscreen) {
+        element.msRequestFullscreen();
+    }
+    else if (element.webkitRequestFullscreen) {
+        element.webkitRequestFullScreen();
+    }
+}
+/**
+ * 关闭全屏
+ * @example
+ * closeFullscreen(); /// 关闭全屏
+ * @returns
+ */
+function closeFullscreen() {
+    if (document.exitFullscreen) {
+        document.exitFullscreen();
+        // @ts-ignore
+    }
+    else if (document.msExitFullscreen) {
+        // @ts-ignore
+        document.msExitFullscreen();
+        // @ts-ignore
+    }
+    else if (document.mozCancelFullScreen) {
+        // @ts-ignore
+        document.mozCancelFullScreen();
+        // @ts-ignore
+    }
+    else if (document.webkitExitFullscreen) {
+        // @ts-ignore
+        document.webkitExitFullscreen();
+    }
+}
 // eslint-disable-next-line spellcheck/spell-checker
 /**
  * 字符串转实体字符
@@ -11470,6 +11536,287 @@ function calcFontSize(clientRatio, contentCenter, offsetSelector) {
 function px2rem(px) {
     var htmlFontSize = parseFloat(window.getComputedStyle(document.documentElement).fontSize);
     return px / htmlFontSize;
+}
+/**
+ * 填对应值到对应的 dom 中
+ * @example
+ * dataTo('.className', 'xxx'); /// xxx 会填入到类名为 class-name 的元素中
+ * dataTo('.class-name', 'xxx'); /// xxx 会填入到类名为 class-name 的元素中
+ * dataTo('.class_name', 'xxx'); /// xxx 会填入到类名为 class-name 的元素中
+ * dataTo('.class.name', 'xxx'); /// xxx 会填入到类名为 class-name 的元素中
+ * dataTo('#id.name', 'xxx'); /// xxx 会填入到 id 名为 id-name 的元素中
+ * @param key key 值
+ * @param value value 值
+ * @returns
+ */
+function dataTo(key, value) {
+    var $dom;
+    try {
+        key = key.toString();
+        $dom = document.querySelector((['.'].includes(key.charAt(0)) ? key.charAt(0) : '') + textSplitCase(key).join('-'));
+        if ($dom) {
+            $dom.innerHTML = value;
+            // @ts-ignore
+            $dom.value = value;
+        }
+    }
+    catch (e) {
+        console.log('js-xxx:dataToError--->', e, { key: key, value: value, $dom: $dom });
+    }
+}
+// eslint-disable-next-line spellcheck/spell-checker
+/**
+ * 单击事件转换为多击事件
+ * Author: WuXingHeng
+ * @example
+ * dom.onclick = onClick2MoreClick(300, clickOneCallBack, clickTwoCallBack, clickThreeCallBack, clickFourCallBack); /// void
+ * @param delay 点击间隔
+ * @param events 事件多击 rest 参数
+ * @returns
+ */
+function onClick2MoreClick(delay) {
+    if (delay === void 0) { delay = 300; }
+    var events = [];
+    for (var _i = 1; _i < arguments.length; _i++) {
+        events[_i - 1] = arguments[_i];
+    }
+    var timer = null;
+    var lastTime = 0;
+    var count = 0;
+    // click 事件传递的参数 args
+    return function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        clearTimeout(timer);
+        var currentTime = new Date().getTime();
+        count = currentTime - lastTime < delay ? count + 1 : 0;
+        lastTime = new Date().getTime();
+        events.forEach(function (event, i) {
+            if (i === count) {
+                timer = setTimeout(function () {
+                    count = 0;
+                    lastTime = 0;
+                    event.apply(void 0, __spreadArray([], __read(args), false));
+                }, delay);
+            }
+        });
+    };
+}
+/**
+ * 单独绑定多击事件
+ * @example
+ * dom.onclick = bindMoreClick(moreClickCallBack, 4, 500); /// 绑定 4 击事件
+ * @param fn 触发方法
+ * @param times 几次点击触发
+ * @param delay 点击间隔
+ * @returns
+ */
+function bindMoreClick(fn, times, delay) {
+    if (times === void 0) { times = 3; }
+    if (delay === void 0) { delay = 300; }
+    // count 从 0 开始
+    times = times - 1;
+    var timer = null;
+    var lastTime = 0;
+    var count = 0;
+    return function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        clearTimeout(timer);
+        var currentTime = new Date().getTime();
+        count = currentTime - lastTime < delay ? count + 1 : 0;
+        lastTime = new Date().getTime();
+        if (count === times) {
+            timer = setTimeout(function () {
+                count = 0;
+                lastTime = 0;
+                fn.apply(void 0, __spreadArray([], __read(args), false));
+            }, delay);
+        }
+    };
+}
+/**
+ * 设置网页 icon
+ * @example
+ * setIcon('/favicon.ico')
+ * @param iconLink icon 链接
+ * @returns
+ */
+function setIcon(iconLink) {
+    var _a;
+    var dom = document.querySelector('head [rel="icon"]');
+    if (dom) {
+        dom.setAttribute('href', iconLink);
+        dom.setAttribute('rel', 'icon');
+    }
+    else {
+        var iconDom = document.createElement('link');
+        iconDom.setAttribute('rel', 'icon');
+        iconDom.setAttribute('href', iconLink);
+        (_a = document.querySelector('head')) === null || _a === void 0 ? void 0 : _a.appendChild(iconDom);
+    }
+}
+/**
+ * 复制到剪贴板
+ * @example
+ * copyToClipboard('hello world')
+ * @param text 内容文本
+ * @returns
+ */
+function copyToClipboard(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text);
+    }
+    else {
+        var info = '复制成功！';
+        var tempInput = document.createElement('input');
+        tempInput.style.position = 'absolute';
+        tempInput.style.top = '-5201314px';
+        tempInput.style.left = '-5201314px';
+        tempInput.value = text;
+        document.body.appendChild(tempInput);
+        // 将焦点移动到文档或输入元素上
+        tempInput.focus();
+        tempInput.select();
+        try {
+            document.execCommand('copy');
+        }
+        catch (err) {
+            info = '浏览器不支持此操作，请手动复制。';
+        }
+        document.body.removeChild(tempInput);
+        console.log('js-xxx:copyToClipboard--->', info);
+    }
+}
+/**
+ * 获取鼠标选中内容
+ * @example
+ * getSelectText()
+ * @returns
+ */
+function getSelectText() {
+    var _a;
+    return (_a = window === null || window === void 0 ? void 0 : window.getSelection()) === null || _a === void 0 ? void 0 : _a.toString();
+}
+/**
+ * 设置长按事件-支持加入单击事件
+ * @example
+ * addLongPressEvent(document.querySelector('.img-btn'), (event); /// console.log('addLongPressEvent'), 3000); /// 长按会触发事件
+ * @param element 需要绑定事件的元素
+ * @param longPressCallback 长按事件函数
+ * @param duration 长按时间
+ * @param clickCallback 单击事件函数(可选)
+ * @returns
+ */
+function addLongPressEvent(element, longPressCallback, duration, clickCallback) {
+    var e_1, _a;
+    if (duration === void 0) { duration = 2500; }
+    if (!element) {
+        return;
+    }
+    var timer;
+    var longPressTriggered = false;
+    var events = [
+        { name: 'mousedown', handler: handleStart },
+        { name: 'mouseup', handler: handleEnd },
+        { name: 'mouseout', handler: handleEnd },
+        { name: 'touchstart', handler: handleStart },
+        { name: 'touchend', handler: handleEnd },
+        { name: 'touchcancel', handler: handleEnd },
+        { name: 'click', handler: handleClick },
+    ];
+    function handleStart(event) {
+        start(event);
+    }
+    function handleEnd() {
+        end();
+    }
+    function handleClick(event) {
+        if (!longPressTriggered) {
+            clickCallback && clickCallback(event);
+        }
+    }
+    function start(event) {
+        if (timer)
+            return;
+        timer = setTimeout(function () {
+            longPressTriggered = true;
+            longPressCallback && longPressCallback(event);
+        }, duration);
+    }
+    function end() {
+        clearTimeout(timer);
+        timer = null;
+        setTimeout(function () {
+            longPressTriggered = false;
+        }, 0);
+    }
+    try {
+        for (var events_1 = __values(events), events_1_1 = events_1.next(); !events_1_1.done; events_1_1 = events_1.next()) {
+            var _b = events_1_1.value, name_1 = _b.name, handler = _b.handler;
+            element.addEventListener(name_1, handler);
+        }
+    }
+    catch (e_1_1) { e_1 = { error: e_1_1 }; }
+    finally {
+        try {
+            if (events_1_1 && !events_1_1.done && (_a = events_1.return)) _a.call(events_1);
+        }
+        finally { if (e_1) throw e_1.error; }
+    }
+    element.addEventListener('contextmenu', function (event) {
+        event.preventDefault();
+    });
+}
+/**
+ * 触发某个键盘按键事件
+ * @example
+ * emitKeyboardEvent('keydown', 108); /// 小键盘回车事件
+ * @param eventType 事件类型
+ * @param keyCode 触发键盘 code
+ * @returns
+ */
+function emitKeyboardEvent(eventType, keyCode) {
+    if (eventType === void 0) { eventType = 'keydown'; }
+    if (keyCode === void 0) { keyCode = 13; }
+    var myEvent = new KeyboardEvent(eventType, {
+        bubbles: true,
+        cancelable: true,
+        keyCode: keyCode,
+    });
+    document.body.dispatchEvent(myEvent);
+}
+/**
+ * 禁用冲突事件，条码枪、关闭窗口快捷键等。
+ * @example
+ * document.addEventListener('keydown', disableConflictEvent); /// 进入页面后禁用冲突事件
+ * document.removeEventListener('keydown', disableConflictEvent); /// 退出页面后关闭监听
+ * @param event 触发事件
+ * @returns
+ */
+function disableConflictEvent(event) {
+    var keyCode = event.keyCode || event.which || event.charCode;
+    var ctrlKey = event.ctrlKey || event.metaKey;
+    var altKey = event.altKey;
+    if (ctrlKey && keyCode == 74) {
+        // ctrl+j 禁用条码枪触发事件
+        event.preventDefault();
+        emitKeyboardEvent();
+    }
+    if (altKey && keyCode == 115) {
+        // alt+f4 关闭窗口快捷键
+        event.preventDefault();
+    }
+    if (ctrlKey && keyCode == 115) {
+        // ctrl+f4 关闭窗口快捷键
+        event.preventDefault();
+    }
+    // true 防止此事件被进一步传播; false 允许此事件继续传播;
+    return false;
 }
 
 /*
@@ -12426,7 +12773,7 @@ function getContentType(fileType) {
     return (_a = CONTENT_TYPES[fileType]) !== null && _a !== void 0 ? _a : 'application/octet-stream';
 }
 
-/* eslint-disable max-lines, indent */
+/* eslint-disable max-lines */
 function _isValidCronField(field, min, max) {
     var regex = new RegExp('^\\d+|\\*/\\d+|[\\d,-]+/[\\d,-]+$');
     if (!regex.test(field)) {
@@ -12459,69 +12806,6 @@ function formatBytes(bytes, precision) {
     bytes /= 1 << (10 * pow);
     var unit = (_a = units === null || units === void 0 ? void 0 : units[pow]) !== null && _a !== void 0 ? _a : units[0];
     return bytes.toFixed(precision) + ' ' + unit;
-}
-/**
- * 设置网页 icon
- * @example
- * setIcon('/favicon.ico')
- * @param iconLink icon 链接
- * @returns
- */
-function setIcon(iconLink) {
-    var _a;
-    var dom = document.querySelector('head [rel="icon"]');
-    if (dom) {
-        dom.setAttribute('href', iconLink);
-        dom.setAttribute('rel', 'icon');
-    }
-    else {
-        var iconDom = document.createElement('link');
-        iconDom.setAttribute('rel', 'icon');
-        iconDom.setAttribute('href', iconLink);
-        (_a = document.querySelector('head')) === null || _a === void 0 ? void 0 : _a.appendChild(iconDom);
-    }
-}
-/**
- * 复制到剪贴板
- * @example
- * copyToClipboard('hello world')
- * @param text 内容文本
- * @returns
- */
-function copyToClipboard(text) {
-    if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(text);
-    }
-    else {
-        var info = '复制成功！';
-        var tempInput = document.createElement('input');
-        tempInput.style.position = 'absolute';
-        tempInput.style.top = '-5201314px';
-        tempInput.style.left = '-5201314px';
-        tempInput.value = text;
-        document.body.appendChild(tempInput);
-        // 将焦点移动到文档或输入元素上
-        tempInput.focus();
-        tempInput.select();
-        try {
-            document.execCommand('copy');
-        }
-        catch (err) {
-            info = '浏览器不支持此操作，请手动复制。';
-        }
-        document.body.removeChild(tempInput);
-        console.log('js-xxx:copyToClipboard--->', info);
-    }
-}
-/**
- * 获取鼠标选中内容
- * @example
- * getSelectText()
- * @returns
- */
-function getSelectText() {
-    var _a;
-    return (_a = window === null || window === void 0 ? void 0 : window.getSelection()) === null || _a === void 0 ? void 0 : _a.toString();
 }
 /**
  * 获取浏览器信息
@@ -12645,197 +12929,6 @@ function isDarkMode() {
  */
 function isAppleDevice() {
     return /Mac|iPod|iPhone|iPad/.test(navigator.platform);
-}
-// eslint-disable-next-line spellcheck/spell-checker
-/**
- * 单击事件转换为多击事件
- * Author: WuXingHeng
- * @example
- * dom.onclick = onClick2MoreClick(300, clickOneCallBack, clickTwoCallBack, clickThreeCallBack, clickFourCallBack); /// void
- * @param delay 点击间隔
- * @param events 事件多击 rest 参数
- * @returns
- */
-function onClick2MoreClick(delay) {
-    if (delay === void 0) { delay = 300; }
-    var events = [];
-    for (var _i = 1; _i < arguments.length; _i++) {
-        events[_i - 1] = arguments[_i];
-    }
-    var timer = null;
-    var lastTime = 0;
-    var count = 0;
-    // click 事件传递的参数 args
-    return function () {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        clearTimeout(timer);
-        var currentTime = new Date().getTime();
-        count = currentTime - lastTime < delay ? count + 1 : 0;
-        lastTime = new Date().getTime();
-        events.forEach(function (event, i) {
-            if (i === count) {
-                timer = setTimeout(function () {
-                    count = 0;
-                    lastTime = 0;
-                    event.apply(void 0, __spreadArray([], __read(args), false));
-                }, delay);
-            }
-        });
-    };
-}
-/**
- * 单独绑定多击事件
- * @example
- * dom.onclick = bindMoreClick(moreClickCallBack, 4, 500); /// 绑定 4 击事件
- * @param fn 触发方法
- * @param times 几次点击触发
- * @param delay 点击间隔
- * @returns
- */
-function bindMoreClick(fn, times, delay) {
-    if (times === void 0) { times = 3; }
-    if (delay === void 0) { delay = 300; }
-    // count 从 0 开始
-    times = times - 1;
-    var timer = null;
-    var lastTime = 0;
-    var count = 0;
-    return function () {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        clearTimeout(timer);
-        var currentTime = new Date().getTime();
-        count = currentTime - lastTime < delay ? count + 1 : 0;
-        lastTime = new Date().getTime();
-        if (count === times) {
-            timer = setTimeout(function () {
-                count = 0;
-                lastTime = 0;
-                fn.apply(void 0, __spreadArray([], __read(args), false));
-            }, delay);
-        }
-    };
-}
-/**
- * 设置长按事件-支持加入单击事件
- * @example
- * addLongPressEvent(document.querySelector('.img-btn'), (event); /// console.log('addLongPressEvent'), 3000); /// 长按会触发事件
- * @param element 需要绑定事件的元素
- * @param longPressCallback 长按事件函数
- * @param duration 长按时间
- * @param clickCallback 单击事件函数(可选)
- * @returns
- */
-function addLongPressEvent(element, longPressCallback, duration, clickCallback) {
-    var e_1, _a;
-    if (duration === void 0) { duration = 2500; }
-    if (!element) {
-        return;
-    }
-    var timer;
-    var longPressTriggered = false;
-    var events = [
-        { name: 'mousedown', handler: handleStart },
-        { name: 'mouseup', handler: handleEnd },
-        { name: 'mouseout', handler: handleEnd },
-        { name: 'touchstart', handler: handleStart },
-        { name: 'touchend', handler: handleEnd },
-        { name: 'touchcancel', handler: handleEnd },
-        { name: 'click', handler: handleClick },
-    ];
-    function handleStart(event) {
-        start(event);
-    }
-    function handleEnd() {
-        end();
-    }
-    function handleClick(event) {
-        if (!longPressTriggered) {
-            clickCallback && clickCallback(event);
-        }
-    }
-    function start(event) {
-        if (timer)
-            return;
-        timer = setTimeout(function () {
-            longPressTriggered = true;
-            longPressCallback && longPressCallback(event);
-        }, duration);
-    }
-    function end() {
-        clearTimeout(timer);
-        timer = null;
-        setTimeout(function () {
-            longPressTriggered = false;
-        }, 0);
-    }
-    try {
-        for (var events_1 = __values(events), events_1_1 = events_1.next(); !events_1_1.done; events_1_1 = events_1.next()) {
-            var _b = events_1_1.value, name_1 = _b.name, handler = _b.handler;
-            element.addEventListener(name_1, handler);
-        }
-    }
-    catch (e_1_1) { e_1 = { error: e_1_1 }; }
-    finally {
-        try {
-            if (events_1_1 && !events_1_1.done && (_a = events_1.return)) _a.call(events_1);
-        }
-        finally { if (e_1) throw e_1.error; }
-    }
-    element.addEventListener('contextmenu', function (event) {
-        event.preventDefault();
-    });
-}
-/**
- * 触发某个键盘按键事件
- * @example
- * emitKeyboardEvent('keydown', 108); /// 小键盘回车事件
- * @param eventType 事件类型
- * @param keyCode 触发键盘 code
- * @returns
- */
-function emitKeyboardEvent(eventType, keyCode) {
-    if (eventType === void 0) { eventType = 'keydown'; }
-    if (keyCode === void 0) { keyCode = 13; }
-    var myEvent = new KeyboardEvent(eventType, {
-        bubbles: true,
-        cancelable: true,
-        keyCode: keyCode,
-    });
-    document.body.dispatchEvent(myEvent);
-}
-/**
- * 禁用冲突事件，条码枪、关闭窗口快捷键等。
- * @example
- * document.addEventListener('keydown', disableConflictEvent); /// 进入页面后禁用冲突事件
- * document.removeEventListener('keydown', disableConflictEvent); /// 退出页面后关闭监听
- * @param event 触发事件
- * @returns
- */
-function disableConflictEvent(event) {
-    var keyCode = event.keyCode || event.which || event.charCode;
-    var ctrlKey = event.ctrlKey || event.metaKey;
-    var altKey = event.altKey;
-    if (ctrlKey && keyCode == 74) {
-        // ctrl+j 禁用条码枪触发事件
-        event.preventDefault();
-        emitKeyboardEvent();
-    }
-    if (altKey && keyCode == 115) {
-        // alt+f4 关闭窗口快捷键
-        event.preventDefault();
-    }
-    if (ctrlKey && keyCode == 115) {
-        // ctrl+f4 关闭窗口快捷键
-        event.preventDefault();
-    }
-    // true 防止此事件被进一步传播; false 允许此事件继续传播;
-    return false;
 }
 /**
  * 版本号比对算法
@@ -12993,88 +13086,6 @@ function getBloodGroup(bloodGroup) {
     return bloodGroups[bloodGroup];
 }
 /**
- * 填对应值到对应的 dom 中
- * @example
- * dataTo('.className', 'xxx'); /// xxx 会填入到类名为 class-name 的元素中
- * dataTo('.class-name', 'xxx'); /// xxx 会填入到类名为 class-name 的元素中
- * dataTo('.class_name', 'xxx'); /// xxx 会填入到类名为 class-name 的元素中
- * dataTo('.class.name', 'xxx'); /// xxx 会填入到类名为 class-name 的元素中
- * dataTo('#id.name', 'xxx'); /// xxx 会填入到 id 名为 id-name 的元素中
- * @param key key 值
- * @param value value 值
- * @returns
- */
-function dataTo(key, value) {
-    var $dom;
-    try {
-        key = key.toString();
-        $dom = document.querySelector((['.'].includes(key.charAt(0)) ? key.charAt(0) : '') + textSplitCase(key).join('-'));
-        if ($dom) {
-            $dom.innerHTML = value;
-            // @ts-ignore
-            $dom.value = value;
-        }
-    }
-    catch (e) {
-        console.log('js-xxx:dataToError--->', e, { key: key, value: value, $dom: $dom });
-    }
-}
-/**
- * 给对应 dom 生成水印
- * @example
- * watermark(document.body, 'My Watermark', { fontSize: 20, opacity: 0.5, angle: -30, color: 'red', fontFamily: 'Arial', repeat: true, backgroundOpacity: 0.05 });
- * watermark(document.body, 'My Watermark'); /// 在 body 中生成水印
- * watermark(document.body, 'My Watermark', { fontSize: 120, color: 'red', repeat: false, angle: 0 }); /// 在 body 中生成水印
- * watermark(document.body, 'My Watermark', { fontSize: 20, color: 'red', repeat: true, angle: 90 }); /// 在 body 中生成水印
- * @param dom 需要生成水印的 dom
- * @param text 水印内容
- * @param options 样式配置
- * @returns
- */
-function watermark(dom, text, options) {
-    if (options === void 0) { options = {}; }
-    var _a = options.fontSize, fontSize = _a === void 0 ? 16 : _a, _b = options.opacity, opacity = _b === void 0 ? 0.3 : _b, _c = options.angle, angle = _c === void 0 ? -45 : _c, _d = options.color, color = _d === void 0 ? '#000' : _d, _e = options.fontFamily, fontFamily = _e === void 0 ? 'Arial' : _e, _f = options.repeat, repeat = _f === void 0 ? true : _f, _g = options.backgroundOpacity, backgroundOpacity = _g === void 0 ? 0.05 : _g;
-    var canvas = document.createElement('canvas');
-    var ctx = canvas.getContext('2d');
-    ctx.font = "".concat(fontSize, "px ").concat(fontFamily);
-    var textWidth = ctx.measureText(text).width;
-    var textHeight = fontSize;
-    var canvasWidth = angle % 180 == 0
-        ? textWidth * 2
-        : angle % 90 == 0
-            ? textHeight * 2
-            : (Math.abs(textWidth * Math.cos((angle * Math.PI) / 180)) +
-                Math.abs(textHeight * Math.sin((angle * Math.PI) / 180))) *
-                2;
-    var canvasHeight = angle % 180 == 0
-        ? textHeight * 2
-        : angle % 90 == 0
-            ? textWidth * 2
-            : (Math.abs(textHeight * Math.cos((angle * Math.PI) / 180)) +
-                Math.abs(textWidth * Math.sin((angle * Math.PI) / 180))) *
-                2;
-    canvas.width = canvasWidth;
-    canvas.height = canvasHeight;
-    ctx.font = "".concat(fontSize, "px ").concat(fontFamily);
-    ctx.fillStyle = color;
-    ctx.globalAlpha = opacity;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    var centerX = canvasWidth / 2;
-    var centerY = canvasHeight / 2;
-    ctx.translate(centerX, centerY);
-    ctx.rotate((angle * Math.PI) / 180);
-    ctx.fillText(text, 0, 0);
-    ctx.rotate((-angle * Math.PI) / 180);
-    ctx.translate(-centerX, -centerY);
-    var backgroundImage = "url(".concat(canvas.toDataURL('image/png'), ")");
-    dom.style.backgroundImage = backgroundImage;
-    dom.style.backgroundRepeat = repeat ? 'repeat' : 'no-repeat';
-    dom.style.backgroundSize = "".concat(dom.clientWidth === canvasWidth ? canvasWidth : dom.clientWidth / Math.ceil(dom.clientWidth / canvasWidth), "px ").concat(dom.clientHeight === canvasHeight ? canvasHeight : dom.clientHeight / Math.ceil(dom.clientHeight / canvasHeight), "px");
-    dom.style.backgroundColor = "rgba(0, 0, 0, ".concat(backgroundOpacity, ")");
-    dom.style.backgroundPosition = 'center';
-}
-/**
  * 生成 cron 表达式
  * @example
  * calcCron(); /// '* * * * *'
@@ -13225,24 +13236,6 @@ function log() {
         console.log.apply(console, __spreadArray(__spreadArray([], __read(args), false), [e], false));
     }
     return "\n[".concat(formatDate(new Date()), "] =====>\n (---").concat(JSON.stringify(args), "---)\n");
-}
-/**
- * 强制转换扫描字符串的特殊字符
- * `/(=)|(<)|(>)|(&)|(%)|(#)|(@)|(~)/g`
- * @example
- * transferScanStr('=900182201234500'); /// '900182201234500'
- * transferScanStr('=<E5433000'); /// 'E5433000'
- * transferScanStr('@123'); /// '123'
- * transferScanStr('#test~'); /// 'test'
- * transferScanStr(undefined); /// ''
- * @param value 值
- * @returns
- */
-function transferScanStr(value) {
-    if (!value) {
-        return '';
-    }
-    return "".concat(value).replace(/(=)|(<)|(>)|(&)|(%)|(#)|(@)|(~)/g, '');
 }
 /**
  * 强制转化为字符串，避免导出表格显示科学计数法。

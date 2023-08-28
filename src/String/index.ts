@@ -792,3 +792,22 @@ export function getPinYin(str: string, extractFirst = false) {
   }
   return result;
 }
+
+/**
+ * 强制转换扫描字符串的特殊字符
+ * `/(=)|(<)|(>)|(&)|(%)|(#)|(@)|(~)/g`
+ * @example
+ * transferScanStr('=900182201234500'); /// '900182201234500'
+ * transferScanStr('=<E5433000'); /// 'E5433000'
+ * transferScanStr('@123'); /// '123'
+ * transferScanStr('#test~'); /// 'test'
+ * transferScanStr(undefined); /// ''
+ * @param value 值
+ * @returns
+ */
+export function transferScanStr(value: string): string {
+  if (!value) {
+    return '';
+  }
+  return `${value}`.replace(/(=)|(<)|(>)|(&)|(%)|(#)|(@)|(~)/g, '');
+}

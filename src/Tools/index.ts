@@ -1,9 +1,10 @@
+/* eslint-disable indent */
 /* eslint-disable max-lines */
 /*
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-24 17:51:34
+ * @LastEditTime: 2023-08-28 14:35:14
  * @Description: 工具函数
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
@@ -336,49 +337,6 @@ export function openFileSelect(options?: { accept?: string; multiple?: boolean }
     });
     input.click();
   });
-}
-
-/**
- * 开启全屏
- * @example
- * openFullscreen(); /// 开启全屏
- * @param element 元素
- * @returns
- */
-export function openFullscreen(element: any = document.body) {
-  if (element.requestFullscreen) {
-    element.requestFullscreen();
-  } else if (element.mozRequestFullScreen) {
-    element.mozRequestFullScreen();
-  } else if (element.msRequestFullscreen) {
-    element.msRequestFullscreen();
-  } else if (element.webkitRequestFullscreen) {
-    element.webkitRequestFullScreen();
-  }
-}
-
-/**
- * 关闭全屏
- * @example
- * closeFullscreen(); /// 关闭全屏
- * @returns
- */
-export function closeFullscreen() {
-  if (document.exitFullscreen) {
-    document.exitFullscreen();
-    // @ts-ignore
-  } else if (document.msExitFullscreen) {
-    // @ts-ignore
-    document.msExitFullscreen();
-    // @ts-ignore
-  } else if (document.mozCancelFullScreen) {
-    // @ts-ignore
-    document.mozCancelFullScreen();
-    // @ts-ignore
-  } else if (document.webkitExitFullscreen) {
-    // @ts-ignore
-    document.webkitExitFullscreen();
-  }
 }
 
 /**
@@ -1467,6 +1425,80 @@ export function getRandIp(): string {
   const segment4 = getRandNum(1, 255);
 
   return `${segment1}.${segment2}.${segment3}.${segment4}`;
+}
+
+/**
+ * 给对应 dom 生成水印
+ * @example
+ * watermark(document.body, 'My Watermark', { fontSize: 20, opacity: 0.5, angle: -30, color: 'red', fontFamily: 'Arial', repeat: true, backgroundOpacity: 0.05 });
+ * watermark(document.body, 'My Watermark'); /// 在 body 中生成水印
+ * watermark(document.body, 'My Watermark', { fontSize: 120, color: 'red', repeat: false, angle: 0 }); /// 在 body 中生成水印
+ * watermark(document.body, 'My Watermark', { fontSize: 20, color: 'red', repeat: true, angle: 90 }); /// 在 body 中生成水印
+ * @param dom 需要生成水印的 dom
+ * @param text 水印内容
+ * @param options 样式配置
+ * @returns
+ */
+export function watermark(dom: any, text: string, options: any = {}) {
+  const {
+    fontSize = 16,
+    opacity = 0.3,
+    angle = -45,
+    color = '#000',
+    fontFamily = 'Arial',
+    repeat = true,
+    backgroundOpacity = 0.05,
+  } = options;
+
+  const canvas = document.createElement('canvas');
+  const ctx: any = canvas.getContext('2d');
+  ctx.font = `${fontSize}px ${fontFamily}`;
+  const textWidth = ctx.measureText(text).width;
+  const textHeight = fontSize;
+  const canvasWidth =
+    angle % 180 == 0
+      ? textWidth * 2
+      : angle % 90 == 0
+      ? textHeight * 2
+      : (Math.abs(textWidth * Math.cos((angle * Math.PI) / 180)) +
+          Math.abs(textHeight * Math.sin((angle * Math.PI) / 180))) *
+        2;
+  const canvasHeight =
+    angle % 180 == 0
+      ? textHeight * 2
+      : angle % 90 == 0
+      ? textWidth * 2
+      : (Math.abs(textHeight * Math.cos((angle * Math.PI) / 180)) +
+          Math.abs(textWidth * Math.sin((angle * Math.PI) / 180))) *
+        2;
+
+  canvas.width = canvasWidth;
+  canvas.height = canvasHeight;
+
+  ctx.font = `${fontSize}px ${fontFamily}`;
+  ctx.fillStyle = color;
+  ctx.globalAlpha = opacity;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+
+  const centerX = canvasWidth / 2;
+  const centerY = canvasHeight / 2;
+  ctx.translate(centerX, centerY);
+  ctx.rotate((angle * Math.PI) / 180);
+  ctx.fillText(text, 0, 0);
+  ctx.rotate((-angle * Math.PI) / 180);
+  ctx.translate(-centerX, -centerY);
+
+  const backgroundImage = `url(${canvas.toDataURL('image/png')})`;
+  dom.style.backgroundImage = backgroundImage;
+  dom.style.backgroundRepeat = repeat ? 'repeat' : 'no-repeat';
+  dom.style.backgroundSize = `${
+    dom.clientWidth === canvasWidth ? canvasWidth : dom.clientWidth / Math.ceil(dom.clientWidth / canvasWidth)
+  }px ${
+    dom.clientHeight === canvasHeight ? canvasHeight : dom.clientHeight / Math.ceil(dom.clientHeight / canvasHeight)
+  }px`;
+  dom.style.backgroundColor = `rgba(0, 0, 0, ${backgroundOpacity})`;
+  dom.style.backgroundPosition = 'center';
 }
 
 /**
