@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 16:24:47
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-24 15:22:23
+ * @LastEditTime: 2023-08-28 14:45:17
  * @Description: 常用数字相关函数
  * @FilePath: \js-xxx\src\Number\index.ts
  */
@@ -13,7 +13,7 @@
  * @example
  * round(1.2345, 2); /// 1.23
  * round(0.355, 2); /// 0.36
- * round(1.005, 2); /// 0.36
+ * round(1.005, 2); /// 1.01
  * @param number 浮点数
  * @param d 保留小数位
  * @returns
