@@ -1,6 +1,6 @@
 js-xxx
 
-# js-xxx - v2.0.5
+# js-xxx - v2.0.6
 
 ## Table of contents
 
@@ -5240,7 +5240,7 @@ ___
 ```ts
 round(1.2345, 2); /// 1.23
 round(0.355, 2); /// 0.36
-round(1.005, 2); /// 0.36
+round(1.005, 2); /// 1.01
 ```
 
 #### Parameters

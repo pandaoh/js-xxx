@@ -4,7 +4,7 @@
  * @example
  * round(1.2345, 2); /// 1.23
  * round(0.355, 2); /// 0.36
- * round(1.005, 2); /// 0.36
+ * round(1.005, 2); /// 1.01
  * @param number 浮点数
  * @param d 保留小数位
  * @returns
