@@ -4,7 +4,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-28 14:35:14
+ * @LastEditTime: 2023-08-30 13:50:59
  * @Description: 工具函数
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
@@ -702,7 +702,7 @@ export function ms(str: any): string | number {
  */
 export function transferFileToBase64(content: any, contentType: string, callBack: any): void {
   const blob = new Blob([content], {
-    type: contentType,
+    type: contentType, // ;charset=utf-8
   });
   const reader = new FileReader();
   reader.readAsDataURL(blob);

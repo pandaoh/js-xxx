@@ -602,4 +602,5 @@ export function exportFile(data: string, fileName?: string, fileType = 'txt'): v
   // U+FEFF 是一个零宽度非断字符（Zero Width No-Break Space），也称为“字节顺序标记（Byte Order Mark，BOM）”。
   // eslint-disable-next-line spellcheck/spell-checker
   download(uri, `${fileName ?? formatDate(new Date(), 'yyyy-mm-dd-hhiiss')}.${fileType}`);
+  // downloadContent 可以兼容落后浏览器的情况
 }
