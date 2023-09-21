@@ -4,7 +4,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-09-21 15:58:54
+ * @LastEditTime: 2023-09-21 18:22:44
  * @Description: 工具函数
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
@@ -1051,7 +1051,7 @@ export function setEventListener(eventKey: string, foo: any, once = false, dom: 
  * H5 移动端软键盘缩回/弹起回调
  * `return cancel listener of keyBoardResize`
  * @example
- * keyBoardResize(()=>{ console.log('downCb'); }, ()=>{ console.log('upCb'); }); /// do something
+ * keyBoardResize(() => { console.log('downCb'); }, () => { console.log('upCb'); }); /// do something
  * @param downCb 缩回回调
  * @param upCb 弹起回调
  * @returns
