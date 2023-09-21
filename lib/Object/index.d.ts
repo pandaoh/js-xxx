@@ -32,4 +32,30 @@ export declare function hasKey(data: any, key: string): boolean;
  * @returns
  */
 export declare function deepClone(data: any, hash?: WeakMap<object, any>): any;
+/**
+ * every 函数
+ * 因为默认的 every 空数组会返回 true
+ * @example
+ * every([]); /// false
+ * every([1, 2, 3], (item) => item > 0); /// true
+ * every({}); /// false
+ * every(undefined); /// false
+ * @param collection 源数据
+ * @param callback 回调
+ * @returns
+ */
+export declare function every(collection: any, callback?: any): boolean;
+/**
+ * 找到对象数组具有最多 key 的对象，并返回其 key 组成的数组。
+ * @example
+ * const objects = [
+ *  { id: 1, name: 'a', age: 25 },
+ *  { id: 2, name: 'b', age: 30, city: '123' },
+ *  { id: 3, name: 'c', age: 35, city: '456', profession: 'Engineer' }
+ * ];
+ *  findMaxKey(objects); /// ['id', 'name', 'age', 'city', 'profession']
+ * @param objArray 源数据
+ * @returns
+ */
+export declare function findMaxKey(objArray: any[]): never[];
 //# sourceMappingURL=index.d.ts.map

@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:05:14
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-24 15:39:00
+ * @LastEditTime: 2023-09-21 17:56:02
  * @Description: 对象相关函数
  * @FilePath: \js-xxx\src\Object\index.ts
  */
@@ -98,4 +98,78 @@ export function deepClone(data: any, hash = new WeakMap()): any {
   //     result[i] = deepClone(data[i]);
   //   }
   //   return result;
+}
+
+/**
+ * every 函数
+ * 因为默认的 every 空数组会返回 true
+ * @example
+ * every([]); /// false
+ * every([1, 2, 3], (item) => item > 0); /// true
+ * every({}); /// false
+ * every(undefined); /// false
+ * @param collection 源数据
+ * @param callback 回调
+ * @returns
+ */
+export function every(collection: any, callback?: any) {
+  if (!collection) {
+    return false;
+  }
+
+  if (Array.isArray(collection)) {
+    if (collection.length === 0) {
+      return false;
+    }
+    return collection.every(callback ?? Boolean);
+  }
+
+  if (typeof collection === 'object') {
+    const values = Object.values(collection);
+    if (values.length === 0) {
+      return false;
+    }
+    return values.every(callback ?? Boolean);
+  }
+
+  return false;
+}
+
+/**
+ * 找到对象数组具有最多 key 的对象，并返回其 key 组成的数组。
+ * @example
+ * const objects = [
+ *  { id: 1, name: 'a', age: 25 },
+ *  { id: 2, name: 'b', age: 30, city: '123' },
+ *  { id: 3, name: 'c', age: 35, city: '456', profession: 'Engineer' }
+ * ];
+ *  findMaxKey(objects); /// ['id', 'name', 'age', 'city', 'profession']
+ * @param objArray 源数据
+ * @returns
+ */
+export function findMaxKey(objArray: any[]) {
+  if (!objArray) {
+    return [];
+  }
+
+  let maxKeyCount = 0;
+  let maxKeyObject = null;
+
+  // 遍历对象数组
+  objArray?.forEach(function (obj) {
+    const keyCount = Object.keys(obj ?? {}) ?? [];
+
+    // 更新最大 key 数量和对应的对象
+    if (keyCount.length > maxKeyCount) {
+      maxKeyCount = keyCount.length;
+      maxKeyObject = keyCount;
+    }
+  });
+
+  // 返回最大 key 对象的 key 数组
+  if (maxKeyObject) {
+    return maxKeyObject;
+  } else {
+    return [];
+  }
 }

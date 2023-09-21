@@ -1,6 +1,6 @@
 js-xxx
 
-# js-xxx - v2.0.6
+# js-xxx - v2.0.8
 
 ## Table of contents
 
@@ -69,7 +69,6 @@ js-xxx
 - [contains](README.md#contains)
 - [copyToClipboard](README.md#copytoclipboard)
 - [countdown](README.md#countdown)
-- [curryIt](README.md#curryit)
 - [data2Arr](README.md#data2arr)
 - [data2Obj](README.md#data2obj)
 - [dataTo](README.md#datato)
@@ -84,8 +83,10 @@ js-xxx
 - [emitKeyboardEvent](README.md#emitkeyboardevent)
 - [empty](README.md#empty)
 - [encrypt](README.md#encrypt)
+- [every](README.md#every)
 - [exportFile](README.md#exportfile)
 - [findChildren](README.md#findchildren)
+- [findMaxKey](README.md#findmaxkey)
 - [findParents](README.md#findparents)
 - [float](README.md#float)
 - [forEach](README.md#foreach)
@@ -217,6 +218,7 @@ js-xxx
 - [rip](README.md#rip)
 - [round](README.md#round)
 - [same](README.md#same)
+- [scrollToView](README.md#scrolltoview)
 - [scrollXTo](README.md#scrollxto)
 - [scrollYTo](README.md#scrollyto)
 - [sendNotification](README.md#sendnotification)
@@ -230,6 +232,7 @@ js-xxx
 - [setWsBinaryType](README.md#setwsbinarytype)
 - [sha1](README.md#sha1)
 - [sha256](README.md#sha256)
+- [showProcess](README.md#showprocess)
 - [showToast](README.md#showtoast)
 - [showVar](README.md#showvar)
 - [sleep](README.md#sleep)
@@ -252,6 +255,7 @@ js-xxx
 - [toNum](README.md#tonum)
 - [toQueryString](README.md#toquerystring)
 - [toStr](README.md#tostr)
+- [toggleClass](README.md#toggleclass)
 - [transferCSVData](README.md#transfercsvdata)
 - [transferFileToBase64](README.md#transferfiletobase64)
 - [transferIdCard](README.md#transferidcard)
@@ -259,6 +263,7 @@ js-xxx
 - [transferNumber](README.md#transfernumber)
 - [transferScanStr](README.md#transferscanstr)
 - [transferSeconds](README.md#transferseconds)
+- [transferTemperature](README.md#transfertemperature)
 - [trim](README.md#trim)
 - [truncate](README.md#truncate)
 - [unicode2str](README.md#unicode2str)
@@ -1465,43 +1470,6 @@ console.time('test'); countdown(10, (x) => console.log('--->', x), () => console
 
 ___
 
-### curryIt
-
-▸ **curryIt**(`fn`): (`arg`: `any`) => `any`
-
--函数柯里化-
-是把接受多个参数的函数变换成接受一个单一参数(最初函数的第一个参数)的函数，并且返回接受余下的参数且返回结果的新函数的技术。
-
-**`Example`**
-
-```ts
-curryIt(function (a, b, c) {return a + b + c})(1)(2)(3); /// 6
-```
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `fn` | `any` | 函数 |
-
-#### Returns
-
-`fn`
-
-▸ (`arg`): `any`
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `arg` | `any` |
-
-##### Returns
-
-`any`
-
-___
-
 ### data2Arr
 
 ▸ **data2Arr**(`sourceData`, `key`): `any`[]
@@ -1888,6 +1856,35 @@ encrypt("value", "1234567887654321","1234567887654321"); /// 自定义密钥加�
 
 ___
 
+### every
+
+▸ **every**(`collection`, `callback?`): `boolean`
+
+every 函数
+因为默认的 every 空数组会返回 true
+
+**`Example`**
+
+```ts
+every([]); /// false
+every([1, 2, 3], (item) => item > 0); /// true
+every({}); /// false
+every(undefined); /// false
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `collection` | `any` | 源数据 |
+| `callback?` | `any` | 回调 |
+
+#### Returns
+
+`boolean`
+
+___
+
 ### exportFile
 
 ▸ **exportFile**(`data`, `fileName?`, `fileType?`): `void`
@@ -1937,6 +1934,35 @@ findChildren(document.getElementById('test')); /// #test 的所有子元素数�
 #### Returns
 
 `any`[]
+
+___
+
+### findMaxKey
+
+▸ **findMaxKey**(`objArray`): `never`[]
+
+找到对象数组具有最多 key 的对象，并返回其 key 组成的数组。
+
+**`Example`**
+
+```ts
+const objects = [
+ { id: 1, name: 'a', age: 25 },
+ { id: 2, name: 'b', age: 30, city: '123' },
+ { id: 3, name: 'c', age: 35, city: '456', profession: 'Engineer' }
+];
+ findMaxKey(objects); /// ['id', 'name', 'age', 'city', 'profession']
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `objArray` | `any`[] | 源数据 |
+
+#### Returns
+
+`never`[]
 
 ___
 
@@ -5286,6 +5312,32 @@ same('admins', 'admin'); /// false
 
 ___
 
+### scrollToView
+
+▸ **scrollToView**(`dom?`, `targetVal?`): `void`
+
+将元素滚动到视野范围
+
+**`Example`**
+
+```ts
+scrollIntoView(document.querySelector('.test')); /// test 元素滚动到视野范围
+scrollIntoView(document.querySelector('.test'), 'start'); /// test 元素滚动到视野范围顶部
+```
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `dom` | `any` | `document.documentElement` | 元素对象 |
+| `targetVal` | ``"center"`` \| ``"start"`` \| ``"end"`` \| ``"nearest"`` | `'center'` | 'start' \| 'end' \| 'center' \| 'nearest' |
+
+#### Returns
+
+`void`
+
+___
+
 ### scrollXTo
 
 ▸ **scrollXTo**(`targetVal`, `callback`, `dom?`): `void`
@@ -5295,9 +5347,9 @@ X 轴滚动到指定位置
 **`Example`**
 
 ```ts
-`scrollXTo(0); /// 滚动到左侧
- `scrollXTo('start', null, document.documentElement); /// 滚动到左侧
- `scrollXTo('end', (percent) => console.log(percent), document.querySelector('body')); /// 滚动到右侧
+scrollXTo(0); /// 滚动到左侧
+scrollXTo('start', null, document.documentElement); /// 滚动到左侧
+scrollXTo('end', (percent) => console.log(percent), document.querySelector('body')); /// 滚动到右侧
 ```
 
 #### Parameters
@@ -5323,9 +5375,9 @@ Y 轴滚动到指定位置
 **`Example`**
 
 ```ts
-`scrollYTo(0); /// 滚动到顶部
- `scrollYTo('start', null, document.documentElement); /// 滚动到顶部
- `scrollYTo('end', (percent) => console.log(percent), document.querySelector('body')); /// 滚动到底部
+scrollYTo(0); /// 滚动到顶部
+scrollYTo('start', null, document.documentElement); /// 滚动到顶部
+scrollYTo('end', (percent) => console.log(percent), document.querySelector('body')); /// 滚动到底部
 ```
 
 #### Parameters
@@ -5616,6 +5668,37 @@ sha256("value"); /// 加密后的字符串
 #### Returns
 
 `string`
+
+___
+
+### showProcess
+
+▸ **showProcess**(`element`): () => `void`
+
+展示水滴加载动画
+
+**`Example`**
+
+```ts
+const hideProcess = showProcess(myElement); /// 在元素中显示水滴加载动画
+hideProcess(); /// 隐藏水滴加载动画
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `element` | `any` | 元素 |
+
+#### Returns
+
+`fn`
+
+▸ (): `void`
+
+##### Returns
+
+`void`
 
 ___
 
@@ -6209,6 +6292,32 @@ toStr(null); /// ''
 
 ___
 
+### toggleClass
+
+▸ **toggleClass**(`element`, `className`): `void`
+
+给元素添加/删除类
+
+**`Example`**
+
+```ts
+toggleClass(myElement, 'active'); /// 给元素添加/删除 active 类
+toggleClass(myElement, ['active', 'disabled']); /// 给元素添加/删除 active/disabled 类
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `element` | `any` | 元素 |
+| `className` | `string` \| `string`[] | 类 |
+
+#### Returns
+
+`void`
+
+___
+
 ### transferCSVData
 
 ▸ **transferCSVData**(`fields`, `data`): `string`
@@ -6394,6 +6503,33 @@ transferSeconds(1234, true); /// {h: '00', i: 20, s: 34}
 #### Returns
 
 `string` \| `any`
+
+___
+
+### transferTemperature
+
+▸ **transferTemperature**(`temperature`, `isCelsius?`, `addSuffix?`): `string` \| `number`
+
+华氏/摄氏度互转
+
+**`Example`**
+
+```ts
+transferTemperature(30.5); /// '86.9 °F'
+transferTemperature(86, false, false); /// 30
+```
+
+#### Parameters
+
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `temperature` | `string` \| `number` | `undefined` |
+| `isCelsius` | `boolean` | `true` |
+| `addSuffix` | `boolean` | `true` |
+
+#### Returns
+
+`string` \| `number`
 
 ___
 

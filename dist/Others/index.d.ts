@@ -177,4 +177,12 @@ export declare function transferCSVData(fields: {
  * @returns
  */
 export declare function exportFile(data: string, fileName?: string, fileType?: string): void;
+/**
+ * 华氏/摄氏度互转
+ * @example
+ * transferTemperature(30.5); /// '86.9 °F'
+ * transferTemperature(86, false, false); /// 30
+ * @returns
+ */
+export declare function transferTemperature(temperature: number | string, isCelsius?: boolean, addSuffix?: boolean): string | number;
 //# sourceMappingURL=index.d.ts.map

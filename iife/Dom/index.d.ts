@@ -49,9 +49,9 @@ export declare function offDefaultEvent(event: any): boolean;
 /**
  * Y 轴滚动到指定位置
  * @example
- *  `scrollYTo(0); /// 滚动到顶部
- *  `scrollYTo('start', null, document.documentElement); /// 滚动到顶部
- *  `scrollYTo('end', (percent) => console.log(percent), document.querySelector('body')); /// 滚动到底部
+ * scrollYTo(0); /// 滚动到顶部
+ * scrollYTo('start', null, document.documentElement); /// 滚动到顶部
+ * scrollYTo('end', (percent) => console.log(percent), document.querySelector('body')); /// 滚动到底部
  * @param targetVal 'start' | 'end' | number
  * @param callback 回调
  * @param dom 元素对象
@@ -61,15 +61,25 @@ export declare function scrollYTo(targetVal: 'start' | 'end' | number, callback:
 /**
  * X 轴滚动到指定位置
  * @example
- *  `scrollXTo(0); /// 滚动到左侧
- *  `scrollXTo('start', null, document.documentElement); /// 滚动到左侧
- *  `scrollXTo('end', (percent) => console.log(percent), document.querySelector('body')); /// 滚动到右侧
+ * scrollXTo(0); /// 滚动到左侧
+ * scrollXTo('start', null, document.documentElement); /// 滚动到左侧
+ * scrollXTo('end', (percent) => console.log(percent), document.querySelector('body')); /// 滚动到右侧
  * @param targetVal 'start' | 'end' | number
  * @param callback 回调
  * @param dom 元素对象
  * @returns
  */
 export declare function scrollXTo(targetVal: 'start' | 'end' | number, callback: any, dom?: any): void;
+/**
+ * 将元素滚动到视野范围
+ * @example
+ * scrollIntoView(document.querySelector('.test')); /// test 元素滚动到视野范围
+ * scrollIntoView(document.querySelector('.test'), 'start'); /// test 元素滚动到视野范围顶部
+ * @param dom 元素对象
+ * @param targetVal 'start' | 'end' | 'center' | 'nearest'
+ * @returns
+ */
+export declare function scrollToView(dom?: any, targetVal?: 'start' | 'end' | 'center' | 'nearest'): void;
 /**
  * 获取滚动条百分比
  * @example
@@ -216,6 +226,23 @@ export declare function px2rem(px: number): number;
  * @returns
  */
 export declare function dataTo(key: string, value: any): void;
+/**
+ * 给元素添加/删除类
+ * @example
+ * toggleClass(myElement, 'active'); /// 给元素添加/删除 active 类
+ * toggleClass(myElement, ['active', 'disabled']); /// 给元素添加/删除 active/disabled 类
+ * @param element 元素
+ * @param className 类
+ */
+export declare function toggleClass(element: any, className: string | Array<string>): void;
+/**
+ * 展示水滴加载动画
+ * @example
+ * const hideProcess = showProcess(myElement); /// 在元素中显示水滴加载动画
+ * hideProcess(); /// 隐藏水滴加载动画
+ * @param element 元素
+ */
+export declare function showProcess(element: any): () => void;
 /**
  * 单击事件转换为多击事件
  * Author: WuXingHeng

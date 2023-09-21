@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-28 14:33:06
+ * @LastEditTime: 2023-09-21 17:45:42
  * @Description: 利用 dom 的一些函数
  * @FilePath: \js-xxx\src\Dom\index.ts
  */
@@ -119,9 +119,9 @@ export function offDefaultEvent(event: any) {
 /**
  * Y 轴滚动到指定位置
  * @example
- *  `scrollYTo(0); /// 滚动到顶部
- *  `scrollYTo('start', null, document.documentElement); /// 滚动到顶部
- *  `scrollYTo('end', (percent) => console.log(percent), document.querySelector('body')); /// 滚动到底部
+ * scrollYTo(0); /// 滚动到顶部
+ * scrollYTo('start', null, document.documentElement); /// 滚动到顶部
+ * scrollYTo('end', (percent) => console.log(percent), document.querySelector('body')); /// 滚动到底部
  * @param targetVal 'start' | 'end' | number
  * @param callback 回调
  * @param dom 元素对象
@@ -159,7 +159,7 @@ export function scrollYTo(targetVal: 'start' | 'end' | number, callback: any, do
   /* 旧版函数 */
   // clearInterval(dom.timer);
   // dom.timer = setInterval(function () {
-  //   var step = (targetVal - dom.scrollY) / 10;
+  //   let step = (targetVal - dom.scrollY) / 10;
   //   step = step > 0 ? Math.ceil(step) : Math.floor(step);
   //   if (dom.scrollY == targetVal) {
   //     clearInterval(dom.timer);
@@ -185,9 +185,9 @@ export function scrollYTo(targetVal: 'start' | 'end' | number, callback: any, do
 /**
  * X 轴滚动到指定位置
  * @example
- *  `scrollXTo(0); /// 滚动到左侧
- *  `scrollXTo('start', null, document.documentElement); /// 滚动到左侧
- *  `scrollXTo('end', (percent) => console.log(percent), document.querySelector('body')); /// 滚动到右侧
+ * scrollXTo(0); /// 滚动到左侧
+ * scrollXTo('start', null, document.documentElement); /// 滚动到左侧
+ * scrollXTo('end', (percent) => console.log(percent), document.querySelector('body')); /// 滚动到右侧
  * @param targetVal 'start' | 'end' | number
  * @param callback 回调
  * @param dom 元素对象
@@ -215,6 +215,30 @@ export function scrollXTo(targetVal: 'start' | 'end' | number, callback: any, do
     timer = setTimeout(cancel, 100);
   }
   window.scroll({ left: customVal[targetVal] ?? targetVal, behavior: 'smooth' });
+}
+
+/**
+ * 将元素滚动到视野范围
+ * @example
+ * scrollIntoView(document.querySelector('.test')); /// test 元素滚动到视野范围
+ * scrollIntoView(document.querySelector('.test'), 'start'); /// test 元素滚动到视野范围顶部
+ * @param dom 元素对象
+ * @param targetVal 'start' | 'end' | 'center' | 'nearest'
+ * @returns
+ */
+export function scrollToView(
+  dom: any = document.documentElement,
+  targetVal: 'start' | 'end' | 'center' | 'nearest' = 'center',
+) {
+  dom.scrollIntoView({
+    behavior: 'smooth',
+    block: targetVal,
+    inline: targetVal,
+  });
+  // 「 start 」「默认值」元素顶部和滚动容器顶部对齐
+  // 「 center 」元素和滚动容器居中对齐
+  // 「 end 」元素底部和滚动容器底部对齐
+  // 「 nearest 」如果已经在视野范围内，就不滚动，否则就滚动到顶部或者底部（哪个更靠近就滚到哪里）。
 }
 
 /**
@@ -584,6 +608,75 @@ export function dataTo(key: string, value: any): void {
   } catch (e) {
     console.log('js-xxx:dataToError--->', e, { key, value, $dom });
   }
+}
+
+/**
+ * 给元素添加/删除类
+ * @example
+ * toggleClass(myElement, 'active'); /// 给元素添加/删除 active 类
+ * toggleClass(myElement, ['active', 'disabled']); /// 给元素添加/删除 active/disabled 类
+ * @param element 元素
+ * @param className 类
+ */
+export function toggleClass(element: any, className: string | Array<string>) {
+  if (Array.isArray(className)) {
+    className.forEach((item) => {
+      toggleClass(element, item);
+    });
+    return;
+  }
+
+  if (element.classList) {
+    element.classList.toggle(className);
+  } else {
+    const classes = element.className.split(' ');
+    const existingIndex = classes.indexOf(className);
+
+    if (existingIndex >= 0) {
+      classes.splice(existingIndex, 1);
+    } else {
+      classes.push(className);
+    }
+
+    element.className = classes.join(' ');
+  }
+}
+
+/**
+ * 展示水滴加载动画
+ * @example
+ * const hideProcess = showProcess(myElement); /// 在元素中显示水滴加载动画
+ * hideProcess(); /// 隐藏水滴加载动画
+ * @param element 元素
+ */
+export function showProcess(element: any) {
+  // 设置相对定位样式
+  element.style.position = 'relative';
+
+  // 检查是否已经创建了样式
+  const existingStyle = document.getElementById('xxx-process-style');
+  if (!existingStyle) {
+    // 创建样式字符串
+    const css =
+      // eslint-disable-next-line spellcheck/spell-checker
+      '.xxx-progress{position:absolute;z-index:100;top:50%;left:50%;transform:translate(-50%,-50%);--r1:154%;--r2:68.5%;width:60px;height:60px;border-radius:50%;background:radial-gradient(var(--r1) var(--r2) at top,#0000 79.5%,#269af2 80%) center left,radial-gradient(var(--r1) var(--r2) at bottom,#269af2 79.5%,#0000 80%) center center,radial-gradient(var(--r1) var(--r2) at top,#0000 79.5%,#269af2 80%) center right,#ccc;background-size:50.5% 220%;background-position:-100% 0%,0% 0%,100% 0%;background-repeat:no-repeat;animation:xxx-p-animation 2s infinite linear;-webkit-transform:translate(-50);-moz-transform:translate(-50);-ms-transform:translate(-50);-o-transform:translate(-50);}@keyframes xxx-p-animation{33%{background-position:0% 33%,100% 33%,200% 33%;}66%{background-position:-100% 66%,0% 66%,100% 66%;}100%{background-position:0% 100%,100% 100%,200% 100%;}}';
+    // 创建 <style> 元素并设置样式内容
+    const style = document.createElement('style');
+    style.id = 'xxx-process-style';
+    style.innerHTML = css;
+    // 将 <style> 元素添加到 <head> 中
+    document.head.appendChild(style);
+  }
+
+  // 创建 <div> 元素并设置类名
+  const $div = document.createElement('div');
+  $div.className = 'xxx-progress';
+
+  // 将 <div> 元素添加到指定元素中央
+  element.appendChild($div);
+  return () => {
+    $div.remove();
+  };
 }
 
 // eslint-disable-next-line spellcheck/spell-checker

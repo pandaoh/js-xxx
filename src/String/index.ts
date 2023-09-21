@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:45:48
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-24 16:40:28
+ * @LastEditTime: 2023-09-21 18:11:33
  * @Description: 字符串常用函数
  * @FilePath: \js-xxx\src\String\index.ts
  */
@@ -473,6 +473,7 @@ export function truncate(
  */
 export function formatJSON(value: any): string {
   try {
+    // JSON.stringify(value, ['key']); // 只取对象某个字段
     return JSON.stringify(value, null, 2) ?? 'undefined';
   } catch (e) {
     return `${value}`;

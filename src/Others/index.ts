@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:53:39
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-28 14:31:24
+ * @LastEditTime: 2023-09-21 18:06:45
  * @Description: 因项目需要常用函数，不管任何项目，都放到一起。注意甄别，没有复用意义的函数就不要添加了。
  * @FilePath: \js-xxx\src\Others\index.ts
  */
@@ -603,4 +603,34 @@ export function exportFile(data: string, fileName?: string, fileType = 'txt'): v
   // eslint-disable-next-line spellcheck/spell-checker
   download(uri, `${fileName ?? formatDate(new Date(), 'yyyy-mm-dd-hhiiss')}.${fileType}`);
   // downloadContent 可以兼容落后浏览器的情况
+}
+
+/**
+ * 华氏/摄氏度互转
+ * @example
+ * transferTemperature(30.5); /// '86.9 °F'
+ * transferTemperature(86, false, false); /// 30
+ * @returns
+ */
+export function transferTemperature(temperature: number | string, isCelsius = true, addSuffix = true) {
+  temperature = Number(temperature);
+  let convertedTemperature;
+
+  if (isCelsius) {
+    // 将摄氏度转换为华氏度
+    convertedTemperature = (temperature * 9) / 5 + 32;
+    if (addSuffix) {
+      return parseFloat(convertedTemperature.toFixed(2)) + ' °F';
+    } else {
+      return parseFloat(convertedTemperature.toFixed(2));
+    }
+  } else {
+    // 将华氏度转换为摄氏度
+    convertedTemperature = ((temperature - 32) * 5) / 9;
+    if (addSuffix) {
+      return parseFloat(convertedTemperature.toFixed(2)) + ' °C';
+    } else {
+      return parseFloat(convertedTemperature.toFixed(2));
+    }
+  }
 }
