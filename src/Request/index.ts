@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:15:37
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-24 12:25:12
+ * @LastEditTime: 2023-09-22 09:49:44
  * @Description: 请求相关函数
  * @FilePath: \js-xxx\src\Request\index.ts
  */
@@ -246,10 +246,11 @@ export function xFetch(
  * getContentType('form'); /// 'application/x-www-form-urlencoded'
  * getContentType('file'); /// 'multipart/form-data'
  * getContentType('pdf'); /// 'application/pdf'
+ * getContentType('PDF'); /// 'application/pdf'
  * getContentType('unknown'); /// 'application/octet-stream'
  * @param fileType 文件类型
  * @returns
  */
 export function getContentType(fileType: string): string {
-  return CONTENT_TYPES[fileType] ?? 'application/octet-stream';
+  return CONTENT_TYPES[fileType.toLowerCase()] ?? 'application/octet-stream';
 }
