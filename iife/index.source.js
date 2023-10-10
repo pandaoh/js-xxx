@@ -9421,7 +9421,7 @@ var $xxx = (function (exports) {
      * H5 移动端软键盘缩回/弹起回调
      * `return cancel listener of keyBoardResize`
      * @example
-     * keyBoardResize(()=>{ console.log('downCb'); }, ()=>{ console.log('upCb'); }); /// do something
+     * keyBoardResize(() => { console.log('downCb'); }, () => { console.log('upCb'); }); /// do something
      * @param downCb 缩回回调
      * @param upCb 弹起回调
      * @returns
@@ -9444,6 +9444,67 @@ var $xxx = (function (exports) {
             }
         };
         return setEventListener('resize', H5KeyBoardResizeFoo);
+    }
+    /**
+     * 设置 resize 时的监听函数，默认重新加载页面。
+     * 返回取消该监听的函数 return cancel
+     * @example
+     * onResize(); /// cancel 当前 listener 的 function
+     * onResize('resize', () => { console.log('resize'); }); /// cancel 当前 listener 的 function
+     * @param foo 函数
+     * @returns
+     */
+    function onResize(foo) {
+        var func = function () {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i] = arguments[_i];
+            }
+            !foo ? window.location.reload() : foo === null || foo === void 0 ? void 0 : foo.apply(void 0, __spreadArray([], __read(args), false));
+        };
+        window.addEventListener('resize', func);
+        return function () {
+            window.removeEventListener('resize', func);
+        };
+    }
+    /**
+     * 获取简单的浏览器指纹
+     * @example
+     * getFingerprint(); /// md5 加密后的指纹
+     * getFingerprint('test'); /// md5 加密后的指纹
+     * @param extraString 额外的字符串，可以说用户名等。
+     * @returns
+     */
+    function getFingerprint(extraString) {
+        var _a, _b, _c;
+        var fingerprint = '';
+        // 获取浏览器 User Agent
+        var userAgent = navigator.userAgent;
+        // 获取浏览器语言
+        var language = 
+        // @ts-ignore
+        navigator.language || navigator.userLanguage || navigator.browserLanguage || navigator.systemLanguage || 'xLang';
+        // 获取屏幕分辨率
+        var resolution = ((_a = window === null || window === void 0 ? void 0 : window.screen) === null || _a === void 0 ? void 0 : _a.width) + '*' + ((_b = window === null || window === void 0 ? void 0 : window.screen) === null || _b === void 0 ? void 0 : _b.height);
+        // 获取屏幕颜色深度
+        var colorDepth = ((_c = window === null || window === void 0 ? void 0 : window.screen) === null || _c === void 0 ? void 0 : _c.colorDepth) || 'xColorDepth';
+        // 获取时区偏移
+        var timezoneOffset = new Date().getTimezoneOffset();
+        // 获取浏览器插件列表
+        var plugins = Array.from(navigator.plugins || [])
+            .map(function (plugin) {
+            return (plugin === null || plugin === void 0 ? void 0 : plugin.name) + '::' + (plugin === null || plugin === void 0 ? void 0 : plugin.filename);
+        })
+            .join(';');
+        // 获取浏览器是否启用了 Do Not Track
+        // @ts-ignore
+        var doNotTrack = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack || 'xDoNotTrack';
+        // 拼接指纹字符串
+        fingerprint =
+            userAgent + language + resolution + colorDepth + timezoneOffset + plugins + doNotTrack + "".concat(extraString !== null && extraString !== void 0 ? extraString : 'xxx');
+        // 对指纹字符串进行加密
+        fingerprint = md5(fingerprint);
+        return fingerprint;
     }
     /**
      * 禁用控制台
@@ -10579,6 +10640,47 @@ var $xxx = (function (exports) {
         }
         return "".concat(value).replace(/(=)|(<)|(>)|(&)|(%)|(#)|(@)|(~)/g, '');
     }
+    /**
+     * 强制给字符串添加空格间隔
+     * @example
+     * addSpace('test'); /// 't e s t'
+     * addSpace(null); /// ''
+     * addSpace('123 45'); /// '1 2 3 4 5'
+     * @param str 字符串
+     * @returns
+     */
+    function addSpace(str) {
+        if (!str) {
+            return '';
+        }
+        return "".concat(str).replaceAll(' ', '').split('').join(' ');
+    }
+    /**
+     * 左边补某个字符
+     * @example
+     * leftJoin('1', 3, '0'); /// '001'
+     * leftJoin(0, 3, 1); /// '110'
+     * @param str 字符串
+     * @returns
+     */
+    function leftJoin(str, length, char) {
+        if (length === void 0) { length = 2; }
+        if (char === void 0) { char = 0; }
+        return "".concat(str !== null && str !== void 0 ? str : '').padStart(Number(length), "".concat(char));
+    }
+    /**
+     * 右边补某个字符
+     * @example
+     * rightJoin('1', 3, 'x'); /// '1xx'
+     * rightJoin(0, 3, 1); /// '011'
+     * @param str 字符串
+     * @returns
+     */
+    function rightJoin(str, length, char) {
+        if (length === void 0) { length = 2; }
+        if (char === void 0) { char = 0; }
+        return "".concat(str !== null && str !== void 0 ? str : '').padEnd(Number(length), "".concat(char));
+    }
 
     /**
      * 时间格式化
@@ -11445,7 +11547,11 @@ var $xxx = (function (exports) {
             var $marqueeDom = document.querySelector(selector);
             var noAnimation = (options === null || options === void 0 ? void 0 : options.loopType) != 'infinite' && ($marqueeDom === null || $marqueeDom === void 0 ? void 0 : $marqueeDom.clientHeight) < ((_b = $marqueeDom === null || $marqueeDom === void 0 ? void 0 : $marqueeDom.parentElement) === null || _b === void 0 ? void 0 : _b.offsetHeight);
             $marqueeDom === null || $marqueeDom === void 0 ? void 0 : $marqueeDom.setAttribute('style', "overflow:visible;animation-name:marquee-".concat(tempId, ";animation-timing-function:linear;animation-iteration-count:infinite;animation-duration:").concat((_d = (((options === null || options === void 0 ? void 0 : options.direction) === 'Y' ? $marqueeDom.clientHeight : $marqueeDom.clientWidth) / 200) *
-                ((_c = options === null || options === void 0 ? void 0 : options.speed) !== null && _c !== void 0 ? _c : 3)) !== null && _d !== void 0 ? _d : 5, "s;").concat(noAnimation ? 'animation-duration:0s;' : '').concat((_e = options === null || options === void 0 ? void 0 : options.style) !== null && _e !== void 0 ? _e : ''));
+                ((_c = options === null || options === void 0 ? void 0 : options.speed) !== null && _c !== void 0 ? _c : 3)) !== null && _d !== void 0 ? _d : 5, "s;").concat(noAnimation ? 'animation-duration:0s;' : '').concat((_e = options === null || options === void 0 ? void 0 : options.style) !== null && _e !== void 0 ? _e : "".concat((options === null || options === void 0 ? void 0 : options.loopType) === 'origin'
+                ? (options === null || options === void 0 ? void 0 : options.direction) === 'Y'
+                    ? 'padding-bottom:12px;'
+                    : 'padding-right:12px;'
+                : '')));
             if ((options === null || options === void 0 ? void 0 : options.direction) === 'Y') {
                 $animationStyle.innerHTML = cssAnimation
                     .replace('ANIMATION_NAME', tempId)
@@ -12919,13 +13025,14 @@ var $xxx = (function (exports) {
      * getContentType('form'); /// 'application/x-www-form-urlencoded'
      * getContentType('file'); /// 'multipart/form-data'
      * getContentType('pdf'); /// 'application/pdf'
+     * getContentType('PDF'); /// 'application/pdf'
      * getContentType('unknown'); /// 'application/octet-stream'
      * @param fileType 文件类型
      * @returns
      */
     function getContentType(fileType) {
         var _a;
-        return (_a = CONTENT_TYPES[fileType]) !== null && _a !== void 0 ? _a : 'application/octet-stream';
+        return (_a = CONTENT_TYPES[fileType.toLowerCase()]) !== null && _a !== void 0 ? _a : 'application/octet-stream';
     }
 
     /* eslint-disable max-lines */
@@ -14056,6 +14163,7 @@ var $xxx = (function (exports) {
     exports.abs = abs;
     exports.add = add;
     exports.addLongPressEvent = addLongPressEvent;
+    exports.addSpace = addSpace;
     exports.all = all;
     exports.any = any;
     exports.appendLink = appendLink;
@@ -14125,6 +14233,7 @@ var $xxx = (function (exports) {
     exports.getDateTime = getDateTime;
     exports.getDayInYear = getDayInYear;
     exports.getDecodeStorage = getDecodeStorage;
+    exports.getFingerprint = getFingerprint;
     exports.getFirstVar = getFirstVar;
     exports.getKey = getKey;
     exports.getLastVar = getLastVar;
@@ -14211,6 +14320,7 @@ var $xxx = (function (exports) {
     exports.isWeekday = isWeekday;
     exports.jsonClone = jsonClone;
     exports.keyBoardResize = keyBoardResize;
+    exports.leftJoin = leftJoin;
     exports.localStorageGet = localStorageGet;
     exports.localStorageSet = localStorageSet;
     exports.log = log;
@@ -14222,6 +14332,7 @@ var $xxx = (function (exports) {
     exports.ms = ms;
     exports.offDefaultEvent = offDefaultEvent;
     exports.onClick2MoreClick = onClick2MoreClick;
+    exports.onResize = onResize;
     exports.openFileSelect = openFileSelect;
     exports.openFullscreen = openFullscreen;
     exports.px2rem = px2rem;
@@ -14230,6 +14341,7 @@ var $xxx = (function (exports) {
     exports.removeCookie = removeCookie;
     exports.repeat = repeat;
     exports.retry = retry;
+    exports.rightJoin = rightJoin;
     exports.rip = rip;
     exports.round = round;
     exports.same = same;

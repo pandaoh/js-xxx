@@ -1,6 +1,6 @@
 js-xxx
 
-# js-xxx - v2.0.8
+# js-xxx - v2.0.9
 
 ## Table of contents
 
@@ -41,6 +41,7 @@ js-xxx
 - [abs](README.md#abs)
 - [add](README.md#add)
 - [addLongPressEvent](README.md#addlongpressevent)
+- [addSpace](README.md#addspace)
 - [all](README.md#all)
 - [any](README.md#any)
 - [appendLink](README.md#appendlink)
@@ -110,6 +111,7 @@ js-xxx
 - [getDateTime](README.md#getdatetime)
 - [getDayInYear](README.md#getdayinyear)
 - [getDecodeStorage](README.md#getdecodestorage)
+- [getFingerprint](README.md#getfingerprint)
 - [getFirstVar](README.md#getfirstvar)
 - [getKey](README.md#getkey)
 - [getLastVar](README.md#getlastvar)
@@ -196,6 +198,7 @@ js-xxx
 - [isWeekday](README.md#isweekday)
 - [jsonClone](README.md#jsonclone)
 - [keyBoardResize](README.md#keyboardresize)
+- [leftJoin](README.md#leftjoin)
 - [localStorageGet](README.md#localstorageget)
 - [localStorageSet](README.md#localstorageset)
 - [log](README.md#log)
@@ -207,6 +210,7 @@ js-xxx
 - [ms](README.md#ms)
 - [offDefaultEvent](README.md#offdefaultevent)
 - [onClick2MoreClick](README.md#onclick2moreclick)
+- [onResize](README.md#onresize)
 - [openFileSelect](README.md#openfileselect)
 - [openFullscreen](README.md#openfullscreen)
 - [px2rem](README.md#px2rem)
@@ -215,6 +219,7 @@ js-xxx
 - [removeCookie](README.md#removecookie)
 - [repeat](README.md#repeat)
 - [retry](README.md#retry)
+- [rightJoin](README.md#rightjoin)
 - [rip](README.md#rip)
 - [round](README.md#round)
 - [same](README.md#same)
@@ -719,6 +724,32 @@ addLongPressEvent(document.querySelector('.img-btn'), (event); /// console.log('
 #### Returns
 
 `void`
+
+___
+
+### addSpace
+
+▸ **addSpace**(`str`): `string`
+
+强制给字符串添加空格间隔
+
+**`Example`**
+
+```ts
+addSpace('test'); /// 't e s t'
+addSpace(null); /// ''
+addSpace('123 45'); /// '1 2 3 4 5'
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `str` | `string` \| `number` | 字符串 |
+
+#### Returns
+
+`string`
 
 ___
 
@@ -2396,6 +2427,7 @@ ___
 getContentType('form'); /// 'application/x-www-form-urlencoded'
 getContentType('file'); /// 'multipart/form-data'
 getContentType('pdf'); /// 'application/pdf'
+getContentType('PDF'); /// 'application/pdf'
 getContentType('unknown'); /// 'application/octet-stream'
 ```
 
@@ -2581,6 +2613,31 @@ getDecodeStorage("key"); /// 处理过后的 value，不需要再 decode 和解�
 #### Returns
 
 `any`
+
+___
+
+### getFingerprint
+
+▸ **getFingerprint**(`extraString`): `string`
+
+获取简单的浏览器指纹
+
+**`Example`**
+
+```ts
+getFingerprint(); /// md5 加密后的指纹
+getFingerprint('test'); /// md5 加密后的指纹
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `extraString` | `string` \| `number` | 额外的字符串，可以说用户名等。 |
+
+#### Returns
+
+`string`
 
 ___
 
@@ -4714,7 +4771,7 @@ H5 移动端软键盘缩回/弹起回调
 **`Example`**
 
 ```ts
-keyBoardResize(()=>{ console.log('downCb'); }, ()=>{ console.log('upCb'); }); /// do something
+keyBoardResize(() => { console.log('downCb'); }, () => { console.log('upCb'); }); /// do something
 ```
 
 #### Parameters
@@ -4727,6 +4784,33 @@ keyBoardResize(()=>{ console.log('downCb'); }, ()=>{ console.log('upCb'); }); //
 #### Returns
 
 `any`
+
+___
+
+### leftJoin
+
+▸ **leftJoin**(`str`, `length?`, `char?`): `string`
+
+左边补某个字符
+
+**`Example`**
+
+```ts
+leftJoin('1', 3, '0'); /// '001'
+leftJoin(0, 3, 1); /// '110'
+```
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `str` | `string` \| `number` | `undefined` | 字符串 |
+| `length` | `string` \| `number` | `2` | - |
+| `char` | `string` \| `number` | `0` | - |
+
+#### Returns
+
+`string`
 
 ___
 
@@ -5029,6 +5113,32 @@ dom.onclick = onClick2MoreClick(300, clickOneCallBack, clickTwoCallBack, clickTh
 
 ___
 
+### onResize
+
+▸ **onResize**(`foo`): `any`
+
+设置 resize 时的监听函数，默认重新加载页面。
+返回取消该监听的函数 return cancel
+
+**`Example`**
+
+```ts
+onResize(); /// cancel 当前 listener 的 function
+onResize('resize', () => { console.log('resize'); }); /// cancel 当前 listener 的 function
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `foo` | `any` | 函数 |
+
+#### Returns
+
+`any`
+
+___
+
 ### openFileSelect
 
 ▸ **openFileSelect**(`options?`): `Promise`<`any`\>
@@ -5233,6 +5343,33 @@ retry(() => Promise.reject(new Error('error')), 3); /// Promise.reject(new Error
 #### Returns
 
 `Promise`<`unknown`\>
+
+___
+
+### rightJoin
+
+▸ **rightJoin**(`str`, `length?`, `char?`): `string`
+
+右边补某个字符
+
+**`Example`**
+
+```ts
+rightJoin('1', 3, 'x'); /// '1xx'
+rightJoin(0, 3, 1); /// '011'
+```
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `str` | `string` \| `number` | `undefined` | 字符串 |
+| `length` | `string` \| `number` | `2` | - |
+| `char` | `string` \| `number` | `0` | - |
+
+#### Returns
+
+`string`
 
 ___
 

@@ -391,12 +391,31 @@ export declare function setEventListener(eventKey: string, foo: any, once?: bool
  * H5 移动端软键盘缩回/弹起回调
  * `return cancel listener of keyBoardResize`
  * @example
- * keyBoardResize(()=>{ console.log('downCb'); }, ()=>{ console.log('upCb'); }); /// do something
+ * keyBoardResize(() => { console.log('downCb'); }, () => { console.log('upCb'); }); /// do something
  * @param downCb 缩回回调
  * @param upCb 弹起回调
  * @returns
  */
 export declare function keyBoardResize(downCb: any, upCb: any): any;
+/**
+ * 设置 resize 时的监听函数，默认重新加载页面。
+ * 返回取消该监听的函数 return cancel
+ * @example
+ * onResize(); /// cancel 当前 listener 的 function
+ * onResize('resize', () => { console.log('resize'); }); /// cancel 当前 listener 的 function
+ * @param foo 函数
+ * @returns
+ */
+export declare function onResize(foo: any): any;
+/**
+ * 获取简单的浏览器指纹
+ * @example
+ * getFingerprint(); /// md5 加密后的指纹
+ * getFingerprint('test'); /// md5 加密后的指纹
+ * @param extraString 额外的字符串，可以说用户名等。
+ * @returns
+ */
+export declare function getFingerprint(extraString: string | number): string;
 /**
  * 禁用控制台
  * windows

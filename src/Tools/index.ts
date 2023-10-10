@@ -4,10 +4,11 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-09-21 18:22:44
+ * @LastEditTime: 2023-10-10 17:03:01
  * @Description: 工具函数
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
+import { md5 } from '@/Crypto';
 import { unique, arraySort } from '@/Array';
 import {
   ANIMALS,
@@ -1074,6 +1075,74 @@ export function keyBoardResize(downCb: any, upCb: any): any {
     }
   };
   return setEventListener('resize', H5KeyBoardResizeFoo);
+}
+
+/**
+ * 设置 resize 时的监听函数，默认重新加载页面。
+ * 返回取消该监听的函数 return cancel
+ * @example
+ * onResize(); /// cancel 当前 listener 的 function
+ * onResize('resize', () => { console.log('resize'); }); /// cancel 当前 listener 的 function
+ * @param foo 函数
+ * @returns
+ */
+export function onResize(foo: any): any {
+  const func = (...args: any[]) => {
+    !foo ? window.location.reload() : foo?.(...args);
+  };
+  window.addEventListener('resize', func);
+  return () => {
+    window.removeEventListener('resize', func);
+  };
+}
+
+/**
+ * 获取简单的浏览器指纹
+ * @example
+ * getFingerprint(); /// md5 加密后的指纹
+ * getFingerprint('test'); /// md5 加密后的指纹
+ * @param extraString 额外的字符串，可以说用户名等。
+ * @returns
+ */
+export function getFingerprint(extraString: string | number): string {
+  let fingerprint = '';
+
+  // 获取浏览器 User Agent
+  const userAgent = navigator.userAgent;
+
+  // 获取浏览器语言
+  const language =
+    // @ts-ignore
+    navigator.language || navigator.userLanguage || navigator.browserLanguage || navigator.systemLanguage || 'xLang';
+
+  // 获取屏幕分辨率
+  const resolution = window?.screen?.width + '*' + window?.screen?.height;
+
+  // 获取屏幕颜色深度
+  const colorDepth = window?.screen?.colorDepth || 'xColorDepth';
+
+  // 获取时区偏移
+  const timezoneOffset = new Date().getTimezoneOffset();
+
+  // 获取浏览器插件列表
+  const plugins = Array.from(navigator.plugins || [])
+    .map(function (plugin) {
+      return plugin?.name + '::' + plugin?.filename;
+    })
+    .join(';');
+
+  // 获取浏览器是否启用了 Do Not Track
+  // @ts-ignore
+  const doNotTrack = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack || 'xDoNotTrack';
+
+  // 拼接指纹字符串
+  fingerprint =
+    userAgent + language + resolution + colorDepth + timezoneOffset + plugins + doNotTrack + `${extraString ?? 'xxx'}`;
+
+  // 对指纹字符串进行加密
+  fingerprint = md5(fingerprint);
+
+  return fingerprint;
 }
 
 /**

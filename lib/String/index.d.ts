@@ -339,4 +339,32 @@ export declare function getPinYin(str: string, extractFirst?: boolean): string;
  * @returns
  */
 export declare function transferScanStr(value: string): string;
+/**
+ * 强制给字符串添加空格间隔
+ * @example
+ * addSpace('test'); /// 't e s t'
+ * addSpace(null); /// ''
+ * addSpace('123 45'); /// '1 2 3 4 5'
+ * @param str 字符串
+ * @returns
+ */
+export declare function addSpace(str: string | number): string;
+/**
+ * 左边补某个字符
+ * @example
+ * leftJoin('1', 3, '0'); /// '001'
+ * leftJoin(0, 3, 1); /// '110'
+ * @param str 字符串
+ * @returns
+ */
+export declare function leftJoin(str: string | number, length?: string | number, char?: string | number): string;
+/**
+ * 右边补某个字符
+ * @example
+ * rightJoin('1', 3, 'x'); /// '1xx'
+ * rightJoin(0, 3, 1); /// '011'
+ * @param str 字符串
+ * @returns
+ */
+export declare function rightJoin(str: string | number, length?: string | number, char?: string | number): string;
 //# sourceMappingURL=index.d.ts.map

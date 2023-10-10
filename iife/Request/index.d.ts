@@ -96,6 +96,7 @@ export declare function xFetch(method: string | HttpMethod, url: string, options
  * getContentType('form'); /// 'application/x-www-form-urlencoded'
  * getContentType('file'); /// 'multipart/form-data'
  * getContentType('pdf'); /// 'application/pdf'
+ * getContentType('PDF'); /// 'application/pdf'
  * getContentType('unknown'); /// 'application/octet-stream'
  * @param fileType 文件类型
  * @returns

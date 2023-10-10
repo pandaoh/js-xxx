@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-09-21 17:45:42
+ * @LastEditTime: 2023-10-10 16:52:13
  * @Description: 利用 dom 的一些函数
  * @FilePath: \js-xxx\src\Dom\index.ts
  */
@@ -461,7 +461,16 @@ export function marquee(
       `overflow:visible;animation-name:marquee-${tempId};animation-timing-function:linear;animation-iteration-count:infinite;animation-duration:${
         ((options?.direction === 'Y' ? $marqueeDom.clientHeight : $marqueeDom.clientWidth) / 200) *
           (options?.speed ?? 3) ?? 5
-      }s;${noAnimation ? 'animation-duration:0s;' : ''}${options?.style ?? ''}`,
+      }s;${noAnimation ? 'animation-duration:0s;' : ''}${
+        options?.style ??
+        `${
+          options?.loopType === 'origin'
+            ? options?.direction === 'Y'
+              ? 'padding-bottom:12px;'
+              : 'padding-right:12px;'
+            : ''
+        }`
+      }`,
     );
     if (options?.direction === 'Y') {
       $animationStyle.innerHTML = cssAnimation

@@ -9418,7 +9418,7 @@ function setEventListener(eventKey, foo, once, dom) {
  * H5 移动端软键盘缩回/弹起回调
  * `return cancel listener of keyBoardResize`
  * @example
- * keyBoardResize(()=>{ console.log('downCb'); }, ()=>{ console.log('upCb'); }); /// do something
+ * keyBoardResize(() => { console.log('downCb'); }, () => { console.log('upCb'); }); /// do something
  * @param downCb 缩回回调
  * @param upCb 弹起回调
  * @returns
@@ -9441,6 +9441,67 @@ function keyBoardResize(downCb, upCb) {
         }
     };
     return setEventListener('resize', H5KeyBoardResizeFoo);
+}
+/**
+ * 设置 resize 时的监听函数，默认重新加载页面。
+ * 返回取消该监听的函数 return cancel
+ * @example
+ * onResize(); /// cancel 当前 listener 的 function
+ * onResize('resize', () => { console.log('resize'); }); /// cancel 当前 listener 的 function
+ * @param foo 函数
+ * @returns
+ */
+function onResize(foo) {
+    var func = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        !foo ? window.location.reload() : foo === null || foo === void 0 ? void 0 : foo.apply(void 0, __spreadArray([], __read(args), false));
+    };
+    window.addEventListener('resize', func);
+    return function () {
+        window.removeEventListener('resize', func);
+    };
+}
+/**
+ * 获取简单的浏览器指纹
+ * @example
+ * getFingerprint(); /// md5 加密后的指纹
+ * getFingerprint('test'); /// md5 加密后的指纹
+ * @param extraString 额外的字符串，可以说用户名等。
+ * @returns
+ */
+function getFingerprint(extraString) {
+    var _a, _b, _c;
+    var fingerprint = '';
+    // 获取浏览器 User Agent
+    var userAgent = navigator.userAgent;
+    // 获取浏览器语言
+    var language = 
+    // @ts-ignore
+    navigator.language || navigator.userLanguage || navigator.browserLanguage || navigator.systemLanguage || 'xLang';
+    // 获取屏幕分辨率
+    var resolution = ((_a = window === null || window === void 0 ? void 0 : window.screen) === null || _a === void 0 ? void 0 : _a.width) + '*' + ((_b = window === null || window === void 0 ? void 0 : window.screen) === null || _b === void 0 ? void 0 : _b.height);
+    // 获取屏幕颜色深度
+    var colorDepth = ((_c = window === null || window === void 0 ? void 0 : window.screen) === null || _c === void 0 ? void 0 : _c.colorDepth) || 'xColorDepth';
+    // 获取时区偏移
+    var timezoneOffset = new Date().getTimezoneOffset();
+    // 获取浏览器插件列表
+    var plugins = Array.from(navigator.plugins || [])
+        .map(function (plugin) {
+        return (plugin === null || plugin === void 0 ? void 0 : plugin.name) + '::' + (plugin === null || plugin === void 0 ? void 0 : plugin.filename);
+    })
+        .join(';');
+    // 获取浏览器是否启用了 Do Not Track
+    // @ts-ignore
+    var doNotTrack = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack || 'xDoNotTrack';
+    // 拼接指纹字符串
+    fingerprint =
+        userAgent + language + resolution + colorDepth + timezoneOffset + plugins + doNotTrack + "".concat(extraString !== null && extraString !== void 0 ? extraString : 'xxx');
+    // 对指纹字符串进行加密
+    fingerprint = md5(fingerprint);
+    return fingerprint;
 }
 /**
  * 禁用控制台
@@ -10576,6 +10637,47 @@ function transferScanStr(value) {
     }
     return "".concat(value).replace(/(=)|(<)|(>)|(&)|(%)|(#)|(@)|(~)/g, '');
 }
+/**
+ * 强制给字符串添加空格间隔
+ * @example
+ * addSpace('test'); /// 't e s t'
+ * addSpace(null); /// ''
+ * addSpace('123 45'); /// '1 2 3 4 5'
+ * @param str 字符串
+ * @returns
+ */
+function addSpace(str) {
+    if (!str) {
+        return '';
+    }
+    return "".concat(str).replaceAll(' ', '').split('').join(' ');
+}
+/**
+ * 左边补某个字符
+ * @example
+ * leftJoin('1', 3, '0'); /// '001'
+ * leftJoin(0, 3, 1); /// '110'
+ * @param str 字符串
+ * @returns
+ */
+function leftJoin(str, length, char) {
+    if (length === void 0) { length = 2; }
+    if (char === void 0) { char = 0; }
+    return "".concat(str !== null && str !== void 0 ? str : '').padStart(Number(length), "".concat(char));
+}
+/**
+ * 右边补某个字符
+ * @example
+ * rightJoin('1', 3, 'x'); /// '1xx'
+ * rightJoin(0, 3, 1); /// '011'
+ * @param str 字符串
+ * @returns
+ */
+function rightJoin(str, length, char) {
+    if (length === void 0) { length = 2; }
+    if (char === void 0) { char = 0; }
+    return "".concat(str !== null && str !== void 0 ? str : '').padEnd(Number(length), "".concat(char));
+}
 
 /**
  * 时间格式化
@@ -11442,7 +11544,11 @@ function marquee(selector, options) {
         var $marqueeDom = document.querySelector(selector);
         var noAnimation = (options === null || options === void 0 ? void 0 : options.loopType) != 'infinite' && ($marqueeDom === null || $marqueeDom === void 0 ? void 0 : $marqueeDom.clientHeight) < ((_b = $marqueeDom === null || $marqueeDom === void 0 ? void 0 : $marqueeDom.parentElement) === null || _b === void 0 ? void 0 : _b.offsetHeight);
         $marqueeDom === null || $marqueeDom === void 0 ? void 0 : $marqueeDom.setAttribute('style', "overflow:visible;animation-name:marquee-".concat(tempId, ";animation-timing-function:linear;animation-iteration-count:infinite;animation-duration:").concat((_d = (((options === null || options === void 0 ? void 0 : options.direction) === 'Y' ? $marqueeDom.clientHeight : $marqueeDom.clientWidth) / 200) *
-            ((_c = options === null || options === void 0 ? void 0 : options.speed) !== null && _c !== void 0 ? _c : 3)) !== null && _d !== void 0 ? _d : 5, "s;").concat(noAnimation ? 'animation-duration:0s;' : '').concat((_e = options === null || options === void 0 ? void 0 : options.style) !== null && _e !== void 0 ? _e : ''));
+            ((_c = options === null || options === void 0 ? void 0 : options.speed) !== null && _c !== void 0 ? _c : 3)) !== null && _d !== void 0 ? _d : 5, "s;").concat(noAnimation ? 'animation-duration:0s;' : '').concat((_e = options === null || options === void 0 ? void 0 : options.style) !== null && _e !== void 0 ? _e : "".concat((options === null || options === void 0 ? void 0 : options.loopType) === 'origin'
+            ? (options === null || options === void 0 ? void 0 : options.direction) === 'Y'
+                ? 'padding-bottom:12px;'
+                : 'padding-right:12px;'
+            : '')));
         if ((options === null || options === void 0 ? void 0 : options.direction) === 'Y') {
             $animationStyle.innerHTML = cssAnimation
                 .replace('ANIMATION_NAME', tempId)
@@ -12916,13 +13022,14 @@ function xFetch(method, url, options) {
  * getContentType('form'); /// 'application/x-www-form-urlencoded'
  * getContentType('file'); /// 'multipart/form-data'
  * getContentType('pdf'); /// 'application/pdf'
+ * getContentType('PDF'); /// 'application/pdf'
  * getContentType('unknown'); /// 'application/octet-stream'
  * @param fileType 文件类型
  * @returns
  */
 function getContentType(fileType) {
     var _a;
-    return (_a = CONTENT_TYPES[fileType]) !== null && _a !== void 0 ? _a : 'application/octet-stream';
+    return (_a = CONTENT_TYPES[fileType.toLowerCase()]) !== null && _a !== void 0 ? _a : 'application/octet-stream';
 }
 
 /* eslint-disable max-lines */
@@ -14029,4 +14136,4 @@ function getWebSocket() {
     return xWebSocket;
 }
 
-export { ANIMALS, BASE_CHAR_LOW, BASE_CHAR_UP, BASE_NUMBER, BLOOD_GROUP, CODE_MSG, CONSTELLATION, CONTENT_TYPES, HttpMethod, ICONS, ID_CARD_PROVINCE, KEYBOARD_CODE, Loading, MAN, MONTHS, PY_MAPS, ROLES, Speaker, TRANSFER_STR, Toast, WEEKS, WOMAN, abs, add, addLongPressEvent, all, any, appendLink, appendScript, arrObj2objArr, arrayFill, arrayShuffle, arraySort, average, banConsole, base64Decode, base64Encode, bindMoreClick, calcCron, calcDate, calcFontSize, catchPromise, checkFileExt, checkIdCard, checkPassWordLevel, checkVersion, clearCookies, closeFullscreen, closeWebSocket, compareDate, contains, copyToClipboard, countdown, data2Arr, data2Obj, dataTo, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitKeyboardEvent, empty, encrypt, every, exportFile, findChildren, findMaxKey, findParents, float, forEach, forceToStr, formatBytes, formatDate, formatJSON, formatNumber, formatRh, getAge, getAnimal, getBSColor, getBaseURL, getBloodGroup, getConstellation, getContentType, getCookie, getCryptoJS, getDateDifference, getDateList, getDateTime, getDayInYear, getDecodeStorage, getFirstVar, getKey, getLastVar, getLocalArr, getLocalObj, getMonthDayCount, getMonthInfo, getPercentage, getPinYin, getQueryString, getRandColor, getRandDate, getRandIp, getRandNum, getRandStr, getRandVar, getScrollPercent, getSearchParams, getSelectText, getSessionArr, getSessionObj, getSortVar, getStyleByName, getTimeCode, getType, getUTCTime, getUserAgent, getV, getVarSize, getViewportSize, getWebSocket, getWeekInfo, globalError, hasKey, hasSpecialChar, hideToast, html2str, inRange, initNotification, initWebSocket, insertAfter, intersection, inversion, isAccount, isAppleDevice, isArr, isArrayBuffer, isBankCard, isBlob, isBool, isBrowser, isCarCode, isChinese, isCreditCode, isDarkMode, isDate, isDecimal, isElement, isEmail, isEnglish, isEqual, isEven, isFn, isHttp, isInteger, isIpAddress, isIpv4, isIpv6, isJSON, isMobile, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPromise, isQQ, isRhNegative, isStr, isStrongPassWord, isTel, isUndef, isUrl, isWeekday, jsonClone, keyBoardResize, localStorageGet, localStorageSet, log, logRunTime, markNumber, marquee, maskString, md5, ms, offDefaultEvent, onClick2MoreClick, openFileSelect, openFullscreen, px2rem, qsParse, qsStringify, removeCookie, repeat, retry, rip, round, same, scrollToView, scrollXTo, scrollYTo, sendNotification, sendWsMsg, sessionStorageGet, sessionStorageSet, setCookie, setEncodeStorage, setEventListener, setIcon, setWsBinaryType, sha1, sha256, showProcess, showToast, showVar, sleep, slugify, sortBy, sortCallBack, stackSticky, str2html, str2unicode, sub, textCamelCase, textSplitCase, textTransferCase, throttle, timeSince, times, to, toBool, toFormData, toNum, toQueryString, toStr, toggleClass, transferCSVData, transferFileToBase64, transferIdCard, transferMoney, transferNumber, transferScanStr, transferSeconds, transferTemperature, trim, truncate, unicode2str, union, unique, uuid, versionUpgrade, waitUntil, watermark, xAjax, xFetch };
+export { ANIMALS, BASE_CHAR_LOW, BASE_CHAR_UP, BASE_NUMBER, BLOOD_GROUP, CODE_MSG, CONSTELLATION, CONTENT_TYPES, HttpMethod, ICONS, ID_CARD_PROVINCE, KEYBOARD_CODE, Loading, MAN, MONTHS, PY_MAPS, ROLES, Speaker, TRANSFER_STR, Toast, WEEKS, WOMAN, abs, add, addLongPressEvent, addSpace, all, any, appendLink, appendScript, arrObj2objArr, arrayFill, arrayShuffle, arraySort, average, banConsole, base64Decode, base64Encode, bindMoreClick, calcCron, calcDate, calcFontSize, catchPromise, checkFileExt, checkIdCard, checkPassWordLevel, checkVersion, clearCookies, closeFullscreen, closeWebSocket, compareDate, contains, copyToClipboard, countdown, data2Arr, data2Obj, dataTo, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitKeyboardEvent, empty, encrypt, every, exportFile, findChildren, findMaxKey, findParents, float, forEach, forceToStr, formatBytes, formatDate, formatJSON, formatNumber, formatRh, getAge, getAnimal, getBSColor, getBaseURL, getBloodGroup, getConstellation, getContentType, getCookie, getCryptoJS, getDateDifference, getDateList, getDateTime, getDayInYear, getDecodeStorage, getFingerprint, getFirstVar, getKey, getLastVar, getLocalArr, getLocalObj, getMonthDayCount, getMonthInfo, getPercentage, getPinYin, getQueryString, getRandColor, getRandDate, getRandIp, getRandNum, getRandStr, getRandVar, getScrollPercent, getSearchParams, getSelectText, getSessionArr, getSessionObj, getSortVar, getStyleByName, getTimeCode, getType, getUTCTime, getUserAgent, getV, getVarSize, getViewportSize, getWebSocket, getWeekInfo, globalError, hasKey, hasSpecialChar, hideToast, html2str, inRange, initNotification, initWebSocket, insertAfter, intersection, inversion, isAccount, isAppleDevice, isArr, isArrayBuffer, isBankCard, isBlob, isBool, isBrowser, isCarCode, isChinese, isCreditCode, isDarkMode, isDate, isDecimal, isElement, isEmail, isEnglish, isEqual, isEven, isFn, isHttp, isInteger, isIpAddress, isIpv4, isIpv6, isJSON, isMobile, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPromise, isQQ, isRhNegative, isStr, isStrongPassWord, isTel, isUndef, isUrl, isWeekday, jsonClone, keyBoardResize, leftJoin, localStorageGet, localStorageSet, log, logRunTime, markNumber, marquee, maskString, md5, ms, offDefaultEvent, onClick2MoreClick, onResize, openFileSelect, openFullscreen, px2rem, qsParse, qsStringify, removeCookie, repeat, retry, rightJoin, rip, round, same, scrollToView, scrollXTo, scrollYTo, sendNotification, sendWsMsg, sessionStorageGet, sessionStorageSet, setCookie, setEncodeStorage, setEventListener, setIcon, setWsBinaryType, sha1, sha256, showProcess, showToast, showVar, sleep, slugify, sortBy, sortCallBack, stackSticky, str2html, str2unicode, sub, textCamelCase, textSplitCase, textTransferCase, throttle, timeSince, times, to, toBool, toFormData, toNum, toQueryString, toStr, toggleClass, transferCSVData, transferFileToBase64, transferIdCard, transferMoney, transferNumber, transferScanStr, transferSeconds, transferTemperature, trim, truncate, unicode2str, union, unique, uuid, versionUpgrade, waitUntil, watermark, xAjax, xFetch };

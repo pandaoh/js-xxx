@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:45:48
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-09-21 18:11:33
+ * @LastEditTime: 2023-10-10 16:11:18
  * @Description: 字符串常用函数
  * @FilePath: \js-xxx\src\String\index.ts
  */
@@ -811,4 +811,44 @@ export function transferScanStr(value: string): string {
     return '';
   }
   return `${value}`.replace(/(=)|(<)|(>)|(&)|(%)|(#)|(@)|(~)/g, '');
+}
+
+/**
+ * 强制给字符串添加空格间隔
+ * @example
+ * addSpace('test'); /// 't e s t'
+ * addSpace(null); /// ''
+ * addSpace('123 45'); /// '1 2 3 4 5'
+ * @param str 字符串
+ * @returns
+ */
+export function addSpace(str: string | number): string {
+  if (!str) {
+    return '';
+  }
+  return `${str}`.replaceAll(' ', '').split('').join(' ');
+}
+
+/**
+ * 左边补某个字符
+ * @example
+ * leftJoin('1', 3, '0'); /// '001'
+ * leftJoin(0, 3, 1); /// '110'
+ * @param str 字符串
+ * @returns
+ */
+export function leftJoin(str: string | number, length: string | number = 2, char: string | number = 0): string {
+  return `${str ?? ''}`.padStart(Number(length), `${char}`);
+}
+
+/**
+ * 右边补某个字符
+ * @example
+ * rightJoin('1', 3, 'x'); /// '1xx'
+ * rightJoin(0, 3, 1); /// '011'
+ * @param str 字符串
+ * @returns
+ */
+export function rightJoin(str: string | number, length: string | number = 2, char: string | number = 0): string {
+  return `${str ?? ''}`.padEnd(Number(length), `${char}`);
 }
