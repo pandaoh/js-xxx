@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 11:52:01
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-24 14:41:03
+ * @LastEditTime: 2023-12-15 18:30:28
  * @Description: 数组常用函数
  * @FilePath: \js-xxx\src\Array\index.ts
  */
@@ -131,7 +131,7 @@ export function sortCallBack(key: string, isAscend = true): any {
  * @param arr 数组
  * @returns
  */
-export function arrayShuffle(arr: any[]) {
+export function arrayShuffle(arr: any[]): any[] {
   return arr.sort(() => Math.random() - 0.5);
 }
 

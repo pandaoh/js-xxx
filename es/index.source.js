@@ -364,7 +364,7 @@ function isArrayBuffer(value) {
  * @Author: HxB
  * @Date: 2022-04-26 11:52:01
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-24 14:41:03
+ * @LastEditTime: 2023-12-15 18:30:28
  * @Description: 数组常用函数
  * @FilePath: \js-xxx\src\Array\index.ts
  */
@@ -9468,7 +9468,7 @@ function onResize(foo) {
  * 获取简单的浏览器指纹
  * @example
  * getFingerprint(); /// md5 加密后的指纹
- * getFingerprint('test'); /// md5 加密后的指纹
+ * getFingerprint('test'); /// md5 加密后的指纹-建议增加使用者标识，避免指纹冲突。
  * @param extraString 额外的字符串，可以说用户名等。
  * @returns
  */
@@ -12888,11 +12888,21 @@ function qsParse(url, key) {
  * getBaseURL('https://test.com/index?name=leo&org=biugle#test'); /// 'https://test.com/index'
  * getBaseURL(''); /// ''
  * getBaseURL(); /// 当前页面 BaseURL
+ * getBaseURL('https://test.com/#/test?name=leo&org=biugle', true); /// 'https://test.com/#/test'
+ * getBaseURL(null); /// 相当于 window.location.origin
  * @param url 地址/链接
+ * @param hashRoute 是否为 hash 路由，默认为 false 。
  * @returns
  */
-function getBaseURL(url) {
+function getBaseURL(url, hashRoute) {
+    if (hashRoute === void 0) { hashRoute = false; }
+    if (url === null) {
+        return window.location.origin;
+    }
     url = url !== null && url !== void 0 ? url : window.location.href;
+    if (hashRoute) {
+        return url.split('?')[0];
+    }
     return url.replace(/[?#].*$/, '');
 }
 /**
@@ -12907,6 +12917,27 @@ function getBaseURL(url) {
 function getQueryString(url) {
     var _a, _b, _c, _d, _e;
     return toBool(url) ? (_d = (_c = (_b = (_a = url === null || url === void 0 ? void 0 : url.split('?')) === null || _a === void 0 ? void 0 : _a[1]) === null || _b === void 0 ? void 0 : _b.split('#')) === null || _c === void 0 ? void 0 : _c[0]) !== null && _d !== void 0 ? _d : '' : (_e = window.location.search) === null || _e === void 0 ? void 0 : _e.replace('?', '');
+}
+/**
+ * 改变 URL 地址而不刷新页面，并且支持保留或替换历史记录
+ * @example
+ * 假如当前地址为：https://test.com/user
+ * changeURL('leo'); /// url 变为 'https://test.com/user/leo'
+ * changeURL('./leo'); /// url 变为 'https://test.com/user/leo'
+ * changeURL('/users'); /// url 变为 'https://test.com/users'
+ * changeURL('https://test.com/test'); /// url 变为 'https://test.com/test' (若域名不同，会报错中断。)
+ * changeURL('/users', false); /// url 变为 'https://test.com/users' (不覆盖历史记录，返回时会再显示 'https://test.com/user'，而上面的例子返回时是直接显示 'https://test.com/user' 的上一条。)
+ * @param url URL 地址
+ * @param replaceHistory 是否替换历史记录，默认为 true 。
+ */
+function changeURL(url, replaceHistory) {
+    if (replaceHistory === void 0) { replaceHistory = true; }
+    if (replaceHistory) {
+        window.history.replaceState({}, '', url);
+    }
+    else {
+        window.history.pushState({}, '', url);
+    }
 }
 /**
  * 获取查询地址/链接中的参数对象
@@ -14136,4 +14167,4 @@ function getWebSocket() {
     return xWebSocket;
 }
 
-export { ANIMALS, BASE_CHAR_LOW, BASE_CHAR_UP, BASE_NUMBER, BLOOD_GROUP, CODE_MSG, CONSTELLATION, CONTENT_TYPES, HttpMethod, ICONS, ID_CARD_PROVINCE, KEYBOARD_CODE, Loading, MAN, MONTHS, PY_MAPS, ROLES, Speaker, TRANSFER_STR, Toast, WEEKS, WOMAN, abs, add, addLongPressEvent, addSpace, all, any, appendLink, appendScript, arrObj2objArr, arrayFill, arrayShuffle, arraySort, average, banConsole, base64Decode, base64Encode, bindMoreClick, calcCron, calcDate, calcFontSize, catchPromise, checkFileExt, checkIdCard, checkPassWordLevel, checkVersion, clearCookies, closeFullscreen, closeWebSocket, compareDate, contains, copyToClipboard, countdown, data2Arr, data2Obj, dataTo, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitKeyboardEvent, empty, encrypt, every, exportFile, findChildren, findMaxKey, findParents, float, forEach, forceToStr, formatBytes, formatDate, formatJSON, formatNumber, formatRh, getAge, getAnimal, getBSColor, getBaseURL, getBloodGroup, getConstellation, getContentType, getCookie, getCryptoJS, getDateDifference, getDateList, getDateTime, getDayInYear, getDecodeStorage, getFingerprint, getFirstVar, getKey, getLastVar, getLocalArr, getLocalObj, getMonthDayCount, getMonthInfo, getPercentage, getPinYin, getQueryString, getRandColor, getRandDate, getRandIp, getRandNum, getRandStr, getRandVar, getScrollPercent, getSearchParams, getSelectText, getSessionArr, getSessionObj, getSortVar, getStyleByName, getTimeCode, getType, getUTCTime, getUserAgent, getV, getVarSize, getViewportSize, getWebSocket, getWeekInfo, globalError, hasKey, hasSpecialChar, hideToast, html2str, inRange, initNotification, initWebSocket, insertAfter, intersection, inversion, isAccount, isAppleDevice, isArr, isArrayBuffer, isBankCard, isBlob, isBool, isBrowser, isCarCode, isChinese, isCreditCode, isDarkMode, isDate, isDecimal, isElement, isEmail, isEnglish, isEqual, isEven, isFn, isHttp, isInteger, isIpAddress, isIpv4, isIpv6, isJSON, isMobile, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPromise, isQQ, isRhNegative, isStr, isStrongPassWord, isTel, isUndef, isUrl, isWeekday, jsonClone, keyBoardResize, leftJoin, localStorageGet, localStorageSet, log, logRunTime, markNumber, marquee, maskString, md5, ms, offDefaultEvent, onClick2MoreClick, onResize, openFileSelect, openFullscreen, px2rem, qsParse, qsStringify, removeCookie, repeat, retry, rightJoin, rip, round, same, scrollToView, scrollXTo, scrollYTo, sendNotification, sendWsMsg, sessionStorageGet, sessionStorageSet, setCookie, setEncodeStorage, setEventListener, setIcon, setWsBinaryType, sha1, sha256, showProcess, showToast, showVar, sleep, slugify, sortBy, sortCallBack, stackSticky, str2html, str2unicode, sub, textCamelCase, textSplitCase, textTransferCase, throttle, timeSince, times, to, toBool, toFormData, toNum, toQueryString, toStr, toggleClass, transferCSVData, transferFileToBase64, transferIdCard, transferMoney, transferNumber, transferScanStr, transferSeconds, transferTemperature, trim, truncate, unicode2str, union, unique, uuid, versionUpgrade, waitUntil, watermark, xAjax, xFetch };
+export { ANIMALS, BASE_CHAR_LOW, BASE_CHAR_UP, BASE_NUMBER, BLOOD_GROUP, CODE_MSG, CONSTELLATION, CONTENT_TYPES, HttpMethod, ICONS, ID_CARD_PROVINCE, KEYBOARD_CODE, Loading, MAN, MONTHS, PY_MAPS, ROLES, Speaker, TRANSFER_STR, Toast, WEEKS, WOMAN, abs, add, addLongPressEvent, addSpace, all, any, appendLink, appendScript, arrObj2objArr, arrayFill, arrayShuffle, arraySort, average, banConsole, base64Decode, base64Encode, bindMoreClick, calcCron, calcDate, calcFontSize, catchPromise, changeURL, checkFileExt, checkIdCard, checkPassWordLevel, checkVersion, clearCookies, closeFullscreen, closeWebSocket, compareDate, contains, copyToClipboard, countdown, data2Arr, data2Obj, dataTo, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitKeyboardEvent, empty, encrypt, every, exportFile, findChildren, findMaxKey, findParents, float, forEach, forceToStr, formatBytes, formatDate, formatJSON, formatNumber, formatRh, getAge, getAnimal, getBSColor, getBaseURL, getBloodGroup, getConstellation, getContentType, getCookie, getCryptoJS, getDateDifference, getDateList, getDateTime, getDayInYear, getDecodeStorage, getFingerprint, getFirstVar, getKey, getLastVar, getLocalArr, getLocalObj, getMonthDayCount, getMonthInfo, getPercentage, getPinYin, getQueryString, getRandColor, getRandDate, getRandIp, getRandNum, getRandStr, getRandVar, getScrollPercent, getSearchParams, getSelectText, getSessionArr, getSessionObj, getSortVar, getStyleByName, getTimeCode, getType, getUTCTime, getUserAgent, getV, getVarSize, getViewportSize, getWebSocket, getWeekInfo, globalError, hasKey, hasSpecialChar, hideToast, html2str, inRange, initNotification, initWebSocket, insertAfter, intersection, inversion, isAccount, isAppleDevice, isArr, isArrayBuffer, isBankCard, isBlob, isBool, isBrowser, isCarCode, isChinese, isCreditCode, isDarkMode, isDate, isDecimal, isElement, isEmail, isEnglish, isEqual, isEven, isFn, isHttp, isInteger, isIpAddress, isIpv4, isIpv6, isJSON, isMobile, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPromise, isQQ, isRhNegative, isStr, isStrongPassWord, isTel, isUndef, isUrl, isWeekday, jsonClone, keyBoardResize, leftJoin, localStorageGet, localStorageSet, log, logRunTime, markNumber, marquee, maskString, md5, ms, offDefaultEvent, onClick2MoreClick, onResize, openFileSelect, openFullscreen, px2rem, qsParse, qsStringify, removeCookie, repeat, retry, rightJoin, rip, round, same, scrollToView, scrollXTo, scrollYTo, sendNotification, sendWsMsg, sessionStorageGet, sessionStorageSet, setCookie, setEncodeStorage, setEventListener, setIcon, setWsBinaryType, sha1, sha256, showProcess, showToast, showVar, sleep, slugify, sortBy, sortCallBack, stackSticky, str2html, str2unicode, sub, textCamelCase, textSplitCase, textTransferCase, throttle, timeSince, times, to, toBool, toFormData, toNum, toQueryString, toStr, toggleClass, transferCSVData, transferFileToBase64, transferIdCard, transferMoney, transferNumber, transferScanStr, transferSeconds, transferTemperature, trim, truncate, unicode2str, union, unique, uuid, versionUpgrade, waitUntil, watermark, xAjax, xFetch };

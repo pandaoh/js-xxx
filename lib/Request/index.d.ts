@@ -30,10 +30,13 @@ export declare function qsParse(url?: string, key?: string): any;
  * getBaseURL('https://test.com/index?name=leo&org=biugle#test'); /// 'https://test.com/index'
  * getBaseURL(''); /// ''
  * getBaseURL(); /// 当前页面 BaseURL
+ * getBaseURL('https://test.com/#/test?name=leo&org=biugle', true); /// 'https://test.com/#/test'
+ * getBaseURL(null); /// 相当于 window.location.origin
  * @param url 地址/链接
+ * @param hashRoute 是否为 hash 路由，默认为 false 。
  * @returns
  */
-export declare function getBaseURL(url?: string): string;
+export declare function getBaseURL(url?: string, hashRoute?: boolean): string;
 /**
  * 获取 url 查询参数字符串
  * @example
@@ -44,6 +47,19 @@ export declare function getBaseURL(url?: string): string;
  * @returns
  */
 export declare function getQueryString(url?: string): any;
+/**
+ * 改变 URL 地址而不刷新页面，并且支持保留或替换历史记录
+ * @example
+ * 假如当前地址为：https://test.com/user
+ * changeURL('leo'); /// url 变为 'https://test.com/user/leo'
+ * changeURL('./leo'); /// url 变为 'https://test.com/user/leo'
+ * changeURL('/users'); /// url 变为 'https://test.com/users'
+ * changeURL('https://test.com/test'); /// url 变为 'https://test.com/test' (若域名不同，会报错中断。)
+ * changeURL('/users', false); /// url 变为 'https://test.com/users' (不覆盖历史记录，返回时会再显示 'https://test.com/user'，而上面的例子返回时是直接显示 'https://test.com/user' 的上一条。)
+ * @param url URL 地址
+ * @param replaceHistory 是否替换历史记录，默认为 true 。
+ */
+export declare function changeURL(url: string, replaceHistory?: boolean): void;
 /**
  * 获取查询地址/链接中的参数对象
  * @example

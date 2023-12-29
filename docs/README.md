@@ -1,6 +1,6 @@
 js-xxx
 
-# js-xxx - v2.0.9
+# js-xxx - v2.0.10
 
 ## Table of contents
 
@@ -59,6 +59,7 @@ js-xxx
 - [calcDate](README.md#calcdate)
 - [calcFontSize](README.md#calcfontsize)
 - [catchPromise](README.md#catchpromise)
+- [changeURL](README.md#changeurl)
 - [checkFileExt](README.md#checkfileext)
 - [checkIdCard](README.md#checkidcard)
 - [checkPassWordLevel](README.md#checkpasswordlevel)
@@ -1227,6 +1228,36 @@ new catchPromise(resolve, reject, rejectHandler); /// Promise
 
 ___
 
+### changeURL
+
+▸ **changeURL**(`url`, `replaceHistory?`): `void`
+
+改变 URL 地址而不刷新页面，并且支持保留或替换历史记录
+
+**`Example`**
+
+```ts
+假如当前地址为：https://test.com/user
+changeURL('leo'); /// url 变为 'https://test.com/user/leo'
+changeURL('./leo'); /// url 变为 'https://test.com/user/leo'
+changeURL('/users'); /// url 变为 'https://test.com/users'
+changeURL('https://test.com/test'); /// url 变为 'https://test.com/test' (若域名不同，会报错中断。)
+changeURL('/users', false); /// url 变为 'https://test.com/users' (不覆盖历史记录，返回时会再显示 'https://test.com/user'，而上面的例子返回时是直接显示 'https://test.com/user' 的上一条。)
+```
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `url` | `string` | `undefined` | URL 地址 |
+| `replaceHistory` | `boolean` | `true` | 是否替换历史记录，默认为 true 。 |
+
+#### Returns
+
+`void`
+
+___
+
 ### checkFileExt
 
 ▸ **checkFileExt**(`arr`, `value`): `boolean`
@@ -2327,7 +2358,7 @@ ___
 
 ### getBaseURL
 
-▸ **getBaseURL**(`url?`): `string`
+▸ **getBaseURL**(`url?`, `hashRoute?`): `string`
 
 获取不带任何参数或片段标识符的当前 URL
 
@@ -2337,13 +2368,16 @@ ___
 getBaseURL('https://test.com/index?name=leo&org=biugle#test'); /// 'https://test.com/index'
 getBaseURL(''); /// ''
 getBaseURL(); /// 当前页面 BaseURL
+getBaseURL('https://test.com/#/test?name=leo&org=biugle', true); /// 'https://test.com/#/test'
+getBaseURL(null); /// 相当于 window.location.origin
 ```
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `url?` | `string` | 地址/链接 |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `url?` | `string` | `undefined` | 地址/链接 |
+| `hashRoute` | `boolean` | `false` | 是否为 hash 路由，默认为 false 。 |
 
 #### Returns
 
@@ -2626,7 +2660,7 @@ ___
 
 ```ts
 getFingerprint(); /// md5 加密后的指纹
-getFingerprint('test'); /// md5 加密后的指纹
+getFingerprint('test'); /// md5 加密后的指纹-建议增加使用者标识，避免指纹冲突。
 ```
 
 #### Parameters

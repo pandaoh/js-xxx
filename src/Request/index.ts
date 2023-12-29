@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:15:37
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-09-22 09:49:44
+ * @LastEditTime: 2023-12-29 11:12:17
  * @Description: 请求相关函数
  * @FilePath: \js-xxx\src\Request\index.ts
  */
@@ -99,11 +99,20 @@ export function qsParse(url?: string, key?: string): any {
  * getBaseURL('https://test.com/index?name=leo&org=biugle#test'); /// 'https://test.com/index'
  * getBaseURL(''); /// ''
  * getBaseURL(); /// 当前页面 BaseURL
+ * getBaseURL('https://test.com/#/test?name=leo&org=biugle', true); /// 'https://test.com/#/test'
+ * getBaseURL(null); /// 相当于 window.location.origin
  * @param url 地址/链接
+ * @param hashRoute 是否为 hash 路由，默认为 false 。
  * @returns
  */
-export function getBaseURL(url?: string): string {
+export function getBaseURL(url?: string, hashRoute = false): string {
+  if (url === null) {
+    return window.location.origin;
+  }
   url = url ?? window.location.href;
+  if (hashRoute) {
+    return url.split('?')[0];
+  }
   return url.replace(/[?#].*$/, '');
 }
 
@@ -118,6 +127,26 @@ export function getBaseURL(url?: string): string {
  */
 export function getQueryString(url?: string): any {
   return toBool(url) ? url?.split('?')?.[1]?.split('#')?.[0] ?? '' : window.location.search?.replace('?', '');
+}
+
+/**
+ * 改变 URL 地址而不刷新页面，并且支持保留或替换历史记录
+ * @example
+ * 假如当前地址为：https://test.com/user
+ * changeURL('leo'); /// url 变为 'https://test.com/user/leo'
+ * changeURL('./leo'); /// url 变为 'https://test.com/user/leo'
+ * changeURL('/users'); /// url 变为 'https://test.com/users'
+ * changeURL('https://test.com/test'); /// url 变为 'https://test.com/test' (若域名不同，会报错中断。)
+ * changeURL('/users', false); /// url 变为 'https://test.com/users' (不覆盖历史记录，返回时会再显示 'https://test.com/user'，而上面的例子返回时是直接显示 'https://test.com/user' 的上一条。)
+ * @param url URL 地址
+ * @param replaceHistory 是否替换历史记录，默认为 true 。
+ */
+export function changeURL(url: string, replaceHistory = true) {
+  if (replaceHistory) {
+    window.history.replaceState({}, '', url);
+  } else {
+    window.history.pushState({}, '', url);
+  }
 }
 
 /**
