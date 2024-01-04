@@ -1345,7 +1345,7 @@ ___
 
 ### checkUpdate
 
-▸ **checkUpdate**(`callback`, `interval?`, `url?`): `Object`
+▸ **checkUpdate**(`callback`, `interval?`, `url?`): `undefined` \| () => `void`
 
 刷新页面或执行回调函数，用于检测服务端是否发布了更新
 
@@ -1362,16 +1362,12 @@ checkUpdate((type) => window.location.reload(), 5 * 60 * 1000, '/index.js'); ///
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `callback` | `any` | 文件更新时要执行的回调函数 |
-| `interval?` | `number` | 请求文件的时间间隔（毫秒） |
-| `url?` | `string` | 要检测的文件路径（默认为页面最后一个 JavaScript 文件） |
+| `interval` | `number` | 请求文件的时间间隔（毫秒），默认为 15 分钟，最小值 1 分钟。 |
+| `url?` | `string` | 要检测的文件路径（默认为页面最后一个 JavaScript/CSS 文件） |
 
 #### Returns
 
-`Object`
-
-| Name | Type |
-| :------ | :------ |
-| `stop` | () => `void` |
+`undefined` \| () => `void`
 
 ___
 

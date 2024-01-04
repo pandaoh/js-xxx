@@ -4,7 +4,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-04 10:31:09
+ * @LastEditTime: 2024-01-04 15:51:36
  * @Description: 工具函数
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
@@ -339,24 +339,36 @@ export function observeResource(callback?: any) {
  * checkUpdate(); /// 检测服务端是否发布了更新，若更新或请求失败则刷新页面。
  * checkUpdate((type) => window.location.reload(), 5 * 60 * 1000, '/index.js'); /// 检测服务端某个文件是否发布了更新，若更新或请求失败则刷新页面。
  * @param callback 文件更新时要执行的回调函数
- * @param interval 请求文件的时间间隔（毫秒）
- * @param url 要检测的文件路径（默认为页面最后一个 JavaScript 文件）
+ * @param interval 请求文件的时间间隔（毫秒），默认为 15 分钟，最小值 1 分钟。
+ * @param url 要检测的文件路径（默认为页面最后一个 JavaScript/CSS 文件）
  * @returns
  */
-export function checkUpdate(callback: any, interval?: number, url?: string) {
+export function checkUpdate(callback: any, interval = 15 * 60 * 1000, url?: string) {
   let filePath: any = url;
   let lastModified: any = null;
   let timerId: any = null;
-  interval = interval ?? 15 * 60 * 1000; // 15 分钟
+  interval = Math.max(1 * 60 * 1000, interval ?? 0);
 
   if (!filePath) {
     const scripts = document.getElementsByTagName('script');
-    filePath = scripts[scripts.length - 1].src ?? '';
+    const lastScript: any = scripts[scripts.length - 1];
+    if (lastScript?.src) {
+      filePath = lastScript.src;
+    } else {
+      const links = document.getElementsByTagName('link');
+      const lastLink = links[links.length - 1];
+      filePath = lastLink.href;
+    }
+  }
+
+  if (!filePath) {
+    console.error('Failed to get file path.');
+    return;
   }
 
   function requestFile() {
     const xhr = new XMLHttpRequest();
-    xhr.open('HEAD', filePath, true);
+    xhr.open('HEAD', filePath + '?_=' + Date.now(), true);
 
     xhr.onload = function () {
       if (xhr.status === 200) {
@@ -403,9 +415,7 @@ export function checkUpdate(callback: any, interval?: number, url?: string) {
 
   startTimer();
 
-  return {
-    stop: stopTimer,
-  };
+  return stopTimer; // 返回取消定时器的函数
 }
 
 /**

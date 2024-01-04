@@ -8708,23 +8708,35 @@
      * checkUpdate(); /// 检测服务端是否发布了更新，若更新或请求失败则刷新页面。
      * checkUpdate((type) => window.location.reload(), 5 * 60 * 1000, '/index.js'); /// 检测服务端某个文件是否发布了更新，若更新或请求失败则刷新页面。
      * @param callback 文件更新时要执行的回调函数
-     * @param interval 请求文件的时间间隔（毫秒）
-     * @param url 要检测的文件路径（默认为页面最后一个 JavaScript 文件）
+     * @param interval 请求文件的时间间隔（毫秒），默认为 15 分钟，最小值 1 分钟。
+     * @param url 要检测的文件路径（默认为页面最后一个 JavaScript/CSS 文件）
      * @returns
      */
     function checkUpdate(callback, interval, url) {
-        var _a;
+        if (interval === void 0) { interval = 15 * 60 * 1000; }
         var filePath = url;
         var lastModified = null;
         var timerId = null;
-        interval = interval !== null && interval !== void 0 ? interval : 15 * 60 * 1000; // 15 分钟
+        interval = Math.max(1 * 60 * 1000, interval !== null && interval !== void 0 ? interval : 0);
         if (!filePath) {
             var scripts = document.getElementsByTagName('script');
-            filePath = (_a = scripts[scripts.length - 1].src) !== null && _a !== void 0 ? _a : '';
+            var lastScript = scripts[scripts.length - 1];
+            if (lastScript === null || lastScript === void 0 ? void 0 : lastScript.src) {
+                filePath = lastScript.src;
+            }
+            else {
+                var links = document.getElementsByTagName('link');
+                var lastLink = links[links.length - 1];
+                filePath = lastLink.href;
+            }
+        }
+        if (!filePath) {
+            console.error('Failed to get file path.');
+            return;
         }
         function requestFile() {
             var xhr = new XMLHttpRequest();
-            xhr.open('HEAD', filePath, true);
+            xhr.open('HEAD', filePath + '?_=' + Date.now(), true);
             xhr.onload = function () {
                 if (xhr.status === 200) {
                     var currentModified = xhr.getResponseHeader('Last-Modified');
@@ -8765,9 +8777,7 @@
             clearInterval(timerId);
         }
         startTimer();
-        return {
-            stop: stopTimer,
-        };
+        return stopTimer; // 返回取消定时器的函数
     }
     /**
      * 获取随机数字
