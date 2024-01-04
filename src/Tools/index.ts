@@ -4,7 +4,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-10-10 17:03:01
+ * @LastEditTime: 2024-01-04 10:31:09
  * @Description: 工具函数
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
@@ -198,19 +198,213 @@ export function throttle(fn: any, delay = 2000) {
 }
 
 /**
- * 全局捕获异常
+ * 全局尽可能捕获异常
  * @example
- * globalError((message, source, lineNo, colNo, error) => console.log('全局捕获异常'), false); /// '全局捕获异常'
- * @param fn (message, source, lineNo, colNo, error)
+ * globalError((error) => console.log('全局捕获异常'), false); /// '全局捕获异常'
+ * @param fn (error)
  * @param notShowConsole 是否不回显控制台
  * @returns
  */
 export function globalError(fn: any, notShowConsole = true) {
+  // 监听全局错误
   window.onerror = function (message, source, lineNo, colNo, error) {
-    notShowConsole && console.log('js-xxx:globalError--->', { message, source, lineNo, colNo, error });
-    fn.call(this, message, source, lineNo, colNo, error);
-    // return true 不在控制台报错
-    return notShowConsole;
+    if (!notShowConsole) {
+      console.error('js-xxx:globalError--->', { message, source, lineNo, colNo, error });
+    }
+    fn.call(this, { type: 'globalError', error, message, source, lineNo, colNo });
+    return notShowConsole; // 返回 true，则不在控制台报错
+  };
+
+  // 监听 Promise 的未处理错误
+  // eslint-disable-next-line spellcheck/spell-checker
+  window.addEventListener('unhandledrejection', function (event) {
+    if (!notShowConsole) {
+      console.error('js-xxx:globalError---> Unhandled Promise Rejection:', event.reason);
+    }
+    fn.call(this, { type: 'Unhandled Promise Rejection', error: event.reason, event });
+    event.preventDefault();
+  });
+
+  // 捕获其他错误
+  window.addEventListener('error', function (event) {
+    if (!notShowConsole) {
+      console.error('js-xxx:globalError--->', event.error);
+    }
+    fn.call(this, { type: 'Error', error: event.error, event });
+    event.preventDefault();
+  });
+
+  // 捕获未处理的全局错误
+  window.addEventListener('DOMContentLoaded', function () {
+    // 捕获全局脚本错误
+    const originalCreateElement = document.createElement;
+    document.createElement = function (tagName: string) {
+      const element: any = originalCreateElement.call(document, tagName);
+      if (tagName.toLowerCase() === 'script') {
+        element.addEventListener('error', function (event: any) {
+          if (!notShowConsole) {
+            console.error('js-xxx:globalError---> Script Error:', element.src || element.textContent);
+          }
+          // @ts-ignore
+          fn.call(this, { type: 'Script Error', error: element.src || element.textContent, event });
+          event.preventDefault();
+        });
+      }
+      return element;
+    };
+
+    // 捕获全局资源加载错误（例如，<img>，<link>，<audio>，<video> 等）
+    const originalImageConstructor = window.Image;
+    window.Image = function () {
+      const image = new originalImageConstructor();
+      image.addEventListener('error', function (event) {
+        if (!notShowConsole) {
+          console.error('js-xxx:globalError---> Image Error:', image.src);
+        }
+        fn.call(this, { type: 'Image Error', error: image.src, event });
+        event.preventDefault();
+      });
+      return image;
+    } as any;
+  });
+}
+
+/**
+ * 监听资源找不到的情况，刷新页面。
+ * @example
+ * observeResource(() => console.log('Refreshing')); /// 找不到资源时输出 "Refreshing"
+ * observeResource(); /// 找不到资源时刷新页面
+ * @param callback
+ * @returns
+ */
+export function observeResource(callback?: any) {
+  const PERFORMANCE_SUPPORTED = window.performance && typeof window.performance.getEntries === 'function';
+  const RESOURCE_TYPE = 'resource';
+  const JS_EXTENSION = 'js';
+
+  if (!PERFORMANCE_SUPPORTED) {
+    console.error('Performance API is not supported on this platform.');
+    return;
+  }
+
+  const observerCallback = (list: any) => {
+    for (const entry of list.getEntries()) {
+      if (entry.entryType === RESOURCE_TYPE && entry.responseStatus === 404 && entry.name.includes(JS_EXTENSION)) {
+        console.log(`Resource ${entry.name} is outdated. Refreshing the page...`);
+        if (callback) {
+          callback();
+        } else {
+          window.location.reload();
+        }
+        break;
+      }
+    }
+  };
+
+  const observePerformance = () => {
+    const PerformanceObserver = getPerformanceObserverConstructor();
+
+    if (!PerformanceObserver) {
+      console.error('PerformanceObserver is not supported on this platform.');
+      return;
+    }
+
+    const observer = new PerformanceObserver(observerCallback);
+    const entryTypes = getEntryTypes();
+    observer.observe({ entryTypes });
+    // observer.observe({ type: 'resource', buffered: true });
+  };
+
+  const getPerformanceObserverConstructor = () =>
+    window.PerformanceObserver ||
+    // @ts-ignore
+    window.WebKitPerformanceObserver ||
+    // @ts-ignore
+    window.MozPerformanceObserver ||
+    // @ts-ignore
+    window.msPerformanceObserver;
+
+  const getEntryTypes = () =>
+    ['navigation', 'resource', 'network', 'error', 'event'].filter((type) =>
+      PerformanceObserver.supportedEntryTypes.includes(type),
+    );
+
+  observePerformance();
+}
+
+/**
+ * 刷新页面或执行回调函数，用于检测服务端是否发布了更新
+ * @example
+ * checkUpdate((type) => console.log({ type })); /// 检测服务端是否发布了更新，若更新或请求失败则执行回调。
+ * checkUpdate(); /// 检测服务端是否发布了更新，若更新或请求失败则刷新页面。
+ * checkUpdate((type) => window.location.reload(), 5 * 60 * 1000, '/index.js'); /// 检测服务端某个文件是否发布了更新，若更新或请求失败则刷新页面。
+ * @param callback 文件更新时要执行的回调函数
+ * @param interval 请求文件的时间间隔（毫秒）
+ * @param url 要检测的文件路径（默认为页面最后一个 JavaScript 文件）
+ * @returns
+ */
+export function checkUpdate(callback: any, interval?: number, url?: string) {
+  let filePath: any = url;
+  let lastModified: any = null;
+  let timerId: any = null;
+  interval = interval ?? 15 * 60 * 1000; // 15 分钟
+
+  if (!filePath) {
+    const scripts = document.getElementsByTagName('script');
+    filePath = scripts[scripts.length - 1].src ?? '';
+  }
+
+  function requestFile() {
+    const xhr = new XMLHttpRequest();
+    xhr.open('HEAD', filePath, true);
+
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        const currentModified = xhr.getResponseHeader('Last-Modified');
+        if (lastModified && currentModified !== lastModified) {
+          handleUpdate();
+        }
+        lastModified = currentModified;
+      } else {
+        handleFailure();
+      }
+    };
+
+    xhr.onerror = handleFailure;
+
+    xhr.send();
+  }
+
+  function handleUpdate() {
+    if (typeof callback === 'function') {
+      callback('UPDATE');
+    } else {
+      console.log('Server has been updated. Refreshing the page...');
+      window.location.reload();
+    }
+  }
+
+  function handleFailure() {
+    if (typeof callback === 'function') {
+      callback('FAIL');
+    } else {
+      console.log(`Failed to load file: ${filePath}. Refreshing the page...`);
+      window.location.reload();
+    }
+  }
+
+  function startTimer() {
+    timerId = setInterval(requestFile, interval);
+  }
+
+  function stopTimer() {
+    clearInterval(timerId);
+  }
+
+  startTimer();
+
+  return {
+    stop: stopTimer,
   };
 }
 

@@ -8560,20 +8560,207 @@ function throttle(fn, delay) {
     };
 }
 /**
- * 全局捕获异常
+ * 全局尽可能捕获异常
  * @example
- * globalError((message, source, lineNo, colNo, error) => console.log('全局捕获异常'), false); /// '全局捕获异常'
- * @param fn (message, source, lineNo, colNo, error)
+ * globalError((error) => console.log('全局捕获异常'), false); /// '全局捕获异常'
+ * @param fn (error)
  * @param notShowConsole 是否不回显控制台
  * @returns
  */
 function globalError(fn, notShowConsole) {
     if (notShowConsole === void 0) { notShowConsole = true; }
+    // 监听全局错误
     window.onerror = function (message, source, lineNo, colNo, error) {
-        notShowConsole && console.log('js-xxx:globalError--->', { message: message, source: source, lineNo: lineNo, colNo: colNo, error: error });
-        fn.call(this, message, source, lineNo, colNo, error);
-        // return true 不在控制台报错
-        return notShowConsole;
+        if (!notShowConsole) {
+            console.error('js-xxx:globalError--->', { message: message, source: source, lineNo: lineNo, colNo: colNo, error: error });
+        }
+        fn.call(this, { type: 'globalError', error: error, message: message, source: source, lineNo: lineNo, colNo: colNo });
+        return notShowConsole; // 返回 true，则不在控制台报错
+    };
+    // 监听 Promise 的未处理错误
+    // eslint-disable-next-line spellcheck/spell-checker
+    window.addEventListener('unhandledrejection', function (event) {
+        if (!notShowConsole) {
+            console.error('js-xxx:globalError---> Unhandled Promise Rejection:', event.reason);
+        }
+        fn.call(this, { type: 'Unhandled Promise Rejection', error: event.reason, event: event });
+        event.preventDefault();
+    });
+    // 捕获其他错误
+    window.addEventListener('error', function (event) {
+        if (!notShowConsole) {
+            console.error('js-xxx:globalError--->', event.error);
+        }
+        fn.call(this, { type: 'Error', error: event.error, event: event });
+        event.preventDefault();
+    });
+    // 捕获未处理的全局错误
+    window.addEventListener('DOMContentLoaded', function () {
+        // 捕获全局脚本错误
+        var originalCreateElement = document.createElement;
+        document.createElement = function (tagName) {
+            var element = originalCreateElement.call(document, tagName);
+            if (tagName.toLowerCase() === 'script') {
+                element.addEventListener('error', function (event) {
+                    if (!notShowConsole) {
+                        console.error('js-xxx:globalError---> Script Error:', element.src || element.textContent);
+                    }
+                    // @ts-ignore
+                    fn.call(this, { type: 'Script Error', error: element.src || element.textContent, event: event });
+                    event.preventDefault();
+                });
+            }
+            return element;
+        };
+        // 捕获全局资源加载错误（例如，<img>，<link>，<audio>，<video> 等）
+        var originalImageConstructor = window.Image;
+        window.Image = function () {
+            var image = new originalImageConstructor();
+            image.addEventListener('error', function (event) {
+                if (!notShowConsole) {
+                    console.error('js-xxx:globalError---> Image Error:', image.src);
+                }
+                fn.call(this, { type: 'Image Error', error: image.src, event: event });
+                event.preventDefault();
+            });
+            return image;
+        };
+    });
+}
+/**
+ * 监听资源找不到的情况，刷新页面。
+ * @example
+ * observeResource(() => console.log('Refreshing')); /// 找不到资源时输出 "Refreshing"
+ * observeResource(); /// 找不到资源时刷新页面
+ * @param callback
+ * @returns
+ */
+function observeResource(callback) {
+    var PERFORMANCE_SUPPORTED = window.performance && typeof window.performance.getEntries === 'function';
+    var RESOURCE_TYPE = 'resource';
+    var JS_EXTENSION = 'js';
+    if (!PERFORMANCE_SUPPORTED) {
+        console.error('Performance API is not supported on this platform.');
+        return;
+    }
+    var observerCallback = function (list) {
+        var e_1, _a;
+        try {
+            for (var _b = __values(list.getEntries()), _c = _b.next(); !_c.done; _c = _b.next()) {
+                var entry = _c.value;
+                if (entry.entryType === RESOURCE_TYPE && entry.responseStatus === 404 && entry.name.includes(JS_EXTENSION)) {
+                    console.log("Resource ".concat(entry.name, " is outdated. Refreshing the page..."));
+                    if (callback) {
+                        callback();
+                    }
+                    else {
+                        window.location.reload();
+                    }
+                    break;
+                }
+            }
+        }
+        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+        finally {
+            try {
+                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+            }
+            finally { if (e_1) throw e_1.error; }
+        }
+    };
+    var observePerformance = function () {
+        var PerformanceObserver = getPerformanceObserverConstructor();
+        if (!PerformanceObserver) {
+            console.error('PerformanceObserver is not supported on this platform.');
+            return;
+        }
+        var observer = new PerformanceObserver(observerCallback);
+        var entryTypes = getEntryTypes();
+        observer.observe({ entryTypes: entryTypes });
+        // observer.observe({ type: 'resource', buffered: true });
+    };
+    var getPerformanceObserverConstructor = function () {
+        return window.PerformanceObserver ||
+            // @ts-ignore
+            window.WebKitPerformanceObserver ||
+            // @ts-ignore
+            window.MozPerformanceObserver ||
+            // @ts-ignore
+            window.msPerformanceObserver;
+    };
+    var getEntryTypes = function () {
+        return ['navigation', 'resource', 'network', 'error', 'event'].filter(function (type) {
+            return PerformanceObserver.supportedEntryTypes.includes(type);
+        });
+    };
+    observePerformance();
+}
+/**
+ * 刷新页面或执行回调函数，用于检测服务端是否发布了更新
+ * @example
+ * checkUpdate((type) => console.log({ type })); /// 检测服务端是否发布了更新，若更新或请求失败则执行回调。
+ * checkUpdate(); /// 检测服务端是否发布了更新，若更新或请求失败则刷新页面。
+ * checkUpdate((type) => window.location.reload(), 5 * 60 * 1000, '/index.js'); /// 检测服务端某个文件是否发布了更新，若更新或请求失败则刷新页面。
+ * @param callback 文件更新时要执行的回调函数
+ * @param interval 请求文件的时间间隔（毫秒）
+ * @param url 要检测的文件路径（默认为页面最后一个 JavaScript 文件）
+ * @returns
+ */
+function checkUpdate(callback, interval, url) {
+    var _a;
+    var filePath = url;
+    var lastModified = null;
+    var timerId = null;
+    interval = interval !== null && interval !== void 0 ? interval : 15 * 60 * 1000; // 15 分钟
+    if (!filePath) {
+        var scripts = document.getElementsByTagName('script');
+        filePath = (_a = scripts[scripts.length - 1].src) !== null && _a !== void 0 ? _a : '';
+    }
+    function requestFile() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('HEAD', filePath, true);
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                var currentModified = xhr.getResponseHeader('Last-Modified');
+                if (lastModified && currentModified !== lastModified) {
+                    handleUpdate();
+                }
+                lastModified = currentModified;
+            }
+            else {
+                handleFailure();
+            }
+        };
+        xhr.onerror = handleFailure;
+        xhr.send();
+    }
+    function handleUpdate() {
+        if (typeof callback === 'function') {
+            callback('UPDATE');
+        }
+        else {
+            console.log('Server has been updated. Refreshing the page...');
+            window.location.reload();
+        }
+    }
+    function handleFailure() {
+        if (typeof callback === 'function') {
+            callback('FAIL');
+        }
+        else {
+            console.log("Failed to load file: ".concat(filePath, ". Refreshing the page..."));
+            window.location.reload();
+        }
+    }
+    function startTimer() {
+        timerId = setInterval(requestFile, interval);
+    }
+    function stopTimer() {
+        clearInterval(timerId);
+    }
+    startTimer();
+    return {
+        stop: stopTimer,
     };
 }
 /**
@@ -9590,7 +9777,7 @@ function getMonthInfo(n) {
  * @returns
  */
 function isEqual(obj1, obj2) {
-    var e_1, _a;
+    var e_2, _a;
     // 判断类型是否相同
     if (typeof obj1 !== typeof obj2) {
         return false;
@@ -9627,12 +9814,12 @@ function isEqual(obj1, obj2) {
                 }
             }
         }
-        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+        catch (e_2_1) { e_2 = { error: e_2_1 }; }
         finally {
             try {
                 if (keys1_1_1 && !keys1_1_1.done && (_a = keys1_1.return)) _a.call(keys1_1);
             }
-            finally { if (e_1) throw e_1.error; }
+            finally { if (e_2) throw e_2.error; }
         }
         return true;
     }
@@ -14167,4 +14354,4 @@ function getWebSocket() {
     return xWebSocket;
 }
 
-export { ANIMALS, BASE_CHAR_LOW, BASE_CHAR_UP, BASE_NUMBER, BLOOD_GROUP, CODE_MSG, CONSTELLATION, CONTENT_TYPES, HttpMethod, ICONS, ID_CARD_PROVINCE, KEYBOARD_CODE, Loading, MAN, MONTHS, PY_MAPS, ROLES, Speaker, TRANSFER_STR, Toast, WEEKS, WOMAN, abs, add, addLongPressEvent, addSpace, all, any, appendLink, appendScript, arrObj2objArr, arrayFill, arrayShuffle, arraySort, average, banConsole, base64Decode, base64Encode, bindMoreClick, calcCron, calcDate, calcFontSize, catchPromise, changeURL, checkFileExt, checkIdCard, checkPassWordLevel, checkVersion, clearCookies, closeFullscreen, closeWebSocket, compareDate, contains, copyToClipboard, countdown, data2Arr, data2Obj, dataTo, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitKeyboardEvent, empty, encrypt, every, exportFile, findChildren, findMaxKey, findParents, float, forEach, forceToStr, formatBytes, formatDate, formatJSON, formatNumber, formatRh, getAge, getAnimal, getBSColor, getBaseURL, getBloodGroup, getConstellation, getContentType, getCookie, getCryptoJS, getDateDifference, getDateList, getDateTime, getDayInYear, getDecodeStorage, getFingerprint, getFirstVar, getKey, getLastVar, getLocalArr, getLocalObj, getMonthDayCount, getMonthInfo, getPercentage, getPinYin, getQueryString, getRandColor, getRandDate, getRandIp, getRandNum, getRandStr, getRandVar, getScrollPercent, getSearchParams, getSelectText, getSessionArr, getSessionObj, getSortVar, getStyleByName, getTimeCode, getType, getUTCTime, getUserAgent, getV, getVarSize, getViewportSize, getWebSocket, getWeekInfo, globalError, hasKey, hasSpecialChar, hideToast, html2str, inRange, initNotification, initWebSocket, insertAfter, intersection, inversion, isAccount, isAppleDevice, isArr, isArrayBuffer, isBankCard, isBlob, isBool, isBrowser, isCarCode, isChinese, isCreditCode, isDarkMode, isDate, isDecimal, isElement, isEmail, isEnglish, isEqual, isEven, isFn, isHttp, isInteger, isIpAddress, isIpv4, isIpv6, isJSON, isMobile, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPromise, isQQ, isRhNegative, isStr, isStrongPassWord, isTel, isUndef, isUrl, isWeekday, jsonClone, keyBoardResize, leftJoin, localStorageGet, localStorageSet, log, logRunTime, markNumber, marquee, maskString, md5, ms, offDefaultEvent, onClick2MoreClick, onResize, openFileSelect, openFullscreen, px2rem, qsParse, qsStringify, removeCookie, repeat, retry, rightJoin, rip, round, same, scrollToView, scrollXTo, scrollYTo, sendNotification, sendWsMsg, sessionStorageGet, sessionStorageSet, setCookie, setEncodeStorage, setEventListener, setIcon, setWsBinaryType, sha1, sha256, showProcess, showToast, showVar, sleep, slugify, sortBy, sortCallBack, stackSticky, str2html, str2unicode, sub, textCamelCase, textSplitCase, textTransferCase, throttle, timeSince, times, to, toBool, toFormData, toNum, toQueryString, toStr, toggleClass, transferCSVData, transferFileToBase64, transferIdCard, transferMoney, transferNumber, transferScanStr, transferSeconds, transferTemperature, trim, truncate, unicode2str, union, unique, uuid, versionUpgrade, waitUntil, watermark, xAjax, xFetch };
+export { ANIMALS, BASE_CHAR_LOW, BASE_CHAR_UP, BASE_NUMBER, BLOOD_GROUP, CODE_MSG, CONSTELLATION, CONTENT_TYPES, HttpMethod, ICONS, ID_CARD_PROVINCE, KEYBOARD_CODE, Loading, MAN, MONTHS, PY_MAPS, ROLES, Speaker, TRANSFER_STR, Toast, WEEKS, WOMAN, abs, add, addLongPressEvent, addSpace, all, any, appendLink, appendScript, arrObj2objArr, arrayFill, arrayShuffle, arraySort, average, banConsole, base64Decode, base64Encode, bindMoreClick, calcCron, calcDate, calcFontSize, catchPromise, changeURL, checkFileExt, checkIdCard, checkPassWordLevel, checkUpdate, checkVersion, clearCookies, closeFullscreen, closeWebSocket, compareDate, contains, copyToClipboard, countdown, data2Arr, data2Obj, dataTo, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitKeyboardEvent, empty, encrypt, every, exportFile, findChildren, findMaxKey, findParents, float, forEach, forceToStr, formatBytes, formatDate, formatJSON, formatNumber, formatRh, getAge, getAnimal, getBSColor, getBaseURL, getBloodGroup, getConstellation, getContentType, getCookie, getCryptoJS, getDateDifference, getDateList, getDateTime, getDayInYear, getDecodeStorage, getFingerprint, getFirstVar, getKey, getLastVar, getLocalArr, getLocalObj, getMonthDayCount, getMonthInfo, getPercentage, getPinYin, getQueryString, getRandColor, getRandDate, getRandIp, getRandNum, getRandStr, getRandVar, getScrollPercent, getSearchParams, getSelectText, getSessionArr, getSessionObj, getSortVar, getStyleByName, getTimeCode, getType, getUTCTime, getUserAgent, getV, getVarSize, getViewportSize, getWebSocket, getWeekInfo, globalError, hasKey, hasSpecialChar, hideToast, html2str, inRange, initNotification, initWebSocket, insertAfter, intersection, inversion, isAccount, isAppleDevice, isArr, isArrayBuffer, isBankCard, isBlob, isBool, isBrowser, isCarCode, isChinese, isCreditCode, isDarkMode, isDate, isDecimal, isElement, isEmail, isEnglish, isEqual, isEven, isFn, isHttp, isInteger, isIpAddress, isIpv4, isIpv6, isJSON, isMobile, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPromise, isQQ, isRhNegative, isStr, isStrongPassWord, isTel, isUndef, isUrl, isWeekday, jsonClone, keyBoardResize, leftJoin, localStorageGet, localStorageSet, log, logRunTime, markNumber, marquee, maskString, md5, ms, observeResource, offDefaultEvent, onClick2MoreClick, onResize, openFileSelect, openFullscreen, px2rem, qsParse, qsStringify, removeCookie, repeat, retry, rightJoin, rip, round, same, scrollToView, scrollXTo, scrollYTo, sendNotification, sendWsMsg, sessionStorageGet, sessionStorageSet, setCookie, setEncodeStorage, setEventListener, setIcon, setWsBinaryType, sha1, sha256, showProcess, showToast, showVar, sleep, slugify, sortBy, sortCallBack, stackSticky, str2html, str2unicode, sub, textCamelCase, textSplitCase, textTransferCase, throttle, timeSince, times, to, toBool, toFormData, toNum, toQueryString, toStr, toggleClass, transferCSVData, transferFileToBase64, transferIdCard, transferMoney, transferNumber, transferScanStr, transferSeconds, transferTemperature, trim, truncate, unicode2str, union, unique, uuid, versionUpgrade, waitUntil, watermark, xAjax, xFetch };

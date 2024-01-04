@@ -1,6 +1,6 @@
 js-xxx
 
-# js-xxx - v2.0.10
+# js-xxx - v2.0.11
 
 ## Table of contents
 
@@ -63,6 +63,7 @@ js-xxx
 - [checkFileExt](README.md#checkfileext)
 - [checkIdCard](README.md#checkidcard)
 - [checkPassWordLevel](README.md#checkpasswordlevel)
+- [checkUpdate](README.md#checkupdate)
 - [checkVersion](README.md#checkversion)
 - [clearCookies](README.md#clearcookies)
 - [closeFullscreen](README.md#closefullscreen)
@@ -209,6 +210,7 @@ js-xxx
 - [maskString](README.md#maskstring)
 - [md5](README.md#md5)
 - [ms](README.md#ms)
+- [observeResource](README.md#observeresource)
 - [offDefaultEvent](README.md#offdefaultevent)
 - [onClick2MoreClick](README.md#onclick2moreclick)
 - [onResize](README.md#onresize)
@@ -642,7 +644,7 @@ const hide = Toast('这是一个快速演示 Toast'); /// hide();
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
 | `msg` | `string` | `undefined` | 内容 |
-| `type` | ``"default"`` \| ``"info"`` \| ``"success"`` \| ``"warning"`` \| ``"error"`` \| ``"loading"`` | `'default'` | 类型 |
+| `type` | ``"error"`` \| ``"default"`` \| ``"info"`` \| ``"success"`` \| ``"warning"`` \| ``"loading"`` | `'default'` | 类型 |
 
 #### Returns
 
@@ -1338,6 +1340,38 @@ checkPassWordLevel('123456789654321.H'); /// 5
 #### Returns
 
 ``1`` \| ``-1`` \| ``2`` \| ``3`` \| ``4`` \| ``5``
+
+___
+
+### checkUpdate
+
+▸ **checkUpdate**(`callback`, `interval?`, `url?`): `Object`
+
+刷新页面或执行回调函数，用于检测服务端是否发布了更新
+
+**`Example`**
+
+```ts
+checkUpdate((type) => console.log({ type })); /// 检测服务端是否发布了更新，若更新或请求失败则执行回调。
+checkUpdate(); /// 检测服务端是否发布了更新，若更新或请求失败则刷新页面。
+checkUpdate((type) => window.location.reload(), 5 * 60 * 1000, '/index.js'); /// 检测服务端某个文件是否发布了更新，若更新或请求失败则刷新页面。
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `callback` | `any` | 文件更新时要执行的回调函数 |
+| `interval?` | `number` | 请求文件的时间间隔（毫秒） |
+| `url?` | `string` | 要检测的文件路径（默认为页面最后一个 JavaScript 文件） |
+
+#### Returns
+
+`Object`
+
+| Name | Type |
+| :------ | :------ |
+| `stop` | () => `void` |
 
 ___
 
@@ -3458,19 +3492,19 @@ ___
 
 ▸ **globalError**(`fn`, `notShowConsole?`): `void`
 
-全局捕获异常
+全局尽可能捕获异常
 
 **`Example`**
 
 ```ts
-globalError((message, source, lineNo, colNo, error) => console.log('全局捕获异常'), false); /// '全局捕获异常'
+globalError((error) => console.log('全局捕获异常'), false); /// '全局捕获异常'
 ```
 
 #### Parameters
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `fn` | `any` | `undefined` | (message, source, lineNo, colNo, error) |
+| `fn` | `any` | `undefined` | (error) |
 | `notShowConsole` | `boolean` | `true` | 是否不回显控制台 |
 
 #### Returns
@@ -5094,6 +5128,31 @@ ms(60000); /// '1m'
 #### Returns
 
 `string` \| `number`
+
+___
+
+### observeResource
+
+▸ **observeResource**(`callback?`): `void`
+
+监听资源找不到的情况，刷新页面。
+
+**`Example`**
+
+```ts
+observeResource(() => console.log('Refreshing')); /// 找不到资源时输出 "Refreshing"
+observeResource(); /// 找不到资源时刷新页面
+```
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `callback?` | `any` |
+
+#### Returns
+
+`void`
 
 ___
 

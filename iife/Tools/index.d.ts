@@ -70,14 +70,37 @@ export declare function debounce(fn: any, delay?: number): () => void;
  */
 export declare function throttle(fn: any, delay?: number): () => void;
 /**
- * 全局捕获异常
+ * 全局尽可能捕获异常
  * @example
- * globalError((message, source, lineNo, colNo, error) => console.log('全局捕获异常'), false); /// '全局捕获异常'
- * @param fn (message, source, lineNo, colNo, error)
+ * globalError((error) => console.log('全局捕获异常'), false); /// '全局捕获异常'
+ * @param fn (error)
  * @param notShowConsole 是否不回显控制台
  * @returns
  */
 export declare function globalError(fn: any, notShowConsole?: boolean): void;
+/**
+ * 监听资源找不到的情况，刷新页面。
+ * @example
+ * observeResource(() => console.log('Refreshing')); /// 找不到资源时输出 "Refreshing"
+ * observeResource(); /// 找不到资源时刷新页面
+ * @param callback
+ * @returns
+ */
+export declare function observeResource(callback?: any): void;
+/**
+ * 刷新页面或执行回调函数，用于检测服务端是否发布了更新
+ * @example
+ * checkUpdate((type) => console.log({ type })); /// 检测服务端是否发布了更新，若更新或请求失败则执行回调。
+ * checkUpdate(); /// 检测服务端是否发布了更新，若更新或请求失败则刷新页面。
+ * checkUpdate((type) => window.location.reload(), 5 * 60 * 1000, '/index.js'); /// 检测服务端某个文件是否发布了更新，若更新或请求失败则刷新页面。
+ * @param callback 文件更新时要执行的回调函数
+ * @param interval 请求文件的时间间隔（毫秒）
+ * @param url 要检测的文件路径（默认为页面最后一个 JavaScript 文件）
+ * @returns
+ */
+export declare function checkUpdate(callback: any, interval?: number, url?: string): {
+    stop: () => void;
+};
 /**
  * 获取随机数字
  * @example
