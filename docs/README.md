@@ -6924,7 +6924,7 @@ ___
 
 ▸ **useStateData**(`initialData`): (`value`: `any`) => `any`[]
 
-创建用于处理表单数据的钩子函数
+创建用于处理数据的钩子函数
 
 **`Example`**
 

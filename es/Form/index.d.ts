@@ -21,7 +21,7 @@ export declare function toFormData(obj: any, hasBrackets?: boolean, hasIndex?: b
  */
 export declare function toQueryString(obj: any, hasBrackets?: boolean, hasIndex?: boolean): URLSearchParams;
 /**
- * 创建用于处理表单数据的钩子函数
+ * 创建用于处理数据的钩子函数
  * @example
  * const [getData, setData, resetData] = useStateData({a: 1, b: 2, c: 3});
  * console.log(getData()); /// {a: 1, b: 2, c: 3}

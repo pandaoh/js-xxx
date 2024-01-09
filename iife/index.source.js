@@ -12343,7 +12343,7 @@ var $xxx = (function (exports) {
         return queryString;
     }
     /**
-     * 创建用于处理表单数据的钩子函数
+     * 创建用于处理数据的钩子函数
      * @example
      * const [getData, setData, resetData] = useStateData({a: 1, b: 2, c: 3});
      * console.log(getData()); /// {a: 1, b: 2, c: 3}
@@ -12359,7 +12359,7 @@ var $xxx = (function (exports) {
     function useStateData(initialData) {
         var data = initialData;
         /**
-         * 设置表单数据
+         * 设置数据
          * @param value 新的数据
          */
         function setData(value) {
@@ -12367,14 +12367,14 @@ var $xxx = (function (exports) {
             return data;
         }
         /**
-         * 重置表单数据为初始值
+         * 重置数据为初始值
          */
         function resetData() {
             data = initialData;
             return data;
         }
         /**
-         * 获取数据值
+         * 获取数据
          */
         function getData() {
             return data;
