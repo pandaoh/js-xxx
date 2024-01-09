@@ -233,6 +233,7 @@ export declare function dataTo(key: string, value: any): void;
  * toggleClass(myElement, ['active', 'disabled']); /// 给元素添加/删除 active/disabled 类
  * @param element 元素
  * @param className 类
+ * @returns
  */
 export declare function toggleClass(element: any, className: string | Array<string>): void;
 /**
@@ -241,6 +242,7 @@ export declare function toggleClass(element: any, className: string | Array<stri
  * const hideProcess = showProcess(myElement); /// 在元素中显示水滴加载动画
  * hideProcess(); /// 隐藏水滴加载动画
  * @param element 元素
+ * @returns
  */
 export declare function showProcess(element: any): () => void;
 /**
@@ -300,12 +302,23 @@ export declare function addLongPressEvent(element: any, longPressCallback: any, 
 /**
  * 触发某个键盘按键事件
  * @example
- * emitKeyboardEvent('keydown', 108); /// 小键盘回车事件
- * @param eventType 事件类型
- * @param keyCode 触发键盘 code
+ * emitKeyboardEvent('keydown', 108); // 小键盘回车事件
+ * emitKeyboardEvent('keydown', KEYBOARD_CODE.TAB); // TAB 事件
+ * @param eventType 事件类型，默认为 'keydown' 。
+ * @param keyCode 触发键盘 code，默认为 13 。
+ * @param element 目标元素，默认为 document.body 。
  * @returns
  */
-export declare function emitKeyboardEvent(eventType?: 'keydown' | 'keypress' | 'keyup', keyCode?: number): void;
+export declare function emitKeyboardEvent(eventType?: 'keydown' | 'keypress' | 'keyup', keyCode?: number, element?: HTMLElement | null): void;
+/**
+ * 触发元素事件
+ * @example
+ * emitEvent('click', document.getElementById('myButton')); // 触发元素点击事件
+ * @param eventType 事件类型，默认为 'click' 。
+ * @param element 目标元素，默认为 document.body
+ * @returns
+ */
+export declare function emitEvent(eventType?: string, element?: HTMLElement | null): void;
 /**
  * 禁用冲突事件，条码枪、关闭窗口快捷键等。
  * @example

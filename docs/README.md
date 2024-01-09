@@ -1,6 +1,6 @@
 js-xxx
 
-# js-xxx - v2.0.11
+# js-xxx - v2.1.0
 
 ## Table of contents
 
@@ -83,6 +83,7 @@ js-xxx
 - [div](README.md#div)
 - [download](README.md#download)
 - [downloadContent](README.md#downloadcontent)
+- [emitEvent](README.md#emitevent)
 - [emitKeyboardEvent](README.md#emitkeyboardevent)
 - [empty](README.md#empty)
 - [encrypt](README.md#encrypt)
@@ -277,12 +278,14 @@ js-xxx
 - [unicode2str](README.md#unicode2str)
 - [union](README.md#union)
 - [unique](README.md#unique)
+- [useStateData](README.md#usestatedata)
 - [uuid](README.md#uuid)
 - [versionUpgrade](README.md#versionupgrade)
 - [waitUntil](README.md#waituntil)
 - [watermark](README.md#watermark)
 - [xAjax](README.md#xajax)
 - [xFetch](README.md#xfetch)
+- [xTimer](README.md#xtimer)
 
 ## Type Aliases
 
@@ -1861,24 +1864,51 @@ downloadContent('test.json', JSON.stringify({content: 'test json'})); /// 下载
 
 ___
 
-### emitKeyboardEvent
+### emitEvent
 
-▸ **emitKeyboardEvent**(`eventType?`, `keyCode?`): `void`
+▸ **emitEvent**(`eventType?`, `element?`): `void`
 
-触发某个键盘按键事件
+触发元素事件
 
 **`Example`**
 
 ```ts
-emitKeyboardEvent('keydown', 108); /// 小键盘回车事件
+emitEvent('click', document.getElementById('myButton')); // 触发元素点击事件
 ```
 
 #### Parameters
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `eventType` | ``"keydown"`` \| ``"keypress"`` \| ``"keyup"`` | `'keydown'` | 事件类型 |
-| `keyCode` | `number` | `13` | 触发键盘 code |
+| `eventType` | `string` | `'click'` | 事件类型，默认为 'click' 。 |
+| `element` | ``null`` \| `HTMLElement` | `document.body` | 目标元素，默认为 document.body |
+
+#### Returns
+
+`void`
+
+___
+
+### emitKeyboardEvent
+
+▸ **emitKeyboardEvent**(`eventType?`, `keyCode?`, `element?`): `void`
+
+触发某个键盘按键事件
+
+**`Example`**
+
+```ts
+emitKeyboardEvent('keydown', 108); // 小键盘回车事件
+emitKeyboardEvent('keydown', KEYBOARD_CODE.TAB); // TAB 事件
+```
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `eventType` | ``"keydown"`` \| ``"keypress"`` \| ``"keyup"`` | `'keydown'` | 事件类型，默认为 'keydown' 。 |
+| `keyCode` | `number` | `13` | 触发键盘 code，默认为 13 。 |
+| `element` | ``null`` \| `HTMLElement` | `document.body` | 目标元素，默认为 document.body 。 |
 
 #### Returns
 
@@ -6890,6 +6920,37 @@ unique([{id: 1, value: 'hello'}, {id: 2, value: 'world'}, {id: 2, value: 'world'
 
 ___
 
+### useStateData
+
+▸ **useStateData**(`initialData`): (`value`: `any`) => `any`[]
+
+创建用于处理表单数据的钩子函数
+
+**`Example`**
+
+```ts
+const [getData, setData, resetData] = useStateData({a: 1, b: 2, c: 3});
+console.log(getData()); /// {a: 1, b: 2, c: 3}
+setData({ a : 10 }); /// {a: 10}
+resetData(); /// {a: 1, b: 2, c: 3}
+const [getData, setData, resetData] = useStateData('test');
+console.log(getData()); /// 'test'
+setData('test001'); /// 'test001'
+resetData(); /// 'test'
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `initialData` | `any` | 初始数据 |
+
+#### Returns
+
+(`value`: `any`) => `any`[]
+
+___
+
 ### uuid
 
 ▸ **uuid**(): `string`
@@ -7030,15 +7091,15 @@ ___
 
 ### xFetch
 
-▸ **xFetch**(`method`, `url`, `options?`): `any`
+▸ **xFetch**(`method`, `url`, `options?`): `Promise`<`any`\>
 
 fetch 简单封装
 
 **`Example`**
 
 ```ts
-xFetch('get', 'https://test.cn', { params: { test: 123, hello: 456 } }).then(res => res.json()).then(data => console.log(data)); /// fetchXPromise
-xFetch('POST', 'https://test.cn', { contentType: 'application/json', data: { test: 123 } }).catch(error => console.log(error)); /// fetchXPromise
+xFetch('get', 'https://api.uomg.com/api/rand.qinghua?x=1', { params: { format: 'json', hello: 456 } }).then(data => console.log(data)); /// fetchXPromise
+xFetch('POST', 'https://test.cn', { headers: { contentType: 'application/json' }, data: { test: 123 } }).catch(error => console.log(error)); /// fetchXPromise
 ```
 
 #### Parameters
@@ -7048,11 +7109,53 @@ xFetch('POST', 'https://test.cn', { contentType: 'application/json', data: { tes
 | `method` | `string` | Http Method |
 | `url` | `string` | 地址/链接 |
 | `options?` | `Object` | 请求配置 |
-| `options.contentType?` | `string` | - |
+| `options.callback?` | `any` | - |
 | `options.data?` | `any` | - |
+| `options.headers?` | `any` | - |
+| `options.isFile?` | `boolean` | - |
 | `options.params?` | `any` | - |
 | `options.raw?` | `boolean` | - |
 
 #### Returns
 
-`any`
+`Promise`<`any`\>
+
+___
+
+### xTimer
+
+▸ **xTimer**(`callback`, `time?`, `once?`, `immediate?`): () => `void`
+
+创建定时器
+
+**`Example`**
+
+```ts
+const cancelTimer = xTimer(() => {
+  console.log('Timer executed!');
+}, 1000, true, true);
+cancelTimer();
+const cancelIntervalTimer = xTimer(() => {
+  console.log('IntervalTimer executed!');
+}, 1000, false);
+cancelIntervalTimer();
+```
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `callback` | `any` | `undefined` | 回调函数 |
+| `time?` | `number` | `0` | 时间间隔（毫秒），默认为 1 。 |
+| `once?` | `boolean` | `false` | 是否为一次性定时器，默认为 false 。 |
+| `immediate?` | `boolean` | `false` | 是否立即执行回调函数，默认为 false 。 |
+
+#### Returns
+
+`fn`
+
+▸ (): `void`
+
+##### Returns
+
+`void`

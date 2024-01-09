@@ -581,4 +581,22 @@ export declare function getRandIp(): string;
  * @returns
  */
 export declare function watermark(dom: any, text: string, options?: any): void;
+/**
+ * 创建定时器
+ * @example
+ * const cancelTimer = xTimer(() => {
+ *   console.log('Timer executed!');
+ * }, 1000, true, true);
+ * cancelTimer();
+ * const cancelIntervalTimer = xTimer(() => {
+ *   console.log('IntervalTimer executed!');
+ * }, 1000, false);
+ * cancelIntervalTimer();
+ * @param callback 回调函数
+ * @param [time=1] 时间间隔（毫秒），默认为 1 。
+ * @param [once=false] 是否为一次性定时器，默认为 false 。
+ * @param [immediate=false] 是否立即执行回调函数，默认为 false 。
+ * @returns
+ */
+export declare function xTimer(callback: any, time?: number, once?: boolean, immediate?: boolean): () => void;
 //# sourceMappingURL=index.d.ts.map

@@ -10074,13 +10074,58 @@ function watermark(dom, text, options) {
     dom.style.backgroundColor = "rgba(0, 0, 0, ".concat(backgroundOpacity, ")");
     dom.style.backgroundPosition = 'center';
 }
+/**
+ * 创建定时器
+ * @example
+ * const cancelTimer = xTimer(() => {
+ *   console.log('Timer executed!');
+ * }, 1000, true, true);
+ * cancelTimer();
+ * const cancelIntervalTimer = xTimer(() => {
+ *   console.log('IntervalTimer executed!');
+ * }, 1000, false);
+ * cancelIntervalTimer();
+ * @param callback 回调函数
+ * @param [time=1] 时间间隔（毫秒），默认为 1 。
+ * @param [once=false] 是否为一次性定时器，默认为 false 。
+ * @param [immediate=false] 是否立即执行回调函数，默认为 false 。
+ * @returns
+ */
+function xTimer(callback, time, once, immediate) {
+    if (time === void 0) { time = 0; }
+    if (once === void 0) { once = false; }
+    if (immediate === void 0) { immediate = false; }
+    time = time !== null && time !== void 0 ? time : 0;
+    if (once) {
+        if (immediate) {
+            callback();
+        }
+        var timer_1 = setTimeout(function () {
+            callback();
+        }, time);
+        return function () {
+            clearTimeout(timer_1);
+        };
+    }
+    else {
+        if (immediate) {
+            callback();
+        }
+        var interval_1 = setInterval(function () {
+            callback();
+        }, time);
+        return function () {
+            clearInterval(interval_1);
+        };
+    }
+}
 // /**
 //  * -函数柯里化-
 //  * 是把接受多个参数的函数变换成接受一个单一参数(最初函数的第一个参数)的函数，并且返回接受余下的参数且返回结果的新函数的技术。
 //  * @noExample
 //  * curryIt(function (a, b, c) {return a + b + c})(1)(2)(3); /// 6
 //  * @param fn 函数
-//  * @returns
+//  * @noReturns
 //  */
 // exportNo function curryIt(fn: any) {
 //   // 获取预定义函数的参数个数
@@ -11896,6 +11941,7 @@ function dataTo(key, value) {
  * toggleClass(myElement, ['active', 'disabled']); /// 给元素添加/删除 active/disabled 类
  * @param element 元素
  * @param className 类
+ * @returns
  */
 function toggleClass(element, className) {
     if (Array.isArray(className)) {
@@ -11925,6 +11971,7 @@ function toggleClass(element, className) {
  * const hideProcess = showProcess(myElement); /// 在元素中显示水滴加载动画
  * hideProcess(); /// 隐藏水滴加载动画
  * @param element 元素
+ * @returns
  */
 function showProcess(element) {
     // 设置相对定位样式
@@ -12163,20 +12210,39 @@ function addLongPressEvent(element, longPressCallback, duration, clickCallback) 
 /**
  * 触发某个键盘按键事件
  * @example
- * emitKeyboardEvent('keydown', 108); /// 小键盘回车事件
- * @param eventType 事件类型
- * @param keyCode 触发键盘 code
+ * emitKeyboardEvent('keydown', 108); // 小键盘回车事件
+ * emitKeyboardEvent('keydown', KEYBOARD_CODE.TAB); // TAB 事件
+ * @param eventType 事件类型，默认为 'keydown' 。
+ * @param keyCode 触发键盘 code，默认为 13 。
+ * @param element 目标元素，默认为 document.body 。
  * @returns
  */
-function emitKeyboardEvent(eventType, keyCode) {
+function emitKeyboardEvent(eventType, keyCode, element) {
     if (eventType === void 0) { eventType = 'keydown'; }
     if (keyCode === void 0) { keyCode = 13; }
+    if (element === void 0) { element = document.body; }
     var myEvent = new KeyboardEvent(eventType, {
         bubbles: true,
         cancelable: true,
         keyCode: keyCode,
     });
-    document.body.dispatchEvent(myEvent);
+    element === null || element === void 0 ? void 0 : element.dispatchEvent(myEvent);
+}
+/**
+ * 触发元素事件
+ * @example
+ * emitEvent('click', document.getElementById('myButton')); // 触发元素点击事件
+ * @param eventType 事件类型，默认为 'click' 。
+ * @param element 目标元素，默认为 document.body
+ * @returns
+ */
+function emitEvent(eventType, element) {
+    if (eventType === void 0) { eventType = 'click'; }
+    if (element === void 0) { element = document.body; }
+    element === null || element === void 0 ? void 0 : element.dispatchEvent(new Event(eventType, {
+        bubbles: true,
+        cancelable: true,
+    }));
 }
 /**
  * 禁用冲突事件，条码枪、关闭窗口快捷键等。
@@ -12211,7 +12277,7 @@ function disableConflictEvent(event) {
  * @Author: HxB
  * @Date: 2022-04-26 15:53:02
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-24 13:38:31
+ * @LastEditTime: 2024-01-09 14:31:35
  * @Description: 表单相关
  * @FilePath: \js-xxx\src\Form\index.ts
  */
@@ -12272,6 +12338,45 @@ function toQueryString(obj, hasBrackets, hasIndex) {
         }
     });
     return queryString;
+}
+/**
+ * 创建用于处理表单数据的钩子函数
+ * @example
+ * const [getData, setData, resetData] = useStateData({a: 1, b: 2, c: 3});
+ * console.log(getData()); /// {a: 1, b: 2, c: 3}
+ * setData({ a : 10 }); /// {a: 10}
+ * resetData(); /// {a: 1, b: 2, c: 3}
+ * const [getData, setData, resetData] = useStateData('test');
+ * console.log(getData()); /// 'test'
+ * setData('test001'); /// 'test001'
+ * resetData(); /// 'test'
+ * @param initialData 初始数据
+ * @returns
+ */
+function useStateData(initialData) {
+    var data = initialData;
+    /**
+     * 设置表单数据
+     * @param value 新的数据
+     */
+    function setData(value) {
+        data = value;
+        return data;
+    }
+    /**
+     * 重置表单数据为初始值
+     */
+    function resetData() {
+        data = initialData;
+        return data;
+    }
+    /**
+     * 获取数据值
+     */
+    function getData() {
+        return data;
+    }
+    return [getData, setData, resetData];
 }
 
 /*
@@ -13126,6 +13231,7 @@ function getQueryString(url) {
  * changeURL('/users', false); /// url 变为 'https://test.com/users' (不覆盖历史记录，返回时会再显示 'https://test.com/user'，而上面的例子返回时是直接显示 'https://test.com/user' 的上一条。)
  * @param url URL 地址
  * @param replaceHistory 是否替换历史记录，默认为 true 。
+ * @returns
  */
 function changeURL(url, replaceHistory) {
     if (replaceHistory === void 0) { replaceHistory = true; }
@@ -13220,27 +13326,65 @@ function xAjax(method, url, options) {
 /**
  * fetch 简单封装
  * @example
- * xFetch('get', 'https://test.cn', { params: { test: 123, hello: 456 } }).then(res => res.json()).then(data => console.log(data)); /// fetchXPromise
- * xFetch('POST', 'https://test.cn', { contentType: 'application/json', data: { test: 123 } }).catch(error => console.log(error)); /// fetchXPromise
+ * xFetch('get', 'https://api.uomg.com/api/rand.qinghua?x=1', { params: { format: 'json', hello: 456 } }).then(data => console.log(data)); /// fetchXPromise
+ * xFetch('POST', 'https://test.cn', { headers: { contentType: 'application/json' }, data: { test: 123 } }).catch(error => console.log(error)); /// fetchXPromise
  * @param method Http Method
  * @param url 地址/链接
  * @param options 请求配置
  * @returns
  */
 function xFetch(method, url, options) {
-    var _a;
+    var _a, _b, _c, _d, _e, _f, _g, _h;
     if (options === null || options === void 0 ? void 0 : options.params) {
         url = "".concat(url).concat(url.includes('?') ? '&' : '?').concat(new URLSearchParams(options.params).toString());
     }
     if (options === null || options === void 0 ? void 0 : options.data) {
         options.data = !(options === null || options === void 0 ? void 0 : options.raw) && isObj(options.data) ? JSON.stringify(options.data) : options.data;
     }
+    var headers = (_a = options === null || options === void 0 ? void 0 : options.headers) !== null && _a !== void 0 ? _a : {};
+    var contentType = (_h = (_g = (_f = (_e = (_d = (_c = (_b = headers.contenttype) !== null && _b !== void 0 ? _b : headers.contentType) !== null && _c !== void 0 ? _c : headers.ContentType) !== null && _d !== void 0 ? _d : headers.Contenttype) !== null && _e !== void 0 ? _e : headers['content-type']) !== null && _f !== void 0 ? _f : headers['content-Type']) !== null && _g !== void 0 ? _g : headers === null || headers === void 0 ? void 0 : headers['Content-Type']) !== null && _h !== void 0 ? _h : headers === null || headers === void 0 ? void 0 : headers['Content-type'];
     return fetch(url, {
-        headers: {
-            'content-type': (_a = options === null || options === void 0 ? void 0 : options.contentType) !== null && _a !== void 0 ? _a : 'application/x-www-form-urlencoded;charset=UTF-8',
-        },
+        // 文件请求相关处理时需注意别写 content-type
+        headers: __assign(__assign({}, headers), (!contentType || (options === null || options === void 0 ? void 0 : options.isFile)
+            ? {}
+            : {
+                'content-type': contentType !== null && contentType !== void 0 ? contentType : 'application/x-www-form-urlencoded;charset=UTF-8',
+                // ?? 'application/json;charset=UTF-8',
+            })),
         method: method,
         body: options === null || options === void 0 ? void 0 : options.data,
+    })
+        .then(function (res) {
+        var type = res.headers.get('content-type');
+        if (type === null || type === void 0 ? void 0 : type.includes('json')) {
+            return res.json();
+        }
+        else if (type === null || type === void 0 ? void 0 : type.includes('text')) {
+            return res.text();
+        }
+        else if (type === null || type === void 0 ? void 0 : type.includes('form')) {
+            return res.formData();
+        }
+        else if ((type === null || type === void 0 ? void 0 : type.includes('video')) || (type === null || type === void 0 ? void 0 : type.includes('image'))) {
+            return res.blob();
+        }
+        else if (type === null || type === void 0 ? void 0 : type.includes('arrayBuffer')) {
+            return res.arrayBuffer();
+        }
+        else {
+            try {
+                if (options === null || options === void 0 ? void 0 : options.callback) {
+                    return options === null || options === void 0 ? void 0 : options.callback(res);
+                }
+                return res;
+            }
+            catch (e) {
+                return res;
+            }
+        }
+    })
+        .catch(function (error) {
+        return Promise.reject(error);
     });
 }
 // eslint-disable-next-line spellcheck/spell-checker
@@ -14364,4 +14508,4 @@ function getWebSocket() {
     return xWebSocket;
 }
 
-export { ANIMALS, BASE_CHAR_LOW, BASE_CHAR_UP, BASE_NUMBER, BLOOD_GROUP, CODE_MSG, CONSTELLATION, CONTENT_TYPES, HttpMethod, ICONS, ID_CARD_PROVINCE, KEYBOARD_CODE, Loading, MAN, MONTHS, PY_MAPS, ROLES, Speaker, TRANSFER_STR, Toast, WEEKS, WOMAN, abs, add, addLongPressEvent, addSpace, all, any, appendLink, appendScript, arrObj2objArr, arrayFill, arrayShuffle, arraySort, average, banConsole, base64Decode, base64Encode, bindMoreClick, calcCron, calcDate, calcFontSize, catchPromise, changeURL, checkFileExt, checkIdCard, checkPassWordLevel, checkUpdate, checkVersion, clearCookies, closeFullscreen, closeWebSocket, compareDate, contains, copyToClipboard, countdown, data2Arr, data2Obj, dataTo, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitKeyboardEvent, empty, encrypt, every, exportFile, findChildren, findMaxKey, findParents, float, forEach, forceToStr, formatBytes, formatDate, formatJSON, formatNumber, formatRh, getAge, getAnimal, getBSColor, getBaseURL, getBloodGroup, getConstellation, getContentType, getCookie, getCryptoJS, getDateDifference, getDateList, getDateTime, getDayInYear, getDecodeStorage, getFingerprint, getFirstVar, getKey, getLastVar, getLocalArr, getLocalObj, getMonthDayCount, getMonthInfo, getPercentage, getPinYin, getQueryString, getRandColor, getRandDate, getRandIp, getRandNum, getRandStr, getRandVar, getScrollPercent, getSearchParams, getSelectText, getSessionArr, getSessionObj, getSortVar, getStyleByName, getTimeCode, getType, getUTCTime, getUserAgent, getV, getVarSize, getViewportSize, getWebSocket, getWeekInfo, globalError, hasKey, hasSpecialChar, hideToast, html2str, inRange, initNotification, initWebSocket, insertAfter, intersection, inversion, isAccount, isAppleDevice, isArr, isArrayBuffer, isBankCard, isBlob, isBool, isBrowser, isCarCode, isChinese, isCreditCode, isDarkMode, isDate, isDecimal, isElement, isEmail, isEnglish, isEqual, isEven, isFn, isHttp, isInteger, isIpAddress, isIpv4, isIpv6, isJSON, isMobile, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPromise, isQQ, isRhNegative, isStr, isStrongPassWord, isTel, isUndef, isUrl, isWeekday, jsonClone, keyBoardResize, leftJoin, localStorageGet, localStorageSet, log, logRunTime, markNumber, marquee, maskString, md5, ms, observeResource, offDefaultEvent, onClick2MoreClick, onResize, openFileSelect, openFullscreen, px2rem, qsParse, qsStringify, removeCookie, repeat, retry, rightJoin, rip, round, same, scrollToView, scrollXTo, scrollYTo, sendNotification, sendWsMsg, sessionStorageGet, sessionStorageSet, setCookie, setEncodeStorage, setEventListener, setIcon, setWsBinaryType, sha1, sha256, showProcess, showToast, showVar, sleep, slugify, sortBy, sortCallBack, stackSticky, str2html, str2unicode, sub, textCamelCase, textSplitCase, textTransferCase, throttle, timeSince, times, to, toBool, toFormData, toNum, toQueryString, toStr, toggleClass, transferCSVData, transferFileToBase64, transferIdCard, transferMoney, transferNumber, transferScanStr, transferSeconds, transferTemperature, trim, truncate, unicode2str, union, unique, uuid, versionUpgrade, waitUntil, watermark, xAjax, xFetch };
+export { ANIMALS, BASE_CHAR_LOW, BASE_CHAR_UP, BASE_NUMBER, BLOOD_GROUP, CODE_MSG, CONSTELLATION, CONTENT_TYPES, HttpMethod, ICONS, ID_CARD_PROVINCE, KEYBOARD_CODE, Loading, MAN, MONTHS, PY_MAPS, ROLES, Speaker, TRANSFER_STR, Toast, WEEKS, WOMAN, abs, add, addLongPressEvent, addSpace, all, any, appendLink, appendScript, arrObj2objArr, arrayFill, arrayShuffle, arraySort, average, banConsole, base64Decode, base64Encode, bindMoreClick, calcCron, calcDate, calcFontSize, catchPromise, changeURL, checkFileExt, checkIdCard, checkPassWordLevel, checkUpdate, checkVersion, clearCookies, closeFullscreen, closeWebSocket, compareDate, contains, copyToClipboard, countdown, data2Arr, data2Obj, dataTo, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitEvent, emitKeyboardEvent, empty, encrypt, every, exportFile, findChildren, findMaxKey, findParents, float, forEach, forceToStr, formatBytes, formatDate, formatJSON, formatNumber, formatRh, getAge, getAnimal, getBSColor, getBaseURL, getBloodGroup, getConstellation, getContentType, getCookie, getCryptoJS, getDateDifference, getDateList, getDateTime, getDayInYear, getDecodeStorage, getFingerprint, getFirstVar, getKey, getLastVar, getLocalArr, getLocalObj, getMonthDayCount, getMonthInfo, getPercentage, getPinYin, getQueryString, getRandColor, getRandDate, getRandIp, getRandNum, getRandStr, getRandVar, getScrollPercent, getSearchParams, getSelectText, getSessionArr, getSessionObj, getSortVar, getStyleByName, getTimeCode, getType, getUTCTime, getUserAgent, getV, getVarSize, getViewportSize, getWebSocket, getWeekInfo, globalError, hasKey, hasSpecialChar, hideToast, html2str, inRange, initNotification, initWebSocket, insertAfter, intersection, inversion, isAccount, isAppleDevice, isArr, isArrayBuffer, isBankCard, isBlob, isBool, isBrowser, isCarCode, isChinese, isCreditCode, isDarkMode, isDate, isDecimal, isElement, isEmail, isEnglish, isEqual, isEven, isFn, isHttp, isInteger, isIpAddress, isIpv4, isIpv6, isJSON, isMobile, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPromise, isQQ, isRhNegative, isStr, isStrongPassWord, isTel, isUndef, isUrl, isWeekday, jsonClone, keyBoardResize, leftJoin, localStorageGet, localStorageSet, log, logRunTime, markNumber, marquee, maskString, md5, ms, observeResource, offDefaultEvent, onClick2MoreClick, onResize, openFileSelect, openFullscreen, px2rem, qsParse, qsStringify, removeCookie, repeat, retry, rightJoin, rip, round, same, scrollToView, scrollXTo, scrollYTo, sendNotification, sendWsMsg, sessionStorageGet, sessionStorageSet, setCookie, setEncodeStorage, setEventListener, setIcon, setWsBinaryType, sha1, sha256, showProcess, showToast, showVar, sleep, slugify, sortBy, sortCallBack, stackSticky, str2html, str2unicode, sub, textCamelCase, textSplitCase, textTransferCase, throttle, timeSince, times, to, toBool, toFormData, toNum, toQueryString, toStr, toggleClass, transferCSVData, transferFileToBase64, transferIdCard, transferMoney, transferNumber, transferScanStr, transferSeconds, transferTemperature, trim, truncate, unicode2str, union, unique, useStateData, uuid, versionUpgrade, waitUntil, watermark, xAjax, xFetch, xTimer };

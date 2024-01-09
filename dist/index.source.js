@@ -10080,13 +10080,58 @@
         dom.style.backgroundColor = "rgba(0, 0, 0, ".concat(backgroundOpacity, ")");
         dom.style.backgroundPosition = 'center';
     }
+    /**
+     * 创建定时器
+     * @example
+     * const cancelTimer = xTimer(() => {
+     *   console.log('Timer executed!');
+     * }, 1000, true, true);
+     * cancelTimer();
+     * const cancelIntervalTimer = xTimer(() => {
+     *   console.log('IntervalTimer executed!');
+     * }, 1000, false);
+     * cancelIntervalTimer();
+     * @param callback 回调函数
+     * @param [time=1] 时间间隔（毫秒），默认为 1 。
+     * @param [once=false] 是否为一次性定时器，默认为 false 。
+     * @param [immediate=false] 是否立即执行回调函数，默认为 false 。
+     * @returns
+     */
+    function xTimer(callback, time, once, immediate) {
+        if (time === void 0) { time = 0; }
+        if (once === void 0) { once = false; }
+        if (immediate === void 0) { immediate = false; }
+        time = time !== null && time !== void 0 ? time : 0;
+        if (once) {
+            if (immediate) {
+                callback();
+            }
+            var timer_1 = setTimeout(function () {
+                callback();
+            }, time);
+            return function () {
+                clearTimeout(timer_1);
+            };
+        }
+        else {
+            if (immediate) {
+                callback();
+            }
+            var interval_1 = setInterval(function () {
+                callback();
+            }, time);
+            return function () {
+                clearInterval(interval_1);
+            };
+        }
+    }
     // /**
     //  * -函数柯里化-
     //  * 是把接受多个参数的函数变换成接受一个单一参数(最初函数的第一个参数)的函数，并且返回接受余下的参数且返回结果的新函数的技术。
     //  * @noExample
     //  * curryIt(function (a, b, c) {return a + b + c})(1)(2)(3); /// 6
     //  * @param fn 函数
-    //  * @returns
+    //  * @noReturns
     //  */
     // exportNo function curryIt(fn: any) {
     //   // 获取预定义函数的参数个数
@@ -11902,6 +11947,7 @@
      * toggleClass(myElement, ['active', 'disabled']); /// 给元素添加/删除 active/disabled 类
      * @param element 元素
      * @param className 类
+     * @returns
      */
     function toggleClass(element, className) {
         if (Array.isArray(className)) {
@@ -11931,6 +11977,7 @@
      * const hideProcess = showProcess(myElement); /// 在元素中显示水滴加载动画
      * hideProcess(); /// 隐藏水滴加载动画
      * @param element 元素
+     * @returns
      */
     function showProcess(element) {
         // 设置相对定位样式
@@ -12169,20 +12216,39 @@
     /**
      * 触发某个键盘按键事件
      * @example
-     * emitKeyboardEvent('keydown', 108); /// 小键盘回车事件
-     * @param eventType 事件类型
-     * @param keyCode 触发键盘 code
+     * emitKeyboardEvent('keydown', 108); // 小键盘回车事件
+     * emitKeyboardEvent('keydown', KEYBOARD_CODE.TAB); // TAB 事件
+     * @param eventType 事件类型，默认为 'keydown' 。
+     * @param keyCode 触发键盘 code，默认为 13 。
+     * @param element 目标元素，默认为 document.body 。
      * @returns
      */
-    function emitKeyboardEvent(eventType, keyCode) {
+    function emitKeyboardEvent(eventType, keyCode, element) {
         if (eventType === void 0) { eventType = 'keydown'; }
         if (keyCode === void 0) { keyCode = 13; }
+        if (element === void 0) { element = document.body; }
         var myEvent = new KeyboardEvent(eventType, {
             bubbles: true,
             cancelable: true,
             keyCode: keyCode,
         });
-        document.body.dispatchEvent(myEvent);
+        element === null || element === void 0 ? void 0 : element.dispatchEvent(myEvent);
+    }
+    /**
+     * 触发元素事件
+     * @example
+     * emitEvent('click', document.getElementById('myButton')); // 触发元素点击事件
+     * @param eventType 事件类型，默认为 'click' 。
+     * @param element 目标元素，默认为 document.body
+     * @returns
+     */
+    function emitEvent(eventType, element) {
+        if (eventType === void 0) { eventType = 'click'; }
+        if (element === void 0) { element = document.body; }
+        element === null || element === void 0 ? void 0 : element.dispatchEvent(new Event(eventType, {
+            bubbles: true,
+            cancelable: true,
+        }));
     }
     /**
      * 禁用冲突事件，条码枪、关闭窗口快捷键等。
@@ -12217,7 +12283,7 @@
      * @Author: HxB
      * @Date: 2022-04-26 15:53:02
      * @LastEditors: DoubleAm
-     * @LastEditTime: 2023-08-24 13:38:31
+     * @LastEditTime: 2024-01-09 14:31:35
      * @Description: 表单相关
      * @FilePath: \js-xxx\src\Form\index.ts
      */
@@ -12278,6 +12344,45 @@
             }
         });
         return queryString;
+    }
+    /**
+     * 创建用于处理表单数据的钩子函数
+     * @example
+     * const [getData, setData, resetData] = useStateData({a: 1, b: 2, c: 3});
+     * console.log(getData()); /// {a: 1, b: 2, c: 3}
+     * setData({ a : 10 }); /// {a: 10}
+     * resetData(); /// {a: 1, b: 2, c: 3}
+     * const [getData, setData, resetData] = useStateData('test');
+     * console.log(getData()); /// 'test'
+     * setData('test001'); /// 'test001'
+     * resetData(); /// 'test'
+     * @param initialData 初始数据
+     * @returns
+     */
+    function useStateData(initialData) {
+        var data = initialData;
+        /**
+         * 设置表单数据
+         * @param value 新的数据
+         */
+        function setData(value) {
+            data = value;
+            return data;
+        }
+        /**
+         * 重置表单数据为初始值
+         */
+        function resetData() {
+            data = initialData;
+            return data;
+        }
+        /**
+         * 获取数据值
+         */
+        function getData() {
+            return data;
+        }
+        return [getData, setData, resetData];
     }
 
     /*
@@ -13132,6 +13237,7 @@
      * changeURL('/users', false); /// url 变为 'https://test.com/users' (不覆盖历史记录，返回时会再显示 'https://test.com/user'，而上面的例子返回时是直接显示 'https://test.com/user' 的上一条。)
      * @param url URL 地址
      * @param replaceHistory 是否替换历史记录，默认为 true 。
+     * @returns
      */
     function changeURL(url, replaceHistory) {
         if (replaceHistory === void 0) { replaceHistory = true; }
@@ -13226,27 +13332,65 @@
     /**
      * fetch 简单封装
      * @example
-     * xFetch('get', 'https://test.cn', { params: { test: 123, hello: 456 } }).then(res => res.json()).then(data => console.log(data)); /// fetchXPromise
-     * xFetch('POST', 'https://test.cn', { contentType: 'application/json', data: { test: 123 } }).catch(error => console.log(error)); /// fetchXPromise
+     * xFetch('get', 'https://api.uomg.com/api/rand.qinghua?x=1', { params: { format: 'json', hello: 456 } }).then(data => console.log(data)); /// fetchXPromise
+     * xFetch('POST', 'https://test.cn', { headers: { contentType: 'application/json' }, data: { test: 123 } }).catch(error => console.log(error)); /// fetchXPromise
      * @param method Http Method
      * @param url 地址/链接
      * @param options 请求配置
      * @returns
      */
     function xFetch(method, url, options) {
-        var _a;
+        var _a, _b, _c, _d, _e, _f, _g, _h;
         if (options === null || options === void 0 ? void 0 : options.params) {
             url = "".concat(url).concat(url.includes('?') ? '&' : '?').concat(new URLSearchParams(options.params).toString());
         }
         if (options === null || options === void 0 ? void 0 : options.data) {
             options.data = !(options === null || options === void 0 ? void 0 : options.raw) && isObj(options.data) ? JSON.stringify(options.data) : options.data;
         }
+        var headers = (_a = options === null || options === void 0 ? void 0 : options.headers) !== null && _a !== void 0 ? _a : {};
+        var contentType = (_h = (_g = (_f = (_e = (_d = (_c = (_b = headers.contenttype) !== null && _b !== void 0 ? _b : headers.contentType) !== null && _c !== void 0 ? _c : headers.ContentType) !== null && _d !== void 0 ? _d : headers.Contenttype) !== null && _e !== void 0 ? _e : headers['content-type']) !== null && _f !== void 0 ? _f : headers['content-Type']) !== null && _g !== void 0 ? _g : headers === null || headers === void 0 ? void 0 : headers['Content-Type']) !== null && _h !== void 0 ? _h : headers === null || headers === void 0 ? void 0 : headers['Content-type'];
         return fetch(url, {
-            headers: {
-                'content-type': (_a = options === null || options === void 0 ? void 0 : options.contentType) !== null && _a !== void 0 ? _a : 'application/x-www-form-urlencoded;charset=UTF-8',
-            },
+            // 文件请求相关处理时需注意别写 content-type
+            headers: __assign(__assign({}, headers), (!contentType || (options === null || options === void 0 ? void 0 : options.isFile)
+                ? {}
+                : {
+                    'content-type': contentType !== null && contentType !== void 0 ? contentType : 'application/x-www-form-urlencoded;charset=UTF-8',
+                    // ?? 'application/json;charset=UTF-8',
+                })),
             method: method,
             body: options === null || options === void 0 ? void 0 : options.data,
+        })
+            .then(function (res) {
+            var type = res.headers.get('content-type');
+            if (type === null || type === void 0 ? void 0 : type.includes('json')) {
+                return res.json();
+            }
+            else if (type === null || type === void 0 ? void 0 : type.includes('text')) {
+                return res.text();
+            }
+            else if (type === null || type === void 0 ? void 0 : type.includes('form')) {
+                return res.formData();
+            }
+            else if ((type === null || type === void 0 ? void 0 : type.includes('video')) || (type === null || type === void 0 ? void 0 : type.includes('image'))) {
+                return res.blob();
+            }
+            else if (type === null || type === void 0 ? void 0 : type.includes('arrayBuffer')) {
+                return res.arrayBuffer();
+            }
+            else {
+                try {
+                    if (options === null || options === void 0 ? void 0 : options.callback) {
+                        return options === null || options === void 0 ? void 0 : options.callback(res);
+                    }
+                    return res;
+                }
+                catch (e) {
+                    return res;
+                }
+            }
+        })
+            .catch(function (error) {
+            return Promise.reject(error);
         });
     }
     // eslint-disable-next-line spellcheck/spell-checker
@@ -14436,6 +14580,7 @@
     exports.div = div;
     exports.download = download;
     exports.downloadContent = downloadContent;
+    exports.emitEvent = emitEvent;
     exports.emitKeyboardEvent = emitKeyboardEvent;
     exports.empty = empty;
     exports.encrypt = encrypt;
@@ -14630,12 +14775,14 @@
     exports.unicode2str = unicode2str;
     exports.union = union;
     exports.unique = unique;
+    exports.useStateData = useStateData;
     exports.uuid = uuid;
     exports.versionUpgrade = versionUpgrade;
     exports.waitUntil = waitUntil;
     exports.watermark = watermark;
     exports.xAjax = xAjax;
     exports.xFetch = xFetch;
+    exports.xTimer = xTimer;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

@@ -10,7 +10,7 @@
 * 请参考并遵循 `JSDoc` 开发规范，必须要有**函数说明、参数解释与范例**，`@example` 的内容需换行且为真实代码，禁止使用伪代码，可参考已存在的函数注释。
 * 统一使用 `export function functionName() {}` 导出函数，不要使用 `export const functionName = function() {}` 或者`箭头函数`。
 * 函数范例结果统一使用 ` /// `，前后都需**空格**，函数内注释统一**放在代码上一行**，`禁止放在代码行末尾`。
-* 确保每次提交时 `src` 目录下的 `export function` 的数目与 `@example` 的数目一致。
+* 确保每次提交时 `src` 目录下的 `export function` 的数目与 `@example`/`@returns` 的数目一致。
 * 提交前在 `package.json` 中修改[版本号](https://docs-1257794070.cos-website.ap-nanjing.myqcloud.com/#/git/?id=tags)，并执行 `npm run build && npm run doc` or `npm run push:before`
 * 开发时使用 `npm run lint` 可进行代码检查
 * `push` 到 `publish` 分支即可发布新版本。

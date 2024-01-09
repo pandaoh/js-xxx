@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-10-10 16:52:13
+ * @LastEditTime: 2024-01-09 14:59:01
  * @Description: 利用 dom 的一些函数
  * @FilePath: \js-xxx\src\Dom\index.ts
  */
@@ -626,6 +626,7 @@ export function dataTo(key: string, value: any): void {
  * toggleClass(myElement, ['active', 'disabled']); /// 给元素添加/删除 active/disabled 类
  * @param element 元素
  * @param className 类
+ * @returns
  */
 export function toggleClass(element: any, className: string | Array<string>) {
   if (Array.isArray(className)) {
@@ -657,6 +658,7 @@ export function toggleClass(element: any, className: string | Array<string>) {
  * const hideProcess = showProcess(myElement); /// 在元素中显示水滴加载动画
  * hideProcess(); /// 隐藏水滴加载动画
  * @param element 元素
+ * @returns
  */
 export function showProcess(element: any) {
   // 设置相对定位样式
@@ -882,18 +884,41 @@ export function addLongPressEvent(element: any, longPressCallback: any, duration
 /**
  * 触发某个键盘按键事件
  * @example
- * emitKeyboardEvent('keydown', 108); /// 小键盘回车事件
- * @param eventType 事件类型
- * @param keyCode 触发键盘 code
+ * emitKeyboardEvent('keydown', 108); // 小键盘回车事件
+ * emitKeyboardEvent('keydown', KEYBOARD_CODE.TAB); // TAB 事件
+ * @param eventType 事件类型，默认为 'keydown' 。
+ * @param keyCode 触发键盘 code，默认为 13 。
+ * @param element 目标元素，默认为 document.body 。
  * @returns
  */
-export function emitKeyboardEvent(eventType: 'keydown' | 'keypress' | 'keyup' = 'keydown', keyCode = 13): void {
+export function emitKeyboardEvent(
+  eventType: 'keydown' | 'keypress' | 'keyup' = 'keydown',
+  keyCode = 13,
+  element: HTMLElement | null = document.body,
+): void {
   const myEvent = new KeyboardEvent(eventType, {
     bubbles: true,
     cancelable: true,
     keyCode: keyCode,
   });
-  document.body.dispatchEvent(myEvent);
+  element?.dispatchEvent(myEvent);
+}
+
+/**
+ * 触发元素事件
+ * @example
+ * emitEvent('click', document.getElementById('myButton')); // 触发元素点击事件
+ * @param eventType 事件类型，默认为 'click' 。
+ * @param element 目标元素，默认为 document.body
+ * @returns
+ */
+export function emitEvent(eventType = 'click', element: HTMLElement | null = document.body): void {
+  element?.dispatchEvent(
+    new Event(eventType, {
+      bubbles: true,
+      cancelable: true,
+    }),
+  );
 }
 
 /**

@@ -20,4 +20,19 @@ export declare function toFormData(obj: any, hasBrackets?: boolean, hasIndex?: b
  * @returns
  */
 export declare function toQueryString(obj: any, hasBrackets?: boolean, hasIndex?: boolean): URLSearchParams;
+/**
+ * 创建用于处理表单数据的钩子函数
+ * @example
+ * const [getData, setData, resetData] = useStateData({a: 1, b: 2, c: 3});
+ * console.log(getData()); /// {a: 1, b: 2, c: 3}
+ * setData({ a : 10 }); /// {a: 10}
+ * resetData(); /// {a: 1, b: 2, c: 3}
+ * const [getData, setData, resetData] = useStateData('test');
+ * console.log(getData()); /// 'test'
+ * setData('test001'); /// 'test001'
+ * resetData(); /// 'test'
+ * @param initialData 初始数据
+ * @returns
+ */
+export declare function useStateData(initialData: any): ((value: any) => any)[];
 //# sourceMappingURL=index.d.ts.map

@@ -1,8 +1,9 @@
+/* eslint-disable indent */
 /*
  * @Author: HxB
  * @Date: 2022-04-26 14:15:37
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-12-29 11:12:17
+ * @LastEditTime: 2024-01-09 15:01:01
  * @Description: 请求相关函数
  * @FilePath: \js-xxx\src\Request\index.ts
  */
@@ -140,6 +141,7 @@ export function getQueryString(url?: string): any {
  * changeURL('/users', false); /// url 变为 'https://test.com/users' (不覆盖历史记录，返回时会再显示 'https://test.com/user'，而上面的例子返回时是直接显示 'https://test.com/user' 的上一条。)
  * @param url URL 地址
  * @param replaceHistory 是否替换历史记录，默认为 true 。
+ * @returns
  */
 export function changeURL(url: string, replaceHistory = true) {
   if (replaceHistory) {
@@ -236,8 +238,8 @@ export function xAjax(
 /**
  * fetch 简单封装
  * @example
- * xFetch('get', 'https://test.cn', { params: { test: 123, hello: 456 } }).then(res => res.json()).then(data => console.log(data)); /// fetchXPromise
- * xFetch('POST', 'https://test.cn', { contentType: 'application/json', data: { test: 123 } }).catch(error => console.log(error)); /// fetchXPromise
+ * xFetch('get', 'https://api.uomg.com/api/rand.qinghua?x=1', { params: { format: 'json', hello: 456 } }).then(data => console.log(data)); /// fetchXPromise
+ * xFetch('POST', 'https://test.cn', { headers: { contentType: 'application/json' }, data: { test: 123 } }).catch(error => console.log(error)); /// fetchXPromise
  * @param method Http Method
  * @param url 地址/链接
  * @param options 请求配置
@@ -250,22 +252,67 @@ export function xFetch(
     data?: any;
     params?: any;
     raw?: boolean;
-    contentType?: string;
+    isFile?: boolean;
+    callback?: any;
+    headers?: any;
   },
-): any {
+): Promise<any> {
   if (options?.params) {
     url = `${url}${url.includes('?') ? '&' : '?'}${new URLSearchParams(options.params).toString()}`;
   }
   if (options?.data) {
     options.data = !options?.raw && isObj(options.data) ? JSON.stringify(options.data) : options.data;
   }
+  const headers = options?.headers ?? {};
+  const contentType =
+    headers.contenttype ??
+    headers.contentType ??
+    headers.ContentType ??
+    headers.Contenttype ??
+    headers['content-type'] ??
+    headers['content-Type'] ??
+    headers?.['Content-Type'] ??
+    headers?.['Content-type'];
   return fetch(url, {
+    // 文件请求相关处理时需注意别写 content-type
     headers: {
-      'content-type': options?.contentType ?? 'application/x-www-form-urlencoded;charset=UTF-8',
+      ...headers,
+      ...(!contentType || options?.isFile
+        ? {}
+        : {
+            'content-type': contentType ?? 'application/x-www-form-urlencoded;charset=UTF-8',
+            // ?? 'application/json;charset=UTF-8',
+          }),
     },
     method: method,
     body: options?.data,
-  });
+  })
+    .then((res: any) => {
+      const type = res.headers.get('content-type');
+      if (type?.includes('json')) {
+        return res.json();
+      } else if (type?.includes('text')) {
+        return res.text();
+      } else if (type?.includes('form')) {
+        return res.formData();
+      } else if (type?.includes('video') || type?.includes('image')) {
+        return res.blob();
+      } else if (type?.includes('arrayBuffer')) {
+        return res.arrayBuffer();
+      } else {
+        try {
+          if (options?.callback) {
+            return options?.callback(res);
+          }
+          return res;
+        } catch (e) {
+          return res;
+        }
+      }
+    })
+    .catch((error: any) => {
+      return Promise.reject(error);
+    });
 }
 
 // eslint-disable-next-line spellcheck/spell-checker

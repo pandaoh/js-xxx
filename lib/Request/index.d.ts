@@ -58,6 +58,7 @@ export declare function getQueryString(url?: string): any;
  * changeURL('/users', false); /// url 变为 'https://test.com/users' (不覆盖历史记录，返回时会再显示 'https://test.com/user'，而上面的例子返回时是直接显示 'https://test.com/user' 的上一条。)
  * @param url URL 地址
  * @param replaceHistory 是否替换历史记录，默认为 true 。
+ * @returns
  */
 export declare function changeURL(url: string, replaceHistory?: boolean): void;
 /**
@@ -93,8 +94,8 @@ export declare function xAjax(method: string | HttpMethod, url: string, options?
 /**
  * fetch 简单封装
  * @example
- * xFetch('get', 'https://test.cn', { params: { test: 123, hello: 456 } }).then(res => res.json()).then(data => console.log(data)); /// fetchXPromise
- * xFetch('POST', 'https://test.cn', { contentType: 'application/json', data: { test: 123 } }).catch(error => console.log(error)); /// fetchXPromise
+ * xFetch('get', 'https://api.uomg.com/api/rand.qinghua?x=1', { params: { format: 'json', hello: 456 } }).then(data => console.log(data)); /// fetchXPromise
+ * xFetch('POST', 'https://test.cn', { headers: { contentType: 'application/json' }, data: { test: 123 } }).catch(error => console.log(error)); /// fetchXPromise
  * @param method Http Method
  * @param url 地址/链接
  * @param options 请求配置
@@ -104,8 +105,10 @@ export declare function xFetch(method: string | HttpMethod, url: string, options
     data?: any;
     params?: any;
     raw?: boolean;
-    contentType?: string;
-}): any;
+    isFile?: boolean;
+    callback?: any;
+    headers?: any;
+}): Promise<any>;
 /**
  * 获取常见的 content-type
  * @example

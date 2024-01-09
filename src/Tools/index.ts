@@ -4,7 +4,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-04 15:51:36
+ * @LastEditTime: 2024-01-09 15:04:50
  * @Description: 工具函数
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
@@ -1774,13 +1774,60 @@ export function watermark(dom: any, text: string, options: any = {}) {
   dom.style.backgroundPosition = 'center';
 }
 
+/**
+ * 创建定时器
+ * @example
+ * const cancelTimer = xTimer(() => {
+ *   console.log('Timer executed!');
+ * }, 1000, true, true);
+ * cancelTimer();
+ * const cancelIntervalTimer = xTimer(() => {
+ *   console.log('IntervalTimer executed!');
+ * }, 1000, false);
+ * cancelIntervalTimer();
+ * @param callback 回调函数
+ * @param [time=1] 时间间隔（毫秒），默认为 1 。
+ * @param [once=false] 是否为一次性定时器，默认为 false 。
+ * @param [immediate=false] 是否立即执行回调函数，默认为 false 。
+ * @returns
+ */
+export function xTimer(callback: any, time = 0, once = false, immediate = false) {
+  time = time ?? 0;
+
+  if (once) {
+    if (immediate) {
+      callback();
+    }
+
+    const timer = setTimeout(() => {
+      callback();
+    }, time);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  } else {
+    if (immediate) {
+      callback();
+    }
+
+    const interval = setInterval(() => {
+      callback();
+    }, time);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }
+}
+
 // /**
 //  * -函数柯里化-
 //  * 是把接受多个参数的函数变换成接受一个单一参数(最初函数的第一个参数)的函数，并且返回接受余下的参数且返回结果的新函数的技术。
 //  * @noExample
 //  * curryIt(function (a, b, c) {return a + b + c})(1)(2)(3); /// 6
 //  * @param fn 函数
-//  * @returns
+//  * @noReturns
 //  */
 // exportNo function curryIt(fn: any) {
 //   // 获取预定义函数的参数个数

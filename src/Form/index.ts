@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:53:02
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-24 13:38:31
+ * @LastEditTime: 2024-01-09 14:31:35
  * @Description: 表单相关
  * @FilePath: \js-xxx\src\Form\index.ts
  */
@@ -60,4 +60,48 @@ export function toQueryString(obj: any, hasBrackets = false, hasIndex = false): 
     }
   });
   return queryString;
+}
+
+/**
+ * 创建用于处理表单数据的钩子函数
+ * @example
+ * const [getData, setData, resetData] = useStateData({a: 1, b: 2, c: 3});
+ * console.log(getData()); /// {a: 1, b: 2, c: 3}
+ * setData({ a : 10 }); /// {a: 10}
+ * resetData(); /// {a: 1, b: 2, c: 3}
+ * const [getData, setData, resetData] = useStateData('test');
+ * console.log(getData()); /// 'test'
+ * setData('test001'); /// 'test001'
+ * resetData(); /// 'test'
+ * @param initialData 初始数据
+ * @returns
+ */
+export function useStateData(initialData: any) {
+  let data = initialData;
+
+  /**
+   * 设置表单数据
+   * @param value 新的数据
+   */
+  function setData(value: any) {
+    data = value;
+    return data;
+  }
+
+  /**
+   * 重置表单数据为初始值
+   */
+  function resetData() {
+    data = initialData;
+    return data;
+  }
+
+  /**
+   * 获取数据值
+   */
+  function getData() {
+    return data;
+  }
+
+  return [getData, setData, resetData];
 }
