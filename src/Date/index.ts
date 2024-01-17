@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:54:41
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-24 15:36:44
+ * @LastEditTime: 2024-01-17 15:06:12
  * @Description: 时间相关函数
  * @FilePath: \js-xxx\src\Date\index.ts
  */
@@ -23,7 +23,9 @@ export function formatDate(
   fmt = 'yyyy-mm-dd hh:ii:ss',
   weeks: any[] = [7, 1, 2, 3, 4, 5, 6],
 ): string {
-  if (getType(date) === 'string') {
+  // @ts-ignore
+  if (getType(date) === 'string' && !date?.includes('T')) {
+    // 排除 UTC 时间
     // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
     // @ts-ignore
     date = date.replace(/-/g, '/');
@@ -62,7 +64,8 @@ export function formatDate(
  * @returns
  */
 export function calcDate(date: string | Date, calcStrOrArr: string | string[]): Date {
-  if (getType(date) === 'string') {
+  // @ts-ignore
+  if (getType(date) === 'string' && !date?.includes('T')) {
     // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
     // @ts-ignore
     date = date.replace(/-/g, '/');
@@ -143,12 +146,14 @@ export function getDateDifference(
     | 'SECOND'
     | 'SECONDS' = 'all',
 ): number | { days: number; hours: number; minutes: number; seconds: number } {
-  if (getType(oldDate) === 'string') {
+  // @ts-ignore
+  if (getType(oldDate) === 'string' && !oldDate?.includes('T')) {
     // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
     // @ts-ignore
     oldDate = oldDate.replace(/-/g, '/');
   }
-  if (getType(nowDate) === 'string') {
+  // @ts-ignore
+  if (getType(nowDate) === 'string' && !nowDate?.includes('T')) {
     // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
     // @ts-ignore
     nowDate = nowDate.replace(/-/g, '/');
@@ -190,7 +195,8 @@ export function getDateDifference(
  * @returns
  */
 export function timeSince(date?: string | Date, longAgo = false, formatter = 'yyyy-mm-dd hh:ii:ss') {
-  if (getType(date) === 'string') {
+  // @ts-ignore
+  if (getType(date) === 'string' && !date?.includes('T')) {
     // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
     // @ts-ignore
     date = date.replace(/-/g, '/');
@@ -238,7 +244,8 @@ export function timeSince(date?: string | Date, longAgo = false, formatter = 'yy
  * @returns
  */
 export function isWeekday(date?: string | Date): boolean {
-  if (getType(date) === 'string') {
+  // @ts-ignore
+  if (getType(date) === 'string' && !date?.includes('T')) {
     // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
     // @ts-ignore
     date = date.replace(/-/g, '/');
@@ -255,7 +262,8 @@ export function isWeekday(date?: string | Date): boolean {
  * @returns
  */
 export function getDayInYear(date?: string | Date): number {
-  if (getType(date) === 'string') {
+  // @ts-ignore
+  if (getType(date) === 'string' && !date?.includes('T')) {
     // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
     // @ts-ignore
     date = date.replace(/-/g, '/');
@@ -283,7 +291,8 @@ export function getDateList(
   type: 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second' = 'day',
   date: any = new Date(),
 ): string[] {
-  if (getType(date) === 'string') {
+  // @ts-ignore
+  if (getType(date) === 'string' && !date?.includes('T')) {
     // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
     // @ts-ignore
     date = date.replace(/-/g, '/');
@@ -318,7 +327,8 @@ export function getDateList(
  * @returns
  */
 export function getDateTime(date?: string | Date): number {
-  if (getType(date) === 'string') {
+  // @ts-ignore
+  if (getType(date) === 'string' && !date?.includes('T')) {
     // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
     // @ts-ignore
     date = date.replace(/-/g, '/');
@@ -338,12 +348,14 @@ export function getDateTime(date?: string | Date): number {
  * @returns
  */
 export function compareDate(dateA: any, dateB?: any): -1 | 1 | 0 {
-  if (getType(dateA) === 'string') {
+  // @ts-ignore
+  if (getType(dateA) === 'string' && !dateA?.includes('T')) {
     // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
     // @ts-ignore
     dateA = dateA.replace(/-/g, '/');
   }
-  if (getType(dateB) === 'string') {
+  // @ts-ignore
+  if (getType(dateB) === 'string' && !dateB?.includes('T')) {
     // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
     // @ts-ignore
     dateB = dateB.replace(/-/g, '/');
@@ -437,7 +449,8 @@ export function transferSeconds(duration: number, returnObj = false): string | a
  * @returns
  */
 export function getMonthDayCount(date?: string | Date): number {
-  if (getType(date) === 'string') {
+  // @ts-ignore
+  if (getType(date) === 'string' && !date?.includes('T')) {
     // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
     // @ts-ignore
     date = date.replace(/-/g, '/');

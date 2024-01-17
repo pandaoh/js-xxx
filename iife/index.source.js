@@ -10936,7 +10936,9 @@ var $xxx = (function (exports) {
     function formatDate(date, fmt, weeks) {
         if (fmt === void 0) { fmt = 'yyyy-mm-dd hh:ii:ss'; }
         if (weeks === void 0) { weeks = [7, 1, 2, 3, 4, 5, 6]; }
-        if (getType(date) === 'string') {
+        // @ts-ignore
+        if (getType(date) === 'string' && !(date === null || date === void 0 ? void 0 : date.includes('T'))) {
+            // 排除 UTC 时间
             // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
             // @ts-ignore
             date = date.replace(/-/g, '/');
@@ -10974,7 +10976,8 @@ var $xxx = (function (exports) {
      * @returns
      */
     function calcDate(date, calcStrOrArr) {
-        if (getType(date) === 'string') {
+        // @ts-ignore
+        if (getType(date) === 'string' && !(date === null || date === void 0 ? void 0 : date.includes('T'))) {
             // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
             // @ts-ignore
             date = date.replace(/-/g, '/');
@@ -11034,12 +11037,14 @@ var $xxx = (function (exports) {
      */
     function getDateDifference(oldDate, nowDate, type) {
         if (type === void 0) { type = 'all'; }
-        if (getType(oldDate) === 'string') {
+        // @ts-ignore
+        if (getType(oldDate) === 'string' && !(oldDate === null || oldDate === void 0 ? void 0 : oldDate.includes('T'))) {
             // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
             // @ts-ignore
             oldDate = oldDate.replace(/-/g, '/');
         }
-        if (getType(nowDate) === 'string') {
+        // @ts-ignore
+        if (getType(nowDate) === 'string' && !(nowDate === null || nowDate === void 0 ? void 0 : nowDate.includes('T'))) {
             // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
             // @ts-ignore
             nowDate = nowDate.replace(/-/g, '/');
@@ -11082,7 +11087,8 @@ var $xxx = (function (exports) {
     function timeSince(date, longAgo, formatter) {
         if (longAgo === void 0) { longAgo = false; }
         if (formatter === void 0) { formatter = 'yyyy-mm-dd hh:ii:ss'; }
-        if (getType(date) === 'string') {
+        // @ts-ignore
+        if (getType(date) === 'string' && !(date === null || date === void 0 ? void 0 : date.includes('T'))) {
             // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
             // @ts-ignore
             date = date.replace(/-/g, '/');
@@ -11129,7 +11135,8 @@ var $xxx = (function (exports) {
      * @returns
      */
     function isWeekday(date) {
-        if (getType(date) === 'string') {
+        // @ts-ignore
+        if (getType(date) === 'string' && !(date === null || date === void 0 ? void 0 : date.includes('T'))) {
             // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
             // @ts-ignore
             date = date.replace(/-/g, '/');
@@ -11145,7 +11152,8 @@ var $xxx = (function (exports) {
      * @returns
      */
     function getDayInYear(date) {
-        if (getType(date) === 'string') {
+        // @ts-ignore
+        if (getType(date) === 'string' && !(date === null || date === void 0 ? void 0 : date.includes('T'))) {
             // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
             // @ts-ignore
             date = date.replace(/-/g, '/');
@@ -11170,7 +11178,8 @@ var $xxx = (function (exports) {
     function getDateList(n, type, date) {
         if (type === void 0) { type = 'day'; }
         if (date === void 0) { date = new Date(); }
-        if (getType(date) === 'string') {
+        // @ts-ignore
+        if (getType(date) === 'string' && !(date === null || date === void 0 ? void 0 : date.includes('T'))) {
             // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
             // @ts-ignore
             date = date.replace(/-/g, '/');
@@ -11204,7 +11213,8 @@ var $xxx = (function (exports) {
      * @returns
      */
     function getDateTime(date) {
-        if (getType(date) === 'string') {
+        // @ts-ignore
+        if (getType(date) === 'string' && !(date === null || date === void 0 ? void 0 : date.includes('T'))) {
             // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
             // @ts-ignore
             date = date.replace(/-/g, '/');
@@ -11223,12 +11233,14 @@ var $xxx = (function (exports) {
      * @returns
      */
     function compareDate(dateA, dateB) {
-        if (getType(dateA) === 'string') {
+        // @ts-ignore
+        if (getType(dateA) === 'string' && !(dateA === null || dateA === void 0 ? void 0 : dateA.includes('T'))) {
             // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
             // @ts-ignore
             dateA = dateA.replace(/-/g, '/');
         }
-        if (getType(dateB) === 'string') {
+        // @ts-ignore
+        if (getType(dateB) === 'string' && !(dateB === null || dateB === void 0 ? void 0 : dateB.includes('T'))) {
             // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
             // @ts-ignore
             dateB = dateB.replace(/-/g, '/');
@@ -11323,7 +11335,8 @@ var $xxx = (function (exports) {
      * @returns
      */
     function getMonthDayCount(date) {
-        if (getType(date) === 'string') {
+        // @ts-ignore
+        if (getType(date) === 'string' && !(date === null || date === void 0 ? void 0 : date.includes('T'))) {
             // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
             // @ts-ignore
             date = date.replace(/-/g, '/');
