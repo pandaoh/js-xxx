@@ -48,6 +48,20 @@ export declare function sub(sub1: number | string, sub2: number | string): numbe
  */
 export declare function average(...args: any[]): number;
 /**
+ * 计算所有数
+ * @example
+ * calculate('+', 1, 2, 3, 4); /// 10
+ * calculate('+', 1, 2, 3, undefined); /// 6
+ * calculate('*', 1, 2, 3); /// 6
+ * calculate('*', 1, 2, 3, undefined); /// 0
+ * calculate('-', 10, 2, 3); /// 5
+ * calculate('/', 10, 2, 2); /// 2.5
+ * @param operator 操作符
+ * @param args 需要计算的数...
+ * @returns
+ */
+export declare function calculate(operator: string, ...args: any[]): number;
+/**
  * 获取绝对值
  * @example
  * abs(-1); /// 1

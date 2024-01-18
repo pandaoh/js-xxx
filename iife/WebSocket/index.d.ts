@@ -44,6 +44,29 @@ export declare function closeWebSocket(): boolean;
  */
 export declare function setWsBinaryType(binaryType?: any): boolean;
 /**
+ * buffer to object
+ * @example
+ * const _protoBuffer = _proto.lookupType('MonitorMessage');
+ * const obj = buf2obj(event.data, _protoBuffer);
+ * console.log(obj);
+ * @param data buffer 数据
+ * @param transfer 转换器
+ * @returns
+ */
+export declare function buf2obj(data: any, transfer: any): any;
+/**
+ * object to buffer
+ * @example
+ * const _protoBuffer = _proto.lookupType('MonitorMessage');
+ * const bufferData = obj2buf(obj, _protoBuffer);
+ * console.log(bufferData);
+ * webSocket.send(bufferData);
+ * @param data object 数据
+ * @param transfer 转换器
+ * @returns
+ */
+export declare function obj2buf(data: any, transfer: any): any;
+/**
  * 获取 websocket 实例
  * @example
  * getWebSocket(); /// [websocket object]

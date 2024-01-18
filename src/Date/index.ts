@@ -2,35 +2,43 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:54:41
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-17 15:06:12
+ * @LastEditTime: 2024-01-17 18:19:50
  * @Description: 时间相关函数
  * @FilePath: \js-xxx\src\Date\index.ts
  */
 import { trim } from '@/String';
-import { getType } from '@/Types';
+import { getType, isInvalidDate } from '@/Types';
 
 /**
  * 时间格式化
  * @example
  * formatDate(new Date(), 'yyyy-mm-dd hh:ii:ss Q S W', ['星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']); /// '2022-04-26 11:33:53 2 123 星期二'
+ * // @before-2.2.0
+ * formatDate(); /// '当前时间 yyyy-mm-dd hh:ii:ss'
+ * // @since-2.2.0
+ * formatDate(); /// undefined
  * @param date 时间
  * @param fmt 格式化模板 'yyyy-mm-dd hh:ii:ss'
  * @param weeks 星期对应数组 [7, 1, 2, 3, 4, 5, 6]
  * @returns
  */
-export function formatDate(
-  date?: string | Date,
-  fmt = 'yyyy-mm-dd hh:ii:ss',
-  weeks: any[] = [7, 1, 2, 3, 4, 5, 6],
-): string {
+export function formatDate(date?: any, fmt = 'yyyy-mm-dd hh:ii:ss', weeks: any[] = [7, 1, 2, 3, 4, 5, 6]) {
+  // @since 2.2.0
+  if (!date) {
+    return undefined;
+  }
+  const originDate = date;
   // @ts-ignore
   if (getType(date) === 'string' && !date?.includes('T')) {
     // 排除 UTC 时间
     // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
     // @ts-ignore
-    date = date.replace(/-/g, '/');
+    date = originDate.replace(/-/g, '/');
   }
-  date = date ? new Date(date) : new Date();
+  date = new Date(date);
+  if (isInvalidDate(date)) {
+    return originDate;
+  }
   const o: any = {
     'm+': date.getMonth() + 1,
     'd+': date.getDate(),
@@ -71,6 +79,9 @@ export function calcDate(date: string | Date, calcStrOrArr: string | string[]): 
     date = date.replace(/-/g, '/');
   }
   let oldDate = date ? new Date(date) : new Date();
+  if (!calcStrOrArr) {
+    return oldDate;
+  }
   if (Array.isArray(calcStrOrArr)) {
     calcStrOrArr.forEach((calcStr) => {
       oldDate = calcDate(oldDate, calcStr);
@@ -299,7 +310,7 @@ export function getDateList(
   }
   // 包含当天
   let myDate = calcDate(new Date(date), `${n > 0 ? n - 1 : n + 1} ${type}`);
-  const dateArray = [];
+  const dateArray: string[] = [];
   let dateTemp;
   const flag = n > 0 ? -1 : 1;
   const formatters = {
@@ -312,7 +323,7 @@ export function getDateList(
   };
   const tempN = Math.abs(n);
   for (let i = 0; i < tempN; i++) {
-    dateTemp = formatDate(myDate, formatters[type]);
+    dateTemp = formatDate(myDate, formatters[type]) ?? '-';
     dateArray.push(dateTemp);
     myDate = calcDate(dateTemp, `${flag} ${type}`);
   }

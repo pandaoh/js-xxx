@@ -2,23 +2,40 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:05:14
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-09-21 17:56:02
+ * @LastEditTime: 2024-01-18 11:08:52
  * @Description: 对象相关函数
  * @FilePath: \js-xxx\src\Object\index.ts
  */
+
+import { getKey } from '@/Tools';
 
 /**
  * 获取多级对象值
  * @example
  * getV('默认值', {name: {children: [123, 456]}}, 'name', 'children', '0'); /// 123
+ * getV('默认值', {name: {children: [123, 456]}}, 'name.children.0'); /// 123
+ * getV('默认值', {name: {children: [123, 456]}}, 'name.children.xxx'); /// 默认值
+ * getV('默认值', { name: {children: [123, 456], '[]': ['test']} }, 'name.[].0'); /// 'test'
+ * getV('默认值', { name: {children: [123, 456], '[]': ['test']} }, 'name', '[]', 0); /// 'test'
  * @param defaultResult 默认值
  * @param args 需要获取的多级 rest 参数
  * @returns
  */
 export function getV(defaultResult: any, ...args: any): any {
+  if (args?.length == 2 && args[1]?.includes('.')) {
+    const [obj, propPath] = args;
+    const propKeys = propPath.split('.');
+
+    let value = obj;
+    for (const key of propKeys) {
+      value = hasKey(value, key) ? value[key] : defaultResult;
+    }
+
+    return value ?? defaultResult;
+  }
   return args.length >= 2
     ? // eslint-disable-next-line no-prototype-builtins, indent
-      args.reduce((a: any, b: any) => (hasKey(a, b) ? a[b] : defaultResult))
+      args.reduce((a: any, b: any) => (hasKey(a, b) ? a[b] ?? defaultResult : defaultResult))
     : defaultResult;
 }
 
@@ -172,4 +189,50 @@ export function findMaxKey(objArray: any[]) {
   } else {
     return [];
   }
+}
+
+/**
+ * 转化为 Select 数据，至少有 label/value/key 字段。
+ * @example
+ * arr2select([{ id: 1, name: 'A' }, { id: 2, name: 'B' }], { label: 'name', value: 'id' });
+ * /// [{ label: 'A', value: 1, key: 'selectKey-Random1' }, { label: 'B', value: 2, key: 'selectKey-Random2' }]
+ * arr2select([{ id: 1, name: 'A' }, { id: 2, name: 'B' }], { value: 'id', key: 'UNDEFINED' });
+ * /// [{ label: 1, value: 1, key: 1 }, { label: 2, value: 2, key: 2 }]
+ * arr2select([{ data: { id: 1, name: 'A' }, key: 'test1' }, { data: { id: 2, name: 'B' }, key: 'test2' }], { value: 'data.id', key: 'key', label: 'data.name' });
+ * /// [{ value: 1, label: "A", key: "test1" }, { value: 2, label: "B", key: "test2" }]
+ * @param arr 数组
+ * @param options 配置 { label?: 'label', value: 'value', key?: 'key' }
+ * @returns 转换后的 Select 数据数组
+ */
+export function arr2select(arr: any[], options: { label?: string; value: string; key?: string }): any[] {
+  if (!arr || !arr.length) {
+    return [];
+  }
+  const { label, value, key } = options;
+  const selectData: any[] = [];
+
+  for (const item of arr) {
+    const selectItem: any = {};
+
+    const valueData = getV(null, item, value);
+    selectItem.value = valueData;
+
+    // 设置 label 字段
+    if (label) {
+      selectItem.label = getV(valueData, item, label);
+    } else {
+      selectItem.label = valueData;
+    }
+
+    // 设置 key 字段
+    if (key) {
+      selectItem.key = getV(valueData, item, key);
+    } else {
+      selectItem.key = getKey(5, 'selectKey');
+    }
+
+    selectData.push(selectItem);
+  }
+
+  return selectData;
 }

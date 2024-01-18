@@ -1,8 +1,9 @@
+/* eslint-disable spellcheck/spell-checker */
 /*
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-23 14:11:20
+ * @LastEditTime: 2024-01-18 09:57:02
  * @Description: websocket
  * @FilePath: \js-xxx\src\WebSocket\index.ts
  */
@@ -73,11 +74,17 @@ export function initWebSocket(options: {
   };
 
   // @ts-ignore
+  xWebSocket.options = options;
+  // @ts-ignore
   xWebSocket.sendWsMsg = sendWsMsg;
   // @ts-ignore
   xWebSocket.closeWebSocket = closeWebSocket;
   // @ts-ignore
   xWebSocket.setWsBinaryType = setWsBinaryType;
+  // @ts-ignore
+  xWebSocket.buf2obj = buf2obj;
+  // @ts-ignore
+  xWebSocket.obk2buf = obj2buf;
 
   // xWebSocket.readyState == 1 正常状态
   return xWebSocket;
@@ -96,8 +103,12 @@ export function sendWsMsg(message: any, isJSONEncode = false): boolean {
   if (!xWebSocket) {
     return false;
   }
-  xWebSocket.send(isJSONEncode ? JSON.stringify(message) : message);
-  return true;
+  if (xWebSocket.readyState == 1) {
+    xWebSocket.send(isJSONEncode ? JSON.stringify(message) : message);
+    return true;
+  } else {
+    return false;
+  }
 }
 
 /**
@@ -131,7 +142,54 @@ export function setWsBinaryType(binaryType: any = 'arraybuffer'): boolean {
 
 // eslint-disable-next-line spellcheck/spell-checker
 // 使用 grpc 或 protobuf 记得 buffer2obj 和 obj2buffer
-// 使用专用工具进行封装与解析
+// 使用专用工具（pbjs/protoc/protobufjs-cli）进行封装与解析
+
+/**
+ * buffer to object
+ * @example
+ * const _protoBuffer = _proto.lookupType('MonitorMessage');
+ * const obj = buf2obj(event.data, _protoBuffer);
+ * console.log(obj);
+ * @param data buffer 数据
+ * @param transfer 转换器
+ * @returns
+ */
+export function buf2obj(data: any, transfer: any): any {
+  try {
+    const result = transfer.toObject(transfer.decode(new Uint8Array(data)), {
+      enums: String, // enums as string names
+      longs: String, // longs as strings (requires long.js)
+      bytes: String, // bytes as base64 encoded strings
+      defaults: true, // includes default values
+      arrays: true, // populates empty arrays (repeated fields) even if defaults=false
+      objects: true, // populates empty objects (map fields) even if defaults=false
+      oneofs: true,
+    });
+    return result;
+  } catch (e) {
+    return data;
+  }
+}
+
+/**
+ * object to buffer
+ * @example
+ * const _protoBuffer = _proto.lookupType('MonitorMessage');
+ * const bufferData = obj2buf(obj, _protoBuffer);
+ * console.log(bufferData);
+ * webSocket.send(bufferData);
+ * @param data object 数据
+ * @param transfer 转换器
+ * @returns
+ */
+export function obj2buf(data: any, transfer: any): any {
+  try {
+    const result = transfer.encode(transfer.create(data ?? {})).finish();
+    return result;
+  } catch (e) {
+    return data;
+  }
+}
 
 /**
  * 获取 websocket 实例

@@ -4,7 +4,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-09 15:04:50
+ * @LastEditTime: 2024-01-18 09:31:16
  * @Description: 工具函数
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
@@ -15,6 +15,7 @@ import {
   BASE_CHAR_LOW,
   BASE_CHAR_UP,
   BASE_NUMBER,
+  BS_COLORS,
   CONSTELLATION,
   ID_CARD_PROVINCE,
   MAN,
@@ -472,26 +473,8 @@ export function getBSColor(key = 'default'): string {
     'grey',
   ];
   key = keyList.includes(key) ? key : 'others';
-  const colors: any = {
-    dark: '#343a40',
-    black: '#343a40',
-    light: '#f8f9fa',
-    white: '#f8f9fa',
-    info: '#17a2b8',
-    cyan: '#17a2b8',
-    success: '#28a745',
-    green: '#28a745',
-    warning: '#ffc107',
-    yellow: '#ffc107',
-    danger: '#dc3545',
-    red: '#dc3545',
-    primary: '#007bff',
-    blue: '#007bff',
-    secondary: '#6c757d',
-    default: '#6c757d',
-    grey: '#6c757d',
-  };
-  return colors[key];
+  // @ts-ignore
+  return BS_COLORS[key];
 }
 
 /**

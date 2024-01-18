@@ -2,6 +2,10 @@
  * 获取多级对象值
  * @example
  * getV('默认值', {name: {children: [123, 456]}}, 'name', 'children', '0'); /// 123
+ * getV('默认值', {name: {children: [123, 456]}}, 'name.children.0'); /// 123
+ * getV('默认值', {name: {children: [123, 456]}}, 'name.children.xxx'); /// 默认值
+ * getV('默认值', { name: {children: [123, 456], '[]': ['test']} }, 'name.[].0'); /// 'test'
+ * getV('默认值', { name: {children: [123, 456], '[]': ['test']} }, 'name', '[]', 0); /// 'test'
  * @param defaultResult 默认值
  * @param args 需要获取的多级 rest 参数
  * @returns
@@ -58,4 +62,22 @@ export declare function every(collection: any, callback?: any): boolean;
  * @returns
  */
 export declare function findMaxKey(objArray: any[]): never[];
+/**
+ * 转化为 Select 数据，至少有 label/value/key 字段。
+ * @example
+ * arr2select([{ id: 1, name: 'A' }, { id: 2, name: 'B' }], { label: 'name', value: 'id' });
+ * /// [{ label: 'A', value: 1, key: 'selectKey-Random1' }, { label: 'B', value: 2, key: 'selectKey-Random2' }]
+ * arr2select([{ id: 1, name: 'A' }, { id: 2, name: 'B' }], { value: 'id', key: 'UNDEFINED' });
+ * /// [{ label: 1, value: 1, key: 1 }, { label: 2, value: 2, key: 2 }]
+ * arr2select([{ data: { id: 1, name: 'A' }, key: 'test1' }, { data: { id: 2, name: 'B' }, key: 'test2' }], { value: 'data.id', key: 'key', label: 'data.name' });
+ * /// [{ value: 1, label: "A", key: "test1" }, { value: 2, label: "B", key: "test2" }]
+ * @param arr 数组
+ * @param options 配置 { label?: 'label', value: 'value', key?: 'key' }
+ * @returns 转换后的 Select 数据数组
+ */
+export declare function arr2select(arr: any[], options: {
+    label?: string;
+    value: string;
+    key?: string;
+}): any[];
 //# sourceMappingURL=index.d.ts.map

@@ -391,6 +391,56 @@ export const BLOOD_GROUP = {
 
 /**
  * @const
+ * 血型基础信息
+ */
+export const BLOOD_GROUP_INFO: {
+  [key: string]: {
+    value: string;
+    label: string;
+    color: string;
+    lower: string;
+    upper: string;
+  };
+} = {
+  A: {
+    value: 'A',
+    label: 'A型',
+    color: '#1890FF',
+    lower: 'a',
+    upper: 'A',
+  },
+  B: {
+    value: 'B',
+    label: 'B型',
+    color: '#36AE7C',
+    lower: 'b',
+    upper: 'B',
+  },
+  O: {
+    value: 'O',
+    label: 'O型',
+    color: '#E64848',
+    lower: 'o',
+    upper: 'O',
+  },
+  AB: {
+    value: 'AB',
+    label: 'AB型',
+    color: '#A575F2',
+    lower: 'a',
+    upper: 'A',
+  },
+  unknown: {
+    value: 'unknown',
+    label: '未知',
+    color: '#CB9D83',
+    lower: 'unknown',
+    upper: 'UNKNOWN',
+  },
+};
+
+/**
+ * @const
  * 角色管理对象
  */
 export const ROLES = {
@@ -466,6 +516,30 @@ export const BASE_CHAR_UP = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
  * 进制转换基础数据
  */
 export const TRANSFER_STR = BASE_NUMBER + BASE_CHAR_LOW + BASE_CHAR_UP + '_@';
+
+/**
+ * @const
+ * 颜色数据
+ */
+export const BS_COLORS = {
+  dark: '#343a40',
+  black: '#343a40',
+  light: '#f8f9fa',
+  white: '#f8f9fa',
+  info: '#17a2b8',
+  cyan: '#17a2b8',
+  success: '#28a745',
+  green: '#28a745',
+  warning: '#ffc107',
+  yellow: '#ffc107',
+  danger: '#dc3545',
+  red: '#dc3545',
+  primary: '#007bff',
+  blue: '#007bff',
+  secondary: '#6c757d',
+  default: '#6c757d',
+  grey: '#6c757d',
+};
 
 /**
  * @const

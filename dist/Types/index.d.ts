@@ -75,6 +75,17 @@ export declare function isBool(value: any): boolean;
  */
 export declare function isDate(value: any): boolean;
 /**
+ * 检查是否 Invalid Date 类型
+ * @example
+ * isInvalidDate(new Date()); /// false
+ * isInvalidDate(null); /// false
+ * isInvalidDate(undefined); /// true
+ * isInvalidDate(new Date('invalid date')); /// true
+ * @param date 值
+ * @returns
+ */
+export declare function isInvalidDate(date: any): boolean;
+/**
  * 检查是否字符串类型
  * @example
  * isStr('test'); /// true

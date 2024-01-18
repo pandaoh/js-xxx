@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 16:24:34
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-24 17:42:51
+ * @LastEditTime: 2024-01-18 09:23:54
  * @Description: 数学常用函数
  * @FilePath: \js-xxx\src\Math\index.ts
  */
@@ -133,9 +133,63 @@ export function average(...args: any[]) {
   let sum = 0;
   const len = args.length;
 
-  for (let i = 0; i < len; i++) sum = add(sum, args[i]);
+  for (let i = 0; i < len; i++) {
+    const d = Number(args[i] ?? 0);
+    sum = add(sum, isNaN(d) ? 0 : d);
+  }
 
   return args.length ? div(sum, len) : 0;
+}
+
+/**
+ * 计算所有数
+ * @example
+ * calculate('+', 1, 2, 3, 4); /// 10
+ * calculate('+', 1, 2, 3, undefined); /// 6
+ * calculate('*', 1, 2, 3); /// 6
+ * calculate('*', 1, 2, 3, undefined); /// 0
+ * calculate('-', 10, 2, 3); /// 5
+ * calculate('/', 10, 2, 2); /// 2.5
+ * @param operator 操作符
+ * @param args 需要计算的数...
+ * @returns
+ */
+export function calculate(operator: string, ...args: any[]) {
+  let res = operator === '*' ? 1 : 0;
+  const len = args.length;
+  if (!len) {
+    return 0;
+  }
+  let i = 0;
+  if (operator === '-' || operator === '/') {
+    res = Number(args[0] ?? 0);
+    i++;
+  }
+
+  const defaultValue = 0;
+  for (i; i < len; i++) {
+    const d = Number(args[i] ?? defaultValue);
+    const operand = isNaN(d) ? defaultValue : d;
+    switch (operator) {
+      case '+':
+        res = add(res, operand);
+        break;
+      case '-':
+        res = sub(res, operand);
+        break;
+      case '*':
+        res = times(res, operand);
+        break;
+      case '/':
+        res = div(res, operand);
+        break;
+      default:
+        res = add(res, operand);
+        break;
+    }
+  }
+
+  return res;
 }
 
 /**

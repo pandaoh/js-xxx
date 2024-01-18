@@ -128,6 +128,19 @@ export declare const BLOOD_GROUP: {
 };
 /**
  * @const
+ * 血型基础信息
+ */
+export declare const BLOOD_GROUP_INFO: {
+    [key: string]: {
+        value: string;
+        label: string;
+        color: string;
+        lower: string;
+        upper: string;
+    };
+};
+/**
+ * @const
  * 角色管理对象
  */
 export declare const ROLES: {
@@ -164,6 +177,29 @@ export declare const BASE_CHAR_UP = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
  * 进制转换基础数据
  */
 export declare const TRANSFER_STR: string;
+/**
+ * @const
+ * 颜色数据
+ */
+export declare const BS_COLORS: {
+    dark: string;
+    black: string;
+    light: string;
+    white: string;
+    info: string;
+    cyan: string;
+    success: string;
+    green: string;
+    warning: string;
+    yellow: string;
+    danger: string;
+    red: string;
+    primary: string;
+    blue: string;
+    secondary: string;
+    default: string;
+    grey: string;
+};
 /**
  * @const
  * ICONS 通用小图标

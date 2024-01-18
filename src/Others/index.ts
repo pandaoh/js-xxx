@@ -12,6 +12,7 @@ import { formatDate } from '@/Date';
 import { isUrl } from '@/String';
 import { download } from '@/Dom';
 import { getContentType } from '@/Request';
+import { BLOOD_GROUP_INFO } from '@/Data';
 
 function _isValidCronField(field: any, min: any, max: any): boolean {
   const regex = new RegExp('^\\d+|\\*/\\d+|[\\d,-]+/[\\d,-]+$');
@@ -335,52 +336,7 @@ export function getBloodGroup(bloodGroup: string): {
 } {
   const keyList = ['A', 'a', 'B', 'b', 'O', 'o', 'AB', 'ab'];
   bloodGroup = keyList.includes(bloodGroup) ? bloodGroup.toUpperCase() : 'unknown';
-  const bloodGroups: {
-    [key: string]: {
-      value: string;
-      label: string;
-      color: string;
-      lower: string;
-      upper: string;
-    };
-  } = {
-    A: {
-      value: 'A',
-      label: 'A型',
-      color: '#1890FF',
-      lower: 'a',
-      upper: 'A',
-    },
-    B: {
-      value: 'B',
-      label: 'B型',
-      color: '#36AE7C',
-      lower: 'b',
-      upper: 'B',
-    },
-    O: {
-      value: 'O',
-      label: 'O型',
-      color: '#E64848',
-      lower: 'o',
-      upper: 'O',
-    },
-    AB: {
-      value: 'AB',
-      label: 'AB型',
-      color: '#A575F2',
-      lower: 'a',
-      upper: 'A',
-    },
-    unknown: {
-      value: 'unknown',
-      label: '未知',
-      color: '#CB9D83',
-      lower: 'unknown',
-      upper: 'UNKNOWN',
-    },
-  };
-  return bloodGroups[bloodGroup];
+  return BLOOD_GROUP_INFO[bloodGroup];
 }
 
 /**

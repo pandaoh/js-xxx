@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-28 14:35:36
+ * @LastEditTime: 2024-01-17 18:09:40
  * @Description: 类型校验等函数
  * @FilePath: \js-xxx\src\Types\index.ts
  */
@@ -123,6 +123,20 @@ export function isBool(value: any): boolean {
  */
 export function isDate(value: any): boolean {
   return getType(value) === 'date';
+}
+
+/**
+ * 检查是否 Invalid Date 类型
+ * @example
+ * isInvalidDate(new Date()); /// false
+ * isInvalidDate(null); /// false
+ * isInvalidDate(undefined); /// true
+ * isInvalidDate(new Date('invalid date')); /// true
+ * @param date 值
+ * @returns
+ */
+export function isInvalidDate(date: any) {
+  return isNaN(new Date(date).getTime());
 }
 
 /**

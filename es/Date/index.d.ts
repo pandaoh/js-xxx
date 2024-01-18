@@ -2,12 +2,16 @@
  * 时间格式化
  * @example
  * formatDate(new Date(), 'yyyy-mm-dd hh:ii:ss Q S W', ['星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']); /// '2022-04-26 11:33:53 2 123 星期二'
+ * // @before-2.2.0
+ * formatDate(); /// '当前时间 yyyy-mm-dd hh:ii:ss'
+ * // @since-2.2.0
+ * formatDate(); /// undefined
  * @param date 时间
  * @param fmt 格式化模板 'yyyy-mm-dd hh:ii:ss'
  * @param weeks 星期对应数组 [7, 1, 2, 3, 4, 5, 6]
  * @returns
  */
-export declare function formatDate(date?: string | Date, fmt?: string, weeks?: any[]): string;
+export declare function formatDate(date?: any, fmt?: string, weeks?: any[]): any;
 /**
  * 时间计算
  * @example
@@ -44,7 +48,7 @@ export declare function getDateDifference(oldDate: string | Date, nowDate?: stri
  * @param formatter 正常显示时的时间显示格式
  * @returns
  */
-export declare function timeSince(date?: string | Date, longAgo?: boolean, formatter?: string): string;
+export declare function timeSince(date?: string | Date, longAgo?: boolean, formatter?: string): any;
 /**
  * 检查所提供的日期是否为工作日
  * @example

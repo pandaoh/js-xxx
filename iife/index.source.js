@@ -108,7 +108,7 @@ var $xxx = (function (exports) {
      * @Author: HxB
      * @Date: 2022-04-26 14:10:35
      * @LastEditors: DoubleAm
-     * @LastEditTime: 2023-08-28 14:35:36
+     * @LastEditTime: 2024-01-17 18:09:40
      * @Description: 类型校验等函数
      * @FilePath: \js-xxx\src\Types\index.ts
      */
@@ -224,6 +224,19 @@ var $xxx = (function (exports) {
      */
     function isDate(value) {
         return getType(value) === 'date';
+    }
+    /**
+     * 检查是否 Invalid Date 类型
+     * @example
+     * isInvalidDate(new Date()); /// false
+     * isInvalidDate(null); /// false
+     * isInvalidDate(undefined); /// true
+     * isInvalidDate(new Date('invalid date')); /// true
+     * @param date 值
+     * @returns
+     */
+    function isInvalidDate(date) {
+        return isNaN$1(new Date(date).getTime());
     }
     /**
      * 检查是否字符串类型
@@ -367,7 +380,7 @@ var $xxx = (function (exports) {
      * @Author: HxB
      * @Date: 2022-04-26 11:52:01
      * @LastEditors: DoubleAm
-     * @LastEditTime: 2023-12-15 18:30:28
+     * @LastEditTime: 2024-01-18 10:34:15
      * @Description: 数组常用函数
      * @FilePath: \js-xxx\src\Array\index.ts
      */
@@ -7899,6 +7912,47 @@ var $xxx = (function (exports) {
     };
     /**
      * @const
+     * 血型基础信息
+     */
+    var BLOOD_GROUP_INFO = {
+        A: {
+            value: 'A',
+            label: 'A型',
+            color: '#1890FF',
+            lower: 'a',
+            upper: 'A',
+        },
+        B: {
+            value: 'B',
+            label: 'B型',
+            color: '#36AE7C',
+            lower: 'b',
+            upper: 'B',
+        },
+        O: {
+            value: 'O',
+            label: 'O型',
+            color: '#E64848',
+            lower: 'o',
+            upper: 'O',
+        },
+        AB: {
+            value: 'AB',
+            label: 'AB型',
+            color: '#A575F2',
+            lower: 'a',
+            upper: 'A',
+        },
+        unknown: {
+            value: 'unknown',
+            label: '未知',
+            color: '#CB9D83',
+            lower: 'unknown',
+            upper: 'UNKNOWN',
+        },
+    };
+    /**
+     * @const
      * 角色管理对象
      */
     var ROLES = {
@@ -7969,6 +8023,29 @@ var $xxx = (function (exports) {
      * 进制转换基础数据
      */
     var TRANSFER_STR = BASE_NUMBER + BASE_CHAR_LOW + BASE_CHAR_UP + '_@';
+    /**
+     * @const
+     * 颜色数据
+     */
+    var BS_COLORS = {
+        dark: '#343a40',
+        black: '#343a40',
+        light: '#f8f9fa',
+        white: '#f8f9fa',
+        info: '#17a2b8',
+        cyan: '#17a2b8',
+        success: '#28a745',
+        green: '#28a745',
+        warning: '#ffc107',
+        yellow: '#ffc107',
+        danger: '#dc3545',
+        red: '#dc3545',
+        primary: '#007bff',
+        blue: '#007bff',
+        secondary: '#6c757d',
+        default: '#6c757d',
+        grey: '#6c757d',
+    };
     /**
      * @const
      * ICONS 通用小图标
@@ -8831,26 +8908,8 @@ var $xxx = (function (exports) {
             'grey',
         ];
         key = keyList.includes(key) ? key : 'others';
-        var colors = {
-            dark: '#343a40',
-            black: '#343a40',
-            light: '#f8f9fa',
-            white: '#f8f9fa',
-            info: '#17a2b8',
-            cyan: '#17a2b8',
-            success: '#28a745',
-            green: '#28a745',
-            warning: '#ffc107',
-            yellow: '#ffc107',
-            danger: '#dc3545',
-            red: '#dc3545',
-            primary: '#007bff',
-            blue: '#007bff',
-            secondary: '#6c757d',
-            default: '#6c757d',
-            grey: '#6c757d',
-        };
-        return colors[key];
+        // @ts-ignore
+        return BS_COLORS[key];
     }
     /**
      * 获取任意变量长度
@@ -10928,6 +10987,10 @@ var $xxx = (function (exports) {
      * 时间格式化
      * @example
      * formatDate(new Date(), 'yyyy-mm-dd hh:ii:ss Q S W', ['星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']); /// '2022-04-26 11:33:53 2 123 星期二'
+     * // @before-2.2.0
+     * formatDate(); /// '当前时间 yyyy-mm-dd hh:ii:ss'
+     * // @since-2.2.0
+     * formatDate(); /// undefined
      * @param date 时间
      * @param fmt 格式化模板 'yyyy-mm-dd hh:ii:ss'
      * @param weeks 星期对应数组 [7, 1, 2, 3, 4, 5, 6]
@@ -10936,14 +10999,22 @@ var $xxx = (function (exports) {
     function formatDate(date, fmt, weeks) {
         if (fmt === void 0) { fmt = 'yyyy-mm-dd hh:ii:ss'; }
         if (weeks === void 0) { weeks = [7, 1, 2, 3, 4, 5, 6]; }
+        // @since 2.2.0
+        if (!date) {
+            return undefined;
+        }
+        var originDate = date;
         // @ts-ignore
         if (getType(date) === 'string' && !(date === null || date === void 0 ? void 0 : date.includes('T'))) {
             // 排除 UTC 时间
             // 虽然 Windows 浏览器两种符号都可以，但是需兼容 Safari 。
             // @ts-ignore
-            date = date.replace(/-/g, '/');
+            date = originDate.replace(/-/g, '/');
         }
-        date = date ? new Date(date) : new Date();
+        date = new Date(date);
+        if (isInvalidDate(date)) {
+            return originDate;
+        }
         var o = {
             'm+': date.getMonth() + 1,
             'd+': date.getDate(),
@@ -10983,6 +11054,9 @@ var $xxx = (function (exports) {
             date = date.replace(/-/g, '/');
         }
         var oldDate = date ? new Date(date) : new Date();
+        if (!calcStrOrArr) {
+            return oldDate;
+        }
         if (Array.isArray(calcStrOrArr)) {
             calcStrOrArr.forEach(function (calcStr) {
                 oldDate = calcDate(oldDate, calcStr);
@@ -11176,6 +11250,7 @@ var $xxx = (function (exports) {
      * @returns
      */
     function getDateList(n, type, date) {
+        var _a;
         if (type === void 0) { type = 'day'; }
         if (date === void 0) { date = new Date(); }
         // @ts-ignore
@@ -11199,7 +11274,7 @@ var $xxx = (function (exports) {
         };
         var tempN = Math.abs(n);
         for (var i = 0; i < tempN; i++) {
-            dateTemp = formatDate(myDate, formatters[type]);
+            dateTemp = (_a = formatDate(myDate, formatters[type])) !== null && _a !== void 0 ? _a : '-';
             dateArray.push(dateTemp);
             myDate = calcDate(dateTemp, "".concat(flag, " ").concat(type));
         }
@@ -12399,7 +12474,7 @@ var $xxx = (function (exports) {
      * @Author: HxB
      * @Date: 2022-04-26 16:24:34
      * @LastEditors: DoubleAm
-     * @LastEditTime: 2023-08-24 17:42:51
+     * @LastEditTime: 2024-01-18 09:23:54
      * @Description: 数学常用函数
      * @FilePath: \js-xxx\src\Math\index.ts
      */
@@ -12518,15 +12593,71 @@ var $xxx = (function (exports) {
      * @returns
      */
     function average() {
+        var _a;
         var args = [];
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
         var sum = 0;
         var len = args.length;
-        for (var i = 0; i < len; i++)
-            sum = add(sum, args[i]);
+        for (var i = 0; i < len; i++) {
+            var d = Number((_a = args[i]) !== null && _a !== void 0 ? _a : 0);
+            sum = add(sum, isNaN(d) ? 0 : d);
+        }
         return args.length ? div(sum, len) : 0;
+    }
+    /**
+     * 计算所有数
+     * @example
+     * calculate('+', 1, 2, 3, 4); /// 10
+     * calculate('+', 1, 2, 3, undefined); /// 6
+     * calculate('*', 1, 2, 3); /// 6
+     * calculate('*', 1, 2, 3, undefined); /// 0
+     * calculate('-', 10, 2, 3); /// 5
+     * calculate('/', 10, 2, 2); /// 2.5
+     * @param operator 操作符
+     * @param args 需要计算的数...
+     * @returns
+     */
+    function calculate(operator) {
+        var _a, _b;
+        var args = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            args[_i - 1] = arguments[_i];
+        }
+        var res = operator === '*' ? 1 : 0;
+        var len = args.length;
+        if (!len) {
+            return 0;
+        }
+        var i = 0;
+        if (operator === '-' || operator === '/') {
+            res = Number((_a = args[0]) !== null && _a !== void 0 ? _a : 0);
+            i++;
+        }
+        var defaultValue = 0;
+        for (i; i < len; i++) {
+            var d = Number((_b = args[i]) !== null && _b !== void 0 ? _b : defaultValue);
+            var operand = isNaN(d) ? defaultValue : d;
+            switch (operator) {
+                case '+':
+                    res = add(res, operand);
+                    break;
+                case '-':
+                    res = sub(res, operand);
+                    break;
+                case '*':
+                    res = times(res, operand);
+                    break;
+                case '/':
+                    res = div(res, operand);
+                    break;
+                default:
+                    res = add(res, operand);
+                    break;
+            }
+        }
+        return res;
     }
     /**
      * 获取绝对值
@@ -12954,7 +13085,7 @@ var $xxx = (function (exports) {
      * @Author: HxB
      * @Date: 2022-04-26 15:05:14
      * @LastEditors: DoubleAm
-     * @LastEditTime: 2023-09-21 17:56:02
+     * @LastEditTime: 2024-01-18 11:08:52
      * @Description: 对象相关函数
      * @FilePath: \js-xxx\src\Object\index.ts
      */
@@ -12962,18 +13093,43 @@ var $xxx = (function (exports) {
      * 获取多级对象值
      * @example
      * getV('默认值', {name: {children: [123, 456]}}, 'name', 'children', '0'); /// 123
+     * getV('默认值', {name: {children: [123, 456]}}, 'name.children.0'); /// 123
+     * getV('默认值', {name: {children: [123, 456]}}, 'name.children.xxx'); /// 默认值
+     * getV('默认值', { name: {children: [123, 456], '[]': ['test']} }, 'name.[].0'); /// 'test'
+     * getV('默认值', { name: {children: [123, 456], '[]': ['test']} }, 'name', '[]', 0); /// 'test'
      * @param defaultResult 默认值
      * @param args 需要获取的多级 rest 参数
      * @returns
      */
     function getV(defaultResult) {
+        var e_1, _a;
+        var _b;
         var args = [];
         for (var _i = 1; _i < arguments.length; _i++) {
             args[_i - 1] = arguments[_i];
         }
+        if ((args === null || args === void 0 ? void 0 : args.length) == 2 && ((_b = args[1]) === null || _b === void 0 ? void 0 : _b.includes('.'))) {
+            var _c = __read(args, 2), obj = _c[0], propPath = _c[1];
+            var propKeys = propPath.split('.');
+            var value = obj;
+            try {
+                for (var propKeys_1 = __values(propKeys), propKeys_1_1 = propKeys_1.next(); !propKeys_1_1.done; propKeys_1_1 = propKeys_1.next()) {
+                    var key = propKeys_1_1.value;
+                    value = hasKey(value, key) ? value[key] : defaultResult;
+                }
+            }
+            catch (e_1_1) { e_1 = { error: e_1_1 }; }
+            finally {
+                try {
+                    if (propKeys_1_1 && !propKeys_1_1.done && (_a = propKeys_1.return)) _a.call(propKeys_1);
+                }
+                finally { if (e_1) throw e_1.error; }
+            }
+            return value !== null && value !== void 0 ? value : defaultResult;
+        }
         return args.length >= 2
             ? // eslint-disable-next-line no-prototype-builtins, indent
-                args.reduce(function (a, b) { return (hasKey(a, b) ? a[b] : defaultResult); })
+                args.reduce(function (a, b) { var _a; return (hasKey(a, b) ? (_a = a[b]) !== null && _a !== void 0 ? _a : defaultResult : defaultResult); })
             : defaultResult;
     }
     /**
@@ -13122,6 +13278,58 @@ var $xxx = (function (exports) {
             return [];
         }
     }
+    /**
+     * 转化为 Select 数据，至少有 label/value/key 字段。
+     * @example
+     * arr2select([{ id: 1, name: 'A' }, { id: 2, name: 'B' }], { label: 'name', value: 'id' });
+     * /// [{ label: 'A', value: 1, key: 'selectKey-Random1' }, { label: 'B', value: 2, key: 'selectKey-Random2' }]
+     * arr2select([{ id: 1, name: 'A' }, { id: 2, name: 'B' }], { value: 'id', key: 'UNDEFINED' });
+     * /// [{ label: 1, value: 1, key: 1 }, { label: 2, value: 2, key: 2 }]
+     * arr2select([{ data: { id: 1, name: 'A' }, key: 'test1' }, { data: { id: 2, name: 'B' }, key: 'test2' }], { value: 'data.id', key: 'key', label: 'data.name' });
+     * /// [{ value: 1, label: "A", key: "test1" }, { value: 2, label: "B", key: "test2" }]
+     * @param arr 数组
+     * @param options 配置 { label?: 'label', value: 'value', key?: 'key' }
+     * @returns 转换后的 Select 数据数组
+     */
+    function arr2select(arr, options) {
+        var e_2, _a;
+        if (!arr || !arr.length) {
+            return [];
+        }
+        var label = options.label, value = options.value, key = options.key;
+        var selectData = [];
+        try {
+            for (var arr_1 = __values(arr), arr_1_1 = arr_1.next(); !arr_1_1.done; arr_1_1 = arr_1.next()) {
+                var item = arr_1_1.value;
+                var selectItem = {};
+                var valueData = getV(null, item, value);
+                selectItem.value = valueData;
+                // 设置 label 字段
+                if (label) {
+                    selectItem.label = getV(valueData, item, label);
+                }
+                else {
+                    selectItem.label = valueData;
+                }
+                // 设置 key 字段
+                if (key) {
+                    selectItem.key = getV(valueData, item, key);
+                }
+                else {
+                    selectItem.key = getKey(5, 'selectKey');
+                }
+                selectData.push(selectItem);
+            }
+        }
+        catch (e_2_1) { e_2 = { error: e_2_1 }; }
+        finally {
+            try {
+                if (arr_1_1 && !arr_1_1.done && (_a = arr_1.return)) _a.call(arr_1);
+            }
+            finally { if (e_2) throw e_2.error; }
+        }
+        return selectData;
+    }
 
     /**
      * 对象转 queryString 暂时只支持两层数据，第二层对象与与数组值不能为引用类型。
@@ -13151,7 +13359,8 @@ var $xxx = (function (exports) {
                         queryString.append(key, val.join(','));
                     }
                     else {
-                        val.filter(Boolean).forEach(function (arrVal, arrIndex) {
+                        // val.filter(Boolean)
+                        val.filter(toBool).forEach(function (arrVal, arrIndex) {
                             var newArrVal = getType(arrVal) == 'object' ? JSON.stringify(arrVal) : arrVal;
                             (options === null || options === void 0 ? void 0 : options.hasBrackets)
                                 ? queryString.append((options === null || options === void 0 ? void 0 : options.hasIndex) ? "".concat(key, "[").concat(arrIndex, "]") : "".concat(key, "[]"), newArrVal)
@@ -13693,44 +13902,7 @@ var $xxx = (function (exports) {
     function getBloodGroup(bloodGroup) {
         var keyList = ['A', 'a', 'B', 'b', 'O', 'o', 'AB', 'ab'];
         bloodGroup = keyList.includes(bloodGroup) ? bloodGroup.toUpperCase() : 'unknown';
-        var bloodGroups = {
-            A: {
-                value: 'A',
-                label: 'A型',
-                color: '#1890FF',
-                lower: 'a',
-                upper: 'A',
-            },
-            B: {
-                value: 'B',
-                label: 'B型',
-                color: '#36AE7C',
-                lower: 'b',
-                upper: 'B',
-            },
-            O: {
-                value: 'O',
-                label: 'O型',
-                color: '#E64848',
-                lower: 'o',
-                upper: 'O',
-            },
-            AB: {
-                value: 'AB',
-                label: 'AB型',
-                color: '#A575F2',
-                lower: 'a',
-                upper: 'A',
-            },
-            unknown: {
-                value: 'unknown',
-                label: '未知',
-                color: '#CB9D83',
-                lower: 'unknown',
-                upper: 'UNKNOWN',
-            },
-        };
-        return bloodGroups[bloodGroup];
+        return BLOOD_GROUP_INFO[bloodGroup];
     }
     /**
      * 生成 cron 表达式
@@ -14396,11 +14568,12 @@ var $xxx = (function (exports) {
         return function () { return hideToast($_loading); };
     }
 
+    /* eslint-disable spellcheck/spell-checker */
     /*
      * @Author: HxB
      * @Date: 2022-04-26 14:10:35
      * @LastEditors: DoubleAm
-     * @LastEditTime: 2023-08-23 14:11:20
+     * @LastEditTime: 2024-01-18 09:57:02
      * @Description: websocket
      * @FilePath: \js-xxx\src\WebSocket\index.ts
      */
@@ -14458,11 +14631,17 @@ var $xxx = (function (exports) {
             }
         };
         // @ts-ignore
+        xWebSocket.options = options;
+        // @ts-ignore
         xWebSocket.sendWsMsg = sendWsMsg;
         // @ts-ignore
         xWebSocket.closeWebSocket = closeWebSocket;
         // @ts-ignore
         xWebSocket.setWsBinaryType = setWsBinaryType;
+        // @ts-ignore
+        xWebSocket.buf2obj = buf2obj;
+        // @ts-ignore
+        xWebSocket.obk2buf = obj2buf;
         // xWebSocket.readyState == 1 正常状态
         return xWebSocket;
     }
@@ -14480,8 +14659,13 @@ var $xxx = (function (exports) {
         if (!xWebSocket) {
             return false;
         }
-        xWebSocket.send(isJSONEncode ? JSON.stringify(message) : message);
-        return true;
+        if (xWebSocket.readyState == 1) {
+            xWebSocket.send(isJSONEncode ? JSON.stringify(message) : message);
+            return true;
+        }
+        else {
+            return false;
+        }
     }
     /**
      * 关闭 websocket
@@ -14513,7 +14697,54 @@ var $xxx = (function (exports) {
     }
     // eslint-disable-next-line spellcheck/spell-checker
     // 使用 grpc 或 protobuf 记得 buffer2obj 和 obj2buffer
-    // 使用专用工具进行封装与解析
+    // 使用专用工具（pbjs/protoc/protobufjs-cli）进行封装与解析
+    /**
+     * buffer to object
+     * @example
+     * const _protoBuffer = _proto.lookupType('MonitorMessage');
+     * const obj = buf2obj(event.data, _protoBuffer);
+     * console.log(obj);
+     * @param data buffer 数据
+     * @param transfer 转换器
+     * @returns
+     */
+    function buf2obj(data, transfer) {
+        try {
+            var result = transfer.toObject(transfer.decode(new Uint8Array(data)), {
+                enums: String,
+                longs: String,
+                bytes: String,
+                defaults: true,
+                arrays: true,
+                objects: true,
+                oneofs: true,
+            });
+            return result;
+        }
+        catch (e) {
+            return data;
+        }
+    }
+    /**
+     * object to buffer
+     * @example
+     * const _protoBuffer = _proto.lookupType('MonitorMessage');
+     * const bufferData = obj2buf(obj, _protoBuffer);
+     * console.log(bufferData);
+     * webSocket.send(bufferData);
+     * @param data object 数据
+     * @param transfer 转换器
+     * @returns
+     */
+    function obj2buf(data, transfer) {
+        try {
+            var result = transfer.encode(transfer.create(data !== null && data !== void 0 ? data : {})).finish();
+            return result;
+        }
+        catch (e) {
+            return data;
+        }
+    }
     /**
      * 获取 websocket 实例
      * @example
@@ -14529,6 +14760,8 @@ var $xxx = (function (exports) {
     exports.BASE_CHAR_UP = BASE_CHAR_UP;
     exports.BASE_NUMBER = BASE_NUMBER;
     exports.BLOOD_GROUP = BLOOD_GROUP;
+    exports.BLOOD_GROUP_INFO = BLOOD_GROUP_INFO;
+    exports.BS_COLORS = BS_COLORS;
     exports.CODE_MSG = CODE_MSG;
     exports.CONSTELLATION = CONSTELLATION;
     exports.CONTENT_TYPES = CONTENT_TYPES;
@@ -14553,6 +14786,7 @@ var $xxx = (function (exports) {
     exports.any = any;
     exports.appendLink = appendLink;
     exports.appendScript = appendScript;
+    exports.arr2select = arr2select;
     exports.arrObj2objArr = arrObj2objArr;
     exports.arrayFill = arrayFill;
     exports.arrayShuffle = arrayShuffle;
@@ -14562,9 +14796,11 @@ var $xxx = (function (exports) {
     exports.base64Decode = base64Decode;
     exports.base64Encode = base64Encode;
     exports.bindMoreClick = bindMoreClick;
+    exports.buf2obj = buf2obj;
     exports.calcCron = calcCron;
     exports.calcDate = calcDate;
     exports.calcFontSize = calcFontSize;
+    exports.calculate = calculate;
     exports.catchPromise = catchPromise;
     exports.changeURL = changeURL;
     exports.checkFileExt = checkFileExt;
@@ -14687,6 +14923,7 @@ var $xxx = (function (exports) {
     exports.isFn = isFn;
     exports.isHttp = isHttp;
     exports.isInteger = isInteger;
+    exports.isInvalidDate = isInvalidDate;
     exports.isIpAddress = isIpAddress;
     exports.isIpv4 = isIpv4;
     exports.isIpv6 = isIpv6;
@@ -14718,6 +14955,7 @@ var $xxx = (function (exports) {
     exports.maskString = maskString;
     exports.md5 = md5;
     exports.ms = ms;
+    exports.obj2buf = obj2buf;
     exports.observeResource = observeResource;
     exports.offDefaultEvent = offDefaultEvent;
     exports.onClick2MoreClick = onClick2MoreClick;

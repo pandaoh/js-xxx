@@ -1,6 +1,6 @@
 js-xxx
 
-# js-xxx - v2.1.1
+# js-xxx - v2.2.0
 
 ## Table of contents
 
@@ -19,6 +19,8 @@ js-xxx
 - [BASE\_CHAR\_UP](README.md#base_char_up)
 - [BASE\_NUMBER](README.md#base_number)
 - [BLOOD\_GROUP](README.md#blood_group)
+- [BLOOD\_GROUP\_INFO](README.md#blood_group_info)
+- [BS\_COLORS](README.md#bs_colors)
 - [CODE\_MSG](README.md#code_msg)
 - [CONSTELLATION](README.md#constellation)
 - [CONTENT\_TYPES](README.md#content_types)
@@ -46,6 +48,7 @@ js-xxx
 - [any](README.md#any)
 - [appendLink](README.md#appendlink)
 - [appendScript](README.md#appendscript)
+- [arr2select](README.md#arr2select)
 - [arrObj2objArr](README.md#arrobj2objarr)
 - [arrayFill](README.md#arrayfill)
 - [arrayShuffle](README.md#arrayshuffle)
@@ -55,9 +58,11 @@ js-xxx
 - [base64Decode](README.md#base64decode)
 - [base64Encode](README.md#base64encode)
 - [bindMoreClick](README.md#bindmoreclick)
+- [buf2obj](README.md#buf2obj)
 - [calcCron](README.md#calccron)
 - [calcDate](README.md#calcdate)
 - [calcFontSize](README.md#calcfontsize)
+- [calculate](README.md#calculate)
 - [catchPromise](README.md#catchpromise)
 - [changeURL](README.md#changeurl)
 - [checkFileExt](README.md#checkfileext)
@@ -180,6 +185,7 @@ js-xxx
 - [isFn](README.md#isfn)
 - [isHttp](README.md#ishttp)
 - [isInteger](README.md#isinteger)
+- [isInvalidDate](README.md#isinvaliddate)
 - [isIpAddress](README.md#isipaddress)
 - [isIpv4](README.md#isipv4)
 - [isIpv6](README.md#isipv6)
@@ -211,6 +217,7 @@ js-xxx
 - [maskString](README.md#maskstring)
 - [md5](README.md#md5)
 - [ms](README.md#ms)
+- [obj2buf](README.md#obj2buf)
 - [observeResource](README.md#observeresource)
 - [offDefaultEvent](README.md#offdefaultevent)
 - [onClick2MoreClick](README.md#onclick2moreclick)
@@ -365,6 +372,52 @@ ___
 | `AB` | `string` |
 | `B` | `string` |
 | `O` | `string` |
+
+___
+
+### BLOOD\_GROUP\_INFO
+
+• `Const` **BLOOD\_GROUP\_INFO**: `Object`
+
+**`Const`**
+
+血型基础信息
+
+#### Index signature
+
+▪ [key: `string`]: { `color`: `string` ; `label`: `string` ; `lower`: `string` ; `upper`: `string` ; `value`: `string`  }
+
+___
+
+### BS\_COLORS
+
+• `Const` **BS\_COLORS**: `Object`
+
+**`Const`**
+
+颜色数据
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `black` | `string` |
+| `blue` | `string` |
+| `cyan` | `string` |
+| `danger` | `string` |
+| `dark` | `string` |
+| `default` | `string` |
+| `green` | `string` |
+| `grey` | `string` |
+| `info` | `string` |
+| `light` | `string` |
+| `primary` | `string` |
+| `red` | `string` |
+| `secondary` | `string` |
+| `success` | `string` |
+| `warning` | `string` |
+| `white` | `string` |
+| `yellow` | `string` |
 
 ___
 
@@ -860,6 +913,41 @@ appendScript('./test.js'); /// 添加一个 script 标签
 
 ___
 
+### arr2select
+
+▸ **arr2select**(`arr`, `options`): `any`[]
+
+转化为 Select 数据，至少有 label/value/key 字段。
+
+**`Example`**
+
+```ts
+arr2select([{ id: 1, name: 'A' }, { id: 2, name: 'B' }], { label: 'name', value: 'id' });
+/// [{ label: 'A', value: 1, key: 'selectKey-Random1' }, { label: 'B', value: 2, key: 'selectKey-Random2' }]
+arr2select([{ id: 1, name: 'A' }, { id: 2, name: 'B' }], { value: 'id', key: 'UNDEFINED' });
+/// [{ label: 1, value: 1, key: 1 }, { label: 2, value: 2, key: 2 }]
+arr2select([{ data: { id: 1, name: 'A' }, key: 'test1' }, { data: { id: 2, name: 'B' }, key: 'test2' }], { value: 'data.id', key: 'key', label: 'data.name' });
+/// [{ value: 1, label: "A", key: "test1" }, { value: 2, label: "B", key: "test2" }]
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `arr` | `any`[] | 数组 |
+| `options` | `Object` | 配置 { label?: 'label', value: 'value', key?: 'key' } |
+| `options.key?` | `string` | - |
+| `options.label?` | `string` | - |
+| `options.value` | `string` | - |
+
+#### Returns
+
+`any`[]
+
+转换后的 Select 数据数组
+
+___
+
 ### arrObj2objArr
 
 ▸ **arrObj2objArr**(`data`, `key`): `Object`
@@ -1108,6 +1196,33 @@ dom.onclick = bindMoreClick(moreClickCallBack, 4, 500); /// 绑定 4 击事件
 
 ___
 
+### buf2obj
+
+▸ **buf2obj**(`data`, `transfer`): `any`
+
+buffer to object
+
+**`Example`**
+
+```ts
+const _protoBuffer = _proto.lookupType('MonitorMessage');
+const obj = buf2obj(event.data, _protoBuffer);
+console.log(obj);
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `data` | `any` | buffer 数据 |
+| `transfer` | `any` | 转换器 |
+
+#### Returns
+
+`any`
+
+___
+
 ### calcCron
 
 ▸ **calcCron**(`options?`): `string`
@@ -1205,6 +1320,36 @@ calcFontSize(16/10, true, 'body'); /// 按 16/10 计算并设置 body 偏移使�
 ##### Returns
 
 `void`
+
+___
+
+### calculate
+
+▸ **calculate**(`operator`, `...args`): `number`
+
+计算所有数
+
+**`Example`**
+
+```ts
+calculate('+', 1, 2, 3, 4); /// 10
+calculate('+', 1, 2, 3, undefined); /// 6
+calculate('*', 1, 2, 3); /// 6
+calculate('*', 1, 2, 3, undefined); /// 0
+calculate('-', 10, 2, 3); /// 5
+calculate('/', 10, 2, 2); /// 2.5
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `operator` | `string` | 操作符 |
+| `...args` | `any`[] | 需要计算的数... |
+
+#### Returns
+
+`number`
 
 ___
 
@@ -2226,7 +2371,7 @@ ___
 
 ### formatDate
 
-▸ **formatDate**(`date?`, `fmt?`, `weeks?`): `string`
+▸ **formatDate**(`date?`, `fmt?`, `weeks?`): `any`
 
 时间格式化
 
@@ -2234,19 +2379,23 @@ ___
 
 ```ts
 formatDate(new Date(), 'yyyy-mm-dd hh:ii:ss Q S W', ['星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']); /// '2022-04-26 11:33:53 2 123 星期二'
+// @before-2.2.0
+formatDate(); /// '当前时间 yyyy-mm-dd hh:ii:ss'
+// @since-2.2.0
+formatDate(); /// undefined
 ```
 
 #### Parameters
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `date?` | `string` \| `Date` | `undefined` | 时间 |
+| `date?` | `any` | `undefined` | 时间 |
 | `fmt` | `string` | `'yyyy-mm-dd hh:ii:ss'` | 格式化模板 'yyyy-mm-dd hh:ii:ss' |
 | `weeks` | `any`[] | `undefined` | 星期对应数组 [7, 1, 2, 3, 4, 5, 6] |
 
 #### Returns
 
-`string`
+`any`
 
 ___
 
@@ -3402,6 +3551,10 @@ ___
 
 ```ts
 getV('默认值', {name: {children: [123, 456]}}, 'name', 'children', '0'); /// 123
+getV('默认值', {name: {children: [123, 456]}}, 'name.children.0'); /// 123
+getV('默认值', {name: {children: [123, 456]}}, 'name.children.xxx'); /// 默认值
+getV('默认值', { name: {children: [123, 456], '[]': ['test']} }, 'name.[].0'); /// 'test'
+getV('默认值', { name: {children: [123, 456], '[]': ['test']} }, 'name', '[]', 0); /// 'test'
 ```
 
 #### Parameters
@@ -4353,6 +4506,33 @@ isInteger('-0', '+'); /// false
 
 ___
 
+### isInvalidDate
+
+▸ **isInvalidDate**(`date`): `boolean`
+
+检查是否 Invalid Date 类型
+
+**`Example`**
+
+```ts
+isInvalidDate(new Date()); /// false
+isInvalidDate(null); /// false
+isInvalidDate(undefined); /// true
+isInvalidDate(new Date('invalid date')); /// true
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `date` | `any` | 值 |
+
+#### Returns
+
+`boolean`
+
+___
+
 ### isIpAddress
 
 ▸ **isIpAddress**(`value`): `boolean`
@@ -5154,6 +5334,34 @@ ms(60000); /// '1m'
 #### Returns
 
 `string` \| `number`
+
+___
+
+### obj2buf
+
+▸ **obj2buf**(`data`, `transfer`): `any`
+
+object to buffer
+
+**`Example`**
+
+```ts
+const _protoBuffer = _proto.lookupType('MonitorMessage');
+const bufferData = obj2buf(obj, _protoBuffer);
+console.log(bufferData);
+webSocket.send(bufferData);
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `data` | `any` | object 数据 |
+| `transfer` | `any` | 转换器 |
+
+#### Returns
+
+`any`
 
 ___
 
@@ -6330,7 +6538,7 @@ ___
 
 ### timeSince
 
-▸ **timeSince**(`date?`, `longAgo?`, `formatter?`): `string`
+▸ **timeSince**(`date?`, `longAgo?`, `formatter?`): `any`
 
 人性化时间
 
@@ -6350,7 +6558,7 @@ timeSince(new Date()); /// '刚刚'
 
 #### Returns
 
-`string`
+`any`
 
 ___
 

@@ -43,7 +43,8 @@ export function qsStringify(
         if (options?.arr2str) {
           queryString.append(key, val.join(','));
         } else {
-          val.filter(Boolean).forEach((arrVal: any, arrIndex: number) => {
+          // val.filter(Boolean)
+          val.filter(toBool).forEach((arrVal: any, arrIndex: number) => {
             const newArrVal: any = getType(arrVal) == 'object' ? JSON.stringify(arrVal) : arrVal;
             options?.hasBrackets
               ? queryString.append(options?.hasIndex ? `${key}[${arrIndex}]` : `${key}[]`, newArrVal)
