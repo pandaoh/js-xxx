@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:05:14
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-18 11:08:52
+ * @LastEditTime: 2024-01-18 11:17:24
  * @Description: 对象相关函数
  * @FilePath: \js-xxx\src\Object\index.ts
  */
@@ -18,7 +18,7 @@ import { getKey } from '@/Tools';
  * getV('默认值', { name: {children: [123, 456], '[]': ['test']} }, 'name.[].0'); /// 'test'
  * getV('默认值', { name: {children: [123, 456], '[]': ['test']} }, 'name', '[]', 0); /// 'test'
  * @param defaultResult 默认值
- * @param args 需要获取的多级 rest 参数
+ * @param args 需要获取的多级 rest 参数或者独立多级 string
  * @returns
  */
 export function getV(defaultResult: any, ...args: any): any {
