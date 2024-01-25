@@ -14,7 +14,7 @@ import { download } from '@/Dom';
 import { getContentType } from '@/Request';
 import { BLOOD_GROUP_INFO } from '@/Data';
 
-function _calculateCheckChar(serialNo: string, hex = false) {
+function _calcCheckChar(serialNo: string, hex = false) {
   serialNo = String(serialNo).trim();
 
   if (serialNo.length < 13) {
