@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-09 14:59:01
+ * @LastEditTime: 2024-01-25 17:05:49
  * @Description: 利用 dom 的一些函数
  * @FilePath: \js-xxx\src\Dom\index.ts
  */
@@ -400,7 +400,7 @@ export function download(link: string, name: string) {
 }
 
 /**
- * 在浏览器中自定义下载一些内容
+ * 在浏览器中自定义下载一些内容，与 download 不同的是，downloadContent 采用 Blob 可能会有长度限制。
  * @example
  * downloadContent('test.txt', 'test txt content'); /// 下载返回的流
  * downloadContent('test.json', JSON.stringify({content: 'test json'})); /// 下载返回的流
@@ -418,6 +418,9 @@ export function downloadContent(name: string, content: any) {
     }
     const link = URL.createObjectURL(content);
     download(link, name);
+    setTimeout(() => {
+      URL.revokeObjectURL(link);
+    }, 0);
   } catch (e) {
     console.log('js-xxx:downloadContentError--->', e);
   }

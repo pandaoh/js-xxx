@@ -11827,7 +11827,7 @@ function download(link, name) {
     document.body.removeChild(eleLink);
 }
 /**
- * 在浏览器中自定义下载一些内容
+ * 在浏览器中自定义下载一些内容，与 download 不同的是，downloadContent 采用 Blob 可能会有长度限制。
  * @example
  * downloadContent('test.txt', 'test txt content'); /// 下载返回的流
  * downloadContent('test.json', JSON.stringify({content: 'test json'})); /// 下载返回的流
@@ -11843,8 +11843,11 @@ function downloadContent(name, content) {
         if (!(content instanceof Blob)) {
             content = new Blob([content]);
         }
-        var link = URL.createObjectURL(content);
-        download(link, name);
+        var link_1 = URL.createObjectURL(content);
+        download(link_1, name);
+        setTimeout(function () {
+            URL.revokeObjectURL(link_1);
+        }, 0);
     }
     catch (e) {
         console.log('js-xxx:downloadContentError--->', e);
@@ -13082,7 +13085,7 @@ function formatNumber(value, n) {
  * @Author: HxB
  * @Date: 2022-04-26 15:05:14
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-18 11:08:52
+ * @LastEditTime: 2024-01-18 11:17:24
  * @Description: 对象相关函数
  * @FilePath: \js-xxx\src\Object\index.ts
  */
@@ -13095,7 +13098,7 @@ function formatNumber(value, n) {
  * getV('默认值', { name: {children: [123, 456], '[]': ['test']} }, 'name.[].0'); /// 'test'
  * getV('默认值', { name: {children: [123, 456], '[]': ['test']} }, 'name', '[]', 0); /// 'test'
  * @param defaultResult 默认值
- * @param args 需要获取的多级 rest 参数
+ * @param args 需要获取的多级 rest 参数或者独立多级 string
  * @returns
  */
 function getV(defaultResult) {
@@ -14089,7 +14092,7 @@ function transferCSVData(fields, data) {
     for (var i = 0; i < data.length; i++) {
         _loop_2(i);
     }
-    return encodeURIComponent(result);
+    return result;
 }
 // eslint-disable-next-line spellcheck/spell-checker
 /**
@@ -14097,6 +14100,7 @@ function transferCSVData(fields, data) {
  * @example
  * exportFile(data); /// 导出 txt 文件
  * exportFile(data, 'csv-导出文件测试', 'csv'); /// 导出 csv 文件
+ * exportFile(document.getElementById('table_to_xls').outerHTML, 'excelWithStyle', 'xls'); /// 导出表格为带样式的 xls 文件
  * exportFile('http://a.biugle.cn/img/cdn/dev/avatar/1.png', 'test', 'png'); /// 导出 png 文件
  * @param data 数据
  * @param fileName 文件名
@@ -14112,7 +14116,7 @@ function exportFile(data, fileName, fileType) {
     }
     // 加入特殊字符确保 utf-8
     // eslint-disable-next-line spellcheck/spell-checker
-    var uri = "data:".concat(getContentType(fileType), ";charset=utf-8,\uFEFF").concat(data);
+    var uri = "data:".concat(getContentType(fileType), ";charset=utf-8,\uFEFF").concat(encodeURIComponent(data));
     // U+FEFF 是一个零宽度非断字符（Zero Width No-Break Space），也称为“字节顺序标记（Byte Order Mark，BOM）”。
     // eslint-disable-next-line spellcheck/spell-checker
     download(uri, "".concat(fileName !== null && fileName !== void 0 ? fileName : formatDate(new Date(), 'yyyy-mm-dd-hhiiss'), ".").concat(fileType));

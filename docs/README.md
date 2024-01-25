@@ -1,6 +1,6 @@
 js-xxx
 
-# js-xxx - v2.2.0
+# js-xxx - v2.2.1
 
 ## Table of contents
 
@@ -1987,7 +1987,7 @@ ___
 
 ▸ **downloadContent**(`name`, `content`): `void`
 
-在浏览器中自定义下载一些内容
+在浏览器中自定义下载一些内容，与 download 不同的是，downloadContent 采用 Blob 可能会有长度限制。
 
 **`Example`**
 
@@ -2163,6 +2163,7 @@ ___
 ```ts
 exportFile(data); /// 导出 txt 文件
 exportFile(data, 'csv-导出文件测试', 'csv'); /// 导出 csv 文件
+exportFile(document.getElementById('table_to_xls').outerHTML, 'excelWithStyle', 'xls'); /// 导出表格为带样式的 xls 文件
 exportFile('http://a.biugle.cn/img/cdn/dev/avatar/1.png', 'test', 'png'); /// 导出 png 文件
 ```
 
@@ -3562,7 +3563,7 @@ getV('默认值', { name: {children: [123, 456], '[]': ['test']} }, 'name', '[]'
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `defaultResult` | `any` | 默认值 |
-| `...args` | `any` | 需要获取的多级 rest 参数 |
+| `...args` | `any` | 需要获取的多级 rest 参数或者独立多级 string |
 
 #### Returns
 

@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:53:39
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-09-21 18:06:45
+ * @LastEditTime: 2024-01-25 17:13:11
  * @Description: 因项目需要常用函数，不管任何项目，都放到一起。注意甄别，没有复用意义的函数就不要添加了。
  * @FilePath: \js-xxx\src\Others\index.ts
  */
@@ -13,6 +13,57 @@ import { isUrl } from '@/String';
 import { download } from '@/Dom';
 import { getContentType } from '@/Request';
 import { BLOOD_GROUP_INFO } from '@/Data';
+
+function _calculateCheckChar(serialNo: string, hex = false) {
+  serialNo = String(serialNo).trim();
+
+  if (serialNo.length < 13) {
+    throw new Error('格式不正确，请检查！');
+  }
+
+  const iso7064ValueToCharTable = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ*';
+  const charValueTable: any = {};
+
+  let sum = 0;
+
+  for (let i = 0; i < iso7064ValueToCharTable.length; i++) {
+    const ch = iso7064ValueToCharTable[i];
+    const isDigit = ch >= '0' && ch <= '9';
+    const isUpperAlpha = ch >= 'A' && ch <= 'Z';
+
+    if (isDigit || isUpperAlpha) {
+      let charValue;
+      if (isDigit) {
+        charValue = Number(ch);
+      } else {
+        charValue = ch.charCodeAt(0) - 'A'.charCodeAt(0) + 10;
+      }
+
+      charValueTable[ch] = charValue;
+    }
+  }
+
+  for (let i = 0; i < 13; i++) {
+    const ch = serialNo[i].toUpperCase();
+    const charValue = charValueTable[ch];
+
+    if (charValue === undefined) {
+      throw new Error('包含无效字符，请检查！');
+    }
+
+    sum = ((sum + charValue) * 2) % 37;
+  }
+
+  const charValue = (38 - sum) % 37;
+  const checkChar = iso7064ValueToCharTable[charValue];
+
+  if (hex) {
+    const hexValue = charValue.toString(16).toUpperCase().padStart(2, '0');
+    return hexValue;
+  }
+
+  return checkChar;
+}
 
 function _isValidCronField(field: any, min: any, max: any): boolean {
   const regex = new RegExp('^\\d+|\\*/\\d+|[\\d,-]+/[\\d,-]+$');
@@ -531,7 +582,7 @@ export function transferCSVData(fields: { label?: string; prop: string }[], data
     const item = data[i] ?? {};
     result += keys.map((key) => forceToStr(item[key])).join(',') + '\n';
   }
-  return encodeURIComponent(result);
+  return result;
 }
 
 // eslint-disable-next-line spellcheck/spell-checker
@@ -540,6 +591,7 @@ export function transferCSVData(fields: { label?: string; prop: string }[], data
  * @example
  * exportFile(data); /// 导出 txt 文件
  * exportFile(data, 'csv-导出文件测试', 'csv'); /// 导出 csv 文件
+ * exportFile(document.getElementById('table_to_xls').outerHTML, 'excelWithStyle', 'xls'); /// 导出表格为带样式的 xls 文件
  * exportFile('http://a.biugle.cn/img/cdn/dev/avatar/1.png', 'test', 'png'); /// 导出 png 文件
  * @param data 数据
  * @param fileName 文件名
@@ -554,7 +606,7 @@ export function exportFile(data: string, fileName?: string, fileType = 'txt'): v
   }
   // 加入特殊字符确保 utf-8
   // eslint-disable-next-line spellcheck/spell-checker
-  const uri = `data:${getContentType(fileType)};charset=utf-8,\ufeff${data}`;
+  const uri = `data:${getContentType(fileType)};charset=utf-8,\ufeff${encodeURIComponent(data)}`;
   // U+FEFF 是一个零宽度非断字符（Zero Width No-Break Space），也称为“字节顺序标记（Byte Order Mark，BOM）”。
   // eslint-disable-next-line spellcheck/spell-checker
   download(uri, `${fileName ?? formatDate(new Date(), 'yyyy-mm-dd-hhiiss')}.${fileType}`);

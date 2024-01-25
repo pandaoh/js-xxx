@@ -154,7 +154,7 @@ export declare function appendScript(scriptUrl: string, async?: boolean, defer?:
  */
 export declare function download(link: string, name: string): void;
 /**
- * 在浏览器中自定义下载一些内容
+ * 在浏览器中自定义下载一些内容，与 download 不同的是，downloadContent 采用 Blob 可能会有长度限制。
  * @example
  * downloadContent('test.txt', 'test txt content'); /// 下载返回的流
  * downloadContent('test.json', JSON.stringify({content: 'test json'})); /// 下载返回的流
