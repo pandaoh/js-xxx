@@ -3,12 +3,12 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-18 09:57:02
+ * @LastEditTime: 2024-03-01 17:30:30
  * @Description: websocket
  * @FilePath: \js-xxx\src\WebSocket\index.ts
  */
 let xWebSocket: WebSocket;
-// 用于设置 websocket 连接超时问题 timeout
+// 用于设置 websocket 连接超时问题 timeout 计时器
 let xWebSocketTimer: any;
 
 // eslint-disable-next-line spellcheck/spell-checker
