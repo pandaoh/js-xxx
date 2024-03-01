@@ -328,4 +328,25 @@ export declare function emitEvent(eventType?: string, element?: HTMLElement | nu
  * @returns
  */
 export declare function disableConflictEvent(event: any): boolean;
+/**
+ * 在打印预览中打印指定元素，并设置样式。
+ * @example
+ * printElement('#print-table', {
+ *   bodyStyle: {
+ *     padding: '10px',
+ *     backgroundColor: 'red',
+ *   },
+ * });
+ * @param selector - 要打印的元素的 CSS 选择器。
+ * @param styles - iframe 的 style 配置对象。
+ *   @property {any} style - iframe 的基本样式。
+ *   @property {any} bodyStyle - iframe 的 body 样式。
+ *   @property {any} htmlStyle - iframe 的 html 样式。
+ * @returns
+ */
+export declare function printDom(selector: string, styles?: {
+    iframeStyle?: any;
+    bodyStyle?: any;
+    htmlStyle?: any;
+}): any;
 //# sourceMappingURL=index.d.ts.map

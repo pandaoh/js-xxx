@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2023-03-13 15:05:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-24 10:32:45
+ * @LastEditTime: 2024-03-01 16:45:34
  * @Description: eslint 配置文件
  * @FilePath: \js-xxx\.eslintrc.js
  */
@@ -174,6 +174,7 @@ module.exports = {
           'nodemon',
           'hhiiss',
           'whitesmoke',
+          'iframe',
         ],
         skipIfMatch: [
           // http url

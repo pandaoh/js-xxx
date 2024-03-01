@@ -1,6 +1,6 @@
 js-xxx
 
-# js-xxx - v2.2.1
+# js-xxx - v2.2.2
 
 ## Table of contents
 
@@ -224,6 +224,7 @@ js-xxx
 - [onResize](README.md#onresize)
 - [openFileSelect](README.md#openfileselect)
 - [openFullscreen](README.md#openfullscreen)
+- [printDom](README.md#printdom)
 - [px2rem](README.md#px2rem)
 - [qsParse](README.md#qsparse)
 - [qsStringify](README.md#qsstringify)
@@ -2163,7 +2164,7 @@ ___
 ```ts
 exportFile(data); /// 导出 txt 文件
 exportFile(data, 'csv-导出文件测试', 'csv'); /// 导出 csv 文件
-exportFile(document.getElementById('table_to_xls').outerHTML, 'excelWithStyle', 'xls'); /// 导出表格为带样式的 xls 文件
+exportFile(document.getElementById('table_to_xls').outerHTML, 'excelWithStyle', 'xls'); /// 导出表格为带样式的 excel xls 文件
 exportFile('http://a.biugle.cn/img/cdn/dev/avatar/1.png', 'test', 'png'); /// 导出 png 文件
 ```
 
@@ -5514,6 +5515,39 @@ openFullscreen(); /// 开启全屏
 #### Returns
 
 `void`
+
+___
+
+### printDom
+
+▸ **printDom**(`selector`, `styles?`): `any`
+
+在打印预览中打印指定元素，并设置样式。
+
+**`Example`**
+
+```ts
+printElement('#print-table', {
+  bodyStyle: {
+    padding: '10px',
+    backgroundColor: 'red',
+  },
+});
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `selector` | `string` | 要打印的元素的 CSS 选择器。 |
+| `styles?` | `Object` | iframe 的 style 配置对象。 |
+| `styles.bodyStyle?` | `any` | - |
+| `styles.htmlStyle?` | `any` | - |
+| `styles.iframeStyle?` | `any` | - |
+
+#### Returns
+
+`any`
 
 ___
 

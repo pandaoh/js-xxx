@@ -12363,6 +12363,90 @@ function disableConflictEvent(event) {
     // true 防止此事件被进一步传播; false 允许此事件继续传播;
     return false;
 }
+/**
+ * 在打印预览中打印指定元素，并设置样式。
+ * @example
+ * printElement('#print-table', {
+ *   bodyStyle: {
+ *     padding: '10px',
+ *     backgroundColor: 'red',
+ *   },
+ * });
+ * @param selector - 要打印的元素的 CSS 选择器。
+ * @param styles - iframe 的 style 配置对象。
+ *   @property {any} style - iframe 的基本样式。
+ *   @property {any} bodyStyle - iframe 的 body 样式。
+ *   @property {any} htmlStyle - iframe 的 html 样式。
+ * @returns
+ */
+function printDom(selector, styles) {
+    // 获取需要打印的元素
+    var element = document.querySelector(selector);
+    if (!element) {
+        console.error("Element with query selector ".concat(selector, " not found."));
+        return;
+    }
+    // 创建打印的 iframe
+    var iframe = document.createElement('iframe');
+    // 设置 iframe 的样式
+    Object.assign(iframe.style, __assign({ display: 'none', width: '100%', height: 'auto' }, ((styles === null || styles === void 0 ? void 0 : styles.iframeStyle) || {})));
+    document.body.appendChild(iframe);
+    // 获取 iframe 的内置对象
+    var iframeDoc = iframe.contentDocument;
+    var iframeHtml = iframeDoc.documentElement;
+    var iframeHead = iframeDoc.head;
+    var iframeBody = iframeDoc.body;
+    // 获取元素需要的样式
+    var elementStyles = getComputedStyle(element);
+    // 将元素需要的样式添加到 iframe
+    for (var i = 0; i < elementStyles.length; i++) {
+        var styleName = elementStyles[i];
+        iframeBody.style[styleName] = elementStyles.getPropertyValue(styleName);
+    }
+    try {
+        // 获取元素所在页面上的样式
+        var styleSheets = Array.from(document.styleSheets).map(function (styleSheet) {
+            return Array.from(styleSheet.cssRules)
+                .map(function (cssRule) { return cssRule.cssText; })
+                .join('\n');
+        });
+        // 将元素所在页面的样式添加到 iframe
+        var styleElement = document.createElement('style');
+        styleElement.innerHTML = styleSheets.join('\n');
+        iframeHead.appendChild(styleElement);
+    }
+    catch (e) {
+        console.error(e);
+    }
+    // // 在媒体查询中设置打印时的背景样式
+    // const printStyles = `
+    //   @media print {
+    //     html {
+    //       background-color: white;
+    //     }
+    //     body {
+    //       padding: 10px;
+    //     }
+    //   }
+    // `;
+    // const printStyleElement = document.createElement('style');
+    // printStyleElement.innerHTML = printStyles;
+    // iframeHead.appendChild(printStyleElement);
+    // 获取元素的内容
+    var elementContent = element.outerHTML;
+    // 将元素的内容添加到 iframe
+    iframeBody.innerHTML = elementContent;
+    // 设置 iframe.body 和 iframe.html 的样式与添加自定义的一些样式
+    Object.assign(iframeBody.style, __assign({ width: '100%', height: 'auto' }, ((styles === null || styles === void 0 ? void 0 : styles.bodyStyle) || {})));
+    Object.assign(iframeHtml.style, __assign({ width: '100%', height: 'auto' }, ((styles === null || styles === void 0 ? void 0 : styles.htmlStyle) || {})));
+    // 执行打印
+    iframe.contentWindow.print();
+    // 打印完成后移除 iframe
+    setTimeout(function () {
+        document.body.removeChild(iframe);
+    }, 1000);
+    return iframe;
+}
 
 /*
  * @Author: HxB
@@ -14100,7 +14184,7 @@ function transferCSVData(fields, data) {
  * @example
  * exportFile(data); /// 导出 txt 文件
  * exportFile(data, 'csv-导出文件测试', 'csv'); /// 导出 csv 文件
- * exportFile(document.getElementById('table_to_xls').outerHTML, 'excelWithStyle', 'xls'); /// 导出表格为带样式的 xls 文件
+ * exportFile(document.getElementById('table_to_xls').outerHTML, 'excelWithStyle', 'xls'); /// 导出表格为带样式的 excel xls 文件
  * exportFile('http://a.biugle.cn/img/cdn/dev/avatar/1.png', 'test', 'png'); /// 导出 png 文件
  * @param data 数据
  * @param fileName 文件名
@@ -14756,4 +14840,4 @@ function getWebSocket() {
     return xWebSocket;
 }
 
-export { ANIMALS, BASE_CHAR_LOW, BASE_CHAR_UP, BASE_NUMBER, BLOOD_GROUP, BLOOD_GROUP_INFO, BS_COLORS, CODE_MSG, CONSTELLATION, CONTENT_TYPES, HttpMethod, ICONS, ID_CARD_PROVINCE, KEYBOARD_CODE, Loading, MAN, MONTHS, PY_MAPS, ROLES, Speaker, TRANSFER_STR, Toast, WEEKS, WOMAN, abs, add, addLongPressEvent, addSpace, all, any, appendLink, appendScript, arr2select, arrObj2objArr, arrayFill, arrayShuffle, arraySort, average, banConsole, base64Decode, base64Encode, bindMoreClick, buf2obj, calcCron, calcDate, calcFontSize, calculate, catchPromise, changeURL, checkFileExt, checkIdCard, checkPassWordLevel, checkUpdate, checkVersion, clearCookies, closeFullscreen, closeWebSocket, compareDate, contains, copyToClipboard, countdown, data2Arr, data2Obj, dataTo, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitEvent, emitKeyboardEvent, empty, encrypt, every, exportFile, findChildren, findMaxKey, findParents, float, forEach, forceToStr, formatBytes, formatDate, formatJSON, formatNumber, formatRh, getAge, getAnimal, getBSColor, getBaseURL, getBloodGroup, getConstellation, getContentType, getCookie, getCryptoJS, getDateDifference, getDateList, getDateTime, getDayInYear, getDecodeStorage, getFingerprint, getFirstVar, getKey, getLastVar, getLocalArr, getLocalObj, getMonthDayCount, getMonthInfo, getPercentage, getPinYin, getQueryString, getRandColor, getRandDate, getRandIp, getRandNum, getRandStr, getRandVar, getScrollPercent, getSearchParams, getSelectText, getSessionArr, getSessionObj, getSortVar, getStyleByName, getTimeCode, getType, getUTCTime, getUserAgent, getV, getVarSize, getViewportSize, getWebSocket, getWeekInfo, globalError, hasKey, hasSpecialChar, hideToast, html2str, inRange, initNotification, initWebSocket, insertAfter, intersection, inversion, isAccount, isAppleDevice, isArr, isArrayBuffer, isBankCard, isBlob, isBool, isBrowser, isCarCode, isChinese, isCreditCode, isDarkMode, isDate, isDecimal, isElement, isEmail, isEnglish, isEqual, isEven, isFn, isHttp, isInteger, isInvalidDate, isIpAddress, isIpv4, isIpv6, isJSON, isMobile, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPromise, isQQ, isRhNegative, isStr, isStrongPassWord, isTel, isUndef, isUrl, isWeekday, jsonClone, keyBoardResize, leftJoin, localStorageGet, localStorageSet, log, logRunTime, markNumber, marquee, maskString, md5, ms, obj2buf, observeResource, offDefaultEvent, onClick2MoreClick, onResize, openFileSelect, openFullscreen, px2rem, qsParse, qsStringify, removeCookie, repeat, retry, rightJoin, rip, round, same, scrollToView, scrollXTo, scrollYTo, sendNotification, sendWsMsg, sessionStorageGet, sessionStorageSet, setCookie, setEncodeStorage, setEventListener, setIcon, setWsBinaryType, sha1, sha256, showProcess, showToast, showVar, sleep, slugify, sortBy, sortCallBack, stackSticky, str2html, str2unicode, sub, textCamelCase, textSplitCase, textTransferCase, throttle, timeSince, times, to, toBool, toFormData, toNum, toQueryString, toStr, toggleClass, transferCSVData, transferFileToBase64, transferIdCard, transferMoney, transferNumber, transferScanStr, transferSeconds, transferTemperature, trim, truncate, unicode2str, union, unique, useStateData, uuid, versionUpgrade, waitUntil, watermark, xAjax, xFetch, xTimer };
+export { ANIMALS, BASE_CHAR_LOW, BASE_CHAR_UP, BASE_NUMBER, BLOOD_GROUP, BLOOD_GROUP_INFO, BS_COLORS, CODE_MSG, CONSTELLATION, CONTENT_TYPES, HttpMethod, ICONS, ID_CARD_PROVINCE, KEYBOARD_CODE, Loading, MAN, MONTHS, PY_MAPS, ROLES, Speaker, TRANSFER_STR, Toast, WEEKS, WOMAN, abs, add, addLongPressEvent, addSpace, all, any, appendLink, appendScript, arr2select, arrObj2objArr, arrayFill, arrayShuffle, arraySort, average, banConsole, base64Decode, base64Encode, bindMoreClick, buf2obj, calcCron, calcDate, calcFontSize, calculate, catchPromise, changeURL, checkFileExt, checkIdCard, checkPassWordLevel, checkUpdate, checkVersion, clearCookies, closeFullscreen, closeWebSocket, compareDate, contains, copyToClipboard, countdown, data2Arr, data2Obj, dataTo, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitEvent, emitKeyboardEvent, empty, encrypt, every, exportFile, findChildren, findMaxKey, findParents, float, forEach, forceToStr, formatBytes, formatDate, formatJSON, formatNumber, formatRh, getAge, getAnimal, getBSColor, getBaseURL, getBloodGroup, getConstellation, getContentType, getCookie, getCryptoJS, getDateDifference, getDateList, getDateTime, getDayInYear, getDecodeStorage, getFingerprint, getFirstVar, getKey, getLastVar, getLocalArr, getLocalObj, getMonthDayCount, getMonthInfo, getPercentage, getPinYin, getQueryString, getRandColor, getRandDate, getRandIp, getRandNum, getRandStr, getRandVar, getScrollPercent, getSearchParams, getSelectText, getSessionArr, getSessionObj, getSortVar, getStyleByName, getTimeCode, getType, getUTCTime, getUserAgent, getV, getVarSize, getViewportSize, getWebSocket, getWeekInfo, globalError, hasKey, hasSpecialChar, hideToast, html2str, inRange, initNotification, initWebSocket, insertAfter, intersection, inversion, isAccount, isAppleDevice, isArr, isArrayBuffer, isBankCard, isBlob, isBool, isBrowser, isCarCode, isChinese, isCreditCode, isDarkMode, isDate, isDecimal, isElement, isEmail, isEnglish, isEqual, isEven, isFn, isHttp, isInteger, isInvalidDate, isIpAddress, isIpv4, isIpv6, isJSON, isMobile, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPromise, isQQ, isRhNegative, isStr, isStrongPassWord, isTel, isUndef, isUrl, isWeekday, jsonClone, keyBoardResize, leftJoin, localStorageGet, localStorageSet, log, logRunTime, markNumber, marquee, maskString, md5, ms, obj2buf, observeResource, offDefaultEvent, onClick2MoreClick, onResize, openFileSelect, openFullscreen, printDom, px2rem, qsParse, qsStringify, removeCookie, repeat, retry, rightJoin, rip, round, same, scrollToView, scrollXTo, scrollYTo, sendNotification, sendWsMsg, sessionStorageGet, sessionStorageSet, setCookie, setEncodeStorage, setEventListener, setIcon, setWsBinaryType, sha1, sha256, showProcess, showToast, showVar, sleep, slugify, sortBy, sortCallBack, stackSticky, str2html, str2unicode, sub, textCamelCase, textSplitCase, textTransferCase, throttle, timeSince, times, to, toBool, toFormData, toNum, toQueryString, toStr, toggleClass, transferCSVData, transferFileToBase64, transferIdCard, transferMoney, transferNumber, transferScanStr, transferSeconds, transferTemperature, trim, truncate, unicode2str, union, unique, useStateData, uuid, versionUpgrade, waitUntil, watermark, xAjax, xFetch, xTimer };

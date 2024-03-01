@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-25 17:05:49
+ * @LastEditTime: 2024-03-01 17:10:01
  * @Description: 利用 dom 的一些函数
  * @FilePath: \js-xxx\src\Dom\index.ts
  */
@@ -951,4 +951,110 @@ export function disableConflictEvent(event: any) {
   }
   // true 防止此事件被进一步传播; false 允许此事件继续传播;
   return false;
+}
+
+/**
+ * 在打印预览中打印指定元素，并设置样式。
+ * @example
+ * printElement('#print-table', {
+ *   bodyStyle: {
+ *     padding: '10px',
+ *     backgroundColor: 'red',
+ *   },
+ * });
+ * @param selector - 要打印的元素的 CSS 选择器。
+ * @param styles - iframe 的 style 配置对象。
+ *   @property {any} style - iframe 的基本样式。
+ *   @property {any} bodyStyle - iframe 的 body 样式。
+ *   @property {any} htmlStyle - iframe 的 html 样式。
+ * @returns
+ */
+export function printDom(selector: string, styles?: { iframeStyle?: any; bodyStyle?: any; htmlStyle?: any }) {
+  // 获取需要打印的元素
+  const element = document.querySelector(selector);
+  if (!element) {
+    console.error(`Element with query selector ${selector} not found.`);
+    return;
+  }
+
+  // 创建打印的 iframe
+  const iframe: any = document.createElement('iframe');
+  // 设置 iframe 的样式
+  Object.assign(iframe.style, {
+    display: 'none',
+    width: '100%',
+    height: 'auto',
+    ...(styles?.iframeStyle || {}),
+  });
+  document.body.appendChild(iframe);
+
+  // 获取 iframe 的内置对象
+  const iframeDoc: any = iframe.contentDocument;
+  const iframeHtml = iframeDoc.documentElement;
+  const iframeHead = iframeDoc.head;
+  const iframeBody = iframeDoc.body;
+
+  // 获取元素需要的样式
+  const elementStyles = getComputedStyle(element);
+  // 将元素需要的样式添加到 iframe
+  for (let i = 0; i < elementStyles.length; i++) {
+    const styleName = elementStyles[i];
+    iframeBody.style[styleName] = elementStyles.getPropertyValue(styleName);
+  }
+
+  try {
+    // 获取元素所在页面上的样式
+    const styleSheets = Array.from(document.styleSheets).map((styleSheet) =>
+      Array.from(styleSheet.cssRules)
+        .map((cssRule) => cssRule.cssText)
+        .join('\n'),
+    );
+    // 将元素所在页面的样式添加到 iframe
+    const styleElement = document.createElement('style');
+    styleElement.innerHTML = styleSheets.join('\n');
+    iframeHead.appendChild(styleElement);
+  } catch (e) {
+    console.error(e);
+  }
+
+  // // 在媒体查询中设置打印时的背景样式
+  // const printStyles = `
+  //   @media print {
+  //     html {
+  //       background-color: white;
+  //     }
+  //     body {
+  //       padding: 10px;
+  //     }
+  //   }
+  // `;
+  // const printStyleElement = document.createElement('style');
+  // printStyleElement.innerHTML = printStyles;
+  // iframeHead.appendChild(printStyleElement);
+
+  // 获取元素的内容
+  const elementContent = element.outerHTML;
+  // 将元素的内容添加到 iframe
+  iframeBody.innerHTML = elementContent;
+
+  // 设置 iframe.body 和 iframe.html 的样式与添加自定义的一些样式
+  Object.assign(iframeBody.style, {
+    width: '100%',
+    height: 'auto',
+    ...(styles?.bodyStyle || {}),
+  });
+  Object.assign(iframeHtml.style, {
+    width: '100%',
+    height: 'auto',
+    ...(styles?.htmlStyle || {}),
+  });
+
+  // 执行打印
+  iframe.contentWindow.print();
+
+  // 打印完成后移除 iframe
+  setTimeout(() => {
+    document.body.removeChild(iframe);
+  }, 1000);
+  return iframe;
 }

@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:53:39
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-25 17:13:11
+ * @LastEditTime: 2024-03-01 17:15:03
  * @Description: 因项目需要常用函数，不管任何项目，都放到一起。注意甄别，没有复用意义的函数就不要添加了。
  * @FilePath: \js-xxx\src\Others\index.ts
  */
@@ -591,7 +591,7 @@ export function transferCSVData(fields: { label?: string; prop: string }[], data
  * @example
  * exportFile(data); /// 导出 txt 文件
  * exportFile(data, 'csv-导出文件测试', 'csv'); /// 导出 csv 文件
- * exportFile(document.getElementById('table_to_xls').outerHTML, 'excelWithStyle', 'xls'); /// 导出表格为带样式的 xls 文件
+ * exportFile(document.getElementById('table_to_xls').outerHTML, 'excelWithStyle', 'xls'); /// 导出表格为带样式的 excel xls 文件
  * exportFile('http://a.biugle.cn/img/cdn/dev/avatar/1.png', 'test', 'png'); /// 导出 png 文件
  * @param data 数据
  * @param fileName 文件名
