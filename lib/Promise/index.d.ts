@@ -11,12 +11,23 @@ export declare function sleep(milliseconds: number | undefined): Promise<void>;
  * promise 报错不会阻断后面的 Promise，适用于多个 await Promise 情况。
  * @example
  * to(Promise.resolve(1)); /// Promise.resolve(1)
+ * // 也可挂载在 Promise 原型上
  * @param promise promise
  * @param res 成功回调
  * @param rej 失败回调
  * @returns
  */
 export declare function to(promise: Promise<any>, res?: any, rej?: any): Promise<any>;
+/**
+ * 自定义封装 Promise 的 finally 方法，小程序使用。
+ * @example
+ * customFinally(Promise.resolve(1), () => console.log(1)); /// finally 回调
+ * // 也可挂载在 Promise 原型上
+ * @param promise 要封装的 Promise 对象
+ * @param onFinally finally 回调函数 (可选)
+ * @returns
+ */
+export declare function customFinally(promise: Promise<any>, onFinally?: any): Promise<any>;
 /**
  * Promise 重试
  * @example

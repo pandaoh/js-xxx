@@ -1,6 +1,6 @@
 js-xxx
 
-# js-xxx - v2.2.2
+# js-xxx - v2.2.3
 
 ## Table of contents
 
@@ -77,6 +77,7 @@ js-xxx
 - [contains](README.md#contains)
 - [copyToClipboard](README.md#copytoclipboard)
 - [countdown](README.md#countdown)
+- [customFinally](README.md#customfinally)
 - [data2Arr](README.md#data2arr)
 - [data2Obj](README.md#data2obj)
 - [dataTo](README.md#datato)
@@ -205,6 +206,8 @@ js-xxx
 - [isUndef](README.md#isundef)
 - [isUrl](README.md#isurl)
 - [isWeekday](README.md#isweekday)
+- [javaDecrypt](README.md#javadecrypt)
+- [javaEncrypt](README.md#javaencrypt)
 - [jsonClone](README.md#jsonclone)
 - [keyBoardResize](README.md#keyboardresize)
 - [leftJoin](README.md#leftjoin)
@@ -1708,6 +1711,32 @@ console.time('test'); countdown(10, (x) => console.log('--->', x), () => console
 #### Returns
 
 `any`
+
+___
+
+### customFinally
+
+▸ **customFinally**(`promise`, `onFinally?`): `Promise`<`any`\>
+
+自定义封装 Promise 的 finally 方法，小程序使用。
+
+**`Example`**
+
+```ts
+customFinally(Promise.resolve(1), () => console.log(1)); /// finally 回调
+// 也可挂载在 Promise 原型上
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `promise` | `Promise`<`any`\> | 要封装的 Promise 对象 |
+| `onFinally?` | `any` | finally 回调函数 (可选) |
+
+#### Returns
+
+`Promise`<`any`\>
 
 ___
 
@@ -5012,6 +5041,106 @@ isWorkDay(new Date()); /// true
 
 ___
 
+### javaDecrypt
+
+▸ **javaDecrypt**(`encryptedData`, `secretKey?`, `secretIv?`): `string`
+
+配合使用 Java 对称解密函数
+
+**`Example`**
+
+```ts
+javaEncrypt("需要加密的字符串"); /// 'SotKrdjNkEIvnQ0OBImYuViSs+WdpjjILvxE1UpNedA='
+javaDecrypt("SotKrdjNkEIvnQ0OBImYuViSs+WdpjjILvxE1UpNedA="); /// '需要加密的字符串'
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `encryptedData` | `string` | 待解密数据 |
+| `secretKey?` | `string` | 可选参数，密钥，若不传入则使用默认密钥 SECRET_KEY |
+| `secretIv?` | `string` | 可选参数，向量，若不传入则使用默认向量 SECRET_IV |
+
+#### Returns
+
+`string`
+
+___
+
+### javaEncrypt
+
+▸ **javaEncrypt**(`dataStr`, `secretKey?`, `secretIv?`): `string`
+
+配合使用 Java 加密算法对字符串进行对称加密
+
+**`Example`**
+
+```ts
+javaEncrypt("需要加密的字符串"); /// 'SotKrdjNkEIvnQ0OBImYuViSs+WdpjjILvxE1UpNedA='
+javaDecrypt("SotKrdjNkEIvnQ0OBImYuViSs+WdpjjILvxE1UpNedA="); /// '需要加密的字符串'
+// java 实例代码
+import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+
+public class EncryptionUtils {
+    private static final String SECRET_KEY = "自定义的密钥";
+    private static final String SECRET_IV = "自定义的偏移量";
+
+    public static String encrypt(String data, String secretKey, String secretIV) throws Exception {
+        SecretKeySpec secretKeySpec = new SecretKeySpec(secretKey.getBytes(StandardCharsets.UTF_8), "AES");
+        IvParameterSpec ivParameterSpec = new IvParameterSpec(secretIV.getBytes(StandardCharsets.UTF_8));
+
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, ivParameterSpec);
+
+        byte[] encryptedBytes = cipher.doFinal(data.getBytes(StandardCharsets.UTF_8));
+        return Base64.getEncoder().encodeToString(encryptedBytes);
+    }
+
+    public static String decrypt(String encryptedData) throws Exception {
+        SecretKeySpec secretKeySpec = new SecretKeySpec(SECRET_KEY.getBytes(StandardCharsets.UTF_8), "AES");
+        IvParameterSpec ivParameterSpec = new IvParameterSpec(SECRET_IV.getBytes(StandardCharsets.UTF_8));
+
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivParameterSpec);
+
+        byte[] encryptedBytes = Base64.getDecoder().decode(encryptedData);
+        byte[] decryptedBytes = cipher.doFinal(encryptedBytes);
+        return new String(decryptedBytes, StandardCharsets.UTF_8);
+    }
+
+    public static void main(String[] args) {
+        try {
+            String encryptedData = encrypt("需要加密的字符串", SECRET_KEY, SECRET_IV);
+            System.out.println("Encrypted data: " + encryptedData); // SotKrdjNkEIvnQ0OBImYuViSs+WdpjjILvxE1UpNedA=
+
+            String decryptedData = decrypt(encryptedData);
+            System.out.println("Decrypted data: " + decryptedData); // 需要加密的字符串
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `dataStr` | `string` | 待加密的字符串 |
+| `secretKey?` | `string` | 可选的加密密钥，默认为 SECRET_KEY |
+| `secretIv?` | `string` | 可选的加密向量，默认为 SECRET_IV |
+
+#### Returns
+
+`string`
+
+___
+
 ### jsonClone
 
 ▸ **jsonClone**(`value`): `any`
@@ -6634,6 +6763,7 @@ promise 报错不会阻断后面的 Promise，适用于多个 await Promise 情�
 
 ```ts
 to(Promise.resolve(1)); /// Promise.resolve(1)
+// 也可挂载在 Promise 原型上
 ```
 
 #### Parameters

@@ -7381,14 +7381,7 @@ var rabbitLegacy = {exports: {}};
 
 var CryptoJS = cryptoJs.exports;
 
-/*
- * @Author: HxB
- * @Date: 2022-04-26 15:54:41
- * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-22 09:56:42
- * @Description: 加密相关函数 依赖 crypto-js
- * @FilePath: \js-xxx\src\Crypto\index.ts
- */
+/* eslint-disable spellcheck/spell-checker */
 // 十六位十六进制数作为密钥
 var SECRET_KEY = CryptoJS.enc.Utf8.parse('1998092819980608');
 // 十六位十六进制数作为密钥偏移量
@@ -7434,7 +7427,6 @@ function encrypt(data, secretKey, secretIv) {
     });
     return encrypted.ciphertext.toString();
 }
-// eslint-disable-next-line spellcheck/spell-checker
 /**
  * 解密函数
  * 防君子不防小人，也可以通过后台获取密钥。
@@ -7471,6 +7463,98 @@ function decrypt(dataStr, jsonDecode, secretKey, secretIv) {
     var decryptedStr = decrypt.toString(CryptoJS.enc.Utf8);
     var result = decryptedStr.toString();
     return jsonDecode ? JSON.parse(result) : result;
+}
+/**
+ * 配合使用 Java 加密算法对字符串进行对称加密
+ * @example
+ * javaEncrypt("需要加密的字符串"); /// 'SotKrdjNkEIvnQ0OBImYuViSs+WdpjjILvxE1UpNedA='
+ * javaDecrypt("SotKrdjNkEIvnQ0OBImYuViSs+WdpjjILvxE1UpNedA="); /// '需要加密的字符串'
+ * // java 实例代码
+ * import javax.crypto.Cipher;
+ * import javax.crypto.spec.IvParameterSpec;
+ * import javax.crypto.spec.SecretKeySpec;
+ * import java.nio.charset.StandardCharsets;
+ * import java.util.Base64;
+ *
+ * public class EncryptionUtils {
+ *     private static final String SECRET_KEY = "自定义的密钥";
+ *     private static final String SECRET_IV = "自定义的偏移量";
+ *
+ *     public static String encrypt(String data, String secretKey, String secretIV) throws Exception {
+ *         SecretKeySpec secretKeySpec = new SecretKeySpec(secretKey.getBytes(StandardCharsets.UTF_8), "AES");
+ *         IvParameterSpec ivParameterSpec = new IvParameterSpec(secretIV.getBytes(StandardCharsets.UTF_8));
+ *
+ *         Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+ *         cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, ivParameterSpec);
+ *
+ *         byte[] encryptedBytes = cipher.doFinal(data.getBytes(StandardCharsets.UTF_8));
+ *         return Base64.getEncoder().encodeToString(encryptedBytes);
+ *     }
+ *
+ *     public static String decrypt(String encryptedData) throws Exception {
+ *         SecretKeySpec secretKeySpec = new SecretKeySpec(SECRET_KEY.getBytes(StandardCharsets.UTF_8), "AES");
+ *         IvParameterSpec ivParameterSpec = new IvParameterSpec(SECRET_IV.getBytes(StandardCharsets.UTF_8));
+ *
+ *         Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+ *         cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivParameterSpec);
+ *
+ *         byte[] encryptedBytes = Base64.getDecoder().decode(encryptedData);
+ *         byte[] decryptedBytes = cipher.doFinal(encryptedBytes);
+ *         return new String(decryptedBytes, StandardCharsets.UTF_8);
+ *     }
+ *
+ *     public static void main(String[] args) {
+ *         try {
+ *             String encryptedData = encrypt("需要加密的字符串", SECRET_KEY, SECRET_IV);
+ *             System.out.println("Encrypted data: " + encryptedData); // SotKrdjNkEIvnQ0OBImYuViSs+WdpjjILvxE1UpNedA=
+ *
+ *             String decryptedData = decrypt(encryptedData);
+ *             System.out.println("Decrypted data: " + decryptedData); // 需要加密的字符串
+ *         } catch (Exception e) {
+ *             e.printStackTrace();
+ *         }
+ *     }
+ * }
+ * @param dataStr 待加密的字符串
+ * @param secretKey 可选的加密密钥，默认为 SECRET_KEY
+ * @param secretIv 可选的加密向量，默认为 SECRET_IV
+ * @returns
+ */
+function javaEncrypt(dataStr, secretKey, secretIv) {
+    if (!dataStr) {
+        return '';
+    }
+    var key = !secretKey ? SECRET_KEY : CryptoJS.enc.Utf8.parse(secretKey);
+    var iv = !secretIv ? SECRET_IV : CryptoJS.enc.Utf8.parse(secretIv);
+    var encrypted = CryptoJS.AES.encrypt(dataStr, key, {
+        iv: iv,
+        mode: CryptoJS.mode.CBC,
+        padding: CryptoJS.pad.Pkcs7,
+    });
+    return encrypted.toString();
+}
+/**
+ * 配合使用 Java 对称解密函数
+ * @example
+ * javaEncrypt("需要加密的字符串"); /// 'SotKrdjNkEIvnQ0OBImYuViSs+WdpjjILvxE1UpNedA='
+ * javaDecrypt("SotKrdjNkEIvnQ0OBImYuViSs+WdpjjILvxE1UpNedA="); /// '需要加密的字符串'
+ * @param encryptedData 待解密数据
+ * @param secretKey 可选参数，密钥，若不传入则使用默认密钥 SECRET_KEY
+ * @param secretIv 可选参数，向量，若不传入则使用默认向量 SECRET_IV
+ * @returns
+ */
+function javaDecrypt(encryptedData, secretKey, secretIv) {
+    if (!encryptedData) {
+        return '';
+    }
+    var key = !secretKey ? SECRET_KEY : CryptoJS.enc.Utf8.parse(secretKey);
+    var iv = !secretIv ? SECRET_IV : CryptoJS.enc.Utf8.parse(secretIv);
+    var decrypted = CryptoJS.AES.decrypt(encryptedData, key, {
+        iv: iv,
+        mode: CryptoJS.mode.CBC,
+        padding: CryptoJS.pad.Pkcs7,
+    });
+    return decrypted.toString(CryptoJS.enc.Utf8);
 }
 /**
  * md5 加密函数
@@ -14244,7 +14328,7 @@ function transferTemperature(temperature, isCelsius, addSuffix) {
  * @Author: HxB
  * @Date: 2022-04-26 15:18:13
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-22 13:44:27
+ * @LastEditTime: 2024-03-21 10:30:16
  * @Description: Promise 常用函数，或者扩展函数。
  * @FilePath: \js-xxx\src\Promise\index.ts
  */
@@ -14263,6 +14347,7 @@ function sleep(milliseconds) {
  * promise 报错不会阻断后面的 Promise，适用于多个 await Promise 情况。
  * @example
  * to(Promise.resolve(1)); /// Promise.resolve(1)
+ * // 也可挂载在 Promise 原型上
  * @param promise promise
  * @param res 成功回调
  * @param rej 失败回调
@@ -14277,6 +14362,26 @@ function to(promise, res, rej) {
         .catch(function (e) {
         rej && rej(e);
         console.log('js-xxx:toError--->', e);
+    });
+}
+/**
+ * 自定义封装 Promise 的 finally 方法，小程序使用。
+ * @example
+ * customFinally(Promise.resolve(1), () => console.log(1)); /// finally 回调
+ * // 也可挂载在 Promise 原型上
+ * @param promise 要封装的 Promise 对象
+ * @param onFinally finally 回调函数 (可选)
+ * @returns
+ */
+function customFinally(promise, onFinally) {
+    return promise.then(function (value) {
+        // 在 Promise 被 resolved 后执行 finally 回调，并将 resolved 值传递下去
+        return Promise.resolve(onFinally && onFinally()).then(function () { return value; });
+    }, function (reason) {
+        // 在 Promise 被 rejected 后执行 finally 回调，并将原始的 rejected 值抛出
+        return Promise.resolve(onFinally && onFinally()).then(function () {
+            throw reason;
+        });
     });
 }
 /**
@@ -14658,12 +14763,12 @@ function Loading(msg) {
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-18 09:57:02
+ * @LastEditTime: 2024-03-01 17:30:30
  * @Description: websocket
  * @FilePath: \js-xxx\src\WebSocket\index.ts
  */
 var xWebSocket;
-// 用于设置 websocket 连接超时问题 timeout
+// 用于设置 websocket 连接超时问题 timeout 计时器
 var xWebSocketTimer;
 // eslint-disable-next-line spellcheck/spell-checker
 /**
@@ -14840,4 +14945,4 @@ function getWebSocket() {
     return xWebSocket;
 }
 
-export { ANIMALS, BASE_CHAR_LOW, BASE_CHAR_UP, BASE_NUMBER, BLOOD_GROUP, BLOOD_GROUP_INFO, BS_COLORS, CODE_MSG, CONSTELLATION, CONTENT_TYPES, HttpMethod, ICONS, ID_CARD_PROVINCE, KEYBOARD_CODE, Loading, MAN, MONTHS, PY_MAPS, ROLES, Speaker, TRANSFER_STR, Toast, WEEKS, WOMAN, abs, add, addLongPressEvent, addSpace, all, any, appendLink, appendScript, arr2select, arrObj2objArr, arrayFill, arrayShuffle, arraySort, average, banConsole, base64Decode, base64Encode, bindMoreClick, buf2obj, calcCron, calcDate, calcFontSize, calculate, catchPromise, changeURL, checkFileExt, checkIdCard, checkPassWordLevel, checkUpdate, checkVersion, clearCookies, closeFullscreen, closeWebSocket, compareDate, contains, copyToClipboard, countdown, data2Arr, data2Obj, dataTo, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitEvent, emitKeyboardEvent, empty, encrypt, every, exportFile, findChildren, findMaxKey, findParents, float, forEach, forceToStr, formatBytes, formatDate, formatJSON, formatNumber, formatRh, getAge, getAnimal, getBSColor, getBaseURL, getBloodGroup, getConstellation, getContentType, getCookie, getCryptoJS, getDateDifference, getDateList, getDateTime, getDayInYear, getDecodeStorage, getFingerprint, getFirstVar, getKey, getLastVar, getLocalArr, getLocalObj, getMonthDayCount, getMonthInfo, getPercentage, getPinYin, getQueryString, getRandColor, getRandDate, getRandIp, getRandNum, getRandStr, getRandVar, getScrollPercent, getSearchParams, getSelectText, getSessionArr, getSessionObj, getSortVar, getStyleByName, getTimeCode, getType, getUTCTime, getUserAgent, getV, getVarSize, getViewportSize, getWebSocket, getWeekInfo, globalError, hasKey, hasSpecialChar, hideToast, html2str, inRange, initNotification, initWebSocket, insertAfter, intersection, inversion, isAccount, isAppleDevice, isArr, isArrayBuffer, isBankCard, isBlob, isBool, isBrowser, isCarCode, isChinese, isCreditCode, isDarkMode, isDate, isDecimal, isElement, isEmail, isEnglish, isEqual, isEven, isFn, isHttp, isInteger, isInvalidDate, isIpAddress, isIpv4, isIpv6, isJSON, isMobile, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPromise, isQQ, isRhNegative, isStr, isStrongPassWord, isTel, isUndef, isUrl, isWeekday, jsonClone, keyBoardResize, leftJoin, localStorageGet, localStorageSet, log, logRunTime, markNumber, marquee, maskString, md5, ms, obj2buf, observeResource, offDefaultEvent, onClick2MoreClick, onResize, openFileSelect, openFullscreen, printDom, px2rem, qsParse, qsStringify, removeCookie, repeat, retry, rightJoin, rip, round, same, scrollToView, scrollXTo, scrollYTo, sendNotification, sendWsMsg, sessionStorageGet, sessionStorageSet, setCookie, setEncodeStorage, setEventListener, setIcon, setWsBinaryType, sha1, sha256, showProcess, showToast, showVar, sleep, slugify, sortBy, sortCallBack, stackSticky, str2html, str2unicode, sub, textCamelCase, textSplitCase, textTransferCase, throttle, timeSince, times, to, toBool, toFormData, toNum, toQueryString, toStr, toggleClass, transferCSVData, transferFileToBase64, transferIdCard, transferMoney, transferNumber, transferScanStr, transferSeconds, transferTemperature, trim, truncate, unicode2str, union, unique, useStateData, uuid, versionUpgrade, waitUntil, watermark, xAjax, xFetch, xTimer };
+export { ANIMALS, BASE_CHAR_LOW, BASE_CHAR_UP, BASE_NUMBER, BLOOD_GROUP, BLOOD_GROUP_INFO, BS_COLORS, CODE_MSG, CONSTELLATION, CONTENT_TYPES, HttpMethod, ICONS, ID_CARD_PROVINCE, KEYBOARD_CODE, Loading, MAN, MONTHS, PY_MAPS, ROLES, Speaker, TRANSFER_STR, Toast, WEEKS, WOMAN, abs, add, addLongPressEvent, addSpace, all, any, appendLink, appendScript, arr2select, arrObj2objArr, arrayFill, arrayShuffle, arraySort, average, banConsole, base64Decode, base64Encode, bindMoreClick, buf2obj, calcCron, calcDate, calcFontSize, calculate, catchPromise, changeURL, checkFileExt, checkIdCard, checkPassWordLevel, checkUpdate, checkVersion, clearCookies, closeFullscreen, closeWebSocket, compareDate, contains, copyToClipboard, countdown, customFinally, data2Arr, data2Obj, dataTo, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitEvent, emitKeyboardEvent, empty, encrypt, every, exportFile, findChildren, findMaxKey, findParents, float, forEach, forceToStr, formatBytes, formatDate, formatJSON, formatNumber, formatRh, getAge, getAnimal, getBSColor, getBaseURL, getBloodGroup, getConstellation, getContentType, getCookie, getCryptoJS, getDateDifference, getDateList, getDateTime, getDayInYear, getDecodeStorage, getFingerprint, getFirstVar, getKey, getLastVar, getLocalArr, getLocalObj, getMonthDayCount, getMonthInfo, getPercentage, getPinYin, getQueryString, getRandColor, getRandDate, getRandIp, getRandNum, getRandStr, getRandVar, getScrollPercent, getSearchParams, getSelectText, getSessionArr, getSessionObj, getSortVar, getStyleByName, getTimeCode, getType, getUTCTime, getUserAgent, getV, getVarSize, getViewportSize, getWebSocket, getWeekInfo, globalError, hasKey, hasSpecialChar, hideToast, html2str, inRange, initNotification, initWebSocket, insertAfter, intersection, inversion, isAccount, isAppleDevice, isArr, isArrayBuffer, isBankCard, isBlob, isBool, isBrowser, isCarCode, isChinese, isCreditCode, isDarkMode, isDate, isDecimal, isElement, isEmail, isEnglish, isEqual, isEven, isFn, isHttp, isInteger, isInvalidDate, isIpAddress, isIpv4, isIpv6, isJSON, isMobile, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPromise, isQQ, isRhNegative, isStr, isStrongPassWord, isTel, isUndef, isUrl, isWeekday, javaDecrypt, javaEncrypt, jsonClone, keyBoardResize, leftJoin, localStorageGet, localStorageSet, log, logRunTime, markNumber, marquee, maskString, md5, ms, obj2buf, observeResource, offDefaultEvent, onClick2MoreClick, onResize, openFileSelect, openFullscreen, printDom, px2rem, qsParse, qsStringify, removeCookie, repeat, retry, rightJoin, rip, round, same, scrollToView, scrollXTo, scrollYTo, sendNotification, sendWsMsg, sessionStorageGet, sessionStorageSet, setCookie, setEncodeStorage, setEventListener, setIcon, setWsBinaryType, sha1, sha256, showProcess, showToast, showVar, sleep, slugify, sortBy, sortCallBack, stackSticky, str2html, str2unicode, sub, textCamelCase, textSplitCase, textTransferCase, throttle, timeSince, times, to, toBool, toFormData, toNum, toQueryString, toStr, toggleClass, transferCSVData, transferFileToBase64, transferIdCard, transferMoney, transferNumber, transferScanStr, transferSeconds, transferTemperature, trim, truncate, unicode2str, union, unique, useStateData, uuid, versionUpgrade, waitUntil, watermark, xAjax, xFetch, xTimer };

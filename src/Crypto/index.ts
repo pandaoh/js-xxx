@@ -1,8 +1,9 @@
+/* eslint-disable spellcheck/spell-checker */
 /*
  * @Author: HxB
  * @Date: 2022-04-26 15:54:41
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-22 09:56:42
+ * @LastEditTime: 2024-03-21 10:16:11
  * @Description: 加密相关函数 依赖 crypto-js
  * @FilePath: \js-xxx\src\Crypto\index.ts
  */
@@ -54,7 +55,6 @@ export function encrypt(data: any, secretKey?: string, secretIv?: string): strin
   return encrypted.ciphertext.toString();
 }
 
-// eslint-disable-next-line spellcheck/spell-checker
 /**
  * 解密函数
  * 防君子不防小人，也可以通过后台获取密钥。
@@ -90,6 +90,106 @@ export function decrypt(dataStr: string, jsonDecode = false, secretKey?: string,
   const decryptedStr = decrypt.toString(CryptoJS.enc.Utf8);
   const result = decryptedStr.toString();
   return jsonDecode ? JSON.parse(result) : result;
+}
+
+/**
+ * 配合使用 Java 加密算法对字符串进行对称加密
+ * @example
+ * javaEncrypt("需要加密的字符串"); /// 'SotKrdjNkEIvnQ0OBImYuViSs+WdpjjILvxE1UpNedA='
+ * javaDecrypt("SotKrdjNkEIvnQ0OBImYuViSs+WdpjjILvxE1UpNedA="); /// '需要加密的字符串'
+ * // java 实例代码
+ * import javax.crypto.Cipher;
+ * import javax.crypto.spec.IvParameterSpec;
+ * import javax.crypto.spec.SecretKeySpec;
+ * import java.nio.charset.StandardCharsets;
+ * import java.util.Base64;
+ *
+ * public class EncryptionUtils {
+ *     private static final String SECRET_KEY = "自定义的密钥";
+ *     private static final String SECRET_IV = "自定义的偏移量";
+ *
+ *     public static String encrypt(String data, String secretKey, String secretIV) throws Exception {
+ *         SecretKeySpec secretKeySpec = new SecretKeySpec(secretKey.getBytes(StandardCharsets.UTF_8), "AES");
+ *         IvParameterSpec ivParameterSpec = new IvParameterSpec(secretIV.getBytes(StandardCharsets.UTF_8));
+ *
+ *         Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+ *         cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, ivParameterSpec);
+ *
+ *         byte[] encryptedBytes = cipher.doFinal(data.getBytes(StandardCharsets.UTF_8));
+ *         return Base64.getEncoder().encodeToString(encryptedBytes);
+ *     }
+ *
+ *     public static String decrypt(String encryptedData) throws Exception {
+ *         SecretKeySpec secretKeySpec = new SecretKeySpec(SECRET_KEY.getBytes(StandardCharsets.UTF_8), "AES");
+ *         IvParameterSpec ivParameterSpec = new IvParameterSpec(SECRET_IV.getBytes(StandardCharsets.UTF_8));
+ *
+ *         Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+ *         cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivParameterSpec);
+ *
+ *         byte[] encryptedBytes = Base64.getDecoder().decode(encryptedData);
+ *         byte[] decryptedBytes = cipher.doFinal(encryptedBytes);
+ *         return new String(decryptedBytes, StandardCharsets.UTF_8);
+ *     }
+ *
+ *     public static void main(String[] args) {
+ *         try {
+ *             String encryptedData = encrypt("需要加密的字符串", SECRET_KEY, SECRET_IV);
+ *             System.out.println("Encrypted data: " + encryptedData); // SotKrdjNkEIvnQ0OBImYuViSs+WdpjjILvxE1UpNedA=
+ *
+ *             String decryptedData = decrypt(encryptedData);
+ *             System.out.println("Decrypted data: " + decryptedData); // 需要加密的字符串
+ *         } catch (Exception e) {
+ *             e.printStackTrace();
+ *         }
+ *     }
+ * }
+ * @param dataStr 待加密的字符串
+ * @param secretKey 可选的加密密钥，默认为 SECRET_KEY
+ * @param secretIv 可选的加密向量，默认为 SECRET_IV
+ * @returns
+ */
+export function javaEncrypt(dataStr: string, secretKey?: string, secretIv?: string) {
+  if (!dataStr) {
+    return '';
+  }
+
+  const key = !secretKey ? SECRET_KEY : CryptoJS.enc.Utf8.parse(secretKey);
+  const iv = !secretIv ? SECRET_IV : CryptoJS.enc.Utf8.parse(secretIv);
+
+  const encrypted = CryptoJS.AES.encrypt(dataStr, key, {
+    iv: iv,
+    mode: CryptoJS.mode.CBC,
+    padding: CryptoJS.pad.Pkcs7,
+  });
+
+  return encrypted.toString();
+}
+
+/**
+ * 配合使用 Java 对称解密函数
+ * @example
+ * javaEncrypt("需要加密的字符串"); /// 'SotKrdjNkEIvnQ0OBImYuViSs+WdpjjILvxE1UpNedA='
+ * javaDecrypt("SotKrdjNkEIvnQ0OBImYuViSs+WdpjjILvxE1UpNedA="); /// '需要加密的字符串'
+ * @param encryptedData 待解密数据
+ * @param secretKey 可选参数，密钥，若不传入则使用默认密钥 SECRET_KEY
+ * @param secretIv 可选参数，向量，若不传入则使用默认向量 SECRET_IV
+ * @returns
+ */
+export function javaDecrypt(encryptedData: string, secretKey?: string, secretIv?: string) {
+  if (!encryptedData) {
+    return '';
+  }
+
+  const key = !secretKey ? SECRET_KEY : CryptoJS.enc.Utf8.parse(secretKey);
+  const iv = !secretIv ? SECRET_IV : CryptoJS.enc.Utf8.parse(secretIv);
+
+  const decrypted = CryptoJS.AES.decrypt(encryptedData, key, {
+    iv: iv,
+    mode: CryptoJS.mode.CBC,
+    padding: CryptoJS.pad.Pkcs7,
+  });
+
+  return decrypted.toString(CryptoJS.enc.Utf8);
 }
 
 /**

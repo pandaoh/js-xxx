@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:18:13
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-22 13:44:27
+ * @LastEditTime: 2024-03-21 10:30:16
  * @Description: Promise 常用函数，或者扩展函数。
  * @FilePath: \js-xxx\src\Promise\index.ts
  */
@@ -23,6 +23,7 @@ export function sleep(milliseconds: number | undefined): Promise<void> {
  * promise 报错不会阻断后面的 Promise，适用于多个 await Promise 情况。
  * @example
  * to(Promise.resolve(1)); /// Promise.resolve(1)
+ * // 也可挂载在 Promise 原型上
  * @param promise promise
  * @param res 成功回调
  * @param rej 失败回调
@@ -38,6 +39,30 @@ export function to(promise: Promise<any>, res?: any, rej?: any): Promise<any> {
       rej && rej(e);
       console.log('js-xxx:toError--->', e);
     });
+}
+
+/**
+ * 自定义封装 Promise 的 finally 方法，小程序使用。
+ * @example
+ * customFinally(Promise.resolve(1), () => console.log(1)); /// finally 回调
+ * // 也可挂载在 Promise 原型上
+ * @param promise 要封装的 Promise 对象
+ * @param onFinally finally 回调函数 (可选)
+ * @returns
+ */
+export function customFinally(promise: Promise<any>, onFinally?: any): Promise<any> {
+  return promise.then(
+    (value: any) => {
+      // 在 Promise 被 resolved 后执行 finally 回调，并将 resolved 值传递下去
+      return Promise.resolve(onFinally && onFinally()).then(() => value);
+    },
+    (reason: any) => {
+      // 在 Promise 被 rejected 后执行 finally 回调，并将原始的 rejected 值抛出
+      return Promise.resolve(onFinally && onFinally()).then(() => {
+        throw reason;
+      });
+    },
+  );
 }
 
 /**
