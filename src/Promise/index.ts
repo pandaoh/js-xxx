@@ -2,13 +2,13 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:18:13
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-03-21 10:30:16
+ * @LastEditTime: 2024-03-21 10:38:46
  * @Description: Promise 常用函数，或者扩展函数。
  * @FilePath: \js-xxx\src\Promise\index.ts
  */
 
 /**
- * 睡眠
+ * 睡眠指定时间
  * @example
  * await sleep(1000); /// 等待 1000 毫秒再执行后面的
  * @param milliseconds 睡眠时间
