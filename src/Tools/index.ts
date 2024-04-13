@@ -4,7 +4,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-18 09:31:16
+ * @LastEditTime: 2024-04-13 11:16:23
  * @Description: 工具函数
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
@@ -1804,28 +1804,28 @@ export function xTimer(callback: any, time = 0, once = false, immediate = false)
   }
 }
 
-// /**
-//  * -函数柯里化-
-//  * 是把接受多个参数的函数变换成接受一个单一参数(最初函数的第一个参数)的函数，并且返回接受余下的参数且返回结果的新函数的技术。
-//  * @noExample
-//  * curryIt(function (a, b, c) {return a + b + c})(1)(2)(3); /// 6
-//  * @param fn 函数
-//  * @noReturns
-//  */
-// exportNo function curryIt(fn: any) {
-//   // 获取预定义函数的参数个数
-//   let length = fn.length;
-//   // 声明存放参数的数组
-//   const args: any[] = [];
-//   return function (arg: any) {
-//     args.push(arg);
-//     length--;
-//     if (length <= 0) {
-//       // @ts-ignore
-//       return fn.apply(this, args);
-//     } else {
-//       // callee 属性是一个指针，指向拥有这个 arguments 对象的函数。
-//       return arguments.callee;
-//     }
-//   };
-// }
+/**
+ * -函数柯里化-
+ * 是把接受多个参数的函数变换成接受一个单一参数(最初函数的第一个参数)的函数，并且返回接受余下的参数且返回结果的新函数的技术。
+ * @example
+ * curryIt(function (a, b, c) {return a + b + c})(1)(2)(3); /// 6
+ * @param fn 函数
+ * @returns
+ */
+export function curryIt(fn: any) {
+  // 获取预定义函数的参数个数
+  let length = fn.length;
+  // 声明存放参数的数组
+  const args: any[] = [];
+  return function (arg: any) {
+    args.push(arg);
+    length--;
+    if (length <= 0) {
+      // @ts-ignore
+      return fn.apply(this, args);
+    } else {
+      // callee 属性是一个指针，指向拥有这个 arguments 对象的函数。
+      return arguments.callee;
+    }
+  };
+}

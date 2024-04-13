@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:45:48
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-10-10 16:11:18
+ * @LastEditTime: 2024-04-13 11:14:52
  * @Description: 字符串常用函数
  * @FilePath: \js-xxx\src\String\index.ts
  */
@@ -796,21 +796,29 @@ export function getPinYin(str: string, extractFirst = false) {
 
 /**
  * 强制转换扫描字符串的特殊字符
- * `/(=)|(<)|(>)|(&)|(%)|(#)|(@)|(~)/g`
+ * `/(=)|(<)|(>)|(《)|(》)|(&)|(%)|(\^)|(!)|(~)|(#)|(@)|(:)|(\s)|(')|(")|(‘)|(’)|(“)|(”)/g`
  * @example
  * transferScanStr('=900182201234500'); /// '900182201234500'
  * transferScanStr('=<E5433000'); /// 'E5433000'
- * transferScanStr('@123'); /// '123'
- * transferScanStr('#test~'); /// 'test'
+ * transferScanStr('@123', true); /// '123'
+ * transferScanStr('#te st~ ', true); /// 'test'
  * transferScanStr(undefined); /// ''
  * @param value 值
+ * @param higherReplace 严格替换
  * @returns
  */
-export function transferScanStr(value: string): string {
+export function transferScanStr(value: string, higherReplace = false): string {
   if (!value) {
     return '';
   }
-  return `${value}`.replace(/(=)|(<)|(>)|(&)|(%)|(#)|(@)|(~)/g, '');
+  value = trim(`${value}`);
+  if (higherReplace) {
+    return `${value}`.replace(
+      /(=)|(<)|(>)|(《)|(》)|(&)|(%)|(\^)|(!)|(~)|(#)|(@)|(:)|(\s)|(')|(")|(‘)|(’)|(“)|(”)/g,
+      '',
+    );
+  }
+  return `${value}`.replace(/(=)|(<)|(>)|(《)|(》)|(&)|(%)|(\^)|(!)|(~)/g, '');
 }
 
 /**

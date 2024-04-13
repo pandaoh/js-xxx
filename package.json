@@ -1,6 +1,6 @@
 {
   "name": "js-xxx",
-  "version": "2.2.3",
+  "version": "2.2.5",
   "description": "前端 JavaScript 常用函数/工具/方法库",
   "main": "lib/index.js",
   "module": "es/index.js",
