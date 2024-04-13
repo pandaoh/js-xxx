@@ -1,5 +1,5 @@
 /**
- * 睡眠
+ * 睡眠指定时间
  * @example
  * await sleep(1000); /// 等待 1000 毫秒再执行后面的
  * @param milliseconds 睡眠时间

@@ -328,17 +328,18 @@ export declare function checkPassWordLevel(passWord: string): 1 | 2 | 3 | 4 | 5 
 export declare function getPinYin(str: string, extractFirst?: boolean): string;
 /**
  * 强制转换扫描字符串的特殊字符
- * `/(=)|(<)|(>)|(&)|(%)|(#)|(@)|(~)/g`
+ * `/(=)|(<)|(>)|(《)|(》)|(&)|(%)|(\^)|(!)|(~)|(#)|(@)|(:)|(\s)|(')|(")|(‘)|(’)|(“)|(”)/g`
  * @example
  * transferScanStr('=900182201234500'); /// '900182201234500'
  * transferScanStr('=<E5433000'); /// 'E5433000'
- * transferScanStr('@123'); /// '123'
- * transferScanStr('#test~'); /// 'test'
+ * transferScanStr('@123', true); /// '123'
+ * transferScanStr('#te st~ ', true); /// 'test'
  * transferScanStr(undefined); /// ''
  * @param value 值
+ * @param higherReplace 严格替换
  * @returns
  */
-export declare function transferScanStr(value: string): string;
+export declare function transferScanStr(value: string, higherReplace?: boolean): string;
 /**
  * 强制给字符串添加空格间隔
  * @example

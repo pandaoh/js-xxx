@@ -1,6 +1,6 @@
 js-xxx
 
-# js-xxx - v2.2.3
+# js-xxx - v2.2.5
 
 ## Table of contents
 
@@ -77,6 +77,7 @@ js-xxx
 - [contains](README.md#contains)
 - [copyToClipboard](README.md#copytoclipboard)
 - [countdown](README.md#countdown)
+- [curryIt](README.md#curryit)
 - [customFinally](README.md#customfinally)
 - [data2Arr](README.md#data2arr)
 - [data2Obj](README.md#data2obj)
@@ -1709,6 +1710,43 @@ console.time('test'); countdown(10, (x) => console.log('--->', x), () => console
 | `finishCallBack?` | `any` | 完成回调函数 |
 
 #### Returns
+
+`any`
+
+___
+
+### curryIt
+
+▸ **curryIt**(`fn`): (`arg`: `any`) => `any`
+
+-函数柯里化-
+是把接受多个参数的函数变换成接受一个单一参数(最初函数的第一个参数)的函数，并且返回接受余下的参数且返回结果的新函数的技术。
+
+**`Example`**
+
+```ts
+curryIt(function (a, b, c) {return a + b + c})(1)(2)(3); /// 6
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `fn` | `any` | 函数 |
+
+#### Returns
+
+`fn`
+
+▸ (`arg`): `any`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `arg` | `any` |
+
+##### Returns
 
 `any`
 
@@ -6384,7 +6422,7 @@ ___
 
 ▸ **sleep**(`milliseconds`): `Promise`<`void`\>
 
-睡眠
+睡眠指定时间
 
 **`Example`**
 
@@ -7082,26 +7120,27 @@ ___
 
 ### transferScanStr
 
-▸ **transferScanStr**(`value`): `string`
+▸ **transferScanStr**(`value`, `higherReplace?`): `string`
 
 强制转换扫描字符串的特殊字符
-`/(=)|(<)|(>)|(&)|(%)|(#)|(@)|(~)/g`
+`/(=)|(<)|(>)|(《)|(》)|(&)|(%)|(\^)|(!)|(~)|(#)|(@)|(:)|(\s)|(')|(")|(‘)|(’)|(“)|(”)/g`
 
 **`Example`**
 
 ```ts
 transferScanStr('=900182201234500'); /// '900182201234500'
 transferScanStr('=<E5433000'); /// 'E5433000'
-transferScanStr('@123'); /// '123'
-transferScanStr('#test~'); /// 'test'
+transferScanStr('@123', true); /// '123'
+transferScanStr('#te st~ ', true); /// 'test'
 transferScanStr(undefined); /// ''
 ```
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `value` | `string` | 值 |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `value` | `string` | `undefined` | 值 |
+| `higherReplace` | `boolean` | `false` | 严格替换 |
 
 #### Returns
 
