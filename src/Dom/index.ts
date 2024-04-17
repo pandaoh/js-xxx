@@ -955,6 +955,7 @@ export function disableConflictEvent(event: any) {
 
 /**
  * 在打印预览中打印指定元素，并设置样式。
+ * 需在浏览器打印设置众-更多设置-开启背景与图形打印选项
  * @example
  * printElement('#print-table', {
  *   bodyStyle: {
