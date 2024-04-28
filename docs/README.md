@@ -5764,7 +5764,7 @@ ___
 
 ```ts
 qsParse('start=0&count=20&x=1&x=2&x=3', 'x'); /// [1, 2, 3]
-qsParse('http://a.cn/123/teststart=0&count=20&x=1&x=2&x=3#123'); /// { start: '0', count: '20', x: [1, 2, 3], '#': 123, '_': 'test', '/': 'test?start=0&count=20&x=1&x=2&x=3#123' }
+qsParse('http://a.cn/123/test?start=0&count=20&x=1&x=2&x=3#123'); /// { start: '0', count: '20', x: [1, 2, 3], '#': 123, '_': 'test', '/': 'test?start=0&count=20&x=1&x=2&x=3#123' }
 ```
 
 ___
