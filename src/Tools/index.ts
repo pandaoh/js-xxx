@@ -1813,19 +1813,28 @@ export function xTimer(callback: any, time = 0, once = false, immediate = false)
  * @returns
  */
 export function curryIt(fn: any) {
-  // 获取预定义函数的参数个数
-  let length = fn.length;
-  // 声明存放参数的数组
-  const args: any[] = [];
-  return function (arg: any) {
-    args.push(arg);
-    length--;
-    if (length <= 0) {
-      // @ts-ignore
-      return fn.apply(this, args);
+  return function curried(...args: any[]) {
+    if (args.length >= fn.length) {
+      return fn(...args);
     } else {
-      // callee 属性是一个指针，指向拥有这个 arguments 对象的函数。
-      return arguments.callee;
+      return function (...nextArgs: any[]) {
+        return curried(...args.concat(nextArgs));
+      };
     }
   };
+  //   // 获取预定义函数的参数个数
+  //   let length = fn.length;
+  //   // 声明存放参数的数组
+  //   const args: any[] = [];
+  //   return function (arg: any) {
+  //     args.push(arg);
+  //     length--;
+  //     if (length <= 0) {
+  //       // @ts-ignore
+  //       return fn.apply(this, args);
+  //     } else {
+  //       // callee 属性是一个指针，指向拥有这个 arguments 对象的函数。
+  //       return arguments.callee;
+  //     }
+  //   };
 }

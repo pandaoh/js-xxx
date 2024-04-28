@@ -330,6 +330,7 @@ export declare function emitEvent(eventType?: string, element?: HTMLElement | nu
 export declare function disableConflictEvent(event: any): boolean;
 /**
  * 在打印预览中打印指定元素，并设置样式。
+ * 需在浏览器打印设置中-更多设置-开启背景与图形打印选项
  * @example
  * printElement('#print-table', {
  *   bodyStyle: {

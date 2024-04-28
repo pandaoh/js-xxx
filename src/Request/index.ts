@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:15:37
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-09 15:01:01
+ * @LastEditTime: 2024-04-28 17:33:47
  * @Description: 请求相关函数
  * @FilePath: \js-xxx\src\Request\index.ts
  */
@@ -76,7 +76,7 @@ export function qsParse(url?: string, key?: string): any {
   const filename: string = pathname.substring(pathname.lastIndexOf('/') + 1);
   const paramMap: any = {
     '/': filename,
-    '_': filename?.split('?')?.[0] ?? '',
+    _: filename?.split('?')?.[0] ?? '',
   };
   const queryString: string = url.includes('?') ? url.split('?')[1] : url;
   const queryStringList: string[] = queryString.split('#');

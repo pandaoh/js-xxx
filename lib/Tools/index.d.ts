@@ -607,5 +607,5 @@ export declare function xTimer(callback: any, time?: number, once?: boolean, imm
  * @param fn 函数
  * @returns
  */
-export declare function curryIt(fn: any): (arg: any) => any;
+export declare function curryIt(fn: any): (...args: any[]) => any;
 //# sourceMappingURL=index.d.ts.map

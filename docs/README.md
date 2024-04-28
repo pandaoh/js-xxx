@@ -1,6 +1,6 @@
 js-xxx
 
-# js-xxx - v2.2.5
+# js-xxx - v2.2.6
 
 ## Table of contents
 
@@ -390,7 +390,7 @@ ___
 
 #### Index signature
 
-▪ [key: `string`]: { `color`: `string` ; `label`: `string` ; `lower`: `string` ; `upper`: `string` ; `value`: `string`  }
+▪ [key: `string`]: \{ `color`: `string` ; `label`: `string` ; `lower`: `string` ; `upper`: `string` ; `value`: `string`  }
 
 ___
 
@@ -553,7 +553,7 @@ ___
 
 ### MONTHS
 
-• `Const` **MONTHS**: { `abbr`: `string` ; `id`: `number` ; `key`: `string` ; `name`: `string` ; `others`: `string`  }[]
+• `Const` **MONTHS**: \{ `abbr`: `string` ; `id`: `number` ; `key`: `string` ; `name`: `string` ; `others`: `string`  }[]
 
 **`Const`**
 
@@ -603,7 +603,7 @@ ___
 
 ### WEEKS
 
-• `Const` **WEEKS**: { `abbr`: `string` ; `id`: `number` ; `key`: `string` ; `name`: `string` ; `others`: `string`  }[]
+• `Const` **WEEKS**: \{ `abbr`: `string` ; `id`: `number` ; `key`: `string` ; `name`: `string` ; `others`: `string`  }[]
 
 **`Const`**
 
@@ -627,12 +627,6 @@ ___
 
 Loading Toast 不会自动关闭
 
-**`Example`**
-
-```ts
-const hide = Loading(msg?); /// hide();
-```
-
 #### Parameters
 
 | Name | Type | Description |
@@ -643,6 +637,12 @@ const hide = Loading(msg?); /// hide();
 
 `any`
 
+**`Example`**
+
+```ts
+const hide = Loading(msg?); /// hide();
+```
+
 ___
 
 ### Speaker
@@ -650,14 +650,6 @@ ___
 ▸ **Speaker**(`text`, `lang?`, `volume?`, `pitch?`, `rate?`): `Object`
 
 TTS 语音，可以在现代浏览器直接运行。
-
-**`Example`**
-
-```ts
-const mySpeaker = Speaker();
-mySpeaker.setText('你好，这是一条测试语音！hello');
-mySpeaker.speak();
-```
 
 #### Parameters
 
@@ -686,6 +678,14 @@ mySpeaker.speak();
 | `speak` | () => `void` |
 | `stop` | () => `void` |
 
+**`Example`**
+
+```ts
+const mySpeaker = Speaker();
+mySpeaker.setText('你好，这是一条测试语音！hello');
+mySpeaker.speak();
+```
+
 ___
 
 ### Toast
@@ -693,12 +693,6 @@ ___
 ▸ **Toast**(`msg`, `type?`): `any`
 
 快速展示 Toast
-
-**`Example`**
-
-```ts
-const hide = Toast('这是一个快速演示 Toast'); /// hide();
-```
 
 #### Parameters
 
@@ -711,6 +705,12 @@ const hide = Toast('这是一个快速演示 Toast'); /// hide();
 
 `any`
 
+**`Example`**
+
+```ts
+const hide = Toast('这是一个快速演示 Toast'); /// hide();
+```
+
 ___
 
 ### abs
@@ -718,13 +718,6 @@ ___
 ▸ **abs**(`value`): `number`
 
 获取绝对值
-
-**`Example`**
-
-```ts
-abs(-1); /// 1
-abs(1); /// 1
-```
 
 #### Parameters
 
@@ -736,6 +729,13 @@ abs(1); /// 1
 
 `number`
 
+**`Example`**
+
+```ts
+abs(-1); /// 1
+abs(1); /// 1
+```
+
 ___
 
 ### add
@@ -743,13 +743,6 @@ ___
 ▸ **add**(`add1`, `add2`): `number`
 
 加法函数
-
-**`Example`**
-
-```ts
-add(1, 2); /// 3
-add(0.1, 0.2); /// 0.3
-```
 
 #### Parameters
 
@@ -762,6 +755,13 @@ add(0.1, 0.2); /// 0.3
 
 `number`
 
+**`Example`**
+
+```ts
+add(1, 2); /// 3
+add(0.1, 0.2); /// 0.3
+```
+
 ___
 
 ### addLongPressEvent
@@ -769,12 +769,6 @@ ___
 ▸ **addLongPressEvent**(`element`, `longPressCallback`, `duration?`, `clickCallback?`): `void`
 
 设置长按事件-支持加入单击事件
-
-**`Example`**
-
-```ts
-addLongPressEvent(document.querySelector('.img-btn'), (event); /// console.log('addLongPressEvent'), 3000); /// 长按会触发事件
-```
 
 #### Parameters
 
@@ -789,6 +783,12 @@ addLongPressEvent(document.querySelector('.img-btn'), (event); /// console.log('
 
 `void`
 
+**`Example`**
+
+```ts
+addLongPressEvent(document.querySelector('.img-btn'), (event); /// console.log('addLongPressEvent'), 3000); /// 长按会触发事件
+```
+
 ___
 
 ### addSpace
@@ -796,14 +796,6 @@ ___
 ▸ **addSpace**(`str`): `string`
 
 强制给字符串添加空格间隔
-
-**`Example`**
-
-```ts
-addSpace('test'); /// 't e s t'
-addSpace(null); /// ''
-addSpace('123 45'); /// '1 2 3 4 5'
-```
 
 #### Parameters
 
@@ -815,13 +807,32 @@ addSpace('123 45'); /// '1 2 3 4 5'
 
 `string`
 
+**`Example`**
+
+```ts
+addSpace('test'); /// 't e s t'
+addSpace(null); /// ''
+addSpace('123 45'); /// '1 2 3 4 5'
+```
+
 ___
 
 ### all
 
-▸ **all**(`promises`, `errorHandler?`): `Promise`<`any`\>
+▸ **all**(`promises`, `errorHandler?`): `Promise`\<`any`\>
 
 同步执行 promise，已做错误处理。
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `promises` | `Promise`\<`any`\>[] | promises |
+| `errorHandler?` | `any` | errorHandler |
+
+#### Returns
+
+`Promise`\<`any`\>
 
 **`Example`**
 
@@ -829,41 +840,30 @@ ___
 await all(...promise array); /// [...result array]
 ```
 
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `promises` | `Promise`<`any`\>[] | promises |
-| `errorHandler?` | `any` | errorHandler |
-
-#### Returns
-
-`Promise`<`any`\>
-
 ___
 
 ### any
 
-▸ **any**(`promises`, `errorHandler?`): `Promise`<`any`\>
+▸ **any**(`promises`, `errorHandler?`): `Promise`\<`any`\>
 
 同步执行多个 promise，返回最先成功的结果，已做错误处理。
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `promises` | `Promise`\<`any`\>[] | promises |
+| `errorHandler?` | `any` | errorHandler |
+
+#### Returns
+
+`Promise`\<`any`\>
 
 **`Example`**
 
 ```ts
 await any(...promise array); /// success result
 ```
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `promises` | `Promise`<`any`\>[] | promises |
-| `errorHandler?` | `any` | errorHandler |
-
-#### Returns
-
-`Promise`<`any`\>
 
 ___
 
@@ -872,12 +872,6 @@ ___
 ▸ **appendLink**(`linkUrl`, `rel?`): `HTMLLinkElement`
 
 添加 link 标签
-
-**`Example`**
-
-```ts
-appendLink('favicon', 'favicon'); /// 添加一个 link 标签
-```
 
 #### Parameters
 
@@ -890,6 +884,12 @@ appendLink('favicon', 'favicon'); /// 添加一个 link 标签
 
 `HTMLLinkElement`
 
+**`Example`**
+
+```ts
+appendLink('favicon', 'favicon'); /// 添加一个 link 标签
+```
+
 ___
 
 ### appendScript
@@ -897,12 +897,6 @@ ___
 ▸ **appendScript**(`scriptUrl`, `async?`, `defer?`): `HTMLScriptElement`
 
 添加 script 标签
-
-**`Example`**
-
-```ts
-appendScript('./test.js'); /// 添加一个 script 标签
-```
 
 #### Parameters
 
@@ -916,6 +910,12 @@ appendScript('./test.js'); /// 添加一个 script 标签
 
 `HTMLScriptElement`
 
+**`Example`**
+
+```ts
+appendScript('./test.js'); /// 添加一个 script 标签
+```
+
 ___
 
 ### arr2select
@@ -923,17 +923,6 @@ ___
 ▸ **arr2select**(`arr`, `options`): `any`[]
 
 转化为 Select 数据，至少有 label/value/key 字段。
-
-**`Example`**
-
-```ts
-arr2select([{ id: 1, name: 'A' }, { id: 2, name: 'B' }], { label: 'name', value: 'id' });
-/// [{ label: 'A', value: 1, key: 'selectKey-Random1' }, { label: 'B', value: 2, key: 'selectKey-Random2' }]
-arr2select([{ id: 1, name: 'A' }, { id: 2, name: 'B' }], { value: 'id', key: 'UNDEFINED' });
-/// [{ label: 1, value: 1, key: 1 }, { label: 2, value: 2, key: 2 }]
-arr2select([{ data: { id: 1, name: 'A' }, key: 'test1' }, { data: { id: 2, name: 'B' }, key: 'test2' }], { value: 'data.id', key: 'key', label: 'data.name' });
-/// [{ value: 1, label: "A", key: "test1" }, { value: 2, label: "B", key: "test2" }]
-```
 
 #### Parameters
 
@@ -951,6 +940,17 @@ arr2select([{ data: { id: 1, name: 'A' }, key: 'test1' }, { data: { id: 2, name:
 
 转换后的 Select 数据数组
 
+**`Example`**
+
+```ts
+arr2select([{ id: 1, name: 'A' }, { id: 2, name: 'B' }], { label: 'name', value: 'id' });
+/// [{ label: 'A', value: 1, key: 'selectKey-Random1' }, { label: 'B', value: 2, key: 'selectKey-Random2' }]
+arr2select([{ id: 1, name: 'A' }, { id: 2, name: 'B' }], { value: 'id', key: 'UNDEFINED' });
+/// [{ label: 1, value: 1, key: 1 }, { label: 2, value: 2, key: 2 }]
+arr2select([{ data: { id: 1, name: 'A' }, key: 'test1' }, { data: { id: 2, name: 'B' }, key: 'test2' }], { value: 'data.id', key: 'key', label: 'data.name' });
+/// [{ value: 1, label: "A", key: "test1" }, { value: 2, label: "B", key: "test2" }]
+```
+
 ___
 
 ### arrObj2objArr
@@ -960,23 +960,23 @@ ___
 数组对象转换为对象数组，需确保源数据已经去重哦，否则会暴力去重，最后一条数据有效。
 一般图表类插件需要此类转换
 
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `data` | \{ `[key: string]`: `any`;  }[] | 源数据 |
+| `key` | `string` | 用于转换的 key |
+
+#### Returns
+
+`Object`
+
 **`Example`**
 
 ```ts
 const data = [{ id: 1, name: '张三', score: 98, remark: '语文成绩' }, { id: 3, name: '王五', score: 98 }, { id: 3, name: '王五', score: 99, remark: '最后一条有效成绩' }, { id: 2, name: '李四', score: 100 }];
 arrObj2objArr(data, 'id'); /// {"id": [1, 2, 3], "name": ["张三", "李四", "王五"], "score": [98, 100, 99], "remark": ["语文成绩", null, "最后一条有效成绩"]}
 ```
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `data` | { `[key: string]`: `any`;  }[] | 源数据 |
-| `key` | `string` | 用于转换的 key |
-
-#### Returns
-
-`Object`
 
 ___
 
@@ -985,14 +985,6 @@ ___
 ▸ **arrayFill**(`arr`, `n?`): `number`[]
 
 填充数组空值，取前后值得中间数。
-
-**`Example`**
-
-```ts
-arrayFill([1, undefined, 3, undefined, 4]); /// [1, 2, 3, 3.5, 4]
-arrayFill([1, undefined, 3, undefined, 4], 0); ///  [1, 2, 3, 4, 4]
-arrayFill([1, undefined, 3, undefined, 10.55], 2); /// [1, 2, 3, 6.78, 10.55]
-```
 
 #### Parameters
 
@@ -1005,6 +997,14 @@ arrayFill([1, undefined, 3, undefined, 10.55], 2); /// [1, 2, 3, 6.78, 10.55]
 
 `number`[]
 
+**`Example`**
+
+```ts
+arrayFill([1, undefined, 3, undefined, 4]); /// [1, 2, 3, 3.5, 4]
+arrayFill([1, undefined, 3, undefined, 4], 0); ///  [1, 2, 3, 4, 4]
+arrayFill([1, undefined, 3, undefined, 10.55], 2); /// [1, 2, 3, 6.78, 10.55]
+```
+
 ___
 
 ### arrayShuffle
@@ -1012,12 +1012,6 @@ ___
 ▸ **arrayShuffle**(`arr`): `any`[]
 
 数组乱序
-
-**`Example`**
-
-```ts
-arrayShuffle([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]); /// [5, 9, 1, 10, 2, 6, 4, 8, 3, 7]
-```
 
 #### Parameters
 
@@ -1029,6 +1023,12 @@ arrayShuffle([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]); /// [5, 9, 1, 10, 2, 6, 4, 8, 3, 
 
 `any`[]
 
+**`Example`**
+
+```ts
+arrayShuffle([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]); /// [5, 9, 1, 10, 2, 6, 4, 8, 3, 7]
+```
+
 ___
 
 ### arraySort
@@ -1036,6 +1036,18 @@ ___
 ▸ **arraySort**(`arr`, `type?`, `keys?`): `any`[]
 
 数组排序(支持多条件排序+中文)
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `arr` | `any`[] | `undefined` | 数组 |
+| `type` | `boolean` \| ``"desc"`` \| ``"asc"`` \| ``"ASC"`` \| ``"DESC"`` | `'asc'` | 类型 |
+| `keys?` | `string` \| `string`[] | `undefined` | 关键字/集合 |
+
+#### Returns
+
+`any`[]
 
 **`Example`**
 
@@ -1050,18 +1062,6 @@ arraySort(arr1, false, ['d', 'c']); /// 3 - 2 - 1
 arraySort(arr1, 'DESC', ['c']); /// 张三 - 王五 - 李四
 ```
 
-#### Parameters
-
-| Name | Type | Default value | Description |
-| :------ | :------ | :------ | :------ |
-| `arr` | `any`[] | `undefined` | 数组 |
-| `type` | `boolean` \| ``"desc"`` \| ``"asc"`` \| ``"ASC"`` \| ``"DESC"`` | `'asc'` | 类型 |
-| `keys?` | `string` \| `string`[] | `undefined` | 关键字/集合 |
-
-#### Returns
-
-`any`[]
-
 ___
 
 ### average
@@ -1069,13 +1069,6 @@ ___
 ▸ **average**(`...args`): `number`
 
 获取平均数
-
-**`Example`**
-
-```ts
-average(1, 2, 3, 4); /// 2.5
-average(1, 2, 3, 4.123); /// 2.53075
-```
 
 #### Parameters
 
@@ -1086,6 +1079,13 @@ average(1, 2, 3, 4.123); /// 2.53075
 #### Returns
 
 `number`
+
+**`Example`**
+
+```ts
+average(1, 2, 3, 4); /// 2.5
+average(1, 2, 3, 4.123); /// 2.53075
+```
 
 ___
 
@@ -1099,15 +1099,15 @@ windows
 监听页面大小变化没必要
 监听编辑 dom 事件 reload 也算了
 
+#### Returns
+
+`any`
+
 **`Example`**
 
 ```ts
 banConsole(); /// 返回取消禁用的 function
 ```
-
-#### Returns
-
-`any`
 
 ___
 
@@ -1116,12 +1116,6 @@ ___
 ▸ **base64Decode**(`str`): `string`
 
 base64 解密函数
-
-**`Example`**
-
-```ts
-base64Decode("加密后的字符串"); /// 解密后的字符串
-```
 
 #### Parameters
 
@@ -1133,6 +1127,12 @@ base64Decode("加密后的字符串"); /// 解密后的字符串
 
 `string`
 
+**`Example`**
+
+```ts
+base64Decode("加密后的字符串"); /// 解密后的字符串
+```
+
 ___
 
 ### base64Encode
@@ -1142,13 +1142,6 @@ ___
 base64 加密函数
 `使用 url 中时建议使用 encodeURIComponent 再次编码，因为单独 + 号在 url 中会被解析成空格。`
 `使用 encodeURIComponent 会把 + 解析为 %2B 与空格 %20 区分`
-
-**`Example`**
-
-```ts
-base64Encode("value"); /// 加密后的字符串
-base64Encode("value", true); /// 加密后的字符串并替换 +/=
-```
 
 #### Parameters
 
@@ -1161,6 +1154,13 @@ base64Encode("value", true); /// 加密后的字符串并替换 +/=
 
 `string`
 
+**`Example`**
+
+```ts
+base64Encode("value"); /// 加密后的字符串
+base64Encode("value", true); /// 加密后的字符串并替换 +/=
+```
+
 ___
 
 ### bindMoreClick
@@ -1168,12 +1168,6 @@ ___
 ▸ **bindMoreClick**(`fn`, `times?`, `delay?`): (...`args`: `any`[]) => `void`
 
 单独绑定多击事件
-
-**`Example`**
-
-```ts
-dom.onclick = bindMoreClick(moreClickCallBack, 4, 500); /// 绑定 4 击事件
-```
 
 #### Parameters
 
@@ -1199,6 +1193,12 @@ dom.onclick = bindMoreClick(moreClickCallBack, 4, 500); /// 绑定 4 击事件
 
 `void`
 
+**`Example`**
+
+```ts
+dom.onclick = bindMoreClick(moreClickCallBack, 4, 500); /// 绑定 4 击事件
+```
+
 ___
 
 ### buf2obj
@@ -1206,14 +1206,6 @@ ___
 ▸ **buf2obj**(`data`, `transfer`): `any`
 
 buffer to object
-
-**`Example`**
-
-```ts
-const _protoBuffer = _proto.lookupType('MonitorMessage');
-const obj = buf2obj(event.data, _protoBuffer);
-console.log(obj);
-```
 
 #### Parameters
 
@@ -1226,6 +1218,14 @@ console.log(obj);
 
 `any`
 
+**`Example`**
+
+```ts
+const _protoBuffer = _proto.lookupType('MonitorMessage');
+const obj = buf2obj(event.data, _protoBuffer);
+console.log(obj);
+```
+
 ___
 
 ### calcCron
@@ -1233,6 +1233,21 @@ ___
 ▸ **calcCron**(`options?`): `string`
 
 生成 cron 表达式
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `options` | `Object` | cron 配置 |
+| `options.day` | `undefined` \| `string` | - |
+| `options.hour` | `undefined` \| `string` | - |
+| `options.minute` | `undefined` \| `string` | - |
+| `options.month` | `undefined` \| `string` | - |
+| `options.week` | `undefined` \| `string` | - |
+
+#### Returns
+
+`string`
 
 **`Example`**
 
@@ -1250,21 +1265,6 @@ calcCron({ day: '1,5' }); /// '* * 1,5 * * '
 calcCron({ day: '1/5' }); /// '* * 1/5 * * '
 ```
 
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `options` | `Object` | cron 配置 |
-| `options.day` | `undefined` \| `string` | - |
-| `options.hour` | `undefined` \| `string` | - |
-| `options.minute` | `undefined` \| `string` | - |
-| `options.month` | `undefined` \| `string` | - |
-| `options.week` | `undefined` \| `string` | - |
-
-#### Returns
-
-`string`
-
 ___
 
 ### calcDate
@@ -1272,14 +1272,6 @@ ___
 ▸ **calcDate**(`date`, `calcStrOrArr`): `Date`
 
 时间计算
-
-**`Example`**
-
-```ts
-calcDate(new Date(), '-1 days'); /// date object
-calcDate(new Date(), '-1 DAYS'); /// date object
-calcDate(new Date(), ['-1 day', '+1 year', '-2 month', '2 weeks', '1 hour', '-3 minute', '45 seconds']); /// date object
-```
 
 #### Parameters
 
@@ -1292,6 +1284,14 @@ calcDate(new Date(), ['-1 day', '+1 year', '-2 month', '2 weeks', '1 hour', '-3 
 
 `Date`
 
+**`Example`**
+
+```ts
+calcDate(new Date(), '-1 days'); /// date object
+calcDate(new Date(), '-1 DAYS'); /// date object
+calcDate(new Date(), ['-1 day', '+1 year', '-2 month', '2 weeks', '1 hour', '-3 minute', '45 seconds']); /// date object
+```
+
 ___
 
 ### calcFontSize
@@ -1299,14 +1299,6 @@ ___
 ▸ **calcFontSize**(`clientRatio?`, `contentCenter?`, `offsetSelector`): () => `void`
 
 自动计算 font-size 并设置
-
-**`Example`**
-
-```ts
-calcFontSize(); /// 按 16/9 计算并设置
-calcFontSize(16/10, true); /// 按 16/10 计算并设置内容居中
-calcFontSize(16/10, true, 'body'); /// 按 16/10 计算并设置 body 偏移使得内容居中
-```
 
 #### Parameters
 
@@ -1326,6 +1318,14 @@ calcFontSize(16/10, true, 'body'); /// 按 16/10 计算并设置 body 偏移使�
 
 `void`
 
+**`Example`**
+
+```ts
+calcFontSize(); /// 按 16/9 计算并设置
+calcFontSize(16/10, true); /// 按 16/10 计算并设置内容居中
+calcFontSize(16/10, true, 'body'); /// 按 16/10 计算并设置 body 偏移使得内容居中
+```
+
 ___
 
 ### calculate
@@ -1333,17 +1333,6 @@ ___
 ▸ **calculate**(`operator`, `...args`): `number`
 
 计算所有数
-
-**`Example`**
-
-```ts
-calculate('+', 1, 2, 3, 4); /// 10
-calculate('+', 1, 2, 3, undefined); /// 6
-calculate('*', 1, 2, 3); /// 6
-calculate('*', 1, 2, 3, undefined); /// 0
-calculate('-', 10, 2, 3); /// 5
-calculate('/', 10, 2, 2); /// 2.5
-```
 
 #### Parameters
 
@@ -1356,19 +1345,24 @@ calculate('/', 10, 2, 2); /// 2.5
 
 `number`
 
+**`Example`**
+
+```ts
+calculate('+', 1, 2, 3, 4); /// 10
+calculate('+', 1, 2, 3, undefined); /// 6
+calculate('*', 1, 2, 3); /// 6
+calculate('*', 1, 2, 3, undefined); /// 0
+calculate('-', 10, 2, 3); /// 5
+calculate('/', 10, 2, 2); /// 2.5
+```
+
 ___
 
 ### catchPromise
 
-▸ **catchPromise**(`promiseHandler`, `errorHandler?`): `Promise`<`any`\>
+▸ **catchPromise**(`promiseHandler`, `errorHandler?`): `Promise`\<`any`\>
 
 New 一个自带错误处理的 Promise，适用于只处理成功情况，不关注失败的 Promise，省去写 catch 的时间与空间。
-
-**`Example`**
-
-```ts
-new catchPromise(resolve, reject, rejectHandler); /// Promise
-```
 
 #### Parameters
 
@@ -1379,7 +1373,13 @@ new catchPromise(resolve, reject, rejectHandler); /// Promise
 
 #### Returns
 
-`Promise`<`any`\>
+`Promise`\<`any`\>
+
+**`Example`**
+
+```ts
+new catchPromise(resolve, reject, rejectHandler); /// Promise
+```
 
 ___
 
@@ -1388,17 +1388,6 @@ ___
 ▸ **changeURL**(`url`, `replaceHistory?`): `void`
 
 改变 URL 地址而不刷新页面，并且支持保留或替换历史记录
-
-**`Example`**
-
-```ts
-假如当前地址为：https://test.com/user
-changeURL('leo'); /// url 变为 'https://test.com/user/leo'
-changeURL('./leo'); /// url 变为 'https://test.com/user/leo'
-changeURL('/users'); /// url 变为 'https://test.com/users'
-changeURL('https://test.com/test'); /// url 变为 'https://test.com/test' (若域名不同，会报错中断。)
-changeURL('/users', false); /// url 变为 'https://test.com/users' (不覆盖历史记录，返回时会再显示 'https://test.com/user'，而上面的例子返回时是直接显示 'https://test.com/user' 的上一条。)
-```
 
 #### Parameters
 
@@ -1411,6 +1400,17 @@ changeURL('/users', false); /// url 变为 'https://test.com/users' (不覆盖�
 
 `void`
 
+**`Example`**
+
+```ts
+假如当前地址为：https://test.com/user
+changeURL('leo'); /// url 变为 'https://test.com/user/leo'
+changeURL('./leo'); /// url 变为 'https://test.com/user/leo'
+changeURL('/users'); /// url 变为 'https://test.com/users'
+changeURL('https://test.com/test'); /// url 变为 'https://test.com/test' (若域名不同，会报错中断。)
+changeURL('/users', false); /// url 变为 'https://test.com/users' (不覆盖历史记录，返回时会再显示 'https://test.com/user'，而上面的例子返回时是直接显示 'https://test.com/user' 的上一条。)
+```
+
 ___
 
 ### checkFileExt
@@ -1418,13 +1418,6 @@ ___
 ▸ **checkFileExt**(`arr`, `value`): `boolean`
 
 检查是否为 file.ext string 文件扩展名
-
-**`Example`**
-
-```ts
-checkFileExt(['png', 'jpg'], 'test.jpg'); /// true
-checkFileExt(['png', 'jpg'], 'test.jpg.txt'); /// false
-```
 
 #### Parameters
 
@@ -1437,6 +1430,13 @@ checkFileExt(['png', 'jpg'], 'test.jpg.txt'); /// false
 
 `boolean`
 
+**`Example`**
+
+```ts
+checkFileExt(['png', 'jpg'], 'test.jpg'); /// true
+checkFileExt(['png', 'jpg'], 'test.jpg.txt'); /// false
+```
+
 ___
 
 ### checkIdCard
@@ -1445,15 +1445,6 @@ ___
 
 检查是否为 idCard string 身份证
 支持 15 、 18 位
-
-**`Example`**
-
-```ts
-checkIdCard('350424870506202'); /// true
-checkIdCard('003424870506202'); /// false
-checkIdCard('415106199801012130'); /// true
-checkIdCard('123123123123123222'); /// false
-```
 
 #### Parameters
 
@@ -1465,6 +1456,15 @@ checkIdCard('123123123123123222'); /// false
 
 `boolean`
 
+**`Example`**
+
+```ts
+checkIdCard('350424870506202'); /// true
+checkIdCard('003424870506202'); /// false
+checkIdCard('415106199801012130'); /// true
+checkIdCard('123123123123123222'); /// false
+```
+
 ___
 
 ### checkPassWordLevel
@@ -1472,6 +1472,16 @@ ___
 ▸ **checkPassWordLevel**(`passWord`): ``1`` \| ``-1`` \| ``2`` \| ``3`` \| ``4`` \| ``5``
 
 密码强度等级检测(-1~5)
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `passWord` | `string` | 字符串值-密码 |
+
+#### Returns
+
+``1`` \| ``-1`` \| ``2`` \| ``3`` \| ``4`` \| ``5``
 
 **`Example`**
 
@@ -1484,16 +1494,6 @@ checkPassWordLevel('123456789654321.'); /// 4
 checkPassWordLevel('123456789654321.H'); /// 5
 ```
 
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `passWord` | `string` | 字符串值-密码 |
-
-#### Returns
-
-``1`` \| ``-1`` \| ``2`` \| ``3`` \| ``4`` \| ``5``
-
 ___
 
 ### checkUpdate
@@ -1501,14 +1501,6 @@ ___
 ▸ **checkUpdate**(`callback`, `interval?`, `url?`): `undefined` \| () => `void`
 
 刷新页面或执行回调函数，用于检测服务端是否发布了更新
-
-**`Example`**
-
-```ts
-checkUpdate((type) => console.log({ type })); /// 检测服务端是否发布了更新，若更新或请求失败则执行回调。
-checkUpdate(); /// 检测服务端是否发布了更新，若更新或请求失败则刷新页面。
-checkUpdate((type) => window.location.reload(), 5 * 60 * 1000, '/index.js'); /// 检测服务端某个文件是否发布了更新，若更新或请求失败则刷新页面。
-```
 
 #### Parameters
 
@@ -1522,6 +1514,14 @@ checkUpdate((type) => window.location.reload(), 5 * 60 * 1000, '/index.js'); ///
 
 `undefined` \| () => `void`
 
+**`Example`**
+
+```ts
+checkUpdate((type) => console.log({ type })); /// 检测服务端是否发布了更新，若更新或请求失败则执行回调。
+checkUpdate(); /// 检测服务端是否发布了更新，若更新或请求失败则刷新页面。
+checkUpdate((type) => window.location.reload(), 5 * 60 * 1000, '/index.js'); /// 检测服务端某个文件是否发布了更新，若更新或请求失败则刷新页面。
+```
+
 ___
 
 ### checkVersion
@@ -1529,14 +1529,6 @@ ___
 ▸ **checkVersion**(`targetVersion`, `currentVersion`, `testStr?`): ``-1`` \| ``1`` \| ``0``
 
 版本号比对算法
-
-**`Example`**
-
-```ts
-checkVersion('1.0.1-rc', '1.0.0', '-rc'); /// 1
-checkVersion('1.0.0', '1.0.1'); /// -1
-checkVersion('1.0.0', '1.0.0'); /// 0
-```
 
 #### Parameters
 
@@ -1550,6 +1542,14 @@ checkVersion('1.0.0', '1.0.0'); /// 0
 
 ``-1`` \| ``1`` \| ``0``
 
+**`Example`**
+
+```ts
+checkVersion('1.0.1-rc', '1.0.0', '-rc'); /// 1
+checkVersion('1.0.0', '1.0.1'); /// -1
+checkVersion('1.0.0', '1.0.0'); /// 0
+```
+
 ___
 
 ### clearCookies
@@ -1558,15 +1558,15 @@ ___
 
 Clear Cookie
 
+#### Returns
+
+`void`
+
 **`Example`**
 
 ```ts
 clearCookies(); /// 删除所有的 Cookie
 ```
-
-#### Returns
-
-`void`
 
 ___
 
@@ -1576,15 +1576,15 @@ ___
 
 关闭全屏
 
+#### Returns
+
+`void`
+
 **`Example`**
 
 ```ts
 closeFullscreen(); /// 关闭全屏
 ```
-
-#### Returns
-
-`void`
 
 ___
 
@@ -1594,15 +1594,15 @@ ___
 
 关闭 websocket
 
+#### Returns
+
+`boolean`
+
 **`Example`**
 
 ```ts
 closeWebSocket(); /// true/false
 ```
-
-#### Returns
-
-`boolean`
 
 ___
 
@@ -1612,13 +1612,6 @@ ___
 
 时间大小比较
 -1(A<B), 1(A>B), 0(A=B)
-
-**`Example`**
-
-```ts
-compareDate('2023-1-1'); /// 1
-compareDate('2023-1-1 12:00:00', '2023-1-2 12:00:00'); /// -1
-```
 
 #### Parameters
 
@@ -1631,6 +1624,13 @@ compareDate('2023-1-1 12:00:00', '2023-1-2 12:00:00'); /// -1
 
 ``-1`` \| ``1`` \| ``0``
 
+**`Example`**
+
+```ts
+compareDate('2023-1-1'); /// 1
+compareDate('2023-1-1 12:00:00', '2023-1-2 12:00:00'); /// -1
+```
+
 ___
 
 ### contains
@@ -1638,6 +1638,17 @@ ___
 ▸ **contains**(`value`, `target`): `boolean`
 
 检测某个数组是否包含某个值
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `any`[] | 值 |
+| `target` | `any` | 目标值 |
+
+#### Returns
+
+`boolean`
 
 **`Example`**
 
@@ -1652,17 +1663,6 @@ contains([[1, 2], [3, 4]], [3, 4]); /// true
 contains([[1, 2], [3, 4]], [1, 3]); /// false
 ```
 
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `value` | `any`[] | 值 |
-| `target` | `any` | 目标值 |
-
-#### Returns
-
-`boolean`
-
 ___
 
 ### copyToClipboard
@@ -1670,12 +1670,6 @@ ___
 ▸ **copyToClipboard**(`text`): `void`
 
 复制到剪贴板
-
-**`Example`**
-
-```ts
-copyToClipboard('hello world')
-```
 
 #### Parameters
 
@@ -1687,6 +1681,12 @@ copyToClipboard('hello world')
 
 `void`
 
+**`Example`**
+
+```ts
+copyToClipboard('hello world')
+```
+
 ___
 
 ### countdown
@@ -1694,12 +1694,6 @@ ___
 ▸ **countdown**(`seconds`, `callback?`, `finishCallBack?`): `any`
 
 倒计时
-
-**`Example`**
-
-```ts
-console.time('test'); countdown(10, (x) => console.log('--->', x), () => console.timeEnd('test')); /// test: 10023.636962890625 ms
-```
 
 #### Parameters
 
@@ -1713,20 +1707,20 @@ console.time('test'); countdown(10, (x) => console.log('--->', x), () => console
 
 `any`
 
+**`Example`**
+
+```ts
+console.time('test'); countdown(10, (x) => console.log('--->', x), () => console.timeEnd('test')); /// test: 10023.636962890625 ms
+```
+
 ___
 
 ### curryIt
 
-▸ **curryIt**(`fn`): (`arg`: `any`) => `any`
+▸ **curryIt**(`fn`): (...`args`: `any`[]) => `any`
 
 -函数柯里化-
 是把接受多个参数的函数变换成接受一个单一参数(最初函数的第一个参数)的函数，并且返回接受余下的参数且返回结果的新函数的技术。
-
-**`Example`**
-
-```ts
-curryIt(function (a, b, c) {return a + b + c})(1)(2)(3); /// 6
-```
 
 #### Parameters
 
@@ -1738,25 +1732,42 @@ curryIt(function (a, b, c) {return a + b + c})(1)(2)(3); /// 6
 
 `fn`
 
-▸ (`arg`): `any`
+▸ (`...args`): `any`
 
 ##### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `arg` | `any` |
+| `...args` | `any`[] |
 
 ##### Returns
 
 `any`
 
+**`Example`**
+
+```ts
+curryIt(function (a, b, c) {return a + b + c})(1)(2)(3); /// 6
+```
+
 ___
 
 ### customFinally
 
-▸ **customFinally**(`promise`, `onFinally?`): `Promise`<`any`\>
+▸ **customFinally**(`promise`, `onFinally?`): `Promise`\<`any`\>
 
 自定义封装 Promise 的 finally 方法，小程序使用。
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `promise` | `Promise`\<`any`\> | 要封装的 Promise 对象 |
+| `onFinally?` | `any` | finally 回调函数 (可选) |
+
+#### Returns
+
+`Promise`\<`any`\>
 
 **`Example`**
 
@@ -1764,17 +1775,6 @@ ___
 customFinally(Promise.resolve(1), () => console.log(1)); /// finally 回调
 // 也可挂载在 Promise 原型上
 ```
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `promise` | `Promise`<`any`\> | 要封装的 Promise 对象 |
-| `onFinally?` | `any` | finally 回调函数 (可选) |
-
-#### Returns
-
-`Promise`<`any`\>
 
 ___
 
@@ -1784,22 +1784,22 @@ ___
 
 数组对象转数组值
 
-**`Example`**
-
-```ts
-data2Arr([{a: 1, b: 2}, {a: 3}, {b: 1}], 'a'); /// [1, 3]
-```
-
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `sourceData` | { `[key: string]`: `any`;  }[] | 源数据 |
+| `sourceData` | \{ `[key: string]`: `any`;  }[] | 源数据 |
 | `key` | `string` | 取值的 key |
 
 #### Returns
 
 `any`[]
+
+**`Example`**
+
+```ts
+data2Arr([{a: 1, b: 2}, {a: 3}, {b: 1}], 'a'); /// [1, 3]
+```
 
 ___
 
@@ -1809,24 +1809,24 @@ ___
 
 数组对象转对象，按照指定的 key 分组。
 
-**`Example`**
-
-```ts
-data2Obj([{a: 1, b: 2}, {a: 3}, {b: 1}, {c: 1}], 'a'); /// {1: {a: 1, b: 2}, 3: {a: 3}, undefined: {c: 1}}
-data2Obj([{a: 1, b: 'b1'}, {a: 3}, {a: 2, b: 'b2'}], 'a', 'b'); /// { '1': 'b1', '2': 'b2', '3': undefined }
-```
-
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `sourceData` | { `[key: string]`: `any`;  }[] | 源数据 |
+| `sourceData` | \{ `[key: string]`: `any`;  }[] | 源数据 |
 | `key` | `string` | 分组的 key |
 | `vKey?` | `string` | 值的 key，默认为整个值。 |
 
 #### Returns
 
 `Object`
+
+**`Example`**
+
+```ts
+data2Obj([{a: 1, b: 2}, {a: 3}, {b: 1}, {c: 1}], 'a'); /// {1: {a: 1, b: 2}, 3: {a: 3}, undefined: {c: 1}}
+data2Obj([{a: 1, b: 'b1'}, {a: 3}, {a: 2, b: 'b2'}], 'a', 'b'); /// { '1': 'b1', '2': 'b2', '3': undefined }
+```
 
 ___
 
@@ -1835,16 +1835,6 @@ ___
 ▸ **dataTo**(`key`, `value`): `void`
 
 填对应值到对应的 dom 中
-
-**`Example`**
-
-```ts
-dataTo('.className', 'xxx'); /// xxx 会填入到类名为 class-name 的元素中
-dataTo('.class-name', 'xxx'); /// xxx 会填入到类名为 class-name 的元素中
-dataTo('.class_name', 'xxx'); /// xxx 会填入到类名为 class-name 的元素中
-dataTo('.class.name', 'xxx'); /// xxx 会填入到类名为 class-name 的元素中
-dataTo('#id.name', 'xxx'); /// xxx 会填入到 id 名为 id-name 的元素中
-```
 
 #### Parameters
 
@@ -1857,6 +1847,16 @@ dataTo('#id.name', 'xxx'); /// xxx 会填入到 id 名为 id-name 的元素中
 
 `void`
 
+**`Example`**
+
+```ts
+dataTo('.className', 'xxx'); /// xxx 会填入到类名为 class-name 的元素中
+dataTo('.class-name', 'xxx'); /// xxx 会填入到类名为 class-name 的元素中
+dataTo('.class_name', 'xxx'); /// xxx 会填入到类名为 class-name 的元素中
+dataTo('.class.name', 'xxx'); /// xxx 会填入到类名为 class-name 的元素中
+dataTo('#id.name', 'xxx'); /// xxx 会填入到 id 名为 id-name 的元素中
+```
+
 ___
 
 ### debounce
@@ -1864,12 +1864,6 @@ ___
 ▸ **debounce**(`fn`, `delay?`): () => `void`
 
 防抖函数-最后一次有效（抢购）
-
-**`Example`**
-
-```ts
-debounce(() => {}, 1000); /// 防抖执行
-```
 
 #### Parameters
 
@@ -1888,6 +1882,12 @@ debounce(() => {}, 1000); /// 防抖执行
 
 `void`
 
+**`Example`**
+
+```ts
+debounce(() => {}, 1000); /// 防抖执行
+```
+
 ___
 
 ### decrypt
@@ -1896,14 +1896,6 @@ ___
 
 解密函数
 防君子不防小人，也可以通过后台获取密钥。
-
-**`Example`**
-
-```ts
-decrypt("加密后的字符串"); /// 解密后的字符串
-decrypt("加密后的字符串", true); /// 解密后的字符串并转换为 JSON 对象
-decrypt("加密后的字符串", "1234567887654321","1234567887654321"); /// 自定义密钥解密后的字符串
-```
 
 #### Parameters
 
@@ -1918,6 +1910,14 @@ decrypt("加密后的字符串", "1234567887654321","1234567887654321"); /// 自
 
 `string`
 
+**`Example`**
+
+```ts
+decrypt("加密后的字符串"); /// 解密后的字符串
+decrypt("加密后的字符串", true); /// 解密后的字符串并转换为 JSON 对象
+decrypt("加密后的字符串", "1234567887654321","1234567887654321"); /// 自定义密钥解密后的字符串
+```
+
 ___
 
 ### deepClone
@@ -1925,6 +1925,17 @@ ___
 ▸ **deepClone**(`data`, `hash?`): `any`
 
 深拷贝
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `data` | `any` | 源数据 |
+| `hash` | `WeakMap`\<`object`, `any`\> | hash 存储，避免循环引用。 |
+
+#### Returns
+
+`any`
 
 **`Link`**
 
@@ -1936,17 +1947,6 @@ https://juejin.cn/post/7075351322014253064
 deepClone({a: 1, b: {c: 2}}); /// 新的 {a: 1, b: {c: 2}}
 ```
 
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `data` | `any` | 源数据 |
-| `hash` | `WeakMap`<`object`, `any`\> | hash 存储，避免循环引用。 |
-
-#### Returns
-
-`any`
-
 ___
 
 ### difference
@@ -1954,13 +1954,6 @@ ___
 ▸ **difference**(`paramA`, `paramB`): `any`
 
 获取数组或对象不同值集合
-
-**`Example`**
-
-```ts
-difference([1, 2, 2, 3, 3], [1, 2, 4, 5]); /// [3]
-difference({a: 1, b: 2}, {a: 1, c: 3, b: 4}); /// {b: 2}
-```
 
 #### Parameters
 
@@ -1973,6 +1966,13 @@ difference({a: 1, b: 2}, {a: 1, c: 3, b: 4}); /// {b: 2}
 
 `any`
 
+**`Example`**
+
+```ts
+difference([1, 2, 2, 3, 3], [1, 2, 4, 5]); /// [3]
+difference({a: 1, b: 2}, {a: 1, c: 3, b: 4}); /// {b: 2}
+```
+
 ___
 
 ### disableConflictEvent
@@ -1980,13 +1980,6 @@ ___
 ▸ **disableConflictEvent**(`event`): `boolean`
 
 禁用冲突事件，条码枪、关闭窗口快捷键等。
-
-**`Example`**
-
-```ts
-document.addEventListener('keydown', disableConflictEvent); /// 进入页面后禁用冲突事件
-document.removeEventListener('keydown', disableConflictEvent); /// 退出页面后关闭监听
-```
 
 #### Parameters
 
@@ -1998,6 +1991,13 @@ document.removeEventListener('keydown', disableConflictEvent); /// 退出页面�
 
 `boolean`
 
+**`Example`**
+
+```ts
+document.addEventListener('keydown', disableConflictEvent); /// 进入页面后禁用冲突事件
+document.removeEventListener('keydown', disableConflictEvent); /// 退出页面后关闭监听
+```
+
 ___
 
 ### div
@@ -2005,13 +2005,6 @@ ___
 ▸ **div**(`div1`, `div2`): `number`
 
 除法函数
-
-**`Example`**
-
-```ts
-div(1, 2); /// 0.5
-div(0.55, 100); /// 0.0055
-```
 
 #### Parameters
 
@@ -2024,6 +2017,13 @@ div(0.55, 100); /// 0.0055
 
 `number`
 
+**`Example`**
+
+```ts
+div(1, 2); /// 0.5
+div(0.55, 100); /// 0.0055
+```
+
 ___
 
 ### download
@@ -2031,12 +2031,6 @@ ___
 ▸ **download**(`link`, `name`): `void`
 
 下载一个链接文档
-
-**`Example`**
-
-```ts
-download('https://xxx.com/xxx', 'xxx'); /// 下载后端返回的流
-```
 
 #### Parameters
 
@@ -2049,6 +2043,12 @@ download('https://xxx.com/xxx', 'xxx'); /// 下载后端返回的流
 
 `void`
 
+**`Example`**
+
+```ts
+download('https://xxx.com/xxx', 'xxx'); /// 下载后端返回的流
+```
+
 ___
 
 ### downloadContent
@@ -2056,13 +2056,6 @@ ___
 ▸ **downloadContent**(`name`, `content`): `void`
 
 在浏览器中自定义下载一些内容，与 download 不同的是，downloadContent 采用 Blob 可能会有长度限制。
-
-**`Example`**
-
-```ts
-downloadContent('test.txt', 'test txt content'); /// 下载返回的流
-downloadContent('test.json', JSON.stringify({content: 'test json'})); /// 下载返回的流
-```
 
 #### Parameters
 
@@ -2075,6 +2068,13 @@ downloadContent('test.json', JSON.stringify({content: 'test json'})); /// 下载
 
 `void`
 
+**`Example`**
+
+```ts
+downloadContent('test.txt', 'test txt content'); /// 下载返回的流
+downloadContent('test.json', JSON.stringify({content: 'test json'})); /// 下载返回的流
+```
+
 ___
 
 ### emitEvent
@@ -2082,12 +2082,6 @@ ___
 ▸ **emitEvent**(`eventType?`, `element?`): `void`
 
 触发元素事件
-
-**`Example`**
-
-```ts
-emitEvent('click', document.getElementById('myButton')); // 触发元素点击事件
-```
 
 #### Parameters
 
@@ -2100,6 +2094,12 @@ emitEvent('click', document.getElementById('myButton')); // 触发元素点击�
 
 `void`
 
+**`Example`**
+
+```ts
+emitEvent('click', document.getElementById('myButton')); // 触发元素点击事件
+```
+
 ___
 
 ### emitKeyboardEvent
@@ -2107,13 +2107,6 @@ ___
 ▸ **emitKeyboardEvent**(`eventType?`, `keyCode?`, `element?`): `void`
 
 触发某个键盘按键事件
-
-**`Example`**
-
-```ts
-emitKeyboardEvent('keydown', 108); // 小键盘回车事件
-emitKeyboardEvent('keydown', KEYBOARD_CODE.TAB); // TAB 事件
-```
 
 #### Parameters
 
@@ -2127,6 +2120,13 @@ emitKeyboardEvent('keydown', KEYBOARD_CODE.TAB); // TAB 事件
 
 `void`
 
+**`Example`**
+
+```ts
+emitKeyboardEvent('keydown', 108); // 小键盘回车事件
+emitKeyboardEvent('keydown', KEYBOARD_CODE.TAB); // TAB 事件
+```
+
 ___
 
 ### empty
@@ -2134,6 +2134,16 @@ ___
 ▸ **empty**(`variable`): `boolean`
 
 判断值是否为空
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `variable` | `any` | 变量 |
+
+#### Returns
+
+`boolean`
 
 **`Example`**
 
@@ -2151,16 +2161,6 @@ empty({}); /// true
 empty([]); /// true
 ```
 
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `variable` | `any` | 变量 |
-
-#### Returns
-
-`boolean`
-
 ___
 
 ### encrypt
@@ -2169,13 +2169,6 @@ ___
 
 加密函数
 防君子不防小人，也可以通过后台获取密钥。
-
-**`Example`**
-
-```ts
-encrypt("value"); /// 加密后的字符串
-encrypt("value", "1234567887654321","1234567887654321"); /// 自定义密钥加密后的字符串
-```
 
 #### Parameters
 
@@ -2189,6 +2182,13 @@ encrypt("value", "1234567887654321","1234567887654321"); /// 自定义密钥加�
 
 `string`
 
+**`Example`**
+
+```ts
+encrypt("value"); /// 加密后的字符串
+encrypt("value", "1234567887654321","1234567887654321"); /// 自定义密钥加密后的字符串
+```
+
 ___
 
 ### every
@@ -2197,15 +2197,6 @@ ___
 
 every 函数
 因为默认的 every 空数组会返回 true
-
-**`Example`**
-
-```ts
-every([]); /// false
-every([1, 2, 3], (item) => item > 0); /// true
-every({}); /// false
-every(undefined); /// false
-```
 
 #### Parameters
 
@@ -2218,6 +2209,15 @@ every(undefined); /// false
 
 `boolean`
 
+**`Example`**
+
+```ts
+every([]); /// false
+every([1, 2, 3], (item) => item > 0); /// true
+every({}); /// false
+every(undefined); /// false
+```
+
 ___
 
 ### exportFile
@@ -2225,15 +2225,6 @@ ___
 ▸ **exportFile**(`data`, `fileName?`, `fileType?`): `void`
 
 导出数据为文件
-
-**`Example`**
-
-```ts
-exportFile(data); /// 导出 txt 文件
-exportFile(data, 'csv-导出文件测试', 'csv'); /// 导出 csv 文件
-exportFile(document.getElementById('table_to_xls').outerHTML, 'excelWithStyle', 'xls'); /// 导出表格为带样式的 excel xls 文件
-exportFile('http://a.biugle.cn/img/cdn/dev/avatar/1.png', 'test', 'png'); /// 导出 png 文件
-```
 
 #### Parameters
 
@@ -2247,6 +2238,15 @@ exportFile('http://a.biugle.cn/img/cdn/dev/avatar/1.png', 'test', 'png'); /// �
 
 `void`
 
+**`Example`**
+
+```ts
+exportFile(data); /// 导出 txt 文件
+exportFile(data, 'csv-导出文件测试', 'csv'); /// 导出 csv 文件
+exportFile(document.getElementById('table_to_xls').outerHTML, 'excelWithStyle', 'xls'); /// 导出表格为带样式的 excel xls 文件
+exportFile('http://a.biugle.cn/img/cdn/dev/avatar/1.png', 'test', 'png'); /// 导出 png 文件
+```
+
 ___
 
 ### findChildren
@@ -2254,12 +2254,6 @@ ___
 ▸ **findChildren**(`element`): `any`[]
 
 找元素的所有子元素，解决浏览器兼容问题。
-
-**`Example`**
-
-```ts
-findChildren(document.getElementById('test')); /// #test 的所有子元素数组
-```
 
 #### Parameters
 
@@ -2271,6 +2265,12 @@ findChildren(document.getElementById('test')); /// #test 的所有子元素数�
 
 `any`[]
 
+**`Example`**
+
+```ts
+findChildren(document.getElementById('test')); /// #test 的所有子元素数组
+```
+
 ___
 
 ### findMaxKey
@@ -2278,6 +2278,16 @@ ___
 ▸ **findMaxKey**(`objArray`): `never`[]
 
 找到对象数组具有最多 key 的对象，并返回其 key 组成的数组。
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `objArray` | `any`[] | 源数据 |
+
+#### Returns
+
+`never`[]
 
 **`Example`**
 
@@ -2290,16 +2300,6 @@ const objects = [
  findMaxKey(objects); /// ['id', 'name', 'age', 'city', 'profession']
 ```
 
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `objArray` | `any`[] | 源数据 |
-
-#### Returns
-
-`never`[]
-
 ___
 
 ### findParents
@@ -2307,12 +2307,6 @@ ___
 ▸ **findParents**(`element`, `n`): `any`
 
 找元素的第 n 级父元素
-
-**`Example`**
-
-```ts
-findParents(document.getElementById('test'), 3); /// #test 的第三个父元素
-```
 
 #### Parameters
 
@@ -2325,6 +2319,12 @@ findParents(document.getElementById('test'), 3); /// #test 的第三个父元素
 
 `any`
 
+**`Example`**
+
+```ts
+findParents(document.getElementById('test'), 3); /// #test 的第三个父元素
+```
+
 ___
 
 ### float
@@ -2332,16 +2332,6 @@ ___
 ▸ **float**(`value`, `d?`, `isStr?`): `number` \| `string`
 
 去尾法获取数值
-
-**`Example`**
-
-```ts
-float(1.135, 0, true); /// '1'
-float(1.135, 2, true); /// '1.13'
-float(1.135, 1); /// 1.1
-float(1.135, 4); /// 1.135
-float(1.135, 4, true); /// '1.1350'
-```
 
 #### Parameters
 
@@ -2355,6 +2345,16 @@ float(1.135, 4, true); /// '1.1350'
 
 `number` \| `string`
 
+**`Example`**
+
+```ts
+float(1.135, 0, true); /// '1'
+float(1.135, 2, true); /// '1.13'
+float(1.135, 1); /// 1.1
+float(1.135, 4); /// 1.135
+float(1.135, 4, true); /// '1.1350'
+```
+
 ___
 
 ### forEach
@@ -2362,15 +2362,6 @@ ___
 ▸ **forEach**(`data`, `callback`, `hasReturn?`): `any`
 
 遍历数组或对象，并对每个元素执行回调函数，支持中途 break 和 continue 。
-
-**`Example`**
-
-```ts
-forEach([1, 2, 3], (item, index) => console.log(item, index));
-forEach([1, 2, 3], (item, index) => item * 2, true); /// [2, 4, 6]
-forEach({a: 1, b: 2}, (value, key) => console.log(value, key));
-forEach({a: 1, b: 2}, (value, key) => value * 2, true); /// {a: 2, b: 4}
-```
 
 #### Parameters
 
@@ -2384,6 +2375,15 @@ forEach({a: 1, b: 2}, (value, key) => value * 2, true); /// {a: 2, b: 4}
 
 `any`
 
+**`Example`**
+
+```ts
+forEach([1, 2, 3], (item, index) => console.log(item, index));
+forEach([1, 2, 3], (item, index) => item * 2, true); /// [2, 4, 6]
+forEach({a: 1, b: 2}, (value, key) => console.log(value, key));
+forEach({a: 1, b: 2}, (value, key) => value * 2, true); /// {a: 2, b: 4}
+```
+
 ___
 
 ### forceToStr
@@ -2391,14 +2391,6 @@ ___
 ▸ **forceToStr**(`value`, `defaultValue?`): `string`
 
 强制转化为字符串，避免导出表格显示科学计数法。
-
-**`Example`**
-
-```ts
-forceToStr(123123123); /// '123123123'
-forceToStr(undefined); /// '-'
-forceToStr(undefined, 0); /// '0'
-```
 
 #### Parameters
 
@@ -2411,6 +2403,14 @@ forceToStr(undefined, 0); /// '0'
 
 `string`
 
+**`Example`**
+
+```ts
+forceToStr(123123123); /// '123123123'
+forceToStr(undefined); /// '-'
+forceToStr(undefined, 0); /// '0'
+```
+
 ___
 
 ### formatBytes
@@ -2418,12 +2418,6 @@ ___
 ▸ **formatBytes**(`bytes`, `precision?`): `string`
 
 文件大小格式化
-
-**`Example`**
-
-```ts
-formatBytes(1024); /// '1.00 KB'
-```
 
 #### Parameters
 
@@ -2436,6 +2430,12 @@ formatBytes(1024); /// '1.00 KB'
 
 `string`
 
+**`Example`**
+
+```ts
+formatBytes(1024); /// '1.00 KB'
+```
+
 ___
 
 ### formatDate
@@ -2443,16 +2443,6 @@ ___
 ▸ **formatDate**(`date?`, `fmt?`, `weeks?`): `any`
 
 时间格式化
-
-**`Example`**
-
-```ts
-formatDate(new Date(), 'yyyy-mm-dd hh:ii:ss Q S W', ['星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']); /// '2022-04-26 11:33:53 2 123 星期二'
-// @before-2.2.0
-formatDate(); /// '当前时间 yyyy-mm-dd hh:ii:ss'
-// @since-2.2.0
-formatDate(); /// undefined
-```
 
 #### Parameters
 
@@ -2466,6 +2456,16 @@ formatDate(); /// undefined
 
 `any`
 
+**`Example`**
+
+```ts
+formatDate(new Date(), 'yyyy-mm-dd hh:ii:ss Q S W', ['星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']); /// '2022-04-26 11:33:53 2 123 星期二'
+// @before-2.2.0
+formatDate(); /// '当前时间 yyyy-mm-dd hh:ii:ss'
+// @since-2.2.0
+formatDate(); /// undefined
+```
+
 ___
 
 ### formatJSON
@@ -2473,6 +2473,16 @@ ___
 ▸ **formatJSON**(`value`): `string`
 
 格式化 JSON 字符串
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `any` | 值 |
+
+#### Returns
+
+`string`
 
 **`Example`**
 
@@ -2486,16 +2496,6 @@ formatJSON(undefined); /// 'undefined'
 formatJSON(new Date()); /// '"2023-03-02T10:02:42.019Z"'
 ```
 
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `value` | `any` | 值 |
-
-#### Returns
-
-`string`
-
 ___
 
 ### formatNumber
@@ -2503,14 +2503,6 @@ ___
 ▸ **formatNumber**(`value`, `n?`): `string`
 
 数字人性化显示
-
-**`Example`**
-
-```ts
-formatNumber('12312300'); /// '12,312,300'
-formatNumber(851232.1314); /// '851,232.13'
-formatNumber(851232.1314, 0); /// '851,232'
-```
 
 #### Parameters
 
@@ -2523,6 +2515,14 @@ formatNumber(851232.1314, 0); /// '851,232'
 
 `string`
 
+**`Example`**
+
+```ts
+formatNumber('12312300'); /// '12,312,300'
+formatNumber(851232.1314); /// '851,232.13'
+formatNumber(851232.1314, 0); /// '851,232'
+```
+
 ___
 
 ### formatRh
@@ -2530,13 +2530,6 @@ ___
 ▸ **formatRh**(`input`, `options?`): `string` \| `boolean` \| `number`
 
 处理 rh 血型
-
-**`Example`**
-
-```ts
-formatRh('**d**'); /// '阴性'
-formatRh('**d**', { format: [true, false], default: false }); /// true
-```
 
 #### Parameters
 
@@ -2553,6 +2546,13 @@ formatRh('**d**', { format: [true, false], default: false }); /// true
 
 `string` \| `boolean` \| `number`
 
+**`Example`**
+
+```ts
+formatRh('**d**'); /// '阴性'
+formatRh('**d**', { format: [true, false], default: false }); /// true
+```
+
 ___
 
 ### getAge
@@ -2560,14 +2560,6 @@ ___
 ▸ **getAge**(`birthday`, `targetDate?`): `number`
 
 获取年龄
-
-**`Example`**
-
-```ts
-getAge('1998-9-28'); /// 24
-getAge('1998-6-8', '2023-7'); /// 25
-getAge('2023'); /// -1
-```
 
 #### Parameters
 
@@ -2580,6 +2572,14 @@ getAge('2023'); /// -1
 
 `number`
 
+**`Example`**
+
+```ts
+getAge('1998-9-28'); /// 24
+getAge('1998-6-8', '2023-7'); /// 25
+getAge('2023'); /// -1
+```
+
 ___
 
 ### getAnimal
@@ -2587,14 +2587,6 @@ ___
 ▸ **getAnimal**(`date`): `string`
 
 获取生肖
-
-**`Example`**
-
-```ts
-getAnimal('1998'); /// '虎'
-getAnimal('1998-6-8'); /// '虎'
-getAnimal('2023'); /// '兔'
-```
 
 #### Parameters
 
@@ -2606,6 +2598,14 @@ getAnimal('2023'); /// '兔'
 
 `string`
 
+**`Example`**
+
+```ts
+getAnimal('1998'); /// '虎'
+getAnimal('1998-6-8'); /// '虎'
+getAnimal('2023'); /// '兔'
+```
+
 ___
 
 ### getBSColor
@@ -2613,14 +2613,6 @@ ___
 ▸ **getBSColor**(`key?`): `string`
 
 获取 bootstrap 颜色
-
-**`Example`**
-
-```ts
-getBSColor(); /// '#6c757d'
-getBSColor('red'); /// '#dc3545'
-getBSColor('warning'); /// '#ffc107'
-```
 
 #### Parameters
 
@@ -2632,6 +2624,14 @@ getBSColor('warning'); /// '#ffc107'
 
 `string`
 
+**`Example`**
+
+```ts
+getBSColor(); /// '#6c757d'
+getBSColor('red'); /// '#dc3545'
+getBSColor('warning'); /// '#ffc107'
+```
+
 ___
 
 ### getBaseURL
@@ -2639,16 +2639,6 @@ ___
 ▸ **getBaseURL**(`url?`, `hashRoute?`): `string`
 
 获取不带任何参数或片段标识符的当前 URL
-
-**`Example`**
-
-```ts
-getBaseURL('https://test.com/index?name=leo&org=biugle#test'); /// 'https://test.com/index'
-getBaseURL(''); /// ''
-getBaseURL(); /// 当前页面 BaseURL
-getBaseURL('https://test.com/#/test?name=leo&org=biugle', true); /// 'https://test.com/#/test'
-getBaseURL(null); /// 相当于 window.location.origin
-```
 
 #### Parameters
 
@@ -2661,6 +2651,16 @@ getBaseURL(null); /// 相当于 window.location.origin
 
 `string`
 
+**`Example`**
+
+```ts
+getBaseURL('https://test.com/index?name=leo&org=biugle#test'); /// 'https://test.com/index'
+getBaseURL(''); /// ''
+getBaseURL(); /// 当前页面 BaseURL
+getBaseURL('https://test.com/#/test?name=leo&org=biugle', true); /// 'https://test.com/#/test'
+getBaseURL(null); /// 相当于 window.location.origin
+```
+
 ___
 
 ### getBloodGroup
@@ -2668,12 +2668,6 @@ ___
 ▸ **getBloodGroup**(`bloodGroup`): `Object`
 
 获取血型枚举信息
-
-**`Example`**
-
-```ts
-getBloodGroup('A'); /// { value: 'A', label: 'A 型', color: '#1890FF', lower: 'a', upper: 'A' }
-```
 
 #### Parameters
 
@@ -2693,6 +2687,12 @@ getBloodGroup('A'); /// { value: 'A', label: 'A 型', color: '#1890FF', lower: '
 | `upper` | `string` |
 | `value` | `string` |
 
+**`Example`**
+
+```ts
+getBloodGroup('A'); /// { value: 'A', label: 'A 型', color: '#1890FF', lower: 'a', upper: 'A' }
+```
+
 ___
 
 ### getConstellation
@@ -2700,14 +2700,6 @@ ___
 ▸ **getConstellation**(`date`): `Object`
 
 获取星座
-
-**`Example`**
-
-```ts
-getConstellation('11-24'); /// { cn: '射手', en: 'Sagittarius', date: '11.23-12.21' }
-getConstellation('xxx'); /// {cn: '未知', en: 'unknown', date: 'xxx'}
-getConstellation(new Date('2022-11-24')); /// { cn: '射手', en: 'Sagittarius', date: '11.23-12.21' }
-```
 
 #### Parameters
 
@@ -2725,6 +2717,14 @@ getConstellation(new Date('2022-11-24')); /// { cn: '射手', en: 'Sagittarius',
 | `date` | `any` |
 | `en` | `string` |
 
+**`Example`**
+
+```ts
+getConstellation('11-24'); /// { cn: '射手', en: 'Sagittarius', date: '11.23-12.21' }
+getConstellation('xxx'); /// {cn: '未知', en: 'unknown', date: 'xxx'}
+getConstellation(new Date('2022-11-24')); /// { cn: '射手', en: 'Sagittarius', date: '11.23-12.21' }
+```
+
 ___
 
 ### getContentType
@@ -2732,16 +2732,6 @@ ___
 ▸ **getContentType**(`fileType`): `string`
 
 获取常见的 content-type
-
-**`Example`**
-
-```ts
-getContentType('form'); /// 'application/x-www-form-urlencoded'
-getContentType('file'); /// 'multipart/form-data'
-getContentType('pdf'); /// 'application/pdf'
-getContentType('PDF'); /// 'application/pdf'
-getContentType('unknown'); /// 'application/octet-stream'
-```
 
 #### Parameters
 
@@ -2753,6 +2743,16 @@ getContentType('unknown'); /// 'application/octet-stream'
 
 `string`
 
+**`Example`**
+
+```ts
+getContentType('form'); /// 'application/x-www-form-urlencoded'
+getContentType('file'); /// 'multipart/form-data'
+getContentType('pdf'); /// 'application/pdf'
+getContentType('PDF'); /// 'application/pdf'
+getContentType('unknown'); /// 'application/octet-stream'
+```
+
 ___
 
 ### getCookie
@@ -2760,12 +2760,6 @@ ___
 ▸ **getCookie**(`key`): `any`
 
 Get Cookie
-
-**`Example`**
-
-```ts
-getCookie('name'); /// 获取 name 对应的 Cookie 值
-```
 
 #### Parameters
 
@@ -2777,6 +2771,12 @@ getCookie('name'); /// 获取 name 对应的 Cookie 值
 
 `any`
 
+**`Example`**
+
+```ts
+getCookie('name'); /// 获取 name 对应的 Cookie 值
+```
+
 ___
 
 ### getCryptoJS
@@ -2785,6 +2785,10 @@ ___
 
 获取 CryptoJS
 
+#### Returns
+
+typeof `CryptoJS`
+
 **`Example`**
 
 ```ts
@@ -2792,24 +2796,13 @@ getCryptoJS(); /// CryptoJS
 getCryptoJS().MD5(str).toString(); /// md5 加密后的字符串
 ```
 
-#### Returns
-
-typeof `CryptoJS`
-
 ___
 
 ### getDateDifference
 
-▸ **getDateDifference**(`oldDate`, `nowDate?`, `type?`): `number` \| { `days`: `number` ; `hours`: `number` ; `minutes`: `number` ; `seconds`: `number`  }
+▸ **getDateDifference**(`oldDate`, `nowDate?`, `type?`): `number` \| \{ `days`: `number` ; `hours`: `number` ; `minutes`: `number` ; `seconds`: `number`  }
 
 两个时间差距计算
-
-**`Example`**
-
-```ts
-getDateDifference(new Date('2022-05-01'), new Date(), 'day'); /// 37
-getDateDifference(new Date('2022-05-01'), new Date(), 'all'); /// {days: 37, hours: 8, minutes: 46, seconds: 47}
-```
 
 #### Parameters
 
@@ -2821,7 +2814,14 @@ getDateDifference(new Date('2022-05-01'), new Date(), 'all'); /// {days: 37, hou
 
 #### Returns
 
-`number` \| { `days`: `number` ; `hours`: `number` ; `minutes`: `number` ; `seconds`: `number`  }
+`number` \| \{ `days`: `number` ; `hours`: `number` ; `minutes`: `number` ; `seconds`: `number`  }
+
+**`Example`**
+
+```ts
+getDateDifference(new Date('2022-05-01'), new Date(), 'day'); /// 37
+getDateDifference(new Date('2022-05-01'), new Date(), 'all'); /// {days: 37, hours: 8, minutes: 46, seconds: 47}
+```
 
 ___
 
@@ -2830,16 +2830,6 @@ ___
 ▸ **getDateList**(`n`, `type?`, `date?`): `string`[]
 
 获取指定日期数目的数组
-
-**`Example`**
-
-```ts
-getDateList(7, 'day'); /// 得到今天到未来 7 天的日期数组
-getDateList(-7, 'day'); /// 得到今天到之前 7 天的日期数组
-getDateList(7, 'year'); /// 得到今年到未来 7 年的日期数组
-getDateList(7, 'month'); /// 得到本月到未来 7 个月的日期数组
-getDateList(7, 'day', '2023-02-01'); /// 得到 2023-02-01 日到未来 7 天的日期数组
-```
 
 #### Parameters
 
@@ -2853,6 +2843,16 @@ getDateList(7, 'day', '2023-02-01'); /// 得到 2023-02-01 日到未来 7 天的
 
 `string`[]
 
+**`Example`**
+
+```ts
+getDateList(7, 'day'); /// 得到今天到未来 7 天的日期数组
+getDateList(-7, 'day'); /// 得到今天到之前 7 天的日期数组
+getDateList(7, 'year'); /// 得到今年到未来 7 年的日期数组
+getDateList(7, 'month'); /// 得到本月到未来 7 个月的日期数组
+getDateList(7, 'day', '2023-02-01'); /// 得到 2023-02-01 日到未来 7 天的日期数组
+```
+
 ___
 
 ### getDateTime
@@ -2860,12 +2860,6 @@ ___
 ▸ **getDateTime**(`date?`): `number`
 
 获取日期时间戳
-
-**`Example`**
-
-```ts
-getDateTime(new Date()); /// time stamp
-```
 
 #### Parameters
 
@@ -2876,6 +2870,12 @@ getDateTime(new Date()); /// time stamp
 #### Returns
 
 `number`
+
+**`Example`**
+
+```ts
+getDateTime(new Date()); /// time stamp
+```
 
 ___
 
@@ -2885,12 +2885,6 @@ ___
 
 获取日期所在的年份中的天数
 
-**`Example`**
-
-```ts
-getDayInYear('2023/06/23'); /// 174
-```
-
 #### Parameters
 
 | Name | Type | Description |
@@ -2901,6 +2895,12 @@ getDayInYear('2023/06/23'); /// 174
 
 `number`
 
+**`Example`**
+
+```ts
+getDayInYear('2023/06/23'); /// 174
+```
+
 ___
 
 ### getDecodeStorage
@@ -2908,12 +2908,6 @@ ___
 ▸ **getDecodeStorage**(`key`, `isLocal?`): `any`
 
 获取 Storage 加密数据
-
-**`Example`**
-
-```ts
-getDecodeStorage("key"); /// 处理过后的 value，不需要再 decode 和解密。
-```
 
 #### Parameters
 
@@ -2926,6 +2920,12 @@ getDecodeStorage("key"); /// 处理过后的 value，不需要再 decode 和解�
 
 `any`
 
+**`Example`**
+
+```ts
+getDecodeStorage("key"); /// 处理过后的 value，不需要再 decode 和解密。
+```
+
 ___
 
 ### getFingerprint
@@ -2933,13 +2933,6 @@ ___
 ▸ **getFingerprint**(`extraString`): `string`
 
 获取简单的浏览器指纹
-
-**`Example`**
-
-```ts
-getFingerprint(); /// md5 加密后的指纹
-getFingerprint('test'); /// md5 加密后的指纹-建议增加使用者标识，避免指纹冲突。
-```
 
 #### Parameters
 
@@ -2951,6 +2944,13 @@ getFingerprint('test'); /// md5 加密后的指纹-建议增加使用者标识�
 
 `string`
 
+**`Example`**
+
+```ts
+getFingerprint(); /// md5 加密后的指纹
+getFingerprint('test'); /// md5 加密后的指纹-建议增加使用者标识，避免指纹冲突。
+```
+
 ___
 
 ### getFirstVar
@@ -2958,13 +2958,6 @@ ___
 ▸ **getFirstVar**(`data`): `any`
 
 获取对象/数组第一个值
-
-**`Example`**
-
-```ts
-getFirstVar([1, 2]); /// 1
-getFirstVar({a: 2,b: 1}); /// 2
-```
 
 #### Parameters
 
@@ -2976,6 +2969,13 @@ getFirstVar({a: 2,b: 1}); /// 2
 
 `any`
 
+**`Example`**
+
+```ts
+getFirstVar([1, 2]); /// 1
+getFirstVar({a: 2,b: 1}); /// 2
+```
+
 ___
 
 ### getKey
@@ -2983,14 +2983,6 @@ ___
 ▸ **getKey**(`size?`, `prefix?`, `suffix?`): `string`
 
 获取带前/后缀的唯一 key
-
-**`Example`**
-
-```ts
-getKey(); /// 'M2rmCcGpXCa5MTdN4Kks5'
-getKey(2, 'test'); /// 'test-aK'
-getKey(2, null, 'last'); /// 'aK-last'
-```
 
 #### Parameters
 
@@ -3004,6 +2996,14 @@ getKey(2, null, 'last'); /// 'aK-last'
 
 `string`
 
+**`Example`**
+
+```ts
+getKey(); /// 'M2rmCcGpXCa5MTdN4Kks5'
+getKey(2, 'test'); /// 'test-aK'
+getKey(2, null, 'last'); /// 'aK-last'
+```
+
 ___
 
 ### getLastVar
@@ -3011,13 +3011,6 @@ ___
 ▸ **getLastVar**(`data`): `any`
 
 获取对象/数组最后一个值(对象为 Object.keys 的顺序)
-
-**`Example`**
-
-```ts
-getLastVar([1, 2]); /// 2
-getLastVar({a: 2, b: 1}); /// b
-```
 
 #### Parameters
 
@@ -3029,6 +3022,13 @@ getLastVar({a: 2, b: 1}); /// b
 
 `any`
 
+**`Example`**
+
+```ts
+getLastVar([1, 2]); /// 2
+getLastVar({a: 2, b: 1}); /// b
+```
+
 ___
 
 ### getLocalArr
@@ -3036,12 +3036,6 @@ ___
 ▸ **getLocalArr**(`key`): `any`[]
 
 获取 localStorage 数组值
-
-**`Example`**
-
-```ts
-getLocalArr("key"); /// 处理过后的 value，不需要再 decode，且有默认值 []。
-```
 
 #### Parameters
 
@@ -3053,6 +3047,12 @@ getLocalArr("key"); /// 处理过后的 value，不需要再 decode，且有默�
 
 `any`[]
 
+**`Example`**
+
+```ts
+getLocalArr("key"); /// 处理过后的 value，不需要再 decode，且有默认值 []。
+```
+
 ___
 
 ### getLocalObj
@@ -3060,12 +3060,6 @@ ___
 ▸ **getLocalObj**(`key`): `any`
 
 获取 localStorage 对象值
-
-**`Example`**
-
-```ts
-getLocalObj("key"); /// 处理过后的 value，不需要再 decode，且有默认值 {}。
-```
 
 #### Parameters
 
@@ -3077,6 +3071,12 @@ getLocalObj("key"); /// 处理过后的 value，不需要再 decode，且有默�
 
 `any`
 
+**`Example`**
+
+```ts
+getLocalObj("key"); /// 处理过后的 value，不需要再 decode，且有默认值 {}。
+```
+
 ___
 
 ### getMonthDayCount
@@ -3084,12 +3084,6 @@ ___
 ▸ **getMonthDayCount**(`date?`): `number`
 
 获取月份天数
-
-**`Example`**
-
-```ts
-getMonthDayCount(new Date()); /// 30
-```
 
 #### Parameters
 
@@ -3101,13 +3095,29 @@ getMonthDayCount(new Date()); /// 30
 
 `number`
 
+**`Example`**
+
+```ts
+getMonthDayCount(new Date()); /// 30
+```
+
 ___
 
 ### getMonthInfo
 
-▸ **getMonthInfo**(`n`): { `abbr`: `string` ; `id`: `number` ; `key`: `string` ; `name`: `string` ; `others`: `string`  } \| { `abbr`: `string` ; `id`: `number` ; `key`: `string` ; `name`: `string` ; `others`: `string`  }[]
+▸ **getMonthInfo**(`n`): \{ `abbr`: `string` ; `id`: `number` ; `key`: `string` ; `name`: `string` ; `others`: `string`  } \| \{ `abbr`: `string` ; `id`: `number` ; `key`: `string` ; `name`: `string` ; `others`: `string`  }[]
 
 获取月份信息
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `n` | `string` \| `number` | 值 |
+
+#### Returns
+
+\{ `abbr`: `string` ; `id`: `number` ; `key`: `string` ; `name`: `string` ; `others`: `string`  } \| \{ `abbr`: `string` ; `id`: `number` ; `key`: `string` ; `name`: `string` ; `others`: `string`  }[]
 
 **`Example`**
 
@@ -3121,16 +3131,6 @@ getMonthInfo(1); /// 一月相关信息
 getMonthInfo(13); /// MONTH_INFO
 ```
 
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `n` | `string` \| `number` | 值 |
-
-#### Returns
-
-{ `abbr`: `string` ; `id`: `number` ; `key`: `string` ; `name`: `string` ; `others`: `string`  } \| { `abbr`: `string` ; `id`: `number` ; `key`: `string` ; `name`: `string` ; `others`: `string`  }[]
-
 ___
 
 ### getPercentage
@@ -3138,16 +3138,6 @@ ___
 ▸ **getPercentage**(`value`, `total`, `decimals?`, `options?`): `string` \| `number`
 
 获取百分比
-
-**`Example`**
-
-```ts
-getPercentage(102, 1020, 2); /// 10
-getPercentage(102, 1020, 2, { float: true, suffix: true }); /// '10.00%'
-getPercentage(17, 1020, 2); /// 1.67
-getPercentage(1020, null, 2); /// 0
-getPercentage(0, 1020, 2, { float: false, suffix: true }); /// '0%'
-```
 
 #### Parameters
 
@@ -3164,6 +3154,16 @@ getPercentage(0, 1020, 2, { float: false, suffix: true }); /// '0%'
 
 `string` \| `number`
 
+**`Example`**
+
+```ts
+getPercentage(102, 1020, 2); /// 10
+getPercentage(102, 1020, 2, { float: true, suffix: true }); /// '10.00%'
+getPercentage(17, 1020, 2); /// 1.67
+getPercentage(1020, null, 2); /// 0
+getPercentage(0, 1020, 2, { float: false, suffix: true }); /// '0%'
+```
+
 ___
 
 ### getPinYin
@@ -3171,14 +3171,6 @@ ___
 ▸ **getPinYin**(`str`, `extractFirst?`): `string`
 
 获取汉字拼音或首字母
-
-**`Example`**
-
-```ts
-getPinYin('你好'); /// 'NiHao'
-getPinYin('你好', true); /// 'NH'
-getPinYin('贺'); /// 'He'
-```
 
 #### Parameters
 
@@ -3191,6 +3183,14 @@ getPinYin('贺'); /// 'He'
 
 `string`
 
+**`Example`**
+
+```ts
+getPinYin('你好'); /// 'NiHao'
+getPinYin('你好', true); /// 'NH'
+getPinYin('贺'); /// 'He'
+```
+
 ___
 
 ### getQueryString
@@ -3198,14 +3198,6 @@ ___
 ▸ **getQueryString**(`url?`): `any`
 
 获取 url 查询参数字符串
-
-**`Example`**
-
-```ts
-getQueryString('https://test.com/index?name=leo&org=biugle#test'); /// 'name=leo&org=biugle'
-getQueryString(''); /// ''
-getQueryString(); /// 当前页面 QueryString 字符串部分
-```
 
 #### Parameters
 
@@ -3217,6 +3209,14 @@ getQueryString(); /// 当前页面 QueryString 字符串部分
 
 `any`
 
+**`Example`**
+
+```ts
+getQueryString('https://test.com/index?name=leo&org=biugle#test'); /// 'name=leo&org=biugle'
+getQueryString(''); /// ''
+getQueryString(); /// 当前页面 QueryString 字符串部分
+```
+
 ___
 
 ### getRandColor
@@ -3225,15 +3225,15 @@ ___
 
 获取随机颜色
 
+#### Returns
+
+`string`
+
 **`Example`**
 
 ```ts
 getRandColor(); /// '#xxxxxx'
 ```
-
-#### Returns
-
-`string`
 
 ___
 
@@ -3243,15 +3243,15 @@ ___
 
 获取随机日期时间
 
+#### Returns
+
+`string`
+
 **`Example`**
 
 ```ts
 getRandDate(); /// '1923-01-01 01:03:30'
 ```
-
-#### Returns
-
-`string`
 
 ___
 
@@ -3261,15 +3261,15 @@ ___
 
 获取随机 IP 地址
 
+#### Returns
+
+`string`
+
 **`Example`**
 
 ```ts
 getRandIp(); /// '89.0.142.86'
 ```
-
-#### Returns
-
-`string`
 
 ___
 
@@ -3278,12 +3278,6 @@ ___
 ▸ **getRandNum**(`min?`, `max?`): `number`
 
 获取随机数字
-
-**`Example`**
-
-```ts
-getRandNum(1, 10); /// 1~10 之间的随机数，闭区间。
-```
 
 #### Parameters
 
@@ -3296,6 +3290,12 @@ getRandNum(1, 10); /// 1~10 之间的随机数，闭区间。
 
 `number`
 
+**`Example`**
+
+```ts
+getRandNum(1, 10); /// 1~10 之间的随机数，闭区间。
+```
+
 ___
 
 ### getRandStr
@@ -3303,13 +3303,6 @@ ___
 ▸ **getRandStr**(`length`): `string`
 
 生成一个指定长度的随机数字符串
-
-**`Example`**
-
-```ts
-getRandStr(2); /// '43'
-getRandStr(5); /// '77192'
-```
 
 #### Parameters
 
@@ -3321,6 +3314,13 @@ getRandStr(5); /// '77192'
 
 `string`
 
+**`Example`**
+
+```ts
+getRandStr(2); /// '43'
+getRandStr(5); /// '77192'
+```
+
 ___
 
 ### getRandVar
@@ -3328,13 +3328,6 @@ ___
 ▸ **getRandVar**(`value`, `count?`): `any` \| `any`[]
 
 获取数组或对象随机数据
-
-**`Example`**
-
-```ts
-getRandVar({ a: 1, b: 3 }); /// 1
-getRandVar([1, 2, 3, 4], 2); /// [2, 4]
-```
 
 #### Parameters
 
@@ -3347,6 +3340,13 @@ getRandVar([1, 2, 3, 4], 2); /// [2, 4]
 
 `any` \| `any`[]
 
+**`Example`**
+
+```ts
+getRandVar({ a: 1, b: 3 }); /// 1
+getRandVar([1, 2, 3, 4], 2); /// [2, 4]
+```
+
 ___
 
 ### getScrollPercent
@@ -3354,12 +3354,6 @@ ___
 ▸ **getScrollPercent**(`direction?`, `dom?`): `number`
 
 获取滚动条百分比
-
-**`Example`**
-
-```ts
-getScrollPercent(document.documentElement, 'Y'); /// 0.581134549876
-```
 
 #### Parameters
 
@@ -3372,6 +3366,12 @@ getScrollPercent(document.documentElement, 'Y'); /// 0.581134549876
 
 `number`
 
+**`Example`**
+
+```ts
+getScrollPercent(document.documentElement, 'Y'); /// 0.581134549876
+```
+
 ___
 
 ### getSearchParams
@@ -3379,14 +3379,6 @@ ___
 ▸ **getSearchParams**(`url?`): `any`
 
 获取查询地址/链接中的参数对象
-
-**`Example`**
-
-```ts
-getSearchParams('https://test.com/index?name=leo&org=biugle#test'); /// {name: 'leo', org: 'biugle'}
-getSearchParams(''); /// {}
-getSearchParams(); /// 当前页面 SearchParams 对象
-```
 
 #### Parameters
 
@@ -3398,6 +3390,14 @@ getSearchParams(); /// 当前页面 SearchParams 对象
 
 `any`
 
+**`Example`**
+
+```ts
+getSearchParams('https://test.com/index?name=leo&org=biugle#test'); /// {name: 'leo', org: 'biugle'}
+getSearchParams(''); /// {}
+getSearchParams(); /// 当前页面 SearchParams 对象
+```
+
 ___
 
 ### getSelectText
@@ -3406,15 +3406,15 @@ ___
 
 获取鼠标选中内容
 
+#### Returns
+
+`undefined` \| `string`
+
 **`Example`**
 
 ```ts
 getSelectText()
 ```
-
-#### Returns
-
-`undefined` \| `string`
 
 ___
 
@@ -3423,12 +3423,6 @@ ___
 ▸ **getSessionArr**(`key`): `any`[]
 
 获取 sessionStorage 数组值
-
-**`Example`**
-
-```ts
-getSessionArr("key"); /// 处理过后的 value，不需要再 decode，且有默认值 []。
-```
 
 #### Parameters
 
@@ -3440,6 +3434,12 @@ getSessionArr("key"); /// 处理过后的 value，不需要再 decode，且有�
 
 `any`[]
 
+**`Example`**
+
+```ts
+getSessionArr("key"); /// 处理过后的 value，不需要再 decode，且有默认值 []。
+```
+
 ___
 
 ### getSessionObj
@@ -3447,12 +3447,6 @@ ___
 ▸ **getSessionObj**(`key`): `any`
 
 获取 sessionStorage 对象值
-
-**`Example`**
-
-```ts
-getSessionObj("key"); /// 处理过后的 value，不需要再 decode，且有默认值 {}。
-```
 
 #### Parameters
 
@@ -3464,6 +3458,12 @@ getSessionObj("key"); /// 处理过后的 value，不需要再 decode，且有�
 
 `any`
 
+**`Example`**
+
+```ts
+getSessionObj("key"); /// 处理过后的 value，不需要再 decode，且有默认值 {}。
+```
+
 ___
 
 ### getSortVar
@@ -3471,14 +3471,6 @@ ___
 ▸ **getSortVar**(`value`): `any`
 
 获取排序转换后的数组或对象（仅支持单层简单结构）
-
-**`Example`**
-
-```ts
-getSortVar({ b: 3, a: 2 }); /// { a: 2, b: 3 }
-getSortVar({ a: 2, b: 3 }); /// { a: 2, b: 3 }
-getSortVar([1, 3, 2]); /// [1, 2, 3]
-```
 
 #### Parameters
 
@@ -3490,6 +3482,14 @@ getSortVar([1, 3, 2]); /// [1, 2, 3]
 
 `any`
 
+**`Example`**
+
+```ts
+getSortVar({ b: 3, a: 2 }); /// { a: 2, b: 3 }
+getSortVar({ a: 2, b: 3 }); /// { a: 2, b: 3 }
+getSortVar([1, 3, 2]); /// [1, 2, 3]
+```
+
 ___
 
 ### getStyleByName
@@ -3497,12 +3497,6 @@ ___
 ▸ **getStyleByName**(`element`, `name`): `any`
 
 获取任一元素的 style 任意属性
-
-**`Example`**
-
-```ts
-getStyle(document.getElementById('test'), 'width'); /// #test 的 width 属性
-```
 
 #### Parameters
 
@@ -3515,6 +3509,12 @@ getStyle(document.getElementById('test'), 'width'); /// #test 的 width 属性
 
 `any`
 
+**`Example`**
+
+```ts
+getStyle(document.getElementById('test'), 'width'); /// #test 的 width 属性
+```
+
 ___
 
 ### getTimeCode
@@ -3523,15 +3523,15 @@ ___
 
 获取 16 位可读时间戳
 
+#### Returns
+
+`string`
+
 **`Example`**
 
 ```ts
 getTimeCode(); /// '2036551026042022'
 ```
-
-#### Returns
-
-`string`
 
 ___
 
@@ -3540,13 +3540,6 @@ ___
 ▸ **getType**(`variable`): `string`
 
 获取变量类型
-
-**`Example`**
-
-```ts
-getType(1); /// 'number'
-getType(async function(){}); /// 'asyncfunction'
-```
 
 #### Parameters
 
@@ -3558,6 +3551,13 @@ getType(async function(){}); /// 'asyncfunction'
 
 `string`
 
+**`Example`**
+
+```ts
+getType(1); /// 'number'
+getType(async function(){}); /// 'asyncfunction'
+```
+
 ___
 
 ### getUTCTime
@@ -3566,12 +3566,6 @@ ___
 
 获取标准时间 UTC
 适用于本地时间不准确或者获取其他时区时间的情况
-
-**`Example`**
-
-```ts
-getUTCTime(8); /// 中国标准时间-东八区
-```
 
 #### Parameters
 
@@ -3583,6 +3577,12 @@ getUTCTime(8); /// 中国标准时间-东八区
 
 `Date`
 
+**`Example`**
+
+```ts
+getUTCTime(8); /// 中国标准时间-东八区
+```
+
 ___
 
 ### getUserAgent
@@ -3590,12 +3590,6 @@ ___
 ▸ **getUserAgent**(): `Object`
 
 获取浏览器信息
-
-**`Example`**
-
-```ts
-getUserAgent(); /// { browserName: 'Chrome', browserVersion: '102.0.0.0', osName: 'Windows', osVersion: '10.0', deviceName: '' }
-```
 
 #### Returns
 
@@ -3608,6 +3602,12 @@ getUserAgent(); /// { browserName: 'Chrome', browserVersion: '102.0.0.0', osName
 | `osName` | `string` |
 | `osVersion` | `string` |
 
+**`Example`**
+
+```ts
+getUserAgent(); /// { browserName: 'Chrome', browserVersion: '102.0.0.0', osName: 'Windows', osVersion: '10.0', deviceName: '' }
+```
+
 ___
 
 ### getV
@@ -3615,16 +3615,6 @@ ___
 ▸ **getV**(`defaultResult`, `...args`): `any`
 
 获取多级对象值
-
-**`Example`**
-
-```ts
-getV('默认值', {name: {children: [123, 456]}}, 'name', 'children', '0'); /// 123
-getV('默认值', {name: {children: [123, 456]}}, 'name.children.0'); /// 123
-getV('默认值', {name: {children: [123, 456]}}, 'name.children.xxx'); /// 默认值
-getV('默认值', { name: {children: [123, 456], '[]': ['test']} }, 'name.[].0'); /// 'test'
-getV('默认值', { name: {children: [123, 456], '[]': ['test']} }, 'name', '[]', 0); /// 'test'
-```
 
 #### Parameters
 
@@ -3637,6 +3627,16 @@ getV('默认值', { name: {children: [123, 456], '[]': ['test']} }, 'name', '[]'
 
 `any`
 
+**`Example`**
+
+```ts
+getV('默认值', {name: {children: [123, 456]}}, 'name', 'children', '0'); /// 123
+getV('默认值', {name: {children: [123, 456]}}, 'name.children.0'); /// 123
+getV('默认值', {name: {children: [123, 456]}}, 'name.children.xxx'); /// 默认值
+getV('默认值', { name: {children: [123, 456], '[]': ['test']} }, 'name.[].0'); /// 'test'
+getV('默认值', { name: {children: [123, 456], '[]': ['test']} }, 'name', '[]', 0); /// 'test'
+```
+
 ___
 
 ### getVarSize
@@ -3644,14 +3644,6 @@ ___
 ▸ **getVarSize**(`value`): `number`
 
 获取任意变量长度
-
-**`Example`**
-
-```ts
-getVarSize([]); /// 0
-getVarSize({a: 1, b: 2}); /// 2
-getVarSize(null); /// 0
-```
 
 #### Parameters
 
@@ -3663,6 +3655,14 @@ getVarSize(null); /// 0
 
 `number`
 
+**`Example`**
+
+```ts
+getVarSize([]); /// 0
+getVarSize({a: 1, b: 2}); /// 2
+getVarSize(null); /// 0
+```
+
 ___
 
 ### getViewportSize
@@ -3670,12 +3670,6 @@ ___
 ▸ **getViewportSize**(): `Object`
 
 获取窗口尺寸
-
-**`Example`**
-
-```ts
-getViewportSize(); /// { width: 1280, height: 649 }
-```
 
 #### Returns
 
@@ -3686,6 +3680,12 @@ getViewportSize(); /// { width: 1280, height: 649 }
 | `h` | `number` |
 | `w` | `number` |
 
+**`Example`**
+
+```ts
+getViewportSize(); /// { width: 1280, height: 649 }
+```
+
 ___
 
 ### getWebSocket
@@ -3694,23 +3694,33 @@ ___
 
 获取 websocket 实例
 
+#### Returns
+
+`WebSocket` \| `undefined`
+
 **`Example`**
 
 ```ts
 getWebSocket(); /// [websocket object]
 ```
 
-#### Returns
-
-`WebSocket` \| `undefined`
-
 ___
 
 ### getWeekInfo
 
-▸ **getWeekInfo**(`n`): { `abbr`: `string` ; `id`: `number` ; `key`: `string` ; `name`: `string` ; `others`: `string`  } \| { `abbr`: `string` ; `id`: `number` ; `key`: `string` ; `name`: `string` ; `others`: `string`  }[]
+▸ **getWeekInfo**(`n`): \{ `abbr`: `string` ; `id`: `number` ; `key`: `string` ; `name`: `string` ; `others`: `string`  } \| \{ `abbr`: `string` ; `id`: `number` ; `key`: `string` ; `name`: `string` ; `others`: `string`  }[]
 
 获取星期信息
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `n` | `string` \| `number` | 值 |
+
+#### Returns
+
+\{ `abbr`: `string` ; `id`: `number` ; `key`: `string` ; `name`: `string` ; `others`: `string`  } \| \{ `abbr`: `string` ; `id`: `number` ; `key`: `string` ; `name`: `string` ; `others`: `string`  }[]
 
 **`Example`**
 
@@ -3724,16 +3734,6 @@ getWeekInfo(1); /// 星期一相关信息
 getWeekInfo(8); /// WEEKS_INFO
 ```
 
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `n` | `string` \| `number` | 值 |
-
-#### Returns
-
-{ `abbr`: `string` ; `id`: `number` ; `key`: `string` ; `name`: `string` ; `others`: `string`  } \| { `abbr`: `string` ; `id`: `number` ; `key`: `string` ; `name`: `string` ; `others`: `string`  }[]
-
 ___
 
 ### globalError
@@ -3741,12 +3741,6 @@ ___
 ▸ **globalError**(`fn`, `notShowConsole?`): `void`
 
 全局尽可能捕获异常
-
-**`Example`**
-
-```ts
-globalError((error) => console.log('全局捕获异常'), false); /// '全局捕获异常'
-```
 
 #### Parameters
 
@@ -3759,6 +3753,12 @@ globalError((error) => console.log('全局捕获异常'), false); /// '全局捕
 
 `void`
 
+**`Example`**
+
+```ts
+globalError((error) => console.log('全局捕获异常'), false); /// '全局捕获异常'
+```
+
 ___
 
 ### hasKey
@@ -3766,6 +3766,17 @@ ___
 ▸ **hasKey**(`data`, `key`): `boolean`
 
 对象/数组包含某个 key/index 或者属性
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `data` | `any` | 对象 |
+| `key` | `string` | 需要判断的 key |
+
+#### Returns
+
+`boolean`
 
 **`Example`**
 
@@ -3779,17 +3790,6 @@ a.__proto__.x = 1;
 hasKey(a, 'x'); /// true;
 ```
 
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `data` | `any` | 对象 |
-| `key` | `string` | 需要判断的 key |
-
-#### Returns
-
-`boolean`
-
 ___
 
 ### hasSpecialChar
@@ -3797,13 +3797,6 @@ ___
 ▸ **hasSpecialChar**(`value`): `boolean`
 
 是否全为英文
-
-**`Example`**
-
-```ts
-hasSpecialChar('Aa('); /// true
-hasSpecialChar('a1'); /// false
-```
 
 #### Parameters
 
@@ -3815,6 +3808,13 @@ hasSpecialChar('a1'); /// false
 
 `boolean`
 
+**`Example`**
+
+```ts
+hasSpecialChar('Aa('); /// true
+hasSpecialChar('a1'); /// false
+```
+
 ___
 
 ### hideToast
@@ -3822,12 +3822,6 @@ ___
 ▸ **hideToast**(`toast?`): `void`
 
 隐藏 toast 不传值关闭所有 toast
-
-**`Example`**
-
-```ts
-const $toast = showToast({ content: '这是一个演示 Toast' }); /// hideToast($toast);
-```
 
 #### Parameters
 
@@ -3839,6 +3833,12 @@ const $toast = showToast({ content: '这是一个演示 Toast' }); /// hideToast
 
 `void`
 
+**`Example`**
+
+```ts
+const $toast = showToast({ content: '这是一个演示 Toast' }); /// hideToast($toast);
+```
+
 ___
 
 ### html2str
@@ -3846,12 +3846,6 @@ ___
 ▸ **html2str**(`value`): `string` \| ``null``
 
 实体字符转字符串
-
-**`Example`**
-
-```ts
-html2str('&lt;&gt;&amp;&quot;'); /// '<>&"'
-```
 
 #### Parameters
 
@@ -3863,6 +3857,12 @@ html2str('&lt;&gt;&amp;&quot;'); /// '<>&"'
 
 `string` \| ``null``
 
+**`Example`**
+
+```ts
+html2str('&lt;&gt;&amp;&quot;'); /// '<>&"'
+```
+
 ___
 
 ### inRange
@@ -3870,15 +3870,6 @@ ___
 ▸ **inRange**(`value`, `min`, `max`): `boolean`
 
 判断一个数是否在指定范围（闭区间）
-
-**`Example`**
-
-```ts
-inRange(null, 0, 3); /// false
-inRange(0, 0, 3); /// true
-inRange(3, 0, 3); /// true
-inRange(5, 0, 3); /// false
-```
 
 #### Parameters
 
@@ -3892,6 +3883,15 @@ inRange(5, 0, 3); /// false
 
 `boolean`
 
+**`Example`**
+
+```ts
+inRange(null, 0, 3); /// false
+inRange(0, 0, 3); /// true
+inRange(3, 0, 3); /// true
+inRange(5, 0, 3); /// false
+```
+
 ___
 
 ### initNotification
@@ -3900,15 +3900,15 @@ ___
 
 初始化 Notification
 
+#### Returns
+
+`boolean`
+
 **`Example`**
 
 ```ts
 initNotification(); /// true||false
 ```
-
-#### Returns
-
-`boolean`
 
 ___
 
@@ -3917,12 +3917,6 @@ ___
 ▸ **initWebSocket**(`options`): `WebSocket`
 
 初始化 websocket
-
-**`Example`**
-
-```ts
-initWebSocket({ url: 'ws://localhost:8080/ws', timeout: 30000, onOpen: () => {}, onMessage: () => {}, onClose: () => {}, onError: () => {}, reconnect: {} })
-```
 
 #### Parameters
 
@@ -3944,6 +3938,12 @@ initWebSocket({ url: 'ws://localhost:8080/ws', timeout: 30000, onOpen: () => {},
 
 `WebSocket`
 
+**`Example`**
+
+```ts
+initWebSocket({ url: 'ws://localhost:8080/ws', timeout: 30000, onOpen: () => {}, onMessage: () => {}, onClose: () => {}, onError: () => {}, reconnect: {} })
+```
+
 ___
 
 ### insertAfter
@@ -3951,12 +3951,6 @@ ___
 ▸ **insertAfter**(`newElement`, `targetElement`): `void`
 
 插入某元素到指定 Element 之后
-
-**`Example`**
-
-```ts
-insertAfter(document.getElementById('a'), document.getElementById('b'));
-```
 
 #### Parameters
 
@@ -3969,6 +3963,12 @@ insertAfter(document.getElementById('a'), document.getElementById('b'));
 
 `void`
 
+**`Example`**
+
+```ts
+insertAfter(document.getElementById('a'), document.getElementById('b'));
+```
+
 ___
 
 ### intersection
@@ -3976,13 +3976,6 @@ ___
 ▸ **intersection**(`paramA`, `paramB`): `any`
 
 获取数组或对象交集
-
-**`Example`**
-
-```ts
-intersection([1, 2, 2, 3, 3], [1, 2, 4, 5]); /// [1, 2]
-intersection({a: 1, b: 2}, {a: 1, c: 3, b: 4}); /// {a: 1}
-```
 
 #### Parameters
 
@@ -3995,6 +3988,13 @@ intersection({a: 1, b: 2}, {a: 1, c: 3, b: 4}); /// {a: 1}
 
 `any`
 
+**`Example`**
+
+```ts
+intersection([1, 2, 2, 3, 3], [1, 2, 4, 5]); /// [1, 2]
+intersection({a: 1, b: 2}, {a: 1, c: 3, b: 4}); /// {a: 1}
+```
+
 ___
 
 ### inversion
@@ -4002,15 +4002,6 @@ ___
 ▸ **inversion**(`value`): `any`
 
 反转数组或者字符串
-
-**`Example`**
-
-```ts
-inversion([1, 2, 3]); /// [3, 2, 1]
-inversion('123'); /// '321'
-inversion(); /// undefined
-inversion(true); /// true
-```
 
 #### Parameters
 
@@ -4022,6 +4013,15 @@ inversion(true); /// true
 
 `any`
 
+**`Example`**
+
+```ts
+inversion([1, 2, 3]); /// [3, 2, 1]
+inversion('123'); /// '321'
+inversion(); /// undefined
+inversion(true); /// true
+```
+
 ___
 
 ### isAccount
@@ -4029,16 +4029,6 @@ ___
 ▸ **isAccount**(`value`, `hasChinese?`): `boolean`
 
 检查是否为 char string 用户名规范(字母数字下划线或中文)
-
-**`Example`**
-
-```ts
-isAccount('test123@qq.com'); /// false
-isAccount('_test123_qq_com'); /// false
-isAccount('test123_qq_com'); /// true
-isAccount('我test123_qq_com'); /// false
-isAccount('我test123_qq_com', true); /// true
-```
 
 #### Parameters
 
@@ -4051,6 +4041,16 @@ isAccount('我test123_qq_com', true); /// true
 
 `boolean`
 
+**`Example`**
+
+```ts
+isAccount('test123@qq.com'); /// false
+isAccount('_test123_qq_com'); /// false
+isAccount('test123_qq_com'); /// true
+isAccount('我test123_qq_com'); /// false
+isAccount('我test123_qq_com', true); /// true
+```
+
 ___
 
 ### isAppleDevice
@@ -4059,15 +4059,15 @@ ___
 
 是否苹果设备
 
+#### Returns
+
+`boolean`
+
 **`Example`**
 
 ```ts
 isAppleDevice(); /// true
 ```
-
-#### Returns
-
-`boolean`
 
 ___
 
@@ -4077,13 +4077,6 @@ ___
 
 检查是否数组
 
-**`Example`**
-
-```ts
-isArr([]); /// true
-isArr({}); /// false
-```
-
 #### Parameters
 
 | Name | Type | Description |
@@ -4093,6 +4086,13 @@ isArr({}); /// false
 #### Returns
 
 `boolean`
+
+**`Example`**
+
+```ts
+isArr([]); /// true
+isArr({}); /// false
+```
 
 ___
 
@@ -4102,13 +4102,6 @@ ___
 
 检查是否为 ArrayBuffer
 
-**`Example`**
-
-```ts
-isArrayBuffer(new ArrayBuffer()); /// true
-isArrayBuffer(null); /// false
-```
-
 #### Parameters
 
 | Name | Type | Description |
@@ -4119,6 +4112,13 @@ isArrayBuffer(null); /// false
 
 `boolean`
 
+**`Example`**
+
+```ts
+isArrayBuffer(new ArrayBuffer()); /// true
+isArrayBuffer(null); /// false
+```
+
 ___
 
 ### isBankCard
@@ -4126,13 +4126,6 @@ ___
 ▸ **isBankCard**(`value`): `boolean`
 
 判断是否为银行卡号
-
-**`Example`**
-
-```ts
-isBankCard('6217003810026896707'); /// true
-isBankCard('12312312312'); /// false
-```
 
 #### Parameters
 
@@ -4144,6 +4137,13 @@ isBankCard('12312312312'); /// false
 
 `boolean`
 
+**`Example`**
+
+```ts
+isBankCard('6217003810026896707'); /// true
+isBankCard('12312312312'); /// false
+```
+
 ___
 
 ### isBlob
@@ -4151,13 +4151,6 @@ ___
 ▸ **isBlob**(`value`): `boolean`
 
 检查是否为 Blob
-
-**`Example`**
-
-```ts
-isBlob(new Blob()); /// true
-isBlob(null); /// false
-```
 
 #### Parameters
 
@@ -4168,6 +4161,13 @@ isBlob(null); /// false
 #### Returns
 
 `boolean`
+
+**`Example`**
+
+```ts
+isBlob(new Blob()); /// true
+isBlob(null); /// false
+```
 
 ___
 
@@ -4177,13 +4177,6 @@ ___
 
 检查是否为 boolean 类型
 
-**`Example`**
-
-```ts
-isBool(true); /// true
-isBool(null); /// false
-```
-
 #### Parameters
 
 | Name | Type | Description |
@@ -4194,6 +4187,13 @@ isBool(null); /// false
 
 `boolean`
 
+**`Example`**
+
+```ts
+isBool(true); /// true
+isBool(null); /// false
+```
+
 ___
 
 ### isBrowser
@@ -4202,15 +4202,15 @@ ___
 
 判断当前运行环境是否为浏览器
 
+#### Returns
+
+`boolean`
+
 **`Example`**
 
 ```ts
 isBrowser(); /// true
 ```
-
-#### Returns
-
-`boolean`
 
 ___
 
@@ -4219,6 +4219,16 @@ ___
 ▸ **isCarCode**(`value`): `boolean`
 
 检查是否为 carCode string 车牌号
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `string` | 字符串值 |
+
+#### Returns
+
+`boolean`
 
 **`Example`**
 
@@ -4231,16 +4241,6 @@ isCarCode('粤B 68928'); /// true
 isCarCode('广东 B12345'); /// false
 ```
 
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `value` | `string` | 字符串值 |
-
-#### Returns
-
-`boolean`
-
 ___
 
 ### isChinese
@@ -4249,13 +4249,6 @@ ___
 
 是否全为中文
 
-**`Example`**
-
-```ts
-isChinese('呜呜呜'); /// true
-isChinese('我 1'); /// false
-```
-
 #### Parameters
 
 | Name | Type | Description |
@@ -4265,6 +4258,13 @@ isChinese('我 1'); /// false
 #### Returns
 
 `boolean`
+
+**`Example`**
+
+```ts
+isChinese('呜呜呜'); /// true
+isChinese('我 1'); /// false
+```
 
 ___
 
@@ -4274,13 +4274,6 @@ ___
 
 判断是否为统一社会信用代码
 
-**`Example`**
-
-```ts
-isCreditCode('9144030071526726XG'); /// true
-isCreditCode('12312312312'); /// false
-```
-
 #### Parameters
 
 | Name | Type | Description |
@@ -4291,6 +4284,13 @@ isCreditCode('12312312312'); /// false
 
 `boolean`
 
+**`Example`**
+
+```ts
+isCreditCode('9144030071526726XG'); /// true
+isCreditCode('12312312312'); /// false
+```
+
 ___
 
 ### isDarkMode
@@ -4299,15 +4299,15 @@ ___
 
 检测黑暗模式
 
+#### Returns
+
+`boolean`
+
 **`Example`**
 
 ```ts
 isDarkMode(); /// true
 ```
-
-#### Returns
-
-`boolean`
 
 ___
 
@@ -4316,13 +4316,6 @@ ___
 ▸ **isDate**(`value`): `boolean`
 
 检查是否 date 类型
-
-**`Example`**
-
-```ts
-isDate(new Date()); /// true
-isDate(null); /// false
-```
 
 #### Parameters
 
@@ -4334,6 +4327,13 @@ isDate(null); /// false
 
 `boolean`
 
+**`Example`**
+
+```ts
+isDate(new Date()); /// true
+isDate(null); /// false
+```
+
 ___
 
 ### isDecimal
@@ -4341,15 +4341,6 @@ ___
 ▸ **isDecimal**(`value`, `type?`, `noLastZero?`): `boolean`
 
 是否小数(严格匹配)
-
-**`Example`**
-
-```ts
-isDecimal('0.0'); /// true
-isDecimal('0.0', '+', true); /// false
-isDecimal('-0.1', '+'); /// false
-isDecimal('-0.10', '-'); /// true
-```
 
 #### Parameters
 
@@ -4363,6 +4354,15 @@ isDecimal('-0.10', '-'); /// true
 
 `boolean`
 
+**`Example`**
+
+```ts
+isDecimal('0.0'); /// true
+isDecimal('0.0', '+', true); /// false
+isDecimal('-0.1', '+'); /// false
+isDecimal('-0.10', '-'); /// true
+```
+
 ___
 
 ### isElement
@@ -4370,14 +4370,6 @@ ___
 ▸ **isElement**(`value`): `boolean`
 
 检查是否为 dom 元素
-
-**`Example`**
-
-```ts
-isElement(document.body); /// true
-isElement(document); /// false
-isElement({}); /// false
-```
 
 #### Parameters
 
@@ -4389,6 +4381,14 @@ isElement({}); /// false
 
 `boolean`
 
+**`Example`**
+
+```ts
+isElement(document.body); /// true
+isElement(document); /// false
+isElement({}); /// false
+```
+
 ___
 
 ### isEmail
@@ -4396,13 +4396,6 @@ ___
 ▸ **isEmail**(`value`): `boolean`
 
 检查是否为 email string 邮箱
-
-**`Example`**
-
-```ts
-isEmail('test@qq.com'); /// true
-isEmail('@qq.com'); /// false
-```
 
 #### Parameters
 
@@ -4413,6 +4406,13 @@ isEmail('@qq.com'); /// false
 #### Returns
 
 `boolean`
+
+**`Example`**
+
+```ts
+isEmail('test@qq.com'); /// true
+isEmail('@qq.com'); /// false
+```
 
 ___
 
@@ -4422,13 +4422,6 @@ ___
 
 是否全为英文
 
-**`Example`**
-
-```ts
-isEnglish('Aa'); /// true
-isEnglish('a1'); /// false
-```
-
 #### Parameters
 
 | Name | Type | Description |
@@ -4439,6 +4432,13 @@ isEnglish('a1'); /// false
 
 `boolean`
 
+**`Example`**
+
+```ts
+isEnglish('Aa'); /// true
+isEnglish('a1'); /// false
+```
+
 ___
 
 ### isEqual
@@ -4446,16 +4446,6 @@ ___
 ▸ **isEqual**(`obj1`, `obj2`): `boolean`
 
 判断两个值是否相等
-
-**`Example`**
-
-```ts
-isEqual([1, 2, 3], [1, 2, 3]); /// true
-isEqual({a: 1, b: 2}, {a: 1, b: 2}); /// true
-isEqual({}, {}); /// true
-isEqual(1, 1); /// true
-isEqual(1, '1'); /// false
-```
 
 #### Parameters
 
@@ -4468,6 +4458,16 @@ isEqual(1, '1'); /// false
 
 `boolean`
 
+**`Example`**
+
+```ts
+isEqual([1, 2, 3], [1, 2, 3]); /// true
+isEqual({a: 1, b: 2}, {a: 1, b: 2}); /// true
+isEqual({}, {}); /// true
+isEqual(1, 1); /// true
+isEqual(1, '1'); /// false
+```
+
 ___
 
 ### isEven
@@ -4475,13 +4475,6 @@ ___
 ▸ **isEven**(`value`): `boolean`
 
 检查一个数字是否偶数
-
-**`Example`**
-
-```ts
-isEven(-2); /// true
-isEven(1); /// false
-```
 
 #### Parameters
 
@@ -4493,6 +4486,13 @@ isEven(1); /// false
 
 `boolean`
 
+**`Example`**
+
+```ts
+isEven(-2); /// true
+isEven(1); /// false
+```
+
 ___
 
 ### isFn
@@ -4500,15 +4500,6 @@ ___
 ▸ **isFn**(`value`): `boolean`
 
 检查是否为 function
-
-**`Example`**
-
-```ts
-isFn(function(){}); /// true
-isFn(async function(){}); /// true
-isFn(new Promise((resolve, reject) => resolve()); /// false
-isFn({}); /// false
-```
 
 #### Parameters
 
@@ -4520,6 +4511,15 @@ isFn({}); /// false
 
 `boolean`
 
+**`Example`**
+
+```ts
+isFn(function(){}); /// true
+isFn(async function(){}); /// true
+isFn(new Promise((resolve, reject) => resolve()); /// false
+isFn({}); /// false
+```
+
 ___
 
 ### isHttp
@@ -4527,15 +4527,6 @@ ___
 ▸ **isHttp**(`value`): ``-1`` \| ``1`` \| ``0``
 
 检查是否为 http 协议，1 是，-1 为 https，0 啥也不是。
-
-**`Example`**
-
-```ts
-isHttp('http://test.com'); /// 1
-isHttp('http:test.com'); /// 0
-isHttp('https://test.com'); /// -1
-isHttp('12345'); /// 0
-```
 
 #### Parameters
 
@@ -4547,6 +4538,15 @@ isHttp('12345'); /// 0
 
 ``-1`` \| ``1`` \| ``0``
 
+**`Example`**
+
+```ts
+isHttp('http://test.com'); /// 1
+isHttp('http:test.com'); /// 0
+isHttp('https://test.com'); /// -1
+isHttp('12345'); /// 0
+```
+
 ___
 
 ### isInteger
@@ -4554,13 +4554,6 @@ ___
 ▸ **isInteger**(`value`, `type?`): `boolean`
 
 是否整数(严格匹配)
-
-**`Example`**
-
-```ts
-isInteger('0'); /// true
-isInteger('-0', '+'); /// false
-```
 
 #### Parameters
 
@@ -4573,6 +4566,13 @@ isInteger('-0', '+'); /// false
 
 `boolean`
 
+**`Example`**
+
+```ts
+isInteger('0'); /// true
+isInteger('-0', '+'); /// false
+```
+
 ___
 
 ### isInvalidDate
@@ -4580,15 +4580,6 @@ ___
 ▸ **isInvalidDate**(`date`): `boolean`
 
 检查是否 Invalid Date 类型
-
-**`Example`**
-
-```ts
-isInvalidDate(new Date()); /// false
-isInvalidDate(null); /// false
-isInvalidDate(undefined); /// true
-isInvalidDate(new Date('invalid date')); /// true
-```
 
 #### Parameters
 
@@ -4600,6 +4591,15 @@ isInvalidDate(new Date('invalid date')); /// true
 
 `boolean`
 
+**`Example`**
+
+```ts
+isInvalidDate(new Date()); /// false
+isInvalidDate(null); /// false
+isInvalidDate(undefined); /// true
+isInvalidDate(new Date('invalid date')); /// true
+```
+
 ___
 
 ### isIpAddress
@@ -4607,6 +4607,16 @@ ___
 ▸ **isIpAddress**(`value`): `boolean`
 
 检查是否为 ip string
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `string` | 字符串值 |
+
+#### Returns
+
+`boolean`
 
 **`Example`**
 
@@ -4617,6 +4627,14 @@ isIpAddress('2001:DB8:0:0:8:800:200C:417A'); /// true
 isIpAddress('255.255.255.123.123'); /// false
 ```
 
+___
+
+### isIpv4
+
+▸ **isIpv4**(`value`): `boolean`
+
+检查是否为 ipv4 string
+
 #### Parameters
 
 | Name | Type | Description |
@@ -4626,14 +4644,6 @@ isIpAddress('255.255.255.123.123'); /// false
 #### Returns
 
 `boolean`
-
-___
-
-### isIpv4
-
-▸ **isIpv4**(`value`): `boolean`
-
-检查是否为 ipv4 string
 
 **`Example`**
 
@@ -4644,6 +4654,14 @@ isIpv4('255.255.255.2555'); /// false
 isIpv4('255.255.255.2555.255'); /// false
 ```
 
+___
+
+### isIpv6
+
+▸ **isIpv6**(`value`): `boolean`
+
+检查是否为 ipv6 string
+
 #### Parameters
 
 | Name | Type | Description |
@@ -4653,14 +4671,6 @@ isIpv4('255.255.255.2555.255'); /// false
 #### Returns
 
 `boolean`
-
-___
-
-### isIpv6
-
-▸ **isIpv6**(`value`): `boolean`
-
-检查是否为 ipv6 string
 
 **`Example`**
 
@@ -4674,16 +4684,6 @@ isIpv6('2001:DB8:0:0:8:800:200C:417A:123'); /// false
 isIpv6('2000:0000:0000:0000:0001:2345:6789:abcd:1'); /// false
 ```
 
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `value` | `string` | 字符串值 |
-
-#### Returns
-
-`boolean`
-
 ___
 
 ### isJSON
@@ -4691,14 +4691,6 @@ ___
 ▸ **isJSON**(`str`): `boolean`
 
 检查字符串是否为有效的 JSON
-
-**`Example`**
-
-```ts
-isJSON('{"name":"leo", "age":20}'); /// true
-isJSON('{"name":"leo", age:"20"}'); /// false
-isJSON(null); /// true
-```
 
 #### Parameters
 
@@ -4710,6 +4702,14 @@ isJSON(null); /// true
 
 `boolean`
 
+**`Example`**
+
+```ts
+isJSON('{"name":"leo", "age":20}'); /// true
+isJSON('{"name":"leo", age:"20"}'); /// false
+isJSON(null); /// true
+```
+
 ___
 
 ### isMobile
@@ -4717,13 +4717,6 @@ ___
 ▸ **isMobile**(`value`): `boolean`
 
 检查是否为 string 手机号
-
-**`Example`**
-
-```ts
-isMobile('13579246810'); /// true
-isMobile('12345678910'); /// false
-```
 
 #### Parameters
 
@@ -4734,6 +4727,13 @@ isMobile('12345678910'); /// false
 #### Returns
 
 `boolean`
+
+**`Example`**
+
+```ts
+isMobile('13579246810'); /// true
+isMobile('12345678910'); /// false
+```
 
 ___
 
@@ -4743,13 +4743,6 @@ ___
 
 检查是否为 NaN
 
-**`Example`**
-
-```ts
-isNaN(1); /// false
-isNaN(NaN); /// true
-```
-
 #### Parameters
 
 | Name | Type | Description |
@@ -4759,6 +4752,13 @@ isNaN(NaN); /// true
 #### Returns
 
 `boolean`
+
+**`Example`**
+
+```ts
+isNaN(1); /// false
+isNaN(NaN); /// true
+```
 
 ___
 
@@ -4768,15 +4768,15 @@ ___
 
 判断当前运行环境是否为 Node.js
 
+#### Returns
+
+`boolean`
+
 **`Example`**
 
 ```ts
 isNode(); /// true
 ```
-
-#### Returns
-
-`boolean`
 
 ___
 
@@ -4786,13 +4786,6 @@ ___
 
 检查是否 null
 
-**`Example`**
-
-```ts
-isNull(undefined); /// false
-isNull(null); /// true
-```
-
 #### Parameters
 
 | Name | Type | Description |
@@ -4802,6 +4795,13 @@ isNull(null); /// true
 #### Returns
 
 `boolean`
+
+**`Example`**
+
+```ts
+isNull(undefined); /// false
+isNull(null); /// true
+```
 
 ___
 
@@ -4811,13 +4811,6 @@ ___
 
 检查是否 number 类型
 
-**`Example`**
-
-```ts
-isNum(NaN); /// false
-isNum(1); /// true
-```
-
 #### Parameters
 
 | Name | Type | Description |
@@ -4827,6 +4820,13 @@ isNum(1); /// true
 #### Returns
 
 `boolean`
+
+**`Example`**
+
+```ts
+isNum(NaN); /// false
+isNum(1); /// true
+```
 
 ___
 
@@ -4836,13 +4836,6 @@ ___
 
 检查是否对象
 
-**`Example`**
-
-```ts
-isObj({}); /// true
-isObj(null); /// false
-```
-
 #### Parameters
 
 | Name | Type | Description |
@@ -4852,6 +4845,13 @@ isObj(null); /// false
 #### Returns
 
 `boolean`
+
+**`Example`**
+
+```ts
+isObj({}); /// true
+isObj(null); /// false
+```
 
 ___
 
@@ -4861,14 +4861,6 @@ ___
 
 检查是否为 Promise
 
-**`Example`**
-
-```ts
-isPromise(function(){}); /// false
-isPromise(async function(){}); /// false
-isPromise(new Promise((resolve, reject) => resolve())); /// true
-```
-
 #### Parameters
 
 | Name | Type | Description |
@@ -4879,6 +4871,14 @@ isPromise(new Promise((resolve, reject) => resolve())); /// true
 
 `boolean`
 
+**`Example`**
+
+```ts
+isPromise(function(){}); /// false
+isPromise(async function(){}); /// false
+isPromise(new Promise((resolve, reject) => resolve())); /// true
+```
+
 ___
 
 ### isQQ
@@ -4886,13 +4886,6 @@ ___
 ▸ **isQQ**(`value`): `boolean`
 
 检查是否为 QQ 号
-
-**`Example`**
-
-```ts
-isQQ('1005760694'); /// true
-isQQ('123456789101'); /// false
-```
 
 #### Parameters
 
@@ -4904,6 +4897,13 @@ isQQ('123456789101'); /// false
 
 `boolean`
 
+**`Example`**
+
+```ts
+isQQ('1005760694'); /// true
+isQQ('123456789101'); /// false
+```
+
 ___
 
 ### isRhNegative
@@ -4911,12 +4911,6 @@ ___
 ▸ **isRhNegative**(`input`): `boolean`
 
 是否阴性血
-
-**`Example`**
-
-```ts
-isRhNegative('**d**'); /// true
-```
 
 #### Parameters
 
@@ -4928,6 +4922,12 @@ isRhNegative('**d**'); /// true
 
 `boolean`
 
+**`Example`**
+
+```ts
+isRhNegative('**d**'); /// true
+```
+
 ___
 
 ### isStr
@@ -4935,13 +4935,6 @@ ___
 ▸ **isStr**(`value`): `boolean`
 
 检查是否字符串类型
-
-**`Example`**
-
-```ts
-isStr('test'); /// true
-isStr(null); /// false
-```
 
 #### Parameters
 
@@ -4952,6 +4945,13 @@ isStr(null); /// false
 #### Returns
 
 `boolean`
+
+**`Example`**
+
+```ts
+isStr('test'); /// true
+isStr(null); /// false
+```
 
 ___
 
@@ -4961,13 +4961,6 @@ ___
 
 检查密码强度是否足够
 
-**`Example`**
-
-```ts
-isStrongPassWord('test@qq.com'); /// false
-isStrongPassWord('test@qq.com123'); /// true
-```
-
 #### Parameters
 
 | Name | Type | Description |
@@ -4977,6 +4970,13 @@ isStrongPassWord('test@qq.com123'); /// true
 #### Returns
 
 `boolean`
+
+**`Example`**
+
+```ts
+isStrongPassWord('test@qq.com'); /// false
+isStrongPassWord('test@qq.com123'); /// true
+```
 
 ___
 
@@ -4986,13 +4986,6 @@ ___
 
 判断数据是否为座机号(固定电话)
 
-**`Example`**
-
-```ts
-isTel('0731-24722145'); /// true
-isTel('13579246810'); /// false
-```
-
 #### Parameters
 
 | Name | Type | Description |
@@ -5003,6 +4996,13 @@ isTel('13579246810'); /// false
 
 `boolean`
 
+**`Example`**
+
+```ts
+isTel('0731-24722145'); /// true
+isTel('13579246810'); /// false
+```
+
 ___
 
 ### isUndef
@@ -5010,13 +5010,6 @@ ___
 ▸ **isUndef**(`value`): `boolean`
 
 检查是否 undefined
-
-**`Example`**
-
-```ts
-isUndef(undefined); /// true
-isUndef(null); /// false
-```
 
 #### Parameters
 
@@ -5028,6 +5021,13 @@ isUndef(null); /// false
 
 `boolean`
 
+**`Example`**
+
+```ts
+isUndef(undefined); /// true
+isUndef(null); /// false
+```
+
 ___
 
 ### isUrl
@@ -5035,13 +5035,6 @@ ___
 ▸ **isUrl**(`value`): `boolean`
 
 检查是否为 url string
-
-**`Example`**
-
-```ts
-isUrl('http://www.example.com?foo=bar&param=test'); /// true
-isUrl(http://www); /// false
-```
 
 #### Parameters
 
@@ -5053,6 +5046,13 @@ isUrl(http://www); /// false
 
 `boolean`
 
+**`Example`**
+
+```ts
+isUrl('http://www.example.com?foo=bar&param=test'); /// true
+isUrl(http://www); /// false
+```
+
 ___
 
 ### isWeekday
@@ -5060,12 +5060,6 @@ ___
 ▸ **isWeekday**(`date?`): `boolean`
 
 检查所提供的日期是否为工作日
-
-**`Example`**
-
-```ts
-isWorkDay(new Date()); /// true
-```
 
 #### Parameters
 
@@ -5077,6 +5071,12 @@ isWorkDay(new Date()); /// true
 
 `boolean`
 
+**`Example`**
+
+```ts
+isWorkDay(new Date()); /// true
+```
+
 ___
 
 ### javaDecrypt
@@ -5084,13 +5084,6 @@ ___
 ▸ **javaDecrypt**(`encryptedData`, `secretKey?`, `secretIv?`): `string`
 
 配合使用 Java 对称解密函数
-
-**`Example`**
-
-```ts
-javaEncrypt("需要加密的字符串"); /// 'SotKrdjNkEIvnQ0OBImYuViSs+WdpjjILvxE1UpNedA='
-javaDecrypt("SotKrdjNkEIvnQ0OBImYuViSs+WdpjjILvxE1UpNedA="); /// '需要加密的字符串'
-```
 
 #### Parameters
 
@@ -5104,6 +5097,13 @@ javaDecrypt("SotKrdjNkEIvnQ0OBImYuViSs+WdpjjILvxE1UpNedA="); /// '需要加密�
 
 `string`
 
+**`Example`**
+
+```ts
+javaEncrypt("需要加密的字符串"); /// 'SotKrdjNkEIvnQ0OBImYuViSs+WdpjjILvxE1UpNedA='
+javaDecrypt("SotKrdjNkEIvnQ0OBImYuViSs+WdpjjILvxE1UpNedA="); /// '需要加密的字符串'
+```
+
 ___
 
 ### javaEncrypt
@@ -5111,6 +5111,18 @@ ___
 ▸ **javaEncrypt**(`dataStr`, `secretKey?`, `secretIv?`): `string`
 
 配合使用 Java 加密算法对字符串进行对称加密
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `dataStr` | `string` | 待加密的字符串 |
+| `secretKey?` | `string` | 可选的加密密钥，默认为 SECRET_KEY |
+| `secretIv?` | `string` | 可选的加密向量，默认为 SECRET_IV |
+
+#### Returns
+
+`string`
 
 **`Example`**
 
@@ -5165,18 +5177,6 @@ public class EncryptionUtils {
 }
 ```
 
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `dataStr` | `string` | 待加密的字符串 |
-| `secretKey?` | `string` | 可选的加密密钥，默认为 SECRET_KEY |
-| `secretIv?` | `string` | 可选的加密向量，默认为 SECRET_IV |
-
-#### Returns
-
-`string`
-
 ___
 
 ### jsonClone
@@ -5184,13 +5184,6 @@ ___
 ▸ **jsonClone**(`value`): `any`
 
 JSON 转字符串式克隆
-
-**`Example`**
-
-```ts
-jsonClone([1, 2, 2, 3, 3]); /// [1, 2, 2, 3, 3]
-jsonClone({a: 1, b: 2}); /// {a: 1, b: 2}
-```
 
 #### Parameters
 
@@ -5202,6 +5195,13 @@ jsonClone({a: 1, b: 2}); /// {a: 1, b: 2}
 
 `any`
 
+**`Example`**
+
+```ts
+jsonClone([1, 2, 2, 3, 3]); /// [1, 2, 2, 3, 3]
+jsonClone({a: 1, b: 2}); /// {a: 1, b: 2}
+```
+
 ___
 
 ### keyBoardResize
@@ -5210,12 +5210,6 @@ ___
 
 H5 移动端软键盘缩回/弹起回调
 `return cancel listener of keyBoardResize`
-
-**`Example`**
-
-```ts
-keyBoardResize(() => { console.log('downCb'); }, () => { console.log('upCb'); }); /// do something
-```
 
 #### Parameters
 
@@ -5228,6 +5222,12 @@ keyBoardResize(() => { console.log('downCb'); }, () => { console.log('upCb'); })
 
 `any`
 
+**`Example`**
+
+```ts
+keyBoardResize(() => { console.log('downCb'); }, () => { console.log('upCb'); }); /// do something
+```
+
 ___
 
 ### leftJoin
@@ -5235,13 +5235,6 @@ ___
 ▸ **leftJoin**(`str`, `length?`, `char?`): `string`
 
 左边补某个字符
-
-**`Example`**
-
-```ts
-leftJoin('1', 3, '0'); /// '001'
-leftJoin(0, 3, 1); /// '110'
-```
 
 #### Parameters
 
@@ -5255,6 +5248,13 @@ leftJoin(0, 3, 1); /// '110'
 
 `string`
 
+**`Example`**
+
+```ts
+leftJoin('1', 3, '0'); /// '001'
+leftJoin(0, 3, 1); /// '110'
+```
+
 ___
 
 ### localStorageGet
@@ -5262,12 +5262,6 @@ ___
 ▸ **localStorageGet**(`key`): `any`
 
 获取 localStorage
-
-**`Example`**
-
-```ts
-localStorageGet("key"); /// 处理过后的 value，不需要再 decode 。
-```
 
 #### Parameters
 
@@ -5279,6 +5273,12 @@ localStorageGet("key"); /// 处理过后的 value，不需要再 decode 。
 
 `any`
 
+**`Example`**
+
+```ts
+localStorageGet("key"); /// 处理过后的 value，不需要再 decode 。
+```
+
 ___
 
 ### localStorageSet
@@ -5286,12 +5286,6 @@ ___
 ▸ **localStorageSet**(`key`, `value`): `boolean`
 
 设置 localStorage
-
-**`Example`**
-
-```ts
-localStorageSet("key", "value"); /// 存储时不需要处理数据，value === null|undefined 清除数据。(boolean)
-```
 
 #### Parameters
 
@@ -5304,6 +5298,12 @@ localStorageSet("key", "value"); /// 存储时不需要处理数据，value === 
 
 `boolean`
 
+**`Example`**
+
+```ts
+localStorageSet("key", "value"); /// 存储时不需要处理数据，value === null|undefined 清除数据。(boolean)
+```
+
 ___
 
 ### log
@@ -5311,13 +5311,6 @@ ___
 ▸ **log**(`...args`): `string`
 
 在页面上打印数据，我们打包通常会设置清除 console，使用此函数打印关键信息就不会被清除啦。
-
-**`Example`**
-
-```ts
-log([1, 2, 2, 3, 3], {a: 1, b: 2}, 'test', true); /// 打印数据
-log('danger'); /// 打印数据
-```
 
 #### Parameters
 
@@ -5329,6 +5322,13 @@ log('danger'); /// 打印数据
 
 `string`
 
+**`Example`**
+
+```ts
+log([1, 2, 2, 3, 3], {a: 1, b: 2}, 'test', true); /// 打印数据
+log('danger'); /// 打印数据
+```
+
 ___
 
 ### logRunTime
@@ -5336,16 +5336,6 @@ ___
 ▸ **logRunTime**(`fn`, `timeKey`): `void`
 
 打印某个函数运行时间
-
-**`Example`**
-
-```ts
-logRunTime(() => [1, 2, 3].reduce(...));
-logRunTime(() => [1, 2, 3].reduce(...), 'timeKey');
-logRunTime(async () => { await fun1(); await fun2(); });
-logRunTime($promiseReturnFunction);
-logRunTime(new Promise((resolve, reject) => { setTimeout(() => resolve('test'), 1000) }));
-```
 
 #### Parameters
 
@@ -5358,6 +5348,16 @@ logRunTime(new Promise((resolve, reject) => { setTimeout(() => resolve('test'), 
 
 `void`
 
+**`Example`**
+
+```ts
+logRunTime(() => [1, 2, 3].reduce(...));
+logRunTime(() => [1, 2, 3].reduce(...), 'timeKey');
+logRunTime(async () => { await fun1(); await fun2(); });
+logRunTime($promiseReturnFunction);
+logRunTime(new Promise((resolve, reject) => { setTimeout(() => resolve('test'), 1000) }));
+```
+
 ___
 
 ### markNumber
@@ -5365,14 +5365,6 @@ ___
 ▸ **markNumber**(`value`): `string`
 
 转换数字为大致数字描述
-
-**`Example`**
-
-```ts
-markNumber(10000123111); /// '100.00 亿'
-markNumber(12345); /// '1.2 万'
-markNumber(123); /// '123'
-```
 
 #### Parameters
 
@@ -5384,6 +5376,14 @@ markNumber(123); /// '123'
 
 `string`
 
+**`Example`**
+
+```ts
+markNumber(10000123111); /// '100.00 亿'
+markNumber(12345); /// '1.2 万'
+markNumber(123); /// '123'
+```
+
 ___
 
 ### marquee
@@ -5394,14 +5394,6 @@ ___
 一般来说设置两层，滚动的区间就是父元素的大小。
 若 #demo 高度小于 container，除非 loopType 设置 infinite，否则不会有动画。
 <div class="demo-container"><div id="#demo">...span.items...</div></div>
-
-**`Example`**
-
-```ts
-marquee('#demo'); /// 默认横向正常滚动(loopType=normal)
-marquee('.demo-y', {direction: 'Y', loopType: 'infinite', speed: 3}); /// Y 轴无限无缝滚动，speed > 0 越小速度越快。
-marquee('.demo-x', {direction: 'X', loopType: 'origin', speed: 3, style: 'animation-delay:2s;', parentStyle: 'color:red;'}); /// X 轴无限来回滚动
-```
 
 #### Parameters
 
@@ -5419,6 +5411,14 @@ marquee('.demo-x', {direction: 'X', loopType: 'origin', speed: 3, style: 'animat
 
 `void`
 
+**`Example`**
+
+```ts
+marquee('#demo'); /// 默认横向正常滚动(loopType=normal)
+marquee('.demo-y', {direction: 'Y', loopType: 'infinite', speed: 3}); /// Y 轴无限无缝滚动，speed > 0 越小速度越快。
+marquee('.demo-x', {direction: 'X', loopType: 'origin', speed: 3, style: 'animation-delay:2s;', parentStyle: 'color:red;'}); /// X 轴无限来回滚动
+```
+
 ___
 
 ### maskString
@@ -5426,6 +5426,16 @@ ___
 ▸ **maskString**(`str`): `string`
 
 字符串脱敏(biugle 自定义规则)
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `str` | `string` | 字符串 |
+
+#### Returns
+
+`string`
 
 **`Example`**
 
@@ -5439,16 +5449,6 @@ maskString('广东省深圳市龙华区'); /// 广东省****华区'
 maskString('广东省深圳市福田区福田保税区xxx小区xxx单元x栋x楼xxx号'); /// '广东省深圳市福田区******xx号'
 ```
 
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `str` | `string` | 字符串 |
-
-#### Returns
-
-`string`
-
 ___
 
 ### md5
@@ -5456,12 +5456,6 @@ ___
 ▸ **md5**(`str`): `string`
 
 md5 加密函数
-
-**`Example`**
-
-```ts
-md5("value"); /// 加密后的字符串
-```
 
 #### Parameters
 
@@ -5473,6 +5467,12 @@ md5("value"); /// 加密后的字符串
 
 `string`
 
+**`Example`**
+
+```ts
+md5("value"); /// 加密后的字符串
+```
+
 ___
 
 ### ms
@@ -5480,6 +5480,16 @@ ___
 ▸ **ms**(`str`): `string` \| `number`
 
 毫秒转换
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `str` | `any` | 值 |
+
+#### Returns
+
+`string` \| `number`
 
 **`Example`**
 
@@ -5494,16 +5504,6 @@ ms(1500); /// '1.5s'
 ms(60000); /// '1m'
 ```
 
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `str` | `any` | 值 |
-
-#### Returns
-
-`string` \| `number`
-
 ___
 
 ### obj2buf
@@ -5511,15 +5511,6 @@ ___
 ▸ **obj2buf**(`data`, `transfer`): `any`
 
 object to buffer
-
-**`Example`**
-
-```ts
-const _protoBuffer = _proto.lookupType('MonitorMessage');
-const bufferData = obj2buf(obj, _protoBuffer);
-console.log(bufferData);
-webSocket.send(bufferData);
-```
 
 #### Parameters
 
@@ -5532,6 +5523,15 @@ webSocket.send(bufferData);
 
 `any`
 
+**`Example`**
+
+```ts
+const _protoBuffer = _proto.lookupType('MonitorMessage');
+const bufferData = obj2buf(obj, _protoBuffer);
+console.log(bufferData);
+webSocket.send(bufferData);
+```
+
 ___
 
 ### observeResource
@@ -5539,13 +5539,6 @@ ___
 ▸ **observeResource**(`callback?`): `void`
 
 监听资源找不到的情况，刷新页面。
-
-**`Example`**
-
-```ts
-observeResource(() => console.log('Refreshing')); /// 找不到资源时输出 "Refreshing"
-observeResource(); /// 找不到资源时刷新页面
-```
 
 #### Parameters
 
@@ -5557,6 +5550,13 @@ observeResource(); /// 找不到资源时刷新页面
 
 `void`
 
+**`Example`**
+
+```ts
+observeResource(() => console.log('Refreshing')); /// 找不到资源时输出 "Refreshing"
+observeResource(); /// 找不到资源时刷新页面
+```
+
 ___
 
 ### offDefaultEvent
@@ -5564,12 +5564,6 @@ ___
 ▸ **offDefaultEvent**(`event`): `boolean`
 
 阻止冒泡事件&阻止默认行为&阻止事件捕获
-
-**`Example`**
-
-```ts
-offDefaultEvent(event); /// 阻止冒泡事件&阻止默认行为&阻止事件捕获
-```
 
 #### Parameters
 
@@ -5581,6 +5575,12 @@ offDefaultEvent(event); /// 阻止冒泡事件&阻止默认行为&阻止事件�
 
 `boolean`
 
+**`Example`**
+
+```ts
+offDefaultEvent(event); /// 阻止冒泡事件&阻止默认行为&阻止事件捕获
+```
+
 ___
 
 ### onClick2MoreClick
@@ -5589,12 +5589,6 @@ ___
 
 单击事件转换为多击事件
 Author: WuXingHeng
-
-**`Example`**
-
-```ts
-dom.onclick = onClick2MoreClick(300, clickOneCallBack, clickTwoCallBack, clickThreeCallBack, clickFourCallBack); /// void
-```
 
 #### Parameters
 
@@ -5607,6 +5601,12 @@ dom.onclick = onClick2MoreClick(300, clickOneCallBack, clickTwoCallBack, clickTh
 
 `any`
 
+**`Example`**
+
+```ts
+dom.onclick = onClick2MoreClick(300, clickOneCallBack, clickTwoCallBack, clickThreeCallBack, clickFourCallBack); /// void
+```
+
 ___
 
 ### onResize
@@ -5615,13 +5615,6 @@ ___
 
 设置 resize 时的监听函数，默认重新加载页面。
 返回取消该监听的函数 return cancel
-
-**`Example`**
-
-```ts
-onResize(); /// cancel 当前 listener 的 function
-onResize('resize', () => { console.log('resize'); }); /// cancel 当前 listener 的 function
-```
 
 #### Parameters
 
@@ -5633,19 +5626,20 @@ onResize('resize', () => { console.log('resize'); }); /// cancel 当前 listener
 
 `any`
 
+**`Example`**
+
+```ts
+onResize(); /// cancel 当前 listener 的 function
+onResize('resize', () => { console.log('resize'); }); /// cancel 当前 listener 的 function
+```
+
 ___
 
 ### openFileSelect
 
-▸ **openFileSelect**(`options?`): `Promise`<`any`\>
+▸ **openFileSelect**(`options?`): `Promise`\<`any`\>
 
 在浏览器中打开文件选择框
-
-**`Example`**
-
-```ts
-openFileSelect({ multiple: true, accept: '.txt' }).then(fileList => console.log(fileList));
-```
 
 #### Parameters
 
@@ -5657,7 +5651,13 @@ openFileSelect({ multiple: true, accept: '.txt' }).then(fileList => console.log(
 
 #### Returns
 
-`Promise`<`any`\>
+`Promise`\<`any`\>
+
+**`Example`**
+
+```ts
+openFileSelect({ multiple: true, accept: '.txt' }).then(fileList => console.log(fileList));
+```
 
 ___
 
@@ -5666,12 +5666,6 @@ ___
 ▸ **openFullscreen**(`element?`): `void`
 
 开启全屏
-
-**`Example`**
-
-```ts
-openFullscreen(); /// 开启全屏
-```
 
 #### Parameters
 
@@ -5683,6 +5677,12 @@ openFullscreen(); /// 开启全屏
 
 `void`
 
+**`Example`**
+
+```ts
+openFullscreen(); /// 开启全屏
+```
+
 ___
 
 ### printDom
@@ -5690,17 +5690,7 @@ ___
 ▸ **printDom**(`selector`, `styles?`): `any`
 
 在打印预览中打印指定元素，并设置样式。
-
-**`Example`**
-
-```ts
-printElement('#print-table', {
-  bodyStyle: {
-    padding: '10px',
-    backgroundColor: 'red',
-  },
-});
-```
+需在浏览器打印设置中-更多设置-开启背景与图形打印选项
 
 #### Parameters
 
@@ -5716,6 +5706,17 @@ printElement('#print-table', {
 
 `any`
 
+**`Example`**
+
+```ts
+printElement('#print-table', {
+  bodyStyle: {
+    padding: '10px',
+    backgroundColor: 'red',
+  },
+});
+```
+
 ___
 
 ### px2rem
@@ -5723,12 +5724,6 @@ ___
 ▸ **px2rem**(`px`): `number`
 
 px 转 rem
-
-**`Example`**
-
-```ts
-px2rem(30); /// 转化后的 rem
-```
 
 #### Parameters
 
@@ -5740,6 +5735,12 @@ px2rem(30); /// 转化后的 rem
 
 `number`
 
+**`Example`**
+
+```ts
+px2rem(30); /// 转化后的 rem
+```
+
 ___
 
 ### qsParse
@@ -5747,13 +5748,6 @@ ___
 ▸ **qsParse**(`url?`, `key?`): `any`
 
 获取 query string 参数转对象
-
-**`Example`**
-
-```ts
-qsParse('start=0&count=20&x=1&x=2&x=3', 'x'); /// [1, 2, 3]
-qsParse('start=0&count=20&x=1&x=2&x=3'); /// { start: '0', count: '20', x: [1, 2, 3], '/': 'start=0&count=20&x=1&x=2&x=3' }
-```
 
 #### Parameters
 
@@ -5766,6 +5760,13 @@ qsParse('start=0&count=20&x=1&x=2&x=3'); /// { start: '0', count: '20', x: [1, 2
 
 `any`
 
+**`Example`**
+
+```ts
+qsParse('start=0&count=20&x=1&x=2&x=3', 'x'); /// [1, 2, 3]
+qsParse('start=0&count=20&x=1&x=2&x=3'); /// { start: '0', count: '20', x: [1, 2, 3], '/': 'start=0&count=20&x=1&x=2&x=3' }
+```
+
 ___
 
 ### qsStringify
@@ -5773,14 +5774,6 @@ ___
 ▸ **qsStringify**(`obj`, `options?`): `string`
 
 对象转 queryString 暂时只支持两层数据，第二层对象与与数组值不能为引用类型。
-
-**`Example`**
-
-```ts
-qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3] }); /// 'start=0&count=20&obj[a]=1&arr[]=1&arr[]=2&arr[]=3'
-qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3] }, { arr2str: true }); /// 'start=0&count=20&obj[a]=1&arr=1,2,3'
-qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3], str: '1' }, { hasIndex: true }); /// 'start=0&count=20&obj[a]=1&arr[0]=1&arr[1]=2&arr[2]=3&str=1'
-```
 
 #### Parameters
 
@@ -5797,6 +5790,14 @@ qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3], str: '1' }, { 
 
 `string`
 
+**`Example`**
+
+```ts
+qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3] }); /// 'start=0&count=20&obj[a]=1&arr[]=1&arr[]=2&arr[]=3'
+qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3] }, { arr2str: true }); /// 'start=0&count=20&obj[a]=1&arr=1,2,3'
+qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3], str: '1' }, { hasIndex: true }); /// 'start=0&count=20&obj[a]=1&arr[0]=1&arr[1]=2&arr[2]=3&str=1'
+```
+
 ___
 
 ### removeCookie
@@ -5804,12 +5805,6 @@ ___
 ▸ **removeCookie**(`key`): `void`
 
 Remove Cookie
-
-**`Example`**
-
-```ts
-removeCookie('name'); /// 删除 name 对应的 Cookie
-```
 
 #### Parameters
 
@@ -5821,6 +5816,12 @@ removeCookie('name'); /// 删除 name 对应的 Cookie
 
 `void`
 
+**`Example`**
+
+```ts
+removeCookie('name'); /// 删除 name 对应的 Cookie
+```
+
 ___
 
 ### repeat
@@ -5828,13 +5829,6 @@ ___
 ▸ **repeat**(`str`, `n?`): `string`
 
 字符串 repeat
-
-**`Example`**
-
-```ts
-repeat('*'); /// '*'
-repeat('*', 3); /// '***'
-```
 
 #### Parameters
 
@@ -5847,31 +5841,38 @@ repeat('*', 3); /// '***'
 
 `string`
 
+**`Example`**
+
+```ts
+repeat('*'); /// '*'
+repeat('*', 3); /// '***'
+```
+
 ___
 
 ### retry
 
-▸ **retry**(`promise`, `count?`, `delay?`): `Promise`<`unknown`\>
+▸ **retry**(`promise`, `count?`, `delay?`): `Promise`\<`unknown`\>
 
 Promise 重试
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `promise` | `Promise`\<`any`\> | `undefined` | promise |
+| `count` | `number` | `0` | 次数 |
+| `delay` | `number` | `0` | 延迟时间 |
+
+#### Returns
+
+`Promise`\<`unknown`\>
 
 **`Example`**
 
 ```ts
 retry(() => Promise.reject(new Error('error')), 3); /// Promise.reject(new Error('error')) 执行 3 次
 ```
-
-#### Parameters
-
-| Name | Type | Default value | Description |
-| :------ | :------ | :------ | :------ |
-| `promise` | `Promise`<`any`\> | `undefined` | promise |
-| `count` | `number` | `0` | 次数 |
-| `delay` | `number` | `0` | 延迟时间 |
-
-#### Returns
-
-`Promise`<`unknown`\>
 
 ___
 
@@ -5880,13 +5881,6 @@ ___
 ▸ **rightJoin**(`str`, `length?`, `char?`): `string`
 
 右边补某个字符
-
-**`Example`**
-
-```ts
-rightJoin('1', 3, 'x'); /// '1xx'
-rightJoin(0, 3, 1); /// '011'
-```
 
 #### Parameters
 
@@ -5900,6 +5894,13 @@ rightJoin(0, 3, 1); /// '011'
 
 `string`
 
+**`Example`**
+
+```ts
+rightJoin('1', 3, 'x'); /// '1xx'
+rightJoin(0, 3, 1); /// '011'
+```
+
 ___
 
 ### rip
@@ -5908,15 +5909,15 @@ ___
 
 页面灰白屏幕
 
+#### Returns
+
+`void`
+
 **`Example`**
 
 ```ts
 rip(); /// 页面灰白
 ```
-
-#### Returns
-
-`void`
 
 ___
 
@@ -5926,14 +5927,6 @@ ___
 
 四舍五入
 `const toFixed = (n, fixed) => ~~(Math.pow(10, fixed) * n) / Math.pow(10, fixed);`
-
-**`Example`**
-
-```ts
-round(1.2345, 2); /// 1.23
-round(0.355, 2); /// 0.36
-round(1.005, 2); /// 1.01
-```
 
 #### Parameters
 
@@ -5946,6 +5939,14 @@ round(1.005, 2); /// 1.01
 
 `number`
 
+**`Example`**
+
+```ts
+round(1.2345, 2); /// 1.23
+round(0.355, 2); /// 0.36
+round(1.005, 2); /// 1.01
+```
+
 ___
 
 ### same
@@ -5953,17 +5954,6 @@ ___
 ▸ **same**(`valueA`, `valueB`): `boolean`
 
 两个数值是否有相同的值（交集）
-
-**`Example`**
-
-```ts
-same(['admin','manager','user','viewer','guest'], ['admin','user']); /// true
-same(['admin','manager','user','viewer','guest'], 'admin'); /// true
-same('admin', ['admin','user']); /// true
-same('admin', 'admin'); /// true
-same('admin', 'admins'); /// false
-same('admins', 'admin'); /// false
-```
 
 #### Parameters
 
@@ -5976,6 +5966,17 @@ same('admins', 'admin'); /// false
 
 `boolean`
 
+**`Example`**
+
+```ts
+same(['admin','manager','user','viewer','guest'], ['admin','user']); /// true
+same(['admin','manager','user','viewer','guest'], 'admin'); /// true
+same('admin', ['admin','user']); /// true
+same('admin', 'admin'); /// true
+same('admin', 'admins'); /// false
+same('admins', 'admin'); /// false
+```
+
 ___
 
 ### scrollToView
@@ -5983,13 +5984,6 @@ ___
 ▸ **scrollToView**(`dom?`, `targetVal?`): `void`
 
 将元素滚动到视野范围
-
-**`Example`**
-
-```ts
-scrollIntoView(document.querySelector('.test')); /// test 元素滚动到视野范围
-scrollIntoView(document.querySelector('.test'), 'start'); /// test 元素滚动到视野范围顶部
-```
 
 #### Parameters
 
@@ -6002,6 +5996,13 @@ scrollIntoView(document.querySelector('.test'), 'start'); /// test 元素滚动�
 
 `void`
 
+**`Example`**
+
+```ts
+scrollIntoView(document.querySelector('.test')); /// test 元素滚动到视野范围
+scrollIntoView(document.querySelector('.test'), 'start'); /// test 元素滚动到视野范围顶部
+```
+
 ___
 
 ### scrollXTo
@@ -6009,6 +6010,18 @@ ___
 ▸ **scrollXTo**(`targetVal`, `callback`, `dom?`): `void`
 
 X 轴滚动到指定位置
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `targetVal` | `number` \| ``"start"`` \| ``"end"`` | `undefined` | 'start' \| 'end' \| number |
+| `callback` | `any` | `undefined` | 回调 |
+| `dom` | `any` | `document.documentElement` | 元素对象 |
+
+#### Returns
+
+`void`
 
 **`Example`**
 
@@ -6018,6 +6031,14 @@ scrollXTo('start', null, document.documentElement); /// 滚动到左侧
 scrollXTo('end', (percent) => console.log(percent), document.querySelector('body')); /// 滚动到右侧
 ```
 
+___
+
+### scrollYTo
+
+▸ **scrollYTo**(`targetVal`, `callback`, `dom?`): `void`
+
+Y 轴滚动到指定位置
+
 #### Parameters
 
 | Name | Type | Default value | Description |
@@ -6029,14 +6050,6 @@ scrollXTo('end', (percent) => console.log(percent), document.querySelector('body
 #### Returns
 
 `void`
-
-___
-
-### scrollYTo
-
-▸ **scrollYTo**(`targetVal`, `callback`, `dom?`): `void`
-
-Y 轴滚动到指定位置
 
 **`Example`**
 
@@ -6046,18 +6059,6 @@ scrollYTo('start', null, document.documentElement); /// 滚动到顶部
 scrollYTo('end', (percent) => console.log(percent), document.querySelector('body')); /// 滚动到底部
 ```
 
-#### Parameters
-
-| Name | Type | Default value | Description |
-| :------ | :------ | :------ | :------ |
-| `targetVal` | `number` \| ``"start"`` \| ``"end"`` | `undefined` | 'start' \| 'end' \| number |
-| `callback` | `any` | `undefined` | 回调 |
-| `dom` | `any` | `document.documentElement` | 元素对象 |
-
-#### Returns
-
-`void`
-
 ___
 
 ### sendNotification
@@ -6066,23 +6067,23 @@ ___
 
 发送 Notification
 
-**`Example`**
-
-```ts
-sendNotification('测试通知', '测试标题', {...options}); /// 发送成功/失败
-```
-
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `msg` | `string` |
 | `title?` | `string` |
-| `options?` | { `badge?`: `string` ; `body?`: `string` ; `data?`: `any` ; `dir?`: ``"auto"`` \| ``"ltr"`` \| ``"rtl"`` ; `icon?`: `string` ; `image?`: `string` ; `lang?`: ``"zh-CN"`` \| ``"en-US"`` ; `onClick?`: `any` ; `onClose?`: `any` ; `onError?`: `any` ; `renotify?`: `boolean` ; `requireInteraction?`: `boolean` ; `silent?`: `boolean` ; `tag?`: `string` ; `timestamp?`: `number` ; `vibrate?`: `VibratePattern`  } \| `NotificationOptions` |
+| `options?` | \{ `badge?`: `string` ; `body?`: `string` ; `data?`: `any` ; `dir?`: ``"auto"`` \| ``"ltr"`` \| ``"rtl"`` ; `icon?`: `string` ; `image?`: `string` ; `lang?`: ``"zh-CN"`` \| ``"en-US"`` ; `onClick?`: `any` ; `onClose?`: `any` ; `onError?`: `any` ; `renotify?`: `boolean` ; `requireInteraction?`: `boolean` ; `silent?`: `boolean` ; `tag?`: `string` ; `timestamp?`: `number` ; `vibrate?`: `VibratePattern`  } \| `NotificationOptions` |
 
 #### Returns
 
 `void`
+
+**`Example`**
+
+```ts
+sendNotification('测试通知', '测试标题', {...options}); /// 发送成功/失败
+```
 
 ___
 
@@ -6091,13 +6092,6 @@ ___
 ▸ **sendWsMsg**(`message`, `isJSONEncode?`): `boolean`
 
 发送消息
-
-**`Example`**
-
-```ts
-sendWsMsg({ type: 'login', data: { username: 'admin', password: '123456' }}, true); /// true/false
-sendWsMsg('testMsg'); /// true/false
-```
 
 #### Parameters
 
@@ -6110,6 +6104,13 @@ sendWsMsg('testMsg'); /// true/false
 
 `boolean`
 
+**`Example`**
+
+```ts
+sendWsMsg({ type: 'login', data: { username: 'admin', password: '123456' }}, true); /// true/false
+sendWsMsg('testMsg'); /// true/false
+```
+
 ___
 
 ### sessionStorageGet
@@ -6117,12 +6118,6 @@ ___
 ▸ **sessionStorageGet**(`key`): `any`
 
 获取 sessionStorage
-
-**`Example`**
-
-```ts
-sessionStorageGet("key"); /// 处理过后的 value，不需要再 decode 。
-```
 
 #### Parameters
 
@@ -6134,6 +6129,12 @@ sessionStorageGet("key"); /// 处理过后的 value，不需要再 decode 。
 
 `any`
 
+**`Example`**
+
+```ts
+sessionStorageGet("key"); /// 处理过后的 value，不需要再 decode 。
+```
+
 ___
 
 ### sessionStorageSet
@@ -6141,12 +6142,6 @@ ___
 ▸ **sessionStorageSet**(`key`, `value`): `boolean`
 
 设置 sessionStorage
-
-**`Example`**
-
-```ts
-sessionStorageSet("key", "value"); /// 存储时不需要处理数据，value === null|undefined 清除数据。
-```
 
 #### Parameters
 
@@ -6159,6 +6154,12 @@ sessionStorageSet("key", "value"); /// 存储时不需要处理数据，value ==
 
 `boolean`
 
+**`Example`**
+
+```ts
+sessionStorageSet("key", "value"); /// 存储时不需要处理数据，value === null|undefined 清除数据。
+```
+
 ___
 
 ### setCookie
@@ -6166,12 +6167,6 @@ ___
 ▸ **setCookie**(`key`, `value`, `expires`): `void`
 
 Set Cookie
-
-**`Example`**
-
-```ts
-setCookie('name', 'value', 1); /// 设置 name 对应的 Cookie 值
-```
 
 #### Parameters
 
@@ -6185,6 +6180,12 @@ setCookie('name', 'value', 1); /// 设置 name 对应的 Cookie 值
 
 `void`
 
+**`Example`**
+
+```ts
+setCookie('name', 'value', 1); /// 设置 name 对应的 Cookie 值
+```
+
 ___
 
 ### setEncodeStorage
@@ -6192,12 +6193,6 @@ ___
 ▸ **setEncodeStorage**(`key`, `value`, `isLocal?`): `boolean`
 
 设置 Storage 加密数据
-
-**`Example`**
-
-```ts
-setEncodeStorage("key", "value"); /// 存储时不需要处理数据，自动加密，value === null|undefined 清除数据。(boolean)
-```
 
 #### Parameters
 
@@ -6211,6 +6206,12 @@ setEncodeStorage("key", "value"); /// 存储时不需要处理数据，自动加
 
 `boolean`
 
+**`Example`**
+
+```ts
+setEncodeStorage("key", "value"); /// 存储时不需要处理数据，自动加密，value === null|undefined 清除数据。(boolean)
+```
+
 ___
 
 ### setEventListener
@@ -6219,12 +6220,6 @@ ___
 
 设置监听函数
 返回取消该监听的函数 return cancel
-
-**`Example`**
-
-```ts
-setEventListener('resize', () => { console.log('resize'); }); /// cancel 当前 listener 的 function
-```
 
 #### Parameters
 
@@ -6239,6 +6234,12 @@ setEventListener('resize', () => { console.log('resize'); }); /// cancel 当前 
 
 `any`
 
+**`Example`**
+
+```ts
+setEventListener('resize', () => { console.log('resize'); }); /// cancel 当前 listener 的 function
+```
+
 ___
 
 ### setIcon
@@ -6246,12 +6247,6 @@ ___
 ▸ **setIcon**(`iconLink`): `void`
 
 设置网页 icon
-
-**`Example`**
-
-```ts
-setIcon('/favicon.ico')
-```
 
 #### Parameters
 
@@ -6263,6 +6258,12 @@ setIcon('/favicon.ico')
 
 `void`
 
+**`Example`**
+
+```ts
+setIcon('/favicon.ico')
+```
+
 ___
 
 ### setWsBinaryType
@@ -6270,12 +6271,6 @@ ___
 ▸ **setWsBinaryType**(`binaryType?`): `boolean`
 
 `设置 websocket binaryType default: 'blob'`
-
-**`Example`**
-
-```ts
-setWsBinaryType(); /// true/false
-```
 
 #### Parameters
 
@@ -6287,6 +6282,12 @@ setWsBinaryType(); /// true/false
 
 `boolean`
 
+**`Example`**
+
+```ts
+setWsBinaryType(); /// true/false
+```
+
 ___
 
 ### sha1
@@ -6294,12 +6295,6 @@ ___
 ▸ **sha1**(`str`): `string`
 
 sha1 加密函数
-
-**`Example`**
-
-```ts
-sha1("value"); /// 加密后的字符串
-```
 
 #### Parameters
 
@@ -6310,6 +6305,12 @@ sha1("value"); /// 加密后的字符串
 #### Returns
 
 `string`
+
+**`Example`**
+
+```ts
+sha1("value"); /// 加密后的字符串
+```
 
 ___
 
@@ -6319,12 +6320,6 @@ ___
 
 sha256 加密函数
 
-**`Example`**
-
-```ts
-sha256("value"); /// 加密后的字符串
-```
-
 #### Parameters
 
 | Name | Type | Description |
@@ -6335,6 +6330,12 @@ sha256("value"); /// 加密后的字符串
 
 `string`
 
+**`Example`**
+
+```ts
+sha256("value"); /// 加密后的字符串
+```
+
 ___
 
 ### showProcess
@@ -6342,13 +6343,6 @@ ___
 ▸ **showProcess**(`element`): () => `void`
 
 展示水滴加载动画
-
-**`Example`**
-
-```ts
-const hideProcess = showProcess(myElement); /// 在元素中显示水滴加载动画
-hideProcess(); /// 隐藏水滴加载动画
-```
 
 #### Parameters
 
@@ -6366,6 +6360,13 @@ hideProcess(); /// 隐藏水滴加载动画
 
 `void`
 
+**`Example`**
+
+```ts
+const hideProcess = showProcess(myElement); /// 在元素中显示水滴加载动画
+hideProcess(); /// 隐藏水滴加载动画
+```
+
 ___
 
 ### showToast
@@ -6374,12 +6375,6 @@ ___
 
 显示 Toast
 `export function showToast(options: xToastOptions);`
-
-**`Example`**
-
-```ts
-showToast({ type: 'success', content: '这是一个演示 Toast' }); /// 显示 success 类型的 toast
-```
 
 #### Parameters
 
@@ -6391,6 +6386,12 @@ showToast({ type: 'success', content: '这是一个演示 Toast' }); /// 显示 
 
 `HTMLDivElement`
 
+**`Example`**
+
+```ts
+showToast({ type: 'success', content: '这是一个演示 Toast' }); /// 显示 success 类型的 toast
+```
+
 ___
 
 ### showVar
@@ -6398,13 +6399,6 @@ ___
 ▸ **showVar**(`value`): `any`
 
 在页面上显示某个值
-
-**`Example`**
-
-```ts
-showVar([1, 2, 2, 3, 3]); /// 显示序列化之后的数据
-showVar({a: 1, b: 2}); /// 显示序列化之后的数据
-```
 
 #### Parameters
 
@@ -6416,19 +6410,20 @@ showVar({a: 1, b: 2}); /// 显示序列化之后的数据
 
 `any`
 
+**`Example`**
+
+```ts
+showVar([1, 2, 2, 3, 3]); /// 显示序列化之后的数据
+showVar({a: 1, b: 2}); /// 显示序列化之后的数据
+```
+
 ___
 
 ### sleep
 
-▸ **sleep**(`milliseconds`): `Promise`<`void`\>
+▸ **sleep**(`milliseconds`): `Promise`\<`void`\>
 
 睡眠指定时间
-
-**`Example`**
-
-```ts
-await sleep(1000); /// 等待 1000 毫秒再执行后面的
-```
 
 #### Parameters
 
@@ -6438,7 +6433,13 @@ await sleep(1000); /// 等待 1000 毫秒再执行后面的
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`\<`void`\>
+
+**`Example`**
+
+```ts
+await sleep(1000); /// 等待 1000 毫秒再执行后面的
+```
 
 ___
 
@@ -6447,13 +6448,6 @@ ___
 ▸ **slugify**(`str`, `replacement?`): `string`
 
 Slug 化字符串 URL，将字符串转换为 URL 友好的格式。
-
-**`Example`**
-
-```ts
-slugify('I LOVE OQM'); /// 'I_LOVE_OQM'
-slugify('I LOVE OQM', { ' ': '-' }); /// 'I-LOVE-OQM'
-```
 
 #### Parameters
 
@@ -6466,6 +6460,13 @@ slugify('I LOVE OQM', { ' ': '-' }); /// 'I-LOVE-OQM'
 
 `string`
 
+**`Example`**
+
+```ts
+slugify('I LOVE OQM'); /// 'I_LOVE_OQM'
+slugify('I LOVE OQM', { ' ': '-' }); /// 'I-LOVE-OQM'
+```
+
 ___
 
 ### sortBy
@@ -6473,15 +6474,6 @@ ___
 ▸ **sortBy**(`keys?`, `isAscend?`): `any`
 
 返回排序回调函数(也支持中文、多个字段、混合类型)
-
-**`Example`**
-
-```ts
-['a', '3', 1, 2, 'b'].sort(sortBy('', false)); /// ['b', 'a', '3', 2, 1]
-['a', '3', 1, 2, 'b'].sort(sortBy()); /// [1, 2, '3', 'a', 'b']
-sortBy('createDt'); /// 按照 createDt 升序排列
-sortBy(['name', 'age'], false); /// 按照 name + age 降序排列
-```
 
 #### Parameters
 
@@ -6494,6 +6486,15 @@ sortBy(['name', 'age'], false); /// 按照 name + age 降序排列
 
 `any`
 
+**`Example`**
+
+```ts
+['a', '3', 1, 2, 'b'].sort(sortBy('', false)); /// ['b', 'a', '3', 2, 1]
+['a', '3', 1, 2, 'b'].sort(sortBy()); /// [1, 2, '3', 'a', 'b']
+sortBy('createDt'); /// 按照 createDt 升序排列
+sortBy(['name', 'age'], false); /// 按照 name + age 降序排列
+```
+
 ___
 
 ### sortCallBack
@@ -6501,15 +6502,6 @@ ___
 ▸ **sortCallBack**(`key`, `isAscend?`): `any`
 
 返回排序回调函数(支持中文，不支持一级数据与混合类型。)
-
-**`Example`**
-
-```ts
-sortCallBack('createDt', true); /// 按照 createDt 升序排列
-const arr = [{name: '666'}, {name: '333'}]
-arr.sort(sortCallBack('name')); /// [{name: '333'}, {name: '666'}]
-arr.sort(sortCallBack('name', false)); /// [{name: '666'}, {name: '333'}]
-```
 
 #### Parameters
 
@@ -6522,6 +6514,15 @@ arr.sort(sortCallBack('name', false)); /// [{name: '666'}, {name: '333'}]
 
 `any`
 
+**`Example`**
+
+```ts
+sortCallBack('createDt', true); /// 按照 createDt 升序排列
+const arr = [{name: '666'}, {name: '333'}]
+arr.sort(sortCallBack('name')); /// [{name: '333'}, {name: '666'}]
+arr.sort(sortCallBack('name', false)); /// [{name: '666'}, {name: '333'}]
+```
+
 ___
 
 ### stackSticky
@@ -6529,13 +6530,6 @@ ___
 ▸ **stackSticky**(`selectors`, `direction?`): `void`
 
 自动堆叠
-
-**`Example`**
-
-```ts
-stackSticky('.stack', 'top'); /// 所有 .stack 元素自动在 top 上堆叠
-stackSticky('.stack', 'left'); /// 所有 .stack 元素自动在 left 上堆叠
-```
 
 #### Parameters
 
@@ -6548,6 +6542,13 @@ stackSticky('.stack', 'left'); /// 所有 .stack 元素自动在 left 上堆叠
 
 `void`
 
+**`Example`**
+
+```ts
+stackSticky('.stack', 'top'); /// 所有 .stack 元素自动在 top 上堆叠
+stackSticky('.stack', 'left'); /// 所有 .stack 元素自动在 left 上堆叠
+```
+
 ___
 
 ### str2html
@@ -6555,12 +6556,6 @@ ___
 ▸ **str2html**(`str`): `string`
 
 字符串转实体字符
-
-**`Example`**
-
-```ts
-str2html('<>&"'); /// '&lt;&gt;&amp;&quot;'
-```
 
 #### Parameters
 
@@ -6572,6 +6567,12 @@ str2html('<>&"'); /// '&lt;&gt;&amp;&quot;'
 
 `string`
 
+**`Example`**
+
+```ts
+str2html('<>&"'); /// '&lt;&gt;&amp;&quot;'
+```
+
 ___
 
 ### str2unicode
@@ -6579,12 +6580,6 @@ ___
 ▸ **str2unicode**(`value`): `string`
 
 unicode 转字符
-
-**`Example`**
-
-```ts
-str2unicode("\\u6211\\u662f\\u8001a"); /// '我是老a'
-```
 
 #### Parameters
 
@@ -6596,6 +6591,12 @@ str2unicode("\\u6211\\u662f\\u8001a"); /// '我是老a'
 
 `string`
 
+**`Example`**
+
+```ts
+str2unicode("\\u6211\\u662f\\u8001a"); /// '我是老a'
+```
+
 ___
 
 ### sub
@@ -6603,13 +6604,6 @@ ___
 ▸ **sub**(`sub1`, `sub2`): `number`
 
 减法函数
-
-**`Example`**
-
-```ts
-sub(1, 2); /// -1
-sub(0.55, 0.1); /// 0.45
-```
 
 #### Parameters
 
@@ -6622,6 +6616,13 @@ sub(0.55, 0.1); /// 0.45
 
 `number`
 
+**`Example`**
+
+```ts
+sub(1, 2); /// -1
+sub(0.55, 0.1); /// 0.45
+```
+
 ___
 
 ### textCamelCase
@@ -6629,15 +6630,6 @@ ___
 ▸ **textCamelCase**(`str`): `string`
 
 字符串转驼峰
-
-**`Example`**
-
-```ts
-textCamelCase('foo-bar'); /// 'fooBar'
-textCamelCase('foo_bar'); /// 'fooBar'
-textCamelCase('foo bar'); /// 'fooBar'
-textCamelCase('foo.bar'); /// 'fooBar'
-```
 
 #### Parameters
 
@@ -6649,6 +6641,15 @@ textCamelCase('foo.bar'); /// 'fooBar'
 
 `string`
 
+**`Example`**
+
+```ts
+textCamelCase('foo-bar'); /// 'fooBar'
+textCamelCase('foo_bar'); /// 'fooBar'
+textCamelCase('foo bar'); /// 'fooBar'
+textCamelCase('foo.bar'); /// 'fooBar'
+```
+
 ___
 
 ### textSplitCase
@@ -6656,6 +6657,16 @@ ___
 ▸ **textSplitCase**(`str`): `string`[]
 
 按照普遍的特殊字符分割字符串
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `str` | `string` | 字符串 |
+
+#### Returns
+
+`string`[]
 
 **`Example`**
 
@@ -6668,16 +6679,6 @@ textSplitCase('fooBar'); /// ['foo', 'bar']
 textSplitCase('foo-Bar'); /// ['foo', 'bar']
 ```
 
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `str` | `string` | 字符串 |
-
-#### Returns
-
-`string`[]
-
 ___
 
 ### textTransferCase
@@ -6685,14 +6686,6 @@ ___
 ▸ **textTransferCase**(`str`, `type`): `string`
 
 改变字符串大小写
-
-**`Example`**
-
-```ts
-textTransferCase('red', 'upper'|1); /// 'RED'
-textTransferCase('red', 'lower'|2); /// 'red'
-textTransferCase('red', 'first'|3); /// 'Red'
-```
 
 #### Parameters
 
@@ -6705,6 +6698,14 @@ textTransferCase('red', 'first'|3); /// 'Red'
 
 `string`
 
+**`Example`**
+
+```ts
+textTransferCase('red', 'upper'|1); /// 'RED'
+textTransferCase('red', 'lower'|2); /// 'red'
+textTransferCase('red', 'first'|3); /// 'Red'
+```
+
 ___
 
 ### throttle
@@ -6712,12 +6713,6 @@ ___
 ▸ **throttle**(`fn`, `delay?`): () => `void`
 
 节流函数-第一次有效（游戏开枪间隔）
-
-**`Example`**
-
-```ts
-throttle(() => {}, 1000); /// 节流执行
-```
 
 #### Parameters
 
@@ -6736,6 +6731,12 @@ throttle(() => {}, 1000); /// 节流执行
 
 `void`
 
+**`Example`**
+
+```ts
+throttle(() => {}, 1000); /// 节流执行
+```
+
 ___
 
 ### timeSince
@@ -6743,12 +6744,6 @@ ___
 ▸ **timeSince**(`date?`, `longAgo?`, `formatter?`): `any`
 
 人性化时间
-
-**`Example`**
-
-```ts
-timeSince(new Date()); /// '刚刚'
-```
 
 #### Parameters
 
@@ -6762,6 +6757,12 @@ timeSince(new Date()); /// '刚刚'
 
 `any`
 
+**`Example`**
+
+```ts
+timeSince(new Date()); /// '刚刚'
+```
+
 ___
 
 ### times
@@ -6769,13 +6770,6 @@ ___
 ▸ **times**(`mul1`, `mul2`): `number`
 
 乘法函数
-
-**`Example`**
-
-```ts
-times(1, 2); /// 2
-times(0.55, 100); /// 55
-```
 
 #### Parameters
 
@@ -6788,14 +6782,33 @@ times(0.55, 100); /// 55
 
 `number`
 
+**`Example`**
+
+```ts
+times(1, 2); /// 2
+times(0.55, 100); /// 55
+```
+
 ___
 
 ### to
 
-▸ **to**(`promise`, `res?`, `rej?`): `Promise`<`any`\>
+▸ **to**(`promise`, `res?`, `rej?`): `Promise`\<`any`\>
 
 参考了 to.js，扩展 Promise 用来直接帮助执行且处理异常。
 promise 报错不会阻断后面的 Promise，适用于多个 await Promise 情况。
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `promise` | `Promise`\<`any`\> | promise |
+| `res?` | `any` | 成功回调 |
+| `rej?` | `any` | 失败回调 |
+
+#### Returns
+
+`Promise`\<`any`\>
 
 **`Example`**
 
@@ -6804,18 +6817,6 @@ to(Promise.resolve(1)); /// Promise.resolve(1)
 // 也可挂载在 Promise 原型上
 ```
 
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `promise` | `Promise`<`any`\> | promise |
-| `res?` | `any` | 成功回调 |
-| `rej?` | `any` | 失败回调 |
-
-#### Returns
-
-`Promise`<`any`\>
-
 ___
 
 ### toBool
@@ -6823,6 +6824,17 @@ ___
 ▸ **toBool**(`value`, `falseList?`): `boolean`
 
 任意值转换为布尔类型
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `value` | `any` | `undefined` | 值 |
+| `falseList` | `any`[] | `[]` | 判断为 false 的值列表 |
+
+#### Returns
+
+`boolean`
 
 **`Example`**
 
@@ -6840,17 +6852,6 @@ toBool('NaN'); /// false
 toBool(null); /// false
 ```
 
-#### Parameters
-
-| Name | Type | Default value | Description |
-| :------ | :------ | :------ | :------ |
-| `value` | `any` | `undefined` | 值 |
-| `falseList` | `any`[] | `[]` | 判断为 false 的值列表 |
-
-#### Returns
-
-`boolean`
-
 ___
 
 ### toFormData
@@ -6858,12 +6859,6 @@ ___
 ▸ **toFormData**(`obj`, `hasBrackets?`, `hasIndex?`): `FormData`
 
 对象转 FormData 格式
-
-**`Example`**
-
-```ts
-toFormData({a: 1, b: 2}); /// FormData
-```
 
 #### Parameters
 
@@ -6877,6 +6872,12 @@ toFormData({a: 1, b: 2}); /// FormData
 
 `FormData`
 
+**`Example`**
+
+```ts
+toFormData({a: 1, b: 2}); /// FormData
+```
+
 ___
 
 ### toNum
@@ -6884,14 +6885,6 @@ ___
 ▸ **toNum**(`value`): `number`
 
 任意值转换为数字
-
-**`Example`**
-
-```ts
-toNum({}); /// 0
-toNum([2]); /// 2
-toNum('-123'); /// -123
-```
 
 #### Parameters
 
@@ -6903,6 +6896,14 @@ toNum('-123'); /// -123
 
 `number`
 
+**`Example`**
+
+```ts
+toNum({}); /// 0
+toNum([2]); /// 2
+toNum('-123'); /// -123
+```
+
 ___
 
 ### toQueryString
@@ -6910,14 +6911,6 @@ ___
 ▸ **toQueryString**(`obj`, `hasBrackets?`, `hasIndex?`): `URLSearchParams`
 
 对象转 URLSearchParams 字符串
-
-**`Example`**
-
-```ts
-toQueryString({a: 1, b: 2, c: [1, 2]}); /// a=1&b=2&c=1&c=2
-toQueryString({a: 1, b: 2, c: [1, 2]}, true); /// a=1&b=2&c[]=1&c[]=2
-toQueryString({a: 1, b: 2, c: [1, 2]}, true, true); /// a=1&b=2&c[0]=1&c[1]=2
-```
 
 #### Parameters
 
@@ -6931,6 +6924,14 @@ toQueryString({a: 1, b: 2, c: [1, 2]}, true, true); /// a=1&b=2&c[0]=1&c[1]=2
 
 `URLSearchParams`
 
+**`Example`**
+
+```ts
+toQueryString({a: 1, b: 2, c: [1, 2]}); /// a=1&b=2&c=1&c=2
+toQueryString({a: 1, b: 2, c: [1, 2]}, true); /// a=1&b=2&c[]=1&c[]=2
+toQueryString({a: 1, b: 2, c: [1, 2]}, true, true); /// a=1&b=2&c[0]=1&c[1]=2
+```
+
 ___
 
 ### toStr
@@ -6938,14 +6939,6 @@ ___
 ▸ **toStr**(`value`): `string`
 
 任意值转换为字符串
-
-**`Example`**
-
-```ts
-toStr({}); /// '{}'
-toStr([1, 2]); /// '[1,2]'
-toStr(null); /// ''
-```
 
 #### Parameters
 
@@ -6957,6 +6950,14 @@ toStr(null); /// ''
 
 `string`
 
+**`Example`**
+
+```ts
+toStr({}); /// '{}'
+toStr([1, 2]); /// '[1,2]'
+toStr(null); /// ''
+```
+
 ___
 
 ### toggleClass
@@ -6964,13 +6965,6 @@ ___
 ▸ **toggleClass**(`element`, `className`): `void`
 
 给元素添加/删除类
-
-**`Example`**
-
-```ts
-toggleClass(myElement, 'active'); /// 给元素添加/删除 active 类
-toggleClass(myElement, ['active', 'disabled']); /// 给元素添加/删除 active/disabled 类
-```
 
 #### Parameters
 
@@ -6983,6 +6977,13 @@ toggleClass(myElement, ['active', 'disabled']); /// 给元素添加/删除 activ
 
 `void`
 
+**`Example`**
+
+```ts
+toggleClass(myElement, 'active'); /// 给元素添加/删除 active 类
+toggleClass(myElement, ['active', 'disabled']); /// 给元素添加/删除 active/disabled 类
+```
+
 ___
 
 ### transferCSVData
@@ -6991,23 +6992,23 @@ ___
 
 转换 data 为可导出的 csv 数据
 
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `fields` | \{ `label?`: `string` ; `prop`: `string`  }[] | 导出的栏位 |
+| `data` | `any`[] | 数据 |
+
+#### Returns
+
+`string`
+
 **`Example`**
 
 ```ts
 transferCSVData([{ prop: 'name' }, { prop: 'age' }], [{ name: '张三', age: 15 }]); /// 可以导出的字符数据
 transferCSVData([{ label: '姓名', prop: 'name' }, { label: '年龄', prop: 'age' }], [{ name: '张三', age: 15 }]); /// 可以导出的字符数据
 ```
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `fields` | { `label?`: `string` ; `prop`: `string`  }[] | 导出的栏位 |
-| `data` | `any`[] | 数据 |
-
-#### Returns
-
-`string`
 
 ___
 
@@ -7016,13 +7017,6 @@ ___
 ▸ **transferFileToBase64**(`content`, `contentType`, `callBack`): `void`
 
 文件流或内容转 Base64
-
-**`Example`**
-
-```ts
-transferFileToBase64(file, 'application/pdf;charset=utf-8', (res) => console.log({ res })); /// result object
-transferFileToBase64('test', 'text/plain', (res) => console.log({ res })); /// result object
-```
 
 #### Parameters
 
@@ -7036,6 +7030,13 @@ transferFileToBase64('test', 'text/plain', (res) => console.log({ res })); /// r
 
 `void`
 
+**`Example`**
+
+```ts
+transferFileToBase64(file, 'application/pdf;charset=utf-8', (res) => console.log({ res })); /// result object
+transferFileToBase64('test', 'text/plain', (res) => console.log({ res })); /// result object
+```
+
 ___
 
 ### transferIdCard
@@ -7043,16 +7044,6 @@ ___
 ▸ **transferIdCard**(`idCard`): `any`
 
 身份证解析
-
-**`Example`**
-
-```ts
-transferIdCard('350424870506202');
-/// {"age":35,"year":"1987","idCard":"350424870506202","sex":"女","constellation":{"cn":"金牛","en":"Taurus","date":"4.20-5.20"},"gender":0,"province":"福建","animal":"兔","birthday":"1987-05-06"}
-transferIdCard('415106199801012130');
-/// {"age":24,"year":"1998","idCard":"415106199801012130","sex":"男","constellation":{"cn":"魔羯","en":"Capricorn","date":"12.22-1.19"},"gender":1,"province":"河南","animal":"虎","birthday":"1998-01-01"}
-transferIdCard('xxxxx'); /// {}
-```
 
 #### Parameters
 
@@ -7064,6 +7055,16 @@ transferIdCard('xxxxx'); /// {}
 
 `any`
 
+**`Example`**
+
+```ts
+transferIdCard('350424870506202');
+/// {"age":35,"year":"1987","idCard":"350424870506202","sex":"女","constellation":{"cn":"金牛","en":"Taurus","date":"4.20-5.20"},"gender":0,"province":"福建","animal":"兔","birthday":"1987-05-06"}
+transferIdCard('415106199801012130');
+/// {"age":24,"year":"1998","idCard":"415106199801012130","sex":"男","constellation":{"cn":"魔羯","en":"Capricorn","date":"12.22-1.19"},"gender":1,"province":"河南","animal":"虎","birthday":"1998-01-01"}
+transferIdCard('xxxxx'); /// {}
+```
+
 ___
 
 ### transferMoney
@@ -7071,13 +7072,6 @@ ___
 ▸ **transferMoney**(`n`): `string`
 
 金额转中文
-
-**`Example`**
-
-```ts
-transferMoney(900); /// '玖佰元整'
-transferMoney(852.5); /// '捌佰伍拾贰元伍角'
-```
 
 #### Parameters
 
@@ -7089,6 +7083,13 @@ transferMoney(852.5); /// '捌佰伍拾贰元伍角'
 
 `string`
 
+**`Example`**
+
+```ts
+transferMoney(900); /// '玖佰元整'
+transferMoney(852.5); /// '捌佰伍拾贰元伍角'
+```
+
 ___
 
 ### transferNumber
@@ -7096,13 +7097,6 @@ ___
 ▸ **transferNumber**(`number`, `from?`, `to?`): `string` \| `number`
 
 提供进制转换，最大为 64 进制。
-
-**`Example`**
-
-```ts
-transferNumber(100); /// '1100100'
-transferNumber(1100100, 2, 10); /// 100
-```
 
 #### Parameters
 
@@ -7116,6 +7110,13 @@ transferNumber(1100100, 2, 10); /// 100
 
 `string` \| `number`
 
+**`Example`**
+
+```ts
+transferNumber(100); /// '1100100'
+transferNumber(1100100, 2, 10); /// 100
+```
+
 ___
 
 ### transferScanStr
@@ -7124,16 +7125,6 @@ ___
 
 强制转换扫描字符串的特殊字符
 `/(=)|(<)|(>)|(《)|(》)|(&)|(%)|(\^)|(!)|(~)|(#)|(@)|(:)|(\s)|(')|(")|(‘)|(’)|(“)|(”)/g`
-
-**`Example`**
-
-```ts
-transferScanStr('=900182201234500'); /// '900182201234500'
-transferScanStr('=<E5433000'); /// 'E5433000'
-transferScanStr('@123', true); /// '123'
-transferScanStr('#te st~ ', true); /// 'test'
-transferScanStr(undefined); /// ''
-```
 
 #### Parameters
 
@@ -7146,6 +7137,16 @@ transferScanStr(undefined); /// ''
 
 `string`
 
+**`Example`**
+
+```ts
+transferScanStr('=900182201234500'); /// '900182201234500'
+transferScanStr('=<E5433000'); /// 'E5433000'
+transferScanStr('@123', true); /// '123'
+transferScanStr('#te st~ ', true); /// 'test'
+transferScanStr(undefined); /// ''
+```
+
 ___
 
 ### transferSeconds
@@ -7153,13 +7154,6 @@ ___
 ▸ **transferSeconds**(`duration`, `returnObj?`): `string` \| `any`
 
 转换音视频时长，把秒数转换为 hh:ii:ss 格式。
-
-**`Example`**
-
-```ts
-transferSeconds(1234); /// '00:20:34'
-transferSeconds(1234, true); /// {h: '00', i: 20, s: 34}
-```
 
 #### Parameters
 
@@ -7172,6 +7166,13 @@ transferSeconds(1234, true); /// {h: '00', i: 20, s: 34}
 
 `string` \| `any`
 
+**`Example`**
+
+```ts
+transferSeconds(1234); /// '00:20:34'
+transferSeconds(1234, true); /// {h: '00', i: 20, s: 34}
+```
+
 ___
 
 ### transferTemperature
@@ -7179,13 +7180,6 @@ ___
 ▸ **transferTemperature**(`temperature`, `isCelsius?`, `addSuffix?`): `string` \| `number`
 
 华氏/摄氏度互转
-
-**`Example`**
-
-```ts
-transferTemperature(30.5); /// '86.9 °F'
-transferTemperature(86, false, false); /// 30
-```
 
 #### Parameters
 
@@ -7199,6 +7193,13 @@ transferTemperature(86, false, false); /// 30
 
 `string` \| `number`
 
+**`Example`**
+
+```ts
+transferTemperature(30.5); /// '86.9 °F'
+transferTemperature(86, false, false); /// 30
+```
+
 ___
 
 ### trim
@@ -7207,12 +7208,6 @@ ___
 
 去除字符串空格
 `可选值：0|ba：去除前后空格，1|b：去除前空格，2|a：去除后空格，3|all：去除所有空格，4|pro：去除所有空格，中间的空格保留一个。`
-
-**`Example`**
-
-```ts
-trim('  a  b  ', 4); /// 'a b'
-```
 
 #### Parameters
 
@@ -7225,6 +7220,12 @@ trim('  a  b  ', 4); /// 'a b'
 
 `string`
 
+**`Example`**
+
+```ts
+trim('  a  b  ', 4); /// 'a b'
+```
+
 ___
 
 ### truncate
@@ -7232,13 +7233,6 @@ ___
 ▸ **truncate**(`txt`, `width`, `options?`): `string`
 
 截取字符串，使其长度为指定值，包含省略符。
-
-**`Example`**
-
-```ts
-truncate('HXB HXB HXB HXB HXB HXB', 12); /// 'HXB HXB H...'
-truncate('OQM-OQM-OQM-OQM-OQM-OQM', 10, { ellipsis: '～', separator: '-' }); /// 'OQM-OQM～'
-```
 
 #### Parameters
 
@@ -7254,6 +7248,13 @@ truncate('OQM-OQM-OQM-OQM-OQM-OQM', 10, { ellipsis: '～', separator: '-' }); //
 
 `string`
 
+**`Example`**
+
+```ts
+truncate('HXB HXB HXB HXB HXB HXB', 12); /// 'HXB HXB H...'
+truncate('OQM-OQM-OQM-OQM-OQM-OQM', 10, { ellipsis: '～', separator: '-' }); /// 'OQM-OQM～'
+```
+
 ___
 
 ### unicode2str
@@ -7261,12 +7262,6 @@ ___
 ▸ **unicode2str**(`value`): `string`
 
 字符转 unicode
-
-**`Example`**
-
-```ts
-unicode2str("我是老A"); /// '\\u6211\\u662f\\u8001a'
-```
 
 #### Parameters
 
@@ -7278,6 +7273,12 @@ unicode2str("我是老A"); /// '\\u6211\\u662f\\u8001a'
 
 `string`
 
+**`Example`**
+
+```ts
+unicode2str("我是老A"); /// '\\u6211\\u662f\\u8001a'
+```
+
 ___
 
 ### union
@@ -7285,13 +7286,6 @@ ___
 ▸ **union**(`paramA`, `paramB`): `any`
 
 获取数组或对象并集
-
-**`Example`**
-
-```ts
-union([1, 2, 2, 3, 3], [1, 2, 4, 5]); /// [1, 2, 3, 4, 5]
-union({a: 1, b: 2}, {a: 1, c: 3, b: 4}); /// {a: 1, c: 3, b: 2}
-```
 
 #### Parameters
 
@@ -7304,6 +7298,13 @@ union({a: 1, b: 2}, {a: 1, c: 3, b: 4}); /// {a: 1, c: 3, b: 2}
 
 `any`
 
+**`Example`**
+
+```ts
+union([1, 2, 2, 3, 3], [1, 2, 4, 5]); /// [1, 2, 3, 4, 5]
+union({a: 1, b: 2}, {a: 1, c: 3, b: 4}); /// {a: 1, c: 3, b: 2}
+```
+
 ___
 
 ### unique
@@ -7311,13 +7312,6 @@ ___
 ▸ **unique**(`arr`, `filter?`): `any`[]
 
 数组去重
-
-**`Example`**
-
-```ts
-unique([1, 2, 3, 1, 2, 3]); /// [1, 2, 3]
-unique([{id: 1, value: 'hello'}, {id: 2, value: 'world'}, {id: 2, value: 'world', others: true}], (a, b) => a.id === b.id); /// [id1, id2 带 true]
-```
 
 #### Parameters
 
@@ -7330,6 +7324,13 @@ unique([{id: 1, value: 'hello'}, {id: 2, value: 'world'}, {id: 2, value: 'world'
 
 `any`[]
 
+**`Example`**
+
+```ts
+unique([1, 2, 3, 1, 2, 3]); /// [1, 2, 3]
+unique([{id: 1, value: 'hello'}, {id: 2, value: 'world'}, {id: 2, value: 'world', others: true}], (a, b) => a.id === b.id); /// [id1, id2 带 true]
+```
+
 ___
 
 ### useStateData
@@ -7337,6 +7338,16 @@ ___
 ▸ **useStateData**(`initialData`): (`value`: `any`) => `any`[]
 
 创建用于处理数据的钩子函数
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `initialData` | `any` | 初始数据 |
+
+#### Returns
+
+(`value`: `any`) => `any`[]
 
 **`Example`**
 
@@ -7351,16 +7362,6 @@ setData('test001'); /// 'test001'
 resetData(); /// 'test'
 ```
 
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `initialData` | `any` | 初始数据 |
-
-#### Returns
-
-(`value`: `any`) => `any`[]
-
 ___
 
 ### uuid
@@ -7369,15 +7370,15 @@ ___
 
 获取 V4 版本 UUID
 
+#### Returns
+
+`string`
+
 **`Example`**
 
 ```ts
 uuid(); /// '7b72e264-61fe-426e-b95f-35d4e61c5742'
 ```
-
-#### Returns
-
-`string`
 
 ___
 
@@ -7386,15 +7387,6 @@ ___
 ▸ **versionUpgrade**(`version`, `maxVersionCode?`): `string`
 
 版本号升级算法
-
-**`Example`**
-
-```ts
-versionUpgrade('0.0.1'); /// '0.0.2'
-versionUpgrade('0.0.0.9'); /// '0.0.0.10'
-versionUpgrade('0.0.0.9', 9); /// '0.0.1.0'
-versionUpgrade('0.0.9.9', 9); /// '0.1.0.0'
-```
 
 #### Parameters
 
@@ -7407,21 +7399,22 @@ versionUpgrade('0.0.9.9', 9); /// '0.1.0.0'
 
 `string`
 
+**`Example`**
+
+```ts
+versionUpgrade('0.0.1'); /// '0.0.2'
+versionUpgrade('0.0.0.9'); /// '0.0.0.10'
+versionUpgrade('0.0.0.9', 9); /// '0.0.1.0'
+versionUpgrade('0.0.9.9', 9); /// '0.1.0.0'
+```
+
 ___
 
 ### waitUntil
 
-▸ **waitUntil**(`condition`, `timeout?`, `interval?`): `Promise`<`any`\>
+▸ **waitUntil**(`condition`, `timeout?`, `interval?`): `Promise`\<`any`\>
 
 直到某个函数返回 toBool(true) 的结果(执行完成)
-
-**`Example`**
-
-```ts
-let a = 5;
-setTimeout(() => (a = 10), 5000);
-waitUntil(() => a === 10).then(() => { console.log(a) });
-```
 
 #### Parameters
 
@@ -7433,7 +7426,15 @@ waitUntil(() => a === 10).then(() => { console.log(a) });
 
 #### Returns
 
-`Promise`<`any`\>
+`Promise`\<`any`\>
+
+**`Example`**
+
+```ts
+let a = 5;
+setTimeout(() => (a = 10), 5000);
+waitUntil(() => a === 10).then(() => { console.log(a) });
+```
 
 ___
 
@@ -7442,15 +7443,6 @@ ___
 ▸ **watermark**(`dom`, `text`, `options?`): `void`
 
 给对应 dom 生成水印
-
-**`Example`**
-
-```ts
-watermark(document.body, 'My Watermark', { fontSize: 20, opacity: 0.5, angle: -30, color: 'red', fontFamily: 'Arial', repeat: true, backgroundOpacity: 0.05 });
-watermark(document.body, 'My Watermark'); /// 在 body 中生成水印
-watermark(document.body, 'My Watermark', { fontSize: 120, color: 'red', repeat: false, angle: 0 }); /// 在 body 中生成水印
-watermark(document.body, 'My Watermark', { fontSize: 20, color: 'red', repeat: true, angle: 90 }); /// 在 body 中生成水印
-```
 
 #### Parameters
 
@@ -7464,6 +7456,15 @@ watermark(document.body, 'My Watermark', { fontSize: 20, color: 'red', repeat: t
 
 `void`
 
+**`Example`**
+
+```ts
+watermark(document.body, 'My Watermark', { fontSize: 20, opacity: 0.5, angle: -30, color: 'red', fontFamily: 'Arial', repeat: true, backgroundOpacity: 0.05 });
+watermark(document.body, 'My Watermark'); /// 在 body 中生成水印
+watermark(document.body, 'My Watermark', { fontSize: 120, color: 'red', repeat: false, angle: 0 }); /// 在 body 中生成水印
+watermark(document.body, 'My Watermark', { fontSize: 20, color: 'red', repeat: true, angle: 90 }); /// 在 body 中生成水印
+```
+
 ___
 
 ### xAjax
@@ -7471,13 +7472,6 @@ ___
 ▸ **xAjax**(`method`, `url`, `options?`): `any`
 
 ajax 简单封装
-
-**`Example`**
-
-```ts
-xAjax('get', 'https://test.cn', { params: { test: 123, hello: 456 }, success: (data) => console.log('success', data), fail: (error) => console.log('fail', error) }); /// ajax
-xAjax('POST', 'https://test.cn', { contentType: 'application/json', data: { test: 123 }, success: (data) => console.log('success', data), fail: (error) => console.log('fail', error) }); /// ajax
-```
 
 #### Parameters
 
@@ -7499,20 +7493,20 @@ xAjax('POST', 'https://test.cn', { contentType: 'application/json', data: { test
 
 `any`
 
+**`Example`**
+
+```ts
+xAjax('get', 'https://test.cn', { params: { test: 123, hello: 456 }, success: (data) => console.log('success', data), fail: (error) => console.log('fail', error) }); /// ajax
+xAjax('POST', 'https://test.cn', { contentType: 'application/json', data: { test: 123 }, success: (data) => console.log('success', data), fail: (error) => console.log('fail', error) }); /// ajax
+```
+
 ___
 
 ### xFetch
 
-▸ **xFetch**(`method`, `url`, `options?`): `Promise`<`any`\>
+▸ **xFetch**(`method`, `url`, `options?`): `Promise`\<`any`\>
 
 fetch 简单封装
-
-**`Example`**
-
-```ts
-xFetch('get', 'https://api.uomg.com/api/rand.qinghua?x=1', { params: { format: 'json', hello: 456 } }).then(data => console.log(data)); /// fetchXPromise
-xFetch('POST', 'https://test.cn', { headers: { contentType: 'application/json' }, data: { test: 123 } }).catch(error => console.log(error)); /// fetchXPromise
-```
 
 #### Parameters
 
@@ -7530,7 +7524,14 @@ xFetch('POST', 'https://test.cn', { headers: { contentType: 'application/json' }
 
 #### Returns
 
-`Promise`<`any`\>
+`Promise`\<`any`\>
+
+**`Example`**
+
+```ts
+xFetch('get', 'https://api.uomg.com/api/rand.qinghua?x=1', { params: { format: 'json', hello: 456 } }).then(data => console.log(data)); /// fetchXPromise
+xFetch('POST', 'https://test.cn', { headers: { contentType: 'application/json' }, data: { test: 123 } }).catch(error => console.log(error)); /// fetchXPromise
+```
 
 ___
 
@@ -7539,19 +7540,6 @@ ___
 ▸ **xTimer**(`callback`, `time?`, `once?`, `immediate?`): () => `void`
 
 创建定时器
-
-**`Example`**
-
-```ts
-const cancelTimer = xTimer(() => {
-  console.log('Timer executed!');
-}, 1000, true, true);
-cancelTimer();
-const cancelIntervalTimer = xTimer(() => {
-  console.log('IntervalTimer executed!');
-}, 1000, false);
-cancelIntervalTimer();
-```
 
 #### Parameters
 
@@ -7571,3 +7559,16 @@ cancelIntervalTimer();
 ##### Returns
 
 `void`
+
+**`Example`**
+
+```ts
+const cancelTimer = xTimer(() => {
+  console.log('Timer executed!');
+}, 1000, true, true);
+cancelTimer();
+const cancelIntervalTimer = xTimer(() => {
+  console.log('IntervalTimer executed!');
+}, 1000, false);
+cancelIntervalTimer();
+```
