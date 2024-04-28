@@ -71,15 +71,18 @@ export function qsStringify(
  */
 export function qsParse(url?: string, key?: string): any {
   // 也可使用 new URL(url) 或者 new URLSearchParams(params) API 获取
-  const pathname: string = url ?? window.location.pathname;
-  url = url ?? window.location.search;
+  const pathname: string = url ?? window.location.pathname ?? '';
+  url = url ?? window.location.search ?? '';
   const filename: string = pathname.substring(pathname.lastIndexOf('/') + 1);
   const paramMap: any = {
-    '/': filename ?? undefined,
+    '/': filename,
+    '_': filename?.split('?')?.[0] ?? '',
   };
-  const queryString: string = url.indexOf('?') === 0 ? url.substring(1) : url;
+  const queryString: string = url.includes('?') ? url.split('?')[1] : url;
+  const queryStringList: string[] = queryString.split('#');
+  paramMap['#'] = queryStringList?.[1] ?? '';
   if (queryString.length !== 0) {
-    const parts: any[] = queryString.split('&');
+    const parts: any[] = queryStringList[0].split('&');
     for (let i = 0; i < parts.length; i++) {
       const component: any[] = parts[i].split('=');
       const paramKey = decodeURIComponent(component[0]);
