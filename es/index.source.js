@@ -633,9 +633,10 @@ function arrayFill(arr, n) {
  * @returns
  */
 function getCookie(key) {
-    var arr;
     var reg = new RegExp('(^| )' + key + '=([^;]*)(;|$)');
-    arr === document.cookie.match(reg) ? unescape(arr[2]) : null;
+    // @ts-ignore
+    var arr = document.cookie.match(reg) ? unescape(document.cookie.match(reg)[2]) : null;
+    return arr;
 }
 /**
  * Set Cookie
@@ -11216,8 +11217,29 @@ function formatJSON(value) {
         // JSON.stringify(value, ['key']); // 只取对象某个字段
         return (_a = JSON.stringify(value, null, 2)) !== null && _a !== void 0 ? _a : 'undefined';
     }
-    catch (e) {
+    catch (error) {
+        console.error(error);
         return "".concat(value);
+    }
+}
+/**
+ * 解析 JSON 字符串
+ * @example
+ * parseJSON('{"name":"leo", "age":20}'); /// {"name": "leo", "age": 20}
+ * parseJSON(123); /// 123
+ * parseJSON(true); /// true
+ * parseJSON(null); /// null
+ * parseJSON('test error'); /// null
+ * @param value 需要解析的值
+ * @returns
+ */
+function parseJSON(value) {
+    try {
+        return JSON.parse(value);
+    }
+    catch (error) {
+        console.error(error);
+        return null;
     }
 }
 /**
@@ -13041,6 +13063,71 @@ function printDom(selector, styles) {
         document.body.removeChild(iframe);
     }, 1000);
     return iframe;
+}
+/**
+ * 创建全局 click 事件埋点与回调
+ * @example
+ * const statusMap = createClickLogListener((key, data) => console.log({ key, data })); /// 页面加载完成后创建监听器
+ * <div data-log={JSON.stringify({ trigger: 'click', params: { name: '普通日志' }, logKey: 'example-key-0' })}>普通埋点元素</div> /// 普通埋点元素写法
+ * <div data-log={JSON.stringify({ maxSequence: 2, sequence: 1, trigger: 'click', params: { name: '顺序日志' }, logKey: 'example-key-1' })}>顺序埋点元素 1</div> /// 顺序埋点元素写法
+ * <div data-log={JSON.stringify({ maxSequence: 2, sequence: 2, trigger: 'click', params: { name: '顺序日志' }, logKey: 'example-key-1' })}>顺序埋点元素 2</div> /// 顺序埋点元素写法
+ * @param callback 监听 Track 回调
+ * @returns
+ */
+function createClickLogListener(callback) {
+    var clickSequenceMap = {};
+    function handleClick(event) {
+        var target = event.target;
+        // 找到拥有 data-log 属性的元素为有效点击
+        var logElement = target.closest('[data-log]');
+        if (!logElement) {
+            return;
+        }
+        // console.log({ target, logElement, clickSequenceMap });
+        // data-log 属性有可以解析值才执行后续操作
+        var logData = logElement.getAttribute('data-log');
+        if (!logData) {
+            return;
+        }
+        var parsedLogData = parseJSON(logData);
+        if (!parsedLogData) {
+            return;
+        }
+        var trigger = parsedLogData.trigger, params = parsedLogData.params, sequence = parsedLogData.sequence, maxSequence = parsedLogData.maxSequence, logKey = parsedLogData.logKey;
+        // 无 sequence 或 maxSequence 则认为是普通埋点
+        if (logKey && maxSequence === undefined) {
+            // console.log('普通埋点分析:', trigger ?? 'click', params, 'LogKey:', logKey);
+            callback && callback(logKey, { trigger: trigger !== null && trigger !== void 0 ? trigger : 'click', key: logKey, params: params });
+            return;
+        }
+        // 存在 sequence 或 maxSequence 则认为是顺序埋点
+        if (sequence !== undefined && maxSequence !== undefined) {
+            var clickSequence = clickSequenceMap[logKey] || 0;
+            // 顺序正确，保存顺序并继续执行。
+            if (clickSequence + 1 === sequence) {
+                clickSequenceMap[logKey] = sequence;
+                // 达到 maxSequence 触发埋点
+                if (sequence === maxSequence) {
+                    // console.log('顺序埋点分析:', trigger ?? 'click', params, 'LogKey:', logKey);
+                    callback && callback(logKey, { trigger: trigger !== null && trigger !== void 0 ? trigger : 'click', key: logKey, params: params });
+                    delete clickSequenceMap[logKey];
+                }
+            }
+            else {
+                // 点击相同顺序的按钮多次，不清空重来，防呆。
+                if (clickSequence === sequence) {
+                    clickSequenceMap[logKey] = sequence;
+                }
+                else {
+                    // 点击顺序错误，重来。
+                    delete clickSequenceMap[logKey];
+                }
+            }
+        }
+    }
+    // 此处注意不要重复监听，后续也可以将事件扩展支持多个。
+    document.addEventListener('click', handleClick);
+    return clickSequenceMap;
 }
 
 /*
@@ -15460,4 +15547,4 @@ function getWebSocket() {
     return xWebSocket;
 }
 
-export { ANIMALS, BASE_CHAR_LOW, BASE_CHAR_UP, BASE_NUMBER, BLOOD_GROUP, BLOOD_GROUP_INFO, BS_COLORS, CODE_MSG, CONSTELLATION, CONTENT_TYPES, HttpMethod, ICONS, ID_CARD_PROVINCE, KEYBOARD_CODE, Loading, MAN, MONTHS, PY_MAPS, ROLES, Speaker, TRANSFER_STR, Toast, WEEKS, WOMAN, abs, add, addLongPressEvent, addSpace, all, any, appendLink, appendScript, arr2select, arrObj2objArr, arrayFill, arrayShuffle, arraySort, average, banConsole, base64Decode, base64Encode, bindMoreClick, buf2obj, calcCron, calcDate, calcFontSize, calculate, catchPromise, changeURL, checkFileExt, checkIdCard, checkPassWordLevel, checkUpdate, checkVersion, clearCookies, closeFullscreen, closeWebSocket, compareDate, contains, copyToClipboard, countdown, curryIt, customFinally, data2Arr, data2Obj, dataTo, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitEvent, emitKeyboardEvent, empty, encrypt, every, exportFile, findChildren, findMaxKey, findParents, float, forEach, forceToStr, formatBytes, formatDate, formatJSON, formatNumber, formatRh, getAge, getAnimal, getBSColor, getBaseURL, getBloodGroup, getConstellation, getContentType, getCookie, getCryptoJS, getDateDifference, getDateList, getDateTime, getDayInYear, getDecodeStorage, getFingerprint, getFirstVar, getKey, getLastVar, getLocalArr, getLocalObj, getMonthDayCount, getMonthInfo, getPercentage, getPinYin, getQueryString, getRandColor, getRandDate, getRandIp, getRandNum, getRandStr, getRandVar, getScrollPercent, getSearchParams, getSelectText, getSessionArr, getSessionObj, getSortVar, getStyleByName, getTimeCode, getType, getUTCTime, getUserAgent, getV, getVarSize, getViewportSize, getWebSocket, getWeekInfo, globalError, hasKey, hasSpecialChar, hideToast, html2str, inRange, initNotification, initWebSocket, insertAfter, intersection, inversion, isAccount, isAppleDevice, isArr, isArrayBuffer, isBankCard, isBlob, isBool, isBrowser, isCarCode, isChinese, isCreditCode, isDarkMode, isDate, isDecimal, isElement, isEmail, isEnglish, isEqual, isEven, isFn, isHttp, isInteger, isInvalidDate, isIpAddress, isIpv4, isIpv6, isJSON, isMobile, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPromise, isQQ, isRhNegative, isStr, isStrongPassWord, isTel, isUndef, isUrl, isWeekday, javaDecrypt, javaEncrypt, jsonClone, keyBoardResize, leftJoin, localStorageGet, localStorageSet, log, logRunTime, markNumber, marquee, maskString, md5, ms, obj2buf, observeResource, offDefaultEvent, onClick2MoreClick, onResize, openFileSelect, openFullscreen, printDom, px2rem, qsParse, qsStringify, removeCookie, repeat, retry, rightJoin, rip, round, same, scrollToView, scrollXTo, scrollYTo, sendNotification, sendWsMsg, sessionStorageGet, sessionStorageSet, setCookie, setEncodeStorage, setEventListener, setIcon, setWsBinaryType, sha1, sha256, showProcess, showToast, showVar, sleep, slugify, sortBy, sortCallBack, stackSticky, str2html, str2unicode, sub, textCamelCase, textSplitCase, textTransferCase, throttle, timeSince, times, to, toBool, toFormData, toNum, toQueryString, toStr, toggleClass, transferCSVData, transferFileToBase64, transferIdCard, transferMoney, transferNumber, transferScanStr, transferSeconds, transferTemperature, trim, truncate, unicode2str, union, unique, useStateData, uuid, versionUpgrade, waitUntil, watermark, xAjax, xFetch, xTimer };
+export { ANIMALS, BASE_CHAR_LOW, BASE_CHAR_UP, BASE_NUMBER, BLOOD_GROUP, BLOOD_GROUP_INFO, BS_COLORS, CODE_MSG, CONSTELLATION, CONTENT_TYPES, HttpMethod, ICONS, ID_CARD_PROVINCE, KEYBOARD_CODE, Loading, MAN, MONTHS, PY_MAPS, ROLES, Speaker, TRANSFER_STR, Toast, WEEKS, WOMAN, abs, add, addLongPressEvent, addSpace, all, any, appendLink, appendScript, arr2select, arrObj2objArr, arrayFill, arrayShuffle, arraySort, average, banConsole, base64Decode, base64Encode, bindMoreClick, buf2obj, calcCron, calcDate, calcFontSize, calculate, catchPromise, changeURL, checkFileExt, checkIdCard, checkPassWordLevel, checkUpdate, checkVersion, clearCookies, closeFullscreen, closeWebSocket, compareDate, contains, copyToClipboard, countdown, createClickLogListener, curryIt, customFinally, data2Arr, data2Obj, dataTo, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitEvent, emitKeyboardEvent, empty, encrypt, every, exportFile, findChildren, findMaxKey, findParents, float, forEach, forceToStr, formatBytes, formatDate, formatJSON, formatNumber, formatRh, getAge, getAnimal, getBSColor, getBaseURL, getBloodGroup, getConstellation, getContentType, getCookie, getCryptoJS, getDateDifference, getDateList, getDateTime, getDayInYear, getDecodeStorage, getFingerprint, getFirstVar, getKey, getLastVar, getLocalArr, getLocalObj, getMonthDayCount, getMonthInfo, getPercentage, getPinYin, getQueryString, getRandColor, getRandDate, getRandIp, getRandNum, getRandStr, getRandVar, getScrollPercent, getSearchParams, getSelectText, getSessionArr, getSessionObj, getSortVar, getStyleByName, getTimeCode, getType, getUTCTime, getUserAgent, getV, getVarSize, getViewportSize, getWebSocket, getWeekInfo, globalError, hasKey, hasSpecialChar, hideToast, html2str, inRange, initNotification, initWebSocket, insertAfter, intersection, inversion, isAccount, isAppleDevice, isArr, isArrayBuffer, isBankCard, isBlob, isBool, isBrowser, isCarCode, isChinese, isCreditCode, isDarkMode, isDate, isDecimal, isElement, isEmail, isEnglish, isEqual, isEven, isFn, isHttp, isInteger, isInvalidDate, isIpAddress, isIpv4, isIpv6, isJSON, isMobile, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPromise, isQQ, isRhNegative, isStr, isStrongPassWord, isTel, isUndef, isUrl, isWeekday, javaDecrypt, javaEncrypt, jsonClone, keyBoardResize, leftJoin, localStorageGet, localStorageSet, log, logRunTime, markNumber, marquee, maskString, md5, ms, obj2buf, observeResource, offDefaultEvent, onClick2MoreClick, onResize, openFileSelect, openFullscreen, parseJSON, printDom, px2rem, qsParse, qsStringify, removeCookie, repeat, retry, rightJoin, rip, round, same, scrollToView, scrollXTo, scrollYTo, sendNotification, sendWsMsg, sessionStorageGet, sessionStorageSet, setCookie, setEncodeStorage, setEventListener, setIcon, setWsBinaryType, sha1, sha256, showProcess, showToast, showVar, sleep, slugify, sortBy, sortCallBack, stackSticky, str2html, str2unicode, sub, textCamelCase, textSplitCase, textTransferCase, throttle, timeSince, times, to, toBool, toFormData, toNum, toQueryString, toStr, toggleClass, transferCSVData, transferFileToBase64, transferIdCard, transferMoney, transferNumber, transferScanStr, transferSeconds, transferTemperature, trim, truncate, unicode2str, union, unique, useStateData, uuid, versionUpgrade, waitUntil, watermark, xAjax, xFetch, xTimer };

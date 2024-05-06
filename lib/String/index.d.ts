@@ -240,6 +240,18 @@ export declare function truncate(txt: string, width: number, options?: {
  */
 export declare function formatJSON(value: any): string;
 /**
+ * 解析 JSON 字符串
+ * @example
+ * parseJSON('{"name":"leo", "age":20}'); /// {"name": "leo", "age": 20}
+ * parseJSON(123); /// 123
+ * parseJSON(true); /// true
+ * parseJSON(null); /// null
+ * parseJSON('test error'); /// null
+ * @param value 需要解析的值
+ * @returns
+ */
+export declare function parseJSON(value: any): any;
+/**
  * 检查是否为 QQ 号
  * @example
  * isQQ('1005760694'); /// true

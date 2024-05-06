@@ -15,9 +15,10 @@
  * @returns
  */
 export function getCookie(key: string): any {
-  let arr;
   const reg = new RegExp('(^| )' + key + '=([^;]*)(;|$)');
-  arr === document.cookie.match(reg) ? unescape(arr[2]) : null;
+  // @ts-ignore
+  const arr = document.cookie.match(reg) ? unescape(document.cookie.match(reg)[2]) : null;
+  return arr;
 }
 
 /**

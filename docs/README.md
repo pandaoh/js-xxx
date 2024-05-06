@@ -1,6 +1,6 @@
 js-xxx
 
-# js-xxx - v2.2.6
+# js-xxx - v2.2.7
 
 ## Table of contents
 
@@ -77,6 +77,7 @@ js-xxx
 - [contains](README.md#contains)
 - [copyToClipboard](README.md#copytoclipboard)
 - [countdown](README.md#countdown)
+- [createClickLogListener](README.md#createclickloglistener)
 - [curryIt](README.md#curryit)
 - [customFinally](README.md#customfinally)
 - [data2Arr](README.md#data2arr)
@@ -228,6 +229,7 @@ js-xxx
 - [onResize](README.md#onresize)
 - [openFileSelect](README.md#openfileselect)
 - [openFullscreen](README.md#openfullscreen)
+- [parseJSON](README.md#parsejson)
 - [printDom](README.md#printdom)
 - [px2rem](README.md#px2rem)
 - [qsParse](README.md#qsparse)
@@ -1711,6 +1713,33 @@ ___
 
 ```ts
 console.time('test'); countdown(10, (x) => console.log('--->', x), () => console.timeEnd('test')); /// test: 10023.636962890625 ms
+```
+
+___
+
+### createClickLogListener
+
+▸ **createClickLogListener**(`callback?`): `any`
+
+创建全局 click 事件埋点与回调
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `callback?` | `any` | 监听 Track 回调 |
+
+#### Returns
+
+`any`
+
+**`Example`**
+
+```ts
+const statusMap = createClickLogListener((key, data) => console.log({ key, data })); /// 页面加载完成后创建监听器
+<div data-log={JSON.stringify({ trigger: 'click', params: { name: '普通日志' }, logKey: 'example-key-0' })}>普通埋点元素</div> /// 普通埋点元素写法
+<div data-log={JSON.stringify({ maxSequence: 2, sequence: 1, trigger: 'click', params: { name: '顺序日志' }, logKey: 'example-key-1' })}>顺序埋点元素 1</div> /// 顺序埋点元素写法
+<div data-log={JSON.stringify({ maxSequence: 2, sequence: 2, trigger: 'click', params: { name: '顺序日志' }, logKey: 'example-key-1' })}>顺序埋点元素 2</div> /// 顺序埋点元素写法
 ```
 
 ___
@@ -5681,6 +5710,34 @@ ___
 
 ```ts
 openFullscreen(); /// 开启全屏
+```
+
+___
+
+### parseJSON
+
+▸ **parseJSON**(`value`): `any`
+
+解析 JSON 字符串
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `any` | 需要解析的值 |
+
+#### Returns
+
+`any`
+
+**`Example`**
+
+```ts
+parseJSON('{"name":"leo", "age":20}'); /// {"name": "leo", "age": 20}
+parseJSON(123); /// 123
+parseJSON(true); /// true
+parseJSON(null); /// null
+parseJSON('test error'); /// null
 ```
 
 ___

@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:45:48
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-04-13 11:14:52
+ * @LastEditTime: 2024-05-06 16:11:03
  * @Description: 字符串常用函数
  * @FilePath: \js-xxx\src\String\index.ts
  */
@@ -475,8 +475,29 @@ export function formatJSON(value: any): string {
   try {
     // JSON.stringify(value, ['key']); // 只取对象某个字段
     return JSON.stringify(value, null, 2) ?? 'undefined';
-  } catch (e) {
+  } catch (error) {
+    console.error(error);
     return `${value}`;
+  }
+}
+
+/**
+ * 解析 JSON 字符串
+ * @example
+ * parseJSON('{"name":"leo", "age":20}'); /// {"name": "leo", "age": 20}
+ * parseJSON(123); /// 123
+ * parseJSON(true); /// true
+ * parseJSON(null); /// null
+ * parseJSON('test error'); /// null
+ * @param value 需要解析的值
+ * @returns
+ */
+export function parseJSON(value: any): any {
+  try {
+    return JSON.parse(value);
+  } catch (error) {
+    console.error(error);
+    return null;
   }
 }
 

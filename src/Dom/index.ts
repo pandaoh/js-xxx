@@ -3,12 +3,12 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-03-01 17:10:01
+ * @LastEditTime: 2024-05-06 15:59:01
  * @Description: 利用 dom 的一些函数
  * @FilePath: \js-xxx\src\Dom\index.ts
  */
 
-import { textSplitCase } from '@/String';
+import { parseJSON, textSplitCase } from '@/String';
 import { setEventListener } from '@/Tools';
 
 /**
@@ -1058,4 +1058,78 @@ export function printDom(selector: string, styles?: { iframeStyle?: any; bodySty
     document.body.removeChild(iframe);
   }, 1000);
   return iframe;
+}
+
+/**
+ * 创建全局 click 事件埋点与回调
+ * @example
+ * const statusMap = createClickLogListener((key, data) => console.log({ key, data })); /// 页面加载完成后创建监听器
+ * <div data-log={JSON.stringify({ trigger: 'click', params: { name: '普通日志' }, logKey: 'example-key-0' })}>普通埋点元素</div> /// 普通埋点元素写法
+ * <div data-log={JSON.stringify({ maxSequence: 2, sequence: 1, trigger: 'click', params: { name: '顺序日志' }, logKey: 'example-key-1' })}>顺序埋点元素 1</div> /// 顺序埋点元素写法
+ * <div data-log={JSON.stringify({ maxSequence: 2, sequence: 2, trigger: 'click', params: { name: '顺序日志' }, logKey: 'example-key-1' })}>顺序埋点元素 2</div> /// 顺序埋点元素写法
+ * @param callback 监听 Track 回调
+ * @returns
+ */
+export function createClickLogListener(callback?: any): any {
+  const clickSequenceMap: any = {};
+
+  function handleClick(event: any) {
+    const { target } = event;
+    // 找到拥有 data-log 属性的元素为有效点击
+    const logElement = target.closest('[data-log]');
+    if (!logElement) {
+      return;
+    }
+
+    // console.log({ target, logElement, clickSequenceMap });
+
+    // data-log 属性有可以解析值才执行后续操作
+    const logData = logElement.getAttribute('data-log');
+    if (!logData) {
+      return;
+    }
+    const parsedLogData = parseJSON(logData);
+    if (!parsedLogData) {
+      return;
+    }
+
+    const { trigger, params, sequence, maxSequence, logKey } = parsedLogData;
+
+    // 无 sequence 或 maxSequence 则认为是普通埋点
+    if (logKey && maxSequence === undefined) {
+      // console.log('普通埋点分析:', trigger ?? 'click', params, 'LogKey:', logKey);
+      callback && callback(logKey, { trigger: trigger ?? 'click', key: logKey, params });
+      return;
+    }
+
+    // 存在 sequence 或 maxSequence 则认为是顺序埋点
+    if (sequence !== undefined && maxSequence !== undefined) {
+      const clickSequence = clickSequenceMap[logKey] || 0;
+
+      // 顺序正确，保存顺序并继续执行。
+      if (clickSequence + 1 === sequence) {
+        clickSequenceMap[logKey] = sequence;
+
+        // 达到 maxSequence 触发埋点
+        if (sequence === maxSequence) {
+          // console.log('顺序埋点分析:', trigger ?? 'click', params, 'LogKey:', logKey);
+          callback && callback(logKey, { trigger: trigger ?? 'click', key: logKey, params });
+          delete clickSequenceMap[logKey];
+        }
+      } else {
+        // 点击相同顺序的按钮多次，不清空重来，防呆。
+        if (clickSequence === sequence) {
+          clickSequenceMap[logKey] = sequence;
+        } else {
+          // 点击顺序错误，重来。
+          delete clickSequenceMap[logKey];
+        }
+      }
+    }
+  }
+
+  // 此处注意不要重复监听，后续也可以将事件扩展支持多个。
+  document.addEventListener('click', handleClick);
+
+  return clickSequenceMap;
 }

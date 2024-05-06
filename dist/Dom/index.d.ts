@@ -350,4 +350,15 @@ export declare function printDom(selector: string, styles?: {
     bodyStyle?: any;
     htmlStyle?: any;
 }): any;
+/**
+ * 创建全局 click 事件埋点与回调
+ * @example
+ * const statusMap = createClickLogListener((key, data) => console.log({ key, data })); /// 页面加载完成后创建监听器
+ * <div data-log={JSON.stringify({ trigger: 'click', params: { name: '普通日志' }, logKey: 'example-key-0' })}>普通埋点元素</div> /// 普通埋点元素写法
+ * <div data-log={JSON.stringify({ maxSequence: 2, sequence: 1, trigger: 'click', params: { name: '顺序日志' }, logKey: 'example-key-1' })}>顺序埋点元素 1</div> /// 顺序埋点元素写法
+ * <div data-log={JSON.stringify({ maxSequence: 2, sequence: 2, trigger: 'click', params: { name: '顺序日志' }, logKey: 'example-key-1' })}>顺序埋点元素 2</div> /// 顺序埋点元素写法
+ * @param callback 监听 Track 回调
+ * @returns
+ */
+export declare function createClickLogListener(callback?: any): any;
 //# sourceMappingURL=index.d.ts.map
