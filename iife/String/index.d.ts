@@ -380,4 +380,17 @@ export declare function leftJoin(str: string | number, length?: string | number,
  * @returns
  */
 export declare function rightJoin(str: string | number, length?: string | number, char?: string | number): string;
+/**
+ * 将字符串中的占位符替换为对应的值
+ * @example
+ * loadStr('hello ${test}', { test: 123 }); // 'hello 123'
+ * loadStr('hello ${test}', undefined); // 'hello ${test}'
+ * loadStr('hello ${test}', undefined, '$'); // 'hello $'
+ * loadStr('hello ${name.first}-${name.last} ${ test }', { name: { first: 'A', last: 'B' }, test: '!' }); // 'hello A-B !'
+ * @param str 原始字符串
+ * @param params 参数对象，包含占位符的键值对。
+ * @param emptyStr 对象不存在键值时的占位符，默认不变。
+ * @returns
+ */
+export declare function loadStr(str: string, params: any, emptyStr?: string): string;
 //# sourceMappingURL=index.d.ts.map

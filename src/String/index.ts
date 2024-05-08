@@ -3,11 +3,12 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:45:48
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-05-06 16:11:03
+ * @LastEditTime: 2024-05-08 17:16:08
  * @Description: 字符串常用函数
  * @FilePath: \js-xxx\src\String\index.ts
  */
 import { BASE_NUMBER, PY_MAPS } from '@/Data';
+import { getV } from '@/Object';
 import { union } from '@/Tools';
 import { isStr, isUndef } from '@/Types';
 
@@ -880,4 +881,20 @@ export function leftJoin(str: string | number, length: string | number = 2, char
  */
 export function rightJoin(str: string | number, length: string | number = 2, char: string | number = 0): string {
   return `${str ?? ''}`.padEnd(Number(length), `${char}`);
+}
+
+/**
+ * 将字符串中的占位符替换为对应的值
+ * @example
+ * loadStr('hello ${test}', { test: 123 }); // 'hello 123'
+ * loadStr('hello ${test}', undefined); // 'hello ${test}'
+ * loadStr('hello ${test}', undefined, '$'); // 'hello $'
+ * loadStr('hello ${name.first}-${name.last} ${ test }', { name: { first: 'A', last: 'B' }, test: '!' }); // 'hello A-B !'
+ * @param str 原始字符串
+ * @param params 参数对象，包含占位符的键值对。
+ * @param emptyStr 对象不存在键值时的占位符，默认不变。
+ * @returns
+ */
+export function loadStr(str: string, params: any, emptyStr?: string): string {
+  return str.replace(/\${([^${}]+)}/g, (match, key) => getV(emptyStr ?? '${' + trim(key) + '}', params, trim(key)));
 }

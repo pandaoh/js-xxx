@@ -73,7 +73,7 @@ export declare function findMaxKey(objArray: any[]): never[];
  * /// [{ value: 1, label: "A", key: "test1" }, { value: 2, label: "B", key: "test2" }]
  * @param arr 数组
  * @param options 配置 { label?: 'label', value: 'value', key?: 'key' }
- * @returns 转换后的 Select 数据数组
+ * @returns
  */
 export declare function arr2select(arr: any[], options: {
     label?: string;

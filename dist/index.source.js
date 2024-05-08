@@ -10799,6 +10799,256 @@
       //   };
   }
 
+  /*
+   * @Author: HxB
+   * @Date: 2022-04-26 15:05:14
+   * @LastEditors: DoubleAm
+   * @LastEditTime: 2024-05-08 17:01:30
+   * @Description: 对象相关函数
+   * @FilePath: \js-xxx\src\Object\index.ts
+   */
+  /**
+   * 获取多级对象值
+   * @example
+   * getV('默认值', {name: {children: [123, 456]}}, 'name', 'children', '0'); /// 123
+   * getV('默认值', {name: {children: [123, 456]}}, 'name.children.0'); /// 123
+   * getV('默认值', {name: {children: [123, 456]}}, 'name.children.xxx'); /// 默认值
+   * getV('默认值', { name: {children: [123, 456], '[]': ['test']} }, 'name.[].0'); /// 'test'
+   * getV('默认值', { name: {children: [123, 456], '[]': ['test']} }, 'name', '[]', 0); /// 'test'
+   * @param defaultResult 默认值
+   * @param args 需要获取的多级 rest 参数或者独立多级 string
+   * @returns
+   */
+  function getV(defaultResult) {
+      var e_1, _a;
+      var _b;
+      var args = [];
+      for (var _i = 1; _i < arguments.length; _i++) {
+          args[_i - 1] = arguments[_i];
+      }
+      if ((args === null || args === void 0 ? void 0 : args.length) == 2 && ((_b = args[1]) === null || _b === void 0 ? void 0 : _b.includes('.'))) {
+          var _c = __read(args, 2), obj = _c[0], propPath = _c[1];
+          var propKeys = propPath.split('.');
+          var value = obj;
+          try {
+              for (var propKeys_1 = __values(propKeys), propKeys_1_1 = propKeys_1.next(); !propKeys_1_1.done; propKeys_1_1 = propKeys_1.next()) {
+                  var key = propKeys_1_1.value;
+                  value = hasKey(value, key) ? value[key] : defaultResult;
+              }
+          }
+          catch (e_1_1) { e_1 = { error: e_1_1 }; }
+          finally {
+              try {
+                  if (propKeys_1_1 && !propKeys_1_1.done && (_a = propKeys_1.return)) _a.call(propKeys_1);
+              }
+              finally { if (e_1) throw e_1.error; }
+          }
+          return value !== null && value !== void 0 ? value : defaultResult;
+      }
+      return args.length >= 2
+          ? // eslint-disable-next-line no-prototype-builtins, indent
+              args.reduce(function (a, b) { var _a; return (hasKey(a, b) ? (_a = a[b]) !== null && _a !== void 0 ? _a : defaultResult : defaultResult); })
+          : defaultResult;
+  }
+  /**
+   * 对象/数组包含某个 key/index 或者属性
+   * @example
+   * hasKey({ a: 1 }, 'a'); /// true
+   * hasKey([0, 1], '0'); /// true
+   * hasKey([0, 1], 2); /// false
+   * hasKey({ a: 1 }, 'b'); /// false
+   * const a = { a: 1 };
+   * a.__proto__.x = 1;
+   * hasKey(a, 'x'); /// true;
+   * @param data 对象
+   * @param key 需要判断的 key
+   * @returns
+   */
+  function hasKey(data, key) {
+      if (!data) {
+          return false;
+      }
+      try {
+          // eslint-disable-next-line no-prototype-builtins
+          if (data[key] !== undefined || (data === null || data === void 0 ? void 0 : data.hasOwnProperty(key))) {
+              return true;
+          }
+          else {
+              return false;
+          }
+      }
+      catch (e) {
+          return false;
+      }
+  }
+  /**
+   * 深拷贝
+   * @link https://juejin.cn/post/7075351322014253064
+   * @example
+   * deepClone({a: 1, b: {c: 2}}); /// 新的 {a: 1, b: {c: 2}}
+   * @param data 源数据
+   * @param hash hash 存储，避免循环引用。
+   * @returns
+   */
+  function deepClone(data, hash) {
+      if (hash === void 0) { hash = new WeakMap(); }
+      if (hash.has(data)) {
+          return data;
+      }
+      var result = null;
+      var reference = [Date, RegExp, Set, WeakSet, Map, WeakMap, Error];
+      if (reference.includes(data === null || data === void 0 ? void 0 : data.constructor)) {
+          result = new data.constructor(data);
+      }
+      else if (Array.isArray(data)) {
+          result = [];
+          data.forEach(function (item, i) {
+              result[i] = deepClone(item);
+          });
+      }
+      else if (typeof data === 'object' && data !== null) {
+          hash.set(data, 'exist');
+          result = {};
+          for (var key in data) {
+              if (Object.hasOwnProperty.call(data, key)) {
+                  result[key] = deepClone(data[key], hash);
+              }
+          }
+      }
+      else {
+          result = data;
+      }
+      return result;
+      //   // JSON.parse(JSON.stringify(data))
+      //   if (getType(data) !== 'object' || !Array.isArray(data)) {
+      //     return data;
+      //   }
+      //   let result: any = Array.isArray(data) ? [] : {};
+      //   for (let i in data) {
+      //     result[i] = deepClone(data[i]);
+      //   }
+      //   return result;
+  }
+  /**
+   * every 函数
+   * 因为默认的 every 空数组会返回 true
+   * @example
+   * every([]); /// false
+   * every([1, 2, 3], (item) => item > 0); /// true
+   * every({}); /// false
+   * every(undefined); /// false
+   * @param collection 源数据
+   * @param callback 回调
+   * @returns
+   */
+  function every(collection, callback) {
+      if (!collection) {
+          return false;
+      }
+      if (Array.isArray(collection)) {
+          if (collection.length === 0) {
+              return false;
+          }
+          return collection.every(callback !== null && callback !== void 0 ? callback : Boolean);
+      }
+      if (typeof collection === 'object') {
+          var values = Object.values(collection);
+          if (values.length === 0) {
+              return false;
+          }
+          return values.every(callback !== null && callback !== void 0 ? callback : Boolean);
+      }
+      return false;
+  }
+  /**
+   * 找到对象数组具有最多 key 的对象，并返回其 key 组成的数组。
+   * @example
+   * const objects = [
+   *  { id: 1, name: 'a', age: 25 },
+   *  { id: 2, name: 'b', age: 30, city: '123' },
+   *  { id: 3, name: 'c', age: 35, city: '456', profession: 'Engineer' }
+   * ];
+   *  findMaxKey(objects); /// ['id', 'name', 'age', 'city', 'profession']
+   * @param objArray 源数据
+   * @returns
+   */
+  function findMaxKey(objArray) {
+      if (!objArray) {
+          return [];
+      }
+      var maxKeyCount = 0;
+      var maxKeyObject = null;
+      // 遍历对象数组
+      objArray === null || objArray === void 0 ? void 0 : objArray.forEach(function (obj) {
+          var _a;
+          var keyCount = (_a = Object.keys(obj !== null && obj !== void 0 ? obj : {})) !== null && _a !== void 0 ? _a : [];
+          // 更新最大 key 数量和对应的对象
+          if (keyCount.length > maxKeyCount) {
+              maxKeyCount = keyCount.length;
+              maxKeyObject = keyCount;
+          }
+      });
+      // 返回最大 key 对象的 key 数组
+      if (maxKeyObject) {
+          return maxKeyObject;
+      }
+      else {
+          return [];
+      }
+  }
+  /**
+   * 转化为 Select 数据，至少有 label/value/key 字段。
+   * @example
+   * arr2select([{ id: 1, name: 'A' }, { id: 2, name: 'B' }], { label: 'name', value: 'id' });
+   * /// [{ label: 'A', value: 1, key: 'selectKey-Random1' }, { label: 'B', value: 2, key: 'selectKey-Random2' }]
+   * arr2select([{ id: 1, name: 'A' }, { id: 2, name: 'B' }], { value: 'id', key: 'UNDEFINED' });
+   * /// [{ label: 1, value: 1, key: 1 }, { label: 2, value: 2, key: 2 }]
+   * arr2select([{ data: { id: 1, name: 'A' }, key: 'test1' }, { data: { id: 2, name: 'B' }, key: 'test2' }], { value: 'data.id', key: 'key', label: 'data.name' });
+   * /// [{ value: 1, label: "A", key: "test1" }, { value: 2, label: "B", key: "test2" }]
+   * @param arr 数组
+   * @param options 配置 { label?: 'label', value: 'value', key?: 'key' }
+   * @returns
+   */
+  function arr2select(arr, options) {
+      var e_2, _a;
+      if (!arr || !arr.length) {
+          return [];
+      }
+      var label = options.label, value = options.value, key = options.key;
+      var selectData = [];
+      try {
+          for (var arr_1 = __values(arr), arr_1_1 = arr_1.next(); !arr_1_1.done; arr_1_1 = arr_1.next()) {
+              var item = arr_1_1.value;
+              var selectItem = {};
+              var valueData = getV(null, item, value);
+              selectItem.value = valueData;
+              // 设置 label 字段
+              if (label) {
+                  selectItem.label = getV(valueData, item, label);
+              }
+              else {
+                  selectItem.label = valueData;
+              }
+              // 设置 key 字段
+              if (key) {
+                  selectItem.key = getV(valueData, item, key);
+              }
+              else {
+                  selectItem.key = getKey(5, 'selectKey');
+              }
+              selectData.push(selectItem);
+          }
+      }
+      catch (e_2_1) { e_2 = { error: e_2_1 }; }
+      finally {
+          try {
+              if (arr_1_1 && !arr_1_1.done && (_a = arr_1.return)) _a.call(arr_1);
+          }
+          finally { if (e_2) throw e_2.error; }
+      }
+      return selectData;
+  }
+
   /* eslint-disable max-lines */
   // eslint-disable-next-line spellcheck/spell-checker, zob/comment
   /**
@@ -11600,6 +11850,21 @@
       if (length === void 0) { length = 2; }
       if (char === void 0) { char = 0; }
       return "".concat(str !== null && str !== void 0 ? str : '').padEnd(Number(length), "".concat(char));
+  }
+  /**
+   * 将字符串中的占位符替换为对应的值
+   * @example
+   * loadStr('hello ${test}', { test: 123 }); // 'hello 123'
+   * loadStr('hello ${test}', undefined); // 'hello ${test}'
+   * loadStr('hello ${test}', undefined, '$'); // 'hello $'
+   * loadStr('hello ${name.first}-${name.last} ${ test }', { name: { first: 'A', last: 'B' }, test: '!' }); // 'hello A-B !'
+   * @param str 原始字符串
+   * @param params 参数对象，包含占位符的键值对。
+   * @param emptyStr 对象不存在键值时的占位符，默认不变。
+   * @returns
+   */
+  function loadStr(str, params, emptyStr) {
+      return str.replace(/\${([^${}]+)}/g, function (match, key) { return getV(emptyStr !== null && emptyStr !== void 0 ? emptyStr : '${' + trim(key) + '}', params, trim(key)); });
   }
 
   /**
@@ -13073,15 +13338,18 @@
   /**
    * 创建全局 click 事件埋点与回调
    * @example
-   * const statusMap = createClickLogListener((key, data) => console.log({ key, data })); /// 页面加载完成后创建监听器
+   * const clickListenerObj = createClickLogListener((event, key, data) => console.log({ event, key, data })); /// 页面加载完成后创建监听器，取消监听器 clickListenerObj.cancel(); 。
    * <div data-log={JSON.stringify({ trigger: 'click', params: { name: '普通日志' }, logKey: 'example-key-0' })}>普通埋点元素</div> /// 普通埋点元素写法
-   * <div data-log={JSON.stringify({ maxSequence: 2, sequence: 1, trigger: 'click', params: { name: '顺序日志' }, logKey: 'example-key-1' })}>顺序埋点元素 1</div> /// 顺序埋点元素写法
-   * <div data-log={JSON.stringify({ maxSequence: 2, sequence: 2, trigger: 'click', params: { name: '顺序日志' }, logKey: 'example-key-1' })}>顺序埋点元素 2</div> /// 顺序埋点元素写法
+   * <div data-log={JSON.stringify({ maxSequence: 2, sequence: 1, trigger: 'click', params: { name: '固定顺序日志' }, logKey: 'example-key-1' })}>固定顺序埋点元素 1</div> /// 固定顺序埋点元素写法
+   * <div data-log={JSON.stringify({ maxSequence: 2, sequence: 2, trigger: 'click', params: { name: '固定顺序日志' }, logKey: 'example-key-1' })}>固定顺序埋点元素 2</div> /// 固定顺序埋点元素写法
+   * <div data-log={JSON.stringify({ isOrder: true, orderKey: '元素 1', params: { name: '非固定顺序日志' }, logKey: 'example-key-2' })}>非固定顺序埋点元素 1</div> /// 非固定顺序埋点元素写法
+   * <div data-log={JSON.stringify({ isOrder: true, orderKey: '元素 2', params: { name: '非固定顺序日志' }, logKey: 'example-key-2' })}>非固定顺序埋点元素 2</div> /// 非固定顺序埋点元素写法
    * @param callback 监听 Track 回调
    * @returns
    */
   function createClickLogListener(callback) {
-      var clickSequenceMap = {};
+      var sequenceMap = {};
+      var orderMap = {};
       function handleClick(event) {
           var target = event.target;
           // 找到拥有 data-log 属性的元素为有效点击
@@ -13089,7 +13357,7 @@
           if (!logElement) {
               return;
           }
-          // console.log({ target, logElement, clickSequenceMap });
+          // console.log({ target, logElement, sequenceMap, orderMap });
           // data-log 属性有可以解析值才执行后续操作
           var logData = logElement.getAttribute('data-log');
           if (!logData) {
@@ -13099,41 +13367,160 @@
           if (!parsedLogData) {
               return;
           }
-          var trigger = parsedLogData.trigger, params = parsedLogData.params, sequence = parsedLogData.sequence, maxSequence = parsedLogData.maxSequence, logKey = parsedLogData.logKey;
-          // 无 sequence 或 maxSequence 则认为是普通埋点
-          if (logKey && maxSequence === undefined) {
-              // console.log('普通埋点分析:', trigger ?? 'click', params, 'LogKey:', logKey);
-              callback && callback(logKey, { trigger: trigger !== null && trigger !== void 0 ? trigger : 'click', key: logKey, params: params });
+          var trigger = parsedLogData.trigger, params = parsedLogData.params, sequence = parsedLogData.sequence, maxSequence = parsedLogData.maxSequence, logKey = parsedLogData.logKey, isOrder = parsedLogData.isOrder, orderKey = parsedLogData.orderKey;
+          // 如果 isOrder 是 true 则触发区域非固定顺序记录埋点分析，当一个区域 orderKey 第二次被点击时，本次顺序重来。
+          if (isOrder && logKey && orderKey) {
+              var clickInfo = __assign({}, orderMap);
+              if ((clickInfo === null || clickInfo === void 0 ? void 0 : clickInfo.logKey) !== logKey) {
+                  clickInfo = undefined;
+              }
+              if (!clickInfo) {
+                  clickInfo = {
+                      logKey: logKey,
+                      clickOrder: 1,
+                      clickList: [orderKey],
+                  };
+              }
+              if (clickInfo.clickList[clickInfo.clickList.length - 1] === orderKey) {
+                  clickInfo = __assign({}, clickInfo);
+              }
+              else if (clickInfo.clickList.includes(orderKey)) {
+                  clickInfo = {
+                      logKey: logKey,
+                      clickOrder: 1,
+                      clickList: [orderKey],
+                  };
+              }
+              else {
+                  clickInfo.clickOrder++;
+                  clickInfo.clickList.push(orderKey);
+              }
+              orderMap = clickInfo;
+              var newLogKey = "".concat(logKey, "-").concat(orderKey, "-").concat(clickInfo.clickOrder);
+              // console.log(event, '区域非固定顺序记录埋点分析:', newLogKey, { trigger: trigger ?? 'click', params, logKey });
+              callback && callback(event, newLogKey, { trigger: trigger !== null && trigger !== void 0 ? trigger : 'click', params: params, logKey: logKey });
               return;
           }
-          // 存在 sequence 或 maxSequence 则认为是顺序埋点
+          // 无 sequence 或 maxSequence 则认为是普通埋点
+          if (logKey && maxSequence === undefined) {
+              // console.log(event, '普通埋点分析:', logKey, { trigger: trigger ?? 'click', params, logKey });
+              callback && callback(event, logKey, { trigger: trigger !== null && trigger !== void 0 ? trigger : 'click', params: params, logKey: logKey });
+              return;
+          }
+          // 存在 sequence 或 maxSequence 则认为是固定顺序埋点
           if (sequence !== undefined && maxSequence !== undefined) {
-              var clickSequence = clickSequenceMap[logKey] || 0;
+              var clickSequence = sequenceMap[logKey] || 0;
               // 顺序正确，保存顺序并继续执行。
               if (clickSequence + 1 === sequence) {
-                  clickSequenceMap[logKey] = sequence;
+                  sequenceMap[logKey] = sequence;
                   // 达到 maxSequence 触发埋点
                   if (sequence === maxSequence) {
-                      // console.log('顺序埋点分析:', trigger ?? 'click', params, 'LogKey:', logKey);
-                      callback && callback(logKey, { trigger: trigger !== null && trigger !== void 0 ? trigger : 'click', key: logKey, params: params });
-                      delete clickSequenceMap[logKey];
+                      // console.log(event, '固定顺序埋点分析:', logKey, { trigger: trigger ?? 'click', params, logKey });
+                      callback && callback(event, logKey, { trigger: trigger !== null && trigger !== void 0 ? trigger : 'click', params: params, logKey: logKey });
+                      delete sequenceMap[logKey];
                   }
               }
               else {
                   // 点击相同顺序的按钮多次，不清空重来，防呆。
                   if (clickSequence === sequence) {
-                      clickSequenceMap[logKey] = sequence;
+                      sequenceMap[logKey] = sequence;
                   }
                   else {
                       // 点击顺序错误，重来。
-                      delete clickSequenceMap[logKey];
+                      delete sequenceMap[logKey];
                   }
               }
+              return;
           }
       }
       // 此处注意不要重复监听，后续也可以将事件扩展支持多个。
       document.addEventListener('click', handleClick);
-      return clickSequenceMap;
+      return { sequenceMap: sequenceMap, orderMap: orderMap, cancel: function () { return document.removeEventListener('click', handleClick); } };
+  }
+  /**
+   * 创建元素 scroll 事件埋点与回调
+   * @example
+   * const cancel = createScrollLogListener(document.querySelector('.demo-scroll-dom'), (event, eventKey, data) => console.log({ event, eventKey, data })); /// 页面加载完成后创建监听器，取消监听器 cancel(); 。
+   * @param element 元素
+   * @param callback 监听 Track 回调
+   * @param delay 防抖延迟
+   * @param threshold 触发滚动事件阈值
+   * @returns
+   */
+  function createScrollLogListener(element, callback, delay, threshold) {
+      if (delay === void 0) { delay = 800; }
+      if (threshold === void 0) { threshold = 30; }
+      var timeoutRef = null;
+      var lastScrollPos = { x: 0, y: 0 };
+      function handleScroll(event) {
+          var currentScrollPos = {
+              x: element.scrollLeft,
+              y: element.scrollTop,
+          };
+          var scrollX = currentScrollPos.x - lastScrollPos.x;
+          var scrollY = currentScrollPos.y - lastScrollPos.y;
+          if (Math.abs(scrollX) > threshold || Math.abs(scrollY) > threshold) {
+              // console.log(event, '滚动事件埋点', 'scrollLog', { trigger: 'scroll', X: scrollX, Y: scrollY });
+              callback && callback(event, 'scrollLog', { trigger: 'scroll', X: scrollX, Y: scrollY });
+          }
+          lastScrollPos = currentScrollPos;
+      }
+      function handleScrollDebounce(event) {
+          if (timeoutRef) {
+              clearTimeout(timeoutRef);
+          }
+          timeoutRef = setTimeout(function () {
+              handleScroll(event);
+          }, delay);
+      }
+      if (element) {
+          element.addEventListener('scroll', handleScrollDebounce, { passive: true });
+          return function () {
+              element.removeEventListener('scroll', handleScrollDebounce);
+              clearTimeout(timeoutRef);
+          };
+      }
+  }
+  /**
+   * 创建全局 change 事件埋点与回调
+   * @example
+   * const cancel = createChangeLogListener((event, key, data) => console.log({ event, key, data })); /// 页面加载完成后创建监听器，取消监听器 cancel(); 。
+   * <div data-change={JSON.stringify({ logKey: 'div-input-change-0' })}><input /></div> /// 父元素总监听
+   * <input data-change={JSON.stringify({ logKey: 'input-change-1' })} /> /// 普通监听
+   * @param callback 监听 Track 回调
+   * @returns
+   */
+  function createChangeLogListener(callback) {
+      function handleChange(event) {
+          var target = event.target;
+          // 找到拥有 data-change 属性的输入元素
+          var logElement = target.closest('[data-change]');
+          if (!logElement) {
+              return;
+          }
+          // data-change 属性有可以解析值才执行后续操作
+          var logData = logElement.getAttribute('data-change');
+          if (!logData) {
+              return;
+          }
+          var parsedLogData = parseJSON(logData);
+          if (!parsedLogData) {
+              return;
+          }
+          var trigger = parsedLogData.trigger, params = parsedLogData.params, logKey = parsedLogData.logKey;
+          var value = target.value;
+          // 在这里处理输入事件埋点
+          // console.log(event, 'Change 事件处理:', logKey, {
+          //   trigger: trigger ?? 'change',
+          //   params: { ...params, value },
+          //   logKey,
+          // });
+          callback && callback(event, logKey, { trigger: trigger !== null && trigger !== void 0 ? trigger : 'change', params: __assign(__assign({}, params), { value: value }), logKey: logKey });
+      }
+      document.addEventListener('change', handleChange);
+      return function () {
+          document.removeEventListener('change', handleChange);
+      };
   }
 
   /*
@@ -13851,256 +14238,6 @@
       catch (e) {
           return "".concat(value);
       }
-  }
-
-  /*
-   * @Author: HxB
-   * @Date: 2022-04-26 15:05:14
-   * @LastEditors: DoubleAm
-   * @LastEditTime: 2024-01-18 11:17:24
-   * @Description: 对象相关函数
-   * @FilePath: \js-xxx\src\Object\index.ts
-   */
-  /**
-   * 获取多级对象值
-   * @example
-   * getV('默认值', {name: {children: [123, 456]}}, 'name', 'children', '0'); /// 123
-   * getV('默认值', {name: {children: [123, 456]}}, 'name.children.0'); /// 123
-   * getV('默认值', {name: {children: [123, 456]}}, 'name.children.xxx'); /// 默认值
-   * getV('默认值', { name: {children: [123, 456], '[]': ['test']} }, 'name.[].0'); /// 'test'
-   * getV('默认值', { name: {children: [123, 456], '[]': ['test']} }, 'name', '[]', 0); /// 'test'
-   * @param defaultResult 默认值
-   * @param args 需要获取的多级 rest 参数或者独立多级 string
-   * @returns
-   */
-  function getV(defaultResult) {
-      var e_1, _a;
-      var _b;
-      var args = [];
-      for (var _i = 1; _i < arguments.length; _i++) {
-          args[_i - 1] = arguments[_i];
-      }
-      if ((args === null || args === void 0 ? void 0 : args.length) == 2 && ((_b = args[1]) === null || _b === void 0 ? void 0 : _b.includes('.'))) {
-          var _c = __read(args, 2), obj = _c[0], propPath = _c[1];
-          var propKeys = propPath.split('.');
-          var value = obj;
-          try {
-              for (var propKeys_1 = __values(propKeys), propKeys_1_1 = propKeys_1.next(); !propKeys_1_1.done; propKeys_1_1 = propKeys_1.next()) {
-                  var key = propKeys_1_1.value;
-                  value = hasKey(value, key) ? value[key] : defaultResult;
-              }
-          }
-          catch (e_1_1) { e_1 = { error: e_1_1 }; }
-          finally {
-              try {
-                  if (propKeys_1_1 && !propKeys_1_1.done && (_a = propKeys_1.return)) _a.call(propKeys_1);
-              }
-              finally { if (e_1) throw e_1.error; }
-          }
-          return value !== null && value !== void 0 ? value : defaultResult;
-      }
-      return args.length >= 2
-          ? // eslint-disable-next-line no-prototype-builtins, indent
-              args.reduce(function (a, b) { var _a; return (hasKey(a, b) ? (_a = a[b]) !== null && _a !== void 0 ? _a : defaultResult : defaultResult); })
-          : defaultResult;
-  }
-  /**
-   * 对象/数组包含某个 key/index 或者属性
-   * @example
-   * hasKey({ a: 1 }, 'a'); /// true
-   * hasKey([0, 1], '0'); /// true
-   * hasKey([0, 1], 2); /// false
-   * hasKey({ a: 1 }, 'b'); /// false
-   * const a = { a: 1 };
-   * a.__proto__.x = 1;
-   * hasKey(a, 'x'); /// true;
-   * @param data 对象
-   * @param key 需要判断的 key
-   * @returns
-   */
-  function hasKey(data, key) {
-      if (!data) {
-          return false;
-      }
-      try {
-          // eslint-disable-next-line no-prototype-builtins
-          if (data[key] !== undefined || (data === null || data === void 0 ? void 0 : data.hasOwnProperty(key))) {
-              return true;
-          }
-          else {
-              return false;
-          }
-      }
-      catch (e) {
-          return false;
-      }
-  }
-  /**
-   * 深拷贝
-   * @link https://juejin.cn/post/7075351322014253064
-   * @example
-   * deepClone({a: 1, b: {c: 2}}); /// 新的 {a: 1, b: {c: 2}}
-   * @param data 源数据
-   * @param hash hash 存储，避免循环引用。
-   * @returns
-   */
-  function deepClone(data, hash) {
-      if (hash === void 0) { hash = new WeakMap(); }
-      if (hash.has(data)) {
-          return data;
-      }
-      var result = null;
-      var reference = [Date, RegExp, Set, WeakSet, Map, WeakMap, Error];
-      if (reference.includes(data === null || data === void 0 ? void 0 : data.constructor)) {
-          result = new data.constructor(data);
-      }
-      else if (Array.isArray(data)) {
-          result = [];
-          data.forEach(function (item, i) {
-              result[i] = deepClone(item);
-          });
-      }
-      else if (typeof data === 'object' && data !== null) {
-          hash.set(data, 'exist');
-          result = {};
-          for (var key in data) {
-              if (Object.hasOwnProperty.call(data, key)) {
-                  result[key] = deepClone(data[key], hash);
-              }
-          }
-      }
-      else {
-          result = data;
-      }
-      return result;
-      //   // JSON.parse(JSON.stringify(data))
-      //   if (getType(data) !== 'object' || !Array.isArray(data)) {
-      //     return data;
-      //   }
-      //   let result: any = Array.isArray(data) ? [] : {};
-      //   for (let i in data) {
-      //     result[i] = deepClone(data[i]);
-      //   }
-      //   return result;
-  }
-  /**
-   * every 函数
-   * 因为默认的 every 空数组会返回 true
-   * @example
-   * every([]); /// false
-   * every([1, 2, 3], (item) => item > 0); /// true
-   * every({}); /// false
-   * every(undefined); /// false
-   * @param collection 源数据
-   * @param callback 回调
-   * @returns
-   */
-  function every(collection, callback) {
-      if (!collection) {
-          return false;
-      }
-      if (Array.isArray(collection)) {
-          if (collection.length === 0) {
-              return false;
-          }
-          return collection.every(callback !== null && callback !== void 0 ? callback : Boolean);
-      }
-      if (typeof collection === 'object') {
-          var values = Object.values(collection);
-          if (values.length === 0) {
-              return false;
-          }
-          return values.every(callback !== null && callback !== void 0 ? callback : Boolean);
-      }
-      return false;
-  }
-  /**
-   * 找到对象数组具有最多 key 的对象，并返回其 key 组成的数组。
-   * @example
-   * const objects = [
-   *  { id: 1, name: 'a', age: 25 },
-   *  { id: 2, name: 'b', age: 30, city: '123' },
-   *  { id: 3, name: 'c', age: 35, city: '456', profession: 'Engineer' }
-   * ];
-   *  findMaxKey(objects); /// ['id', 'name', 'age', 'city', 'profession']
-   * @param objArray 源数据
-   * @returns
-   */
-  function findMaxKey(objArray) {
-      if (!objArray) {
-          return [];
-      }
-      var maxKeyCount = 0;
-      var maxKeyObject = null;
-      // 遍历对象数组
-      objArray === null || objArray === void 0 ? void 0 : objArray.forEach(function (obj) {
-          var _a;
-          var keyCount = (_a = Object.keys(obj !== null && obj !== void 0 ? obj : {})) !== null && _a !== void 0 ? _a : [];
-          // 更新最大 key 数量和对应的对象
-          if (keyCount.length > maxKeyCount) {
-              maxKeyCount = keyCount.length;
-              maxKeyObject = keyCount;
-          }
-      });
-      // 返回最大 key 对象的 key 数组
-      if (maxKeyObject) {
-          return maxKeyObject;
-      }
-      else {
-          return [];
-      }
-  }
-  /**
-   * 转化为 Select 数据，至少有 label/value/key 字段。
-   * @example
-   * arr2select([{ id: 1, name: 'A' }, { id: 2, name: 'B' }], { label: 'name', value: 'id' });
-   * /// [{ label: 'A', value: 1, key: 'selectKey-Random1' }, { label: 'B', value: 2, key: 'selectKey-Random2' }]
-   * arr2select([{ id: 1, name: 'A' }, { id: 2, name: 'B' }], { value: 'id', key: 'UNDEFINED' });
-   * /// [{ label: 1, value: 1, key: 1 }, { label: 2, value: 2, key: 2 }]
-   * arr2select([{ data: { id: 1, name: 'A' }, key: 'test1' }, { data: { id: 2, name: 'B' }, key: 'test2' }], { value: 'data.id', key: 'key', label: 'data.name' });
-   * /// [{ value: 1, label: "A", key: "test1" }, { value: 2, label: "B", key: "test2" }]
-   * @param arr 数组
-   * @param options 配置 { label?: 'label', value: 'value', key?: 'key' }
-   * @returns 转换后的 Select 数据数组
-   */
-  function arr2select(arr, options) {
-      var e_2, _a;
-      if (!arr || !arr.length) {
-          return [];
-      }
-      var label = options.label, value = options.value, key = options.key;
-      var selectData = [];
-      try {
-          for (var arr_1 = __values(arr), arr_1_1 = arr_1.next(); !arr_1_1.done; arr_1_1 = arr_1.next()) {
-              var item = arr_1_1.value;
-              var selectItem = {};
-              var valueData = getV(null, item, value);
-              selectItem.value = valueData;
-              // 设置 label 字段
-              if (label) {
-                  selectItem.label = getV(valueData, item, label);
-              }
-              else {
-                  selectItem.label = valueData;
-              }
-              // 设置 key 字段
-              if (key) {
-                  selectItem.key = getV(valueData, item, key);
-              }
-              else {
-                  selectItem.key = getKey(5, 'selectKey');
-              }
-              selectData.push(selectItem);
-          }
-      }
-      catch (e_2_1) { e_2 = { error: e_2_1 }; }
-      finally {
-          try {
-              if (arr_1_1 && !arr_1_1.done && (_a = arr_1.return)) _a.call(arr_1);
-          }
-          finally { if (e_2) throw e_2.error; }
-      }
-      return selectData;
   }
 
   /**
@@ -15613,7 +15750,9 @@
   exports.contains = contains;
   exports.copyToClipboard = copyToClipboard;
   exports.countdown = countdown;
+  exports.createChangeLogListener = createChangeLogListener;
   exports.createClickLogListener = createClickLogListener;
+  exports.createScrollLogListener = createScrollLogListener;
   exports.curryIt = curryIt;
   exports.customFinally = customFinally;
   exports.data2Arr = data2Arr;
@@ -15749,6 +15888,7 @@
   exports.jsonClone = jsonClone;
   exports.keyBoardResize = keyBoardResize;
   exports.leftJoin = leftJoin;
+  exports.loadStr = loadStr;
   exports.localStorageGet = localStorageGet;
   exports.localStorageSet = localStorageSet;
   exports.log = log;

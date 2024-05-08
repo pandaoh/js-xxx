@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-05-06 15:59:01
+ * @LastEditTime: 2024-05-08 18:23:58
  * @Description: 利用 dom 的一些函数
  * @FilePath: \js-xxx\src\Dom\index.ts
  */
@@ -1063,15 +1063,18 @@ export function printDom(selector: string, styles?: { iframeStyle?: any; bodySty
 /**
  * 创建全局 click 事件埋点与回调
  * @example
- * const statusMap = createClickLogListener((key, data) => console.log({ key, data })); /// 页面加载完成后创建监听器
+ * const clickListenerObj = createClickLogListener((event, key, data) => console.log({ event, key, data })); /// 页面加载完成后创建监听器，取消监听器 clickListenerObj.cancel(); 。
  * <div data-log={JSON.stringify({ trigger: 'click', params: { name: '普通日志' }, logKey: 'example-key-0' })}>普通埋点元素</div> /// 普通埋点元素写法
- * <div data-log={JSON.stringify({ maxSequence: 2, sequence: 1, trigger: 'click', params: { name: '顺序日志' }, logKey: 'example-key-1' })}>顺序埋点元素 1</div> /// 顺序埋点元素写法
- * <div data-log={JSON.stringify({ maxSequence: 2, sequence: 2, trigger: 'click', params: { name: '顺序日志' }, logKey: 'example-key-1' })}>顺序埋点元素 2</div> /// 顺序埋点元素写法
+ * <div data-log={JSON.stringify({ maxSequence: 2, sequence: 1, trigger: 'click', params: { name: '固定顺序日志' }, logKey: 'example-key-1' })}>固定顺序埋点元素 1</div> /// 固定顺序埋点元素写法
+ * <div data-log={JSON.stringify({ maxSequence: 2, sequence: 2, trigger: 'click', params: { name: '固定顺序日志' }, logKey: 'example-key-1' })}>固定顺序埋点元素 2</div> /// 固定顺序埋点元素写法
+ * <div data-log={JSON.stringify({ isOrder: true, orderKey: '元素 1', params: { name: '非固定顺序日志' }, logKey: 'example-key-2' })}>非固定顺序埋点元素 1</div> /// 非固定顺序埋点元素写法
+ * <div data-log={JSON.stringify({ isOrder: true, orderKey: '元素 2', params: { name: '非固定顺序日志' }, logKey: 'example-key-2' })}>非固定顺序埋点元素 2</div> /// 非固定顺序埋点元素写法
  * @param callback 监听 Track 回调
  * @returns
  */
 export function createClickLogListener(callback?: any): any {
-  const clickSequenceMap: any = {};
+  const sequenceMap: any = {};
+  let orderMap: any = {};
 
   function handleClick(event: any) {
     const { target } = event;
@@ -1081,7 +1084,7 @@ export function createClickLogListener(callback?: any): any {
       return;
     }
 
-    // console.log({ target, logElement, clickSequenceMap });
+    // console.log({ target, logElement, sequenceMap, orderMap });
 
     // data-log 属性有可以解析值才执行后续操作
     const logData = logElement.getAttribute('data-log');
@@ -1093,43 +1096,176 @@ export function createClickLogListener(callback?: any): any {
       return;
     }
 
-    const { trigger, params, sequence, maxSequence, logKey } = parsedLogData;
+    const { trigger, params, sequence, maxSequence, logKey, isOrder, orderKey } = parsedLogData;
 
-    // 无 sequence 或 maxSequence 则认为是普通埋点
-    if (logKey && maxSequence === undefined) {
-      // console.log('普通埋点分析:', trigger ?? 'click', params, 'LogKey:', logKey);
-      callback && callback(logKey, { trigger: trigger ?? 'click', key: logKey, params });
+    // 如果 isOrder 是 true 则触发区域非固定顺序记录埋点分析，当一个区域 orderKey 第二次被点击时，本次顺序重来。
+    if (isOrder && logKey && orderKey) {
+      let clickInfo = { ...orderMap };
+      if (clickInfo?.logKey !== logKey) {
+        clickInfo = undefined;
+      }
+      if (!clickInfo) {
+        clickInfo = {
+          logKey,
+          clickOrder: 1,
+          clickList: [orderKey],
+        };
+      }
+
+      if (clickInfo.clickList[clickInfo.clickList.length - 1] === orderKey) {
+        clickInfo = { ...clickInfo };
+      } else if (clickInfo.clickList.includes(orderKey)) {
+        clickInfo = {
+          logKey,
+          clickOrder: 1,
+          clickList: [orderKey],
+        };
+      } else {
+        clickInfo.clickOrder++;
+        clickInfo.clickList.push(orderKey);
+      }
+
+      orderMap = clickInfo;
+      const newLogKey = `${logKey}-${orderKey}-${clickInfo.clickOrder}`;
+      // console.log(event, '区域非固定顺序记录埋点分析:', newLogKey, { trigger: trigger ?? 'click', params, logKey });
+      callback && callback(event, newLogKey, { trigger: trigger ?? 'click', params, logKey });
       return;
     }
 
-    // 存在 sequence 或 maxSequence 则认为是顺序埋点
+    // 无 sequence 或 maxSequence 则认为是普通埋点
+    if (logKey && maxSequence === undefined) {
+      // console.log(event, '普通埋点分析:', logKey, { trigger: trigger ?? 'click', params, logKey });
+      callback && callback(event, logKey, { trigger: trigger ?? 'click', params, logKey });
+      return;
+    }
+
+    // 存在 sequence 或 maxSequence 则认为是固定顺序埋点
     if (sequence !== undefined && maxSequence !== undefined) {
-      const clickSequence = clickSequenceMap[logKey] || 0;
+      const clickSequence = sequenceMap[logKey] || 0;
 
       // 顺序正确，保存顺序并继续执行。
       if (clickSequence + 1 === sequence) {
-        clickSequenceMap[logKey] = sequence;
+        sequenceMap[logKey] = sequence;
 
         // 达到 maxSequence 触发埋点
         if (sequence === maxSequence) {
-          // console.log('顺序埋点分析:', trigger ?? 'click', params, 'LogKey:', logKey);
-          callback && callback(logKey, { trigger: trigger ?? 'click', key: logKey, params });
-          delete clickSequenceMap[logKey];
+          // console.log(event, '固定顺序埋点分析:', logKey, { trigger: trigger ?? 'click', params, logKey });
+          callback && callback(event, logKey, { trigger: trigger ?? 'click', params, logKey });
+          delete sequenceMap[logKey];
         }
       } else {
         // 点击相同顺序的按钮多次，不清空重来，防呆。
         if (clickSequence === sequence) {
-          clickSequenceMap[logKey] = sequence;
+          sequenceMap[logKey] = sequence;
         } else {
           // 点击顺序错误，重来。
-          delete clickSequenceMap[logKey];
+          delete sequenceMap[logKey];
         }
       }
+      return;
     }
   }
 
   // 此处注意不要重复监听，后续也可以将事件扩展支持多个。
   document.addEventListener('click', handleClick);
 
-  return clickSequenceMap;
+  return { sequenceMap, orderMap, cancel: () => document.removeEventListener('click', handleClick) };
+}
+
+/**
+ * 创建元素 scroll 事件埋点与回调
+ * @example
+ * const cancel = createScrollLogListener(document.querySelector('.demo-scroll-dom'), (event, eventKey, data) => console.log({ event, eventKey, data })); /// 页面加载完成后创建监听器，取消监听器 cancel(); 。
+ * @param element 元素
+ * @param callback 监听 Track 回调
+ * @param delay 防抖延迟
+ * @param threshold 触发滚动事件阈值
+ * @returns
+ */
+export function createScrollLogListener(element?: any, callback?: any, delay = 800, threshold = 30) {
+  let timeoutRef: any = null;
+  let lastScrollPos = { x: 0, y: 0 };
+
+  function handleScroll(event: any) {
+    const currentScrollPos = {
+      x: element.scrollLeft,
+      y: element.scrollTop,
+    };
+
+    const scrollX = currentScrollPos.x - lastScrollPos.x;
+    const scrollY = currentScrollPos.y - lastScrollPos.y;
+
+    if (Math.abs(scrollX) > threshold || Math.abs(scrollY) > threshold) {
+      // console.log(event, '滚动事件埋点', 'scrollLog', { trigger: 'scroll', X: scrollX, Y: scrollY });
+      callback && callback(event, 'scrollLog', { trigger: 'scroll', X: scrollX, Y: scrollY });
+    }
+
+    lastScrollPos = currentScrollPos;
+  }
+
+  function handleScrollDebounce(event: any) {
+    if (timeoutRef) {
+      clearTimeout(timeoutRef);
+    }
+
+    timeoutRef = setTimeout(() => {
+      handleScroll(event);
+    }, delay);
+  }
+
+  if (element) {
+    element.addEventListener('scroll', handleScrollDebounce, { passive: true });
+
+    return () => {
+      element.removeEventListener('scroll', handleScrollDebounce);
+      clearTimeout(timeoutRef);
+    };
+  }
+}
+
+/**
+ * 创建全局 change 事件埋点与回调
+ * @example
+ * const cancel = createChangeLogListener((event, key, data) => console.log({ event, key, data })); /// 页面加载完成后创建监听器，取消监听器 cancel(); 。
+ * <div data-change={JSON.stringify({ logKey: 'div-input-change-0' })}><input /></div> /// 父元素总监听
+ * <input data-change={JSON.stringify({ logKey: 'input-change-1' })} /> /// 普通监听
+ * @param callback 监听 Track 回调
+ * @returns
+ */
+export function createChangeLogListener(callback?: any) {
+  function handleChange(event: any) {
+    const { target } = event;
+
+    // 找到拥有 data-change 属性的输入元素
+    const logElement = target.closest('[data-change]');
+    if (!logElement) {
+      return;
+    }
+    // data-change 属性有可以解析值才执行后续操作
+    const logData = logElement.getAttribute('data-change');
+    if (!logData) {
+      return;
+    }
+    const parsedLogData = parseJSON(logData);
+    if (!parsedLogData) {
+      return;
+    }
+    const { trigger, params, logKey } = parsedLogData;
+
+    const value = target.value;
+
+    // 在这里处理输入事件埋点
+    // console.log(event, 'Change 事件处理:', logKey, {
+    //   trigger: trigger ?? 'change',
+    //   params: { ...params, value },
+    //   logKey,
+    // });
+    callback && callback(event, logKey, { trigger: trigger ?? 'change', params: { ...params, value }, logKey });
+  }
+
+  document.addEventListener('change', handleChange);
+
+  return () => {
+    document.removeEventListener('change', handleChange);
+  };
 }
