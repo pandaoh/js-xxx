@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:05:14
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-18 11:17:24
+ * @LastEditTime: 2024-05-08 17:01:30
  * @Description: 对象相关函数
  * @FilePath: \js-xxx\src\Object\index.ts
  */
@@ -202,7 +202,7 @@ export function findMaxKey(objArray: any[]) {
  * /// [{ value: 1, label: "A", key: "test1" }, { value: 2, label: "B", key: "test2" }]
  * @param arr 数组
  * @param options 配置 { label?: 'label', value: 'value', key?: 'key' }
- * @returns 转换后的 Select 数据数组
+ * @returns
  */
 export function arr2select(arr: any[], options: { label?: string; value: string; key?: string }): any[] {
   if (!arr || !arr.length) {
