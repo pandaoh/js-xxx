@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-05-08 18:23:58
+ * @LastEditTime: 2024-05-09 14:02:23
  * @Description: 利用 dom 的一些函数
  * @FilePath: \js-xxx\src\Dom\index.ts
  */
@@ -1098,8 +1098,12 @@ export function createClickLogListener(callback?: any): any {
 
     const { trigger, params, sequence, maxSequence, logKey, isOrder, orderKey } = parsedLogData;
 
+    if (!logKey) {
+      return;
+    }
+
     // 如果 isOrder 是 true 则触发区域非固定顺序记录埋点分析，当一个区域 orderKey 第二次被点击时，本次顺序重来。
-    if (isOrder && logKey && orderKey) {
+    if (isOrder && orderKey) {
       let clickInfo = { ...orderMap };
       if (clickInfo?.logKey !== logKey) {
         clickInfo = undefined;
@@ -1133,7 +1137,7 @@ export function createClickLogListener(callback?: any): any {
     }
 
     // 无 sequence 或 maxSequence 则认为是普通埋点
-    if (logKey && maxSequence === undefined) {
+    if (maxSequence === undefined) {
       // console.log(event, '普通埋点分析:', logKey, { trigger: trigger ?? 'click', params, logKey });
       callback && callback(event, logKey, { trigger: trigger ?? 'click', params, logKey });
       return;
@@ -1187,6 +1191,28 @@ export function createScrollLogListener(element?: any, callback?: any, delay = 8
   let lastScrollPos = { x: 0, y: 0 };
 
   function handleScroll(event: any) {
+    const { target } = event;
+
+    // 找到拥有 data-scroll 属性的输入元素
+    const logElement = target.closest('[data-scroll]');
+    if (!logElement) {
+      return;
+    }
+    // data-scroll 属性有可以解析值才执行后续操作
+    const logData = logElement.getAttribute('data-scroll');
+    if (!logData) {
+      return;
+    }
+    const parsedLogData = parseJSON(logData);
+    if (!parsedLogData) {
+      return;
+    }
+    const { trigger, params, logKey } = parsedLogData;
+
+    if (!logKey) {
+      return;
+    }
+
     const currentScrollPos = {
       x: element.scrollLeft,
       y: element.scrollTop,
@@ -1196,8 +1222,17 @@ export function createScrollLogListener(element?: any, callback?: any, delay = 8
     const scrollY = currentScrollPos.y - lastScrollPos.y;
 
     if (Math.abs(scrollX) > threshold || Math.abs(scrollY) > threshold) {
-      // console.log(event, '滚动事件埋点', 'scrollLog', { trigger: 'scroll', X: scrollX, Y: scrollY });
-      callback && callback(event, 'scrollLog', { trigger: 'scroll', X: scrollX, Y: scrollY });
+      console.log(event, '滚动事件埋点', logKey, {
+        trigger: trigger ?? 'scroll',
+        params: { ...(params ?? {}), X: scrollX, Y: scrollY },
+        logKey,
+      });
+      callback &&
+        callback(event, logKey, {
+          trigger: trigger ?? 'scroll',
+          params: { ...(params ?? {}), X: scrollX, Y: scrollY },
+          logKey,
+        });
     }
 
     lastScrollPos = currentScrollPos;
@@ -1252,15 +1287,19 @@ export function createChangeLogListener(callback?: any) {
     }
     const { trigger, params, logKey } = parsedLogData;
 
+    if (!logKey) {
+      return;
+    }
+
     const value = target.value;
 
     // 在这里处理输入事件埋点
     // console.log(event, 'Change 事件处理:', logKey, {
     //   trigger: trigger ?? 'change',
-    //   params: { ...params, value },
+    //   params: { ...(params ?? {}), value },
     //   logKey,
     // });
-    callback && callback(event, logKey, { trigger: trigger ?? 'change', params: { ...params, value }, logKey });
+    callback && callback(event, logKey, { trigger: trigger ?? 'change', params: { ...(params ?? {}), value }, logKey });
   }
 
   document.addEventListener('change', handleChange);

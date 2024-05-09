@@ -1,6 +1,6 @@
 js-xxx
 
-# js-xxx - v2.2.8
+# js-xxx - v2.2.9
 
 ## Table of contents
 
@@ -1802,6 +1802,7 @@ ___
 
 ```ts
 const cancel = createScrollLogListener(document.querySelector('.demo-scroll-dom'), (event, eventKey, data) => console.log({ event, eventKey, data })); /// 页面加载完成后创建监听器，取消监听器 cancel(); 。
+<div data-scroll={JSON.stringify({ logKey: 'example-scroll-X' })}>{...X 滚动埋点元素...}</div> /// 滚动埋点元素
 ```
 
 ___

@@ -367,6 +367,7 @@ export declare function createClickLogListener(callback?: any): any;
  * 创建元素 scroll 事件埋点与回调
  * @example
  * const cancel = createScrollLogListener(document.querySelector('.demo-scroll-dom'), (event, eventKey, data) => console.log({ event, eventKey, data })); /// 页面加载完成后创建监听器，取消监听器 cancel(); 。
+ * <div data-scroll={JSON.stringify({ logKey: 'example-scroll-X' })}>{...X 滚动埋点元素...}</div> /// 滚动埋点元素
  * @param element 元素
  * @param callback 监听 Track 回调
  * @param delay 防抖延迟

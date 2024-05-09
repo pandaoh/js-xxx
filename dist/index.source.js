@@ -13368,8 +13368,11 @@
               return;
           }
           var trigger = parsedLogData.trigger, params = parsedLogData.params, sequence = parsedLogData.sequence, maxSequence = parsedLogData.maxSequence, logKey = parsedLogData.logKey, isOrder = parsedLogData.isOrder, orderKey = parsedLogData.orderKey;
+          if (!logKey) {
+              return;
+          }
           // 如果 isOrder 是 true 则触发区域非固定顺序记录埋点分析，当一个区域 orderKey 第二次被点击时，本次顺序重来。
-          if (isOrder && logKey && orderKey) {
+          if (isOrder && orderKey) {
               var clickInfo = __assign({}, orderMap);
               if ((clickInfo === null || clickInfo === void 0 ? void 0 : clickInfo.logKey) !== logKey) {
                   clickInfo = undefined;
@@ -13402,7 +13405,7 @@
               return;
           }
           // 无 sequence 或 maxSequence 则认为是普通埋点
-          if (logKey && maxSequence === undefined) {
+          if (maxSequence === undefined) {
               // console.log(event, '普通埋点分析:', logKey, { trigger: trigger ?? 'click', params, logKey });
               callback && callback(event, logKey, { trigger: trigger !== null && trigger !== void 0 ? trigger : 'click', params: params, logKey: logKey });
               return;
@@ -13441,6 +13444,7 @@
    * 创建元素 scroll 事件埋点与回调
    * @example
    * const cancel = createScrollLogListener(document.querySelector('.demo-scroll-dom'), (event, eventKey, data) => console.log({ event, eventKey, data })); /// 页面加载完成后创建监听器，取消监听器 cancel(); 。
+   * <div data-scroll={JSON.stringify({ logKey: 'example-scroll-X' })}>{...X 滚动埋点元素...}</div> /// 滚动埋点元素
    * @param element 元素
    * @param callback 监听 Track 回调
    * @param delay 防抖延迟
@@ -13453,6 +13457,25 @@
       var timeoutRef = null;
       var lastScrollPos = { x: 0, y: 0 };
       function handleScroll(event) {
+          var target = event.target;
+          // 找到拥有 data-scroll 属性的输入元素
+          var logElement = target.closest('[data-scroll]');
+          if (!logElement) {
+              return;
+          }
+          // data-scroll 属性有可以解析值才执行后续操作
+          var logData = logElement.getAttribute('data-scroll');
+          if (!logData) {
+              return;
+          }
+          var parsedLogData = parseJSON(logData);
+          if (!parsedLogData) {
+              return;
+          }
+          var trigger = parsedLogData.trigger, params = parsedLogData.params, logKey = parsedLogData.logKey;
+          if (!logKey) {
+              return;
+          }
           var currentScrollPos = {
               x: element.scrollLeft,
               y: element.scrollTop,
@@ -13460,8 +13483,17 @@
           var scrollX = currentScrollPos.x - lastScrollPos.x;
           var scrollY = currentScrollPos.y - lastScrollPos.y;
           if (Math.abs(scrollX) > threshold || Math.abs(scrollY) > threshold) {
-              // console.log(event, '滚动事件埋点', 'scrollLog', { trigger: 'scroll', X: scrollX, Y: scrollY });
-              callback && callback(event, 'scrollLog', { trigger: 'scroll', X: scrollX, Y: scrollY });
+              console.log(event, '滚动事件埋点', logKey, {
+                  trigger: trigger !== null && trigger !== void 0 ? trigger : 'scroll',
+                  params: __assign(__assign({}, (params !== null && params !== void 0 ? params : {})), { X: scrollX, Y: scrollY }),
+                  logKey: logKey,
+              });
+              callback &&
+                  callback(event, logKey, {
+                      trigger: trigger !== null && trigger !== void 0 ? trigger : 'scroll',
+                      params: __assign(__assign({}, (params !== null && params !== void 0 ? params : {})), { X: scrollX, Y: scrollY }),
+                      logKey: logKey,
+                  });
           }
           lastScrollPos = currentScrollPos;
       }
@@ -13508,14 +13540,17 @@
               return;
           }
           var trigger = parsedLogData.trigger, params = parsedLogData.params, logKey = parsedLogData.logKey;
+          if (!logKey) {
+              return;
+          }
           var value = target.value;
           // 在这里处理输入事件埋点
           // console.log(event, 'Change 事件处理:', logKey, {
           //   trigger: trigger ?? 'change',
-          //   params: { ...params, value },
+          //   params: { ...(params ?? {}), value },
           //   logKey,
           // });
-          callback && callback(event, logKey, { trigger: trigger !== null && trigger !== void 0 ? trigger : 'change', params: __assign(__assign({}, params), { value: value }), logKey: logKey });
+          callback && callback(event, logKey, { trigger: trigger !== null && trigger !== void 0 ? trigger : 'change', params: __assign(__assign({}, (params !== null && params !== void 0 ? params : {})), { value: value }), logKey: logKey });
       }
       document.addEventListener('change', handleChange);
       return function () {
