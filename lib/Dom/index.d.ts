@@ -354,7 +354,7 @@ export declare function printDom(selector: string, styles?: {
     htmlStyle?: any;
 }): any;
 /**
- * 创建全局 click 事件埋点与回调
+ * 创建全局 change 事件埋点与回调，也可使用 `emitEvent` 主动触发。
  * @example
  * const clickListenerObj = createClickLogListener((event, key, data) => console.log({ event, key, data })); /// 页面加载完成后创建监听器，取消监听器 clickListenerObj.cancel(); 。
  * <div data-log={JSON.stringify({ trigger: 'click', params: { name: '普通日志' }, logKey: 'example-key-0' })}>普通埋点元素</div> /// 普通埋点元素写法
@@ -367,7 +367,7 @@ export declare function printDom(selector: string, styles?: {
  */
 export declare function createClickLogListener(callback?: any): any;
 /**
- * 创建元素 scroll 事件埋点与回调
+ * 创建全局 change 事件埋点与回调，也可使用 `emitEvent` 主动触发。
  * @example
  * const cancel = createScrollLogListener(document.querySelector('.demo-scroll-dom'), (event, eventKey, data) => console.log({ event, eventKey, data })); /// 页面加载完成后创建监听器，取消监听器 cancel(); 。
  * <div data-scroll={JSON.stringify({ logKey: 'example-scroll-X' })}>{...X 滚动埋点元素...}</div> /// 滚动埋点元素
@@ -379,7 +379,7 @@ export declare function createClickLogListener(callback?: any): any;
  */
 export declare function createScrollLogListener(element?: any, callback?: any, delay?: number, threshold?: number): (() => void) | undefined;
 /**
- * 创建全局 change 事件埋点与回调
+ * 创建全局 change 事件埋点与回调，也可使用 `emitEvent` 主动触发。
  * @example
  * const cancel = createChangeLogListener((event, key, data) => console.log({ event, key, data })); /// 页面加载完成后创建监听器，取消监听器 cancel(); 。
  * <div data-change={JSON.stringify({ logKey: 'div-input-change-0' })}><input /></div> /// 父元素总监听

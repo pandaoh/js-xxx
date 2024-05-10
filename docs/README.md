@@ -1,6 +1,6 @@
 js-xxx
 
-# js-xxx - v2.2.10
+# js-xxx - v2.2.11
 
 ## Table of contents
 
@@ -1722,7 +1722,7 @@ ___
 
 ▸ **createChangeLogListener**(`callback?`): () => `void`
 
-创建全局 change 事件埋点与回调
+创建全局 change 事件埋点与回调，也可使用 `emitEvent` 主动触发。
 
 #### Parameters
 
@@ -1754,7 +1754,7 @@ ___
 
 ▸ **createClickLogListener**(`callback?`): `any`
 
-创建全局 click 事件埋点与回调
+创建全局 change 事件埋点与回调，也可使用 `emitEvent` 主动触发。
 
 #### Parameters
 
@@ -1783,7 +1783,7 @@ ___
 
 ▸ **createScrollLogListener**(`element?`, `callback?`, `delay?`, `threshold?`): `undefined` \| () => `void`
 
-创建元素 scroll 事件埋点与回调
+创建全局 change 事件埋点与回调，也可使用 `emitEvent` 主动触发。
 
 #### Parameters
 
