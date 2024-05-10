@@ -1,4 +1,4 @@
-export const blobTypeMap = {
+export const blobTypes = {
   '3gp': 'video/3gpp',
   aab: 'application/x-authoware-bin',
   aam: 'application/x-authoware-map',
@@ -405,4 +405,4 @@ export const blobTypeMap = {
   yz1: 'application/x-yz1',
   zac: 'application/x-zaurus-zac',
   zip: 'application/zip',
-}
+};

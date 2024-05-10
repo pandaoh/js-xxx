@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-05-09 14:03:48
+ * @LastEditTime: 2024-05-10 17:00:28
  * @Description: 利用 dom 的一些函数
  * @FilePath: \js-xxx\src\Dom\index.ts
  */
@@ -887,41 +887,73 @@ export function addLongPressEvent(element: any, longPressCallback: any, duration
 /**
  * 触发某个键盘按键事件
  * @example
- * emitKeyboardEvent('keydown', 108); // 小键盘回车事件
- * emitKeyboardEvent('keydown', KEYBOARD_CODE.TAB); // TAB 事件
+ * emitKeyboardEvent(108, 'keyup'); // 小键盘回车事件
+ * emitKeyboardEvent('Enter'); // 回车事件
+ * emitKeyboardEvent(KEYBOARD_CODE.TAB, 'keypress'); // TAB 事件
+ * @param keyOrKeyCode 触发键盘 code，默认为 13 。
  * @param eventType 事件类型，默认为 'keydown' 。
- * @param keyCode 触发键盘 code，默认为 13 。
- * @param element 目标元素，默认为 document.body 。
+ * @param element 目标元素，默认为 document.body ，支持传 document 。
  * @returns
  */
 export function emitKeyboardEvent(
+  keyOrKeyCode: string | number = 13,
   eventType: 'keydown' | 'keypress' | 'keyup' = 'keydown',
-  keyCode = 13,
   element: HTMLElement | null = document.body,
 ): void {
-  const myEvent = new KeyboardEvent(eventType, {
-    bubbles: true,
-    cancelable: true,
-    keyCode: keyCode,
-  });
-  element?.dispatchEvent(myEvent);
+  try {
+    const options: any = {
+      bubbles: true,
+      cancelable: true,
+    };
+
+    if (typeof keyOrKeyCode === 'string') {
+      options.key = keyOrKeyCode;
+    } else if (typeof keyOrKeyCode === 'number') {
+      // options.key = String.fromCharCode(keyOrKeyCode);
+      options.keyCode = keyOrKeyCode;
+    } else {
+      console.error('emitKeyboardEvent Invalid key', keyOrKeyCode);
+      return;
+    }
+
+    const myEvent = new KeyboardEvent(eventType, options);
+    element?.dispatchEvent(myEvent);
+  } catch (e) {
+    console.error('emitKeyboardEvent', e);
+  }
 }
 
 /**
  * 触发元素事件
  * @example
- * emitEvent('click', document.getElementById('myButton')); // 触发元素点击事件
+ * emitEvent('click', null, document.getElementById('myButton')); // 触发元素点击事件
+ * emitEvent('click', { logKey: 'test', params: { hello: 'world' } }); // 触发自定义元素点击事件
  * @param eventType 事件类型，默认为 'click' 。
- * @param element 目标元素，默认为 document.body
+ * @param eventDetail 事件自定义参数可以为空。不为空触发 CustomEvent 。
+ * @param element 目标元素，默认为 document.body ，支持传 document 。
  * @returns
  */
-export function emitEvent(eventType = 'click', element: HTMLElement | null = document.body): void {
-  element?.dispatchEvent(
-    new Event(eventType, {
-      bubbles: true,
-      cancelable: true,
-    }),
-  );
+export function emitEvent(eventType = 'click', eventDetail?: any, element: HTMLElement | null = document.body): void {
+  try {
+    if (!eventDetail) {
+      element?.dispatchEvent(
+        new Event(eventType, {
+          bubbles: true,
+          cancelable: true,
+        }),
+      );
+    } else {
+      eventDetail = { trigger: `manual-custom-${eventType}`, ...eventDetail };
+      const customEvent = new CustomEvent(eventType, {
+        bubbles: true,
+        cancelable: true,
+        detail: eventDetail,
+      });
+      element?.dispatchEvent(customEvent);
+    }
+  } catch (e) {
+    console.error('emitEvent', e);
+  }
 }
 
 /**

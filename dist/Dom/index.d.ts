@@ -302,23 +302,26 @@ export declare function addLongPressEvent(element: any, longPressCallback: any, 
 /**
  * 触发某个键盘按键事件
  * @example
- * emitKeyboardEvent('keydown', 108); // 小键盘回车事件
- * emitKeyboardEvent('keydown', KEYBOARD_CODE.TAB); // TAB 事件
+ * emitKeyboardEvent(108, 'keyup'); // 小键盘回车事件
+ * emitKeyboardEvent('Enter'); // 回车事件
+ * emitKeyboardEvent(KEYBOARD_CODE.TAB, 'keypress'); // TAB 事件
+ * @param keyOrKeyCode 触发键盘 code，默认为 13 。
  * @param eventType 事件类型，默认为 'keydown' 。
- * @param keyCode 触发键盘 code，默认为 13 。
- * @param element 目标元素，默认为 document.body 。
+ * @param element 目标元素，默认为 document.body ，支持传 document 。
  * @returns
  */
-export declare function emitKeyboardEvent(eventType?: 'keydown' | 'keypress' | 'keyup', keyCode?: number, element?: HTMLElement | null): void;
+export declare function emitKeyboardEvent(keyOrKeyCode?: string | number, eventType?: 'keydown' | 'keypress' | 'keyup', element?: HTMLElement | null): void;
 /**
  * 触发元素事件
  * @example
- * emitEvent('click', document.getElementById('myButton')); // 触发元素点击事件
+ * emitEvent('click', null, document.getElementById('myButton')); // 触发元素点击事件
+ * emitEvent('click', { logKey: 'test', params: { hello: 'world' } }); // 触发自定义元素点击事件
  * @param eventType 事件类型，默认为 'click' 。
- * @param element 目标元素，默认为 document.body
+ * @param eventDetail 事件自定义参数可以为空。不为空触发 CustomEvent 。
+ * @param element 目标元素，默认为 document.body ，支持传 document 。
  * @returns
  */
-export declare function emitEvent(eventType?: string, element?: HTMLElement | null): void;
+export declare function emitEvent(eventType?: string, eventDetail?: any, element?: HTMLElement | null): void;
 /**
  * 禁用冲突事件，条码枪、关闭窗口快捷键等。
  * @example

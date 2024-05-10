@@ -1,6 +1,6 @@
 js-xxx
 
-# js-xxx - v2.2.9
+# js-xxx - v2.2.10
 
 ## Table of contents
 
@@ -2171,7 +2171,7 @@ ___
 
 ### emitEvent
 
-▸ **emitEvent**(`eventType?`, `element?`): `void`
+▸ **emitEvent**(`eventType?`, `eventDetail?`, `element?`): `void`
 
 触发元素事件
 
@@ -2180,7 +2180,8 @@ ___
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
 | `eventType` | `string` | `'click'` | 事件类型，默认为 'click' 。 |
-| `element` | ``null`` \| `HTMLElement` | `document.body` | 目标元素，默认为 document.body |
+| `eventDetail?` | `any` | `undefined` | 事件自定义参数可以为空。不为空触发 CustomEvent 。 |
+| `element` | ``null`` \| `HTMLElement` | `document.body` | 目标元素，默认为 document.body ，支持传 document 。 |
 
 #### Returns
 
@@ -2189,14 +2190,15 @@ ___
 **`Example`**
 
 ```ts
-emitEvent('click', document.getElementById('myButton')); // 触发元素点击事件
+emitEvent('click', null, document.getElementById('myButton')); // 触发元素点击事件
+emitEvent('click', { logKey: 'test', params: { hello: 'world' } }); // 触发自定义元素点击事件
 ```
 
 ___
 
 ### emitKeyboardEvent
 
-▸ **emitKeyboardEvent**(`eventType?`, `keyCode?`, `element?`): `void`
+▸ **emitKeyboardEvent**(`keyOrKeyCode?`, `eventType?`, `element?`): `void`
 
 触发某个键盘按键事件
 
@@ -2204,9 +2206,9 @@ ___
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
+| `keyOrKeyCode` | `string` \| `number` | `13` | 触发键盘 code，默认为 13 。 |
 | `eventType` | ``"keydown"`` \| ``"keypress"`` \| ``"keyup"`` | `'keydown'` | 事件类型，默认为 'keydown' 。 |
-| `keyCode` | `number` | `13` | 触发键盘 code，默认为 13 。 |
-| `element` | ``null`` \| `HTMLElement` | `document.body` | 目标元素，默认为 document.body 。 |
+| `element` | ``null`` \| `HTMLElement` | `document.body` | 目标元素，默认为 document.body ，支持传 document 。 |
 
 #### Returns
 
@@ -2215,8 +2217,9 @@ ___
 **`Example`**
 
 ```ts
-emitKeyboardEvent('keydown', 108); // 小键盘回车事件
-emitKeyboardEvent('keydown', KEYBOARD_CODE.TAB); // TAB 事件
+emitKeyboardEvent(108, 'keyup'); // 小键盘回车事件
+emitKeyboardEvent('Enter'); // 回车事件
+emitKeyboardEvent(KEYBOARD_CODE.TAB, 'keypress'); // TAB 事件
 ```
 
 ___

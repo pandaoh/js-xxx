@@ -13188,39 +13188,74 @@
   /**
    * 触发某个键盘按键事件
    * @example
-   * emitKeyboardEvent('keydown', 108); // 小键盘回车事件
-   * emitKeyboardEvent('keydown', KEYBOARD_CODE.TAB); // TAB 事件
+   * emitKeyboardEvent(108, 'keyup'); // 小键盘回车事件
+   * emitKeyboardEvent('Enter'); // 回车事件
+   * emitKeyboardEvent(KEYBOARD_CODE.TAB, 'keypress'); // TAB 事件
+   * @param keyOrKeyCode 触发键盘 code，默认为 13 。
    * @param eventType 事件类型，默认为 'keydown' 。
-   * @param keyCode 触发键盘 code，默认为 13 。
-   * @param element 目标元素，默认为 document.body 。
+   * @param element 目标元素，默认为 document.body ，支持传 document 。
    * @returns
    */
-  function emitKeyboardEvent(eventType, keyCode, element) {
+  function emitKeyboardEvent(keyOrKeyCode, eventType, element) {
+      if (keyOrKeyCode === void 0) { keyOrKeyCode = 13; }
       if (eventType === void 0) { eventType = 'keydown'; }
-      if (keyCode === void 0) { keyCode = 13; }
       if (element === void 0) { element = document.body; }
-      var myEvent = new KeyboardEvent(eventType, {
-          bubbles: true,
-          cancelable: true,
-          keyCode: keyCode,
-      });
-      element === null || element === void 0 ? void 0 : element.dispatchEvent(myEvent);
+      try {
+          var options = {
+              bubbles: true,
+              cancelable: true,
+          };
+          if (typeof keyOrKeyCode === 'string') {
+              options.key = keyOrKeyCode;
+          }
+          else if (typeof keyOrKeyCode === 'number') {
+              // options.key = String.fromCharCode(keyOrKeyCode);
+              options.keyCode = keyOrKeyCode;
+          }
+          else {
+              console.error('emitKeyboardEvent Invalid key', keyOrKeyCode);
+              return;
+          }
+          var myEvent = new KeyboardEvent(eventType, options);
+          element === null || element === void 0 ? void 0 : element.dispatchEvent(myEvent);
+      }
+      catch (e) {
+          console.error('emitKeyboardEvent', e);
+      }
   }
   /**
    * 触发元素事件
    * @example
-   * emitEvent('click', document.getElementById('myButton')); // 触发元素点击事件
+   * emitEvent('click', null, document.getElementById('myButton')); // 触发元素点击事件
+   * emitEvent('click', { logKey: 'test', params: { hello: 'world' } }); // 触发自定义元素点击事件
    * @param eventType 事件类型，默认为 'click' 。
-   * @param element 目标元素，默认为 document.body
+   * @param eventDetail 事件自定义参数可以为空。不为空触发 CustomEvent 。
+   * @param element 目标元素，默认为 document.body ，支持传 document 。
    * @returns
    */
-  function emitEvent(eventType, element) {
+  function emitEvent(eventType, eventDetail, element) {
       if (eventType === void 0) { eventType = 'click'; }
       if (element === void 0) { element = document.body; }
-      element === null || element === void 0 ? void 0 : element.dispatchEvent(new Event(eventType, {
-          bubbles: true,
-          cancelable: true,
-      }));
+      try {
+          if (!eventDetail) {
+              element === null || element === void 0 ? void 0 : element.dispatchEvent(new Event(eventType, {
+                  bubbles: true,
+                  cancelable: true,
+              }));
+          }
+          else {
+              eventDetail = __assign({ trigger: "manual-custom-".concat(eventType) }, eventDetail);
+              var customEvent = new CustomEvent(eventType, {
+                  bubbles: true,
+                  cancelable: true,
+                  detail: eventDetail,
+              });
+              element === null || element === void 0 ? void 0 : element.dispatchEvent(customEvent);
+          }
+      }
+      catch (e) {
+          console.error('emitEvent', e);
+      }
   }
   /**
    * 禁用冲突事件，条码枪、关闭窗口快捷键等。
