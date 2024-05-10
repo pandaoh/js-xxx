@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-05-10 17:04:34
+ * @LastEditTime: 2024-05-10 17:28:20
  * @Description: 利用 dom 的一些函数
  * @FilePath: \js-xxx\src\Dom\index.ts
  */
@@ -943,7 +943,7 @@ export function emitEvent(eventType = 'click', eventDetail?: any, element: HTMLE
         }),
       );
     } else {
-      eventDetail = { trigger: `manual-custom-${eventType}`, ...eventDetail };
+      eventDetail = { trigger: `manual-custom-${eventType}`, ...eventDetail, customEvent: true };
       const customEvent = new CustomEvent(eventType, {
         bubbles: true,
         cancelable: true,
@@ -1109,21 +1109,28 @@ export function createClickLogListener(callback?: any): any {
   let orderMap: any = {};
 
   function handleClick(event: any) {
-    const { target } = event;
-    // 找到拥有 data-log 属性的元素为有效点击
-    const logElement = target.closest('[data-log]');
-    if (!logElement) {
-      return;
+    const { target, detail } = event;
+
+    let parsedLogData: any;
+    if (detail?.customEvent) {
+      parsedLogData = detail;
+    } else {
+      // 找到拥有 data-log 属性的元素为有效点击
+      const logElement = target.closest('[data-log]');
+      if (!logElement) {
+        return;
+      }
+
+      // console.log({ target, logElement, sequenceMap, orderMap });
+
+      // data-log 属性有可以解析值才执行后续操作
+      const logData = logElement.getAttribute('data-log');
+      if (!logData) {
+        return;
+      }
+      parsedLogData = parseJSON(logData);
     }
 
-    // console.log({ target, logElement, sequenceMap, orderMap });
-
-    // data-log 属性有可以解析值才执行后续操作
-    const logData = logElement.getAttribute('data-log');
-    if (!logData) {
-      return;
-    }
-    const parsedLogData = parseJSON(logData);
     if (!parsedLogData) {
       return;
     }
@@ -1302,19 +1309,25 @@ export function createScrollLogListener(element?: any, callback?: any, delay = 8
  */
 export function createChangeLogListener(callback?: any) {
   function handleChange(event: any) {
-    const { target } = event;
+    const { target, detail } = event;
 
-    // 找到拥有 data-change 属性的输入元素
-    const logElement = target.closest('[data-change]');
-    if (!logElement) {
-      return;
+    let parsedLogData: any;
+    if (detail?.customEvent) {
+      parsedLogData = detail;
+    } else {
+      // 找到拥有 data-change 属性的输入元素
+      const logElement = target.closest('[data-change]');
+      if (!logElement) {
+        return;
+      }
+      // data-change 属性有可以解析值才执行后续操作
+      const logData = logElement.getAttribute('data-change');
+      if (!logData) {
+        return;
+      }
+      parsedLogData = parseJSON(logData);
     }
-    // data-change 属性有可以解析值才执行后续操作
-    const logData = logElement.getAttribute('data-change');
-    if (!logData) {
-      return;
-    }
-    const parsedLogData = parseJSON(logData);
+
     if (!parsedLogData) {
       return;
     }
@@ -1324,7 +1337,7 @@ export function createChangeLogListener(callback?: any) {
       return;
     }
 
-    const value = target.value;
+    const value = target?.value;
 
     // 在这里处理输入事件埋点
     // console.log(event, 'Change 事件处理:', logKey, {
