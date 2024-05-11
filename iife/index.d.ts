@@ -3,6 +3,7 @@ export * from './Cookies';
 export * from './Crypto';
 export * from './Data';
 export * from './Date';
+export * from './Dev';
 export * from './Dom';
 export * from './Form';
 export * from './Math';

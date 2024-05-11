@@ -12327,6 +12327,163 @@ function getUTCTime(timezone) {
     // return new Date(utcTime + 3600000 * timezone).getTime();
 }
 
+var prettierRules = function (rules) {
+    if (rules === void 0) { rules = {}; }
+    return (__assign({ printWidth: 120, proseWrap: 'never', semi: true, singleQuote: true, jsxSingleQuote: false, bracketSpacing: true, bracketSameLine: false, arrowParens: 'always', insertPragma: false, tabWidth: 2, useTabs: false, endOfLine: 'lf', trailingComma: 'all', htmlWhitespaceSensitivity: 'ignore', 
+        // 每个文件格式化的范围是文件的全部内容
+        rangeStart: 0, rangeEnd: Infinity, quoteProps: 'as-needed' }, (rules !== null && rules !== void 0 ? rules : {})));
+};
+var eslintRules = function (skipWords, rules) {
+    if (skipWords === void 0) { skipWords = []; }
+    if (rules === void 0) { rules = {}; }
+    return (__assign({ 'zob/comment': 'error', '@typescript-eslint/ban-ts-comment': 'off', 'no-useless-escape': 'warn', 'prettier/prettier': [
+            'error',
+            {
+            // trailingComma: 'all',
+            // arrowParens: 'always',
+            // htmlWhitespaceSensitivity: 'ignore',
+            },
+            { usePrettierrc: true },
+        ], 'no-undef': ['error'], 'spaced-comment': ['error', 'always'], 'space-before-blocks': ['error', 'always'], 'no-multiple-empty-lines': ['error', { max: 5 }], 'no-mixed-spaces-and-tabs': ['error', false], 'comma-dangle': ['error', 'only-multiline'], indent: ['error', 2, { SwitchCase: 1 }], 'linebreak-style': ['error', 'unix'], quotes: ['error', 'single'], semi: ['error', 'always'], 
+        // 'no-unused-vars': ['warn', { vars: 'all', args: 'after-used', ignoreRestSiblings: true }], // @typescript-eslint/no-unused-vars
+        '@typescript-eslint/no-explicit-any': ['off'], 'no-irregular-whitespace': [
+            'error',
+            { skipStrings: true, skipComments: true, skipRegExps: true, skipTemplates: true },
+        ], 'no-multi-spaces': ['error', { ignoreEOLComments: true }], 'no-trailing-spaces': ['error', { skipBlankLines: false }], 'brace-style': ['error', '1tbs', { allowSingleLine: false }], 'key-spacing': ['warn', { beforeColon: false, afterColon: true }], 'object-curly-spacing': ['error', 'always'], 'array-bracket-spacing': ['error', 'never'], 'max-lines': ['error', 800], 'max-statements': ['error', 100], 'spellcheck/spell-checker': [
+            // 拼写检查警告
+            'warn',
+            {
+                comments: false,
+                strings: true,
+                identifiers: true,
+                lang: 'en_US',
+                skipWords: __spreadArray([
+                    // npm i modules-words // 常用词库
+                    'javascript',
+                    'debounce',
+                    'pathname',
+                    'minify',
+                    'charset',
+                    'unmount',
+                    'poweroff',
+                    'resize',
+                    'linux',
+                    'darwin',
+                    'resizable',
+                    'renderer',
+                    'biugle',
+                    'unordered',
+                    'dropdown',
+                    'checkbox',
+                    'tooltip',
+                    'namespaced',
+                    'echarts',
+                    'onopen',
+                    'formatter',
+                    'xlocation',
+                    'xcall',
+                    'utils',
+                    'cordova',
+                    'ionics',
+                    'lodash',
+                    'dayjs',
+                    'splashscreen',
+                    'uglify',
+                    'jsonp',
+                    'async',
+                    'bcrypt',
+                    'werbs',
+                    'navbar',
+                    'popover',
+                    'substr',
+                    'zindex',
+                    'viewport',
+                    'validator',
+                    'webserver',
+                    'whitelist',
+                    'runtime',
+                    'proto',
+                    'popup',
+                    'polyfill',
+                    'preload',
+                    'mixin',
+                    'middleware',
+                    'lifecycle',
+                    'linter',
+                    'hostname',
+                    'dirname',
+                    'autocomplete',
+                    'sourcemap',
+                    'dicts',
+                    'undef',
+                    'asyncfunction',
+                    'xxxxx',
+                    'keydown',
+                    'keyup',
+                    'keypress',
+                    'webkit',
+                    'uint8',
+                    'radix',
+                    'storage',
+                    'favicon',
+                    'compat',
+                    'keyframes',
+                    'padlen',
+                    'tring',
+                    'xhtml',
+                    'xmind',
+                    'decrypt',
+                    'decrypted',
+                    'multipart',
+                    'contextmenu',
+                    'loadend',
+                    'callee',
+                    'slugify',
+                    'ciphertext',
+                    'urlencoded',
+                    'cancelable',
+                    'ascii',
+                    'unicode',
+                    'rollup',
+                    'axios',
+                    'redux',
+                    'unlink',
+                    'macos',
+                    'submenu',
+                    'nodemon',
+                    'hhiiss',
+                    'whitesmoke',
+                    'iframe'
+                ], __read((skipWords !== null && skipWords !== void 0 ? skipWords : [])), false),
+                skipIfMatch: [
+                    // http url
+                    'http://[^s]*',
+                    // Auxiliary werbs
+                    // see: https://github.com/aotaduy/eslint-plugin-spellcheck/issues/7
+                    // eslint-disable-next-line quotes
+                    "(\\s|^)\\w+'t(\\s|$)",
+                    // ordinals
+                    // https://github.com/aotaduy/eslint-plugin-spellcheck/issues/8
+                    '(\\s|^|\\w+)\\d+(st|nd|rd|th)(\\s|[A-Z][a-zA-Z]+|$)',
+                    // pre/post prefixes both in kebab case and camel case
+                    '(\\s|^)(pre|post)([-\\w]|[A-Z])[a-zA-Z]+(\\s|$)',
+                    // xml tags
+                    '<(?:/)?[\\w-]+>',
+                    // cryptographic octal hashes
+                    '^[0-9a-f]{5,999}$',
+                    // hex colors
+                    '^#[0-9a-f]{3,6}$',
+                    // For MIME Types
+                    '^[-\\w]+/[-\\w\\.]+$',
+                ],
+                skipWordIfMatch: [
+                    '^foobar.*$', // words that begin with foobar will not be checked
+                ],
+                minLength: 5, // >=5 个字符以上才监测
+            },
+        ], 'import/first': ['error'], 'import/exports-last': ['error'], 'import/newline-after-import': ['error'], 'import/no-duplicates': ['error'], 'import/order': ['error', { 'newlines-between': 'never' }] }, (rules !== null && rules !== void 0 ? rules : {})));
+};
+
 /* eslint-disable max-lines */
 /**
  * 开启全屏
@@ -13476,7 +13633,7 @@ function createClickLogListener(callback) {
     return { sequenceMap: sequenceMap, orderMap: orderMap, cancel: function () { return document.removeEventListener('click', handleClick); } };
 }
 /**
- * 创建全局 change 事件埋点与回调，也可使用 `emitEvent` 主动触发。
+ * 创建全局 change 事件埋点与回调
  * @example
  * const cancel = createScrollLogListener(document.querySelector('.demo-scroll-dom'), (event, eventKey, data) => console.log({ event, eventKey, data })); /// 页面加载完成后创建监听器，取消监听器 cancel(); 。
  * <div data-scroll={JSON.stringify({ logKey: 'example-scroll-X' })}>{...X 滚动埋点元素...}</div> /// 滚动埋点元素
@@ -15766,4 +15923,4 @@ function getWebSocket() {
     return xWebSocket;
 }
 
-export { ANIMALS, BASE_CHAR_LOW, BASE_CHAR_UP, BASE_NUMBER, BLOOD_GROUP, BLOOD_GROUP_INFO, BS_COLORS, CODE_MSG, CONSTELLATION, CONTENT_TYPES, HttpMethod, ICONS, ID_CARD_PROVINCE, KEYBOARD_CODE, Loading, MAN, MONTHS, PY_MAPS, ROLES, Speaker, TRANSFER_STR, Toast, WEEKS, WOMAN, abs, add, addLongPressEvent, addSpace, all, any, appendLink, appendScript, arr2select, arrObj2objArr, arrayFill, arrayShuffle, arraySort, average, banConsole, base64Decode, base64Encode, bindMoreClick, buf2obj, calcCron, calcDate, calcFontSize, calculate, catchPromise, changeURL, checkFileExt, checkIdCard, checkPassWordLevel, checkUpdate, checkVersion, clearCookies, closeFullscreen, closeWebSocket, compareDate, contains, copyToClipboard, countdown, createChangeLogListener, createClickLogListener, createScrollLogListener, curryIt, customFinally, data2Arr, data2Obj, dataTo, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitEvent, emitKeyboardEvent, empty, encrypt, every, exportFile, findChildren, findMaxKey, findParents, float, forEach, forceToStr, formatBytes, formatDate, formatJSON, formatNumber, formatRh, getAge, getAnimal, getBSColor, getBaseURL, getBloodGroup, getConstellation, getContentType, getCookie, getCryptoJS, getDateDifference, getDateList, getDateTime, getDayInYear, getDecodeStorage, getFingerprint, getFirstVar, getKey, getLastVar, getLocalArr, getLocalObj, getMonthDayCount, getMonthInfo, getPercentage, getPinYin, getQueryString, getRandColor, getRandDate, getRandIp, getRandNum, getRandStr, getRandVar, getScrollPercent, getSearchParams, getSelectText, getSessionArr, getSessionObj, getSortVar, getStyleByName, getTimeCode, getType, getUTCTime, getUserAgent, getV, getVarSize, getViewportSize, getWebSocket, getWeekInfo, globalError, hasKey, hasSpecialChar, hideToast, html2str, inRange, initNotification, initWebSocket, insertAfter, intersection, inversion, isAccount, isAppleDevice, isArr, isArrayBuffer, isBankCard, isBlob, isBool, isBrowser, isCarCode, isChinese, isCreditCode, isDarkMode, isDate, isDecimal, isElement, isEmail, isEnglish, isEqual, isEven, isFn, isHttp, isInteger, isInvalidDate, isIpAddress, isIpv4, isIpv6, isJSON, isMobile, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPromise, isQQ, isRhNegative, isStr, isStrongPassWord, isTel, isUndef, isUrl, isWeekday, javaDecrypt, javaEncrypt, jsonClone, keyBoardResize, leftJoin, loadStr, localStorageGet, localStorageSet, log, logRunTime, markNumber, marquee, maskString, md5, ms, obj2buf, observeResource, offDefaultEvent, onClick2MoreClick, onResize, openFileSelect, openFullscreen, parseJSON, printDom, px2rem, qsParse, qsStringify, removeCookie, repeat, retry, rightJoin, rip, round, same, scrollToView, scrollXTo, scrollYTo, sendNotification, sendWsMsg, sessionStorageGet, sessionStorageSet, setCookie, setEncodeStorage, setEventListener, setIcon, setWsBinaryType, sha1, sha256, showProcess, showToast, showVar, sleep, slugify, sortBy, sortCallBack, stackSticky, str2html, str2unicode, sub, textCamelCase, textSplitCase, textTransferCase, throttle, timeSince, times, to, toBool, toFormData, toNum, toQueryString, toStr, toggleClass, transferCSVData, transferFileToBase64, transferIdCard, transferMoney, transferNumber, transferScanStr, transferSeconds, transferTemperature, trim, truncate, unicode2str, union, unique, useStateData, uuid, versionUpgrade, waitUntil, watermark, xAjax, xFetch, xTimer };
+export { ANIMALS, BASE_CHAR_LOW, BASE_CHAR_UP, BASE_NUMBER, BLOOD_GROUP, BLOOD_GROUP_INFO, BS_COLORS, CODE_MSG, CONSTELLATION, CONTENT_TYPES, HttpMethod, ICONS, ID_CARD_PROVINCE, KEYBOARD_CODE, Loading, MAN, MONTHS, PY_MAPS, ROLES, Speaker, TRANSFER_STR, Toast, WEEKS, WOMAN, abs, add, addLongPressEvent, addSpace, all, any, appendLink, appendScript, arr2select, arrObj2objArr, arrayFill, arrayShuffle, arraySort, average, banConsole, base64Decode, base64Encode, bindMoreClick, buf2obj, calcCron, calcDate, calcFontSize, calculate, catchPromise, changeURL, checkFileExt, checkIdCard, checkPassWordLevel, checkUpdate, checkVersion, clearCookies, closeFullscreen, closeWebSocket, compareDate, contains, copyToClipboard, countdown, createChangeLogListener, createClickLogListener, createScrollLogListener, curryIt, customFinally, data2Arr, data2Obj, dataTo, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitEvent, emitKeyboardEvent, empty, encrypt, eslintRules, every, exportFile, findChildren, findMaxKey, findParents, float, forEach, forceToStr, formatBytes, formatDate, formatJSON, formatNumber, formatRh, getAge, getAnimal, getBSColor, getBaseURL, getBloodGroup, getConstellation, getContentType, getCookie, getCryptoJS, getDateDifference, getDateList, getDateTime, getDayInYear, getDecodeStorage, getFingerprint, getFirstVar, getKey, getLastVar, getLocalArr, getLocalObj, getMonthDayCount, getMonthInfo, getPercentage, getPinYin, getQueryString, getRandColor, getRandDate, getRandIp, getRandNum, getRandStr, getRandVar, getScrollPercent, getSearchParams, getSelectText, getSessionArr, getSessionObj, getSortVar, getStyleByName, getTimeCode, getType, getUTCTime, getUserAgent, getV, getVarSize, getViewportSize, getWebSocket, getWeekInfo, globalError, hasKey, hasSpecialChar, hideToast, html2str, inRange, initNotification, initWebSocket, insertAfter, intersection, inversion, isAccount, isAppleDevice, isArr, isArrayBuffer, isBankCard, isBlob, isBool, isBrowser, isCarCode, isChinese, isCreditCode, isDarkMode, isDate, isDecimal, isElement, isEmail, isEnglish, isEqual, isEven, isFn, isHttp, isInteger, isInvalidDate, isIpAddress, isIpv4, isIpv6, isJSON, isMobile, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPromise, isQQ, isRhNegative, isStr, isStrongPassWord, isTel, isUndef, isUrl, isWeekday, javaDecrypt, javaEncrypt, jsonClone, keyBoardResize, leftJoin, loadStr, localStorageGet, localStorageSet, log, logRunTime, markNumber, marquee, maskString, md5, ms, obj2buf, observeResource, offDefaultEvent, onClick2MoreClick, onResize, openFileSelect, openFullscreen, parseJSON, prettierRules, printDom, px2rem, qsParse, qsStringify, removeCookie, repeat, retry, rightJoin, rip, round, same, scrollToView, scrollXTo, scrollYTo, sendNotification, sendWsMsg, sessionStorageGet, sessionStorageSet, setCookie, setEncodeStorage, setEventListener, setIcon, setWsBinaryType, sha1, sha256, showProcess, showToast, showVar, sleep, slugify, sortBy, sortCallBack, stackSticky, str2html, str2unicode, sub, textCamelCase, textSplitCase, textTransferCase, throttle, timeSince, times, to, toBool, toFormData, toNum, toQueryString, toStr, toggleClass, transferCSVData, transferFileToBase64, transferIdCard, transferMoney, transferNumber, transferScanStr, transferSeconds, transferTemperature, trim, truncate, unicode2str, union, unique, useStateData, uuid, versionUpgrade, waitUntil, watermark, xAjax, xFetch, xTimer };

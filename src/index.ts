@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 11:33:53
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-23 14:01:30
+ * @LastEditTime: 2024-05-11 11:24:42
  * @Description: 主项目文件汇总（请勿使用路径别名，否则会导致声明文件失效。）
  * @FilePath: \js-xxx\src\index.ts
  */
@@ -18,6 +18,7 @@ export * from './Cookies';
 export * from './Crypto';
 export * from './Data';
 export * from './Date';
+export * from './Dev';
 export * from './Dom';
 export * from './Form';
 export * from './Math';

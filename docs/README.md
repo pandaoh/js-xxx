@@ -1,6 +1,6 @@
 js-xxx
 
-# js-xxx - v2.2.11
+# js-xxx - v2.2.12
 
 ## Table of contents
 
@@ -97,6 +97,7 @@ js-xxx
 - [emitKeyboardEvent](README.md#emitkeyboardevent)
 - [empty](README.md#empty)
 - [encrypt](README.md#encrypt)
+- [eslintRules](README.md#eslintrules)
 - [every](README.md#every)
 - [exportFile](README.md#exportfile)
 - [findChildren](README.md#findchildren)
@@ -233,6 +234,7 @@ js-xxx
 - [openFileSelect](README.md#openfileselect)
 - [openFullscreen](README.md#openfullscreen)
 - [parseJSON](README.md#parsejson)
+- [prettierRules](README.md#prettierrules)
 - [printDom](README.md#printdom)
 - [px2rem](README.md#px2rem)
 - [qsParse](README.md#qsparse)
@@ -1783,7 +1785,7 @@ ___
 
 ▸ **createScrollLogListener**(`element?`, `callback?`, `delay?`, `threshold?`): `undefined` \| () => `void`
 
-创建全局 change 事件埋点与回调，也可使用 `emitEvent` 主动触发。
+创建全局 change 事件埋点与回调
 
 #### Parameters
 
@@ -2283,6 +2285,56 @@ ___
 encrypt("value"); /// 加密后的字符串
 encrypt("value", "1234567887654321","1234567887654321"); /// 自定义密钥加密后的字符串
 ```
+
+___
+
+### eslintRules
+
+▸ **eslintRules**(`skipWords?`, `rules?`): `Object`
+
+#### Parameters
+
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `skipWords` | `never`[] | `[]` |
+| `rules` | `Object` | `{}` |
+
+#### Returns
+
+`Object`
+
+| Name | Type |
+| :------ | :------ |
+| `@typescript-eslint/ban-ts-comment` | `string` |
+| `@typescript-eslint/no-explicit-any` | `string`[] |
+| `array-bracket-spacing` | `string`[] |
+| `brace-style` | (`string` \| \{ `allowSingleLine`: `boolean` = false })[] |
+| `comma-dangle` | `string`[] |
+| `import/exports-last` | `string`[] |
+| `import/first` | `string`[] |
+| `import/newline-after-import` | `string`[] |
+| `import/no-duplicates` | `string`[] |
+| `import/order` | (`string` \| \{ `newlines-between`: `string` = 'never' })[] |
+| `indent` | (`string` \| `number` \| \{ `SwitchCase`: `number` = 1 })[] |
+| `key-spacing` | (`string` \| \{ `afterColon`: `boolean` = true; `beforeColon`: `boolean` = false })[] |
+| `linebreak-style` | `string`[] |
+| `max-lines` | (`string` \| `number`)[] |
+| `max-statements` | (`string` \| `number`)[] |
+| `no-irregular-whitespace` | (`string` \| \{ `skipComments`: `boolean` = true; `skipRegExps`: `boolean` = true; `skipStrings`: `boolean` = true; `skipTemplates`: `boolean` = true })[] |
+| `no-mixed-spaces-and-tabs` | (`string` \| `boolean`)[] |
+| `no-multi-spaces` | (`string` \| \{ `ignoreEOLComments`: `boolean` = true })[] |
+| `no-multiple-empty-lines` | (`string` \| \{ `max`: `number` = 5 })[] |
+| `no-trailing-spaces` | (`string` \| \{ `skipBlankLines`: `boolean` = false })[] |
+| `no-undef` | `string`[] |
+| `no-useless-escape` | `string` |
+| `object-curly-spacing` | `string`[] |
+| `prettier/prettier` | (`string` \| \{ `usePrettierrc?`: `undefined` = true } \| \{ `usePrettierrc`: `boolean` = true })[] |
+| `quotes` | `string`[] |
+| `semi` | `string`[] |
+| `space-before-blocks` | `string`[] |
+| `spaced-comment` | `string`[] |
+| `spellcheck/spell-checker` | (`string` \| \{ `comments`: `boolean` = false; `identifiers`: `boolean` = true; `lang`: `string` = 'en\_US'; `minLength`: `number` = 5; `skipIfMatch`: `string`[] ; `skipWordIfMatch`: `string`[] ; `skipWords`: `string`[] ; `strings`: `boolean` = true })[] |
+| `zob/comment` | `string` |
 
 ___
 
@@ -5834,6 +5886,42 @@ parseJSON(true); /// true
 parseJSON(null); /// null
 parseJSON('test error'); /// null
 ```
+
+___
+
+### prettierRules
+
+▸ **prettierRules**(`rules?`): `Object`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `rules` | `Object` |
+
+#### Returns
+
+`Object`
+
+| Name | Type |
+| :------ | :------ |
+| `arrowParens` | `string` |
+| `bracketSameLine` | `boolean` |
+| `bracketSpacing` | `boolean` |
+| `endOfLine` | `string` |
+| `htmlWhitespaceSensitivity` | `string` |
+| `insertPragma` | `boolean` |
+| `jsxSingleQuote` | `boolean` |
+| `printWidth` | `number` |
+| `proseWrap` | `string` |
+| `quoteProps` | `string` |
+| `rangeEnd` | `number` |
+| `rangeStart` | `number` |
+| `semi` | `boolean` |
+| `singleQuote` | `boolean` |
+| `tabWidth` | `number` |
+| `trailingComma` | `string` |
+| `useTabs` | `boolean` |
 
 ___
 

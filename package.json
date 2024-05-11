@@ -1,6 +1,6 @@
 {
   "name": "js-xxx",
-  "version": "2.2.11",
+  "version": "2.2.12",
   "description": "前端 JavaScript 常用函数/工具/方法库",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -12,14 +12,14 @@
   "iife-source": "iife/index.source.js",
   "scripts": {
     "dev": "rollup -c -w",
-    "build": "rollup -c",
-    "lint": "npm run prettier && npm run eslint",
+    "build": "npm run lint && rollup -c",
+    "lint": "node ./dev.build.js && npm run prettier && npm run eslint",
     "eslint": "eslint ./src --fix --ext .ts,.tsx,.js,.jsx,.vue",
     "prettier": "prettier --write ./src/**/*.{ts,tsx,js,jsx,vue,html,css,scss,less}",
     "doc": "typedoc --options ./typedoc.json && npm run doc:md && node ./_docs.build.js",
     "doc:md": "typedoc --plugin typedoc-plugin-markdown --options ./typedoc.json --out docs",
-    "pub": "npm install --legacy-peer-deps && npm run lint && npm run build && npm run doc && npm publish",
-    "push:before": "npm run lint && npm run build && npm run doc"
+    "pub": "npm install --legacy-peer-deps && npm run build && npm run doc && npm publish",
+    "push:before": "npm run build && npm run doc"
   },
   "files": [
     "/lib",
