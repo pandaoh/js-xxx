@@ -1757,7 +1757,8 @@ ___
 
 ▸ **createClickLogListener**(`callback?`): `any`
 
-创建全局 change 事件埋点与回调，也可使用 `emitEvent` 主动触发。
+创建全局 click 事件埋点与回调，也可使用 `emitEvent` 主动触发。
+若 log-* 属性报错，记得 eslint 关闭 `'react/no-unknown-property': 'warn'`。
 
 #### Parameters
 
@@ -1786,7 +1787,8 @@ ___
 
 ▸ **createScrollLogListener**(`element?`, `callback?`, `delay?`, `threshold?`): `undefined` \| () => `void`
 
-创建全局 change 事件埋点与回调
+创建全局 scroll 事件埋点与回调
+若 log-* 属性报错，记得 eslint 关闭 `'react/no-unknown-property': 'warn'`。
 
 #### Parameters
 

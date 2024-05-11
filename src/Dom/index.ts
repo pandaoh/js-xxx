@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-05-10 17:33:08
+ * @LastEditTime: 2024-05-11 17:51:23
  * @Description: 利用 dom 的一些函数
  * @FilePath: \js-xxx\src\Dom\index.ts
  */
@@ -1093,7 +1093,8 @@ export function printDom(selector: string, styles?: { iframeStyle?: any; bodySty
 }
 
 /**
- * 创建全局 change 事件埋点与回调，也可使用 `emitEvent` 主动触发。
+ * 创建全局 click 事件埋点与回调，也可使用 `emitEvent` 主动触发。
+ * 若 log-* 属性报错，记得 eslint 关闭 `'react/no-unknown-property': 'warn'`。
  * @example
  * const clickListenerObj = createClickLogListener((event, key, data) => console.log({ event, key, data })); /// 页面加载完成后创建监听器，取消监听器 clickListenerObj.cancel(); 。
  * <div log-click={JSON.stringify({ trigger: 'click', params: { name: '普通日志' }, logKey: 'example-key-0' })}>普通埋点元素</div> /// 普通埋点元素写法
@@ -1170,14 +1171,14 @@ export function createClickLogListener(callback?: any): any {
 
       orderMap = clickInfo;
       const newLogKey = `${logKey}-${orderKey}-${clickInfo.clickOrder}`;
-      // console.log(event, '区域非固定顺序记录埋点分析:', newLogKey, { trigger: trigger ?? 'click', params, logKey });
+      console.log(event, '区域非固定顺序记录埋点分析:', newLogKey, { trigger: trigger ?? 'click', params, logKey });
       callback && callback(event, newLogKey, { trigger: trigger ?? 'click', params, logKey });
       return;
     }
 
     // 无 sequence 或 maxSequence 则认为是普通埋点
     if (maxSequence === undefined) {
-      // console.log(event, '普通埋点分析:', logKey, { trigger: trigger ?? 'click', params, logKey });
+      console.log(event, '普通埋点分析:', logKey, { trigger: trigger ?? 'click', params, logKey });
       callback && callback(event, logKey, { trigger: trigger ?? 'click', params, logKey });
       return;
     }
@@ -1192,7 +1193,7 @@ export function createClickLogListener(callback?: any): any {
 
         // 达到 maxSequence 触发埋点
         if (sequence === maxSequence) {
-          // console.log(event, '固定顺序埋点分析:', logKey, { trigger: trigger ?? 'click', params, logKey });
+          console.log(event, '固定顺序埋点分析:', logKey, { trigger: trigger ?? 'click', params, logKey });
           callback && callback(event, logKey, { trigger: trigger ?? 'click', params, logKey });
           delete sequenceMap[logKey];
         }
@@ -1216,7 +1217,8 @@ export function createClickLogListener(callback?: any): any {
 }
 
 /**
- * 创建全局 change 事件埋点与回调
+ * 创建全局 scroll 事件埋点与回调
+ * 若 log-* 属性报错，记得 eslint 关闭 `'react/no-unknown-property': 'warn'`。
  * @example
  * const cancel = createScrollLogListener(document.querySelector('.demo-scroll-dom'), (event, eventKey, data) => console.log({ event, eventKey, data })); /// 页面加载完成后创建监听器，取消监听器 cancel(); 。
  * <div log-scroll={JSON.stringify({ logKey: 'example-scroll-X' })}>{...X 滚动埋点元素...}</div> /// 滚动埋点元素
@@ -1340,11 +1342,11 @@ export function createChangeLogListener(callback?: any) {
     const value = target?.value;
 
     // 在这里处理输入事件埋点
-    // console.log(event, 'Change 事件处理:', logKey, {
-    //   trigger: trigger ?? 'change',
-    //   params: { ...(params ?? {}), value },
-    //   logKey,
-    // });
+    console.log(event, 'Change 事件处理:', logKey, {
+      trigger: trigger ?? 'change',
+      params: { ...(params ?? {}), value },
+      logKey,
+    });
     callback && callback(event, logKey, { trigger: trigger ?? 'change', params: { ...(params ?? {}), value }, logKey });
   }
 
