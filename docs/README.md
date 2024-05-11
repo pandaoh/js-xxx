@@ -1474,7 +1474,7 @@ ___
 
 ### checkPassWordLevel
 
-▸ **checkPassWordLevel**(`passWord`): ``1`` \| ``-1`` \| ``2`` \| ``3`` \| ``4`` \| ``5``
+▸ **checkPassWordLevel**(`passWord`): ``2`` \| ``5`` \| ``1`` \| ``-1`` \| ``3`` \| ``4``
 
 密码强度等级检测(-1~5)
 
@@ -1486,7 +1486,7 @@ ___
 
 #### Returns
 
-``1`` \| ``-1`` \| ``2`` \| ``3`` \| ``4`` \| ``5``
+``2`` \| ``5`` \| ``1`` \| ``-1`` \| ``3`` \| ``4``
 
 **`Example`**
 
@@ -2209,7 +2209,7 @@ ___
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
 | `keyOrKeyCode` | `string` \| `number` | `13` | 触发键盘 code，默认为 13 。 |
-| `eventType` | ``"keydown"`` \| ``"keypress"`` \| ``"keyup"`` | `'keydown'` | 事件类型，默认为 'keydown' 。 |
+| `eventType` | ``"keydown"`` \| ``"keyup"`` \| ``"keypress"`` | `'keydown'` | 事件类型，默认为 'keydown' 。 |
 | `element` | ``null`` \| `HTMLElement` | `document.body` | 目标元素，默认为 document.body ，支持传 document 。 |
 
 #### Returns
@@ -6932,7 +6932,7 @@ ___
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `str` | `string` | 字符串 |
-| `type` | ``1`` \| ``2`` \| ``3`` \| ``"upper"`` \| ``"lower"`` \| ``"first"`` | 目标类型 |
+| `type` | ``2`` \| ``1`` \| ``3`` \| ``"upper"`` \| ``"lower"`` \| ``"first"`` | 目标类型 |
 
 #### Returns
 
