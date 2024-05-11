@@ -82,4 +82,5 @@ export declare const eslintRules: (skipWords?: never[], rules?: {}) => {
         'newlines-between': string;
     })[];
 };
+export declare const sortJSON: (obj: any) => string;
 //# sourceMappingURL=index.d.ts.map

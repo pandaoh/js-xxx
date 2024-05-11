@@ -106,6 +106,7 @@ typeof SuppressedError === "function" ? SuppressedError : function (error, suppr
   return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
 };
 
+/* eslint-disable */
 var prettierRules = function (rules) {
     if (rules === void 0) { rules = {}; }
     return (__assign({ printWidth: 120, proseWrap: 'never', semi: true, singleQuote: true, jsxSingleQuote: false, bracketSpacing: true, bracketSameLine: false, arrowParens: 'always', insertPragma: false, tabWidth: 2, useTabs: false, endOfLine: 'lf', trailingComma: 'all', htmlWhitespaceSensitivity: 'ignore', 
@@ -261,6 +262,39 @@ var eslintRules = function (skipWords, rules) {
                 minLength: 5, // >=5 个字符以上才监测
             },
         ], 'import/first': ['error'], 'import/exports-last': ['error'], 'import/newline-after-import': ['error'], 'import/no-duplicates': ['error'], 'import/order': ['error', { 'newlines-between': 'never' }] }, (rules !== null && rules !== void 0 ? rules : {})));
+};
+var sortJSON = function (obj) {
+    // 去重并获取对象的键数组
+    var keys = Object.keys(obj);
+    // 按键的首字符进行排序
+    var sortedKeys = keys.sort(function (a, b) {
+        var aKey = a[0];
+        var bKey = b[0];
+        return aKey.localeCompare(bKey);
+    });
+    // 构建分类和排序后的对象
+    var sortedAndGroupedObject = sortedKeys.reduce(function (result, key) {
+        var firstChar = key[0];
+        if (!result[firstChar]) {
+            result[firstChar] = [];
+        }
+        result[firstChar].push(key);
+        return result;
+    }, {});
+    // 在每个分类中按键的长度进行排序
+    for (var group in sortedAndGroupedObject) {
+        sortedAndGroupedObject[group].sort(function (a, b) { return a.length - b.length; });
+    }
+    // 拼接分类后的键数组
+    var finalKeys = Object.values(sortedAndGroupedObject).flat();
+    // 构建排序后的对象
+    var sortedObject = finalKeys.reduce(function (result, key) {
+        result[key] = obj[key];
+        return result;
+    }, {});
+    // 转换为 JSON 字符串并输出
+    var jsonString = JSON.stringify(sortedObject);
+    return jsonString;
 };
 
 /*
@@ -13525,11 +13559,11 @@ function printDom(selector, styles) {
  * 创建全局 change 事件埋点与回调，也可使用 `emitEvent` 主动触发。
  * @example
  * const clickListenerObj = createClickLogListener((event, key, data) => console.log({ event, key, data })); /// 页面加载完成后创建监听器，取消监听器 clickListenerObj.cancel(); 。
- * <div data-log={JSON.stringify({ trigger: 'click', params: { name: '普通日志' }, logKey: 'example-key-0' })}>普通埋点元素</div> /// 普通埋点元素写法
- * <div data-log={JSON.stringify({ maxSequence: 2, sequence: 1, trigger: 'click', params: { name: '固定顺序日志' }, logKey: 'example-key-1' })}>固定顺序埋点元素 1</div> /// 固定顺序埋点元素写法
- * <div data-log={JSON.stringify({ maxSequence: 2, sequence: 2, trigger: 'click', params: { name: '固定顺序日志' }, logKey: 'example-key-1' })}>固定顺序埋点元素 2</div> /// 固定顺序埋点元素写法
- * <div data-log={JSON.stringify({ isOrder: true, orderKey: '元素 1', params: { name: '非固定顺序日志' }, logKey: 'example-key-2' })}>非固定顺序埋点元素 1</div> /// 非固定顺序埋点元素写法
- * <div data-log={JSON.stringify({ isOrder: true, orderKey: '元素 2', params: { name: '非固定顺序日志' }, logKey: 'example-key-2' })}>非固定顺序埋点元素 2</div> /// 非固定顺序埋点元素写法
+ * <div log-click={JSON.stringify({ trigger: 'click', params: { name: '普通日志' }, logKey: 'example-key-0' })}>普通埋点元素</div> /// 普通埋点元素写法
+ * <div log-click={JSON.stringify({ maxSequence: 2, sequence: 1, trigger: 'click', params: { name: '固定顺序日志' }, logKey: 'example-key-1' })}>固定顺序埋点元素 1</div> /// 固定顺序埋点元素写法
+ * <div log-click={JSON.stringify({ maxSequence: 2, sequence: 2, trigger: 'click', params: { name: '固定顺序日志' }, logKey: 'example-key-1' })}>固定顺序埋点元素 2</div> /// 固定顺序埋点元素写法
+ * <div log-click={JSON.stringify({ isOrder: true, orderKey: '元素 1', params: { name: '非固定顺序日志' }, logKey: 'example-key-2' })}>非固定顺序埋点元素 1</div> /// 非固定顺序埋点元素写法
+ * <div log-click={JSON.stringify({ isOrder: true, orderKey: '元素 2', params: { name: '非固定顺序日志' }, logKey: 'example-key-2' })}>非固定顺序埋点元素 2</div> /// 非固定顺序埋点元素写法
  * @param callback 监听 Track 回调
  * @returns
  */
@@ -13543,14 +13577,14 @@ function createClickLogListener(callback) {
             parsedLogData = detail;
         }
         else {
-            // 找到拥有 data-log 属性的元素为有效点击
-            var logElement = target.closest('[data-log]');
+            // 找到拥有 log-click 属性的元素为有效点击
+            var logElement = target.closest('[log-click]');
             if (!logElement) {
                 return;
             }
             // console.log({ target, logElement, sequenceMap, orderMap });
-            // data-log 属性有可以解析值才执行后续操作
-            var logData = logElement.getAttribute('data-log');
+            // log-click 属性有可以解析值才执行后续操作
+            var logData = logElement.getAttribute('log-click');
             if (!logData) {
                 return;
             }
@@ -13636,7 +13670,7 @@ function createClickLogListener(callback) {
  * 创建全局 change 事件埋点与回调
  * @example
  * const cancel = createScrollLogListener(document.querySelector('.demo-scroll-dom'), (event, eventKey, data) => console.log({ event, eventKey, data })); /// 页面加载完成后创建监听器，取消监听器 cancel(); 。
- * <div data-scroll={JSON.stringify({ logKey: 'example-scroll-X' })}>{...X 滚动埋点元素...}</div> /// 滚动埋点元素
+ * <div log-scroll={JSON.stringify({ logKey: 'example-scroll-X' })}>{...X 滚动埋点元素...}</div> /// 滚动埋点元素
  * @param element 元素
  * @param callback 监听 Track 回调
  * @param delay 防抖延迟
@@ -13650,13 +13684,13 @@ function createScrollLogListener(element, callback, delay, threshold) {
     var lastScrollPos = { x: 0, y: 0 };
     function handleScroll(event) {
         var target = event.target;
-        // 找到拥有 data-scroll 属性的输入元素
-        var logElement = target.closest('[data-scroll]');
+        // 找到拥有 log-scroll 属性的输入元素
+        var logElement = target.closest('[log-scroll]');
         if (!logElement) {
             return;
         }
-        // data-scroll 属性有可以解析值才执行后续操作
-        var logData = logElement.getAttribute('data-scroll');
+        // log-scroll 属性有可以解析值才执行后续操作
+        var logData = logElement.getAttribute('log-scroll');
         if (!logData) {
             return;
         }
@@ -13709,8 +13743,8 @@ function createScrollLogListener(element, callback, delay, threshold) {
  * 创建全局 change 事件埋点与回调，也可使用 `emitEvent` 主动触发。
  * @example
  * const cancel = createChangeLogListener((event, key, data) => console.log({ event, key, data })); /// 页面加载完成后创建监听器，取消监听器 cancel(); 。
- * <div data-change={JSON.stringify({ logKey: 'div-input-change-0' })}><input /></div> /// 父元素总监听
- * <input data-change={JSON.stringify({ logKey: 'input-change-1' })} /> /// 普通监听
+ * <div log-change={JSON.stringify({ logKey: 'div-input-change-0' })}><input /></div> /// 父元素总监听
+ * <input log-change={JSON.stringify({ logKey: 'input-change-1' })} /> /// 普通监听
  * @param callback 监听 Track 回调
  * @returns
  */
@@ -13722,13 +13756,13 @@ function createChangeLogListener(callback) {
             parsedLogData = detail;
         }
         else {
-            // 找到拥有 data-change 属性的输入元素
-            var logElement = target.closest('[data-change]');
+            // 找到拥有 log-change 属性的输入元素
+            var logElement = target.closest('[log-change]');
             if (!logElement) {
                 return;
             }
-            // data-change 属性有可以解析值才执行后续操作
-            var logData = logElement.getAttribute('data-change');
+            // log-change 属性有可以解析值才执行后续操作
+            var logData = logElement.getAttribute('log-change');
             if (!logData) {
                 return;
             }
@@ -15441,7 +15475,7 @@ function catchPromise(promiseHandler, errorHandler) {
  * @Author: HxB
  * @Date: 2022-06-04 16:30:04
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-22 13:46:40
+ * @LastEditTime: 2024-05-11 16:33:02
  * @Description: localStorage 与 sessionStorage
  * @FilePath: \js-xxx\src\Storage\index.ts
  */
@@ -15923,4 +15957,4 @@ function getWebSocket() {
     return xWebSocket;
 }
 
-export { ANIMALS, BASE_CHAR_LOW, BASE_CHAR_UP, BASE_NUMBER, BLOOD_GROUP, BLOOD_GROUP_INFO, BS_COLORS, CODE_MSG, CONSTELLATION, CONTENT_TYPES, HttpMethod, ICONS, ID_CARD_PROVINCE, KEYBOARD_CODE, Loading, MAN, MONTHS, PY_MAPS, ROLES, Speaker, TRANSFER_STR, Toast, WEEKS, WOMAN, abs, add, addLongPressEvent, addSpace, all, any, appendLink, appendScript, arr2select, arrObj2objArr, arrayFill, arrayShuffle, arraySort, average, banConsole, base64Decode, base64Encode, bindMoreClick, buf2obj, calcCron, calcDate, calcFontSize, calculate, catchPromise, changeURL, checkFileExt, checkIdCard, checkPassWordLevel, checkUpdate, checkVersion, clearCookies, closeFullscreen, closeWebSocket, compareDate, contains, copyToClipboard, countdown, createChangeLogListener, createClickLogListener, createScrollLogListener, curryIt, customFinally, data2Arr, data2Obj, dataTo, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitEvent, emitKeyboardEvent, empty, encrypt, eslintRules, every, exportFile, findChildren, findMaxKey, findParents, float, forEach, forceToStr, formatBytes, formatDate, formatJSON, formatNumber, formatRh, getAge, getAnimal, getBSColor, getBaseURL, getBloodGroup, getConstellation, getContentType, getCookie, getCryptoJS, getDateDifference, getDateList, getDateTime, getDayInYear, getDecodeStorage, getFingerprint, getFirstVar, getKey, getLastVar, getLocalArr, getLocalObj, getMonthDayCount, getMonthInfo, getPercentage, getPinYin, getQueryString, getRandColor, getRandDate, getRandIp, getRandNum, getRandStr, getRandVar, getScrollPercent, getSearchParams, getSelectText, getSessionArr, getSessionObj, getSortVar, getStyleByName, getTimeCode, getType, getUTCTime, getUserAgent, getV, getVarSize, getViewportSize, getWebSocket, getWeekInfo, globalError, hasKey, hasSpecialChar, hideToast, html2str, inRange, initNotification, initWebSocket, insertAfter, intersection, inversion, isAccount, isAppleDevice, isArr, isArrayBuffer, isBankCard, isBlob, isBool, isBrowser, isCarCode, isChinese, isCreditCode, isDarkMode, isDate, isDecimal, isElement, isEmail, isEnglish, isEqual, isEven, isFn, isHttp, isInteger, isInvalidDate, isIpAddress, isIpv4, isIpv6, isJSON, isMobile, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPromise, isQQ, isRhNegative, isStr, isStrongPassWord, isTel, isUndef, isUrl, isWeekday, javaDecrypt, javaEncrypt, jsonClone, keyBoardResize, leftJoin, loadStr, localStorageGet, localStorageSet, log, logRunTime, markNumber, marquee, maskString, md5, ms, obj2buf, observeResource, offDefaultEvent, onClick2MoreClick, onResize, openFileSelect, openFullscreen, parseJSON, prettierRules, printDom, px2rem, qsParse, qsStringify, removeCookie, repeat, retry, rightJoin, rip, round, same, scrollToView, scrollXTo, scrollYTo, sendNotification, sendWsMsg, sessionStorageGet, sessionStorageSet, setCookie, setEncodeStorage, setEventListener, setIcon, setWsBinaryType, sha1, sha256, showProcess, showToast, showVar, sleep, slugify, sortBy, sortCallBack, stackSticky, str2html, str2unicode, sub, textCamelCase, textSplitCase, textTransferCase, throttle, timeSince, times, to, toBool, toFormData, toNum, toQueryString, toStr, toggleClass, transferCSVData, transferFileToBase64, transferIdCard, transferMoney, transferNumber, transferScanStr, transferSeconds, transferTemperature, trim, truncate, unicode2str, union, unique, useStateData, uuid, versionUpgrade, waitUntil, watermark, xAjax, xFetch, xTimer };
+export { ANIMALS, BASE_CHAR_LOW, BASE_CHAR_UP, BASE_NUMBER, BLOOD_GROUP, BLOOD_GROUP_INFO, BS_COLORS, CODE_MSG, CONSTELLATION, CONTENT_TYPES, HttpMethod, ICONS, ID_CARD_PROVINCE, KEYBOARD_CODE, Loading, MAN, MONTHS, PY_MAPS, ROLES, Speaker, TRANSFER_STR, Toast, WEEKS, WOMAN, abs, add, addLongPressEvent, addSpace, all, any, appendLink, appendScript, arr2select, arrObj2objArr, arrayFill, arrayShuffle, arraySort, average, banConsole, base64Decode, base64Encode, bindMoreClick, buf2obj, calcCron, calcDate, calcFontSize, calculate, catchPromise, changeURL, checkFileExt, checkIdCard, checkPassWordLevel, checkUpdate, checkVersion, clearCookies, closeFullscreen, closeWebSocket, compareDate, contains, copyToClipboard, countdown, createChangeLogListener, createClickLogListener, createScrollLogListener, curryIt, customFinally, data2Arr, data2Obj, dataTo, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitEvent, emitKeyboardEvent, empty, encrypt, eslintRules, every, exportFile, findChildren, findMaxKey, findParents, float, forEach, forceToStr, formatBytes, formatDate, formatJSON, formatNumber, formatRh, getAge, getAnimal, getBSColor, getBaseURL, getBloodGroup, getConstellation, getContentType, getCookie, getCryptoJS, getDateDifference, getDateList, getDateTime, getDayInYear, getDecodeStorage, getFingerprint, getFirstVar, getKey, getLastVar, getLocalArr, getLocalObj, getMonthDayCount, getMonthInfo, getPercentage, getPinYin, getQueryString, getRandColor, getRandDate, getRandIp, getRandNum, getRandStr, getRandVar, getScrollPercent, getSearchParams, getSelectText, getSessionArr, getSessionObj, getSortVar, getStyleByName, getTimeCode, getType, getUTCTime, getUserAgent, getV, getVarSize, getViewportSize, getWebSocket, getWeekInfo, globalError, hasKey, hasSpecialChar, hideToast, html2str, inRange, initNotification, initWebSocket, insertAfter, intersection, inversion, isAccount, isAppleDevice, isArr, isArrayBuffer, isBankCard, isBlob, isBool, isBrowser, isCarCode, isChinese, isCreditCode, isDarkMode, isDate, isDecimal, isElement, isEmail, isEnglish, isEqual, isEven, isFn, isHttp, isInteger, isInvalidDate, isIpAddress, isIpv4, isIpv6, isJSON, isMobile, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPromise, isQQ, isRhNegative, isStr, isStrongPassWord, isTel, isUndef, isUrl, isWeekday, javaDecrypt, javaEncrypt, jsonClone, keyBoardResize, leftJoin, loadStr, localStorageGet, localStorageSet, log, logRunTime, markNumber, marquee, maskString, md5, ms, obj2buf, observeResource, offDefaultEvent, onClick2MoreClick, onResize, openFileSelect, openFullscreen, parseJSON, prettierRules, printDom, px2rem, qsParse, qsStringify, removeCookie, repeat, retry, rightJoin, rip, round, same, scrollToView, scrollXTo, scrollYTo, sendNotification, sendWsMsg, sessionStorageGet, sessionStorageSet, setCookie, setEncodeStorage, setEventListener, setIcon, setWsBinaryType, sha1, sha256, showProcess, showToast, showVar, sleep, slugify, sortBy, sortCallBack, sortJSON, stackSticky, str2html, str2unicode, sub, textCamelCase, textSplitCase, textTransferCase, throttle, timeSince, times, to, toBool, toFormData, toNum, toQueryString, toStr, toggleClass, transferCSVData, transferFileToBase64, transferIdCard, transferMoney, transferNumber, transferScanStr, transferSeconds, transferTemperature, trim, truncate, unicode2str, union, unique, useStateData, uuid, versionUpgrade, waitUntil, watermark, xAjax, xFetch, xTimer };

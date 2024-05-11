@@ -1096,11 +1096,11 @@ export function printDom(selector: string, styles?: { iframeStyle?: any; bodySty
  * 创建全局 change 事件埋点与回调，也可使用 `emitEvent` 主动触发。
  * @example
  * const clickListenerObj = createClickLogListener((event, key, data) => console.log({ event, key, data })); /// 页面加载完成后创建监听器，取消监听器 clickListenerObj.cancel(); 。
- * <div data-log={JSON.stringify({ trigger: 'click', params: { name: '普通日志' }, logKey: 'example-key-0' })}>普通埋点元素</div> /// 普通埋点元素写法
- * <div data-log={JSON.stringify({ maxSequence: 2, sequence: 1, trigger: 'click', params: { name: '固定顺序日志' }, logKey: 'example-key-1' })}>固定顺序埋点元素 1</div> /// 固定顺序埋点元素写法
- * <div data-log={JSON.stringify({ maxSequence: 2, sequence: 2, trigger: 'click', params: { name: '固定顺序日志' }, logKey: 'example-key-1' })}>固定顺序埋点元素 2</div> /// 固定顺序埋点元素写法
- * <div data-log={JSON.stringify({ isOrder: true, orderKey: '元素 1', params: { name: '非固定顺序日志' }, logKey: 'example-key-2' })}>非固定顺序埋点元素 1</div> /// 非固定顺序埋点元素写法
- * <div data-log={JSON.stringify({ isOrder: true, orderKey: '元素 2', params: { name: '非固定顺序日志' }, logKey: 'example-key-2' })}>非固定顺序埋点元素 2</div> /// 非固定顺序埋点元素写法
+ * <div log-click={JSON.stringify({ trigger: 'click', params: { name: '普通日志' }, logKey: 'example-key-0' })}>普通埋点元素</div> /// 普通埋点元素写法
+ * <div log-click={JSON.stringify({ maxSequence: 2, sequence: 1, trigger: 'click', params: { name: '固定顺序日志' }, logKey: 'example-key-1' })}>固定顺序埋点元素 1</div> /// 固定顺序埋点元素写法
+ * <div log-click={JSON.stringify({ maxSequence: 2, sequence: 2, trigger: 'click', params: { name: '固定顺序日志' }, logKey: 'example-key-1' })}>固定顺序埋点元素 2</div> /// 固定顺序埋点元素写法
+ * <div log-click={JSON.stringify({ isOrder: true, orderKey: '元素 1', params: { name: '非固定顺序日志' }, logKey: 'example-key-2' })}>非固定顺序埋点元素 1</div> /// 非固定顺序埋点元素写法
+ * <div log-click={JSON.stringify({ isOrder: true, orderKey: '元素 2', params: { name: '非固定顺序日志' }, logKey: 'example-key-2' })}>非固定顺序埋点元素 2</div> /// 非固定顺序埋点元素写法
  * @param callback 监听 Track 回调
  * @returns
  */
@@ -1115,16 +1115,16 @@ export function createClickLogListener(callback?: any): any {
     if (detail?.customEvent) {
       parsedLogData = detail;
     } else {
-      // 找到拥有 data-log 属性的元素为有效点击
-      const logElement = target.closest('[data-log]');
+      // 找到拥有 log-click 属性的元素为有效点击
+      const logElement = target.closest('[log-click]');
       if (!logElement) {
         return;
       }
 
       // console.log({ target, logElement, sequenceMap, orderMap });
 
-      // data-log 属性有可以解析值才执行后续操作
-      const logData = logElement.getAttribute('data-log');
+      // log-click 属性有可以解析值才执行后续操作
+      const logData = logElement.getAttribute('log-click');
       if (!logData) {
         return;
       }
@@ -1219,7 +1219,7 @@ export function createClickLogListener(callback?: any): any {
  * 创建全局 change 事件埋点与回调
  * @example
  * const cancel = createScrollLogListener(document.querySelector('.demo-scroll-dom'), (event, eventKey, data) => console.log({ event, eventKey, data })); /// 页面加载完成后创建监听器，取消监听器 cancel(); 。
- * <div data-scroll={JSON.stringify({ logKey: 'example-scroll-X' })}>{...X 滚动埋点元素...}</div> /// 滚动埋点元素
+ * <div log-scroll={JSON.stringify({ logKey: 'example-scroll-X' })}>{...X 滚动埋点元素...}</div> /// 滚动埋点元素
  * @param element 元素
  * @param callback 监听 Track 回调
  * @param delay 防抖延迟
@@ -1233,13 +1233,13 @@ export function createScrollLogListener(element?: any, callback?: any, delay = 8
   function handleScroll(event: any) {
     const { target } = event;
 
-    // 找到拥有 data-scroll 属性的输入元素
-    const logElement = target.closest('[data-scroll]');
+    // 找到拥有 log-scroll 属性的输入元素
+    const logElement = target.closest('[log-scroll]');
     if (!logElement) {
       return;
     }
-    // data-scroll 属性有可以解析值才执行后续操作
-    const logData = logElement.getAttribute('data-scroll');
+    // log-scroll 属性有可以解析值才执行后续操作
+    const logData = logElement.getAttribute('log-scroll');
     if (!logData) {
       return;
     }
@@ -1302,8 +1302,8 @@ export function createScrollLogListener(element?: any, callback?: any, delay = 8
  * 创建全局 change 事件埋点与回调，也可使用 `emitEvent` 主动触发。
  * @example
  * const cancel = createChangeLogListener((event, key, data) => console.log({ event, key, data })); /// 页面加载完成后创建监听器，取消监听器 cancel(); 。
- * <div data-change={JSON.stringify({ logKey: 'div-input-change-0' })}><input /></div> /// 父元素总监听
- * <input data-change={JSON.stringify({ logKey: 'input-change-1' })} /> /// 普通监听
+ * <div log-change={JSON.stringify({ logKey: 'div-input-change-0' })}><input /></div> /// 父元素总监听
+ * <input log-change={JSON.stringify({ logKey: 'input-change-1' })} /> /// 普通监听
  * @param callback 监听 Track 回调
  * @returns
  */
@@ -1315,13 +1315,13 @@ export function createChangeLogListener(callback?: any) {
     if (detail?.customEvent) {
       parsedLogData = detail;
     } else {
-      // 找到拥有 data-change 属性的输入元素
-      const logElement = target.closest('[data-change]');
+      // 找到拥有 log-change 属性的输入元素
+      const logElement = target.closest('[log-change]');
       if (!logElement) {
         return;
       }
-      // data-change 属性有可以解析值才执行后续操作
-      const logData = logElement.getAttribute('data-change');
+      // log-change 属性有可以解析值才执行后续操作
+      const logData = logElement.getAttribute('log-change');
       if (!logData) {
         return;
       }

@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2024-05-11 11:04:49
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-05-11 16:57:11
+ * @LastEditTime: 2024-05-11 17:45:23
  * @Description: 转化开发相关内容并导出
  * @FilePath: \js-xxx\dev.build.js
  */
@@ -12,7 +12,7 @@ const transferObj = require('./dev.config.js');
 
 console.log('---转换 Dev 开始---');
 
-let es6ModuleContent = '';
+let es6ModuleContent = '\n/* eslint-disable */\n// @ts-nocheck\n';
 
 Object.keys(transferObj).forEach((i) => {
   const val = transferObj[i];

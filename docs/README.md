@@ -1,6 +1,6 @@
 js-xxx
 
-# js-xxx - v2.2.12
+# js-xxx - v2.2.13
 
 ## Table of contents
 
@@ -267,6 +267,7 @@ js-xxx
 - [slugify](README.md#slugify)
 - [sortBy](README.md#sortby)
 - [sortCallBack](README.md#sortcallback)
+- [sortJSON](README.md#sortjson)
 - [stackSticky](README.md#stacksticky)
 - [str2html](README.md#str2html)
 - [str2unicode](README.md#str2unicode)
@@ -1474,7 +1475,7 @@ ___
 
 ### checkPassWordLevel
 
-▸ **checkPassWordLevel**(`passWord`): ``2`` \| ``5`` \| ``1`` \| ``-1`` \| ``3`` \| ``4``
+▸ **checkPassWordLevel**(`passWord`): ``1`` \| ``-1`` \| ``2`` \| ``3`` \| ``4`` \| ``5``
 
 密码强度等级检测(-1~5)
 
@@ -1486,7 +1487,7 @@ ___
 
 #### Returns
 
-``2`` \| ``5`` \| ``1`` \| ``-1`` \| ``3`` \| ``4``
+``1`` \| ``-1`` \| ``2`` \| ``3`` \| ``4`` \| ``5``
 
 **`Example`**
 
@@ -1746,8 +1747,8 @@ ___
 
 ```ts
 const cancel = createChangeLogListener((event, key, data) => console.log({ event, key, data })); /// 页面加载完成后创建监听器，取消监听器 cancel(); 。
-<div data-change={JSON.stringify({ logKey: 'div-input-change-0' })}><input /></div> /// 父元素总监听
-<input data-change={JSON.stringify({ logKey: 'input-change-1' })} /> /// 普通监听
+<div log-change={JSON.stringify({ logKey: 'div-input-change-0' })}><input /></div> /// 父元素总监听
+<input log-change={JSON.stringify({ logKey: 'input-change-1' })} /> /// 普通监听
 ```
 
 ___
@@ -1772,11 +1773,11 @@ ___
 
 ```ts
 const clickListenerObj = createClickLogListener((event, key, data) => console.log({ event, key, data })); /// 页面加载完成后创建监听器，取消监听器 clickListenerObj.cancel(); 。
-<div data-log={JSON.stringify({ trigger: 'click', params: { name: '普通日志' }, logKey: 'example-key-0' })}>普通埋点元素</div> /// 普通埋点元素写法
-<div data-log={JSON.stringify({ maxSequence: 2, sequence: 1, trigger: 'click', params: { name: '固定顺序日志' }, logKey: 'example-key-1' })}>固定顺序埋点元素 1</div> /// 固定顺序埋点元素写法
-<div data-log={JSON.stringify({ maxSequence: 2, sequence: 2, trigger: 'click', params: { name: '固定顺序日志' }, logKey: 'example-key-1' })}>固定顺序埋点元素 2</div> /// 固定顺序埋点元素写法
-<div data-log={JSON.stringify({ isOrder: true, orderKey: '元素 1', params: { name: '非固定顺序日志' }, logKey: 'example-key-2' })}>非固定顺序埋点元素 1</div> /// 非固定顺序埋点元素写法
-<div data-log={JSON.stringify({ isOrder: true, orderKey: '元素 2', params: { name: '非固定顺序日志' }, logKey: 'example-key-2' })}>非固定顺序埋点元素 2</div> /// 非固定顺序埋点元素写法
+<div log-click={JSON.stringify({ trigger: 'click', params: { name: '普通日志' }, logKey: 'example-key-0' })}>普通埋点元素</div> /// 普通埋点元素写法
+<div log-click={JSON.stringify({ maxSequence: 2, sequence: 1, trigger: 'click', params: { name: '固定顺序日志' }, logKey: 'example-key-1' })}>固定顺序埋点元素 1</div> /// 固定顺序埋点元素写法
+<div log-click={JSON.stringify({ maxSequence: 2, sequence: 2, trigger: 'click', params: { name: '固定顺序日志' }, logKey: 'example-key-1' })}>固定顺序埋点元素 2</div> /// 固定顺序埋点元素写法
+<div log-click={JSON.stringify({ isOrder: true, orderKey: '元素 1', params: { name: '非固定顺序日志' }, logKey: 'example-key-2' })}>非固定顺序埋点元素 1</div> /// 非固定顺序埋点元素写法
+<div log-click={JSON.stringify({ isOrder: true, orderKey: '元素 2', params: { name: '非固定顺序日志' }, logKey: 'example-key-2' })}>非固定顺序埋点元素 2</div> /// 非固定顺序埋点元素写法
 ```
 
 ___
@@ -1804,7 +1805,7 @@ ___
 
 ```ts
 const cancel = createScrollLogListener(document.querySelector('.demo-scroll-dom'), (event, eventKey, data) => console.log({ event, eventKey, data })); /// 页面加载完成后创建监听器，取消监听器 cancel(); 。
-<div data-scroll={JSON.stringify({ logKey: 'example-scroll-X' })}>{...X 滚动埋点元素...}</div> /// 滚动埋点元素
+<div log-scroll={JSON.stringify({ logKey: 'example-scroll-X' })}>{...X 滚动埋点元素...}</div> /// 滚动埋点元素
 ```
 
 ___
@@ -2209,7 +2210,7 @@ ___
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
 | `keyOrKeyCode` | `string` \| `number` | `13` | 触发键盘 code，默认为 13 。 |
-| `eventType` | ``"keydown"`` \| ``"keyup"`` \| ``"keypress"`` | `'keydown'` | 事件类型，默认为 'keydown' 。 |
+| `eventType` | ``"keydown"`` \| ``"keypress"`` \| ``"keyup"`` | `'keydown'` | 事件类型，默认为 'keydown' 。 |
 | `element` | ``null`` \| `HTMLElement` | `document.body` | 目标元素，默认为 document.body ，支持传 document 。 |
 
 #### Returns
@@ -6765,6 +6766,22 @@ arr.sort(sortCallBack('name', false)); /// [{name: '666'}, {name: '333'}]
 
 ___
 
+### sortJSON
+
+▸ **sortJSON**(`obj`): `string`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `obj` | `any` |
+
+#### Returns
+
+`string`
+
+___
+
 ### stackSticky
 
 ▸ **stackSticky**(`selectors`, `direction?`): `void`
@@ -6932,7 +6949,7 @@ ___
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `str` | `string` | 字符串 |
-| `type` | ``2`` \| ``1`` \| ``3`` \| ``"upper"`` \| ``"lower"`` \| ``"first"`` | 目标类型 |
+| `type` | ``1`` \| ``2`` \| ``3`` \| ``"upper"`` \| ``"lower"`` \| ``"first"`` | 目标类型 |
 
 #### Returns
 

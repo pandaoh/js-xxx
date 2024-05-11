@@ -199,7 +199,48 @@ const eslintRules = (skipWords = [], rules = {}) => ({
   ...(rules ?? {}),
 });
 
+const sortJSON = (obj) => {
+  // 去重并获取对象的键数组
+  const keys = Object.keys(obj);
+
+  // 按键的首字符进行排序
+  const sortedKeys = keys.sort((a, b) => {
+    const aKey = a[0];
+    const bKey = b[0];
+    return aKey.localeCompare(bKey);
+  });
+
+  // 构建分类和排序后的对象
+  const sortedAndGroupedObject = sortedKeys.reduce((result, key) => {
+    const firstChar = key[0];
+    if (!result[firstChar]) {
+      result[firstChar] = [];
+    }
+    result[firstChar].push(key);
+    return result;
+  }, {});
+
+  // 在每个分类中按键的长度进行排序
+  for (const group in sortedAndGroupedObject) {
+    sortedAndGroupedObject[group].sort((a, b) => a.length - b.length);
+  }
+
+  // 拼接分类后的键数组
+  const finalKeys = Object.values(sortedAndGroupedObject).flat();
+
+  // 构建排序后的对象
+  const sortedObject = finalKeys.reduce((result, key) => {
+    result[key] = obj[key];
+    return result;
+  }, {});
+
+  // 转换为 JSON 字符串并输出
+  const jsonString = JSON.stringify(sortedObject);
+  return jsonString;
+};
+
 module.exports = {
   prettierRules,
   eslintRules,
+  sortJSON,
 };
