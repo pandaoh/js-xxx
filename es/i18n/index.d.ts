@@ -1,15 +1,18 @@
-interface LanguageResource {
+export interface LanguageResource {
     key: string;
     desc: string;
     translation: Record<string, string>;
 }
-interface i18nOptions {
+export interface i18nOptions {
     resources?: Record<string, LanguageResource>;
     defaultLang?: string;
 }
-interface LanguageData {
+export interface LanguageData {
     key: string;
     desc: string;
+}
+export interface Translations {
+    [language: string]: Record<string, string>;
 }
 /**
  * i18n 国际化支持类，若需切换语言后更新页面内容，可以在切换语言的时候同步更新全局状态 lang，并将 lang 设置为组件顶级 key 即可。
@@ -29,5 +32,4 @@ export declare class i18n {
     addLang(language: string, langData: LanguageData): this;
     t$(key: string, obj?: any, language?: string): string;
 }
-export {};
 //# sourceMappingURL=index.d.ts.map

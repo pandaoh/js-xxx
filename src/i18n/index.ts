@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2024-05-13 15:08:38
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-05-13 16:22:20
+ * @LastEditTime: 2024-05-13 16:26:00
  * @Description: i18n 国际化支持-需自定义如何兼容切换语言后页面刷新
  * @FilePath: \js-xxx\src\i18n\index.ts
  */
@@ -10,26 +10,26 @@
 import { loadStr } from '@/String';
 
 // 语言资源接口
-interface LanguageResource {
+export interface LanguageResource {
   key: string; // 语言的唯一标识符
   desc: string; // 语言描述
   translation: Record<string, string>; // 语言的翻译内容
 }
 
 // i18n 类的选项
-interface i18nOptions {
+export interface i18nOptions {
   resources?: Record<string, LanguageResource>; // 语言资源
   defaultLang?: string; // 默认语言
 }
 
 // 语言数据接口
-interface LanguageData {
+export interface LanguageData {
   key: string; // 语言的唯一标识符
   desc: string; // 语言描述
 }
 
 // 翻译内容接口
-interface Translations {
+export interface Translations {
   [language: string]: Record<string, string>; // 每种语言的翻译内容
 }
 

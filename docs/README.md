@@ -8,6 +8,17 @@ js-xxx
 
 - [HttpMethod](enums/HttpMethod.md)
 
+### Classes
+
+- [i18n](classes/i18n.md)
+
+### Interfaces
+
+- [LanguageData](interfaces/LanguageData.md)
+- [LanguageResource](interfaces/LanguageResource.md)
+- [Translations](interfaces/Translations.md)
+- [i18nOptions](interfaces/i18nOptions.md)
+
 ### Type Aliases
 
 - [xToastOptions](README.md#xtoastoptions)

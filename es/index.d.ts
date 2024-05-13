@@ -19,4 +19,5 @@ export * from './Toast';
 export * from './Tools';
 export * from './Types';
 export * from './WebSocket';
+export * from './i18n';
 //# sourceMappingURL=index.d.ts.map
