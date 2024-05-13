@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2024-05-13 15:08:38
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-05-13 16:26:00
+ * @LastEditTime: 2024-05-13 16:33:10
  * @Description: i18n 国际化支持-需自定义如何兼容切换语言后页面刷新
  * @FilePath: \js-xxx\src\i18n\index.ts
  */
@@ -30,7 +30,7 @@ export interface LanguageData {
 
 // 翻译内容接口
 export interface Translations {
-  [language: string]: Record<string, string>; // 每种语言的翻译内容
+  [language: string]: Record<string, string>;
 }
 
 /**
