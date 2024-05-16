@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2024-05-13 15:08:38
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-05-13 16:33:10
+ * @LastEditTime: 2024-05-16 15:35:49
  * @Description: i18n 国际化支持-需自定义如何兼容切换语言后页面刷新
  * @FilePath: \js-xxx\src\i18n\index.ts
  */
@@ -10,35 +10,41 @@
 import { loadStr } from '@/String';
 
 // 语言资源接口
-export interface LanguageResource {
+export interface i18nLanguageResource {
   key: string; // 语言的唯一标识符
   desc: string; // 语言描述
-  translation: Record<string, string>; // 语言的翻译内容
+  translation: any; // 语言的翻译内容
 }
 
 // i18n 类的选项
 export interface i18nOptions {
-  resources?: Record<string, LanguageResource>; // 语言资源
+  resources: Record<string, i18nLanguageResource>; // 语言资源
   defaultLang?: string; // 默认语言
-}
-
-// 语言数据接口
-export interface LanguageData {
-  key: string; // 语言的唯一标识符
-  desc: string; // 语言描述
-}
-
-// 翻译内容接口
-export interface Translations {
-  [language: string]: Record<string, string>;
 }
 
 /**
  * i18n 国际化支持类，若需切换语言后更新页面内容，可以在切换语言的时候同步更新全局状态 lang，并将 lang 设置为组件顶级 key 即可。
+ * @example
+ * import { zh_CN, en_US } from './locales.data'
+ * export const i18nCustom = new i18n({
+ *    resources: {
+ *     zh_CN: {
+ *      key: 'zh_CN',
+ *     desc: '简体中文',
+ *      translation: zh_CN,
+ *    },
+ *     en_US: {
+ *      key: 'en_US',
+ *      desc: 'English',
+ *     translation: en_US,
+ *     },
+ *   },
+ *   defaultLang: 'zh_CN',
+ * });
  */
 export class i18n {
-  private langList: Record<string, LanguageData>; // 支持的语言列表
-  private translations: Translations; // 所有语言的翻译内容
+  private langList: Record<string, { key: string; desc: string }>; // 支持的语言列表
+  private translations: any; // 所有语言的翻译内容
   private lang: string; // 当前语言
 
   constructor(options: i18nOptions) {
@@ -54,7 +60,7 @@ export class i18n {
   }
 
   // 加载语言资源
-  private loadResources(resources: Record<string, LanguageResource>): this {
+  private loadResources(resources: Record<string, i18nLanguageResource>): this {
     Object.keys(resources).forEach((lang) => {
       const { key, desc, translation } = resources[lang];
       this.langList[lang] = { key, desc };
@@ -79,7 +85,7 @@ export class i18n {
   }
 
   // 获取支持的语言列表
-  public getLangList(): LanguageData[] {
+  public getLangList(): { key: string; desc: string }[] {
     return Object.values(this.langList);
   }
 
@@ -105,9 +111,9 @@ export class i18n {
   }
 
   // 添加一种新的语言到支持的语言列表中
-  public addLang(language: string, langData: LanguageData): this {
+  public addLang(language: string, langData: i18nLanguageResource): this {
     this.langList[language] = langData;
-    this.translations[language] = {};
+    this.translations[language] = langData.translation;
     return this; // 支持方法链式调用
   }
 

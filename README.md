@@ -1,5 +1,7 @@
 # 前端 JavaScript 常用函数/工具/方法库
 
+## [文档(x.biugle.cn)](http://x.biugle.cn)
+
 [![OSCS Status](https://www.oscs1024.com/platform/badge/pandaoh/js-xxx.svg?size=small)](https://www.oscs1024.com/project/pandaoh/js-xxx?ref=badge_small)
 
 > 封装前端常用函数/方法/工具库，支持按需引入；无依赖和第三方库，无冗余代码，无需改动原代码结构；拆箱即用，简单便捷。

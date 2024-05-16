@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:53:39
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-03-01 17:15:03
+ * @LastEditTime: 2024-05-16 15:42:00
  * @Description: 因项目需要常用函数，不管任何项目，都放到一起。注意甄别，没有复用意义的函数就不要添加了。
  * @FilePath: \js-xxx\src\Others\index.ts
  */
@@ -13,6 +13,7 @@ import { isUrl } from '@/String';
 import { download } from '@/Dom';
 import { getContentType } from '@/Request';
 import { BLOOD_GROUP_INFO } from '@/Data';
+import { getV } from '@/Object';
 
 function _calcCheckChar(serialNo: string, hex = false) {
   serialNo = String(serialNo).trim();
@@ -641,4 +642,64 @@ export function transferTemperature(temperature: number | string, isCelsius = tr
       return parseFloat(convertedTemperature.toFixed(2));
     }
   }
+}
+
+/**
+ * 获取数据，支持格式化，默认值。
+ * @example
+ * getDataStr(123123123); /// '123123123'
+ * getDataStr(undefined); /// '-'
+ * getDataStr(undefined, 0); /// '0'
+ * getDataStr('test', '', '(', ')'); /// '(test)'
+ * getDataStr(undefined, '', '(', ')'); /// ''
+ * getDataStr(false); /// 'false'
+ * @param value 值
+ * @param defaultValue 默认值
+ * @param prefix 前缀
+ * @param suffix 后缀
+ * @returns
+ */
+export function getDataStr(value: any, defaultValue = '-', prefix = '', suffix = ''): string {
+  value = value !== undefined ? value : defaultValue !== undefined ? defaultValue : '-';
+  return value !== defaultValue ? `${prefix}${value}${suffix}` : `${value}`;
+}
+
+/**
+ * 获取转换后树的映射对象、数组
+ * @example
+ * transferTreeData(treeData, 'id'); /// { map: any, list: any[] }
+ * transferTreeData(treeData, 'data.id'); /// { map: any, list: any[] }
+ * @param treeData 树值
+ * @param key key
+ * @returns
+ */
+export function transferTreeData(treeData: any[], key = 'key'): { map: any; list: any[] } {
+  const result: { map: any; list: any[] } = {
+    map: {},
+    list: [],
+  };
+
+  if (!treeData) {
+    return result;
+  }
+
+  function traverse(node: any) {
+    if (!node) {
+      return;
+    }
+
+    const data = getV(null, node, key);
+    if (data) {
+      result.list.push(node);
+      result.map[data] = node;
+    }
+
+    if (node.children && Array.isArray(node.children)) {
+      node.children.forEach(traverse);
+    }
+  }
+
+  treeData.forEach(traverse);
+
+  return result;
 }

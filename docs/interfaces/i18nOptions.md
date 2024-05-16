@@ -1,4 +1,4 @@
-[js-xxx - v2.2.14](../README.md) / i18nOptions
+[js-xxx - v2.2.15](../README.md) / i18nOptions
 
 # Interface: i18nOptions
 
@@ -19,4 +19,4 @@ ___
 
 ### resources
 
-• `Optional` **resources**: `Record`\<`string`, [`LanguageResource`](LanguageResource.md)\>
+• **resources**: `Record`\<`string`, [`i18nLanguageResource`](i18nLanguageResource.md)\>

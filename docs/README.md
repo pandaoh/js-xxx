@@ -1,6 +1,6 @@
 js-xxx
 
-# js-xxx - v2.2.14
+# js-xxx - v2.2.15
 
 ## Table of contents
 
@@ -14,9 +14,7 @@ js-xxx
 
 ### Interfaces
 
-- [LanguageData](interfaces/LanguageData.md)
-- [LanguageResource](interfaces/LanguageResource.md)
-- [Translations](interfaces/Translations.md)
+- [i18nLanguageResource](interfaces/i18nLanguageResource.md)
 - [i18nOptions](interfaces/i18nOptions.md)
 
 ### Type Aliases
@@ -131,6 +129,7 @@ js-xxx
 - [getContentType](README.md#getcontenttype)
 - [getCookie](README.md#getcookie)
 - [getCryptoJS](README.md#getcryptojs)
+- [getDataStr](README.md#getdatastr)
 - [getDateDifference](README.md#getdatedifference)
 - [getDateList](README.md#getdatelist)
 - [getDateTime](README.md#getdatetime)
@@ -304,6 +303,7 @@ js-xxx
 - [transferScanStr](README.md#transferscanstr)
 - [transferSeconds](README.md#transferseconds)
 - [transferTemperature](README.md#transfertemperature)
+- [transferTreeData](README.md#transfertreedata)
 - [trim](README.md#trim)
 - [truncate](README.md#truncate)
 - [unicode2str](README.md#unicode2str)
@@ -2955,6 +2955,38 @@ typeof `CryptoJS`
 ```ts
 getCryptoJS(); /// CryptoJS
 getCryptoJS().MD5(str).toString(); /// md5 加密后的字符串
+```
+
+___
+
+### getDataStr
+
+▸ **getDataStr**(`value`, `defaultValue?`, `prefix?`, `suffix?`): `string`
+
+获取数据，支持格式化，默认值。
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `value` | `any` | `undefined` | 值 |
+| `defaultValue` | `string` | `'-'` | 默认值 |
+| `prefix` | `string` | `''` | 前缀 |
+| `suffix` | `string` | `''` | 后缀 |
+
+#### Returns
+
+`string`
+
+**`Example`**
+
+```ts
+getDataStr(123123123); /// '123123123'
+getDataStr(undefined); /// '-'
+getDataStr(undefined, 0); /// '0'
+getDataStr('test', '', '(', ')'); /// '(test)'
+getDataStr(undefined, '', '(', ')'); /// ''
+getDataStr(false); /// 'false'
 ```
 
 ___
@@ -7468,6 +7500,37 @@ ___
 ```ts
 transferTemperature(30.5); /// '86.9 °F'
 transferTemperature(86, false, false); /// 30
+```
+
+___
+
+### transferTreeData
+
+▸ **transferTreeData**(`treeData`, `key?`): `Object`
+
+获取转换后树的映射对象、数组
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `treeData` | `any`[] | `undefined` | 树值 |
+| `key` | `string` | `'key'` | key |
+
+#### Returns
+
+`Object`
+
+| Name | Type |
+| :------ | :------ |
+| `list` | `any`[] |
+| `map` | `any` |
+
+**`Example`**
+
+```ts
+transferTreeData(treeData, 'id'); /// { map: any, list: any[] }
+transferTreeData(treeData, 'data.id'); /// { map: any, list: any[] }
 ```
 
 ___

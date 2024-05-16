@@ -15340,6 +15340,62 @@ var $xxx = (function (exports) {
           }
       }
   }
+  /**
+   * 获取数据，支持格式化，默认值。
+   * @example
+   * getDataStr(123123123); /// '123123123'
+   * getDataStr(undefined); /// '-'
+   * getDataStr(undefined, 0); /// '0'
+   * getDataStr('test', '', '(', ')'); /// '(test)'
+   * getDataStr(undefined, '', '(', ')'); /// ''
+   * getDataStr(false); /// 'false'
+   * @param value 值
+   * @param defaultValue 默认值
+   * @param prefix 前缀
+   * @param suffix 后缀
+   * @returns
+   */
+  function getDataStr(value, defaultValue, prefix, suffix) {
+      if (defaultValue === void 0) { defaultValue = '-'; }
+      if (prefix === void 0) { prefix = ''; }
+      if (suffix === void 0) { suffix = ''; }
+      value = value !== undefined ? value : defaultValue !== undefined ? defaultValue : '-';
+      return value !== defaultValue ? "".concat(prefix).concat(value).concat(suffix) : "".concat(value);
+  }
+  /**
+   * 获取转换后树的映射对象、数组
+   * @example
+   * transferTreeData(treeData, 'id'); /// { map: any, list: any[] }
+   * transferTreeData(treeData, 'data.id'); /// { map: any, list: any[] }
+   * @param treeData 树值
+   * @param key key
+   * @returns
+   */
+  function transferTreeData(treeData, key) {
+      if (key === void 0) { key = 'key'; }
+      var result = {
+          map: {},
+          list: [],
+      };
+      if (!treeData) {
+          return result;
+      }
+      function traverse(node) {
+          if (!node) {
+              return;
+          }
+          var data = getV(null, node, key);
+          if (data) {
+              result.list.push(node);
+              result.map[data] = node;
+          }
+          if (node.children && Array.isArray(node.children)) {
+              node.children.forEach(traverse);
+          }
+      }
+      treeData.forEach(traverse);
+      return result;
+  }
 
   /*
    * @Author: HxB
@@ -15966,12 +16022,29 @@ var $xxx = (function (exports) {
    * @Author: HxB
    * @Date: 2024-05-13 15:08:38
    * @LastEditors: DoubleAm
-   * @LastEditTime: 2024-05-13 16:26:00
+   * @LastEditTime: 2024-05-16 15:35:49
    * @Description: i18n 国际化支持-需自定义如何兼容切换语言后页面刷新
    * @FilePath: \js-xxx\src\i18n\index.ts
    */
   /**
    * i18n 国际化支持类，若需切换语言后更新页面内容，可以在切换语言的时候同步更新全局状态 lang，并将 lang 设置为组件顶级 key 即可。
+   * @example
+   * import { zh_CN, en_US } from './locales.data'
+   * export const i18nCustom = new i18n({
+   *    resources: {
+   *     zh_CN: {
+   *      key: 'zh_CN',
+   *     desc: '简体中文',
+   *      translation: zh_CN,
+   *    },
+   *     en_US: {
+   *      key: 'en_US',
+   *      desc: 'English',
+   *     translation: en_US,
+   *     },
+   *   },
+   *   defaultLang: 'zh_CN',
+   * });
    */
   var i18n = /** @class */ (function () {
       function i18n(options) {
@@ -16032,7 +16105,7 @@ var $xxx = (function (exports) {
       // 添加一种新的语言到支持的语言列表中
       i18n.prototype.addLang = function (language, langData) {
           this.langList[language] = langData;
-          this.translations[language] = {};
+          this.translations[language] = langData.translation;
           return this; // 支持方法链式调用
       };
       // 将键翻译为当前语言
@@ -16149,6 +16222,7 @@ var $xxx = (function (exports) {
   exports.getContentType = getContentType;
   exports.getCookie = getCookie;
   exports.getCryptoJS = getCryptoJS;
+  exports.getDataStr = getDataStr;
   exports.getDateDifference = getDateDifference;
   exports.getDateList = getDateList;
   exports.getDateTime = getDateTime;
@@ -16323,6 +16397,7 @@ var $xxx = (function (exports) {
   exports.transferScanStr = transferScanStr;
   exports.transferSeconds = transferSeconds;
   exports.transferTemperature = transferTemperature;
+  exports.transferTreeData = transferTreeData;
   exports.trim = trim;
   exports.truncate = truncate;
   exports.unicode2str = unicode2str;

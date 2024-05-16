@@ -186,4 +186,33 @@ export declare function exportFile(data: string, fileName?: string, fileType?: s
  * @returns
  */
 export declare function transferTemperature(temperature: number | string, isCelsius?: boolean, addSuffix?: boolean): string | number;
+/**
+ * 获取数据，支持格式化，默认值。
+ * @example
+ * getDataStr(123123123); /// '123123123'
+ * getDataStr(undefined); /// '-'
+ * getDataStr(undefined, 0); /// '0'
+ * getDataStr('test', '', '(', ')'); /// '(test)'
+ * getDataStr(undefined, '', '(', ')'); /// ''
+ * getDataStr(false); /// 'false'
+ * @param value 值
+ * @param defaultValue 默认值
+ * @param prefix 前缀
+ * @param suffix 后缀
+ * @returns
+ */
+export declare function getDataStr(value: any, defaultValue?: string, prefix?: string, suffix?: string): string;
+/**
+ * 获取转换后树的映射对象、数组
+ * @example
+ * transferTreeData(treeData, 'id'); /// { map: any, list: any[] }
+ * transferTreeData(treeData, 'data.id'); /// { map: any, list: any[] }
+ * @param treeData 树值
+ * @param key key
+ * @returns
+ */
+export declare function transferTreeData(treeData: any[], key?: string): {
+    map: any;
+    list: any[];
+};
 //# sourceMappingURL=index.d.ts.map
