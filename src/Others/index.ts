@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:53:39
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-05-16 15:42:00
+ * @LastEditTime: 2024-05-16 15:45:28
  * @Description: 因项目需要常用函数，不管任何项目，都放到一起。注意甄别，没有复用意义的函数就不要添加了。
  * @FilePath: \js-xxx\src\Others\index.ts
  */
@@ -665,7 +665,7 @@ export function getDataStr(value: any, defaultValue = '-', prefix = '', suffix =
 }
 
 /**
- * 获取转换后树的映射对象、数组
+ * 获取转换后树的映射对象、数组 `{ map: any, list: any[] }`
  * @example
  * transferTreeData(treeData, 'id'); /// { map: any, list: any[] }
  * transferTreeData(treeData, 'data.id'); /// { map: any, list: any[] }
