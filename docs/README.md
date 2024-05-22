@@ -1,6 +1,6 @@
 js-xxx
 
-# js-xxx - v2.2.15
+# js-xxx - v2.2.16
 
 ## Table of contents
 
@@ -109,6 +109,7 @@ js-xxx
 - [eslintRules](README.md#eslintrules)
 - [every](README.md#every)
 - [exportFile](README.md#exportfile)
+- [filterTreeData](README.md#filtertreedata)
 - [findChildren](README.md#findchildren)
 - [findMaxKey](README.md#findmaxkey)
 - [findParents](README.md#findparents)
@@ -160,6 +161,7 @@ js-xxx
 - [getSortVar](README.md#getsortvar)
 - [getStyleByName](README.md#getstylebyname)
 - [getTimeCode](README.md#gettimecode)
+- [getTreeData](README.md#gettreedata)
 - [getType](README.md#gettype)
 - [getUTCTime](README.md#getutctime)
 - [getUserAgent](README.md#getuseragent)
@@ -2410,6 +2412,35 @@ exportFile('http://a.biugle.cn/img/cdn/dev/avatar/1.png', 'test', 'png'); /// �
 
 ___
 
+### filterTreeData
+
+▸ **filterTreeData**(`treeData`, `filterValue`, `searchKeys?`, `strictMode?`): `any`
+
+过滤树级数据，并支持显示完整结构。
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `treeData` | `any`[] | `undefined` | 树值 |
+| `filterValue` | `string` | `undefined` | 过滤的值 |
+| `searchKeys` | `string` \| `string`[] | `undefined` | 用于过滤的 key |
+| `strictMode` | `boolean` | `false` | 搜索配置 strictMode 时，会强制平铺排列返回符合条件的节点，默认不开启，保持树排列。 |
+
+#### Returns
+
+`any`
+
+**`Example`**
+
+```ts
+filterTreeData(treeData, '测试搜索关键字', 'id'); /// ...
+filterTreeData(treeData, '测试搜索关键字', ['key', 'title']); /// ...
+filterTreeData(treeData, '测试搜索关键字', ['data.key', 'title'], true); /// ...
+```
+
+___
+
 ### findChildren
 
 ▸ **findChildren**(`element`): `any`[]
@@ -3724,6 +3755,37 @@ ___
 
 ```ts
 getTimeCode(); /// '2036551026042022'
+```
+
+___
+
+### getTreeData
+
+▸ **getTreeData**(`treeData`, `key?`): `Object`
+
+获取转换后树的映射对象、数组 `{ map: any, list: any[] }`
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `treeData` | `any`[] | `undefined` | 树值 |
+| `key` | `string` | `'key'` | key |
+
+#### Returns
+
+`Object`
+
+| Name | Type |
+| :------ | :------ |
+| `list` | `any`[] |
+| `map` | `any` |
+
+**`Example`**
+
+```ts
+getTreeData(treeData, 'id'); /// { map: any, list: any[] }
+getTreeData(treeData, 'data.id'); /// { map: any, list: any[] }
 ```
 
 ___
@@ -7506,31 +7568,29 @@ ___
 
 ### transferTreeData
 
-▸ **transferTreeData**(`treeData`, `key?`): `Object`
+▸ **transferTreeData**(`sourceData`, `options?`): `any`[]
 
-获取转换后树的映射对象、数组
+转换数组数据为树状数据
 
 #### Parameters
 
-| Name | Type | Default value | Description |
-| :------ | :------ | :------ | :------ |
-| `treeData` | `any`[] | `undefined` | 树值 |
-| `key` | `string` | `'key'` | key |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `sourceData` | `any`[] | 源数据 |
+| `options` | `Object` | 转化选项 |
+| `options.labelKey` | `string` | - |
+| `options.parentKey` | `string` | - |
+| `options.valueKey` | `string` | - |
 
 #### Returns
 
-`Object`
-
-| Name | Type |
-| :------ | :------ |
-| `list` | `any`[] |
-| `map` | `any` |
+`any`[]
 
 **`Example`**
 
 ```ts
-transferTreeData(treeData, 'id'); /// { map: any, list: any[] }
-transferTreeData(treeData, 'data.id'); /// { map: any, list: any[] }
+transferTreeData(treeData); /// ...
+transferTreeData(treeData, { labelKey: 'title', valueKey: 'key', parentKey: 'parent' }); /// ...
 ```
 
 ___

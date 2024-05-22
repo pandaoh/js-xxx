@@ -3,13 +3,13 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:53:39
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-05-16 15:45:28
+ * @LastEditTime: 2024-05-22 09:53:57
  * @Description: 因项目需要常用函数，不管任何项目，都放到一起。注意甄别，没有复用意义的函数就不要添加了。
  * @FilePath: \js-xxx\src\Others\index.ts
  */
 
 import { formatDate } from '@/Date';
-import { isUrl } from '@/String';
+import { isUrl, trim } from '@/String';
 import { download } from '@/Dom';
 import { getContentType } from '@/Request';
 import { BLOOD_GROUP_INFO } from '@/Data';
@@ -667,13 +667,13 @@ export function getDataStr(value: any, defaultValue = '-', prefix = '', suffix =
 /**
  * 获取转换后树的映射对象、数组 `{ map: any, list: any[] }`
  * @example
- * transferTreeData(treeData, 'id'); /// { map: any, list: any[] }
- * transferTreeData(treeData, 'data.id'); /// { map: any, list: any[] }
+ * getTreeData(treeData, 'id'); /// { map: any, list: any[] }
+ * getTreeData(treeData, 'data.id'); /// { map: any, list: any[] }
  * @param treeData 树值
  * @param key key
  * @returns
  */
-export function transferTreeData(treeData: any[], key = 'key'): { map: any; list: any[] } {
+export function getTreeData(treeData: any[], key = 'key'): { map: any; list: any[] } {
   const result: { map: any; list: any[] } = {
     map: {},
     list: [],
@@ -683,23 +683,143 @@ export function transferTreeData(treeData: any[], key = 'key'): { map: any; list
     return result;
   }
 
-  function traverse(node: any) {
+  function traverse(node: any, parent?: any): any {
     if (!node) {
       return;
     }
 
     const data = getV(null, node, key);
     if (data) {
-      result.list.push(node);
-      result.map[data] = node;
+      const newNode = {
+        ...node,
+        parent: parent,
+      };
+      result.list.push(newNode);
+      result.map[data] = newNode;
     }
 
     if (node.children && Array.isArray(node.children)) {
-      node.children.forEach(traverse);
+      node.children.forEach((i: any) => traverse(i, data));
     }
   }
 
   treeData.forEach(traverse);
 
   return result;
+}
+
+/**
+ * 过滤树级数据，并支持显示完整结构。
+ * @example
+ * filterTreeData(treeData, '测试搜索关键字', 'id'); /// ...
+ * filterTreeData(treeData, '测试搜索关键字', ['key', 'title']); /// ...
+ * filterTreeData(treeData, '测试搜索关键字', ['data.key', 'title'], true); /// ...
+ * @param treeData 树值
+ * @param filterValue 过滤的值
+ * @param searchKeys 用于过滤的 key
+ * @param strictMode 搜索配置 strictMode 时，会强制平铺排列返回符合条件的节点，默认不开启，保持树排列。
+ * @returns
+ */
+export function filterTreeData(
+  treeData: any[],
+  filterValue: string,
+  searchKeys: string | string[] = ['key', 'title'],
+  strictMode = false,
+) {
+  if (!filterValue) {
+    return treeData;
+  }
+  treeData = JSON.parse(JSON.stringify(treeData));
+  filterValue = trim(filterValue).toLowerCase();
+  // @ts-ignore
+  const newSearchKeys: string[] = [].concat(searchKeys);
+  return treeData.reduce((filteredTree, node: any) => {
+    if (newSearchKeys.some((i) => `${getV('', node, i)}`.toLowerCase().includes(filterValue))) {
+      const filteredNode = node;
+      filteredTree.push(filteredNode);
+      if (strictMode && filteredNode?.children?.length) {
+        filteredTree.push(...filterTreeData(node.children, filterValue, searchKeys, strictMode));
+        filteredNode.children = undefined;
+      }
+    } else if (node.children) {
+      if (strictMode) {
+        filteredTree.push(...filterTreeData(node.children, filterValue, searchKeys, strictMode));
+      } else {
+        const filteredChildren = filterTreeData(node.children, filterValue, searchKeys, strictMode);
+
+        if (filteredChildren?.length) {
+          const filteredNode = { ...node, children: filteredChildren };
+          filteredTree.push(filteredNode);
+        }
+      }
+    }
+
+    return filteredTree;
+  }, []);
+}
+
+/**
+ * 转换数组数据为树状数据
+ * @example
+ * transferTreeData(treeData); /// ...
+ * transferTreeData(treeData, { labelKey: 'title', valueKey: 'key', parentKey: 'parent' }); /// ...
+ * @param sourceData 源数据
+ * @param options 转化选项
+ * @returns
+ */
+export function transferTreeData(
+  sourceData: any[],
+  options: { labelKey: string; valueKey: string; parentKey: string } = {
+    labelKey: 'title',
+    valueKey: 'key',
+    parentKey: 'parent',
+  },
+) {
+  const { labelKey, valueKey, parentKey } = options;
+  // 构建节点映射表
+  const nodeMap = new Map<string, any>();
+  const allKeys: any[] = [];
+  sourceData.forEach((item) => {
+    const label = item[labelKey];
+    const value = item[valueKey];
+    const parent = item[parentKey];
+
+    const treeNode: any = {
+      label,
+      value,
+      title: label,
+      key: value,
+      parent,
+      ...item,
+      children: undefined,
+    };
+
+    allKeys.push(value);
+    nodeMap.set(value, treeNode);
+  });
+
+  // 关联父子节点
+  sourceData.forEach((item) => {
+    const value = item[valueKey];
+    const parentNode = nodeMap.get(item[parentKey]);
+
+    if (parentNode) {
+      if (!parentNode.children) {
+        parentNode.children = [];
+      }
+      parentNode.children.push(nodeMap.get(value));
+    }
+  });
+
+  // 查找根节点
+  const rootNodes: any[] = [];
+  sourceData.forEach((item) => {
+    const value = item[valueKey];
+    const treeNode = nodeMap.get(value);
+    const parent = item[parentKey];
+    if (!allKeys.includes(parent)) {
+      rootNodes.push(treeNode);
+    }
+  });
+  return rootNodes;
 }

@@ -15366,15 +15366,15 @@
       return value !== defaultValue ? "".concat(prefix).concat(value).concat(suffix) : "".concat(value);
   }
   /**
-   * 获取转换后树的映射对象、数组
+   * 获取转换后树的映射对象、数组 `{ map: any, list: any[] }`
    * @example
-   * transferTreeData(treeData, 'id'); /// { map: any, list: any[] }
-   * transferTreeData(treeData, 'data.id'); /// { map: any, list: any[] }
+   * getTreeData(treeData, 'id'); /// { map: any, list: any[] }
+   * getTreeData(treeData, 'data.id'); /// { map: any, list: any[] }
    * @param treeData 树值
    * @param key key
    * @returns
    */
-  function transferTreeData(treeData, key) {
+  function getTreeData(treeData, key) {
       if (key === void 0) { key = 'key'; }
       var result = {
           map: {},
@@ -15383,21 +15383,119 @@
       if (!treeData) {
           return result;
       }
-      function traverse(node) {
+      function traverse(node, parent) {
           if (!node) {
               return;
           }
           var data = getV(null, node, key);
           if (data) {
-              result.list.push(node);
-              result.map[data] = node;
+              var newNode = __assign(__assign({}, node), { parent: parent });
+              result.list.push(newNode);
+              result.map[data] = newNode;
           }
           if (node.children && Array.isArray(node.children)) {
-              node.children.forEach(traverse);
+              node.children.forEach(function (i) { return traverse(i, data); });
           }
       }
       treeData.forEach(traverse);
       return result;
+  }
+  /**
+   * 过滤树级数据，并支持显示完整结构。
+   * @example
+   * filterTreeData(treeData, '测试搜索关键字', 'id'); /// ...
+   * filterTreeData(treeData, '测试搜索关键字', ['key', 'title']); /// ...
+   * filterTreeData(treeData, '测试搜索关键字', ['data.key', 'title'], true); /// ...
+   * @param treeData 树值
+   * @param filterValue 过滤的值
+   * @param searchKeys 用于过滤的 key
+   * @param strictMode 搜索配置 strictMode 时，会强制平铺排列返回符合条件的节点，默认不开启，保持树排列。
+   * @returns
+   */
+  function filterTreeData(treeData, filterValue, searchKeys, strictMode) {
+      if (searchKeys === void 0) { searchKeys = ['key', 'title']; }
+      if (strictMode === void 0) { strictMode = false; }
+      if (!filterValue) {
+          return treeData;
+      }
+      treeData = JSON.parse(JSON.stringify(treeData));
+      filterValue = trim(filterValue).toLowerCase();
+      // @ts-ignore
+      var newSearchKeys = [].concat(searchKeys);
+      return treeData.reduce(function (filteredTree, node) {
+          var _a;
+          if (newSearchKeys.some(function (i) { return "".concat(getV('', node, i)).toLowerCase().includes(filterValue); })) {
+              var filteredNode = node;
+              filteredTree.push(filteredNode);
+              if (strictMode && ((_a = filteredNode === null || filteredNode === void 0 ? void 0 : filteredNode.children) === null || _a === void 0 ? void 0 : _a.length)) {
+                  filteredTree.push.apply(filteredTree, __spreadArray([], __read(filterTreeData(node.children, filterValue, searchKeys, strictMode)), false));
+                  filteredNode.children = undefined;
+              }
+          }
+          else if (node.children) {
+              if (strictMode) {
+                  filteredTree.push.apply(filteredTree, __spreadArray([], __read(filterTreeData(node.children, filterValue, searchKeys, strictMode)), false));
+              }
+              else {
+                  var filteredChildren = filterTreeData(node.children, filterValue, searchKeys, strictMode);
+                  if (filteredChildren === null || filteredChildren === void 0 ? void 0 : filteredChildren.length) {
+                      var filteredNode = __assign(__assign({}, node), { children: filteredChildren });
+                      filteredTree.push(filteredNode);
+                  }
+              }
+          }
+          return filteredTree;
+      }, []);
+  }
+  /**
+   * 转换数组数据为树状数据
+   * @example
+   * transferTreeData(treeData); /// ...
+   * transferTreeData(treeData, { labelKey: 'title', valueKey: 'key', parentKey: 'parent' }); /// ...
+   * @param sourceData 源数据
+   * @param options 转化选项
+   * @returns
+   */
+  function transferTreeData(sourceData, options) {
+      if (options === void 0) { options = {
+          labelKey: 'title',
+          valueKey: 'key',
+          parentKey: 'parent',
+      }; }
+      var labelKey = options.labelKey, valueKey = options.valueKey, parentKey = options.parentKey;
+      // 构建节点映射表
+      var nodeMap = new Map();
+      var allKeys = [];
+      sourceData.forEach(function (item) {
+          var label = item[labelKey];
+          var value = item[valueKey];
+          var parent = item[parentKey];
+          var treeNode = __assign(__assign({ label: label, value: value, title: label, key: value, parent: parent }, item), { children: undefined });
+          allKeys.push(value);
+          nodeMap.set(value, treeNode);
+      });
+      // 关联父子节点
+      sourceData.forEach(function (item) {
+          var value = item[valueKey];
+          var parentNode = nodeMap.get(item[parentKey]);
+          if (parentNode) {
+              if (!parentNode.children) {
+                  parentNode.children = [];
+              }
+              parentNode.children.push(nodeMap.get(value));
+          }
+      });
+      // 查找根节点
+      var rootNodes = [];
+      sourceData.forEach(function (item) {
+          var value = item[valueKey];
+          var treeNode = nodeMap.get(value);
+          var parent = item[parentKey];
+          if (!allKeys.includes(parent)) {
+              rootNodes.push(treeNode);
+          }
+      });
+      return rootNodes;
   }
 
   /*
@@ -16205,6 +16303,7 @@
   exports.eslintRules = eslintRules;
   exports.every = every;
   exports.exportFile = exportFile;
+  exports.filterTreeData = filterTreeData;
   exports.findChildren = findChildren;
   exports.findMaxKey = findMaxKey;
   exports.findParents = findParents;
@@ -16256,6 +16355,7 @@
   exports.getSortVar = getSortVar;
   exports.getStyleByName = getStyleByName;
   exports.getTimeCode = getTimeCode;
+  exports.getTreeData = getTreeData;
   exports.getType = getType;
   exports.getUTCTime = getUTCTime;
   exports.getUserAgent = getUserAgent;
