@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2024-05-13 15:08:38
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-05-16 15:35:49
+ * @LastEditTime: 2024-05-22 10:00:35
  * @Description: i18n 国际化支持-需自定义如何兼容切换语言后页面刷新
  * @FilePath: \js-xxx\src\i18n\index.ts
  */
@@ -117,7 +117,7 @@ export class i18n {
     return this; // 支持方法链式调用
   }
 
-  // 将键翻译为当前语言
+  // 将键翻译为当前语言-后续考虑优先级为当前语言、默认语言、[key]
   public t$(key: string, obj?: any, language?: string): string {
     const translation = this.getTranslation(key, language);
     if (!translation) {
