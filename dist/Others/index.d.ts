@@ -218,16 +218,16 @@ export declare function getTreeData(treeData: any[], key?: string): {
 /**
  * 过滤树级数据，并支持显示完整结构。
  * @example
- * filterTreeData(treeData, '测试搜索关键字', 'id'); /// ...
- * filterTreeData(treeData, '测试搜索关键字', ['key', 'title']); /// ...
- * filterTreeData(treeData, '测试搜索关键字', ['data.key', 'title'], true); /// ...
+ * searchTreeData(treeData, '测试搜索关键字', 'id'); /// ...
+ * searchTreeData(treeData, '测试搜索关键字', ['key', 'title']); /// ...
+ * searchTreeData(treeData, '测试搜索关键字', ['data.key', 'title'], true); /// ...
  * @param treeData 树值
- * @param filterValue 过滤的值
+ * @param searchText 过滤的值
  * @param searchKeys 用于过滤的 key
  * @param strictMode 搜索配置 strictMode 时，会强制平铺排列返回符合条件的节点，默认不开启，保持树排列。
  * @returns
  */
-export declare function filterTreeData(treeData: any[], filterValue: string, searchKeys?: string | string[], strictMode?: boolean): any;
+export declare function searchTreeData(treeData: any[], searchText: string, searchKeys?: string | string[], strictMode?: boolean): any[];
 /**
  * 转换数组数据为树状数据
  * @example
@@ -242,4 +242,14 @@ export declare function transferTreeData(sourceData: any[], options?: {
     valueKey: string;
     parentKey: string;
 }): any[];
+/**
+ * 获取筛选后的树数据
+ * @example
+ * filterTreeData(treeData, (item) => item); /// ...
+ * filterTreeData(treeData, (item) => filterIds.includes(item.id)); /// ...
+ * @param treeData 树值
+ * @param callback 过滤的方法，默认不过滤。
+ * @returns
+ */
+export declare function filterTreeData(treeData: any[], callback?: (item: any) => boolean): any[];
 //# sourceMappingURL=index.d.ts.map

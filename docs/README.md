@@ -1,6 +1,6 @@
 js-xxx
 
-# js-xxx - v2.2.16
+# js-xxx - v2.2.17
 
 ## Table of contents
 
@@ -261,6 +261,7 @@ js-xxx
 - [scrollToView](README.md#scrolltoview)
 - [scrollXTo](README.md#scrollxto)
 - [scrollYTo](README.md#scrollyto)
+- [searchTreeData](README.md#searchtreedata)
 - [sendNotification](README.md#sendnotification)
 - [sendWsMsg](README.md#sendwsmsg)
 - [sessionStorageGet](README.md#sessionstorageget)
@@ -2414,29 +2415,26 @@ ___
 
 ### filterTreeData
 
-▸ **filterTreeData**(`treeData`, `filterValue`, `searchKeys?`, `strictMode?`): `any`
+▸ **filterTreeData**(`treeData`, `callback?`): `any`[]
 
-过滤树级数据，并支持显示完整结构。
+获取筛选后的树数据
 
 #### Parameters
 
-| Name | Type | Default value | Description |
-| :------ | :------ | :------ | :------ |
-| `treeData` | `any`[] | `undefined` | 树值 |
-| `filterValue` | `string` | `undefined` | 过滤的值 |
-| `searchKeys` | `string` \| `string`[] | `undefined` | 用于过滤的 key |
-| `strictMode` | `boolean` | `false` | 搜索配置 strictMode 时，会强制平铺排列返回符合条件的节点，默认不开启，保持树排列。 |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `treeData` | `any`[] | 树值 |
+| `callback?` | (`item`: `any`) => `boolean` | 过滤的方法，默认不过滤。 |
 
 #### Returns
 
-`any`
+`any`[]
 
 **`Example`**
 
 ```ts
-filterTreeData(treeData, '测试搜索关键字', 'id'); /// ...
-filterTreeData(treeData, '测试搜索关键字', ['key', 'title']); /// ...
-filterTreeData(treeData, '测试搜索关键字', ['data.key', 'title'], true); /// ...
+filterTreeData(treeData, (item) => item); /// ...
+filterTreeData(treeData, (item) => filterIds.includes(item.id)); /// ...
 ```
 
 ___
@@ -6405,6 +6403,35 @@ Y 轴滚动到指定位置
 scrollYTo(0); /// 滚动到顶部
 scrollYTo('start', null, document.documentElement); /// 滚动到顶部
 scrollYTo('end', (percent) => console.log(percent), document.querySelector('body')); /// 滚动到底部
+```
+
+___
+
+### searchTreeData
+
+▸ **searchTreeData**(`treeData`, `searchText`, `searchKeys?`, `strictMode?`): `any`[]
+
+过滤树级数据，并支持显示完整结构。
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `treeData` | `any`[] | `undefined` | 树值 |
+| `searchText` | `string` | `undefined` | 过滤的值 |
+| `searchKeys` | `string` \| `string`[] | `undefined` | 用于过滤的 key |
+| `strictMode` | `boolean` | `false` | 搜索配置 strictMode 时，会强制平铺排列返回符合条件的节点，默认不开启，保持树排列。 |
+
+#### Returns
+
+`any`[]
+
+**`Example`**
+
+```ts
+searchTreeData(treeData, '测试搜索关键字', 'id'); /// ...
+searchTreeData(treeData, '测试搜索关键字', ['key', 'title']); /// ...
+searchTreeData(treeData, '测试搜索关键字', ['data.key', 'title'], true); /// ...
 ```
 
 ___

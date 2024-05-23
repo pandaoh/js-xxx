@@ -15400,41 +15400,41 @@ var $xxx = (function (exports) {
   /**
    * 过滤树级数据，并支持显示完整结构。
    * @example
-   * filterTreeData(treeData, '测试搜索关键字', 'id'); /// ...
-   * filterTreeData(treeData, '测试搜索关键字', ['key', 'title']); /// ...
-   * filterTreeData(treeData, '测试搜索关键字', ['data.key', 'title'], true); /// ...
+   * searchTreeData(treeData, '测试搜索关键字', 'id'); /// ...
+   * searchTreeData(treeData, '测试搜索关键字', ['key', 'title']); /// ...
+   * searchTreeData(treeData, '测试搜索关键字', ['data.key', 'title'], true); /// ...
    * @param treeData 树值
-   * @param filterValue 过滤的值
+   * @param searchText 过滤的值
    * @param searchKeys 用于过滤的 key
    * @param strictMode 搜索配置 strictMode 时，会强制平铺排列返回符合条件的节点，默认不开启，保持树排列。
    * @returns
    */
-  function filterTreeData(treeData, filterValue, searchKeys, strictMode) {
+  function searchTreeData(treeData, searchText, searchKeys, strictMode) {
       if (searchKeys === void 0) { searchKeys = ['key', 'title']; }
       if (strictMode === void 0) { strictMode = false; }
-      if (!filterValue) {
+      if (!searchText || !treeData) {
           return treeData;
       }
       treeData = JSON.parse(JSON.stringify(treeData));
-      filterValue = trim(filterValue).toLowerCase();
+      searchText = trim(searchText).toLowerCase();
       // @ts-ignore
       var newSearchKeys = [].concat(searchKeys);
       return treeData.reduce(function (filteredTree, node) {
           var _a;
-          if (newSearchKeys.some(function (i) { return "".concat(getV('', node, i)).toLowerCase().includes(filterValue); })) {
+          if (newSearchKeys.some(function (i) { return "".concat(getV('', node, i)).toLowerCase().includes(searchText); })) {
               var filteredNode = node;
               filteredTree.push(filteredNode);
               if (strictMode && ((_a = filteredNode === null || filteredNode === void 0 ? void 0 : filteredNode.children) === null || _a === void 0 ? void 0 : _a.length)) {
-                  filteredTree.push.apply(filteredTree, __spreadArray([], __read(filterTreeData(node.children, filterValue, searchKeys, strictMode)), false));
+                  filteredTree.push.apply(filteredTree, __spreadArray([], __read(searchTreeData(node.children, searchText, searchKeys, strictMode)), false));
                   filteredNode.children = undefined;
               }
           }
           else if (node.children) {
               if (strictMode) {
-                  filteredTree.push.apply(filteredTree, __spreadArray([], __read(filterTreeData(node.children, filterValue, searchKeys, strictMode)), false));
+                  filteredTree.push.apply(filteredTree, __spreadArray([], __read(searchTreeData(node.children, searchText, searchKeys, strictMode)), false));
               }
               else {
-                  var filteredChildren = filterTreeData(node.children, filterValue, searchKeys, strictMode);
+                  var filteredChildren = searchTreeData(node.children, searchText, searchKeys, strictMode);
                   if (filteredChildren === null || filteredChildren === void 0 ? void 0 : filteredChildren.length) {
                       var filteredNode = __assign(__assign({}, node), { children: filteredChildren });
                       filteredTree.push(filteredNode);
@@ -15459,6 +15459,9 @@ var $xxx = (function (exports) {
           valueKey: 'key',
           parentKey: 'parent',
       }; }
+      if (!sourceData) {
+          return sourceData;
+      }
       var labelKey = options.labelKey, valueKey = options.valueKey, parentKey = options.parentKey;
       // 构建节点映射表
       var nodeMap = new Map();
@@ -15493,6 +15496,36 @@ var $xxx = (function (exports) {
           }
       });
       return rootNodes;
+  }
+  /**
+   * 获取筛选后的树数据
+   * @example
+   * filterTreeData(treeData, (item) => item); /// ...
+   * filterTreeData(treeData, (item) => filterIds.includes(item.id)); /// ...
+   * @param treeData 树值
+   * @param callback 过滤的方法，默认不过滤。
+   * @returns
+   */
+  function filterTreeData(treeData, callback) {
+      if (!callback || !treeData) {
+          return treeData;
+      }
+      treeData = JSON.parse(JSON.stringify(treeData));
+      var results = [];
+      treeData.forEach(function (item) {
+          var _a;
+          var clonedItem = __assign({}, item); // 使用浅拷贝避免修改原始数据
+          if (!clonedItem.children && !callback(clonedItem)) {
+              return;
+          }
+          if (clonedItem.children) {
+              clonedItem.children = filterTreeData(clonedItem.children, callback);
+          }
+          if (callback(clonedItem) || ((_a = clonedItem.children) === null || _a === void 0 ? void 0 : _a.length)) {
+              results.push(clonedItem);
+          }
+      });
+      return results;
   }
 
   /*
@@ -16120,7 +16153,7 @@ var $xxx = (function (exports) {
    * @Author: HxB
    * @Date: 2024-05-13 15:08:38
    * @LastEditors: DoubleAm
-   * @LastEditTime: 2024-05-16 15:35:49
+   * @LastEditTime: 2024-05-22 10:00:35
    * @Description: i18n 国际化支持-需自定义如何兼容切换语言后页面刷新
    * @FilePath: \js-xxx\src\i18n\index.ts
    */
@@ -16206,7 +16239,7 @@ var $xxx = (function (exports) {
           this.translations[language] = langData.translation;
           return this; // 支持方法链式调用
       };
-      // 将键翻译为当前语言
+      // 将键翻译为当前语言-后续考虑优先级为当前语言、默认语言、[key]
       i18n.prototype.t$ = function (key, obj, language) {
           var translation = this.getTranslation(key, language);
           if (!translation) {
@@ -16453,6 +16486,7 @@ var $xxx = (function (exports) {
   exports.scrollToView = scrollToView;
   exports.scrollXTo = scrollXTo;
   exports.scrollYTo = scrollYTo;
+  exports.searchTreeData = searchTreeData;
   exports.sendNotification = sendNotification;
   exports.sendWsMsg = sendWsMsg;
   exports.sessionStorageGet = sessionStorageGet;

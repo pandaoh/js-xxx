@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:53:39
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-05-22 09:53:57
+ * @LastEditTime: 2024-05-23 18:28:11
  * @Description: 因项目需要常用函数，不管任何项目，都放到一起。注意甄别，没有复用意义的函数就不要添加了。
  * @FilePath: \js-xxx\src\Others\index.ts
  */
@@ -711,41 +711,41 @@ export function getTreeData(treeData: any[], key = 'key'): { map: any; list: any
 /**
  * 过滤树级数据，并支持显示完整结构。
  * @example
- * filterTreeData(treeData, '测试搜索关键字', 'id'); /// ...
- * filterTreeData(treeData, '测试搜索关键字', ['key', 'title']); /// ...
- * filterTreeData(treeData, '测试搜索关键字', ['data.key', 'title'], true); /// ...
+ * searchTreeData(treeData, '测试搜索关键字', 'id'); /// ...
+ * searchTreeData(treeData, '测试搜索关键字', ['key', 'title']); /// ...
+ * searchTreeData(treeData, '测试搜索关键字', ['data.key', 'title'], true); /// ...
  * @param treeData 树值
- * @param filterValue 过滤的值
+ * @param searchText 过滤的值
  * @param searchKeys 用于过滤的 key
  * @param strictMode 搜索配置 strictMode 时，会强制平铺排列返回符合条件的节点，默认不开启，保持树排列。
  * @returns
  */
-export function filterTreeData(
+export function searchTreeData(
   treeData: any[],
-  filterValue: string,
+  searchText: string,
   searchKeys: string | string[] = ['key', 'title'],
   strictMode = false,
-) {
-  if (!filterValue) {
+): any[] {
+  if (!searchText || !treeData) {
     return treeData;
   }
   treeData = JSON.parse(JSON.stringify(treeData));
-  filterValue = trim(filterValue).toLowerCase();
+  searchText = trim(searchText).toLowerCase();
   // @ts-ignore
   const newSearchKeys: string[] = [].concat(searchKeys);
   return treeData.reduce((filteredTree, node: any) => {
-    if (newSearchKeys.some((i) => `${getV('', node, i)}`.toLowerCase().includes(filterValue))) {
+    if (newSearchKeys.some((i) => `${getV('', node, i)}`.toLowerCase().includes(searchText))) {
       const filteredNode = node;
       filteredTree.push(filteredNode);
       if (strictMode && filteredNode?.children?.length) {
-        filteredTree.push(...filterTreeData(node.children, filterValue, searchKeys, strictMode));
+        filteredTree.push(...searchTreeData(node.children, searchText, searchKeys, strictMode));
         filteredNode.children = undefined;
       }
     } else if (node.children) {
       if (strictMode) {
-        filteredTree.push(...filterTreeData(node.children, filterValue, searchKeys, strictMode));
+        filteredTree.push(...searchTreeData(node.children, searchText, searchKeys, strictMode));
       } else {
-        const filteredChildren = filterTreeData(node.children, filterValue, searchKeys, strictMode);
+        const filteredChildren = searchTreeData(node.children, searchText, searchKeys, strictMode);
 
         if (filteredChildren?.length) {
           const filteredNode = { ...node, children: filteredChildren };
@@ -774,7 +774,10 @@ export function transferTreeData(
     valueKey: 'key',
     parentKey: 'parent',
   },
-) {
+): any[] {
+  if (!sourceData) {
+    return sourceData;
+  }
   const { labelKey, valueKey, parentKey } = options;
   // 构建节点映射表
   const nodeMap = new Map<string, any>();
@@ -822,4 +825,39 @@ export function transferTreeData(
     }
   });
   return rootNodes;
+}
+
+/**
+ * 获取筛选后的树数据
+ * @example
+ * filterTreeData(treeData, (item) => item); /// ...
+ * filterTreeData(treeData, (item) => filterIds.includes(item.id)); /// ...
+ * @param treeData 树值
+ * @param callback 过滤的方法，默认不过滤。
+ * @returns
+ */
+export function filterTreeData(treeData: any[], callback?: (item: any) => boolean): any[] {
+  if (!callback || !treeData) {
+    return treeData;
+  }
+  treeData = JSON.parse(JSON.stringify(treeData));
+  const results: any[] = [];
+
+  treeData.forEach((item) => {
+    const clonedItem = { ...item }; // 使用浅拷贝避免修改原始数据
+
+    if (!clonedItem.children && !callback(clonedItem)) {
+      return;
+    }
+
+    if (clonedItem.children) {
+      clonedItem.children = filterTreeData(clonedItem.children, callback);
+    }
+
+    if (callback(clonedItem) || clonedItem.children?.length) {
+      results.push(clonedItem);
+    }
+  });
+
+  return results;
 }
