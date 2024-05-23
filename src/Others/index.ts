@@ -828,7 +828,7 @@ export function transferTreeData(
 }
 
 /**
- * 获取筛选后的树数据
+ * 获取筛选后的树数据，自定义方法。
  * @example
  * filterTreeData(treeData, (item) => item); /// ...
  * filterTreeData(treeData, (item) => filterIds.includes(item.id)); /// ...
