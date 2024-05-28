@@ -1,6 +1,6 @@
 js-xxx
 
-# js-xxx - v2.2.17
+# js-xxx - v2.2.18
 
 ## Table of contents
 
@@ -2417,7 +2417,7 @@ ___
 
 ▸ **filterTreeData**(`treeData`, `callback?`): `any`[]
 
-获取筛选后的树数据
+获取筛选后的树数据，自定义方法。
 
 #### Parameters
 

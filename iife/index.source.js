@@ -15498,7 +15498,7 @@ var $xxx = (function (exports) {
       return rootNodes;
   }
   /**
-   * 获取筛选后的树数据
+   * 获取筛选后的树数据，自定义方法。
    * @example
    * filterTreeData(treeData, (item) => item); /// ...
    * filterTreeData(treeData, (item) => filterIds.includes(item.id)); /// ...
@@ -16153,12 +16153,16 @@ var $xxx = (function (exports) {
    * @Author: HxB
    * @Date: 2024-05-13 15:08:38
    * @LastEditors: DoubleAm
-   * @LastEditTime: 2024-05-22 10:00:35
-   * @Description: i18n 国际化支持-需自定义如何兼容切换语言后页面刷新
+   * @LastEditTime: 2024-05-28 14:27:05
+   * @Description: i18n 国际化支持
    * @FilePath: \js-xxx\src\i18n\index.ts
    */
   /**
-   * i18n 国际化支持类，若需切换语言后更新页面内容，可以在切换语言的时候同步更新全局状态 lang，并将 lang 设置为组件顶级 key 即可。
+   * i18n 国际化支持类
+   * 若需切换语言后更新页面内容，可以在切换语言的时候同步更新全局状态 lang，并将全局状态 lang 设置为 t$ 的参数即可。
+   * `具体可参考 web_base 或 vue-admin 案例`
+   * [web_base](https://github.com/biugle/web_base)
+   * [vue-admin](https://github.com/biugle/vue-admin)
    * @example
    * import { zh_CN, en_US } from './locales.data'
    * export const i18nCustom = new i18n({
