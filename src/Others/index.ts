@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:53:39
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-05-23 18:28:11
+ * @LastEditTime: 2024-06-05 15:19:34
  * @Description: 因项目需要常用函数，不管任何项目，都放到一起。注意甄别，没有复用意义的函数就不要添加了。
  * @FilePath: \js-xxx\src\Others\index.ts
  */
@@ -729,7 +729,7 @@ export function searchTreeData(
   if (!searchText || !treeData) {
     return treeData;
   }
-  treeData = JSON.parse(JSON.stringify(treeData));
+  // treeData = JSON.parse(JSON.stringify(treeData));
   searchText = trim(searchText).toLowerCase();
   // @ts-ignore
   const newSearchKeys: string[] = [].concat(searchKeys);
@@ -840,7 +840,7 @@ export function filterTreeData(treeData: any[], callback?: (item: any) => boolea
   if (!callback || !treeData) {
     return treeData;
   }
-  treeData = JSON.parse(JSON.stringify(treeData));
+  // treeData = JSON.parse(JSON.stringify(treeData));
   const results: any[] = [];
 
   treeData.forEach((item) => {
