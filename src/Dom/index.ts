@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-05-11 17:51:23
+ * @LastEditTime: 2024-06-11 17:44:21
  * @Description: 利用 dom 的一些函数
  * @FilePath: \js-xxx\src\Dom\index.ts
  */
@@ -1355,4 +1355,37 @@ export function createChangeLogListener(callback?: any) {
   return () => {
     document.removeEventListener('change', handleChange);
   };
+}
+
+/**
+ * 合并类名 emotion-js
+ * @example
+ * cx('class1', 'class2', { 'class3': true, 'class4': false }, null, undefined); // /"class1 class2 class3 true"
+ * @param classNames 要合并的类名、对象或空值
+ * @returns
+ */
+export function cx(...classNames: any[]): string {
+  const processedClassNames = [];
+
+  for (let i = 0; i < classNames.length; i++) {
+    const className = classNames[i];
+
+    if (!className) {
+      continue;
+    }
+
+    if (typeof className === 'string') {
+      // 处理字符串类名
+      processedClassNames.push(className);
+    } else if (typeof className === 'object' && className !== null) {
+      // 处理对象类名
+      for (const key in className) {
+        if (className[key]) {
+          processedClassNames.push(key);
+        }
+      }
+    }
+  }
+
+  return processedClassNames.join(' ');
 }
