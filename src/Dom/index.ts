@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-06-11 17:44:21
+ * @LastEditTime: 2024-06-12 09:24:08
  * @Description: 利用 dom 的一些函数
  * @FilePath: \js-xxx\src\Dom\index.ts
  */
@@ -1360,7 +1360,7 @@ export function createChangeLogListener(callback?: any) {
 /**
  * 合并类名 emotion-js
  * @example
- * cx('class1', 'class2', { 'class3': true, 'class4': false }, null, undefined); // /"class1 class2 class3 true"
+ * cx('class1', 'class2', { 'class3': true, 'class4': false }, null, undefined); /// "class1 class2 class3 true"
  * @param classNames 要合并的类名、对象或空值
  * @returns
  */
