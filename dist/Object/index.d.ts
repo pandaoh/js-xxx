@@ -4,8 +4,8 @@
  * getV('默认值', {name: {children: [123, 456]}}, 'name', 'children', '0'); /// 123
  * getV('默认值', {name: {children: [123, 456]}}, 'name.children.0'); /// 123
  * getV('默认值', {name: {children: [123, 456]}}, 'name.children.xxx'); /// 默认值
- * getV('默认值', { name: {children: [123, 456], '[]': ['test']} }, 'name.[].0'); /// 'test'
- * getV('默认值', { name: {children: [123, 456], '[]': ['test']} }, 'name', '[]', 0); /// 'test'
+ * getV('默认值', {name: {children: [123, 456], '[]': ['test']}}, 'name.[].0'); /// 'test'
+ * getV('默认值', {name: {children: [123, 456], '[]': ['test']}}, 'name', '[]', 0); /// 'test'
  * @param defaultResult 默认值
  * @param args 需要获取的多级 rest 参数或者独立多级 string
  * @returns

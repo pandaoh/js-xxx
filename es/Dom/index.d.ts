@@ -390,4 +390,12 @@ export declare function createScrollLogListener(element?: any, callback?: any, d
  * @returns
  */
 export declare function createChangeLogListener(callback?: any): () => void;
+/**
+ * 合并类名 emotion-js
+ * @example
+ * cx('class1', 'class2', { 'class3': true, 'class4': false }, null, undefined); // /"class1 class2 class3 true"
+ * @param classNames 要合并的类名、对象或空值
+ * @returns
+ */
+export declare function cx(...classNames: any[]): string;
 //# sourceMappingURL=index.d.ts.map

@@ -1,6 +1,6 @@
 js-xxx
 
-# js-xxx - v2.2.18
+# js-xxx - v2.2.19
 
 ## Table of contents
 
@@ -91,6 +91,7 @@ js-xxx
 - [createScrollLogListener](README.md#createscrollloglistener)
 - [curryIt](README.md#curryit)
 - [customFinally](README.md#customfinally)
+- [cx](README.md#cx)
 - [data2Arr](README.md#data2arr)
 - [data2Obj](README.md#data2obj)
 - [dataTo](README.md#datato)
@@ -1885,6 +1886,30 @@ ___
 ```ts
 customFinally(Promise.resolve(1), () => console.log(1)); /// finally 回调
 // 也可挂载在 Promise 原型上
+```
+
+___
+
+### cx
+
+▸ **cx**(`...classNames`): `string`
+
+合并类名 emotion-js
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `...classNames` | `any`[] | 要合并的类名、对象或空值 |
+
+#### Returns
+
+`string`
+
+**`Example`**
+
+```ts
+cx('class1', 'class2', { 'class3': true, 'class4': false }, null, undefined); // /"class1 class2 class3 true"
 ```
 
 ___
@@ -3886,8 +3911,8 @@ ___
 getV('默认值', {name: {children: [123, 456]}}, 'name', 'children', '0'); /// 123
 getV('默认值', {name: {children: [123, 456]}}, 'name.children.0'); /// 123
 getV('默认值', {name: {children: [123, 456]}}, 'name.children.xxx'); /// 默认值
-getV('默认值', { name: {children: [123, 456], '[]': ['test']} }, 'name.[].0'); /// 'test'
-getV('默认值', { name: {children: [123, 456], '[]': ['test']} }, 'name', '[]', 0); /// 'test'
+getV('默认值', {name: {children: [123, 456], '[]': ['test']}}, 'name.[].0'); /// 'test'
+getV('默认值', {name: {children: [123, 456], '[]': ['test']}}, 'name', '[]', 0); /// 'test'
 ```
 
 ___

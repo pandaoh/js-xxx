@@ -1,4 +1,4 @@
-[js-xxx - v2.2.18](../README.md) / i18nOptions
+[js-xxx - v2.2.19](../README.md) / i18nOptions
 
 # Interface: i18nOptions
 

@@ -10994,7 +10994,7 @@
    * @Author: HxB
    * @Date: 2022-04-26 15:05:14
    * @LastEditors: DoubleAm
-   * @LastEditTime: 2024-05-08 17:01:30
+   * @LastEditTime: 2024-05-30 15:00:39
    * @Description: 对象相关函数
    * @FilePath: \js-xxx\src\Object\index.ts
    */
@@ -11004,8 +11004,8 @@
    * getV('默认值', {name: {children: [123, 456]}}, 'name', 'children', '0'); /// 123
    * getV('默认值', {name: {children: [123, 456]}}, 'name.children.0'); /// 123
    * getV('默认值', {name: {children: [123, 456]}}, 'name.children.xxx'); /// 默认值
-   * getV('默认值', { name: {children: [123, 456], '[]': ['test']} }, 'name.[].0'); /// 'test'
-   * getV('默认值', { name: {children: [123, 456], '[]': ['test']} }, 'name', '[]', 0); /// 'test'
+   * getV('默认值', {name: {children: [123, 456], '[]': ['test']}}, 'name.[].0'); /// 'test'
+   * getV('默认值', {name: {children: [123, 456], '[]': ['test']}}, 'name', '[]', 0); /// 'test'
    * @param defaultResult 默认值
    * @param args 需要获取的多级 rest 参数或者独立多级 string
    * @returns
@@ -13797,6 +13797,39 @@
           document.removeEventListener('change', handleChange);
       };
   }
+  /**
+   * 合并类名 emotion-js
+   * @example
+   * cx('class1', 'class2', { 'class3': true, 'class4': false }, null, undefined); // /"class1 class2 class3 true"
+   * @param classNames 要合并的类名、对象或空值
+   * @returns
+   */
+  function cx() {
+      var classNames = [];
+      for (var _i = 0; _i < arguments.length; _i++) {
+          classNames[_i] = arguments[_i];
+      }
+      var processedClassNames = [];
+      for (var i = 0; i < classNames.length; i++) {
+          var className = classNames[i];
+          if (!className) {
+              continue;
+          }
+          if (typeof className === 'string') {
+              // 处理字符串类名
+              processedClassNames.push(className);
+          }
+          else if (typeof className === 'object' && className !== null) {
+              // 处理对象类名
+              for (var key in className) {
+                  if (className[key]) {
+                      processedClassNames.push(key);
+                  }
+              }
+          }
+      }
+      return processedClassNames.join(' ');
+  }
 
   /*
    * @Author: HxB
@@ -15418,7 +15451,7 @@
       if (!searchText || !treeData) {
           return treeData;
       }
-      treeData = JSON.parse(JSON.stringify(treeData));
+      // treeData = JSON.parse(JSON.stringify(treeData));
       searchText = trim(searchText).toLowerCase();
       // @ts-ignore
       var newSearchKeys = [].concat(searchKeys);
@@ -15513,7 +15546,7 @@
       if (!callback || !treeData) {
           return treeData;
       }
-      treeData = JSON.parse(JSON.stringify(treeData));
+      // treeData = JSON.parse(JSON.stringify(treeData));
       var results = [];
       treeData.forEach(function (item) {
           var _a;
@@ -16156,13 +16189,13 @@
    * @Author: HxB
    * @Date: 2024-05-13 15:08:38
    * @LastEditors: DoubleAm
-   * @LastEditTime: 2024-05-28 14:27:05
+   * @LastEditTime: 2024-05-28 14:29:12
    * @Description: i18n 国际化支持
    * @FilePath: \js-xxx\src\i18n\index.ts
    */
   /**
    * i18n 国际化支持类
-   * 若需切换语言后更新页面内容，可以在切换语言的时候同步更新全局状态 lang，并将全局状态 lang 设置为 t$ 的参数即可。
+   * 若需切换语言后更新页面内容，可以在切换语言的时候同步更新全局状态 lang，并将全局状态 lang 设置为 `t$` 的参数即可。
    * `具体可参考 web_base 或 vue-admin 案例`
    * [web_base](https://github.com/biugle/web_base)
    * [vue-admin](https://github.com/biugle/vue-admin)
@@ -16322,6 +16355,7 @@
   exports.createScrollLogListener = createScrollLogListener;
   exports.curryIt = curryIt;
   exports.customFinally = customFinally;
+  exports.cx = cx;
   exports.data2Arr = data2Arr;
   exports.data2Obj = data2Obj;
   exports.dataTo = dataTo;
