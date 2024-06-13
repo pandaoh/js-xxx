@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:53:39
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-06-05 15:19:34
+ * @LastEditTime: 2024-06-15 08:46:48
  * @Description: 因项目需要常用函数，不管任何项目，都放到一起。注意甄别，没有复用意义的函数就不要添加了。
  * @FilePath: \js-xxx\src\Others\index.ts
  */
@@ -860,4 +860,83 @@ export function filterTreeData(treeData: any[], callback?: (item: any) => boolea
   });
 
   return results;
+}
+
+/**
+ * 主动获取树的半选/全选节点
+ * @example
+ * getTreeCheckNodes(treeData, ['0-0', '0-1']); /// ...
+ * getTreeCheckNodes(treeData, ['0-0', '0-1'], ['0']); /// ...
+ * @param treeData 树值
+ * @param checkedKeys 已经全选的节点
+ * @param halfCheckedKeys 已经半选的节点
+ * @returns
+ */
+export function getTreeCheckNodes(treeData: any[], checkedKeys: any[], halfCheckedKeys?: any[]) {
+  // 将 treeData 转化为一个映射，以便查找节点和其父节点的关系。
+  const nodeMap = new Map();
+  const parentMap = new Map();
+  const checkedSet = new Set(checkedKeys ?? []);
+  const halfCheckedSet = new Set(halfCheckedKeys ?? []);
+
+  // 构建节点映射和父节点映射
+  const buildNodeMaps = (data: any, parentKey = null) => {
+    data.forEach((node: any) => {
+      const { key, children } = node;
+      nodeMap.set(key, node);
+      parentMap.set(key, parentKey);
+      if (children) {
+        buildNodeMaps(children, key);
+      }
+    });
+  };
+
+  buildNodeMaps(treeData);
+
+  // 处理 checkedKeys 和 halfCheckedKeys
+  const processCheckedKeys = (node: any, key: any) => {
+    if (!node || !node?.children) {
+      return;
+    }
+
+    const children = node?.children || [];
+
+    const allSiblingsChecked = children.every((child: any) => checkedSet.has(child.key));
+    const allSiblingsUnchecked = children.every((child: any) => !checkedSet.has(child.key));
+    const allSiblingsUncheckedHalf = children.every((child: any) => !halfCheckedSet.has(child.key));
+
+    if (allSiblingsChecked) {
+      // 若节点的子节点全部选中，则节点添加到 checkedSet 中，从 halfCheckedSet 中剔除。
+      checkedSet.add(key);
+      halfCheckedSet.delete(key);
+    } else if (allSiblingsUnchecked && allSiblingsUncheckedHalf) {
+      // 若节点的子节点都没有选中，则节点从 checkedSet 和 halfCheckedSet 中剔除。
+      checkedSet.delete(key);
+      halfCheckedSet.delete(key);
+    } else {
+      // 若节点的子节点部分选中，则节点从 checkedSet 中剔除，添加到 halfCheckedSet 中。
+      checkedSet.delete(key);
+      halfCheckedSet.add(key);
+    }
+
+    const parentKey = parentMap.get(key);
+    if (parentKey) {
+      processCheckedKeys(nodeMap.get(parentKey), parentKey);
+    }
+  };
+
+  // 遍历所有的节点，检查并处理。
+  nodeMap.forEach((node, key) => {
+    processCheckedKeys(node, key);
+  });
+
+  const newCheckedKeys = Array.from(checkedSet);
+  const newHalfCheckedKeys = Array.from(halfCheckedSet);
+
+  return {
+    nodeMap,
+    parentMap,
+    checkedKeys: newCheckedKeys.length ? newCheckedKeys : undefined,
+    halfCheckedKeys: newHalfCheckedKeys.length ? newHalfCheckedKeys : undefined,
+  };
 }

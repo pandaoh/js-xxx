@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:45:48
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-05-08 17:16:08
+ * @LastEditTime: 2024-06-13 10:52:30
  * @Description: 字符串常用函数
  * @FilePath: \js-xxx\src\String\index.ts
  */
@@ -215,6 +215,32 @@ export function repeat(str: string, n = 1): string {
  */
 export function isUrl(value: string): boolean {
   const regUrl = /^(?:\w+:)?\/\/([^\s.]+\.\S{2}|localhost[:?\d]*)\S*$/;
+  return regUrl.test(value);
+}
+
+/**
+ * 检查是否为经度
+ * @example
+ * isLongitude(-181); /// false
+ * isLongitude(179.12); /// true
+ * @param value 值
+ * @returns
+ */
+export function isLongitude(value: string): boolean {
+  const regUrl = /^(-?(?:1[0-7]\d(\.\d+)?|180(\.0+)?|\d{1,2}(\.\d+)?))$/;
+  return regUrl.test(value);
+}
+
+/**
+ * 检查是否为纬度
+ * @example
+ * isLatitude(-90.1); /// false
+ * isLatitude(90); /// true
+ * @param value 值
+ * @returns
+ */
+export function isLatitude(value: string): boolean {
+  const regUrl = /^(-?(?:[1-8]?\d(\.\d+)?|90(\.0+)?))$/;
   return regUrl.test(value);
 }
 
