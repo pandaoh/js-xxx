@@ -160,8 +160,13 @@ const eslintRules = (skipWords = [], rules = {}) => ({
         'submenu',
         'nodemon',
         'hhiiss',
+        'hhmmss',
+        'hhmmdd',
         'whitesmoke',
         'iframe',
+        'contenttype',
+        'immer',
+        'ahooks',
         ...(skipWords ?? []),
       ],
       skipIfMatch: [
