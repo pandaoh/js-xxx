@@ -172,6 +172,8 @@ const eslintRules = (skipWords = [], rules = {}) => ({
         'contenttype',
         'immer',
         'ahooks',
+        'devtool',
+        'devtools',
         ...(skipWords ?? []),
       ],
       skipIfMatch: [
