@@ -177,6 +177,12 @@ export const eslintRules = (skipWords = [], rules = {}) => ({
         'ahooks',
         'devtool',
         'devtools',
+        'register',
+        'unregister',
+        'maximize',
+        'unmaximize',
+        'unminimize',
+        'minimize',
         ...(skipWords ?? []),
       ],
       skipIfMatch: [
