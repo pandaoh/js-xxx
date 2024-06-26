@@ -252,4 +252,20 @@ export declare function transferTreeData(sourceData: any[], options?: {
  * @returns
  */
 export declare function filterTreeData(treeData: any[], callback?: (item: any) => boolean): any[];
+/**
+ * 主动获取树的半选/全选节点
+ * @example
+ * getTreeCheckNodes(treeData, ['0-0', '0-1']); /// ...
+ * getTreeCheckNodes(treeData, ['0-0', '0-1'], ['0']); /// ...
+ * @param treeData 树值
+ * @param checkedKeys 已经全选的节点
+ * @param halfCheckedKeys 已经半选的节点
+ * @returns
+ */
+export declare function getTreeCheckNodes(treeData: any[], checkedKeys: any[], halfCheckedKeys?: any[]): {
+    nodeMap: Map<any, any>;
+    parentMap: Map<any, any>;
+    checkedKeys: any[] | undefined;
+    halfCheckedKeys: any[] | undefined;
+};
 //# sourceMappingURL=index.d.ts.map

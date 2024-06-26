@@ -232,8 +232,20 @@ var eslintRules = function (skipWords, rules) {
                     'submenu',
                     'nodemon',
                     'hhiiss',
+                    'hhmmss',
+                    'hhmmdd',
                     'whitesmoke',
-                    'iframe'
+                    'esbuild',
+                    'commonjs',
+                    'preset',
+                    'presets',
+                    'browsers',
+                    'iframe',
+                    'contenttype',
+                    'immer',
+                    'ahooks',
+                    'devtool',
+                    'devtools'
                 ], __read((skipWords !== null && skipWords !== void 0 ? skipWords : [])), false),
                 skipIfMatch: [
                     // http url
@@ -11430,6 +11442,30 @@ function isUrl(value) {
     return regUrl.test(value);
 }
 /**
+ * 检查是否为经度
+ * @example
+ * isLongitude(-181); /// false
+ * isLongitude(179.12); /// true
+ * @param value 值
+ * @returns
+ */
+function isLongitude(value) {
+    var regUrl = /^(-?(?:1[0-7]\d(\.\d+)?|180(\.0+)?|\d{1,2}(\.\d+)?))$/;
+    return regUrl.test(value);
+}
+/**
+ * 检查是否为纬度
+ * @example
+ * isLatitude(-90.1); /// false
+ * isLatitude(90); /// true
+ * @param value 值
+ * @returns
+ */
+function isLatitude(value) {
+    var regUrl = /^(-?(?:[1-8]?\d(\.\d+)?|90(\.0+)?))$/;
+    return regUrl.test(value);
+}
+/**
  * 检查是否为 email string 邮箱
  * @example
  * isEmail('test@qq.com'); /// true
@@ -15557,6 +15593,77 @@ function filterTreeData(treeData, callback) {
     });
     return results;
 }
+/**
+ * 主动获取树的半选/全选节点
+ * @example
+ * getTreeCheckNodes(treeData, ['0-0', '0-1']); /// ...
+ * getTreeCheckNodes(treeData, ['0-0', '0-1'], ['0']); /// ...
+ * @param treeData 树值
+ * @param checkedKeys 已经全选的节点
+ * @param halfCheckedKeys 已经半选的节点
+ * @returns
+ */
+function getTreeCheckNodes(treeData, checkedKeys, halfCheckedKeys) {
+    // 将 treeData 转化为一个映射，以便查找节点和其父节点的关系。
+    var nodeMap = new Map();
+    var parentMap = new Map();
+    var checkedSet = new Set(checkedKeys !== null && checkedKeys !== void 0 ? checkedKeys : []);
+    var halfCheckedSet = new Set(halfCheckedKeys !== null && halfCheckedKeys !== void 0 ? halfCheckedKeys : []);
+    // 构建节点映射和父节点映射
+    var buildNodeMaps = function (data, parentKey) {
+        if (parentKey === void 0) { parentKey = null; }
+        data.forEach(function (node) {
+            var key = node.key, children = node.children;
+            nodeMap.set(key, node);
+            parentMap.set(key, parentKey);
+            if (children) {
+                buildNodeMaps(children, key);
+            }
+        });
+    };
+    buildNodeMaps(treeData);
+    // 处理 checkedKeys 和 halfCheckedKeys
+    var processCheckedKeys = function (node, key) {
+        if (!node || !(node === null || node === void 0 ? void 0 : node.children)) {
+            return;
+        }
+        var children = (node === null || node === void 0 ? void 0 : node.children) || [];
+        var allSiblingsChecked = children.every(function (child) { return checkedSet.has(child.key); });
+        var allSiblingsUnchecked = children.every(function (child) { return !checkedSet.has(child.key); });
+        var allSiblingsUncheckedHalf = children.every(function (child) { return !halfCheckedSet.has(child.key); });
+        if (allSiblingsChecked) {
+            // 若节点的子节点全部选中，则节点添加到 checkedSet 中，从 halfCheckedSet 中剔除。
+            checkedSet.add(key);
+            halfCheckedSet.delete(key);
+        }
+        else if (allSiblingsUnchecked && allSiblingsUncheckedHalf) {
+            // 若节点的子节点都没有选中，则节点从 checkedSet 和 halfCheckedSet 中剔除。
+            checkedSet.delete(key);
+            halfCheckedSet.delete(key);
+        }
+        else {
+            // 若节点的子节点部分选中，则节点从 checkedSet 中剔除，添加到 halfCheckedSet 中。
+            checkedSet.delete(key);
+            halfCheckedSet.add(key);
+        }
+        var parentKey = parentMap.get(key);
+        if (parentKey) {
+            processCheckedKeys(nodeMap.get(parentKey), parentKey);
+        }
+    };
+    // 遍历所有的节点，检查并处理。
+    nodeMap.forEach(function (node, key) {
+        processCheckedKeys(node, key);
+    });
+    var newCheckedKeys = Array.from(checkedSet);
+    var newHalfCheckedKeys = Array.from(halfCheckedSet);
+    return {
+        nodeMap: nodeMap,
+        parentMap: parentMap,
+        checkedKeys: newCheckedKeys.length ? newCheckedKeys : undefined,
+        halfCheckedKeys: newHalfCheckedKeys.length ? newHalfCheckedKeys : undefined,
+    };
+}
 
 /*
  * @Author: HxB
@@ -16284,4 +16391,4 @@ var i18n = /** @class */ (function () {
     return i18n;
 }());
 
-export { ANIMALS, BASE_CHAR_LOW, BASE_CHAR_UP, BASE_NUMBER, BLOOD_GROUP, BLOOD_GROUP_INFO, BS_COLORS, CODE_MSG, CONSTELLATION, CONTENT_TYPES, HttpMethod, ICONS, ID_CARD_PROVINCE, KEYBOARD_CODE, Loading, MAN, MONTHS, PY_MAPS, ROLES, Speaker, TRANSFER_STR, Toast, WEEKS, WOMAN, abs, add, addLongPressEvent, addSpace, all, any, appendLink, appendScript, arr2select, arrObj2objArr, arrayFill, arrayShuffle, arraySort, average, banConsole, base64Decode, base64Encode, bindMoreClick, buf2obj, calcCron, calcDate, calcFontSize, calculate, catchPromise, changeURL, checkFileExt, checkIdCard, checkPassWordLevel, checkUpdate, checkVersion, clearCookies, closeFullscreen, closeWebSocket, compareDate, contains, copyToClipboard, countdown, createChangeLogListener, createClickLogListener, createScrollLogListener, curryIt, customFinally, cx, data2Arr, data2Obj, dataTo, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitEvent, emitKeyboardEvent, empty, encrypt, eslintRules, every, exportFile, filterTreeData, findChildren, findMaxKey, findParents, float, forEach, forceToStr, formatBytes, formatDate, formatJSON, formatNumber, formatRh, getAge, getAnimal, getBSColor, getBaseURL, getBloodGroup, getConstellation, getContentType, getCookie, getCryptoJS, getDataStr, getDateDifference, getDateList, getDateTime, getDayInYear, getDecodeStorage, getFingerprint, getFirstVar, getKey, getLastVar, getLocalArr, getLocalObj, getMonthDayCount, getMonthInfo, getPercentage, getPinYin, getQueryString, getRandColor, getRandDate, getRandIp, getRandNum, getRandStr, getRandVar, getScrollPercent, getSearchParams, getSelectText, getSessionArr, getSessionObj, getSortVar, getStyleByName, getTimeCode, getTreeData, getType, getUTCTime, getUserAgent, getV, getVarSize, getViewportSize, getWebSocket, getWeekInfo, globalError, hasKey, hasSpecialChar, hideToast, html2str, i18n, inRange, initNotification, initWebSocket, insertAfter, intersection, inversion, isAccount, isAppleDevice, isArr, isArrayBuffer, isBankCard, isBlob, isBool, isBrowser, isCarCode, isChinese, isCreditCode, isDarkMode, isDate, isDecimal, isElement, isEmail, isEnglish, isEqual, isEven, isFn, isHttp, isInteger, isInvalidDate, isIpAddress, isIpv4, isIpv6, isJSON, isMobile, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPromise, isQQ, isRhNegative, isStr, isStrongPassWord, isTel, isUndef, isUrl, isWeekday, javaDecrypt, javaEncrypt, jsonClone, keyBoardResize, leftJoin, loadStr, localStorageGet, localStorageSet, log, logRunTime, markNumber, marquee, maskString, md5, ms, obj2buf, observeResource, offDefaultEvent, onClick2MoreClick, onResize, openFileSelect, openFullscreen, parseJSON, prettierRules, printDom, px2rem, qsParse, qsStringify, removeCookie, repeat, retry, rightJoin, rip, round, same, scrollToView, scrollXTo, scrollYTo, searchTreeData, sendNotification, sendWsMsg, sessionStorageGet, sessionStorageSet, setCookie, setEncodeStorage, setEventListener, setIcon, setWsBinaryType, sha1, sha256, showProcess, showToast, showVar, sleep, slugify, sortBy, sortCallBack, sortJSON, stackSticky, str2html, str2unicode, sub, textCamelCase, textSplitCase, textTransferCase, throttle, timeSince, times, to, toBool, toFormData, toNum, toQueryString, toStr, toggleClass, transferCSVData, transferFileToBase64, transferIdCard, transferMoney, transferNumber, transferScanStr, transferSeconds, transferTemperature, transferTreeData, trim, truncate, unicode2str, union, unique, useStateData, uuid, versionUpgrade, waitUntil, watermark, xAjax, xFetch, xTimer };
+export { ANIMALS, BASE_CHAR_LOW, BASE_CHAR_UP, BASE_NUMBER, BLOOD_GROUP, BLOOD_GROUP_INFO, BS_COLORS, CODE_MSG, CONSTELLATION, CONTENT_TYPES, HttpMethod, ICONS, ID_CARD_PROVINCE, KEYBOARD_CODE, Loading, MAN, MONTHS, PY_MAPS, ROLES, Speaker, TRANSFER_STR, Toast, WEEKS, WOMAN, abs, add, addLongPressEvent, addSpace, all, any, appendLink, appendScript, arr2select, arrObj2objArr, arrayFill, arrayShuffle, arraySort, average, banConsole, base64Decode, base64Encode, bindMoreClick, buf2obj, calcCron, calcDate, calcFontSize, calculate, catchPromise, changeURL, checkFileExt, checkIdCard, checkPassWordLevel, checkUpdate, checkVersion, clearCookies, closeFullscreen, closeWebSocket, compareDate, contains, copyToClipboard, countdown, createChangeLogListener, createClickLogListener, createScrollLogListener, curryIt, customFinally, cx, data2Arr, data2Obj, dataTo, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, emitEvent, emitKeyboardEvent, empty, encrypt, eslintRules, every, exportFile, filterTreeData, findChildren, findMaxKey, findParents, float, forEach, forceToStr, formatBytes, formatDate, formatJSON, formatNumber, formatRh, getAge, getAnimal, getBSColor, getBaseURL, getBloodGroup, getConstellation, getContentType, getCookie, getCryptoJS, getDataStr, getDateDifference, getDateList, getDateTime, getDayInYear, getDecodeStorage, getFingerprint, getFirstVar, getKey, getLastVar, getLocalArr, getLocalObj, getMonthDayCount, getMonthInfo, getPercentage, getPinYin, getQueryString, getRandColor, getRandDate, getRandIp, getRandNum, getRandStr, getRandVar, getScrollPercent, getSearchParams, getSelectText, getSessionArr, getSessionObj, getSortVar, getStyleByName, getTimeCode, getTreeCheckNodes, getTreeData, getType, getUTCTime, getUserAgent, getV, getVarSize, getViewportSize, getWebSocket, getWeekInfo, globalError, hasKey, hasSpecialChar, hideToast, html2str, i18n, inRange, initNotification, initWebSocket, insertAfter, intersection, inversion, isAccount, isAppleDevice, isArr, isArrayBuffer, isBankCard, isBlob, isBool, isBrowser, isCarCode, isChinese, isCreditCode, isDarkMode, isDate, isDecimal, isElement, isEmail, isEnglish, isEqual, isEven, isFn, isHttp, isInteger, isInvalidDate, isIpAddress, isIpv4, isIpv6, isJSON, isLatitude, isLongitude, isMobile, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPromise, isQQ, isRhNegative, isStr, isStrongPassWord, isTel, isUndef, isUrl, isWeekday, javaDecrypt, javaEncrypt, jsonClone, keyBoardResize, leftJoin, loadStr, localStorageGet, localStorageSet, log, logRunTime, markNumber, marquee, maskString, md5, ms, obj2buf, observeResource, offDefaultEvent, onClick2MoreClick, onResize, openFileSelect, openFullscreen, parseJSON, prettierRules, printDom, px2rem, qsParse, qsStringify, removeCookie, repeat, retry, rightJoin, rip, round, same, scrollToView, scrollXTo, scrollYTo, searchTreeData, sendNotification, sendWsMsg, sessionStorageGet, sessionStorageSet, setCookie, setEncodeStorage, setEventListener, setIcon, setWsBinaryType, sha1, sha256, showProcess, showToast, showVar, sleep, slugify, sortBy, sortCallBack, sortJSON, stackSticky, str2html, str2unicode, sub, textCamelCase, textSplitCase, textTransferCase, throttle, timeSince, times, to, toBool, toFormData, toNum, toQueryString, toStr, toggleClass, transferCSVData, transferFileToBase64, transferIdCard, transferMoney, transferNumber, transferScanStr, transferSeconds, transferTemperature, transferTreeData, trim, truncate, unicode2str, union, unique, useStateData, uuid, versionUpgrade, waitUntil, watermark, xAjax, xFetch, xTimer };

@@ -92,6 +92,24 @@ export declare function repeat(str: string, n?: number): string;
  */
 export declare function isUrl(value: string): boolean;
 /**
+ * 检查是否为经度
+ * @example
+ * isLongitude(-181); /// false
+ * isLongitude(179.12); /// true
+ * @param value 值
+ * @returns
+ */
+export declare function isLongitude(value: string): boolean;
+/**
+ * 检查是否为纬度
+ * @example
+ * isLatitude(-90.1); /// false
+ * isLatitude(90); /// true
+ * @param value 值
+ * @returns
+ */
+export declare function isLatitude(value: string): boolean;
+/**
  * 检查是否为 email string 邮箱
  * @example
  * isEmail('test@qq.com'); /// true
