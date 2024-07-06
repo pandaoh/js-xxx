@@ -248,7 +248,13 @@ var $xxx = (function (exports) {
                       'immer',
                       'ahooks',
                       'devtool',
-                      'devtools'
+                      'devtools',
+                      'register',
+                      'unregister',
+                      'maximize',
+                      'unmaximize',
+                      'unminimize',
+                      'minimize'
                   ], __read((skipWords !== null && skipWords !== void 0 ? skipWords : [])), false),
                   skipIfMatch: [
                       // http url
