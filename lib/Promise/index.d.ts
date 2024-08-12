@@ -1,11 +1,13 @@
 /**
- * 睡眠指定时间
+ * 睡眠指定时间，或者 mock 接口数据。
  * @example
  * await sleep(1000); /// 等待 1000 毫秒再执行后面的
+ * await sleep(1000, '1'); /// 等待 1000 毫秒再执行后面的，并且返回 '1'，方便 mock 数据。
  * @param milliseconds 睡眠时间
+ * @param returnValue 返回值
  * @returns
  */
-export declare function sleep(milliseconds: number | undefined): Promise<void>;
+export declare function sleep(milliseconds: number | undefined, returnValue?: any): Promise<any>;
 /**
  * 参考了 to.js，扩展 Promise 用来直接帮助执行且处理异常。
  * promise 报错不会阻断后面的 Promise，适用于多个 await Promise 情况。

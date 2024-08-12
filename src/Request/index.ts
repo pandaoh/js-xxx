@@ -57,7 +57,7 @@ export function qsStringify(
         break;
     }
   });
-  return options?.urlEncode ? queryString.toString() : decodeURIComponent(queryString.toString());
+  return options?.urlEncode ? queryString.toString() : safeDecodeURI(queryString.toString());
 }
 
 /**
@@ -85,8 +85,8 @@ export function qsParse(url?: string, key?: string): any {
     const parts: any[] = queryStringList[0].split('&');
     for (let i = 0; i < parts.length; i++) {
       const component: any[] = parts[i].split('=');
-      const paramKey = decodeURIComponent(component[0]);
-      const paramVal = decodeURIComponent(component[1]);
+      const paramKey = safeDecodeURI(component[0]);
+      const paramVal = safeDecodeURI(component[1]);
       if (!paramMap[paramKey]) {
         paramMap[paramKey] = paramVal;
         continue;
@@ -333,4 +333,42 @@ export function xFetch(
  */
 export function getContentType(fileType: string): string {
   return CONTENT_TYPES[fileType.toLowerCase()] ?? 'application/octet-stream';
+}
+
+/**
+ * 安全编码 URI，遇到错误时返回原始字符串。
+ * @example
+ * safeEncodeURI('Hello World'); // 'Hello%20World'
+ * safeEncodeURI('你好'); // '%E4%BD%A0%E5%A5%BD'
+ * safeEncodeURI('https://example.com?param=1&param=2'); // 'https%3A%2F%2Fexample.com%3Fparam%3D1%26param%3D2'
+ * safeEncodeURI('特殊字符 !@#'); // '%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6%20%21%40%23'
+ * @param s 要编码的字符串。
+ * @returns
+ */
+export function safeEncodeURI(s: string): string {
+  try {
+    return encodeURIComponent(s);
+  } catch (e) {
+    console.warn(`Failed to encode URI component: ${s}`, e);
+    return s;
+  }
+}
+
+/**
+ * 安全解码 URI，遇到错误时返回原始字符串。
+ * @example
+ * safeDecodeURI('Hello%20World'); // 'Hello World'
+ * safeDecodeURI('%E4%BD%A0%E5%A5%BD'); // '你好'
+ * safeDecodeURI('%E4%BD%A0%E5%A5'); // '%E4%BD%A0%E5%A5' （无效的 URI 片段）
+ * safeDecodeURI('%'); // '%' （无效的 URI 片段）
+ * @param s 要解码的 URI 。
+ * @returns
+ */
+export function safeDecodeURI(s: string): string {
+  try {
+    return decodeURIComponent(s);
+  } catch (e) {
+    console.warn(`Failed to decode URI component: ${s}`, e);
+    return s;
+  }
 }

@@ -1,6 +1,7 @@
 /**
  * 四舍五入
  * `const toFixed = (n, fixed) => ~~(Math.pow(10, fixed) * n) / Math.pow(10, fixed);`
+ * `const toPrecision = (number, c) => (Math.round(+number * 10 ** c) / 10 ** c).toFixed(c);`
  * @example
  * round(1.2345, 2); /// 1.23
  * round(0.355, 2); /// 0.36
@@ -39,4 +40,28 @@ export declare function isDecimal(value: string, type?: '-' | '+', noLastZero?: 
  * @returns
  */
 export declare function formatNumber(value: string | number, n?: number): string;
+/**
+ * 获取用于匹配数字的正则表达式。
+ * @example
+ * // 匹配最多 2 位整数，且不允许小数
+ * const regex = getNumberReg({ integer: 2 });
+ * regex.test('99'); // true
+ * regex.test('123'); // false
+ * regex.test('99.99'); // false
+ * // 匹配最多 3 位整数和最多 2 位小数
+ * const regex = getNumberReg({ integer: 3, decimal: 2 });
+ * regex.test('999'); // true
+ * regex.test('999.99'); // true
+ * regex.test('999.999'); // false
+ * // 匹配任意长度的整数和小数
+ * const regex = getNumberReg({});
+ * regex.test('123456789'); // true
+ * regex.test('12345.6789'); // true
+ * @param options 配置选项，options.integer 最大整数位数，options.decimal 最大小数位数。
+ * @returns
+ */
+export declare function getNumberReg(options: {
+    integer?: number;
+    decimal?: number;
+}): RegExp;
 //# sourceMappingURL=index.d.ts.map

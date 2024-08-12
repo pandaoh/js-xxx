@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:53:39
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-06-15 08:46:48
+ * @LastEditTime: 2024-08-12 14:09:21
  * @Description: 因项目需要常用函数，不管任何项目，都放到一起。注意甄别，没有复用意义的函数就不要添加了。
  * @FilePath: \js-xxx\src\Others\index.ts
  */
@@ -11,7 +11,7 @@
 import { formatDate } from '@/Date';
 import { isUrl, trim } from '@/String';
 import { download } from '@/Dom';
-import { getContentType } from '@/Request';
+import { getContentType, safeEncodeURI } from '@/Request';
 import { BLOOD_GROUP_INFO } from '@/Data';
 import { getV } from '@/Object';
 
@@ -243,6 +243,46 @@ export function isDarkMode(): boolean {
  */
 export function isAppleDevice(): boolean {
   return /Mac|iPod|iPhone|iPad/.test(navigator.platform);
+}
+
+/**
+ * 判断是否客户端渲染
+ * @example
+ * isCSR(); /// true
+ * @returns
+ */
+export function isCSR(): boolean {
+  return typeof window !== 'undefined' && typeof document !== 'undefined';
+}
+
+/**
+ * 判断是否 Windows
+ * @example
+ * isWin(); /// true
+ * @returns
+ */
+export function isWin(): boolean {
+  return typeof navigator !== 'undefined' && /windows|win32/i.test(navigator.userAgent);
+}
+
+/**
+ * 判断是否 MacOS
+ * @example
+ * isMac(); /// true
+ * @returns
+ */
+export function isMac(): boolean {
+  return typeof navigator !== 'undefined' && /Macintosh/i.test(navigator.userAgent);
+}
+
+/**
+ * 判断是否 Chrome 内核
+ * @example
+ * isChrome(); /// true
+ * @returns
+ */
+export function isChrome(): boolean {
+  return typeof navigator !== 'undefined' && navigator.userAgent.indexOf('Chrome') > -1;
 }
 
 /**
@@ -607,7 +647,7 @@ export function exportFile(data: string, fileName?: string, fileType = 'txt'): v
   }
   // 加入特殊字符确保 utf-8
   // eslint-disable-next-line spellcheck/spell-checker
-  const uri = `data:${getContentType(fileType)};charset=utf-8,\ufeff${encodeURIComponent(data)}`;
+  const uri = `data:${getContentType(fileType)};charset=utf-8,\ufeff${safeEncodeURI(data)}`;
   // U+FEFF 是一个零宽度非断字符（Zero Width No-Break Space），也称为“字节顺序标记（Byte Order Mark，BOM）”。
   // eslint-disable-next-line spellcheck/spell-checker
   download(uri, `${fileName ?? formatDate(new Date(), 'yyyy-mm-dd-hhiiss')}.${fileType}`);

@@ -1,6 +1,6 @@
 js-xxx
 
-# js-xxx - v2.2.20
+# js-xxx - v2.2.21
 
 ## Table of contents
 
@@ -103,6 +103,8 @@ js-xxx
 - [div](README.md#div)
 - [download](README.md#download)
 - [downloadContent](README.md#downloadcontent)
+- [downloadFile](README.md#downloadfile)
+- [downloadImg](README.md#downloadimg)
 - [emitEvent](README.md#emitevent)
 - [emitKeyboardEvent](README.md#emitkeyboardevent)
 - [empty](README.md#empty)
@@ -127,6 +129,7 @@ js-xxx
 - [getBSColor](README.md#getbscolor)
 - [getBaseURL](README.md#getbaseurl)
 - [getBloodGroup](README.md#getbloodgroup)
+- [getBrowserLang](README.md#getbrowserlang)
 - [getConstellation](README.md#getconstellation)
 - [getContentType](README.md#getcontenttype)
 - [getCookie](README.md#getcookie)
@@ -137,6 +140,8 @@ js-xxx
 - [getDateTime](README.md#getdatetime)
 - [getDayInYear](README.md#getdayinyear)
 - [getDecodeStorage](README.md#getdecodestorage)
+- [getDefaultLang](README.md#getdefaultlang)
+- [getFileNameFromUrl](README.md#getfilenamefromurl)
 - [getFingerprint](README.md#getfingerprint)
 - [getFirstVar](README.md#getfirstvar)
 - [getKey](README.md#getkey)
@@ -145,6 +150,7 @@ js-xxx
 - [getLocalObj](README.md#getlocalobj)
 - [getMonthDayCount](README.md#getmonthdaycount)
 - [getMonthInfo](README.md#getmonthinfo)
+- [getNumberReg](README.md#getnumberreg)
 - [getPercentage](README.md#getpercentage)
 - [getPinYin](README.md#getpinyin)
 - [getQueryString](README.md#getquerystring)
@@ -162,6 +168,7 @@ js-xxx
 - [getSortVar](README.md#getsortvar)
 - [getStyleByName](README.md#getstylebyname)
 - [getTimeCode](README.md#gettimecode)
+- [getTimezone](README.md#gettimezone)
 - [getTreeCheckNodes](README.md#gettreechecknodes)
 - [getTreeData](README.md#gettreedata)
 - [getType](README.md#gettype)
@@ -191,8 +198,10 @@ js-xxx
 - [isBlob](README.md#isblob)
 - [isBool](README.md#isbool)
 - [isBrowser](README.md#isbrowser)
+- [isCSR](README.md#iscsr)
 - [isCarCode](README.md#iscarcode)
 - [isChinese](README.md#ischinese)
+- [isChrome](README.md#ischrome)
 - [isCreditCode](README.md#iscreditcode)
 - [isDarkMode](README.md#isdarkmode)
 - [isDate](README.md#isdate)
@@ -212,6 +221,7 @@ js-xxx
 - [isJSON](README.md#isjson)
 - [isLatitude](README.md#islatitude)
 - [isLongitude](README.md#islongitude)
+- [isMac](README.md#ismac)
 - [isMobile](README.md#ismobile)
 - [isNaN](README.md#isnan)
 - [isNode](README.md#isnode)
@@ -227,6 +237,7 @@ js-xxx
 - [isUndef](README.md#isundef)
 - [isUrl](README.md#isurl)
 - [isWeekday](README.md#isweekday)
+- [isWin](README.md#iswin)
 - [javaDecrypt](README.md#javadecrypt)
 - [javaEncrypt](README.md#javaencrypt)
 - [jsonClone](README.md#jsonclone)
@@ -249,6 +260,7 @@ js-xxx
 - [onResize](README.md#onresize)
 - [openFileSelect](README.md#openfileselect)
 - [openFullscreen](README.md#openfullscreen)
+- [openPreviewFile](README.md#openpreviewfile)
 - [parseJSON](README.md#parsejson)
 - [prettierRules](README.md#prettierrules)
 - [printDom](README.md#printdom)
@@ -261,7 +273,10 @@ js-xxx
 - [rightJoin](README.md#rightjoin)
 - [rip](README.md#rip)
 - [round](README.md#round)
+- [safeDecodeURI](README.md#safedecodeuri)
+- [safeEncodeURI](README.md#safeencodeuri)
 - [same](README.md#same)
+- [saveAs](README.md#saveas)
 - [scrollToView](README.md#scrolltoview)
 - [scrollXTo](README.md#scrollxto)
 - [scrollYTo](README.md#scrollyto)
@@ -725,7 +740,7 @@ ___
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
 | `msg` | `string` | `undefined` | 内容 |
-| `type` | ``"error"`` \| ``"default"`` \| ``"info"`` \| ``"success"`` \| ``"warning"`` \| ``"loading"`` | `'default'` | 类型 |
+| `type` | ``"success"`` \| ``"error"`` \| ``"default"`` \| ``"info"`` \| ``"warning"`` \| ``"loading"`` | `'default'` | 类型 |
 
 #### Returns
 
@@ -2216,6 +2231,70 @@ downloadContent('test.json', JSON.stringify({content: 'test json'})); /// 下载
 
 ___
 
+### downloadFile
+
+▸ **downloadFile**(`url`, `fileName?`): `void`
+
+下载文件
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `url` | `string` | 文件的 URL 地址。 |
+| `fileName?` | `string` | 可选。下载的文件名，默认为 URL 中的文件名。 |
+
+#### Returns
+
+`void`
+
+**`Example`**
+
+```ts
+// 下载并保存为 'xxx'
+downloadFile('https://example.com/path/to/file.jpg', 'xxx'); // 将文件保存为 'xxx.jpg'
+// 下载并保存为链接中的文件名
+downloadFile('https://example.com/path/to/file.jpg'); // 将文件保存为 'file.jpg'
+// 下载并保存为指定的文件名（没有扩展名）
+downloadFile('https://example.com/path/to/file.jpg', 'customFileName'); // 将文件保存为 'customFileName.jpg'
+// 下载并保存为带有扩展名的自定义文件名
+downloadFile('https://example.com/path/to/file.jpg', 'customFileName.png'); // 将文件保存为 'customFileName.png'
+```
+
+___
+
+### downloadImg
+
+▸ **downloadImg**(`url`, `fileName?`): `void`
+
+根据 Blob 下载图片。
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `url` | `string` | 图片的 URL 地址。 |
+| `fileName?` | `string` | 可选。下载的文件名。 |
+
+#### Returns
+
+`void`
+
+**`Example`**
+
+```ts
+// 下载远程图片，并保存为 'image.jpg'
+downloadImgByBlob('https://example.com/path/to/image.jpg', 'image.jpg');
+// 下载远程图片，并保存为默认文件名（通常是图片的原始文件名）
+downloadImgByBlob('https://example.com/path/to/image.jpg');
+// 尝试下载一个无效的 URL，不会进行下载操作
+downloadImgByBlob('invalid-url');
+// 下载一张跨域图片（需要支持跨域下载）
+downloadImgByBlob('https://a.example.com/path/to/cross-origin-image.jpg', 'cross-origin-image.jpg');
+```
+
+___
+
 ### emitEvent
 
 ▸ **emitEvent**(`eventType?`, `eventDetail?`, `element?`): `void`
@@ -2913,6 +2992,39 @@ getBloodGroup('A'); /// { value: 'A', label: 'A 型', color: '#1890FF', lower: '
 
 ___
 
+### getBrowserLang
+
+▸ **getBrowserLang**(`opts?`): `string`
+
+获取浏览器语言。
+返回的是中划线格式，如：zh-CN 。
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `opts?` | `Object` | 可选配置项。 |
+| `opts.supportLangs?` | `string`[] | 可支持的语言，传入时，会用此数组来限制返回的语言值，防止返回的 navigator.language 和系统定义的语言值不匹配。 |
+
+#### Returns
+
+`string`
+
+**`Example`**
+
+```ts
+// 如果浏览器语言为中文（简体）
+getBrowserLang(); // 'zh-CN'
+// 如果浏览器语言为英文
+getBrowserLang(); // 'en-US'
+// 限制返回语言为支持的语言之一
+getBrowserLang({ supportLangs: ['zh-CN', 'en-US'] }); // 'zh-CN' 或 'en-US'
+// 限制返回语言为不支持的语言之一
+getBrowserLang({ supportLangs: ['es-ES', 'fr-FR'] }); // 'en-US'
+```
+
+___
+
 ### getConstellation
 
 ▸ **getConstellation**(`date`): `Object`
@@ -3178,6 +3290,76 @@ getDecodeStorage("key"); /// 处理过后的 value，不需要再 decode 和解�
 
 ___
 
+### getDefaultLang
+
+▸ **getDefaultLang**(`opts?`): `string`
+
+获取默认语言。
+返回的是中划线格式，如：zh-CN 。
+从 Cookie 获取语言，如果不存在则获取 local 存储中的语言，都不存在则使用浏览器语言。
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `opts?` | `Object` | 可选配置项。 |
+| `opts.key?` | `string` | 用于获取语言的 key 默认为 'js-xxx-lang' |
+| `opts.supportLangs` | `string`[] | 支持的语言列表。如果返回的语言不在此列表中，将返回默认语言 'en-US'。 |
+
+#### Returns
+
+`string`
+
+**`Example`**
+
+```ts
+getDefaultLang({ supportLangs: ['zh-CN', 'en-US'] }); // 'zh-CN' 或 'en-US'
+// 指定一个自定义 key
+getDefaultLang({ supportLangs: ['fr-FR', 'es-ES'], key: 'USER_LANG' }); // 'fr-FR' 或 'es-ES'
+// 如果语言不在支持的语言列表中，则返回默认语言 'en-US'。
+getDefaultLang({ supportLangs: ['es-ES'], key: 'USER_LANG' }); // 'en-US' (假设获取的语言为 'fr_FR')
+```
+
+___
+
+### getFileNameFromUrl
+
+▸ **getFileNameFromUrl**(`url`, `onlyExt?`): `string`
+
+根据 URL 获取文件名。
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `url` | `string` | `undefined` | 要获取文件名的 URL 。 |
+| `onlyExt` | `boolean` | `false` | 可选。如果为 true，则仅返回文件扩展名。 |
+
+#### Returns
+
+`string`
+
+**`Example`**
+
+```ts
+// 获取一个简单 URL 的文件名
+getFileNameFromUrl('https://example.com/path/to/file.jpg'); // 'file.jpg'
+// 获取带有查询参数的 URL 的文件名
+getFileNameFromUrl('https://example.com/path/to/file.jpg?version=1.2'); // 'file.jpg'
+// 获取没有文件扩展名的 URL 的文件名
+getFileNameFromUrl('https://example.com/path/to/file'); // 'file.txt'
+// 获取根路径 URL 的文件名
+getFileNameFromUrl('https://example.com/'); // '1691830390281.txt' (假设当前时间为 1691830390281)
+// 获取一个复杂编码的 URL 的文件名
+getFileNameFromUrl('https://example.com/path/to/%E4%BD%A0%E5%A5%BD.jpg'); // '你好.jpg'
+// 获取包含多个查询参数的 URL 的文件名
+getFileNameFromUrl('https://example.com/path/to/file.jpg?param1=value1&param2=value2'); // 'file.jpg'
+// 仅获取文件扩展名
+getFileNameFromUrl('https://example.com/path/to/file.jpg', true); // 'jpg'
+```
+
+___
+
 ### getFingerprint
 
 ▸ **getFingerprint**(`extraString`): `string`
@@ -3379,6 +3561,45 @@ getMonthInfo('all'); /// MONTH_INFO
 getMonthInfo('unknown'); /// MONTH_INFO
 getMonthInfo(1); /// 一月相关信息
 getMonthInfo(13); /// MONTH_INFO
+```
+
+___
+
+### getNumberReg
+
+▸ **getNumberReg**(`options`): `RegExp`
+
+获取用于匹配数字的正则表达式。
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `options` | `Object` | 配置选项，options.integer 最大整数位数，options.decimal 最大小数位数。 |
+| `options.decimal?` | `number` | - |
+| `options.integer?` | `number` | - |
+
+#### Returns
+
+`RegExp`
+
+**`Example`**
+
+```ts
+// 匹配最多 2 位整数，且不允许小数
+const regex = getNumberReg({ integer: 2 });
+regex.test('99'); // true
+regex.test('123'); // false
+regex.test('99.99'); // false
+// 匹配最多 3 位整数和最多 2 位小数
+const regex = getNumberReg({ integer: 3, decimal: 2 });
+regex.test('999'); // true
+regex.test('999.99'); // true
+regex.test('999.999'); // false
+// 匹配任意长度的整数和小数
+const regex = getNumberReg({});
+regex.test('123456789'); // true
+regex.test('12345.6789'); // true
 ```
 
 ___
@@ -3781,6 +4002,29 @@ ___
 
 ```ts
 getTimeCode(); /// '2036551026042022'
+```
+
+___
+
+### getTimezone
+
+▸ **getTimezone**(): `string`
+
+获取当前时区的标准格式表示。
+
+#### Returns
+
+`string`
+
+**`Example`**
+
+```ts
+// 如果时区为 UTC+8
+getTimezone(); // '+8'
+// 如果时区为 UTC-5
+getTimezone(); // '-5'
+// 如果时区为 UTC
+getTimezone(); // '+0'
 ```
 
 ___
@@ -4529,6 +4773,24 @@ isBrowser(); /// true
 
 ___
 
+### isCSR
+
+▸ **isCSR**(): `boolean`
+
+判断是否客户端渲染
+
+#### Returns
+
+`boolean`
+
+**`Example`**
+
+```ts
+isCSR(); /// true
+```
+
+___
+
 ### isCarCode
 
 ▸ **isCarCode**(`value`): `boolean`
@@ -4579,6 +4841,24 @@ ___
 ```ts
 isChinese('呜呜呜'); /// true
 isChinese('我 1'); /// false
+```
+
+___
+
+### isChrome
+
+▸ **isChrome**(): `boolean`
+
+判断是否 Chrome 内核
+
+#### Returns
+
+`boolean`
+
+**`Example`**
+
+```ts
+isChrome(); /// true
 ```
 
 ___
@@ -5077,6 +5357,24 @@ isLongitude(179.12); /// true
 
 ___
 
+### isMac
+
+▸ **isMac**(): `boolean`
+
+判断是否 MacOS
+
+#### Returns
+
+`boolean`
+
+**`Example`**
+
+```ts
+isMac(); /// true
+```
+
+___
+
 ### isMobile
 
 ▸ **isMobile**(`value`): `boolean`
@@ -5440,6 +5738,24 @@ ___
 
 ```ts
 isWorkDay(new Date()); /// true
+```
+
+___
+
+### isWin
+
+▸ **isWin**(): `boolean`
+
+判断是否 Windows
+
+#### Returns
+
+`boolean`
+
+**`Example`**
+
+```ts
+isWin(); /// true
 ```
 
 ___
@@ -6042,6 +6358,7 @@ ___
 | `options?` | `Object` | 打开配置 |
 | `options.accept?` | `string` | - |
 | `options.multiple?` | `boolean` | - |
+| `options.resultType?` | ``"blob"`` \| ``"base64"`` | - |
 
 #### Returns
 
@@ -6050,7 +6367,9 @@ ___
 **`Example`**
 
 ```ts
-openFileSelect({ multiple: true, accept: '.txt' }).then(fileList => console.log(fileList));
+openFileSelect({ multiple: true }).then(fileList => console.log(fileList));
+openFileSelect({ multiple: true, accept: 'image/*', resultType: 'blob' }).then(fileBlobList => console.log(fileBlobList));
+openFileSelect({ multiple: true, accept: '.txt', resultType: 'base64' }).then(fileDataUrlList => console.log(fileDataUrlList));
 ```
 
 ___
@@ -6075,6 +6394,40 @@ ___
 
 ```ts
 openFullscreen(); /// 开启全屏
+```
+
+___
+
+### openPreviewFile
+
+▸ **openPreviewFile**(`url`, `serviceUrl`): `void`
+
+新开页面预览文件。
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `url` | `string` | 要预览的 URL 地址。 |
+| `serviceUrl` | `string` | - |
+
+#### Returns
+
+`void`
+
+**`Example`**
+
+```ts
+// 预览 Word 文档
+openPreviewFile('https://example.com/path/to/document.docx');
+// 预览 Excel 表格
+openPreviewFile('https://example.com/path/to/spreadsheet.xlsx');
+// 预览 PDF 文件
+openPreviewFile('https://example.com/path/to/document.pdf');
+// 预览图片
+openPreviewFile('https://example.com/path/to/image.png');
+// 预览其他文件或未匹配的文件类型
+openPreviewFile('https://example.com/path/to/otherfile.zip'); // 将直接打开链接
 ```
 
 ___
@@ -6385,6 +6738,7 @@ ___
 
 四舍五入
 `const toFixed = (n, fixed) => ~~(Math.pow(10, fixed) * n) / Math.pow(10, fixed);`
+`const toPrecision = (number, c) => (Math.round(+number * 10 ** c) / 10 ** c).toFixed(c);`
 
 #### Parameters
 
@@ -6403,6 +6757,60 @@ ___
 round(1.2345, 2); /// 1.23
 round(0.355, 2); /// 0.36
 round(1.005, 2); /// 1.01
+```
+
+___
+
+### safeDecodeURI
+
+▸ **safeDecodeURI**(`s`): `string`
+
+安全解码 URI，遇到错误时返回原始字符串。
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `s` | `string` | 要解码的 URI 。 |
+
+#### Returns
+
+`string`
+
+**`Example`**
+
+```ts
+safeDecodeURI('Hello%20World'); // 'Hello World'
+safeDecodeURI('%E4%BD%A0%E5%A5%BD'); // '你好'
+safeDecodeURI('%E4%BD%A0%E5%A5'); // '%E4%BD%A0%E5%A5' （无效的 URI 片段）
+safeDecodeURI('%'); // '%' （无效的 URI 片段）
+```
+
+___
+
+### safeEncodeURI
+
+▸ **safeEncodeURI**(`s`): `string`
+
+安全编码 URI，遇到错误时返回原始字符串。
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `s` | `string` | 要编码的字符串。 |
+
+#### Returns
+
+`string`
+
+**`Example`**
+
+```ts
+safeEncodeURI('Hello World'); // 'Hello%20World'
+safeEncodeURI('你好'); // '%E4%BD%A0%E5%A5%BD'
+safeEncodeURI('https://example.com?param=1&param=2'); // 'https%3A%2F%2Fexample.com%3Fparam%3D1%26param%3D2'
+safeEncodeURI('特殊字符 !@#'); // '%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6%20%21%40%23'
 ```
 
 ___
@@ -6433,6 +6841,34 @@ same('admin', ['admin','user']); /// true
 same('admin', 'admin'); /// true
 same('admin', 'admins'); /// false
 same('admins', 'admin'); /// false
+```
+
+___
+
+### saveAs
+
+▸ **saveAs**(`blob`, `filename?`): `void`
+
+将 Blob 对象保存为文件并下载。
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `blob` | `Blob` | 要保存的 Blob 对象。 |
+| `filename?` | `string` | 可选。保存的文件名。 |
+
+#### Returns
+
+`void`
+
+**`Example`**
+
+```ts
+const blob = new Blob(['Hello, World!'], { type: 'text/plain' });
+saveAs(blob, 'hello.txt'); // 下载文件名为 'hello.txt'
+const jsonBlob = new Blob([JSON.stringify({ a: 1, b: 2 }, null, 2)], { type: 'application/json' });
+saveAs(jsonBlob, 'data.json'); // 下载文件名为 'data.json'
 ```
 
 ___
@@ -6908,24 +7344,26 @@ ___
 
 ### sleep
 
-▸ **sleep**(`milliseconds`): `Promise`\<`void`\>
+▸ **sleep**(`milliseconds`, `returnValue?`): `Promise`\<`any`\>
 
-睡眠指定时间
+睡眠指定时间，或者 mock 接口数据。
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `milliseconds` | `undefined` \| `number` | 睡眠时间 |
+| `returnValue?` | `any` | 返回值 |
 
 #### Returns
 
-`Promise`\<`void`\>
+`Promise`\<`any`\>
 
 **`Example`**
 
 ```ts
 await sleep(1000); /// 等待 1000 毫秒再执行后面的
+await sleep(1000, '1'); /// 等待 1000 毫秒再执行后面的，并且返回 '1'，方便 mock 数据。
 ```
 
 ___

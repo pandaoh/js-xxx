@@ -1,4 +1,4 @@
-[js-xxx - v2.2.20](../README.md) / HttpMethod
+[js-xxx - v2.2.21](../README.md) / HttpMethod
 
 # Enumeration: HttpMethod
 

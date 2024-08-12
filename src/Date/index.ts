@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:54:41
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-17 18:19:50
+ * @LastEditTime: 2024-08-12 11:27:53
  * @Description: 时间相关函数
  * @FilePath: \js-xxx\src\Date\index.ts
  */
@@ -500,4 +500,20 @@ export function getUTCTime(timezone = 0): Date {
   // return new Date(utcTime).getTime();
   // 得到时区时间戳
   // return new Date(utcTime + 3600000 * timezone).getTime();
+}
+
+/**
+ * 获取当前时区的标准格式表示。
+ * @example
+ * // 如果时区为 UTC+8
+ * getTimezone(); // '+8'
+ * // 如果时区为 UTC-5
+ * getTimezone(); // '-5'
+ * // 如果时区为 UTC
+ * getTimezone(); // '+0'
+ * @returns
+ */
+export function getTimezone(): string {
+  const timezoneOffset = -new Date().getTimezoneOffset() / 60;
+  return timezoneOffset >= 0 ? `+${timezoneOffset}` : `${timezoneOffset}`;
 }

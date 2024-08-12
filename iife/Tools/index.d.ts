@@ -138,14 +138,100 @@ export declare function getVarSize(value: any): number;
 /**
  * 在浏览器中打开文件选择框
  * @example
- * openFileSelect({ multiple: true, accept: '.txt' }).then(fileList => console.log(fileList));
+ * openFileSelect({ multiple: true }).then(fileList => console.log(fileList));
+ * openFileSelect({ multiple: true, accept: 'image/*', resultType: 'blob' }).then(fileBlobList => console.log(fileBlobList));
+ * openFileSelect({ multiple: true, accept: '.txt', resultType: 'base64' }).then(fileDataUrlList => console.log(fileDataUrlList));
  * @param options 打开配置
  * @returns
  */
 export declare function openFileSelect(options?: {
     accept?: string;
     multiple?: boolean;
+    resultType?: 'blob' | 'base64';
 }): Promise<any>;
+/**
+ * 将 Blob 对象保存为文件并下载。
+ * @example
+ * const blob = new Blob(['Hello, World!'], { type: 'text/plain' });
+ * saveAs(blob, 'hello.txt'); // 下载文件名为 'hello.txt'
+ * const jsonBlob = new Blob([JSON.stringify({ a: 1, b: 2 }, null, 2)], { type: 'application/json' });
+ * saveAs(jsonBlob, 'data.json'); // 下载文件名为 'data.json'
+ * @param blob 要保存的 Blob 对象。
+ * @param filename 可选。保存的文件名。
+ * @returns
+ */
+export declare function saveAs(blob: Blob, filename?: string): void;
+/**
+ * 根据 Blob 下载图片。
+ * @example
+ * // 下载远程图片，并保存为 'image.jpg'
+ * downloadImgByBlob('https://example.com/path/to/image.jpg', 'image.jpg');
+ * // 下载远程图片，并保存为默认文件名（通常是图片的原始文件名）
+ * downloadImgByBlob('https://example.com/path/to/image.jpg');
+ * // 尝试下载一个无效的 URL，不会进行下载操作
+ * downloadImgByBlob('invalid-url');
+ * // 下载一张跨域图片（需要支持跨域下载）
+ * downloadImgByBlob('https://a.example.com/path/to/cross-origin-image.jpg', 'cross-origin-image.jpg');
+ * @param url 图片的 URL 地址。
+ * @param fileName 可选。下载的文件名。
+ * @returns
+ */
+export declare function downloadImg(url: string, fileName?: string): void;
+/**
+ * 下载文件
+ * @example
+ * // 下载并保存为 'xxx'
+ * downloadFile('https://example.com/path/to/file.jpg', 'xxx'); // 将文件保存为 'xxx.jpg'
+ * // 下载并保存为链接中的文件名
+ * downloadFile('https://example.com/path/to/file.jpg'); // 将文件保存为 'file.jpg'
+ * // 下载并保存为指定的文件名（没有扩展名）
+ * downloadFile('https://example.com/path/to/file.jpg', 'customFileName'); // 将文件保存为 'customFileName.jpg'
+ * // 下载并保存为带有扩展名的自定义文件名
+ * downloadFile('https://example.com/path/to/file.jpg', 'customFileName.png'); // 将文件保存为 'customFileName.png'
+ * @param url 文件的 URL 地址。
+ * @param fileName 可选。下载的文件名，默认为 URL 中的文件名。
+ * @returns
+ */
+export declare function downloadFile(url: string, fileName?: string): void;
+/**
+ * 根据 URL 获取文件名。
+ * @example
+ * // 获取一个简单 URL 的文件名
+ * getFileNameFromUrl('https://example.com/path/to/file.jpg'); // 'file.jpg'
+ * // 获取带有查询参数的 URL 的文件名
+ * getFileNameFromUrl('https://example.com/path/to/file.jpg?version=1.2'); // 'file.jpg'
+ * // 获取没有文件扩展名的 URL 的文件名
+ * getFileNameFromUrl('https://example.com/path/to/file'); // 'file.txt'
+ * // 获取根路径 URL 的文件名
+ * getFileNameFromUrl('https://example.com/'); // '1691830390281.txt' (假设当前时间为 1691830390281)
+ * // 获取一个复杂编码的 URL 的文件名
+ * getFileNameFromUrl('https://example.com/path/to/%E4%BD%A0%E5%A5%BD.jpg'); // '你好.jpg'
+ * // 获取包含多个查询参数的 URL 的文件名
+ * getFileNameFromUrl('https://example.com/path/to/file.jpg?param1=value1&param2=value2'); // 'file.jpg'
+ * // 仅获取文件扩展名
+ * getFileNameFromUrl('https://example.com/path/to/file.jpg', true); // 'jpg'
+ * @param url 要获取文件名的 URL 。
+ * @param onlyExt 可选。如果为 true，则仅返回文件扩展名。
+ * @returns
+ */
+export declare function getFileNameFromUrl(url: string, onlyExt?: boolean): string;
+/**
+ * 新开页面预览文件。
+ * @example
+ * // 预览 Word 文档
+ * openPreviewFile('https://example.com/path/to/document.docx');
+ * // 预览 Excel 表格
+ * openPreviewFile('https://example.com/path/to/spreadsheet.xlsx');
+ * // 预览 PDF 文件
+ * openPreviewFile('https://example.com/path/to/document.pdf');
+ * // 预览图片
+ * openPreviewFile('https://example.com/path/to/image.png');
+ * // 预览其他文件或未匹配的文件类型
+ * openPreviewFile('https://example.com/path/to/otherfile.zip'); // 将直接打开链接
+ * @param url 要预览的 URL 地址。
+ * @returns
+ */
+export declare function openPreviewFile(url: string, serviceUrl: string): void;
 /**
  * 获取数组或对象交集
  * @example

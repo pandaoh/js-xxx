@@ -1,4 +1,4 @@
-[js-xxx - v2.2.20](../README.md) / i18nLanguageResource
+[js-xxx - v2.2.21](../README.md) / i18nLanguageResource
 
 # Interface: i18nLanguageResource
 

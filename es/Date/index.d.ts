@@ -135,4 +135,16 @@ export declare function getMonthDayCount(date?: string | Date): number;
  * @returns
  */
 export declare function getUTCTime(timezone?: number): Date;
+/**
+ * 获取当前时区的标准格式表示。
+ * @example
+ * // 如果时区为 UTC+8
+ * getTimezone(); // '+8'
+ * // 如果时区为 UTC-5
+ * getTimezone(); // '-5'
+ * // 如果时区为 UTC
+ * getTimezone(); // '+0'
+ * @returns
+ */
+export declare function getTimezone(): string;
 //# sourceMappingURL=index.d.ts.map

@@ -121,4 +121,26 @@ export declare function xFetch(method: string | HttpMethod, url: string, options
  * @returns
  */
 export declare function getContentType(fileType: string): string;
+/**
+ * 安全编码 URI，遇到错误时返回原始字符串。
+ * @example
+ * safeEncodeURI('Hello World'); // 'Hello%20World'
+ * safeEncodeURI('你好'); // '%E4%BD%A0%E5%A5%BD'
+ * safeEncodeURI('https://example.com?param=1&param=2'); // 'https%3A%2F%2Fexample.com%3Fparam%3D1%26param%3D2'
+ * safeEncodeURI('特殊字符 !@#'); // '%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6%20%21%40%23'
+ * @param s 要编码的字符串。
+ * @returns
+ */
+export declare function safeEncodeURI(s: string): string;
+/**
+ * 安全解码 URI，遇到错误时返回原始字符串。
+ * @example
+ * safeDecodeURI('Hello%20World'); // 'Hello World'
+ * safeDecodeURI('%E4%BD%A0%E5%A5%BD'); // '你好'
+ * safeDecodeURI('%E4%BD%A0%E5%A5'); // '%E4%BD%A0%E5%A5' （无效的 URI 片段）
+ * safeDecodeURI('%'); // '%' （无效的 URI 片段）
+ * @param s 要解码的 URI 。
+ * @returns
+ */
+export declare function safeDecodeURI(s: string): string;
 //# sourceMappingURL=index.d.ts.map

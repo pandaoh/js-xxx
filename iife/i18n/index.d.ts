@@ -49,4 +49,42 @@ export declare class i18n {
     addLang(language: string, langData: i18nLanguageResource): this;
     t$(key: string, obj?: any, language?: string): string;
 }
+/**
+ * 获取浏览器语言。
+ * 返回的是中划线格式，如：zh-CN 。
+ * @example
+ * // 如果浏览器语言为中文（简体）
+ * getBrowserLang(); // 'zh-CN'
+ * // 如果浏览器语言为英文
+ * getBrowserLang(); // 'en-US'
+ * // 限制返回语言为支持的语言之一
+ * getBrowserLang({ supportLangs: ['zh-CN', 'en-US'] }); // 'zh-CN' 或 'en-US'
+ * // 限制返回语言为不支持的语言之一
+ * getBrowserLang({ supportLangs: ['es-ES', 'fr-FR'] }); // 'en-US'
+ * @param opts 可选配置项。
+ * @param opts.supportLangs 可支持的语言，传入时，会用此数组来限制返回的语言值，防止返回的 navigator.language 和系统定义的语言值不匹配。
+ * @returns
+ */
+export declare function getBrowserLang(opts?: {
+    supportLangs?: string[];
+}): string;
+/**
+ * 获取默认语言。
+ * 返回的是中划线格式，如：zh-CN 。
+ * 从 Cookie 获取语言，如果不存在则获取 local 存储中的语言，都不存在则使用浏览器语言。
+ * @example
+ * getDefaultLang({ supportLangs: ['zh-CN', 'en-US'] }); // 'zh-CN' 或 'en-US'
+ * // 指定一个自定义 key
+ * getDefaultLang({ supportLangs: ['fr-FR', 'es-ES'], key: 'USER_LANG' }); // 'fr-FR' 或 'es-ES'
+ * // 如果语言不在支持的语言列表中，则返回默认语言 'en-US'。
+ * getDefaultLang({ supportLangs: ['es-ES'], key: 'USER_LANG' }); // 'en-US' (假设获取的语言为 'fr_FR')
+ * @param opts 可选配置项。
+ * @param opts.supportLangs 支持的语言列表。如果返回的语言不在此列表中，将返回默认语言 'en-US'。
+ * @param opts.key 用于获取语言的 key 默认为 'js-xxx-lang'
+ * @returns
+ */
+export declare function getDefaultLang(opts?: {
+    supportLangs: string[];
+    key?: string;
+}): string;
 //# sourceMappingURL=index.d.ts.map

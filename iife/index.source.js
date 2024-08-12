@@ -104,6 +104,10 @@ var $xxx = (function (exports) {
     return to.concat(ar || Array.prototype.slice.call(from));
   }
 
+  function __makeTemplateObject(cooked, raw) {
+    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+    return cooked;
+  }
   typeof SuppressedError === "function" ? SuppressedError : function (error, suppressed, message) {
     var e = new Error(message);
     return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
@@ -9255,6 +9259,346 @@ var $xxx = (function (exports) {
   };
 
   /**
+   * 对象转 queryString 暂时只支持两层数据，第二层对象与与数组值不能为引用类型。
+   * @example
+   * qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3] }); /// 'start=0&count=20&obj[a]=1&arr[]=1&arr[]=2&arr[]=3'
+   * qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3] }, { arr2str: true }); /// 'start=0&count=20&obj[a]=1&arr=1,2,3'
+   * qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3], str: '1' }, { hasIndex: true }); /// 'start=0&count=20&obj[a]=1&arr[0]=1&arr[1]=2&arr[2]=3&str=1'
+   * @param obj 源数据
+   * @returns
+   */
+  function qsStringify(obj, options) {
+      if (!obj) {
+          return '';
+      }
+      var queryString = new URLSearchParams();
+      // 不用 for...in，避免污染原对象，且数组遍历效率高。
+      Object.keys(obj).forEach(function (key) {
+          var val = obj[key];
+          switch (getType(val)) {
+              case 'object':
+                  Object.keys(val).forEach(function (objKey) {
+                      queryString.append("".concat(key, "[").concat(objKey, "]"), getType(val[objKey]) == 'object' ? JSON.stringify(val[objKey]) : val[objKey]);
+                  });
+                  break;
+              case 'array':
+                  if (options === null || options === void 0 ? void 0 : options.arr2str) {
+                      queryString.append(key, val.join(','));
+                  }
+                  else {
+                      // val.filter(Boolean)
+                      val.filter(toBool).forEach(function (arrVal, arrIndex) {
+                          var newArrVal = getType(arrVal) == 'object' ? JSON.stringify(arrVal) : arrVal;
+                          (options === null || options === void 0 ? void 0 : options.hasBrackets)
+                              ? queryString.append((options === null || options === void 0 ? void 0 : options.hasIndex) ? "".concat(key, "[").concat(arrIndex, "]") : "".concat(key, "[]"), newArrVal)
+                              : queryString.append(key, newArrVal);
+                      });
+                  }
+                  break;
+              default:
+                  queryString.append(key, val);
+                  break;
+          }
+      });
+      return (options === null || options === void 0 ? void 0 : options.urlEncode) ? queryString.toString() : safeDecodeURI(queryString.toString());
+  }
+  /**
+   * 获取 query string 参数转对象
+   * @example
+   * qsParse('start=0&count=20&x=1&x=2&x=3', 'x'); /// [1, 2, 3]
+   * qsParse('http://a.cn/123/test?start=0&count=20&x=1&x=2&x=3#123'); /// { start: '0', count: '20', x: [1, 2, 3], '#': 123, '_': 'test', '/': 'test?start=0&count=20&x=1&x=2&x=3#123' }
+   * @param url query string
+   * @param key 参数名
+   * @returns
+   */
+  function qsParse(url, key) {
+      var _a, _b, _c, _d, _e;
+      // 也可使用 new URL(url) 或者 new URLSearchParams(params) API 获取
+      var pathname = (_a = url !== null && url !== void 0 ? url : window.location.pathname) !== null && _a !== void 0 ? _a : '';
+      url = (_b = url !== null && url !== void 0 ? url : window.location.search) !== null && _b !== void 0 ? _b : '';
+      var filename = pathname.substring(pathname.lastIndexOf('/') + 1);
+      var paramMap = {
+          '/': filename,
+          _: (_d = (_c = filename === null || filename === void 0 ? void 0 : filename.split('?')) === null || _c === void 0 ? void 0 : _c[0]) !== null && _d !== void 0 ? _d : '',
+      };
+      var queryString = url.includes('?') ? url.split('?')[1] : url;
+      var queryStringList = queryString.split('#');
+      paramMap['#'] = (_e = queryStringList === null || queryStringList === void 0 ? void 0 : queryStringList[1]) !== null && _e !== void 0 ? _e : '';
+      if (queryString.length !== 0) {
+          var parts = queryStringList[0].split('&');
+          for (var i = 0; i < parts.length; i++) {
+              var component = parts[i].split('=');
+              var paramKey = safeDecodeURI(component[0]);
+              var paramVal = safeDecodeURI(component[1]);
+              if (!paramMap[paramKey]) {
+                  paramMap[paramKey] = paramVal;
+                  continue;
+              }
+              !Array.isArray(paramMap[paramKey]) && (paramMap[paramKey] = Array(paramMap[paramKey]));
+              paramMap[paramKey].push(paramVal);
+          }
+      }
+      return key ? paramMap === null || paramMap === void 0 ? void 0 : paramMap[key] : paramMap;
+  }
+  /**
+   * 获取不带任何参数或片段标识符的当前 URL
+   * @example
+   * getBaseURL('https://test.com/index?name=leo&org=biugle#test'); /// 'https://test.com/index'
+   * getBaseURL(''); /// ''
+   * getBaseURL(); /// 当前页面 BaseURL
+   * getBaseURL('https://test.com/#/test?name=leo&org=biugle', true); /// 'https://test.com/#/test'
+   * getBaseURL(null); /// 相当于 window.location.origin
+   * @param url 地址/链接
+   * @param hashRoute 是否为 hash 路由，默认为 false 。
+   * @returns
+   */
+  function getBaseURL(url, hashRoute) {
+      if (hashRoute === void 0) { hashRoute = false; }
+      if (url === null) {
+          return window.location.origin;
+      }
+      url = url !== null && url !== void 0 ? url : window.location.href;
+      if (hashRoute) {
+          return url.split('?')[0];
+      }
+      return url.replace(/[?#].*$/, '');
+  }
+  /**
+   * 获取 url 查询参数字符串
+   * @example
+   * getQueryString('https://test.com/index?name=leo&org=biugle#test'); /// 'name=leo&org=biugle'
+   * getQueryString(''); /// ''
+   * getQueryString(); /// 当前页面 QueryString 字符串部分
+   * @param url 地址/链接
+   * @returns
+   */
+  function getQueryString(url) {
+      var _a, _b, _c, _d, _e;
+      return toBool(url) ? (_d = (_c = (_b = (_a = url === null || url === void 0 ? void 0 : url.split('?')) === null || _a === void 0 ? void 0 : _a[1]) === null || _b === void 0 ? void 0 : _b.split('#')) === null || _c === void 0 ? void 0 : _c[0]) !== null && _d !== void 0 ? _d : '' : (_e = window.location.search) === null || _e === void 0 ? void 0 : _e.replace('?', '');
+  }
+  /**
+   * 改变 URL 地址而不刷新页面，并且支持保留或替换历史记录
+   * @example
+   * 假如当前地址为：https://test.com/user
+   * changeURL('leo'); /// url 变为 'https://test.com/user/leo'
+   * changeURL('./leo'); /// url 变为 'https://test.com/user/leo'
+   * changeURL('/users'); /// url 变为 'https://test.com/users'
+   * changeURL('https://test.com/test'); /// url 变为 'https://test.com/test' (若域名不同，会报错中断。)
+   * changeURL('/users', false); /// url 变为 'https://test.com/users' (不覆盖历史记录，返回时会再显示 'https://test.com/user'，而上面的例子返回时是直接显示 'https://test.com/user' 的上一条。)
+   * @param url URL 地址
+   * @param replaceHistory 是否替换历史记录，默认为 true 。
+   * @returns
+   */
+  function changeURL(url, replaceHistory) {
+      if (replaceHistory === void 0) { replaceHistory = true; }
+      if (replaceHistory) {
+          window.history.replaceState({}, '', url);
+      }
+      else {
+          window.history.pushState({}, '', url);
+      }
+  }
+  /**
+   * 获取查询地址/链接中的参数对象
+   * @example
+   * getSearchParams('https://test.com/index?name=leo&org=biugle#test'); /// {name: 'leo', org: 'biugle'}
+   * getSearchParams(''); /// {}
+   * getSearchParams(); /// 当前页面 SearchParams 对象
+   * @param url 地址/链接
+   * @returns
+   */
+  function getSearchParams(url) {
+      var e_1, _a;
+      var searchPar = new URLSearchParams(getQueryString(url));
+      var paramsObj = {};
+      try {
+          for (var _b = __values(searchPar.entries()), _c = _b.next(); !_c.done; _c = _b.next()) {
+              var _d = __read(_c.value, 2), key = _d[0], value = _d[1];
+              paramsObj[key] = value;
+          }
+      }
+      catch (e_1_1) { e_1 = { error: e_1_1 }; }
+      finally {
+          try {
+              if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+          }
+          finally { if (e_1) throw e_1.error; }
+      }
+      return paramsObj;
+  }
+  /**
+   * ajax 简单封装
+   * @example
+   * xAjax('get', 'https://test.cn', { params: { test: 123, hello: 456 }, success: (data) => console.log('success', data), fail: (error) => console.log('fail', error) }); /// ajax
+   * xAjax('POST', 'https://test.cn', { contentType: 'application/json', data: { test: 123 }, success: (data) => console.log('success', data), fail: (error) => console.log('fail', error) }); /// ajax
+   * @param method Http Method
+   * @param url 地址/链接
+   * @param options 请求配置
+   * @returns
+   */
+  function xAjax(method, url, options) {
+      var _a, _b, _c, _d;
+      var xhr;
+      method = method.toUpperCase();
+      if (window.XMLHttpRequest) {
+          xhr = new XMLHttpRequest();
+      }
+      else {
+          // @ts-ignore
+          // eslint-disable-next-line no-undef
+          xhr = new ActiveXObject('Microsoft.XMLHttp');
+      }
+      // eslint-disable-next-line spellcheck/spell-checker
+      xhr.onreadystatechange = function () {
+          var _a, _b;
+          if (xhr.readyState === 4) {
+              if (xhr.status < 400) {
+                  (_a = options === null || options === void 0 ? void 0 : options.success) === null || _a === void 0 ? void 0 : _a.call(options, xhr.response);
+              }
+              else if (xhr.status >= 400) {
+                  (_b = options === null || options === void 0 ? void 0 : options.fail) === null || _b === void 0 ? void 0 : _b.call(options, xhr.response);
+              }
+          }
+      };
+      var async = (_a = options === null || options === void 0 ? void 0 : options.async) !== null && _a !== void 0 ? _a : true;
+      // setting after open for compatibility with IE versions <=10
+      xhr.withCredentials = (_b = options === null || options === void 0 ? void 0 : options.withCredentials) !== null && _b !== void 0 ? _b : false;
+      if (options === null || options === void 0 ? void 0 : options.data) {
+          options.data = !(options === null || options === void 0 ? void 0 : options.raw) && isObj(options.data) ? JSON.stringify(options.data) : options.data;
+      }
+      if (method == 'GET') {
+          xhr.open('GET', !(options === null || options === void 0 ? void 0 : options.params)
+              ? url
+              : "".concat(url).concat(url.includes('?') ? '&' : '?').concat(new URLSearchParams(options.params).toString()), async);
+          xhr.send();
+      }
+      else {
+          xhr.open(method, url, async);
+          xhr.setRequestHeader('Content-Type', (_c = options === null || options === void 0 ? void 0 : options.contentType) !== null && _c !== void 0 ? _c : 'application/x-www-form-urlencoded;charset=UTF-8');
+          xhr.send((_d = options === null || options === void 0 ? void 0 : options.data) !== null && _d !== void 0 ? _d : null);
+      }
+      return xhr;
+  }
+  /**
+   * fetch 简单封装
+   * @example
+   * xFetch('get', 'https://api.uomg.com/api/rand.qinghua?x=1', { params: { format: 'json', hello: 456 } }).then(data => console.log(data)); /// fetchXPromise
+   * xFetch('POST', 'https://test.cn', { headers: { contentType: 'application/json' }, data: { test: 123 } }).catch(error => console.log(error)); /// fetchXPromise
+   * @param method Http Method
+   * @param url 地址/链接
+   * @param options 请求配置
+   * @returns
+   */
+  function xFetch(method, url, options) {
+      var _a, _b, _c, _d, _e, _f, _g, _h;
+      if (options === null || options === void 0 ? void 0 : options.params) {
+          url = "".concat(url).concat(url.includes('?') ? '&' : '?').concat(new URLSearchParams(options.params).toString());
+      }
+      if (options === null || options === void 0 ? void 0 : options.data) {
+          options.data = !(options === null || options === void 0 ? void 0 : options.raw) && isObj(options.data) ? JSON.stringify(options.data) : options.data;
+      }
+      var headers = (_a = options === null || options === void 0 ? void 0 : options.headers) !== null && _a !== void 0 ? _a : {};
+      var contentType = (_h = (_g = (_f = (_e = (_d = (_c = (_b = headers.contenttype) !== null && _b !== void 0 ? _b : headers.contentType) !== null && _c !== void 0 ? _c : headers.ContentType) !== null && _d !== void 0 ? _d : headers.Contenttype) !== null && _e !== void 0 ? _e : headers['content-type']) !== null && _f !== void 0 ? _f : headers['content-Type']) !== null && _g !== void 0 ? _g : headers === null || headers === void 0 ? void 0 : headers['Content-Type']) !== null && _h !== void 0 ? _h : headers === null || headers === void 0 ? void 0 : headers['Content-type'];
+      return fetch(url, {
+          // 文件请求相关处理时需注意别写 content-type
+          headers: __assign(__assign({}, headers), (!contentType || (options === null || options === void 0 ? void 0 : options.isFile)
+              ? {}
+              : {
+                  'content-type': contentType !== null && contentType !== void 0 ? contentType : 'application/x-www-form-urlencoded;charset=UTF-8',
+                  // ?? 'application/json;charset=UTF-8',
+              })),
+          method: method,
+          body: options === null || options === void 0 ? void 0 : options.data,
+      })
+          .then(function (res) {
+          var type = res.headers.get('content-type');
+          if (type === null || type === void 0 ? void 0 : type.includes('json')) {
+              return res.json();
+          }
+          else if (type === null || type === void 0 ? void 0 : type.includes('text')) {
+              return res.text();
+          }
+          else if (type === null || type === void 0 ? void 0 : type.includes('form')) {
+              return res.formData();
+          }
+          else if ((type === null || type === void 0 ? void 0 : type.includes('video')) || (type === null || type === void 0 ? void 0 : type.includes('image'))) {
+              return res.blob();
+          }
+          else if (type === null || type === void 0 ? void 0 : type.includes('arrayBuffer')) {
+              return res.arrayBuffer();
+          }
+          else {
+              try {
+                  if (options === null || options === void 0 ? void 0 : options.callback) {
+                      return options === null || options === void 0 ? void 0 : options.callback(res);
+                  }
+                  return res;
+              }
+              catch (e) {
+                  return res;
+              }
+          }
+      })
+          .catch(function (error) {
+          return Promise.reject(error);
+      });
+  }
+  // eslint-disable-next-line spellcheck/spell-checker
+  /**
+   * 获取常见的 content-type
+   * @example
+   * getContentType('form'); /// 'application/x-www-form-urlencoded'
+   * getContentType('file'); /// 'multipart/form-data'
+   * getContentType('pdf'); /// 'application/pdf'
+   * getContentType('PDF'); /// 'application/pdf'
+   * getContentType('unknown'); /// 'application/octet-stream'
+   * @param fileType 文件类型
+   * @returns
+   */
+  function getContentType(fileType) {
+      var _a;
+      return (_a = CONTENT_TYPES[fileType.toLowerCase()]) !== null && _a !== void 0 ? _a : 'application/octet-stream';
+  }
+  /**
+   * 安全编码 URI，遇到错误时返回原始字符串。
+   * @example
+   * safeEncodeURI('Hello World'); // 'Hello%20World'
+   * safeEncodeURI('你好'); // '%E4%BD%A0%E5%A5%BD'
+   * safeEncodeURI('https://example.com?param=1&param=2'); // 'https%3A%2F%2Fexample.com%3Fparam%3D1%26param%3D2'
+   * safeEncodeURI('特殊字符 !@#'); // '%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6%20%21%40%23'
+   * @param s 要编码的字符串。
+   * @returns
+   */
+  function safeEncodeURI(s) {
+      try {
+          return encodeURIComponent(s);
+      }
+      catch (e) {
+          console.warn("Failed to encode URI component: ".concat(s), e);
+          return s;
+      }
+  }
+  /**
+   * 安全解码 URI，遇到错误时返回原始字符串。
+   * @example
+   * safeDecodeURI('Hello%20World'); // 'Hello World'
+   * safeDecodeURI('%E4%BD%A0%E5%A5%BD'); // '你好'
+   * safeDecodeURI('%E4%BD%A0%E5%A5'); // '%E4%BD%A0%E5%A5' （无效的 URI 片段）
+   * safeDecodeURI('%'); // '%' （无效的 URI 片段）
+   * @param s 要解码的 URI 。
+   * @returns
+   */
+  function safeDecodeURI(s) {
+      try {
+          return decodeURIComponent(s);
+      }
+      catch (e) {
+          console.warn("Failed to decode URI component: ".concat(s), e);
+          return s;
+      }
+  }
+
+  /**
    * 获取 16 位可读时间戳
    * @example
    * getTimeCode(); /// '2036551026042022'
@@ -9714,31 +10058,278 @@ var $xxx = (function (exports) {
   /**
    * 在浏览器中打开文件选择框
    * @example
-   * openFileSelect({ multiple: true, accept: '.txt' }).then(fileList => console.log(fileList));
+   * openFileSelect({ multiple: true }).then(fileList => console.log(fileList));
+   * openFileSelect({ multiple: true, accept: 'image/*', resultType: 'blob' }).then(fileBlobList => console.log(fileBlobList));
+   * openFileSelect({ multiple: true, accept: '.txt', resultType: 'base64' }).then(fileDataUrlList => console.log(fileDataUrlList));
    * @param options 打开配置
    * @returns
    */
   function openFileSelect(options) {
-      return new Promise(function (resolve) {
-          var input = document.createElement('input');
-          input.style.position = 'fixed';
-          input.style.bottom = '0';
-          input.style.left = '0';
-          input.style.visibility = 'hidden';
-          input.setAttribute('type', 'file');
+      var _this = this;
+      return new Promise(function (resolve, reject) {
+          var $input = document.createElement('input');
+          $input.style.position = 'fixed';
+          $input.style.bottom = '0';
+          $input.style.left = '0';
+          $input.style.visibility = 'hidden';
+          $input.setAttribute('type', 'file');
           if (options === null || options === void 0 ? void 0 : options.accept) {
-              input.setAttribute('accept', options.accept);
+              // accept = '*/*' 'image/*' 'audio/*' 'video/*' '.txt,.png,.pdf' 'image/png,.jpg'
+              $input.setAttribute('accept', options.accept);
           }
           if (options === null || options === void 0 ? void 0 : options.multiple) {
-              input.setAttribute('multiple', '');
+              $input.setAttribute('multiple', 'true');
           }
-          document.body.appendChild(input);
-          input.addEventListener('change', function () {
-              document.body.removeChild(input);
-              resolve(input.files);
+          document.body.appendChild($input);
+          // 判断用户是否点击取消，原生没有提供专门事件，用 hack 的方法实现。
+          $input.addEventListener('click', function () {
+              $input.value = '';
+              document.body.addEventListener('focus', function () {
+                  setTimeout(function () {
+                      if (!$input.value) {
+                          resolve(null);
+                      }
+                  }, 500);
+              });
           });
-          input.click();
+          $input.addEventListener('change', function (e) { return __awaiter(_this, void 0, void 0, function () {
+              var files, results, err_1;
+              var _this = this;
+              return __generator(this, function (_a) {
+                  switch (_a.label) {
+                      case 0:
+                          document.body.removeChild($input);
+                          if (!(options === null || options === void 0 ? void 0 : options.resultType)) {
+                              resolve($input.files);
+                              return [2 /*return*/];
+                          }
+                          files = (e.target.files || []);
+                          _a.label = 1;
+                      case 1:
+                          _a.trys.push([1, 3, , 4]);
+                          return [4 /*yield*/, Promise.all(__spreadArray([], __read(files), false).map(function (file) { return __awaiter(_this, void 0, void 0, function () {
+                                  return __generator(this, function (_a) {
+                                      return [2 /*return*/, new Promise(function (resolve, reject) {
+                                              var reader = new FileReader();
+                                              reader.onloadend = function () {
+                                                  var _a, _b, _c;
+                                                  resolve({
+                                                      filename: file.name,
+                                                      ext: (_a = file.name.split('.').pop()) === null || _a === void 0 ? void 0 : _a.toLowerCase(),
+                                                      type: file.type,
+                                                      result: this.result && options.resultType === 'blob'
+                                                          ? new Blob([new Uint8Array(this.result)], {
+                                                              type: file.type,
+                                                          })
+                                                          : this.result,
+                                                      length: options.resultType === 'blob'
+                                                          ? (_b = this.result) === null || _b === void 0 ? void 0 : _b.byteLength
+                                                          : (_c = this.result) === null || _c === void 0 ? void 0 : _c.length,
+                                                  });
+                                              };
+                                              reader.onerror = function (err) {
+                                                  reject(err);
+                                              };
+                                              switch (options.resultType) {
+                                                  case 'blob': {
+                                                      reader.readAsArrayBuffer(file);
+                                                      break;
+                                                  }
+                                                  case 'base64': {
+                                                      reader.readAsDataURL(file);
+                                                      break;
+                                                  }
+                                                  default: {
+                                                      reader.readAsArrayBuffer(file);
+                                                  }
+                                              }
+                                          })];
+                                  });
+                              }); }))];
+                      case 2:
+                          results = _a.sent();
+                          resolve(results);
+                          return [3 /*break*/, 4];
+                      case 3:
+                          err_1 = _a.sent();
+                          reject(err_1);
+                          return [3 /*break*/, 4];
+                      case 4: return [2 /*return*/];
+                  }
+              });
+          }); });
+          $input.click();
       });
+  }
+  /**
+   * 将 Blob 对象保存为文件并下载。
+   * @example
+   * const blob = new Blob(['Hello, World!'], { type: 'text/plain' });
+   * saveAs(blob, 'hello.txt'); // 下载文件名为 'hello.txt'
+   * const jsonBlob = new Blob([JSON.stringify({ a: 1, b: 2 }, null, 2)], { type: 'application/json' });
+   * saveAs(jsonBlob, 'data.json'); // 下载文件名为 'data.json'
+   * @param blob 要保存的 Blob 对象。
+   * @param filename 可选。保存的文件名。
+   * @returns
+   */
+  function saveAs(blob, filename) {
+      var url = window.URL || window.webkitURL;
+      var link = document.createElement('a');
+      link.download = filename || '';
+      link.href = url.createObjectURL(blob);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      url.revokeObjectURL(link.href);
+  }
+  /**
+   * 根据 Blob 下载图片。
+   * @example
+   * // 下载远程图片，并保存为 'image.jpg'
+   * downloadImgByBlob('https://example.com/path/to/image.jpg', 'image.jpg');
+   * // 下载远程图片，并保存为默认文件名（通常是图片的原始文件名）
+   * downloadImgByBlob('https://example.com/path/to/image.jpg');
+   * // 尝试下载一个无效的 URL，不会进行下载操作
+   * downloadImgByBlob('invalid-url');
+   * // 下载一张跨域图片（需要支持跨域下载）
+   * downloadImgByBlob('https://a.example.com/path/to/cross-origin-image.jpg', 'cross-origin-image.jpg');
+   * @param url 图片的 URL 地址。
+   * @param fileName 可选。下载的文件名。
+   * @returns
+   */
+  function downloadImg(url, fileName) {
+      if (!url || !url.startsWith('http')) {
+          console.warn('Invalid URL provided:', url);
+          return;
+      }
+      var img = new Image();
+      img.onload = function () {
+          var canvas = document.createElement('canvas');
+          canvas.width = img.width;
+          canvas.height = img.height;
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          var ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          canvas.toBlob(function (blob) {
+              if (blob) {
+                  var blobUrl = window.URL.createObjectURL(blob);
+                  var a = document.createElement('a');
+                  a.href = blobUrl;
+                  a.download = fileName || 'download';
+                  a.click();
+                  window.URL.revokeObjectURL(blobUrl);
+              }
+              else {
+                  console.warn('Failed to create Blob from canvas');
+              }
+          }, 'image/png'); // 默认保存为 PNG 格式
+      };
+      img.onerror = function () {
+          console.error('Failed to load image from URL:', url);
+      };
+      img.setAttribute('crossOrigin', 'Anonymous');
+      img.src = url;
+  }
+  /**
+   * 下载文件
+   * @example
+   * // 下载并保存为 'xxx'
+   * downloadFile('https://example.com/path/to/file.jpg', 'xxx'); // 将文件保存为 'xxx.jpg'
+   * // 下载并保存为链接中的文件名
+   * downloadFile('https://example.com/path/to/file.jpg'); // 将文件保存为 'file.jpg'
+   * // 下载并保存为指定的文件名（没有扩展名）
+   * downloadFile('https://example.com/path/to/file.jpg', 'customFileName'); // 将文件保存为 'customFileName.jpg'
+   * // 下载并保存为带有扩展名的自定义文件名
+   * downloadFile('https://example.com/path/to/file.jpg', 'customFileName.png'); // 将文件保存为 'customFileName.png'
+   * @param url 文件的 URL 地址。
+   * @param fileName 可选。下载的文件名，默认为 URL 中的文件名。
+   * @returns
+   */
+  function downloadFile(url, fileName) {
+      var _a, _b, _c;
+      var ext = ((_a = fileName === null || fileName === void 0 ? void 0 : fileName.match(/[^\/]*\.(\w+)(?:\?.*)?$/)) === null || _a === void 0 ? void 0 : _a[1]) || ((_b = url.match(/[^\/]*\.(\w+)(?:\?.*)?$/)) === null || _b === void 0 ? void 0 : _b[1]) || 'txt';
+      var finalFileName = safeDecodeURI(fileName || ((_c = url.match(/([^/]*?)\.\w+(\?.*?)?$/)) === null || _c === void 0 ? void 0 : _c[1]) || String(Date.now()));
+      var oReq = new XMLHttpRequest();
+      oReq.open('GET', url, true);
+      oReq.responseType = 'blob';
+      oReq.onload = function () {
+          var type = getContentType(ext) || 'application/octet-stream';
+          var file = new Blob([oReq.response], { type: type });
+          saveAs(file, /\.\w+$/.test(finalFileName) ? finalFileName : "".concat(finalFileName, ".").concat(ext));
+      };
+      oReq.send();
+  }
+  /**
+   * 根据 URL 获取文件名。
+   * @example
+   * // 获取一个简单 URL 的文件名
+   * getFileNameFromUrl('https://example.com/path/to/file.jpg'); // 'file.jpg'
+   * // 获取带有查询参数的 URL 的文件名
+   * getFileNameFromUrl('https://example.com/path/to/file.jpg?version=1.2'); // 'file.jpg'
+   * // 获取没有文件扩展名的 URL 的文件名
+   * getFileNameFromUrl('https://example.com/path/to/file'); // 'file.txt'
+   * // 获取根路径 URL 的文件名
+   * getFileNameFromUrl('https://example.com/'); // '1691830390281.txt' (假设当前时间为 1691830390281)
+   * // 获取一个复杂编码的 URL 的文件名
+   * getFileNameFromUrl('https://example.com/path/to/%E4%BD%A0%E5%A5%BD.jpg'); // '你好.jpg'
+   * // 获取包含多个查询参数的 URL 的文件名
+   * getFileNameFromUrl('https://example.com/path/to/file.jpg?param1=value1&param2=value2'); // 'file.jpg'
+   * // 仅获取文件扩展名
+   * getFileNameFromUrl('https://example.com/path/to/file.jpg', true); // 'jpg'
+   * @param url 要获取文件名的 URL 。
+   * @param onlyExt 可选。如果为 true，则仅返回文件扩展名。
+   * @returns
+   */
+  function getFileNameFromUrl(url, onlyExt) {
+      var _a, _b;
+      if (onlyExt === void 0) { onlyExt = false; }
+      var ext = ((_a = url.match(/[^\/]*\.(\w+)(?:\?.*)?$/)) === null || _a === void 0 ? void 0 : _a[1]) || 'txt';
+      if (onlyExt) {
+          return ext;
+      }
+      var filenameOfUrl = (_b = url.match(/([^/]*?)\.\w+(\?.*?)?$/)) === null || _b === void 0 ? void 0 : _b[1];
+      var filename = filenameOfUrl ? safeDecodeURI(filenameOfUrl) : String(Date.now());
+      return "".concat(filename, ".").concat(ext);
+  }
+  /**
+   * 新开页面预览文件。
+   * @example
+   * // 预览 Word 文档
+   * openPreviewFile('https://example.com/path/to/document.docx');
+   * // 预览 Excel 表格
+   * openPreviewFile('https://example.com/path/to/spreadsheet.xlsx');
+   * // 预览 PDF 文件
+   * openPreviewFile('https://example.com/path/to/document.pdf');
+   * // 预览图片
+   * openPreviewFile('https://example.com/path/to/image.png');
+   * // 预览其他文件或未匹配的文件类型
+   * openPreviewFile('https://example.com/path/to/otherfile.zip'); // 将直接打开链接
+   * @param url 要预览的 URL 地址。
+   * @returns
+   */
+  function openPreviewFile(url, serviceUrl) {
+      var urlMap = new Map()
+          .set(/\.(docx|doc|xls|xlsx)(\?.*)?$/, function (url) {
+          return window.open("".concat(serviceUrl, "?url=") + encodeURIComponent(window.btoa(url)));
+      })
+          .set(/\.pdf(\?.*)?$/, function (url) {
+          return window
+              .open('')
+              .document.write("<!DOCTYPE html><html><head><style>body{margin:0;}embed{height:100vh;}</style></head><body><embed src=\"".concat(url, "\" width=\"100%\" height=\"100%\"/></body></html>"));
+      })
+          .set(/\.(png|jpg|jpeg|gif)(\?.*)?$/, function (url) {
+          return window
+              .open('')
+              .document.write("<!DOCTYPE html><html><head><style>body{margin:0;}img{width:unset;height:unset;max-width:100%;}</style></head><body><img src=\"".concat(url, "\" /></body></html>"));
+      });
+      var regex = __spreadArray([], __read(urlMap.keys()), false).find(function (regex) { return regex.test(url); });
+      var previewFunction = regex ? urlMap.get(regex) : undefined;
+      if (previewFunction) {
+          previewFunction(url);
+      }
+      else {
+          window.open(url);
+      }
   }
   /**
    * 获取数组或对象交集
@@ -12562,6 +13153,21 @@ var $xxx = (function (exports) {
       // 得到时区时间戳
       // return new Date(utcTime + 3600000 * timezone).getTime();
   }
+  /**
+   * 获取当前时区的标准格式表示。
+   * @example
+   * // 如果时区为 UTC+8
+   * getTimezone(); // '+8'
+   * // 如果时区为 UTC-5
+   * getTimezone(); // '-5'
+   * // 如果时区为 UTC
+   * getTimezone(); // '+0'
+   * @returns
+   */
+  function getTimezone() {
+      var timezoneOffset = -new Date().getTimezoneOffset() / 60;
+      return timezoneOffset >= 0 ? "+".concat(timezoneOffset) : "".concat(timezoneOffset);
+  }
 
   /* eslint-disable max-lines */
   /**
@@ -14460,6 +15066,7 @@ var $xxx = (function (exports) {
   /**
    * 四舍五入
    * `const toFixed = (n, fixed) => ~~(Math.pow(10, fixed) * n) / Math.pow(10, fixed);`
+   * `const toPrecision = (number, c) => (Math.round(+number * 10 ** c) / 10 ** c).toFixed(c);`
    * @example
    * round(1.2345, 2); /// 1.23
    * round(0.355, 2); /// 0.36
@@ -14572,6 +15179,12 @@ var $xxx = (function (exports) {
   function formatNumber(value, n) {
       var _a;
       if (n === void 0) { n = 2; }
+      // if (String(value).includes('.')) {
+      //   const [a, b] = String(value).split('.');
+      //   return String(a).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '.' + b;
+      // } else {
+      //   return String(value).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      // }
       try {
           n = n >= 0 && n <= 20 ? n : 2;
           value = round(parseFloat((value + '').replace(/[^\d\.-]/g, '')), n) + '';
@@ -14586,308 +15199,33 @@ var $xxx = (function (exports) {
           return "".concat(value);
       }
   }
-
   /**
-   * 对象转 queryString 暂时只支持两层数据，第二层对象与与数组值不能为引用类型。
+   * 获取用于匹配数字的正则表达式。
    * @example
-   * qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3] }); /// 'start=0&count=20&obj[a]=1&arr[]=1&arr[]=2&arr[]=3'
-   * qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3] }, { arr2str: true }); /// 'start=0&count=20&obj[a]=1&arr=1,2,3'
-   * qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3], str: '1' }, { hasIndex: true }); /// 'start=0&count=20&obj[a]=1&arr[0]=1&arr[1]=2&arr[2]=3&str=1'
-   * @param obj 源数据
+   * // 匹配最多 2 位整数，且不允许小数
+   * const regex = getNumberReg({ integer: 2 });
+   * regex.test('99'); // true
+   * regex.test('123'); // false
+   * regex.test('99.99'); // false
+   * // 匹配最多 3 位整数和最多 2 位小数
+   * const regex = getNumberReg({ integer: 3, decimal: 2 });
+   * regex.test('999'); // true
+   * regex.test('999.99'); // true
+   * regex.test('999.999'); // false
+   * // 匹配任意长度的整数和小数
+   * const regex = getNumberReg({});
+   * regex.test('123456789'); // true
+   * regex.test('12345.6789'); // true
+   * @param options 配置选项，options.integer 最大整数位数，options.decimal 最大小数位数。
    * @returns
    */
-  function qsStringify(obj, options) {
-      if (!obj) {
-          return '';
-      }
-      var queryString = new URLSearchParams();
-      // 不用 for...in，避免污染原对象，且数组遍历效率高。
-      Object.keys(obj).forEach(function (key) {
-          var val = obj[key];
-          switch (getType(val)) {
-              case 'object':
-                  Object.keys(val).forEach(function (objKey) {
-                      queryString.append("".concat(key, "[").concat(objKey, "]"), getType(val[objKey]) == 'object' ? JSON.stringify(val[objKey]) : val[objKey]);
-                  });
-                  break;
-              case 'array':
-                  if (options === null || options === void 0 ? void 0 : options.arr2str) {
-                      queryString.append(key, val.join(','));
-                  }
-                  else {
-                      // val.filter(Boolean)
-                      val.filter(toBool).forEach(function (arrVal, arrIndex) {
-                          var newArrVal = getType(arrVal) == 'object' ? JSON.stringify(arrVal) : arrVal;
-                          (options === null || options === void 0 ? void 0 : options.hasBrackets)
-                              ? queryString.append((options === null || options === void 0 ? void 0 : options.hasIndex) ? "".concat(key, "[").concat(arrIndex, "]") : "".concat(key, "[]"), newArrVal)
-                              : queryString.append(key, newArrVal);
-                      });
-                  }
-                  break;
-              default:
-                  queryString.append(key, val);
-                  break;
-          }
-      });
-      return (options === null || options === void 0 ? void 0 : options.urlEncode) ? queryString.toString() : decodeURIComponent(queryString.toString());
+  function getNumberReg(options) {
+      var integer = options.integer, decimal = options.decimal;
+      var integerPart = integer ? "{0,".concat(integer - 1, "}") : '*';
+      var decimalPart = decimal ? "{1,".concat(decimal, "}") : '*';
+      return new RegExp(String.raw(templateObject_1 || (templateObject_1 = __makeTemplateObject(["^(0|[1-9]d", ")(?:.d", ")?$"], ["^(0|[1-9]\\d", ")(?:\\.\\d", ")?$"])), integerPart, decimalPart));
   }
-  /**
-   * 获取 query string 参数转对象
-   * @example
-   * qsParse('start=0&count=20&x=1&x=2&x=3', 'x'); /// [1, 2, 3]
-   * qsParse('http://a.cn/123/test?start=0&count=20&x=1&x=2&x=3#123'); /// { start: '0', count: '20', x: [1, 2, 3], '#': 123, '_': 'test', '/': 'test?start=0&count=20&x=1&x=2&x=3#123' }
-   * @param url query string
-   * @param key 参数名
-   * @returns
-   */
-  function qsParse(url, key) {
-      var _a, _b, _c, _d, _e;
-      // 也可使用 new URL(url) 或者 new URLSearchParams(params) API 获取
-      var pathname = (_a = url !== null && url !== void 0 ? url : window.location.pathname) !== null && _a !== void 0 ? _a : '';
-      url = (_b = url !== null && url !== void 0 ? url : window.location.search) !== null && _b !== void 0 ? _b : '';
-      var filename = pathname.substring(pathname.lastIndexOf('/') + 1);
-      var paramMap = {
-          '/': filename,
-          _: (_d = (_c = filename === null || filename === void 0 ? void 0 : filename.split('?')) === null || _c === void 0 ? void 0 : _c[0]) !== null && _d !== void 0 ? _d : '',
-      };
-      var queryString = url.includes('?') ? url.split('?')[1] : url;
-      var queryStringList = queryString.split('#');
-      paramMap['#'] = (_e = queryStringList === null || queryStringList === void 0 ? void 0 : queryStringList[1]) !== null && _e !== void 0 ? _e : '';
-      if (queryString.length !== 0) {
-          var parts = queryStringList[0].split('&');
-          for (var i = 0; i < parts.length; i++) {
-              var component = parts[i].split('=');
-              var paramKey = decodeURIComponent(component[0]);
-              var paramVal = decodeURIComponent(component[1]);
-              if (!paramMap[paramKey]) {
-                  paramMap[paramKey] = paramVal;
-                  continue;
-              }
-              !Array.isArray(paramMap[paramKey]) && (paramMap[paramKey] = Array(paramMap[paramKey]));
-              paramMap[paramKey].push(paramVal);
-          }
-      }
-      return key ? paramMap === null || paramMap === void 0 ? void 0 : paramMap[key] : paramMap;
-  }
-  /**
-   * 获取不带任何参数或片段标识符的当前 URL
-   * @example
-   * getBaseURL('https://test.com/index?name=leo&org=biugle#test'); /// 'https://test.com/index'
-   * getBaseURL(''); /// ''
-   * getBaseURL(); /// 当前页面 BaseURL
-   * getBaseURL('https://test.com/#/test?name=leo&org=biugle', true); /// 'https://test.com/#/test'
-   * getBaseURL(null); /// 相当于 window.location.origin
-   * @param url 地址/链接
-   * @param hashRoute 是否为 hash 路由，默认为 false 。
-   * @returns
-   */
-  function getBaseURL(url, hashRoute) {
-      if (hashRoute === void 0) { hashRoute = false; }
-      if (url === null) {
-          return window.location.origin;
-      }
-      url = url !== null && url !== void 0 ? url : window.location.href;
-      if (hashRoute) {
-          return url.split('?')[0];
-      }
-      return url.replace(/[?#].*$/, '');
-  }
-  /**
-   * 获取 url 查询参数字符串
-   * @example
-   * getQueryString('https://test.com/index?name=leo&org=biugle#test'); /// 'name=leo&org=biugle'
-   * getQueryString(''); /// ''
-   * getQueryString(); /// 当前页面 QueryString 字符串部分
-   * @param url 地址/链接
-   * @returns
-   */
-  function getQueryString(url) {
-      var _a, _b, _c, _d, _e;
-      return toBool(url) ? (_d = (_c = (_b = (_a = url === null || url === void 0 ? void 0 : url.split('?')) === null || _a === void 0 ? void 0 : _a[1]) === null || _b === void 0 ? void 0 : _b.split('#')) === null || _c === void 0 ? void 0 : _c[0]) !== null && _d !== void 0 ? _d : '' : (_e = window.location.search) === null || _e === void 0 ? void 0 : _e.replace('?', '');
-  }
-  /**
-   * 改变 URL 地址而不刷新页面，并且支持保留或替换历史记录
-   * @example
-   * 假如当前地址为：https://test.com/user
-   * changeURL('leo'); /// url 变为 'https://test.com/user/leo'
-   * changeURL('./leo'); /// url 变为 'https://test.com/user/leo'
-   * changeURL('/users'); /// url 变为 'https://test.com/users'
-   * changeURL('https://test.com/test'); /// url 变为 'https://test.com/test' (若域名不同，会报错中断。)
-   * changeURL('/users', false); /// url 变为 'https://test.com/users' (不覆盖历史记录，返回时会再显示 'https://test.com/user'，而上面的例子返回时是直接显示 'https://test.com/user' 的上一条。)
-   * @param url URL 地址
-   * @param replaceHistory 是否替换历史记录，默认为 true 。
-   * @returns
-   */
-  function changeURL(url, replaceHistory) {
-      if (replaceHistory === void 0) { replaceHistory = true; }
-      if (replaceHistory) {
-          window.history.replaceState({}, '', url);
-      }
-      else {
-          window.history.pushState({}, '', url);
-      }
-  }
-  /**
-   * 获取查询地址/链接中的参数对象
-   * @example
-   * getSearchParams('https://test.com/index?name=leo&org=biugle#test'); /// {name: 'leo', org: 'biugle'}
-   * getSearchParams(''); /// {}
-   * getSearchParams(); /// 当前页面 SearchParams 对象
-   * @param url 地址/链接
-   * @returns
-   */
-  function getSearchParams(url) {
-      var e_1, _a;
-      var searchPar = new URLSearchParams(getQueryString(url));
-      var paramsObj = {};
-      try {
-          for (var _b = __values(searchPar.entries()), _c = _b.next(); !_c.done; _c = _b.next()) {
-              var _d = __read(_c.value, 2), key = _d[0], value = _d[1];
-              paramsObj[key] = value;
-          }
-      }
-      catch (e_1_1) { e_1 = { error: e_1_1 }; }
-      finally {
-          try {
-              if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
-          }
-          finally { if (e_1) throw e_1.error; }
-      }
-      return paramsObj;
-  }
-  /**
-   * ajax 简单封装
-   * @example
-   * xAjax('get', 'https://test.cn', { params: { test: 123, hello: 456 }, success: (data) => console.log('success', data), fail: (error) => console.log('fail', error) }); /// ajax
-   * xAjax('POST', 'https://test.cn', { contentType: 'application/json', data: { test: 123 }, success: (data) => console.log('success', data), fail: (error) => console.log('fail', error) }); /// ajax
-   * @param method Http Method
-   * @param url 地址/链接
-   * @param options 请求配置
-   * @returns
-   */
-  function xAjax(method, url, options) {
-      var _a, _b, _c, _d;
-      var xhr;
-      method = method.toUpperCase();
-      if (window.XMLHttpRequest) {
-          xhr = new XMLHttpRequest();
-      }
-      else {
-          // @ts-ignore
-          // eslint-disable-next-line no-undef
-          xhr = new ActiveXObject('Microsoft.XMLHttp');
-      }
-      // eslint-disable-next-line spellcheck/spell-checker
-      xhr.onreadystatechange = function () {
-          var _a, _b;
-          if (xhr.readyState === 4) {
-              if (xhr.status < 400) {
-                  (_a = options === null || options === void 0 ? void 0 : options.success) === null || _a === void 0 ? void 0 : _a.call(options, xhr.response);
-              }
-              else if (xhr.status >= 400) {
-                  (_b = options === null || options === void 0 ? void 0 : options.fail) === null || _b === void 0 ? void 0 : _b.call(options, xhr.response);
-              }
-          }
-      };
-      var async = (_a = options === null || options === void 0 ? void 0 : options.async) !== null && _a !== void 0 ? _a : true;
-      // setting after open for compatibility with IE versions <=10
-      xhr.withCredentials = (_b = options === null || options === void 0 ? void 0 : options.withCredentials) !== null && _b !== void 0 ? _b : false;
-      if (options === null || options === void 0 ? void 0 : options.data) {
-          options.data = !(options === null || options === void 0 ? void 0 : options.raw) && isObj(options.data) ? JSON.stringify(options.data) : options.data;
-      }
-      if (method == 'GET') {
-          xhr.open('GET', !(options === null || options === void 0 ? void 0 : options.params)
-              ? url
-              : "".concat(url).concat(url.includes('?') ? '&' : '?').concat(new URLSearchParams(options.params).toString()), async);
-          xhr.send();
-      }
-      else {
-          xhr.open(method, url, async);
-          xhr.setRequestHeader('Content-Type', (_c = options === null || options === void 0 ? void 0 : options.contentType) !== null && _c !== void 0 ? _c : 'application/x-www-form-urlencoded;charset=UTF-8');
-          xhr.send((_d = options === null || options === void 0 ? void 0 : options.data) !== null && _d !== void 0 ? _d : null);
-      }
-      return xhr;
-  }
-  /**
-   * fetch 简单封装
-   * @example
-   * xFetch('get', 'https://api.uomg.com/api/rand.qinghua?x=1', { params: { format: 'json', hello: 456 } }).then(data => console.log(data)); /// fetchXPromise
-   * xFetch('POST', 'https://test.cn', { headers: { contentType: 'application/json' }, data: { test: 123 } }).catch(error => console.log(error)); /// fetchXPromise
-   * @param method Http Method
-   * @param url 地址/链接
-   * @param options 请求配置
-   * @returns
-   */
-  function xFetch(method, url, options) {
-      var _a, _b, _c, _d, _e, _f, _g, _h;
-      if (options === null || options === void 0 ? void 0 : options.params) {
-          url = "".concat(url).concat(url.includes('?') ? '&' : '?').concat(new URLSearchParams(options.params).toString());
-      }
-      if (options === null || options === void 0 ? void 0 : options.data) {
-          options.data = !(options === null || options === void 0 ? void 0 : options.raw) && isObj(options.data) ? JSON.stringify(options.data) : options.data;
-      }
-      var headers = (_a = options === null || options === void 0 ? void 0 : options.headers) !== null && _a !== void 0 ? _a : {};
-      var contentType = (_h = (_g = (_f = (_e = (_d = (_c = (_b = headers.contenttype) !== null && _b !== void 0 ? _b : headers.contentType) !== null && _c !== void 0 ? _c : headers.ContentType) !== null && _d !== void 0 ? _d : headers.Contenttype) !== null && _e !== void 0 ? _e : headers['content-type']) !== null && _f !== void 0 ? _f : headers['content-Type']) !== null && _g !== void 0 ? _g : headers === null || headers === void 0 ? void 0 : headers['Content-Type']) !== null && _h !== void 0 ? _h : headers === null || headers === void 0 ? void 0 : headers['Content-type'];
-      return fetch(url, {
-          // 文件请求相关处理时需注意别写 content-type
-          headers: __assign(__assign({}, headers), (!contentType || (options === null || options === void 0 ? void 0 : options.isFile)
-              ? {}
-              : {
-                  'content-type': contentType !== null && contentType !== void 0 ? contentType : 'application/x-www-form-urlencoded;charset=UTF-8',
-                  // ?? 'application/json;charset=UTF-8',
-              })),
-          method: method,
-          body: options === null || options === void 0 ? void 0 : options.data,
-      })
-          .then(function (res) {
-          var type = res.headers.get('content-type');
-          if (type === null || type === void 0 ? void 0 : type.includes('json')) {
-              return res.json();
-          }
-          else if (type === null || type === void 0 ? void 0 : type.includes('text')) {
-              return res.text();
-          }
-          else if (type === null || type === void 0 ? void 0 : type.includes('form')) {
-              return res.formData();
-          }
-          else if ((type === null || type === void 0 ? void 0 : type.includes('video')) || (type === null || type === void 0 ? void 0 : type.includes('image'))) {
-              return res.blob();
-          }
-          else if (type === null || type === void 0 ? void 0 : type.includes('arrayBuffer')) {
-              return res.arrayBuffer();
-          }
-          else {
-              try {
-                  if (options === null || options === void 0 ? void 0 : options.callback) {
-                      return options === null || options === void 0 ? void 0 : options.callback(res);
-                  }
-                  return res;
-              }
-              catch (e) {
-                  return res;
-              }
-          }
-      })
-          .catch(function (error) {
-          return Promise.reject(error);
-      });
-  }
-  // eslint-disable-next-line spellcheck/spell-checker
-  /**
-   * 获取常见的 content-type
-   * @example
-   * getContentType('form'); /// 'application/x-www-form-urlencoded'
-   * getContentType('file'); /// 'multipart/form-data'
-   * getContentType('pdf'); /// 'application/pdf'
-   * getContentType('PDF'); /// 'application/pdf'
-   * getContentType('unknown'); /// 'application/octet-stream'
-   * @param fileType 文件类型
-   * @returns
-   */
-  function getContentType(fileType) {
-      var _a;
-      return (_a = CONTENT_TYPES[fileType.toLowerCase()]) !== null && _a !== void 0 ? _a : 'application/octet-stream';
-  }
+  var templateObject_1;
 
   /* eslint-disable max-lines */
   function _isValidCronField(field, min, max) {
@@ -15045,6 +15383,42 @@ var $xxx = (function (exports) {
    */
   function isAppleDevice() {
       return /Mac|iPod|iPhone|iPad/.test(navigator.platform);
+  }
+  /**
+   * 判断是否客户端渲染
+   * @example
+   * isCSR(); /// true
+   * @returns
+   */
+  function isCSR() {
+      return typeof window !== 'undefined' && typeof document !== 'undefined';
+  }
+  /**
+   * 判断是否 Windows
+   * @example
+   * isWin(); /// true
+   * @returns
+   */
+  function isWin() {
+      return typeof navigator !== 'undefined' && /windows|win32/i.test(navigator.userAgent);
+  }
+  /**
+   * 判断是否 MacOS
+   * @example
+   * isMac(); /// true
+   * @returns
+   */
+  function isMac() {
+      return typeof navigator !== 'undefined' && /Macintosh/i.test(navigator.userAgent);
+  }
+  /**
+   * 判断是否 Chrome 内核
+   * @example
+   * isChrome(); /// true
+   * @returns
+   */
+  function isChrome() {
+      return typeof navigator !== 'undefined' && navigator.userAgent.indexOf('Chrome') > -1;
   }
   /**
    * 版本号比对算法
@@ -15376,7 +15750,7 @@ var $xxx = (function (exports) {
       }
       // 加入特殊字符确保 utf-8
       // eslint-disable-next-line spellcheck/spell-checker
-      var uri = "data:".concat(getContentType(fileType), ";charset=utf-8,\uFEFF").concat(encodeURIComponent(data));
+      var uri = "data:".concat(getContentType(fileType), ";charset=utf-8,\uFEFF").concat(safeEncodeURI(data));
       // U+FEFF 是一个零宽度非断字符（Zero Width No-Break Space），也称为“字节顺序标记（Byte Order Mark，BOM）”。
       // eslint-disable-next-line spellcheck/spell-checker
       download(uri, "".concat(fileName !== null && fileName !== void 0 ? fileName : formatDate(new Date(), 'yyyy-mm-dd-hhiiss'), ".").concat(fileType));
@@ -15683,14 +16057,16 @@ var $xxx = (function (exports) {
    * @FilePath: \js-xxx\src\Promise\index.ts
    */
   /**
-   * 睡眠指定时间
+   * 睡眠指定时间，或者 mock 接口数据。
    * @example
    * await sleep(1000); /// 等待 1000 毫秒再执行后面的
+   * await sleep(1000, '1'); /// 等待 1000 毫秒再执行后面的，并且返回 '1'，方便 mock 数据。
    * @param milliseconds 睡眠时间
+   * @param returnValue 返回值
    * @returns
    */
-  function sleep(milliseconds) {
-      return new Promise(function (resolve) { return setTimeout(resolve, milliseconds); });
+  function sleep(milliseconds, returnValue) {
+      return new Promise(function (resolve) { return setTimeout(function () { return resolve(returnValue); }, milliseconds); });
   }
   /**
    * 参考了 to.js，扩展 Promise 用来直接帮助执行且处理异常。
@@ -16299,10 +16675,11 @@ var $xxx = (function (exports) {
    * @Author: HxB
    * @Date: 2024-05-13 15:08:38
    * @LastEditors: DoubleAm
-   * @LastEditTime: 2024-05-28 14:29:12
+   * @LastEditTime: 2024-08-12 13:50:35
    * @Description: i18n 国际化支持
    * @FilePath: \js-xxx\src\i18n\index.ts
    */
+  var I18N_KEY = 'js-xxx-lang';
   /**
    * i18n 国际化支持类
    * 若需切换语言后更新页面内容，可以在切换语言的时候同步更新全局状态 lang，并将全局状态 lang 设置为 `t$` 的参数即可。
@@ -16335,7 +16712,7 @@ var $xxx = (function (exports) {
               this.loadResources(options.resources);
           }
           // 从 localStorage 获取先前选择的语言
-          this.lang = localStorage.getItem('js-xxx-lang') || options.defaultLang || 'zh-CN';
+          this.lang = getCookie(I18N_KEY) || localStorageGet(I18N_KEY) || options.defaultLang || getBrowserLang() || 'zh-CN';
       }
       // 加载语言资源
       i18n.prototype.loadResources = function (resources) {
@@ -16351,7 +16728,7 @@ var $xxx = (function (exports) {
       i18n.prototype.setLang = function (language, callback) {
           this.lang = language;
           // 将当前语言保存到 localStorage
-          localStorage.setItem('js-xxx-lang', language);
+          localStorage.setItem(I18N_KEY, language);
           callback === null || callback === void 0 ? void 0 : callback(language);
           return this; // 支持方法链式调用
       };
@@ -16399,6 +16776,117 @@ var $xxx = (function (exports) {
       };
       return i18n;
   }());
+  /**
+   * 获取浏览器语言。
+   * 返回的是中划线格式，如：zh-CN 。
+   * @example
+   * // 如果浏览器语言为中文（简体）
+   * getBrowserLang(); // 'zh-CN'
+   * // 如果浏览器语言为英文
+   * getBrowserLang(); // 'en-US'
+   * // 限制返回语言为支持的语言之一
+   * getBrowserLang({ supportLangs: ['zh-CN', 'en-US'] }); // 'zh-CN' 或 'en-US'
+   * // 限制返回语言为不支持的语言之一
+   * getBrowserLang({ supportLangs: ['es-ES', 'fr-FR'] }); // 'en-US'
+   * @param opts 可选配置项。
+   * @param opts.supportLangs 可支持的语言，传入时，会用此数组来限制返回的语言值，防止返回的 navigator.language 和系统定义的语言值不匹配。
+   * @returns
+   */
+  function getBrowserLang(opts) {
+      var e_1, _a;
+      // 默认语言
+      var browserLang = 'en-US';
+      // 确保 navigator 对象存在且语言属性有效
+      var isNavigatorLanguageValid = typeof navigator !== 'undefined' && typeof navigator.language === 'string';
+      if (isNavigatorLanguageValid) {
+          // 获取浏览器语言
+          browserLang = navigator.language.split('-').join('-');
+      }
+      // 语言映射表
+      var langMap = new Map([
+          [/^en/i, 'en-US'],
+          [/^zh/i, 'zh-CN'],
+          [/^fr/i, 'fr-FR'],
+          [/^ru/i, 'ru-RU'],
+          [/^de/i, 'de-DE'],
+          [/^ja/i, 'ja-JP'],
+          [/^ko/i, 'ko-KR'],
+          [/^pt/i, 'pt-BR'],
+          [/^es/i, 'es-MX'],
+          [/^it/i, 'it-IT'],
+          [/^ar/i, 'ar-SA'],
+          [/^nl/i, 'nl-NL'],
+          [/^sv/i, 'sv-SE'],
+          [/^da/i, 'da-DK'],
+          [/^fi/i, 'fi-FI'],
+          [/^no/i, 'no-NO'],
+          [/^pl/i, 'pl-PL'],
+          [/^tr/i, 'tr-TR'],
+          [/^he/i, 'he-IL'],
+          [/^cs/i, 'cs-CZ'],
+          [/^hu/i, 'hu-HU'],
+          [/^el/i, 'el-GR'],
+          [/^th/i, 'th-TH'],
+          [/^vi/i, 'vi-VN'],
+          [/^id/i, 'id-ID'],
+          [/^ms/i, 'ms-MY'],
+          [/^hi/i, 'hi-IN'],
+          [/^bn/i, 'bn-BD'],
+          [/^uk/i, 'uk-UA'], // 乌克兰语 - 乌克兰
+      ]);
+      try {
+          // 匹配并设置语言
+          for (var _b = __values(langMap.entries()), _c = _b.next(); !_c.done; _c = _b.next()) {
+              var _d = __read(_c.value, 2), regex = _d[0], lang = _d[1];
+              if (regex.test(browserLang)) {
+                  browserLang = lang;
+                  break;
+              }
+          }
+      }
+      catch (e_1_1) { e_1 = { error: e_1_1 }; }
+      finally {
+          try {
+              if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+          }
+          finally { if (e_1) throw e_1.error; }
+      }
+      // 过滤不支持的语言
+      var supportLangs = opts === null || opts === void 0 ? void 0 : opts.supportLangs;
+      if (supportLangs && !supportLangs.includes(browserLang)) {
+          browserLang = 'en-US';
+      }
+      return browserLang;
+  }
+  /**
+   * 获取默认语言。
+   * 返回的是中划线格式，如：zh-CN 。
+   * 从 Cookie 获取语言，如果不存在则获取 local 存储中的语言，都不存在则使用浏览器语言。
+   * @example
+   * getDefaultLang({ supportLangs: ['zh-CN', 'en-US'] }); // 'zh-CN' 或 'en-US'
+   * // 指定一个自定义 key
+   * getDefaultLang({ supportLangs: ['fr-FR', 'es-ES'], key: 'USER_LANG' }); // 'fr-FR' 或 'es-ES'
+   * // 如果语言不在支持的语言列表中，则返回默认语言 'en-US'。
+   * getDefaultLang({ supportLangs: ['es-ES'], key: 'USER_LANG' }); // 'en-US' (假设获取的语言为 'fr_FR')
+   * @param opts 可选配置项。
+   * @param opts.supportLangs 支持的语言列表。如果返回的语言不在此列表中，将返回默认语言 'en-US'。
+   * @param opts.key 用于获取语言的 key 默认为 'js-xxx-lang'
+   * @returns
+   */
+  function getDefaultLang(opts) {
+      var key = (opts === null || opts === void 0 ? void 0 : opts.key) || I18N_KEY;
+      var supportLangs = (opts === null || opts === void 0 ? void 0 : opts.supportLangs) || [];
+      // 从 Cookie 获取语言，如果不存在则获取 local 存储中的语言，都不存在则使用浏览器语言。
+      var lang = getCookie(key) || localStorageGet(key) || getBrowserLang({ supportLangs: supportLangs });
+      lang = lang.replace('_', '-');
+      // 检查语言是否在支持的语言列表中
+      if (supportLangs.length && !supportLangs.includes(lang)) {
+          return 'en-US';
+      }
+      else {
+          return lang;
+      }
+  }
 
   exports.ANIMALS = ANIMALS;
   exports.BASE_CHAR_LOW = BASE_CHAR_LOW;
@@ -16477,6 +16965,8 @@ var $xxx = (function (exports) {
   exports.div = div;
   exports.download = download;
   exports.downloadContent = downloadContent;
+  exports.downloadFile = downloadFile;
+  exports.downloadImg = downloadImg;
   exports.emitEvent = emitEvent;
   exports.emitKeyboardEvent = emitKeyboardEvent;
   exports.empty = empty;
@@ -16501,6 +16991,7 @@ var $xxx = (function (exports) {
   exports.getBSColor = getBSColor;
   exports.getBaseURL = getBaseURL;
   exports.getBloodGroup = getBloodGroup;
+  exports.getBrowserLang = getBrowserLang;
   exports.getConstellation = getConstellation;
   exports.getContentType = getContentType;
   exports.getCookie = getCookie;
@@ -16511,6 +17002,8 @@ var $xxx = (function (exports) {
   exports.getDateTime = getDateTime;
   exports.getDayInYear = getDayInYear;
   exports.getDecodeStorage = getDecodeStorage;
+  exports.getDefaultLang = getDefaultLang;
+  exports.getFileNameFromUrl = getFileNameFromUrl;
   exports.getFingerprint = getFingerprint;
   exports.getFirstVar = getFirstVar;
   exports.getKey = getKey;
@@ -16519,6 +17012,7 @@ var $xxx = (function (exports) {
   exports.getLocalObj = getLocalObj;
   exports.getMonthDayCount = getMonthDayCount;
   exports.getMonthInfo = getMonthInfo;
+  exports.getNumberReg = getNumberReg;
   exports.getPercentage = getPercentage;
   exports.getPinYin = getPinYin;
   exports.getQueryString = getQueryString;
@@ -16536,6 +17030,7 @@ var $xxx = (function (exports) {
   exports.getSortVar = getSortVar;
   exports.getStyleByName = getStyleByName;
   exports.getTimeCode = getTimeCode;
+  exports.getTimezone = getTimezone;
   exports.getTreeCheckNodes = getTreeCheckNodes;
   exports.getTreeData = getTreeData;
   exports.getType = getType;
@@ -16566,8 +17061,10 @@ var $xxx = (function (exports) {
   exports.isBlob = isBlob;
   exports.isBool = isBool;
   exports.isBrowser = isBrowser;
+  exports.isCSR = isCSR;
   exports.isCarCode = isCarCode;
   exports.isChinese = isChinese;
+  exports.isChrome = isChrome;
   exports.isCreditCode = isCreditCode;
   exports.isDarkMode = isDarkMode;
   exports.isDate = isDate;
@@ -16587,6 +17084,7 @@ var $xxx = (function (exports) {
   exports.isJSON = isJSON;
   exports.isLatitude = isLatitude;
   exports.isLongitude = isLongitude;
+  exports.isMac = isMac;
   exports.isMobile = isMobile;
   exports.isNaN = isNaN$1;
   exports.isNode = isNode;
@@ -16602,6 +17100,7 @@ var $xxx = (function (exports) {
   exports.isUndef = isUndef;
   exports.isUrl = isUrl;
   exports.isWeekday = isWeekday;
+  exports.isWin = isWin;
   exports.javaDecrypt = javaDecrypt;
   exports.javaEncrypt = javaEncrypt;
   exports.jsonClone = jsonClone;
@@ -16624,6 +17123,7 @@ var $xxx = (function (exports) {
   exports.onResize = onResize;
   exports.openFileSelect = openFileSelect;
   exports.openFullscreen = openFullscreen;
+  exports.openPreviewFile = openPreviewFile;
   exports.parseJSON = parseJSON;
   exports.prettierRules = prettierRules;
   exports.printDom = printDom;
@@ -16636,7 +17136,10 @@ var $xxx = (function (exports) {
   exports.rightJoin = rightJoin;
   exports.rip = rip;
   exports.round = round;
+  exports.safeDecodeURI = safeDecodeURI;
+  exports.safeEncodeURI = safeEncodeURI;
   exports.same = same;
+  exports.saveAs = saveAs;
   exports.scrollToView = scrollToView;
   exports.scrollXTo = scrollXTo;
   exports.scrollYTo = scrollYTo;

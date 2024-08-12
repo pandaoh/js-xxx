@@ -48,6 +48,34 @@ export declare function isDarkMode(): boolean;
  */
 export declare function isAppleDevice(): boolean;
 /**
+ * 判断是否客户端渲染
+ * @example
+ * isCSR(); /// true
+ * @returns
+ */
+export declare function isCSR(): boolean;
+/**
+ * 判断是否 Windows
+ * @example
+ * isWin(); /// true
+ * @returns
+ */
+export declare function isWin(): boolean;
+/**
+ * 判断是否 MacOS
+ * @example
+ * isMac(); /// true
+ * @returns
+ */
+export declare function isMac(): boolean;
+/**
+ * 判断是否 Chrome 内核
+ * @example
+ * isChrome(); /// true
+ * @returns
+ */
+export declare function isChrome(): boolean;
+/**
  * 版本号比对算法
  * @example
  * checkVersion('1.0.1-rc', '1.0.0', '-rc'); /// 1

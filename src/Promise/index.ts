@@ -8,14 +8,16 @@
  */
 
 /**
- * 睡眠指定时间
+ * 睡眠指定时间，或者 mock 接口数据。
  * @example
  * await sleep(1000); /// 等待 1000 毫秒再执行后面的
+ * await sleep(1000, '1'); /// 等待 1000 毫秒再执行后面的，并且返回 '1'，方便 mock 数据。
  * @param milliseconds 睡眠时间
+ * @param returnValue 返回值
  * @returns
  */
-export function sleep(milliseconds: number | undefined): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, milliseconds));
+export function sleep(milliseconds: number | undefined, returnValue?: any): Promise<any> {
+  return new Promise((resolve) => setTimeout(() => resolve(returnValue), milliseconds));
 }
 
 /**
