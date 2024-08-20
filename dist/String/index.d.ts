@@ -270,6 +270,19 @@ export declare function formatJSON(value: any): string;
  */
 export declare function parseJSON(value: any): any;
 /**
+ * 将任意值序列化为 JSON 字符串，处理无法序列化的情况。
+ * @example
+ * stringifyJSON({ name: 'leo', age: 20 }); /// '{"name":"leo","age":20}'
+ * stringifyJSON(123); /// '123'
+ * stringifyJSON(true); /// 'true'
+ * stringifyJSON(null); /// 'null'
+ * stringifyJSON(() => {}); /// ''
+ * stringifyJSON(Symbol('test')); /// ''
+ * @param value 需要序列化的值
+ * @returns
+ */
+export declare function stringifyJSON(value: any): string;
+/**
  * 检查是否为 QQ 号
  * @example
  * isQQ('1005760694'); /// true

@@ -231,6 +231,23 @@ export declare function transferTemperature(temperature: number | string, isCels
  */
 export declare function getDataStr(value: any, defaultValue?: string, prefix?: string, suffix?: string): string;
 /**
+ * 比较两个值是否相等，支持严格模式和忽略大小写的比较。
+ * @example
+ * compareTo(1, 2); /// false
+ * compareTo('a', 'A'); /// true
+ * compareTo('a', 'A', true); /// false
+ * compareTo(3, 3); /// true
+ * compareTo(2, '2'); /// true
+ * compareTo('apple', 'banana'); /// false
+ * compareTo('2', 2, true); /// false
+ * compareTo('2', 2); /// true
+ * @param value1 第一个值
+ * @param value2 第二个值
+ * @param strict 是否启用严格模式: true 表示严格比较，false 表示忽略大小写和类型比较，默认值为 false 。
+ * @returns
+ */
+export declare function compareTo(value1: any, value2: any, strict?: boolean): boolean;
+/**
  * 获取转换后树的映射对象、数组 `{ map: any, list: any[] }`
  * @example
  * getTreeData(treeData, 'id'); /// { map: any, list: any[] }

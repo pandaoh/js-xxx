@@ -83,6 +83,7 @@ js-xxx
 - [closeFullscreen](README.md#closefullscreen)
 - [closeWebSocket](README.md#closewebsocket)
 - [compareDate](README.md#comparedate)
+- [compareTo](README.md#compareto)
 - [contains](README.md#contains)
 - [copyToClipboard](README.md#copytoclipboard)
 - [countdown](README.md#countdown)
@@ -303,6 +304,7 @@ js-xxx
 - [stackSticky](README.md#stacksticky)
 - [str2html](README.md#str2html)
 - [str2unicode](README.md#str2unicode)
+- [stringifyJSON](README.md#stringifyjson)
 - [sub](README.md#sub)
 - [textCamelCase](README.md#textcamelcase)
 - [textSplitCase](README.md#textsplitcase)
@@ -1668,6 +1670,39 @@ ___
 ```ts
 compareDate('2023-1-1'); /// 1
 compareDate('2023-1-1 12:00:00', '2023-1-2 12:00:00'); /// -1
+```
+
+___
+
+### compareTo
+
+▸ **compareTo**(`value1`, `value2`, `strict?`): `boolean`
+
+比较两个值是否相等，支持严格模式和忽略大小写的比较。
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `value1` | `any` | `undefined` | 第一个值 |
+| `value2` | `any` | `undefined` | 第二个值 |
+| `strict` | `boolean` | `false` | 是否启用严格模式: true 表示严格比较，false 表示忽略大小写和类型比较，默认值为 false 。 |
+
+#### Returns
+
+`boolean`
+
+**`Example`**
+
+```ts
+compareTo(1, 2); /// false
+compareTo('a', 'A'); /// true
+compareTo('a', 'A', true); /// false
+compareTo(3, 3); /// true
+compareTo(2, '2'); /// true
+compareTo('apple', 'banana'); /// false
+compareTo('2', 2, true); /// false
+compareTo('2', 2); /// true
 ```
 
 ___
@@ -7536,6 +7571,35 @@ unicode 转字符
 
 ```ts
 str2unicode("\\u6211\\u662f\\u8001a"); /// '我是老a'
+```
+
+___
+
+### stringifyJSON
+
+▸ **stringifyJSON**(`value`): `string`
+
+将任意值序列化为 JSON 字符串，处理无法序列化的情况。
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `value` | `any` | 需要序列化的值 |
+
+#### Returns
+
+`string`
+
+**`Example`**
+
+```ts
+stringifyJSON({ name: 'leo', age: 20 }); /// '{"name":"leo","age":20}'
+stringifyJSON(123); /// '123'
+stringifyJSON(true); /// 'true'
+stringifyJSON(null); /// 'null'
+stringifyJSON(() => {}); /// ''
+stringifyJSON(Symbol('test')); /// ''
 ```
 
 ___

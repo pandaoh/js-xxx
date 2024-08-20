@@ -12320,6 +12320,27 @@ var $xxx = (function (exports) {
       }
   }
   /**
+   * 将任意值序列化为 JSON 字符串，处理无法序列化的情况。
+   * @example
+   * stringifyJSON({ name: 'leo', age: 20 }); /// '{"name":"leo","age":20}'
+   * stringifyJSON(123); /// '123'
+   * stringifyJSON(true); /// 'true'
+   * stringifyJSON(null); /// 'null'
+   * stringifyJSON(() => {}); /// ''
+   * stringifyJSON(Symbol('test')); /// ''
+   * @param value 需要序列化的值
+   * @returns
+   */
+  function stringifyJSON(value) {
+      try {
+          return JSON.stringify(value);
+      }
+      catch (error) {
+          console.error(error);
+          return '';
+      }
+  }
+  /**
    * 检查是否为 QQ 号
    * @example
    * isQQ('1005760694'); /// true
@@ -15812,6 +15833,29 @@ var $xxx = (function (exports) {
       return value !== defaultValue ? "".concat(prefix).concat(value).concat(suffix) : "".concat(value);
   }
   /**
+   * 比较两个值是否相等，支持严格模式和忽略大小写的比较。
+   * @example
+   * compareTo(1, 2); /// false
+   * compareTo('a', 'A'); /// true
+   * compareTo('a', 'A', true); /// false
+   * compareTo(3, 3); /// true
+   * compareTo(2, '2'); /// true
+   * compareTo('apple', 'banana'); /// false
+   * compareTo('2', 2, true); /// false
+   * compareTo('2', 2); /// true
+   * @param value1 第一个值
+   * @param value2 第二个值
+   * @param strict 是否启用严格模式: true 表示严格比较，false 表示忽略大小写和类型比较，默认值为 false 。
+   * @returns
+   */
+  function compareTo(value1, value2, strict) {
+      if (strict === void 0) { strict = false; }
+      if (strict) {
+          return value1 === value2;
+      }
+      return "".concat(value1).toLowerCase() === "".concat(value2).toLowerCase();
+  }
+  /**
    * 获取转换后树的映射对象、数组 `{ map: any, list: any[] }`
    * @example
    * getTreeData(treeData, 'id'); /// { map: any, list: any[] }
@@ -16945,6 +16989,7 @@ var $xxx = (function (exports) {
   exports.closeFullscreen = closeFullscreen;
   exports.closeWebSocket = closeWebSocket;
   exports.compareDate = compareDate;
+  exports.compareTo = compareTo;
   exports.contains = contains;
   exports.copyToClipboard = copyToClipboard;
   exports.countdown = countdown;
@@ -17166,6 +17211,7 @@ var $xxx = (function (exports) {
   exports.stackSticky = stackSticky;
   exports.str2html = str2html;
   exports.str2unicode = str2unicode;
+  exports.stringifyJSON = stringifyJSON;
   exports.sub = sub;
   exports.textCamelCase = textCamelCase;
   exports.textSplitCase = textSplitCase;
