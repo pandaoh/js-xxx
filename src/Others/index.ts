@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:53:39
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-08-12 14:09:21
+ * @LastEditTime: 2024-08-20 10:07:56
  * @Description: 因项目需要常用函数，不管任何项目，都放到一起。注意甄别，没有复用意义的函数就不要添加了。
  * @FilePath: \js-xxx\src\Others\index.ts
  */
@@ -702,6 +702,30 @@ export function transferTemperature(temperature: number | string, isCelsius = tr
 export function getDataStr(value: any, defaultValue = '-', prefix = '', suffix = ''): string {
   value = value !== undefined ? value : defaultValue !== undefined ? defaultValue : '-';
   return value !== defaultValue ? `${prefix}${value}${suffix}` : `${value}`;
+}
+
+/**
+ * 比较两个值是否相等，支持严格模式和忽略大小写的比较。
+ * @example
+ * compareTo(1, 2); /// false
+ * compareTo('a', 'A'); /// true
+ * compareTo('a', 'A', true); /// false
+ * compareTo(3, 3); /// true
+ * compareTo(2, '2'); /// true
+ * compareTo('apple', 'banana'); /// false
+ * compareTo('2', 2, true); /// false
+ * compareTo('2', 2); /// true
+ * @param value1 第一个值
+ * @param value2 第二个值
+ * @param strict 是否启用严格模式: true 表示严格比较，false 表示忽略大小写和类型比较，默认值为 false 。
+ * @returns
+ */
+export function compareTo(value1: any, value2: any, strict = false): boolean {
+  if (strict) {
+    return value1 === value2;
+  }
+
+  return `${value1}`.toLowerCase() === `${value2}`.toLowerCase();
 }
 
 /**
