@@ -1,22 +1,21 @@
-[js-xxx - v2.2.21](../README.md) / i18nOptions
+[**js-xxx v2.2.21**](../README.md) • **Docs**
+
+***
+
+[js-xxx v2.2.21](../README.md) / i18nOptions
 
 # Interface: i18nOptions
 
-## Table of contents
-
-### Properties
-
-- [defaultLang](i18nOptions.md#defaultlang)
-- [resources](i18nOptions.md#resources)
+i18n 类的选项
 
 ## Properties
 
-### defaultLang
+### defaultLang?
 
-• `Optional` **defaultLang**: `string`
+> `optional` **defaultLang**: `string`
 
-___
+***
 
 ### resources
 
-• **resources**: `Record`\<`string`, [`i18nLanguageResource`](i18nLanguageResource.md)\>
+> **resources**: `Record`\<`string`, [`i18nLanguageResource`](i18nLanguageResource.md)\>

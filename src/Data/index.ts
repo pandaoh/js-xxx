@@ -3,14 +3,15 @@
  * @Author: HxB
  * @Date: 2022-08-15 15:54:41
  * @LastEditors: DoubleAm
- * @LastEditTime: 2023-08-22 15:37:18
- * @Description: 常用共用的一些常量
+ * @LastEditTime: 2024-08-21 11:45:01
+ * @property: 常用共用的一些常量
  * @FilePath: \js-xxx\src\Data\index.ts
  */
 
 /**
  * @enum
  * Http Methods
+ * @category 常量
  */
 export enum HttpMethod {
   GET = 'GET',
@@ -28,7 +29,8 @@ export enum HttpMethod {
 }
 
 /**
- * @const
+ * @category 常量
+ * @property
  * 常用返回状态码 code message
  */
 export const CODE_MSG: { [status: number]: string } = {
@@ -53,7 +55,8 @@ export const CODE_MSG: { [status: number]: string } = {
 };
 
 /**
- * @const
+ * @category 常量
+ * @property
  * content types
  */
 export const CONTENT_TYPES: { [propName: string]: string } = {
@@ -138,13 +141,15 @@ export const CONTENT_TYPES: { [propName: string]: string } = {
 };
 
 /**
- * @const
+ * @category 常量
+ * @property
  * 根据年份求生肖数据，年 % 12 。
  */
 export const ANIMALS: string[] = ['猴', '鸡', '狗', '猪', '鼠', '牛', '虎', '兔', '龙', '蛇', '马', '羊'];
 
 /**
- * @const
+ * @category 常量
+ * @property
  * 星座数据
  */
 export const CONSTELLATION: any = {
@@ -163,7 +168,8 @@ export const CONSTELLATION: any = {
 };
 
 /**
- * @const
+ * @category 常量
+ * @property
  * 星期数据
  */
 export const WEEKS: {
@@ -225,7 +231,8 @@ export const WEEKS: {
 ];
 
 /**
- * @const
+ * @category 常量
+ * @property
  * 月份数据
  */
 export const MONTHS: {
@@ -322,7 +329,8 @@ export const MONTHS: {
 ];
 
 /**
- * @const
+ * @category 常量
+ * @property
  * 常用键盘控制键
  */
 export const KEYBOARD_CODE = {
@@ -367,19 +375,22 @@ export const KEYBOARD_CODE = {
 };
 
 /**
- * @const
+ * @category 常量
+ * @property
  * 性别常量女(0)
  */
 export const WOMAN = 0;
 
 /**
- * @const
+ * @category 常量
+ * @property
  * 性别常量男(1)
  */
 export const MAN = 1;
 
 /**
- * @const
+ * @category 常量
+ * @property
  * 血型
  */
 export const BLOOD_GROUP = {
@@ -390,7 +401,8 @@ export const BLOOD_GROUP = {
 };
 
 /**
- * @const
+ * @category 常量
+ * @property
  * 血型基础信息
  */
 export const BLOOD_GROUP_INFO: {
@@ -440,7 +452,8 @@ export const BLOOD_GROUP_INFO: {
 };
 
 /**
- * @const
+ * @category 常量
+ * @property
  * 角色管理对象
  */
 export const ROLES = {
@@ -452,7 +465,8 @@ export const ROLES = {
 };
 
 /**
- * @const
+ * @category 常量
+ * @property
  * 身份证省份
  */
 export const ID_CARD_PROVINCE: { [prop: string]: string } = {
@@ -494,31 +508,36 @@ export const ID_CARD_PROVINCE: { [prop: string]: string } = {
 };
 
 /**
- * @const
+ * @category 常量
+ * @property
  * 数字基础数据
  */
 export const BASE_NUMBER = '0123456789';
 
 /**
- * @const
+ * @category 常量
+ * @property
  * 小写字母基础数据
  */
 export const BASE_CHAR_LOW = 'abcdefghijklmnopqrstuvwxyz';
 
 /**
- * @const
+ * @category 常量
+ * @property
  * 大写字母基础数据
  */
 export const BASE_CHAR_UP = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 /**
- * @const
+ * @category 常量
+ * @property
  * 进制转换基础数据
  */
 export const TRANSFER_STR = BASE_NUMBER + BASE_CHAR_LOW + BASE_CHAR_UP + '_@';
 
 /**
- * @const
+ * @category 常量
+ * @property
  * 颜色数据
  */
 export const BS_COLORS = {
@@ -542,7 +561,8 @@ export const BS_COLORS = {
 };
 
 /**
- * @const
+ * @category 常量
+ * @property
  * ICONS 通用小图标
  */
 export const ICONS: any = {
@@ -563,7 +583,8 @@ export const ICONS: any = {
 };
 
 /**
- * @const
+ * @category 常量
+ * @property
  * 拼音转换数据
  */
 export const PY_MAPS: any = {

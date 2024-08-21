@@ -9,6 +9,7 @@ import CryptoJS from 'crypto-js';
  * @param secretKey [可选] 十六位十六进制数作为密钥
  * @param secretIv [可选] 十六位十六进制数作为密钥偏移量
  * @returns
+ * @category Crypto-密码学
  */
 export declare function encrypt(data: any, secretKey?: string, secretIv?: string): string;
 /**
@@ -23,6 +24,7 @@ export declare function encrypt(data: any, secretKey?: string, secretIv?: string
  * @param secretKey [可选] 十六位十六进制数作为密钥
  * @param secretIv [可选] 十六位十六进制数作为密钥偏移量
  * @returns
+ * @category Crypto-密码学
  */
 export declare function decrypt(dataStr: string, jsonDecode?: boolean, secretKey?: string, secretIv?: string): string;
 /**
@@ -80,6 +82,7 @@ export declare function decrypt(dataStr: string, jsonDecode?: boolean, secretKey
  * @param secretKey 可选的加密密钥，默认为 SECRET_KEY
  * @param secretIv 可选的加密向量，默认为 SECRET_IV
  * @returns
+ * @category Crypto-密码学
  */
 export declare function javaEncrypt(dataStr: string, secretKey?: string, secretIv?: string): string;
 /**
@@ -91,6 +94,7 @@ export declare function javaEncrypt(dataStr: string, secretKey?: string, secretI
  * @param secretKey 可选参数，密钥，若不传入则使用默认密钥 SECRET_KEY
  * @param secretIv 可选参数，向量，若不传入则使用默认向量 SECRET_IV
  * @returns
+ * @category Crypto-密码学
  */
 export declare function javaDecrypt(encryptedData: string, secretKey?: string, secretIv?: string): string;
 /**
@@ -99,6 +103,7 @@ export declare function javaDecrypt(encryptedData: string, secretKey?: string, s
  * md5("value"); /// 加密后的字符串
  * @param str 需要加密的字符串
  * @returns
+ * @category Crypto-密码学
  */
 export declare function md5(str: string): string;
 /**
@@ -107,6 +112,7 @@ export declare function md5(str: string): string;
  * sha1("value"); /// 加密后的字符串
  * @param str 需要加密的字符串
  * @returns
+ * @category Crypto-密码学
  */
 export declare function sha1(str: string): string;
 /**
@@ -115,6 +121,7 @@ export declare function sha1(str: string): string;
  * sha256("value"); /// 加密后的字符串
  * @param str 需要加密的字符串
  * @returns
+ * @category Crypto-密码学
  */
 export declare function sha256(str: string): string;
 /**
@@ -127,6 +134,7 @@ export declare function sha256(str: string): string;
  * @param str 需要加密的字符串
  * @param replaceChar 是否替换结果字符串中的特殊字符 '+/='，适用于 url 编码。
  * @returns
+ * @category Crypto-密码学
  */
 export declare function base64Encode(str: string, replaceChar?: boolean): string;
 /**
@@ -135,6 +143,7 @@ export declare function base64Encode(str: string, replaceChar?: boolean): string
  * base64Decode("加密后的字符串"); /// 解密后的字符串
  * @param str 需要加密的字符串
  * @returns
+ * @category Crypto-密码学
  */
 export declare function base64Decode(str: string): string;
 /**
@@ -143,6 +152,7 @@ export declare function base64Decode(str: string): string;
  * getCryptoJS(); /// CryptoJS
  * getCryptoJS().MD5(str).toString(); /// md5 加密后的字符串
  * @returns
+ * @category Crypto-密码学
  */
 export declare function getCryptoJS(): typeof CryptoJS;
 //# sourceMappingURL=index.d.ts.map

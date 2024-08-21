@@ -1,6 +1,7 @@
 /**
  * @enum
  * Http Methods
+ * @category 常量
  */
 export declare enum HttpMethod {
     GET = "GET",
@@ -17,31 +18,36 @@ export declare enum HttpMethod {
     options = "OPTIONS"
 }
 /**
- * @const
+ * @category 常量
+ * @property
  * 常用返回状态码 code message
  */
 export declare const CODE_MSG: {
     [status: number]: string;
 };
 /**
- * @const
+ * @category 常量
+ * @property
  * content types
  */
 export declare const CONTENT_TYPES: {
     [propName: string]: string;
 };
 /**
- * @const
+ * @category 常量
+ * @property
  * 根据年份求生肖数据，年 % 12 。
  */
 export declare const ANIMALS: string[];
 /**
- * @const
+ * @category 常量
+ * @property
  * 星座数据
  */
 export declare const CONSTELLATION: any;
 /**
- * @const
+ * @category 常量
+ * @property
  * 星期数据
  */
 export declare const WEEKS: {
@@ -52,7 +58,8 @@ export declare const WEEKS: {
     others: string;
 }[];
 /**
- * @const
+ * @category 常量
+ * @property
  * 月份数据
  */
 export declare const MONTHS: {
@@ -63,7 +70,8 @@ export declare const MONTHS: {
     others: string;
 }[];
 /**
- * @const
+ * @category 常量
+ * @property
  * 常用键盘控制键
  */
 export declare const KEYBOARD_CODE: {
@@ -107,17 +115,20 @@ export declare const KEYBOARD_CODE: {
     F12: number;
 };
 /**
- * @const
+ * @category 常量
+ * @property
  * 性别常量女(0)
  */
 export declare const WOMAN = 0;
 /**
- * @const
+ * @category 常量
+ * @property
  * 性别常量男(1)
  */
 export declare const MAN = 1;
 /**
- * @const
+ * @category 常量
+ * @property
  * 血型
  */
 export declare const BLOOD_GROUP: {
@@ -127,7 +138,8 @@ export declare const BLOOD_GROUP: {
     AB: string;
 };
 /**
- * @const
+ * @category 常量
+ * @property
  * 血型基础信息
  */
 export declare const BLOOD_GROUP_INFO: {
@@ -140,7 +152,8 @@ export declare const BLOOD_GROUP_INFO: {
     };
 };
 /**
- * @const
+ * @category 常量
+ * @property
  * 角色管理对象
  */
 export declare const ROLES: {
@@ -151,34 +164,40 @@ export declare const ROLES: {
     admin: string;
 };
 /**
- * @const
+ * @category 常量
+ * @property
  * 身份证省份
  */
 export declare const ID_CARD_PROVINCE: {
     [prop: string]: string;
 };
 /**
- * @const
+ * @category 常量
+ * @property
  * 数字基础数据
  */
 export declare const BASE_NUMBER = "0123456789";
 /**
- * @const
+ * @category 常量
+ * @property
  * 小写字母基础数据
  */
 export declare const BASE_CHAR_LOW = "abcdefghijklmnopqrstuvwxyz";
 /**
- * @const
+ * @category 常量
+ * @property
  * 大写字母基础数据
  */
 export declare const BASE_CHAR_UP = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 /**
- * @const
+ * @category 常量
+ * @property
  * 进制转换基础数据
  */
 export declare const TRANSFER_STR: string;
 /**
- * @const
+ * @category 常量
+ * @property
  * 颜色数据
  */
 export declare const BS_COLORS: {
@@ -201,12 +220,14 @@ export declare const BS_COLORS: {
     grey: string;
 };
 /**
- * @const
+ * @category 常量
+ * @property
  * ICONS 通用小图标
  */
 export declare const ICONS: any;
 /**
- * @const
+ * @category 常量
+ * @property
  * 拼音转换数据
  */
 export declare const PY_MAPS: any;

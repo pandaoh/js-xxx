@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2024-05-13 15:08:38
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-08-12 13:50:35
+ * @LastEditTime: 2024-08-21 11:42:57
  * @Description: i18n 国际化支持
  * @FilePath: \js-xxx\src\i18n\index.ts
  */
@@ -13,14 +13,20 @@ import { loadStr } from '@/String';
 
 const I18N_KEY = 'js-xxx-lang';
 
-// 语言资源接口
+/**
+ * 语言资源接口
+ * @category i18n-多语言(国际化)
+ */
 export interface i18nLanguageResource {
   key: string; // 语言的唯一标识符
   desc: string; // 语言描述
   translation: any; // 语言的翻译内容
 }
 
-// i18n 类的选项
+/**
+ * i18n 类的选项
+ * @category i18n-多语言(国际化)
+ */
 export interface i18nOptions {
   resources: Record<string, i18nLanguageResource>; // 语言资源
   defaultLang?: string; // 默认语言
@@ -49,6 +55,7 @@ export interface i18nOptions {
  *   },
  *   defaultLang: 'zh_CN',
  * });
+ * @category i18n-多语言(国际化)
  */
 export class i18n {
   // export function i18n
@@ -151,6 +158,7 @@ export class i18n {
  * @param opts 可选配置项。
  * @param opts.supportLangs 可支持的语言，传入时，会用此数组来限制返回的语言值，防止返回的 navigator.language 和系统定义的语言值不匹配。
  * @returns
+ * @category i18n-多语言(国际化)
  */
 export function getBrowserLang(opts?: { supportLangs?: string[] }): string {
   // 默认语言
@@ -228,6 +236,7 @@ export function getBrowserLang(opts?: { supportLangs?: string[] }): string {
  * @param opts.supportLangs 支持的语言列表。如果返回的语言不在此列表中，将返回默认语言 'en-US'。
  * @param opts.key 用于获取语言的 key 默认为 'js-xxx-lang'
  * @returns
+ * @category i18n-多语言(国际化)
  */
 export function getDefaultLang(opts?: { supportLangs: string[]; key?: string }): string {
   const key = opts?.key || I18N_KEY;

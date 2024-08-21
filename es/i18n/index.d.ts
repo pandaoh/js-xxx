@@ -1,8 +1,16 @@
+/**
+ * 语言资源接口
+ * @category i18n-多语言(国际化)
+ */
 export interface i18nLanguageResource {
     key: string;
     desc: string;
     translation: any;
 }
+/**
+ * i18n 类的选项
+ * @category i18n-多语言(国际化)
+ */
 export interface i18nOptions {
     resources: Record<string, i18nLanguageResource>;
     defaultLang?: string;
@@ -30,6 +38,7 @@ export interface i18nOptions {
  *   },
  *   defaultLang: 'zh_CN',
  * });
+ * @category i18n-多语言(国际化)
  */
 export declare class i18n {
     private langList;
@@ -64,6 +73,7 @@ export declare class i18n {
  * @param opts 可选配置项。
  * @param opts.supportLangs 可支持的语言，传入时，会用此数组来限制返回的语言值，防止返回的 navigator.language 和系统定义的语言值不匹配。
  * @returns
+ * @category i18n-多语言(国际化)
  */
 export declare function getBrowserLang(opts?: {
     supportLangs?: string[];
@@ -82,6 +92,7 @@ export declare function getBrowserLang(opts?: {
  * @param opts.supportLangs 支持的语言列表。如果返回的语言不在此列表中，将返回默认语言 'en-US'。
  * @param opts.key 用于获取语言的 key 默认为 'js-xxx-lang'
  * @returns
+ * @category i18n-多语言(国际化)
  */
 export declare function getDefaultLang(opts?: {
     supportLangs: string[];

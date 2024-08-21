@@ -8104,6 +8104,7 @@
    * @param secretKey [可选] 十六位十六进制数作为密钥
    * @param secretIv [可选] 十六位十六进制数作为密钥偏移量
    * @returns
+   * @category Crypto-密码学
    */
   function encrypt(data, secretKey, secretIv) {
       if (!data) {
@@ -8145,6 +8146,7 @@
    * @param secretKey [可选] 十六位十六进制数作为密钥
    * @param secretIv [可选] 十六位十六进制数作为密钥偏移量
    * @returns
+   * @category Crypto-密码学
    */
   function decrypt(dataStr, jsonDecode, secretKey, secretIv) {
       if (jsonDecode === void 0) { jsonDecode = false; }
@@ -8225,6 +8227,7 @@
    * @param secretKey 可选的加密密钥，默认为 SECRET_KEY
    * @param secretIv 可选的加密向量，默认为 SECRET_IV
    * @returns
+   * @category Crypto-密码学
    */
   function javaEncrypt(dataStr, secretKey, secretIv) {
       if (!dataStr) {
@@ -8248,6 +8251,7 @@
    * @param secretKey 可选参数，密钥，若不传入则使用默认密钥 SECRET_KEY
    * @param secretIv 可选参数，向量，若不传入则使用默认向量 SECRET_IV
    * @returns
+   * @category Crypto-密码学
    */
   function javaDecrypt(encryptedData, secretKey, secretIv) {
       if (!encryptedData) {
@@ -8268,6 +8272,7 @@
    * md5("value"); /// 加密后的字符串
    * @param str 需要加密的字符串
    * @returns
+   * @category Crypto-密码学
    */
   function md5(str) {
       return CryptoJS.MD5(str).toString();
@@ -8278,6 +8283,7 @@
    * sha1("value"); /// 加密后的字符串
    * @param str 需要加密的字符串
    * @returns
+   * @category Crypto-密码学
    */
   function sha1(str) {
       return CryptoJS.SHA1(str).toString();
@@ -8288,6 +8294,7 @@
    * sha256("value"); /// 加密后的字符串
    * @param str 需要加密的字符串
    * @returns
+   * @category Crypto-密码学
    */
   function sha256(str) {
       return CryptoJS.SHA256(str).toString();
@@ -8302,6 +8309,7 @@
    * @param str 需要加密的字符串
    * @param replaceChar 是否替换结果字符串中的特殊字符 '+/='，适用于 url 编码。
    * @returns
+   * @category Crypto-密码学
    */
   function base64Encode(str, replaceChar) {
       if (replaceChar === void 0) { replaceChar = false; }
@@ -8314,6 +8322,7 @@
    * base64Decode("加密后的字符串"); /// 解密后的字符串
    * @param str 需要加密的字符串
    * @returns
+   * @category Crypto-密码学
    */
   function base64Decode(str) {
       return CryptoJS.enc.Base64.parse(str).toString(CryptoJS.enc.Utf8);
@@ -8324,6 +8333,7 @@
    * getCryptoJS(); /// CryptoJS
    * getCryptoJS().MD5(str).toString(); /// md5 加密后的字符串
    * @returns
+   * @category Crypto-密码学
    */
   function getCryptoJS() {
       return CryptoJS;
@@ -8334,13 +8344,14 @@
    * @Author: HxB
    * @Date: 2022-08-15 15:54:41
    * @LastEditors: DoubleAm
-   * @LastEditTime: 2023-08-22 15:37:18
-   * @Description: 常用共用的一些常量
+   * @LastEditTime: 2024-08-21 11:45:01
+   * @property: 常用共用的一些常量
    * @FilePath: \js-xxx\src\Data\index.ts
    */
   /**
    * @enum
    * Http Methods
+   * @category 常量
    */
   exports.HttpMethod = void 0;
   (function (HttpMethod) {
@@ -8358,7 +8369,8 @@
       HttpMethod["options"] = "OPTIONS";
   })(exports.HttpMethod || (exports.HttpMethod = {}));
   /**
-   * @const
+   * @category 常量
+   * @property
    * 常用返回状态码 code message
    */
   var CODE_MSG = {
@@ -8382,7 +8394,8 @@
       504: '网关超时',
   };
   /**
-   * @const
+   * @category 常量
+   * @property
    * content types
    */
   var CONTENT_TYPES = {
@@ -8466,12 +8479,14 @@
       utf8: 'charset=utf-8',
   };
   /**
-   * @const
+   * @category 常量
+   * @property
    * 根据年份求生肖数据，年 % 12 。
    */
   var ANIMALS = ['猴', '鸡', '狗', '猪', '鼠', '牛', '虎', '兔', '龙', '蛇', '马', '羊'];
   /**
-   * @const
+   * @category 常量
+   * @property
    * 星座数据
    */
   var CONSTELLATION = {
@@ -8489,7 +8504,8 @@
       Sagittarius: { cn: '射手', en: 'Sagittarius', date: '11.23-12.21' },
   };
   /**
-   * @const
+   * @category 常量
+   * @property
    * 星期数据
    */
   var WEEKS = [
@@ -8544,7 +8560,8 @@
       },
   ];
   /**
-   * @const
+   * @category 常量
+   * @property
    * 月份数据
    */
   var MONTHS = [
@@ -8634,7 +8651,8 @@
       },
   ];
   /**
-   * @const
+   * @category 常量
+   * @property
    * 常用键盘控制键
    */
   var KEYBOARD_CODE = {
@@ -8678,17 +8696,20 @@
       F12: 123,
   };
   /**
-   * @const
+   * @category 常量
+   * @property
    * 性别常量女(0)
    */
   var WOMAN = 0;
   /**
-   * @const
+   * @category 常量
+   * @property
    * 性别常量男(1)
    */
   var MAN = 1;
   /**
-   * @const
+   * @category 常量
+   * @property
    * 血型
    */
   var BLOOD_GROUP = {
@@ -8698,7 +8719,8 @@
       AB: 'AB 型',
   };
   /**
-   * @const
+   * @category 常量
+   * @property
    * 血型基础信息
    */
   var BLOOD_GROUP_INFO = {
@@ -8739,7 +8761,8 @@
       },
   };
   /**
-   * @const
+   * @category 常量
+   * @property
    * 角色管理对象
    */
   var ROLES = {
@@ -8750,7 +8773,8 @@
       admin: '超级管理员',
   };
   /**
-   * @const
+   * @category 常量
+   * @property
    * 身份证省份
    */
   var ID_CARD_PROVINCE = {
@@ -8791,27 +8815,32 @@
       '91': '国外',
   };
   /**
-   * @const
+   * @category 常量
+   * @property
    * 数字基础数据
    */
   var BASE_NUMBER = '0123456789';
   /**
-   * @const
+   * @category 常量
+   * @property
    * 小写字母基础数据
    */
   var BASE_CHAR_LOW = 'abcdefghijklmnopqrstuvwxyz';
   /**
-   * @const
+   * @category 常量
+   * @property
    * 大写字母基础数据
    */
   var BASE_CHAR_UP = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   /**
-   * @const
+   * @category 常量
+   * @property
    * 进制转换基础数据
    */
   var TRANSFER_STR = BASE_NUMBER + BASE_CHAR_LOW + BASE_CHAR_UP + '_@';
   /**
-   * @const
+   * @category 常量
+   * @property
    * 颜色数据
    */
   var BS_COLORS = {
@@ -8834,7 +8863,8 @@
       grey: '#6c757d',
   };
   /**
-   * @const
+   * @category 常量
+   * @property
    * ICONS 通用小图标
    */
   var ICONS = {
@@ -8854,7 +8884,8 @@
       'data:image/png;base64,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',
   };
   /**
-   * @const
+   * @category 常量
+   * @property
    * 拼音转换数据
    */
   var PY_MAPS = {
@@ -16425,6 +16456,7 @@
    * showToast({ type: 'success', content: '这是一个演示 Toast' }); /// 显示 success 类型的 toast
    * @param options 显示配置
    * @returns
+   * @category Toast-组件
    */
   var showToast = (function () {
       var defaultOptions = {
@@ -16484,6 +16516,7 @@
    * const $toast = showToast({ content: '这是一个演示 Toast' }); /// hideToast($toast);
    * @param toast toast 实例
    * @returns
+   * @category Toast-组件
    */
   function hideToast(toast) {
       var _a;
@@ -16504,6 +16537,7 @@
    * @param msg 内容
    * @param type 类型
    * @returns
+   * @category Toast-组件
    */
   function Toast(msg, type) {
       if (type === void 0) { type = 'default'; }
@@ -16522,6 +16556,7 @@
    * const hide = Loading(msg?); /// hide();
    * @param msg 内容
    * @returns
+   * @category Toast-组件
    */
   function Loading(msg) {
       var $_loading = showToast({
@@ -16546,6 +16581,7 @@
   // eslint-disable-next-line spellcheck/spell-checker
   /**
    * 初始化 websocket
+   * @category WebSocket-封装
    * @example
    * initWebSocket({ url: 'ws://localhost:8080/ws', timeout: 30000, onOpen: () => {}, onMessage: () => {}, onClose: () => {}, onError: () => {}, reconnect: {} })
    * @param options `{url, onOpen, onMessage, onClose, onError, timeout, reconnect: {times, delay, onReconnect} | boolean} WebSocket 配置`
@@ -16610,6 +16646,7 @@
   }
   /**
    * 发送消息
+   * @category WebSocket-封装
    * @example
    * sendWsMsg({ type: 'login', data: { username: 'admin', password: '123456' }}, true); /// true/false
    * sendWsMsg('testMsg'); /// true/false
@@ -16632,6 +16669,7 @@
   }
   /**
    * 关闭 websocket
+   * @category WebSocket-封装
    * @example
    * closeWebSocket(); /// true/false
    * @returns
@@ -16645,6 +16683,7 @@
   }
   /**
    * `设置 websocket binaryType default: 'blob'`
+   * @category WebSocket-封装
    * @example
    * setWsBinaryType(); /// true/false
    * @param binaryType `BinaryType 二进制类型 default: 'arraybuffer'`
@@ -16663,6 +16702,7 @@
   // 使用专用工具（pbjs/protoc/protobufjs-cli）进行封装与解析
   /**
    * buffer to object
+   * @category WebSocket-封装
    * @example
    * const _protoBuffer = _proto.lookupType('MonitorMessage');
    * const obj = buf2obj(event.data, _protoBuffer);
@@ -16690,6 +16730,7 @@
   }
   /**
    * object to buffer
+   * @category WebSocket-封装
    * @example
    * const _protoBuffer = _proto.lookupType('MonitorMessage');
    * const bufferData = obj2buf(obj, _protoBuffer);
@@ -16710,6 +16751,7 @@
   }
   /**
    * 获取 websocket 实例
+   * @category WebSocket-封装
    * @example
    * getWebSocket(); /// [websocket object]
    * @returns
@@ -16722,7 +16764,7 @@
    * @Author: HxB
    * @Date: 2024-05-13 15:08:38
    * @LastEditors: DoubleAm
-   * @LastEditTime: 2024-08-12 13:50:35
+   * @LastEditTime: 2024-08-21 11:42:57
    * @Description: i18n 国际化支持
    * @FilePath: \js-xxx\src\i18n\index.ts
    */
@@ -16750,6 +16792,7 @@
    *   },
    *   defaultLang: 'zh_CN',
    * });
+   * @category i18n-多语言(国际化)
    */
   var i18n = /** @class */ (function () {
       function i18n(options) {
@@ -16838,6 +16881,7 @@
    * @param opts 可选配置项。
    * @param opts.supportLangs 可支持的语言，传入时，会用此数组来限制返回的语言值，防止返回的 navigator.language 和系统定义的语言值不匹配。
    * @returns
+   * @category i18n-多语言(国际化)
    */
   function getBrowserLang(opts) {
       var e_1, _a;
@@ -16919,6 +16963,7 @@
    * @param opts.supportLangs 支持的语言列表。如果返回的语言不在此列表中，将返回默认语言 'en-US'。
    * @param opts.key 用于获取语言的 key 默认为 'js-xxx-lang'
    * @returns
+   * @category i18n-多语言(国际化)
    */
   function getDefaultLang(opts) {
       var key = (opts === null || opts === void 0 ? void 0 : opts.key) || I18N_KEY;

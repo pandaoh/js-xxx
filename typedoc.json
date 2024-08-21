@@ -1,8 +1,15 @@
 {
+  // https://typedoc.org/guides/overview/
   "entryPoints": ["src/index.ts"],
   "out": "html",
   "customCss": "./_docs.custom.css",
   "readme": "none",
   "includeVersion": true,
+  // "hostedBaseUrl": "http://x.biugle.cn/",
+  // "useHostedBaseUrlForAbsoluteLinks": true,
+  // "skipErrorChecking": true,
+  "searchInComments": true,
+  "searchInDocuments": true,
+  "cleanOutputDir": true,
   "disableSources": true
 }

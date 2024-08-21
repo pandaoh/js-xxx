@@ -14,6 +14,7 @@ import { log } from '@/Others';
 /**
  * @type
  * xToast Options Type
+ * @category Toast-组件
  */
 export type xToastOptions = {
   content: string;
@@ -34,6 +35,7 @@ export type xToastOptions = {
  * showToast({ type: 'success', content: '这是一个演示 Toast' }); /// 显示 success 类型的 toast
  * @param options 显示配置
  * @returns
+ * @category Toast-组件
  */
 export const showToast = (function () {
   const defaultOptions = {
@@ -100,6 +102,7 @@ export const showToast = (function () {
  * const $toast = showToast({ content: '这是一个演示 Toast' }); /// hideToast($toast);
  * @param toast toast 实例
  * @returns
+ * @category Toast-组件
  */
 export function hideToast(toast?: any) {
   if (!toast) {
@@ -120,6 +123,7 @@ export function hideToast(toast?: any) {
  * @param msg 内容
  * @param type 类型
  * @returns
+ * @category Toast-组件
  */
 export function Toast(
   msg: string,
@@ -141,6 +145,7 @@ export function Toast(
  * const hide = Loading(msg?); /// hide();
  * @param msg 内容
  * @returns
+ * @category Toast-组件
  */
 export function Loading(msg: string): any {
   const $_loading = showToast({
