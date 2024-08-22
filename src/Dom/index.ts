@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-06-12 09:24:08
+ * @LastEditTime: 2024-08-22 14:39:57
  * @Description: 利用 dom 的一些函数
  * @FilePath: \js-xxx\src\Dom\index.ts
  */
@@ -1104,6 +1104,7 @@ export function printDom(selector: string, styles?: { iframeStyle?: any; bodySty
  * <div log-click={JSON.stringify({ isOrder: true, orderKey: '元素 2', params: { name: '非固定顺序日志' }, logKey: 'example-key-2' })}>非固定顺序埋点元素 2</div> /// 非固定顺序埋点元素写法
  * @param callback 监听 Track 回调
  * @returns
+ * @category Log-日志埋点
  */
 export function createClickLogListener(callback?: any): any {
   const sequenceMap: any = {};
@@ -1227,6 +1228,7 @@ export function createClickLogListener(callback?: any): any {
  * @param delay 防抖延迟
  * @param threshold 触发滚动事件阈值
  * @returns
+ * @category Log-日志埋点
  */
 export function createScrollLogListener(element?: any, callback?: any, delay = 800, threshold = 30) {
   let timeoutRef: any = null;
@@ -1308,6 +1310,7 @@ export function createScrollLogListener(element?: any, callback?: any, delay = 8
  * <input log-change={JSON.stringify({ logKey: 'input-change-1' })} /> /// 普通监听
  * @param callback 监听 Track 回调
  * @returns
+ * @category Log-日志埋点
  */
 export function createChangeLogListener(callback?: any) {
   function handleChange(event: any) {
@@ -1355,6 +1358,72 @@ export function createChangeLogListener(callback?: any) {
   return () => {
     document.removeEventListener('change', handleChange);
   };
+}
+
+/**
+ * 创建间隔时间日志
+ * @param eventName 事件名称
+ * @param eventParams 参数列表
+ * @param callback 回调函数
+ * @returns
+ * @example
+ * // 创建日志实例
+ * const myCustomLog = createTimeLogListener('扫描时长', { menuCode: 'Login' });
+ * // 开始计时
+ * myCustomLog.start({ user: 'admin' });
+ * // ... 执行一些操作 ...
+ * // 结束计时并记录日志
+ * myCustomLog.end({ isLogin: true });
+ * // 输出到控制台和执行回调
+ * // 输出格式包括：logKey, ms, s, menuCode, user, isLogin
+ * @category Log-日志埋点
+ */
+export function createTimeLogListener(
+  eventName: string,
+  eventParams = {},
+  callback?: (logInfo: any, logKey: string) => void,
+) {
+  const log = {
+    startTime: null as number | null,
+    endTime: null as number | null,
+    start(moreParams = {}) {
+      eventParams = {
+        ...eventParams,
+        ...moreParams,
+      };
+      this.startTime = Date.now();
+      this.endTime = null; // 重置 endTime，确保每次使用都是新的计时。
+    },
+    end(moreParams = {}) {
+      if (this.startTime === null) {
+        console.warn(`Cannot end log for '${eventName}' because start was not called.`);
+        return;
+      }
+      eventParams = {
+        ...eventParams,
+        ...moreParams,
+      };
+      const logKey = eventName;
+
+      this.endTime = Date.now();
+      const durationMs = this.endTime - this.startTime;
+      const logInfo = {
+        logKey,
+        ms: durationMs,
+        s: (durationMs / 1000).toFixed(3),
+        ...eventParams,
+      };
+
+      console.table(logInfo); // 以表格形式输出日志信息，包括 logKey 。
+      callback && callback?.(logInfo, logKey);
+
+      // 重置 startTime 和 endTime，以便实例可以重新使用。
+      this.startTime = null;
+      this.endTime = null;
+    },
+  };
+
+  return log;
 }
 
 /**

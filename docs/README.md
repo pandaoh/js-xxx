@@ -17,6 +17,13 @@
 - [sha1](functions/sha1.md)
 - [sha256](functions/sha256.md)
 
+## Log-日志埋点
+
+- [createChangeLogListener](functions/createChangeLogListener.md)
+- [createClickLogListener](functions/createClickLogListener.md)
+- [createScrollLogListener](functions/createScrollLogListener.md)
+- [createTimeLogListener](functions/createTimeLogListener.md)
+
 ## Other
 
 - [Speaker](functions/Speaker.md)
@@ -54,9 +61,6 @@
 - [contains](functions/contains.md)
 - [copyToClipboard](functions/copyToClipboard.md)
 - [countdown](functions/countdown.md)
-- [createChangeLogListener](functions/createChangeLogListener.md)
-- [createClickLogListener](functions/createClickLogListener.md)
-- [createScrollLogListener](functions/createScrollLogListener.md)
 - [curryIt](functions/curryIt.md)
 - [customFinally](functions/customFinally.md)
 - [cx](functions/cx.md)

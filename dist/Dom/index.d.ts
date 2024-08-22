@@ -365,6 +365,7 @@ export declare function printDom(selector: string, styles?: {
  * <div log-click={JSON.stringify({ isOrder: true, orderKey: '元素 2', params: { name: '非固定顺序日志' }, logKey: 'example-key-2' })}>非固定顺序埋点元素 2</div> /// 非固定顺序埋点元素写法
  * @param callback 监听 Track 回调
  * @returns
+ * @category Log-日志埋点
  */
 export declare function createClickLogListener(callback?: any): any;
 /**
@@ -378,6 +379,7 @@ export declare function createClickLogListener(callback?: any): any;
  * @param delay 防抖延迟
  * @param threshold 触发滚动事件阈值
  * @returns
+ * @category Log-日志埋点
  */
 export declare function createScrollLogListener(element?: any, callback?: any, delay?: number, threshold?: number): (() => void) | undefined;
 /**
@@ -388,8 +390,33 @@ export declare function createScrollLogListener(element?: any, callback?: any, d
  * <input log-change={JSON.stringify({ logKey: 'input-change-1' })} /> /// 普通监听
  * @param callback 监听 Track 回调
  * @returns
+ * @category Log-日志埋点
  */
 export declare function createChangeLogListener(callback?: any): () => void;
+/**
+ * 创建间隔时间日志
+ * @param eventName 事件名称
+ * @param eventParams 参数列表
+ * @param callback 回调函数
+ * @returns
+ * @example
+ * // 创建日志实例
+ * const myCustomLog = createTimeLogListener('扫描时长', { menuCode: 'Login' });
+ * // 开始计时
+ * myCustomLog.start({ user: 'admin' });
+ * // ... 执行一些操作 ...
+ * // 结束计时并记录日志
+ * myCustomLog.end({ isLogin: true });
+ * // 输出到控制台和执行回调
+ * // 输出格式包括：logKey, ms, s, menuCode, user, isLogin
+ * @category Log-日志埋点
+ */
+export declare function createTimeLogListener(eventName: string, eventParams?: {}, callback?: (logInfo: any, logKey: string) => void): {
+    startTime: number | null;
+    endTime: number | null;
+    start(moreParams?: {}): void;
+    end(moreParams?: {}): void;
+};
 /**
  * 合并类名 emotion-js
  * @example

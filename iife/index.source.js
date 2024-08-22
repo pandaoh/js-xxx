@@ -14270,6 +14270,7 @@ var $xxx = (function (exports) {
    * <div log-click={JSON.stringify({ isOrder: true, orderKey: '元素 2', params: { name: '非固定顺序日志' }, logKey: 'example-key-2' })}>非固定顺序埋点元素 2</div> /// 非固定顺序埋点元素写法
    * @param callback 监听 Track 回调
    * @returns
+   * @category Log-日志埋点
    */
   function createClickLogListener(callback) {
       var sequenceMap = {};
@@ -14381,6 +14382,7 @@ var $xxx = (function (exports) {
    * @param delay 防抖延迟
    * @param threshold 触发滚动事件阈值
    * @returns
+   * @category Log-日志埋点
    */
   function createScrollLogListener(element, callback, delay, threshold) {
       if (delay === void 0) { delay = 800; }
@@ -14452,6 +14454,7 @@ var $xxx = (function (exports) {
    * <input log-change={JSON.stringify({ logKey: 'input-change-1' })} /> /// 普通监听
    * @param callback 监听 Track 回调
    * @returns
+   * @category Log-日志埋点
    */
   function createChangeLogListener(callback) {
       function handleChange(event) {
@@ -14493,6 +14496,55 @@ var $xxx = (function (exports) {
       return function () {
           document.removeEventListener('change', handleChange);
       };
+  }
+  /**
+   * 创建间隔时间日志
+   * @param eventName 事件名称
+   * @param eventParams 参数列表
+   * @param callback 回调函数
+   * @returns
+   * @example
+   * // 创建日志实例
+   * const myCustomLog = createTimeLogListener('扫描时长', { menuCode: 'Login' });
+   * // 开始计时
+   * myCustomLog.start({ user: 'admin' });
+   * // ... 执行一些操作 ...
+   * // 结束计时并记录日志
+   * myCustomLog.end({ isLogin: true });
+   * // 输出到控制台和执行回调
+   * // 输出格式包括：logKey, ms, s, menuCode, user, isLogin
+   * @category Log-日志埋点
+   */
+  function createTimeLogListener(eventName, eventParams, callback) {
+      if (eventParams === void 0) { eventParams = {}; }
+      var log = {
+          startTime: null,
+          endTime: null,
+          start: function (moreParams) {
+              if (moreParams === void 0) { moreParams = {}; }
+              eventParams = __assign(__assign({}, eventParams), moreParams);
+              this.startTime = Date.now();
+              this.endTime = null; // 重置 endTime，确保每次使用都是新的计时。
+          },
+          end: function (moreParams) {
+              if (moreParams === void 0) { moreParams = {}; }
+              if (this.startTime === null) {
+                  console.warn("Cannot end log for '".concat(eventName, "' because start was not called."));
+                  return;
+              }
+              eventParams = __assign(__assign({}, eventParams), moreParams);
+              var logKey = eventName;
+              this.endTime = Date.now();
+              var durationMs = this.endTime - this.startTime;
+              var logInfo = __assign({ logKey: logKey, ms: durationMs, s: (durationMs / 1000).toFixed(3) }, eventParams);
+              console.table(logInfo); // 以表格形式输出日志信息，包括 logKey 。
+              callback && (callback === null || callback === void 0 ? void 0 : callback(logInfo, logKey));
+              // 重置 startTime 和 endTime，以便实例可以重新使用。
+              this.startTime = null;
+              this.endTime = null;
+          },
+      };
+      return log;
   }
   /**
    * 合并类名 emotion-js
@@ -17041,6 +17093,7 @@ var $xxx = (function (exports) {
   exports.createChangeLogListener = createChangeLogListener;
   exports.createClickLogListener = createClickLogListener;
   exports.createScrollLogListener = createScrollLogListener;
+  exports.createTimeLogListener = createTimeLogListener;
   exports.curryIt = curryIt;
   exports.customFinally = customFinally;
   exports.cx = cx;
