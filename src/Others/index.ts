@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:53:39
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-08-20 10:07:56
+ * @LastEditTime: 2024-08-23 10:56:01
  * @Description: 因项目需要常用函数，不管任何项目，都放到一起。注意甄别，没有复用意义的函数就不要添加了。
  * @FilePath: \js-xxx\src\Others\index.ts
  */
@@ -92,6 +92,7 @@ function _isValidCronField(field: any, min: any, max: any): boolean {
  * @param bytes 文件大小 bytes
  * @param precision 精度
  * @returns
+ * @category Others-业务/其他
  */
 export function formatBytes(bytes: number, precision = 2): string {
   const units: string[] = ['B', 'KB', 'MB', 'GB', 'TB'];
@@ -107,6 +108,7 @@ export function formatBytes(bytes: number, precision = 2): string {
  * @example
  * getUserAgent(); /// { browserName: 'Chrome', browserVersion: '102.0.0.0', osName: 'Windows', osVersion: '10.0', deviceName: '' }
  * @returns
+ * @category Others-业务/其他
  */
 export function getUserAgent(): { browserName: string; browserVersion: string; osName: string; osVersion: string } {
   interface BrowserReg {
@@ -206,6 +208,7 @@ export function getUserAgent(): { browserName: string; browserVersion: string; o
  * @example
  * isNode(); /// true
  * @returns
+ * @category Others-业务/其他
  */
 export function isNode(): boolean {
   return typeof process !== 'undefined' && !!process.versions && !!process.versions.node;
@@ -216,6 +219,7 @@ export function isNode(): boolean {
  * @example
  * isBrowser(); /// true
  * @returns
+ * @category Others-业务/其他
  */
 export function isBrowser(): boolean {
   return typeof window !== 'undefined' && typeof document !== 'undefined';
@@ -226,6 +230,7 @@ export function isBrowser(): boolean {
  * @example
  * isDarkMode(); /// true
  * @returns
+ * @category Others-业务/其他
  */
 export function isDarkMode(): boolean {
   return (
@@ -240,6 +245,7 @@ export function isDarkMode(): boolean {
  * @example
  * isAppleDevice(); /// true
  * @returns
+ * @category Others-业务/其他
  */
 export function isAppleDevice(): boolean {
   return /Mac|iPod|iPhone|iPad/.test(navigator.platform);
@@ -250,6 +256,7 @@ export function isAppleDevice(): boolean {
  * @example
  * isCSR(); /// true
  * @returns
+ * @category Others-业务/其他
  */
 export function isCSR(): boolean {
   return typeof window !== 'undefined' && typeof document !== 'undefined';
@@ -260,6 +267,7 @@ export function isCSR(): boolean {
  * @example
  * isWin(); /// true
  * @returns
+ * @category Others-业务/其他
  */
 export function isWin(): boolean {
   return typeof navigator !== 'undefined' && /windows|win32/i.test(navigator.userAgent);
@@ -270,6 +278,7 @@ export function isWin(): boolean {
  * @example
  * isMac(); /// true
  * @returns
+ * @category Others-业务/其他
  */
 export function isMac(): boolean {
   return typeof navigator !== 'undefined' && /Macintosh/i.test(navigator.userAgent);
@@ -280,6 +289,7 @@ export function isMac(): boolean {
  * @example
  * isChrome(); /// true
  * @returns
+ * @category Others-业务/其他
  */
 export function isChrome(): boolean {
   return typeof navigator !== 'undefined' && navigator.userAgent.indexOf('Chrome') > -1;
@@ -295,6 +305,7 @@ export function isChrome(): boolean {
  * @param currentVersion 当前版本
  * @param testStr 需要替换的字符串 default(-rc)
  * @returns
+ * @category Others-业务/其他
  */
 export function checkVersion(targetVersion: string, currentVersion: string, testStr = '-rc'): -1 | 1 | 0 {
   const targetVersionList: string[] = targetVersion.replace(testStr, '').split('.');
@@ -328,6 +339,7 @@ export function checkVersion(targetVersion: string, currentVersion: string, test
  * @param version 版本号
  * @param maxVersionCode 最大版本号
  * @returns
+ * @category Others-业务/其他
  */
 export function versionUpgrade(version: string, maxVersionCode = 99): string {
   if (maxVersionCode == 0) {
@@ -361,6 +373,7 @@ export function versionUpgrade(version: string, maxVersionCode = 99): string {
  * @param input 输入值
  * @param options 处理配置
  * @returns
+ * @category Others-业务/其他
  */
 export function formatRh(
   input: string,
@@ -407,6 +420,7 @@ export function formatRh(
  * isRhNegative('**d**'); /// true
  * @param input 输入值
  * @returns
+ * @category Others-业务/其他
  */
 export function isRhNegative(input: string): boolean {
   return formatRh(input, { format: [true, false], default: false }) as boolean;
@@ -418,6 +432,7 @@ export function isRhNegative(input: string): boolean {
  * getBloodGroup('A'); /// { value: 'A', label: 'A 型', color: '#1890FF', lower: 'a', upper: 'A' }
  * @param bloodGroup 血型
  * @returns
+ * @category Others-业务/其他
  */
 export function getBloodGroup(bloodGroup: string): {
   value: string;
@@ -447,6 +462,7 @@ export function getBloodGroup(bloodGroup: string): {
  * calcCron({ day: '1/5' }); /// '* * 1/5 * * '
  * @param options cron 配置
  * @returns
+ * @category Others-业务/其他
  */
 export function calcCron({ minute = '*', hour = '*', day = '*', month = '*', week = '*' } = {}) {
   const limits = [
@@ -560,6 +576,7 @@ export function calcCron({ minute = '*', hour = '*', day = '*', month = '*', wee
  * log('danger'); /// 打印数据
  * @param args 打印数据 rest 参数
  * @returns
+ * @category Extra-日志/调试
  */
 export function log(...args: any[]): string {
   try {
@@ -601,6 +618,7 @@ export function log(...args: any[]): string {
  * @param value 值
  * @param defaultValue 默认值
  * @returns
+ * @category Tools-下载/文件相关
  */
 export function forceToStr(value: any, defaultValue = '-'): string {
   // \t \u200c u200d 也可以
@@ -615,6 +633,7 @@ export function forceToStr(value: any, defaultValue = '-'): string {
  * @param fields 导出的栏位
  * @param data 数据
  * @returns
+ * @category Tools-下载/文件相关
  */
 export function transferCSVData(fields: { label?: string; prop: string }[], data: any[]): string {
   const keys = fields.map((field) => field.prop);
@@ -638,6 +657,7 @@ export function transferCSVData(fields: { label?: string; prop: string }[], data
  * @param fileName 文件名
  * @param fileType 文件类型
  * @returns
+ * @category Tools-下载/文件相关
  */
 export function exportFile(data: string, fileName?: string, fileType = 'txt'): void {
   if (isUrl(data)) {
@@ -660,6 +680,7 @@ export function exportFile(data: string, fileName?: string, fileType = 'txt'): v
  * transferTemperature(30.5); /// '86.9 °F'
  * transferTemperature(86, false, false); /// 30
  * @returns
+ * @category Others-业务/其他
  */
 export function transferTemperature(temperature: number | string, isCelsius = true, addSuffix = true) {
   temperature = Number(temperature);
@@ -698,6 +719,7 @@ export function transferTemperature(temperature: number | string, isCelsius = tr
  * @param prefix 前缀
  * @param suffix 后缀
  * @returns
+ * @category Others-业务/其他
  */
 export function getDataStr(value: any, defaultValue = '-', prefix = '', suffix = ''): string {
   value = value !== undefined ? value : defaultValue !== undefined ? defaultValue : '-';
@@ -719,6 +741,7 @@ export function getDataStr(value: any, defaultValue = '-', prefix = '', suffix =
  * @param value2 第二个值
  * @param strict 是否启用严格模式: true 表示严格比较，false 表示忽略大小写和类型比较，默认值为 false 。
  * @returns
+ * @category Others-业务/其他
  */
 export function compareTo(value1: any, value2: any, strict = false): boolean {
   if (strict) {
@@ -736,6 +759,7 @@ export function compareTo(value1: any, value2: any, strict = false): boolean {
  * @param treeData 树值
  * @param key key
  * @returns
+ * @category Others-业务/其他
  */
 export function getTreeData(treeData: any[], key = 'key'): { map: any; list: any[] } {
   const result: { map: any; list: any[] } = {
@@ -783,6 +807,7 @@ export function getTreeData(treeData: any[], key = 'key'): { map: any; list: any
  * @param searchKeys 用于过滤的 key
  * @param strictMode 搜索配置 strictMode 时，会强制平铺排列返回符合条件的节点，默认不开启，保持树排列。
  * @returns
+ * @category Others-业务/其他
  */
 export function searchTreeData(
   treeData: any[],
@@ -830,6 +855,7 @@ export function searchTreeData(
  * @param sourceData 源数据
  * @param options 转化选项
  * @returns
+ * @category Others-业务/其他
  */
 export function transferTreeData(
   sourceData: any[],
@@ -899,6 +925,7 @@ export function transferTreeData(
  * @param treeData 树值
  * @param callback 过滤的方法，默认不过滤。
  * @returns
+ * @category Others-业务/其他
  */
 export function filterTreeData(treeData: any[], callback?: (item: any) => boolean): any[] {
   if (!callback || !treeData) {
@@ -935,6 +962,7 @@ export function filterTreeData(treeData: any[], callback?: (item: any) => boolea
  * @param checkedKeys 已经全选的节点
  * @param halfCheckedKeys 已经半选的节点
  * @returns
+ * @category Others-业务/其他
  */
 export function getTreeCheckNodes(treeData: any[], checkedKeys: any[], halfCheckedKeys?: any[]) {
   // 将 treeData 转化为一个映射，以便查找节点和其父节点的关系。

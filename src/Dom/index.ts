@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-08-22 14:39:57
+ * @LastEditTime: 2024-08-23 11:05:24
  * @Description: 利用 dom 的一些函数
  * @FilePath: \js-xxx\src\Dom\index.ts
  */
@@ -17,6 +17,7 @@ import { setEventListener } from '@/Tools';
  * openFullscreen(); /// 开启全屏
  * @param element 元素
  * @returns
+ * @category Dom-工具方法
  */
 export function openFullscreen(element: any = document.body) {
   if (element.requestFullscreen) {
@@ -35,6 +36,7 @@ export function openFullscreen(element: any = document.body) {
  * @example
  * closeFullscreen(); /// 关闭全屏
  * @returns
+ * @category Dom-工具方法
  */
 export function closeFullscreen() {
   if (document.exitFullscreen) {
@@ -61,6 +63,7 @@ export function closeFullscreen() {
  * str2html('<>&"'); /// '&lt;&gt;&amp;&quot;'
  * @param str 字符串
  * @returns
+ * @category Custom-转码
  */
 export function str2html(str: string): string {
   const div = document.createElement('div');
@@ -75,6 +78,7 @@ export function str2html(str: string): string {
  * html2str('&lt;&gt;&amp;&quot;'); /// '<>&"'
  * @param value 实体字符串
  * @returns
+ * @category Custom-转码
  */
 export function html2str(value: string): string | null {
   const div = document.createElement('div');
@@ -90,6 +94,7 @@ export function html2str(value: string): string | null {
  * @param newElement 某元素
  * @param targetElement 指定元素
  * @returns
+ * @category Dom-工具方法
  */
 export function insertAfter(newElement: any, targetElement: any) {
   const parent: any = targetElement.parentNode;
@@ -98,22 +103,6 @@ export function insertAfter(newElement: any, targetElement: any) {
   } else {
     parent.insertBefore(newElement, targetElement.nextElementSibling);
   }
-}
-
-/**
- * 阻止冒泡事件&阻止默认行为&阻止事件捕获
- * @example
- * offDefaultEvent(event); /// 阻止冒泡事件&阻止默认行为&阻止事件捕获
- * @param event 事件
- * @returns
- */
-export function offDefaultEvent(event: any) {
-  const e = event || window.event;
-  if (e) {
-    e.preventDefault();
-    e.stopPropagation();
-  }
-  return false;
 }
 
 /**
@@ -126,6 +115,7 @@ export function offDefaultEvent(event: any) {
  * @param callback 回调
  * @param dom 元素对象
  * @returns
+ * @category Scroll-滚动相关
  */
 export function scrollYTo(targetVal: 'start' | 'end' | number, callback: any, dom: any = document.documentElement) {
   const customVal: any = {
@@ -192,6 +182,7 @@ export function scrollYTo(targetVal: 'start' | 'end' | number, callback: any, do
  * @param callback 回调
  * @param dom 元素对象
  * @returns
+ * @category Scroll-滚动相关
  */
 export function scrollXTo(targetVal: 'start' | 'end' | number, callback: any, dom: any = document.documentElement) {
   const customVal: any = {
@@ -225,6 +216,7 @@ export function scrollXTo(targetVal: 'start' | 'end' | number, callback: any, do
  * @param dom 元素对象
  * @param targetVal 'start' | 'end' | 'center' | 'nearest'
  * @returns
+ * @category Scroll-滚动相关
  */
 export function scrollToView(
   dom: any = document.documentElement,
@@ -248,6 +240,7 @@ export function scrollToView(
  * @param direction X/Y 轴的进度条
  * @param dom 元素
  * @returns
+ * @category Scroll-滚动相关
  */
 export function getScrollPercent(direction: 'X' | 'Y' = 'Y', dom: any = document.documentElement): number {
   let percent: number;
@@ -268,12 +261,119 @@ export function getScrollPercent(direction: 'X' | 'Y' = 'Y', dom: any = document
 }
 
 /**
+ * 获取最近的可滚动父元素。
+ * 支持普通 DOM 、 Shadow DOM 和 iframe 。
+ * @example
+ * getScrollParent(document.querySelector('.form-error')); // Form
+ * getScrollParent(); /// document.documentElement
+ * @param element 目标元素
+ * @returns
+ * @category Scroll-滚动相关
+ */
+export function getScrollParent(element?: HTMLElement | any): HTMLElement | Document | any {
+  let parent = element?.parentElement;
+
+  while (parent) {
+    const style = window.getComputedStyle(parent);
+    const isScrollableY = style.overflowY === 'auto' || style.overflowY === 'scroll';
+    const isScrollableX = style.overflowX === 'auto' || style.overflowX === 'scroll';
+    const canScrollY = parent.scrollHeight > parent.clientHeight;
+    const canScrollX = parent.scrollWidth > parent.clientWidth;
+
+    if ((isScrollableY && canScrollY) || (isScrollableX && canScrollX)) {
+      return parent;
+    }
+    parent = parent.parentElement;
+  }
+
+  // 处理 Shadow DOM
+  const rootNode = element?.getRootNode();
+  if (rootNode instanceof ShadowRoot) {
+    return rootNode.host;
+  }
+
+  // 处理 iframe
+  if (element?.ownerDocument !== document) {
+    return element?.ownerDocument?.documentElement;
+  }
+
+  return document.documentElement; // 如果没有找到可滚动的父元素，返回 `document.documentElement`
+}
+
+/**
+ * 滚动到指定元素，并将其显示在可滚动容器的中间。
+ * 适用于表单报错时定位报错元素，支持嵌套滚动容器。
+ * @param options 配置对象，包含以下属性：
+ *   - {string} selector - 目标元素的 CSS 选择器。
+ *   - {number} [delay=0] - 滚动执行的延迟时间（毫秒）。
+ *   - {boolean} [parent=false] - 是否在主应用中查找元素（适用于 Shadow DOM 情况）。
+ * @example
+ * // 立即滚动到指定元素
+ * scrollToElement({
+ *   selector: '#error-element',
+ *   delay: 0,
+ *   parent: true,
+ * });
+ * // 延迟滚动到指定元素
+ * scrollToElement({
+ *   selector: '.form-error',
+ *   delay: 100,
+ * });
+ * @returns
+ * @category Scroll-滚动相关
+ */
+export function scrollToElement(options: { selector: string; delay?: number; parent?: boolean }) {
+  const { selector, delay = 0, parent = false } = options;
+
+  const performScroll = () => {
+    // 选择合适的文档上下文
+    const root = parent ? document.documentElement : document;
+    const element = root.querySelector(selector);
+
+    if (!element) {
+      console.warn(`Element with selector "${selector}" not found.`);
+      return;
+    }
+
+    // 获取目标元素的可滚动父容器
+    const scrollContainer = getScrollParent(element);
+    if (!scrollContainer) {
+      console.warn(`No scroll parent found for element with selector "${selector}".`);
+      return;
+    }
+
+    // 计算滚动位置
+    const elementRect = element.getBoundingClientRect();
+    const containerRect = scrollContainer.getBoundingClientRect();
+    const scrollTop =
+      scrollContainer.scrollTop +
+      elementRect.top -
+      containerRect.top -
+      containerRect.height / 2 +
+      elementRect.height / 2;
+
+    // 执行滚动操作
+    scrollContainer.scrollTo({
+      top: scrollTop,
+      behavior: 'smooth',
+    });
+  };
+
+  if (delay > 0) {
+    setTimeout(performScroll, delay);
+  } else {
+    performScroll();
+  }
+}
+
+/**
  * 找元素的第 n 级父元素
  * @example
  * findParents(document.getElementById('test'), 3); /// #test 的第三个父元素
  * @param element 指定元素
  * @param n 第几个
  * @returns
+ * @category Dom-工具方法
  */
 export function findParents(element: any, n: number) {
   while (element && n) {
@@ -289,6 +389,7 @@ export function findParents(element: any, n: number) {
  * findChildren(document.getElementById('test')); /// #test 的所有子元素数组
  * @param element 指定元素
  * @returns
+ * @category Dom-工具方法
  */
 export function findChildren(element: any) {
   const children: any[] = element.childNodes,
@@ -307,6 +408,7 @@ export function findChildren(element: any) {
  * @example
  * getViewportSize(); /// { width: 1280, height: 649 }
  * @returns
+ * @category Dom-工具方法
  */
 export function getViewportSize() {
   if (window.innerWidth) {
@@ -339,6 +441,7 @@ export function getViewportSize() {
  * @param element 指定元素
  * @param name 属性名称
  * @returns
+ * @category Dom-工具方法
  */
 export function getStyleByName(element: any, name: any) {
   return window.getComputedStyle ? window.getComputedStyle(element, null)[name] : element.currentStyle[name];
@@ -351,6 +454,7 @@ export function getStyleByName(element: any, name: any) {
  * @param linkUrl 链接地址
  * @param rel 类型
  * @returns
+ * @category Dom-工具方法
  */
 export function appendLink(linkUrl: string, rel = 'stylesheet'): HTMLLinkElement {
   const link = document.createElement('link');
@@ -368,6 +472,7 @@ export function appendLink(linkUrl: string, rel = 'stylesheet'): HTMLLinkElement
  * @param async 是否异步
  * @param defer 是否延迟加载
  * @returns
+ * @category Dom-工具方法
  */
 export function appendScript(scriptUrl: string, async = false, defer = false): HTMLScriptElement {
   const script = document.createElement('script');
@@ -385,6 +490,7 @@ export function appendScript(scriptUrl: string, async = false, defer = false): H
  * @param link 链接
  * @param name 文件名称(可选，默认以链接最好一段作为名称，填写时可不带后缀自动识别，写了后缀会以写的后缀为准。)
  * @returns
+ * @category Tools-下载/文件相关
  */
 export function download(link: string, name: string) {
   if (!name) {
@@ -407,6 +513,7 @@ export function download(link: string, name: string) {
  * @param name 文件名称(需带后缀)，默认 txt 。
  * @param content 内容 BlobPart | any
  * @returns
+ * @category Tools-下载/文件相关
  */
 export function downloadContent(name: string, content: any) {
   if (!name) {
@@ -438,6 +545,7 @@ export function downloadContent(name: string, content: any) {
  * @param selector 选择器字符串
  * @param options 动画配置
  * @returns
+ * @category BXH-自定义动画
  */
 export function marquee(
   selector: string,
@@ -516,6 +624,7 @@ export function marquee(
  * @param selectors 选择器字符串
  * @param direction 堆叠方向
  * @returns
+ * @category Dom-工具方法
  */
 export function stackSticky(selectors: string, direction = 'top'): void {
   const elements = document.querySelectorAll(`${selectors}`);
@@ -559,6 +668,7 @@ export function stackSticky(selectors: string, direction = 'top'): void {
  * @param contentCenter 内容是否居中
  * @param offsetSelector 偏移元素选择器，默认设置 html 根节点偏移。
  * @returns
+ * @category Dom-工具方法
  */
 export function calcFontSize(clientRatio = 16 / 9, contentCenter = false, offsetSelector: any) {
   const $doc = document.documentElement;
@@ -589,6 +699,7 @@ export function calcFontSize(clientRatio = 16 / 9, contentCenter = false, offset
  * px2rem(30); /// 转化后的 rem
  * @param px 像素值
  * @returns
+ * @category Dom-工具方法
  */
 export function px2rem(px: number) {
   const htmlFontSize = parseFloat(window.getComputedStyle(document.documentElement).fontSize);
@@ -606,6 +717,7 @@ export function px2rem(px: number) {
  * @param key key 值
  * @param value value 值
  * @returns
+ * @category Dom-工具方法
  */
 export function dataTo(key: string, value: any): void {
   let $dom;
@@ -630,6 +742,7 @@ export function dataTo(key: string, value: any): void {
  * @param element 元素
  * @param className 类
  * @returns
+ * @category Dom-工具方法
  */
 export function toggleClass(element: any, className: string | Array<string>) {
   if (Array.isArray(className)) {
@@ -662,6 +775,7 @@ export function toggleClass(element: any, className: string | Array<string>) {
  * hideProcess(); /// 隐藏水滴加载动画
  * @param element 元素
  * @returns
+ * @category BXH-自定义动画
  */
 export function showProcess(element: any) {
   // 设置相对定位样式
@@ -702,6 +816,7 @@ export function showProcess(element: any) {
  * @param delay 点击间隔
  * @param events 事件多击 rest 参数
  * @returns
+ * @category Tools-点击事件相关
  */
 export function onClick2MoreClick(delay = 300, ...events: Array<any>): any {
   let timer: any = null;
@@ -733,6 +848,7 @@ export function onClick2MoreClick(delay = 300, ...events: Array<any>): any {
  * @param times 几次点击触发
  * @param delay 点击间隔
  * @returns
+ * @category Tools-点击事件相关
  */
 export function bindMoreClick(fn: any, times = 3, delay = 300) {
   // count 从 0 开始
@@ -756,68 +872,6 @@ export function bindMoreClick(fn: any, times = 3, delay = 300) {
 }
 
 /**
- * 设置网页 icon
- * @example
- * setIcon('/favicon.ico')
- * @param iconLink icon 链接
- * @returns
- */
-export function setIcon(iconLink: string) {
-  const dom: any = document.querySelector('head [rel="icon"]');
-  if (dom) {
-    dom.setAttribute('href', iconLink);
-    dom.setAttribute('rel', 'icon');
-  } else {
-    const iconDom = document.createElement('link');
-    iconDom.setAttribute('rel', 'icon');
-    iconDom.setAttribute('href', iconLink);
-    document.querySelector('head')?.appendChild(iconDom);
-  }
-}
-
-/**
- * 复制到剪贴板
- * @example
- * copyToClipboard('hello world')
- * @param text 内容文本
- * @returns
- */
-export function copyToClipboard(text: string) {
-  if (navigator.clipboard && window.isSecureContext) {
-    navigator.clipboard.writeText(text);
-  } else {
-    let info = '复制成功！';
-    const tempInput = document.createElement('input');
-    tempInput.style.position = 'absolute';
-    tempInput.style.top = '-5201314px';
-    tempInput.style.left = '-5201314px';
-    tempInput.value = text;
-    document.body.appendChild(tempInput);
-
-    // 将焦点移动到文档或输入元素上
-    tempInput.focus();
-
-    tempInput.select();
-    try {
-      document.execCommand('copy');
-    } catch (err) {
-      info = '浏览器不支持此操作，请手动复制。';
-    }
-    document.body.removeChild(tempInput);
-    console.log('js-xxx:copyToClipboard--->', info);
-  }
-}
-
-/**
- * 获取鼠标选中内容
- * @example
- * getSelectText()
- * @returns
- */
-export function getSelectText() {
-  return window?.getSelection()?.toString();
-}
-/**
  * 设置长按事件-支持加入单击事件
  * @example
  * addLongPressEvent(document.querySelector('.img-btn'), (event); /// console.log('addLongPressEvent'), 3000); /// 长按会触发事件
@@ -826,6 +880,7 @@ export function getSelectText() {
  * @param duration 长按时间
  * @param clickCallback 单击事件函数(可选)
  * @returns
+ * @category Tools-点击事件相关
  */
 export function addLongPressEvent(element: any, longPressCallback: any, duration = 2500, clickCallback?: any) {
   if (!element) {
@@ -885,6 +940,72 @@ export function addLongPressEvent(element: any, longPressCallback: any, duration
 }
 
 /**
+ * 设置网页 icon
+ * @example
+ * setIcon('/favicon.ico')
+ * @param iconLink icon 链接
+ * @returns
+ * @category Dom-工具方法
+ */
+export function setIcon(iconLink: string) {
+  const dom: any = document.querySelector('head [rel="icon"]');
+  if (dom) {
+    dom.setAttribute('href', iconLink);
+    dom.setAttribute('rel', 'icon');
+  } else {
+    const iconDom = document.createElement('link');
+    iconDom.setAttribute('rel', 'icon');
+    iconDom.setAttribute('href', iconLink);
+    document.querySelector('head')?.appendChild(iconDom);
+  }
+}
+
+/**
+ * 复制到剪贴板
+ * @example
+ * copyToClipboard('hello world')
+ * @param text 内容文本
+ * @returns
+ * @category Dom-工具方法
+ */
+export function copyToClipboard(text: string) {
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(text);
+  } else {
+    let info = '复制成功！';
+    const tempInput = document.createElement('input');
+    tempInput.style.position = 'absolute';
+    tempInput.style.top = '-5201314px';
+    tempInput.style.left = '-5201314px';
+    tempInput.value = text;
+    document.body.appendChild(tempInput);
+
+    // 将焦点移动到文档或输入元素上
+    tempInput.focus();
+
+    tempInput.select();
+    try {
+      document.execCommand('copy');
+    } catch (err) {
+      info = '浏览器不支持此操作，请手动复制。';
+    }
+    document.body.removeChild(tempInput);
+    console.log('js-xxx:copyToClipboard--->', info);
+  }
+}
+
+/**
+ * 获取鼠标选中内容
+ * @example
+ * getSelectText()
+ * @returns
+ * @category Dom-工具方法
+ */
+export function getSelectText() {
+  return window?.getSelection()?.toString();
+}
+
+/**
  * 触发某个键盘按键事件
  * @example
  * emitKeyboardEvent(108, 'keyup'); // 小键盘回车事件
@@ -894,6 +1015,7 @@ export function addLongPressEvent(element: any, longPressCallback: any, duration
  * @param eventType 事件类型，默认为 'keydown' 。
  * @param element 目标元素，默认为 document.body ，支持传 document 。
  * @returns
+ * @category Tools-事件相关
  */
 export function emitKeyboardEvent(
   keyOrKeyCode: string | number = 13,
@@ -932,6 +1054,7 @@ export function emitKeyboardEvent(
  * @param eventDetail 事件自定义参数可以为空。不为空触发 CustomEvent 。
  * @param element 目标元素，默认为 document.body ，支持传 document 。
  * @returns
+ * @category Tools-事件相关
  */
 export function emitEvent(eventType = 'click', eventDetail?: any, element: HTMLElement | null = document.body): void {
   try {
@@ -963,6 +1086,7 @@ export function emitEvent(eventType = 'click', eventDetail?: any, element: HTMLE
  * document.removeEventListener('keydown', disableConflictEvent); /// 退出页面后关闭监听
  * @param event 触发事件
  * @returns
+ * @category Tools-事件相关
  */
 export function disableConflictEvent(event: any) {
   const keyCode = event.keyCode || event.which || event.charCode;
@@ -986,6 +1110,23 @@ export function disableConflictEvent(event: any) {
 }
 
 /**
+ * 阻止冒泡事件&阻止默认行为&阻止事件捕获
+ * @example
+ * offDefaultEvent(event); /// 阻止冒泡事件&阻止默认行为&阻止事件捕获
+ * @param event 事件
+ * @returns
+ * @category Tools-事件相关
+ */
+export function offDefaultEvent(event: any) {
+  const e = event || window.event;
+  if (e) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+  return false;
+}
+
+/**
  * 在打印预览中打印指定元素，并设置样式。
  * 需在浏览器打印设置中-更多设置-开启背景与图形打印选项
  * @example
@@ -1001,6 +1142,7 @@ export function disableConflictEvent(event: any) {
  *   @property {any} bodyStyle - iframe 的 body 样式。
  *   @property {any} htmlStyle - iframe 的 html 样式。
  * @returns
+ * @category Dom-工具方法
  */
 export function printDom(selector: string, styles?: { iframeStyle?: any; bodyStyle?: any; htmlStyle?: any }) {
   // 获取需要打印的元素
@@ -1432,6 +1574,7 @@ export function createTimeLogListener(
  * cx('class1', 'class2', { 'class3': true, 'class4': false }, null, undefined); /// "class1 class2 class3 true"
  * @param classNames 要合并的类名、对象或空值
  * @returns
+ * @category Dom-工具方法
  */
 export function cx(...classNames: any[]): string {
   const processedClassNames = [];

@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:45:48
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-08-12 10:53:49
+ * @LastEditTime: 2024-08-23 11:00:58
  * @Description: 字符串常用函数
  * @FilePath: \js-xxx\src\String\index.ts
  */
@@ -19,6 +19,7 @@ import { isStr, isUndef } from '@/Types';
  * unicode2str("我是老A"); /// '\\u6211\\u662f\\u8001a'
  * @param value 中文字符串
  * @returns
+ * @category Custom-转码
  */
 export function unicode2str(value: string): string {
   return escape(value).toLowerCase().replace(/%u/gi, '\\u');
@@ -31,6 +32,7 @@ export function unicode2str(value: string): string {
  * str2unicode("\\u6211\\u662f\\u8001a"); /// '我是老a'
  * @param value unicode 字符串
  * @returns
+ * @category Custom-转码
  */
 export function str2unicode(value: string): string {
   return unescape(value.replace(/\\u/gi, '%u'));
@@ -44,6 +46,7 @@ export function str2unicode(value: string): string {
  * @param str 字符串
  * @param type 类型，默认为 0|ba，错误 type 会返回原字符串。
  * @returns
+ * @category String-字符串
  */
 export function trim(str: string, type: number | string = 0): string {
   switch (type) {
@@ -81,6 +84,7 @@ export function trim(str: string, type: number | string = 0): string {
  * maskString('广东省深圳市福田区福田保税区xxx小区xxx单元x栋x楼xxx号'); /// '广东省深圳市福田区******xx号'
  * @param str 字符串
  * @returns
+ * @category String-字符串
  */
 export function maskString(str: string): string {
   str = str ? `${str}` : '';
@@ -121,6 +125,7 @@ export function maskString(str: string): string {
  * @param str 字符串
  * @param type 目标类型
  * @returns
+ * @category String-字符串
  */
 export function textTransferCase(str: string, type: 1 | 2 | 3 | 'upper' | 'lower' | 'first') {
   switch (type) {
@@ -149,6 +154,7 @@ export function textTransferCase(str: string, type: 1 | 2 | 3 | 'upper' | 'lower
  * textSplitCase('foo-Bar'); /// ['foo', 'bar']
  * @param str 字符串
  * @returns
+ * @category String-字符串
  */
 export function textSplitCase(str: string): string[] {
   const regUpperCase = /([A-Z])/g;
@@ -168,6 +174,7 @@ export function textSplitCase(str: string): string[] {
  * textCamelCase('foo.bar'); /// 'fooBar'
  * @param str 字符串
  * @returns
+ * @category String-字符串
  */
 export function textCamelCase(str: string) {
   const arr = textSplitCase(str);
@@ -190,6 +197,7 @@ export function textCamelCase(str: string) {
  * repeat('*', 3); /// '***'
  * @param str 字符串
  * @returns
+ * @category String-字符串
  */
 export function repeat(str: string, n = 1): string {
   let ret = '';
@@ -212,6 +220,7 @@ export function repeat(str: string, n = 1): string {
  * isUrl(http://www); /// false
  * @param value 字符串值
  * @returns
+ * @category String-字符串
  */
 export function isUrl(value: string): boolean {
   const regUrl = /^(?:\w+:)?\/\/([^\s.]+\.\S{2}|localhost[:?\d]*)\S*$/;
@@ -225,6 +234,7 @@ export function isUrl(value: string): boolean {
  * isLongitude(179.12); /// true
  * @param value 值
  * @returns
+ * @category String-字符串
  */
 export function isLongitude(value: string): boolean {
   const regUrl = /^(-?(?:1[0-7]\d(\.\d+)?|180(\.0+)?|\d{1,2}(\.\d+)?))$/;
@@ -238,6 +248,7 @@ export function isLongitude(value: string): boolean {
  * isLatitude(90); /// true
  * @param value 值
  * @returns
+ * @category String-字符串
  */
 export function isLatitude(value: string): boolean {
   const regUrl = /^(-?(?:[1-8]?\d(\.\d+)?|90(\.0+)?))$/;
@@ -251,6 +262,7 @@ export function isLatitude(value: string): boolean {
  * isEmail('@qq.com'); /// false
  * @param value 字符串值
  * @returns
+ * @category String-字符串
  */
 export function isEmail(value: string): boolean {
   const regEmail = /.+@.+\..+/;
@@ -264,6 +276,7 @@ export function isEmail(value: string): boolean {
  * isMobile('12345678910'); /// false
  * @param value 字符串值
  * @returns
+ * @category String-字符串
  */
 export function isMobile(value: string): boolean {
   const regPhoneNum = /^(0|86|17951)?(1[3-9][0-9])[0-9]{8}$/;
@@ -281,6 +294,7 @@ export function isMobile(value: string): boolean {
  * isAccount('我test123_qq_com', true); /// true
  * @param value 字符串值
  * @returns
+ * @category String-字符串
  */
 export function isAccount(value: string, hasChinese = false): boolean {
   if (!value) {
@@ -299,6 +313,7 @@ export function isAccount(value: string, hasChinese = false): boolean {
  * isStrongPassWord('test@qq.com123'); /// true
  * @param value 字符串值
  * @returns
+ * @category String-字符串
  */
 export function isStrongPassWord(value: string): boolean {
   const pwChar = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).{8,16}/;
@@ -317,6 +332,7 @@ export function isStrongPassWord(value: string): boolean {
  * isCarCode('广东 B12345'); /// false
  * @param value 字符串值
  * @returns
+ * @category String-字符串
  */
 export function isCarCode(value: string): boolean {
   const regCarCode =
@@ -333,6 +349,7 @@ export function isCarCode(value: string): boolean {
  * isIpv4('255.255.255.2555.255'); /// false
  * @param value 字符串值
  * @returns
+ * @category String-字符串
  */
 export function isIpv4(value: string): boolean {
   const regIpv4 = /^((\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.){4}$/;
@@ -352,6 +369,7 @@ export function isIpv4(value: string): boolean {
  * isIpv6('2000:0000:0000:0000:0001:2345:6789:abcd:1'); /// false
  * @param value 字符串值
  * @returns
+ * @category String-字符串
  */
 export function isIpv6(value: string): boolean {
   if (value == '::1') return true;
@@ -368,6 +386,7 @@ export function isIpv6(value: string): boolean {
  * isIpAddress('255.255.255.123.123'); /// false
  * @param value 字符串值
  * @returns
+ * @category String-字符串
  */
 export function isIpAddress(value: string): boolean {
   return isIpv4(value) || isIpv6(value);
@@ -381,6 +400,7 @@ export function isIpAddress(value: string): boolean {
  * checkFileExt(['png', 'jpg'], 'test.jpg.txt'); /// false
  * @param value 字符串值
  * @returns
+ * @category String-字符串
  */
 export function checkFileExt(arr: string[], value: string): boolean {
   const regFileExt = arr.map((name) => `.${name}`).join('|');
@@ -396,6 +416,7 @@ export function checkFileExt(arr: string[], value: string): boolean {
  * isHttp('12345'); /// 0
  * @param value 字符串值
  * @returns
+ * @category String-字符串
  */
 export function isHttp(value: string): -1 | 1 | 0 {
   const flag = value.substring(0, 8);
@@ -410,6 +431,7 @@ export function isHttp(value: string): -1 | 1 | 0 {
  * @param str 字符串值
  * @param replacement 替换字符串映射
  * @returns
+ * @category String-字符串
  */
 export function slugify(str: string, replacement?: { [index: string]: string }): string {
   const regForbidden = /[^\w\s$*_+~.()'"!\-:@]/g;
@@ -444,6 +466,7 @@ export function slugify(str: string, replacement?: { [index: string]: string }):
  * @param width 指定长度
  * @param options 截取配置
  * @returns
+ * @category String-字符串
  */
 export function truncate(
   txt: string,
@@ -497,6 +520,7 @@ export function truncate(
  * formatJSON(new Date()); /// '"2023-03-02T10:02:42.019Z"'
  * @param value 值
  * @returns
+ * @category JSON-相关
  */
 export function formatJSON(value: any): string {
   try {
@@ -518,6 +542,7 @@ export function formatJSON(value: any): string {
  * parseJSON('test error'); /// null
  * @param value 需要解析的值
  * @returns
+ * @category JSON-相关
  */
 export function parseJSON(value: any): any {
   try {
@@ -539,6 +564,7 @@ export function parseJSON(value: any): any {
  * stringifyJSON(Symbol('test')); /// ''
  * @param value 需要序列化的值
  * @returns
+ * @category JSON-相关
  */
 export function stringifyJSON(value: any): string {
   try {
@@ -556,6 +582,7 @@ export function stringifyJSON(value: any): string {
  * isQQ('123456789101'); /// false
  * @param value 字符串值
  * @returns
+ * @category String-字符串
  */
 export function isQQ(value: string): boolean {
   const reg = /^[1-9][0-9]{4,10}$/;
@@ -569,6 +596,7 @@ export function isQQ(value: string): boolean {
  * isEnglish('a1'); /// false
  * @param value 字符串值
  * @returns
+ * @category String-字符串
  */
 export function isEnglish(value: string): boolean {
   const reg = /^[a-zA-Z]+$/;
@@ -582,6 +610,7 @@ export function isEnglish(value: string): boolean {
  * hasSpecialChar('a1'); /// false
  * @param value 字符串值
  * @returns
+ * @category String-字符串
  */
 export function hasSpecialChar(value: string): boolean {
   if (value) {
@@ -607,6 +636,7 @@ export function hasSpecialChar(value: string): boolean {
  * isTel('13579246810'); /// false
  * @param value 字符串值
  * @returns
+ * @category String-字符串
  */
 export function isTel(value: string): boolean {
   if (value.match(/^(([0\+]\d{2,3}-)?(0\d{2,3})-)(\d{7,8})(-(\d{3,}))?$/) == null) {
@@ -623,6 +653,7 @@ export function isTel(value: string): boolean {
  * isChinese('我 1'); /// false
  * @param value 字符串值
  * @returns
+ * @category String-字符串
  */
 export function isChinese(value: string): boolean {
   return /^[\u4E00-\u9FA5]*$/.test(value);
@@ -635,6 +666,7 @@ export function isChinese(value: string): boolean {
  * isCreditCode('12312312312'); /// false
  * @param value 字符串值
  * @returns
+ * @category String-字符串
  */
 export function isCreditCode(value: string): boolean {
   const reg = /^[0-9A-Z]+$/;
@@ -680,6 +712,7 @@ export function isCreditCode(value: string): boolean {
  * isBankCard('12312312312'); /// false
  * @param value 字符串值
  * @returns
+ * @category String-字符串
  */
 export function isBankCard(value: string): boolean {
   if ('' == value.trim() || undefined == value) {
@@ -770,6 +803,7 @@ export function isBankCard(value: string): boolean {
  * checkPassWordLevel('123456789654321.H'); /// 5
  * @param passWord 字符串值-密码
  * @returns
+ * @category String-字符串
  */
 export function checkPassWordLevel(passWord: string) {
   const a = /[^ \f\n\r\t\v\da-zA-Z]/,
@@ -830,6 +864,7 @@ export function checkPassWordLevel(passWord: string) {
  * @param str 字符串值
  * @param extractFirst 是否只获取首字母
  * @returns
+ * @category String-字符串
  */
 export function getPinYin(str: string, extractFirst = false) {
   let i,
@@ -875,6 +910,7 @@ export function getPinYin(str: string, extractFirst = false) {
  * @param value 值
  * @param higherReplace 严格替换
  * @returns
+ * @category String-字符串
  */
 export function transferScanStr(value: string, higherReplace = false): string {
   if (!value) {
@@ -898,6 +934,7 @@ export function transferScanStr(value: string, higherReplace = false): string {
  * addSpace('123 45'); /// '1 2 3 4 5'
  * @param str 字符串
  * @returns
+ * @category String-字符串
  */
 export function addSpace(str: string | number): string {
   if (!str) {
@@ -913,6 +950,7 @@ export function addSpace(str: string | number): string {
  * leftJoin(0, 3, 1); /// '110'
  * @param str 字符串
  * @returns
+ * @category String-字符串
  */
 export function leftJoin(str: string | number, length: string | number = 2, char: string | number = 0): string {
   return `${str ?? ''}`.padStart(Number(length), `${char}`);
@@ -925,6 +963,7 @@ export function leftJoin(str: string | number, length: string | number = 2, char
  * rightJoin(0, 3, 1); /// '011'
  * @param str 字符串
  * @returns
+ * @category String-字符串
  */
 export function rightJoin(str: string | number, length: string | number = 2, char: string | number = 0): string {
   return `${str ?? ''}`.padEnd(Number(length), `${char}`);
@@ -941,6 +980,7 @@ export function rightJoin(str: string | number, length: string | number = 2, cha
  * @param params 参数对象，包含占位符的键值对。
  * @param emptyStr 对象不存在键值时的占位符，默认不变。
  * @returns
+ * @category String-字符串
  */
 export function loadStr(str: string, params: any, emptyStr?: string): string {
   return str.replace(/\${([^${}]+)}/g, (match, key) => getV(emptyStr ?? '${' + trim(key) + '}', params, trim(key)));

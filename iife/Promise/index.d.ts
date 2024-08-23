@@ -6,6 +6,7 @@
  * @param milliseconds 睡眠时间
  * @param returnValue 返回值
  * @returns
+ * @category Promise-相关
  */
 export declare function sleep(milliseconds: number | undefined, returnValue?: any): Promise<any>;
 /**
@@ -18,6 +19,7 @@ export declare function sleep(milliseconds: number | undefined, returnValue?: an
  * @param res 成功回调
  * @param rej 失败回调
  * @returns
+ * @category Promise-相关
  */
 export declare function to(promise: Promise<any>, res?: any, rej?: any): Promise<any>;
 /**
@@ -28,6 +30,7 @@ export declare function to(promise: Promise<any>, res?: any, rej?: any): Promise
  * @param promise 要封装的 Promise 对象
  * @param onFinally finally 回调函数 (可选)
  * @returns
+ * @category Promise-相关
  */
 export declare function customFinally(promise: Promise<any>, onFinally?: any): Promise<any>;
 /**
@@ -38,6 +41,7 @@ export declare function customFinally(promise: Promise<any>, onFinally?: any): P
  * @param count 次数
  * @param delay 延迟时间
  * @returns
+ * @category Promise-相关
  */
 export declare function retry(promise: Promise<any>, count?: number, delay?: number): Promise<unknown>;
 /**
@@ -47,6 +51,7 @@ export declare function retry(promise: Promise<any>, count?: number, delay?: num
  * @param promises promises
  * @param errorHandler errorHandler
  * @returns
+ * @category Promise-相关
  */
 export declare function all(promises: Promise<any>[], errorHandler?: any): Promise<any>;
 /**
@@ -56,6 +61,7 @@ export declare function all(promises: Promise<any>[], errorHandler?: any): Promi
  * @param promises promises
  * @param errorHandler errorHandler
  * @returns
+ * @category Promise-相关
  */
 export declare function any(promises: Promise<any>[], errorHandler?: any): Promise<any>;
 /**
@@ -65,6 +71,7 @@ export declare function any(promises: Promise<any>[], errorHandler?: any): Promi
  * @param promiseHandler promiseHandler
  * @param errorHandler errorHandler
  * @returns
+ * @category Promise-相关
  */
 export declare function catchPromise(promiseHandler: any, errorHandler?: any): Promise<any>;
 //# sourceMappingURL=index.d.ts.map

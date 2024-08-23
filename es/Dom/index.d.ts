@@ -4,6 +4,7 @@
  * openFullscreen(); /// 开启全屏
  * @param element 元素
  * @returns
+ * @category Dom-工具方法
  */
 export declare function openFullscreen(element?: any): void;
 /**
@@ -11,6 +12,7 @@ export declare function openFullscreen(element?: any): void;
  * @example
  * closeFullscreen(); /// 关闭全屏
  * @returns
+ * @category Dom-工具方法
  */
 export declare function closeFullscreen(): void;
 /**
@@ -19,6 +21,7 @@ export declare function closeFullscreen(): void;
  * str2html('<>&"'); /// '&lt;&gt;&amp;&quot;'
  * @param str 字符串
  * @returns
+ * @category Custom-转码
  */
 export declare function str2html(str: string): string;
 /**
@@ -27,6 +30,7 @@ export declare function str2html(str: string): string;
  * html2str('&lt;&gt;&amp;&quot;'); /// '<>&"'
  * @param value 实体字符串
  * @returns
+ * @category Custom-转码
  */
 export declare function html2str(value: string): string | null;
 /**
@@ -36,16 +40,9 @@ export declare function html2str(value: string): string | null;
  * @param newElement 某元素
  * @param targetElement 指定元素
  * @returns
+ * @category Dom-工具方法
  */
 export declare function insertAfter(newElement: any, targetElement: any): void;
-/**
- * 阻止冒泡事件&阻止默认行为&阻止事件捕获
- * @example
- * offDefaultEvent(event); /// 阻止冒泡事件&阻止默认行为&阻止事件捕获
- * @param event 事件
- * @returns
- */
-export declare function offDefaultEvent(event: any): boolean;
 /**
  * Y 轴滚动到指定位置
  * @example
@@ -56,6 +53,7 @@ export declare function offDefaultEvent(event: any): boolean;
  * @param callback 回调
  * @param dom 元素对象
  * @returns
+ * @category Scroll-滚动相关
  */
 export declare function scrollYTo(targetVal: 'start' | 'end' | number, callback: any, dom?: any): void;
 /**
@@ -68,6 +66,7 @@ export declare function scrollYTo(targetVal: 'start' | 'end' | number, callback:
  * @param callback 回调
  * @param dom 元素对象
  * @returns
+ * @category Scroll-滚动相关
  */
 export declare function scrollXTo(targetVal: 'start' | 'end' | number, callback: any, dom?: any): void;
 /**
@@ -78,6 +77,7 @@ export declare function scrollXTo(targetVal: 'start' | 'end' | number, callback:
  * @param dom 元素对象
  * @param targetVal 'start' | 'end' | 'center' | 'nearest'
  * @returns
+ * @category Scroll-滚动相关
  */
 export declare function scrollToView(dom?: any, targetVal?: 'start' | 'end' | 'center' | 'nearest'): void;
 /**
@@ -87,8 +87,47 @@ export declare function scrollToView(dom?: any, targetVal?: 'start' | 'end' | 'c
  * @param direction X/Y 轴的进度条
  * @param dom 元素
  * @returns
+ * @category Scroll-滚动相关
  */
 export declare function getScrollPercent(direction?: 'X' | 'Y', dom?: any): number;
+/**
+ * 获取最近的可滚动父元素。
+ * 支持普通 DOM 、 Shadow DOM 和 iframe 。
+ * @example
+ * getScrollParent(document.querySelector('.form-error')); // Form
+ * getScrollParent(); /// document.documentElement
+ * @param element 目标元素
+ * @returns
+ * @category Scroll-滚动相关
+ */
+export declare function getScrollParent(element?: HTMLElement | any): HTMLElement | Document | any;
+/**
+ * 滚动到指定元素，并将其显示在可滚动容器的中间。
+ * 适用于表单报错时定位报错元素，支持嵌套滚动容器。
+ * @param options 配置对象，包含以下属性：
+ *   - {string} selector - 目标元素的 CSS 选择器。
+ *   - {number} [delay=0] - 滚动执行的延迟时间（毫秒）。
+ *   - {boolean} [parent=false] - 是否在主应用中查找元素（适用于 Shadow DOM 情况）。
+ * @example
+ * // 立即滚动到指定元素
+ * scrollToElement({
+ *   selector: '#error-element',
+ *   delay: 0,
+ *   parent: true,
+ * });
+ * // 延迟滚动到指定元素
+ * scrollToElement({
+ *   selector: '.form-error',
+ *   delay: 100,
+ * });
+ * @returns
+ * @category Scroll-滚动相关
+ */
+export declare function scrollToElement(options: {
+    selector: string;
+    delay?: number;
+    parent?: boolean;
+}): void;
 /**
  * 找元素的第 n 级父元素
  * @example
@@ -96,6 +135,7 @@ export declare function getScrollPercent(direction?: 'X' | 'Y', dom?: any): numb
  * @param element 指定元素
  * @param n 第几个
  * @returns
+ * @category Dom-工具方法
  */
 export declare function findParents(element: any, n: number): any;
 /**
@@ -104,6 +144,7 @@ export declare function findParents(element: any, n: number): any;
  * findChildren(document.getElementById('test')); /// #test 的所有子元素数组
  * @param element 指定元素
  * @returns
+ * @category Dom-工具方法
  */
 export declare function findChildren(element: any): any[];
 /**
@@ -111,6 +152,7 @@ export declare function findChildren(element: any): any[];
  * @example
  * getViewportSize(); /// { width: 1280, height: 649 }
  * @returns
+ * @category Dom-工具方法
  */
 export declare function getViewportSize(): {
     w: number;
@@ -123,6 +165,7 @@ export declare function getViewportSize(): {
  * @param element 指定元素
  * @param name 属性名称
  * @returns
+ * @category Dom-工具方法
  */
 export declare function getStyleByName(element: any, name: any): any;
 /**
@@ -132,6 +175,7 @@ export declare function getStyleByName(element: any, name: any): any;
  * @param linkUrl 链接地址
  * @param rel 类型
  * @returns
+ * @category Dom-工具方法
  */
 export declare function appendLink(linkUrl: string, rel?: string): HTMLLinkElement;
 /**
@@ -142,6 +186,7 @@ export declare function appendLink(linkUrl: string, rel?: string): HTMLLinkEleme
  * @param async 是否异步
  * @param defer 是否延迟加载
  * @returns
+ * @category Dom-工具方法
  */
 export declare function appendScript(scriptUrl: string, async?: boolean, defer?: boolean): HTMLScriptElement;
 /**
@@ -151,6 +196,7 @@ export declare function appendScript(scriptUrl: string, async?: boolean, defer?:
  * @param link 链接
  * @param name 文件名称(可选，默认以链接最好一段作为名称，填写时可不带后缀自动识别，写了后缀会以写的后缀为准。)
  * @returns
+ * @category Tools-下载/文件相关
  */
 export declare function download(link: string, name: string): void;
 /**
@@ -161,6 +207,7 @@ export declare function download(link: string, name: string): void;
  * @param name 文件名称(需带后缀)，默认 txt 。
  * @param content 内容 BlobPart | any
  * @returns
+ * @category Tools-下载/文件相关
  */
 export declare function downloadContent(name: string, content: any): void;
 /**
@@ -175,6 +222,7 @@ export declare function downloadContent(name: string, content: any): void;
  * @param selector 选择器字符串
  * @param options 动画配置
  * @returns
+ * @category BXH-自定义动画
  */
 export declare function marquee(selector: string, options?: {
     direction?: 'X' | 'Y';
@@ -191,6 +239,7 @@ export declare function marquee(selector: string, options?: {
  * @param selectors 选择器字符串
  * @param direction 堆叠方向
  * @returns
+ * @category Dom-工具方法
  */
 export declare function stackSticky(selectors: string, direction?: string): void;
 /**
@@ -203,6 +252,7 @@ export declare function stackSticky(selectors: string, direction?: string): void
  * @param contentCenter 内容是否居中
  * @param offsetSelector 偏移元素选择器，默认设置 html 根节点偏移。
  * @returns
+ * @category Dom-工具方法
  */
 export declare function calcFontSize(clientRatio: number | undefined, contentCenter: boolean | undefined, offsetSelector: any): () => void;
 /**
@@ -211,6 +261,7 @@ export declare function calcFontSize(clientRatio: number | undefined, contentCen
  * px2rem(30); /// 转化后的 rem
  * @param px 像素值
  * @returns
+ * @category Dom-工具方法
  */
 export declare function px2rem(px: number): number;
 /**
@@ -224,6 +275,7 @@ export declare function px2rem(px: number): number;
  * @param key key 值
  * @param value value 值
  * @returns
+ * @category Dom-工具方法
  */
 export declare function dataTo(key: string, value: any): void;
 /**
@@ -234,6 +286,7 @@ export declare function dataTo(key: string, value: any): void;
  * @param element 元素
  * @param className 类
  * @returns
+ * @category Dom-工具方法
  */
 export declare function toggleClass(element: any, className: string | Array<string>): void;
 /**
@@ -243,6 +296,7 @@ export declare function toggleClass(element: any, className: string | Array<stri
  * hideProcess(); /// 隐藏水滴加载动画
  * @param element 元素
  * @returns
+ * @category BXH-自定义动画
  */
 export declare function showProcess(element: any): () => void;
 /**
@@ -253,6 +307,7 @@ export declare function showProcess(element: any): () => void;
  * @param delay 点击间隔
  * @param events 事件多击 rest 参数
  * @returns
+ * @category Tools-点击事件相关
  */
 export declare function onClick2MoreClick(delay?: number, ...events: Array<any>): any;
 /**
@@ -263,31 +318,9 @@ export declare function onClick2MoreClick(delay?: number, ...events: Array<any>)
  * @param times 几次点击触发
  * @param delay 点击间隔
  * @returns
+ * @category Tools-点击事件相关
  */
 export declare function bindMoreClick(fn: any, times?: number, delay?: number): (...args: any[]) => void;
-/**
- * 设置网页 icon
- * @example
- * setIcon('/favicon.ico')
- * @param iconLink icon 链接
- * @returns
- */
-export declare function setIcon(iconLink: string): void;
-/**
- * 复制到剪贴板
- * @example
- * copyToClipboard('hello world')
- * @param text 内容文本
- * @returns
- */
-export declare function copyToClipboard(text: string): void;
-/**
- * 获取鼠标选中内容
- * @example
- * getSelectText()
- * @returns
- */
-export declare function getSelectText(): string | undefined;
 /**
  * 设置长按事件-支持加入单击事件
  * @example
@@ -297,8 +330,35 @@ export declare function getSelectText(): string | undefined;
  * @param duration 长按时间
  * @param clickCallback 单击事件函数(可选)
  * @returns
+ * @category Tools-点击事件相关
  */
 export declare function addLongPressEvent(element: any, longPressCallback: any, duration?: number, clickCallback?: any): void;
+/**
+ * 设置网页 icon
+ * @example
+ * setIcon('/favicon.ico')
+ * @param iconLink icon 链接
+ * @returns
+ * @category Dom-工具方法
+ */
+export declare function setIcon(iconLink: string): void;
+/**
+ * 复制到剪贴板
+ * @example
+ * copyToClipboard('hello world')
+ * @param text 内容文本
+ * @returns
+ * @category Dom-工具方法
+ */
+export declare function copyToClipboard(text: string): void;
+/**
+ * 获取鼠标选中内容
+ * @example
+ * getSelectText()
+ * @returns
+ * @category Dom-工具方法
+ */
+export declare function getSelectText(): string | undefined;
 /**
  * 触发某个键盘按键事件
  * @example
@@ -309,6 +369,7 @@ export declare function addLongPressEvent(element: any, longPressCallback: any, 
  * @param eventType 事件类型，默认为 'keydown' 。
  * @param element 目标元素，默认为 document.body ，支持传 document 。
  * @returns
+ * @category Tools-事件相关
  */
 export declare function emitKeyboardEvent(keyOrKeyCode?: string | number, eventType?: 'keydown' | 'keypress' | 'keyup', element?: HTMLElement | null): void;
 /**
@@ -320,6 +381,7 @@ export declare function emitKeyboardEvent(keyOrKeyCode?: string | number, eventT
  * @param eventDetail 事件自定义参数可以为空。不为空触发 CustomEvent 。
  * @param element 目标元素，默认为 document.body ，支持传 document 。
  * @returns
+ * @category Tools-事件相关
  */
 export declare function emitEvent(eventType?: string, eventDetail?: any, element?: HTMLElement | null): void;
 /**
@@ -329,8 +391,18 @@ export declare function emitEvent(eventType?: string, eventDetail?: any, element
  * document.removeEventListener('keydown', disableConflictEvent); /// 退出页面后关闭监听
  * @param event 触发事件
  * @returns
+ * @category Tools-事件相关
  */
 export declare function disableConflictEvent(event: any): boolean;
+/**
+ * 阻止冒泡事件&阻止默认行为&阻止事件捕获
+ * @example
+ * offDefaultEvent(event); /// 阻止冒泡事件&阻止默认行为&阻止事件捕获
+ * @param event 事件
+ * @returns
+ * @category Tools-事件相关
+ */
+export declare function offDefaultEvent(event: any): boolean;
 /**
  * 在打印预览中打印指定元素，并设置样式。
  * 需在浏览器打印设置中-更多设置-开启背景与图形打印选项
@@ -347,6 +419,7 @@ export declare function disableConflictEvent(event: any): boolean;
  *   @property {any} bodyStyle - iframe 的 body 样式。
  *   @property {any} htmlStyle - iframe 的 html 样式。
  * @returns
+ * @category Dom-工具方法
  */
 export declare function printDom(selector: string, styles?: {
     iframeStyle?: any;
@@ -423,6 +496,7 @@ export declare function createTimeLogListener(eventName: string, eventParams?: {
  * cx('class1', 'class2', { 'class3': true, 'class4': false }, null, undefined); /// "class1 class2 class3 true"
  * @param classNames 要合并的类名、对象或空值
  * @returns
+ * @category Dom-工具方法
  */
 export declare function cx(...classNames: any[]): string;
 //# sourceMappingURL=index.d.ts.map

@@ -38,6 +38,7 @@ export interface i18nOptions {
  *   },
  *   defaultLang: 'zh_CN',
  * });
+ * @returns
  * @category i18n-多语言(国际化)
  */
 export declare class i18n {

@@ -10,6 +10,7 @@
  * @param fmt 格式化模板 'yyyy-mm-dd hh:ii:ss'
  * @param weeks 星期对应数组 [7, 1, 2, 3, 4, 5, 6]
  * @returns
+ * @category Date-日期相关
  */
 export declare function formatDate(date?: any, fmt?: string, weeks?: any[]): any;
 /**
@@ -21,6 +22,7 @@ export declare function formatDate(date?: any, fmt?: string, weeks?: any[]): any
  * @param date 时间
  * @param calcStrOrArr '1 days' or ['-1 day', '3 month']
  * @returns
+ * @category Date-日期相关
  */
 export declare function calcDate(date: string | Date, calcStrOrArr: string | string[]): Date;
 /**
@@ -32,6 +34,7 @@ export declare function calcDate(date: string | Date, calcStrOrArr: string | str
  * @param nowDate 近一点的时间，默认当前时间。
  * @param type 计算方式，默认计算差距的精确天数、时分秒。
  * @returns
+ * @category Date-日期相关
  */
 export declare function getDateDifference(oldDate: string | Date, nowDate?: string | Date, type?: 'all' | 'day' | 'days' | 'hour' | 'hours' | 'minute' | 'minutes' | 'second' | 'seconds' | 'ALL' | 'DAY' | 'DAYS' | 'HOUR' | 'HOURS' | 'MINUTE' | 'MINUTES' | 'SECOND' | 'SECONDS'): number | {
     days: number;
@@ -47,6 +50,7 @@ export declare function getDateDifference(oldDate: string | Date, nowDate?: stri
  * @param longAgo 是否显示周月甚至更久
  * @param formatter 正常显示时的时间显示格式
  * @returns
+ * @category Date-日期相关
  */
 export declare function timeSince(date?: string | Date, longAgo?: boolean, formatter?: string): any;
 /**
@@ -55,6 +59,7 @@ export declare function timeSince(date?: string | Date, longAgo?: boolean, forma
  * isWorkDay(new Date()); /// true
  * @param date 日期
  * @returns
+ * @category Date-日期相关
  */
 export declare function isWeekday(date?: string | Date): boolean;
 /**
@@ -63,6 +68,7 @@ export declare function isWeekday(date?: string | Date): boolean;
  * getDayInYear('2023/06/23'); /// 174
  * @param date 日期
  * @returns
+ * @category Date-日期相关
  */
 export declare function getDayInYear(date?: string | Date): number;
 /**
@@ -77,6 +83,7 @@ export declare function getDayInYear(date?: string | Date): number;
  * @param type 类型
  * @param date 日期
  * @returns
+ * @category Date-日期相关
  */
 export declare function getDateList(n: number, type?: 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second', date?: any): string[];
 /**
@@ -85,6 +92,7 @@ export declare function getDateList(n: number, type?: 'year' | 'month' | 'day' |
  * getDateTime(new Date()); /// time stamp
  * @param date 日期
  * @returns
+ * @category Date-日期相关
  */
 export declare function getDateTime(date?: string | Date): number;
 /**
@@ -96,6 +104,7 @@ export declare function getDateTime(date?: string | Date): number;
  * @param dateA 时间 A
  * @param dateB 时间 B
  * @returns
+ * @category Date-日期相关
  */
 export declare function compareDate(dateA: any, dateB?: any): -1 | 1 | 0;
 /**
@@ -106,6 +115,7 @@ export declare function compareDate(dateA: any, dateB?: any): -1 | 1 | 0;
  * @param callback 回调函数
  * @param finishCallBack 完成回调函数
  * @returns
+ * @category Date-日期相关
  */
 export declare function countdown(seconds: number, callback?: any, finishCallBack?: any): any;
 /**
@@ -116,6 +126,7 @@ export declare function countdown(seconds: number, callback?: any, finishCallBac
  * @param duration 时间/秒
  * @param returnObj 是否返回对象
  * @returns
+ * @category Date-日期相关
  */
 export declare function transferSeconds(duration: number, returnObj?: boolean): string | any;
 /**
@@ -124,6 +135,7 @@ export declare function transferSeconds(duration: number, returnObj?: boolean): 
  * getMonthDayCount(new Date()); /// 30
  * @param date 日期
  * @returns
+ * @category Date-日期相关
  */
 export declare function getMonthDayCount(date?: string | Date): number;
 /**
@@ -133,6 +145,7 @@ export declare function getMonthDayCount(date?: string | Date): number;
  * getUTCTime(8); /// 中国标准时间-东八区
  * @param timezone 时区数字，东八区为 8，西八区为 -8 。
  * @returns
+ * @category Date-日期相关
  */
 export declare function getUTCTime(timezone?: number): Date;
 /**
@@ -145,6 +158,7 @@ export declare function getUTCTime(timezone?: number): Date;
  * // 如果时区为 UTC
  * getTimezone(); // '+0'
  * @returns
+ * @category Date-日期相关
  */
 export declare function getTimezone(): string;
 //# sourceMappingURL=index.d.ts.map

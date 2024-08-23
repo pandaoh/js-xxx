@@ -340,6 +340,7 @@
    * getType(async function(){}); /// 'asyncfunction'
    * @param variable 变量
    * @returns
+   * @category Types-类型相关
    */
   function getType(variable) {
       return Object.prototype.toString.call(variable).slice(8, -1).toLowerCase();
@@ -352,6 +353,7 @@
    * toStr(null); /// ''
    * @param value 值
    * @returns
+   * @category Types-类型相关
    */
   function toStr(value) {
       if (value == null) {
@@ -370,6 +372,7 @@
    * toNum('-123'); /// -123
    * @param value 值
    * @returns
+   * @category Types-类型相关
    */
   function toNum(value) {
       value = Number(value);
@@ -392,6 +395,7 @@
    * @param value 值
    * @param falseList 判断为 false 的值列表
    * @returns
+   * @category Types-类型相关
    */
   function toBool(value, falseList) {
       if (falseList === void 0) { falseList = []; }
@@ -414,6 +418,7 @@
    * isJSON(null); /// true
    * @param str 字符串
    * @returns
+   * @category Types-类型相关
    */
   function isJSON(str) {
       try {
@@ -431,6 +436,7 @@
    * isBool(null); /// false
    * @param value 值
    * @returns
+   * @category Types-类型相关
    */
   function isBool(value) {
       return getType(value) === 'boolean';
@@ -442,6 +448,7 @@
    * isDate(null); /// false
    * @param value 值
    * @returns
+   * @category Types-类型相关
    */
   function isDate(value) {
       return getType(value) === 'date';
@@ -455,6 +462,7 @@
    * isInvalidDate(new Date('invalid date')); /// true
    * @param date 值
    * @returns
+   * @category Types-类型相关
    */
   function isInvalidDate(date) {
       return isNaN$1(new Date(date).getTime());
@@ -466,6 +474,7 @@
    * isStr(null); /// false
    * @param value 值
    * @returns
+   * @category Types-类型相关
    */
   function isStr(value) {
       return getType(value) === 'string';
@@ -477,6 +486,7 @@
    * isUndef(null); /// false
    * @param value 值
    * @returns
+   * @category Types-类型相关
    */
   function isUndef(value) {
       return getType(value) === 'undefined';
@@ -488,6 +498,7 @@
    * isNull(null); /// true
    * @param value 值
    * @returns
+   * @category Types-类型相关
    */
   function isNull(value) {
       return getType(value) === 'null';
@@ -499,6 +510,7 @@
    * isNum(1); /// true
    * @param value 值
    * @returns
+   * @category Types-类型相关
    */
   function isNum(value) {
       return getType(value) === 'number' && !Object.is(NaN, value);
@@ -510,6 +522,7 @@
    * isArr({}); /// false
    * @param value 值
    * @returns
+   * @category Types-类型相关
    */
   function isArr(value) {
       return Array.isArray(value);
@@ -521,6 +534,7 @@
    * isObj(null); /// false
    * @param value 值
    * @returns
+   * @category Types-类型相关
    */
   function isObj(value) {
       return getType(value) === 'object';
@@ -533,6 +547,7 @@
    * isElement({}); /// false
    * @param value 值
    * @returns
+   * @category Types-类型相关
    */
   function isElement(value) {
       return !!(value && value.nodeType === 1);
@@ -546,6 +561,7 @@
    * isFn({}); /// false
    * @param value 值
    * @returns
+   * @category Types-类型相关
    */
   function isFn(value) {
       var type = getType(value);
@@ -559,6 +575,7 @@
    * isPromise(new Promise((resolve, reject) => resolve())); /// true
    * @param value 值
    * @returns
+   * @category Types-类型相关
    */
   function isPromise(value) {
       return getType(value) === 'promise' || (isFn(value === null || value === void 0 ? void 0 : value.then) && isFn(value === null || value === void 0 ? void 0 : value.catch));
@@ -570,6 +587,7 @@
    * isNaN(NaN); /// true
    * @param value 值
    * @returns
+   * @category Types-类型相关
    */
   function isNaN$1(value) {
       return Object.is(NaN, value);
@@ -581,6 +599,7 @@
    * isBlob(null); /// false
    * @param value 值
    * @returns
+   * @category Types-类型相关
    */
   function isBlob(value) {
       return getType(value) === 'blob';
@@ -592,6 +611,7 @@
    * isArrayBuffer(null); /// false
    * @param value 值
    * @returns
+   * @category Types-类型相关
    */
   function isArrayBuffer(value) {
       return getType(value) === 'arraybuffer';
@@ -601,7 +621,7 @@
    * @Author: HxB
    * @Date: 2022-04-26 11:52:01
    * @LastEditors: DoubleAm
-   * @LastEditTime: 2024-01-18 10:34:15
+   * @LastEditTime: 2024-08-23 10:44:23
    * @Description: 数组常用函数
    * @FilePath: \js-xxx\src\Array\index.ts
    */
@@ -614,6 +634,7 @@
    * @param key 分组的 key
    * @param vKey 值的 key，默认为整个值。
    * @returns
+   * @category Array-数组相关
    */
   function data2Obj(sourceData, key, vKey) {
       var obj = {};
@@ -632,6 +653,7 @@
    * @param sourceData 源数据
    * @param key 取值的 key
    * @returns
+   * @category Array-数组相关
    */
   function data2Arr(sourceData, key) {
       var _a;
@@ -653,6 +675,7 @@
    * @param data 源数据
    * @param key 用于转换的 key
    * @returns
+   * @category Array-数组相关
    */
   function arrObj2objArr(data, key) {
       var result = {};
@@ -687,6 +710,7 @@
    * @param arr 数组
    * @param filter 过滤逻辑
    * @returns
+   * @category Array-数组相关
    */
   function unique(arr, filter) {
       if (arr.length == 1) {
@@ -715,6 +739,7 @@
    * @param key 排序的字段
    * @param isAscend 是否升序
    * @returns
+   * @category Array-数组相关
    */
   function sortCallBack(key, isAscend) {
       if (isAscend === void 0) { isAscend = true; }
@@ -726,6 +751,7 @@
    * arrayShuffle([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]); /// [5, 9, 1, 10, 2, 6, 4, 8, 3, 7]
    * @param arr 数组
    * @returns
+   * @category Array-数组相关
    */
   function arrayShuffle(arr) {
       return arr.sort(function () { return Math.random() - 0.5; });
@@ -745,6 +771,7 @@
    * @param type 类型
    * @param keys 关键字/集合
    * @returns
+   * @category Array-数组相关
    */
   function arraySort(arr, type, keys) {
       if (type === void 0) { type = 'asc'; }
@@ -783,6 +810,7 @@
    * @param keys 排序的字段/集合
    * @param isAscend 是否升序
    * @returns
+   * @category Array-数组相关
    */
   function sortBy(keys, isAscend) {
       if (isAscend === void 0) { isAscend = true; }
@@ -808,6 +836,7 @@
    * @param arr 数组
    * @param n 保留小数位
    * @returns
+   * @category Array-数组相关
    */
   function arrayFill(arr, n) {
       var result = [];
@@ -840,7 +869,7 @@
    * @Author: HxB
    * @Date: 2022-04-26 16:29:18
    * @LastEditors: DoubleAm
-   * @LastEditTime: 2023-08-22 10:25:51
+   * @LastEditTime: 2024-08-23 10:38:45
    * @Description: Cookies 常用函数
    * @FilePath: \js-xxx\src\Cookies\index.ts
    */
@@ -850,6 +879,7 @@
    * getCookie('name'); /// 获取 name 对应的 Cookie 值
    * @param key Cookie key
    * @returns
+   * @category Storage-存储相关
    */
   function getCookie(key) {
       var reg = new RegExp('(^| )' + key + '=([^;]*)(;|$)');
@@ -865,6 +895,7 @@
    * @param value Cookie value
    * @param expires Cookie expires
    * @returns
+   * @category Storage-存储相关
    */
   function setCookie(key, value, expires) {
       // 没有设置有效期，默认有效期是 30 天。
@@ -881,6 +912,7 @@
    * removeCookie('name'); /// 删除 name 对应的 Cookie
    * @param key Cookie key
    * @returns
+   * @category Storage-存储相关
    */
   function removeCookie(key) {
       var exp = new Date();
@@ -895,6 +927,7 @@
    * @example
    * clearCookies(); /// 删除所有的 Cookie
    * @returns
+   * @category Storage-存储相关
    */
   function clearCookies() {
       document.cookie
@@ -9300,6 +9333,7 @@
    * qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3], str: '1' }, { hasIndex: true }); /// 'start=0&count=20&obj[a]=1&arr[0]=1&arr[1]=2&arr[2]=3&str=1'
    * @param obj 源数据
    * @returns
+   * @category Request-请求相关
    */
   function qsStringify(obj, options) {
       if (!obj) {
@@ -9344,6 +9378,7 @@
    * @param url query string
    * @param key 参数名
    * @returns
+   * @category Request-请求相关
    */
   function qsParse(url, key) {
       var _a, _b, _c, _d, _e;
@@ -9385,6 +9420,7 @@
    * @param url 地址/链接
    * @param hashRoute 是否为 hash 路由，默认为 false 。
    * @returns
+   * @category Request-请求相关
    */
   function getBaseURL(url, hashRoute) {
       if (hashRoute === void 0) { hashRoute = false; }
@@ -9405,6 +9441,7 @@
    * getQueryString(); /// 当前页面 QueryString 字符串部分
    * @param url 地址/链接
    * @returns
+   * @category Request-请求相关
    */
   function getQueryString(url) {
       var _a, _b, _c, _d, _e;
@@ -9422,6 +9459,7 @@
    * @param url URL 地址
    * @param replaceHistory 是否替换历史记录，默认为 true 。
    * @returns
+   * @category Request-请求相关
    */
   function changeURL(url, replaceHistory) {
       if (replaceHistory === void 0) { replaceHistory = true; }
@@ -9440,6 +9478,7 @@
    * getSearchParams(); /// 当前页面 SearchParams 对象
    * @param url 地址/链接
    * @returns
+   * @category Request-请求相关
    */
   function getSearchParams(url) {
       var e_1, _a;
@@ -9469,6 +9508,7 @@
    * @param url 地址/链接
    * @param options 请求配置
    * @returns
+   * @category xAjax-请求封装
    */
   function xAjax(method, url, options) {
       var _a, _b, _c, _d;
@@ -9522,6 +9562,7 @@
    * @param url 地址/链接
    * @param options 请求配置
    * @returns
+   * @category xFetch-封装
    */
   function xFetch(method, url, options) {
       var _a, _b, _c, _d, _e, _f, _g, _h;
@@ -9588,6 +9629,7 @@
    * getContentType('unknown'); /// 'application/octet-stream'
    * @param fileType 文件类型
    * @returns
+   * @category Request-请求相关
    */
   function getContentType(fileType) {
       var _a;
@@ -9602,6 +9644,7 @@
    * safeEncodeURI('特殊字符 !@#'); // '%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6%20%21%40%23'
    * @param s 要编码的字符串。
    * @returns
+   * @category Custom-转码
    */
   function safeEncodeURI(s) {
       try {
@@ -9621,6 +9664,7 @@
    * safeDecodeURI('%'); // '%' （无效的 URI 片段）
    * @param s 要解码的 URI 。
    * @returns
+   * @category Custom-转码
    */
   function safeDecodeURI(s) {
       try {
@@ -9637,6 +9681,7 @@
    * @example
    * getTimeCode(); /// '2036551026042022'
    * @returns
+   * @category Tools-工具方法
    */
   function getTimeCode() {
       var dateObj = new Date();
@@ -9664,6 +9709,7 @@
    * empty([]); /// true
    * @param variable 变量
    * @returns
+   * @category Tools-工具方法
    */
   function empty(variable) {
       if (typeof variable === 'boolean') {
@@ -9703,6 +9749,7 @@
    * getFirstVar({a: 2,b: 1}); /// 2
    * @param data 源数据
    * @returns
+   * @category Tools-工具方法
    */
   function getFirstVar(data) {
       if (getType(data) !== 'object' && !Array.isArray(data)) {
@@ -9720,6 +9767,7 @@
    * getLastVar({a: 2, b: 1}); /// b
    * @param data 源数据
    * @returns
+   * @category Tools-工具方法
    */
   function getLastVar(data) {
       var isObj = getType(data) == 'object';
@@ -9740,6 +9788,7 @@
    * @param value 值
    * @param count 获取数据量
    * @returns
+   * @category Tools-工具方法
    */
   function getRandVar(value, count) {
       if (count === void 0) { count = 1; }
@@ -9761,6 +9810,7 @@
    * @param fn 执行的函数
    * @param delay 延迟时间
    * @returns
+   * @category Tools-工具方法
    */
   function debounce(fn, delay) {
       if (delay === void 0) { delay = 1000; }
@@ -9781,6 +9831,7 @@
    * @param fn 执行的函数
    * @param delay 延迟时间
    * @returns
+   * @category Tools-工具方法
    */
   function throttle(fn, delay) {
       if (delay === void 0) { delay = 2000; }
@@ -9804,6 +9855,7 @@
    * @param fn (error)
    * @param notShowConsole 是否不回显控制台
    * @returns
+   * @category Tools-工具方法
    */
   function globalError(fn, notShowConsole) {
       if (notShowConsole === void 0) { notShowConsole = true; }
@@ -9872,6 +9924,7 @@
    * observeResource(); /// 找不到资源时刷新页面
    * @param callback
    * @returns
+   * @category Tools-工具方法
    */
   function observeResource(callback) {
       var PERFORMANCE_SUPPORTED = window.performance && typeof window.performance.getEntries === 'function';
@@ -9943,6 +9996,7 @@
    * @param interval 请求文件的时间间隔（毫秒），默认为 15 分钟，最小值 1 分钟。
    * @param url 要检测的文件路径（默认为页面最后一个 JavaScript/CSS 文件）
    * @returns
+   * @category Tools-工具方法
    */
   function checkUpdate(callback, interval, url) {
       if (interval === void 0) { interval = 15 * 60 * 1000; }
@@ -10018,6 +10072,7 @@
    * @param min 最小值
    * @param max 最大值
    * @returns
+   * @category Tools-工具方法
    */
   function getRandNum(min, max) {
       if (min === void 0) { min = 0; }
@@ -10029,6 +10084,7 @@
    * @example
    * getRandColor(); /// '#xxxxxx'
    * @returns
+   * @category Tools-工具方法
    */
   function getRandColor() {
       return '#' + ('00000' + ((Math.random() * 0x1000000) << 0).toString(16)).slice(-6);
@@ -10042,6 +10098,7 @@
    * getBSColor('warning'); /// '#ffc107'
    * @param key color name
    * @returns
+   * @category Tools-工具方法
    */
   function getBSColor(key) {
       if (key === void 0) { key = 'default'; }
@@ -10077,6 +10134,7 @@
    * getVarSize(null); /// 0
    * @param value 值
    * @returns
+   * @category Tools-工具方法
    */
   function getVarSize(value) {
       if (getType(value) === 'object') {
@@ -10097,6 +10155,7 @@
    * openFileSelect({ multiple: true, accept: '.txt', resultType: 'base64' }).then(fileDataUrlList => console.log(fileDataUrlList));
    * @param options 打开配置
    * @returns
+   * @category Tools-下载/文件相关
    */
   function openFileSelect(options) {
       var _this = this;
@@ -10205,6 +10264,7 @@
    * @param blob 要保存的 Blob 对象。
    * @param filename 可选。保存的文件名。
    * @returns
+   * @category Tools-下载/文件相关
    */
   function saveAs(blob, filename) {
       var url = window.URL || window.webkitURL;
@@ -10230,6 +10290,7 @@
    * @param url 图片的 URL 地址。
    * @param fileName 可选。下载的文件名。
    * @returns
+   * @category Tools-下载/文件相关
    */
   function downloadImg(url, fileName) {
       if (!url || !url.startsWith('http')) {
@@ -10278,6 +10339,7 @@
    * @param url 文件的 URL 地址。
    * @param fileName 可选。下载的文件名，默认为 URL 中的文件名。
    * @returns
+   * @category Tools-下载/文件相关
    */
   function downloadFile(url, fileName) {
       var _a, _b, _c;
@@ -10313,6 +10375,7 @@
    * @param url 要获取文件名的 URL 。
    * @param onlyExt 可选。如果为 true，则仅返回文件扩展名。
    * @returns
+   * @category Tools-下载/文件相关
    */
   function getFileNameFromUrl(url, onlyExt) {
       var _a, _b;
@@ -10340,6 +10403,7 @@
    * openPreviewFile('https://example.com/path/to/otherfile.zip'); // 将直接打开链接
    * @param url 要预览的 URL 地址。
    * @returns
+   * @category Tools-下载/文件相关
    */
   function openPreviewFile(url, serviceUrl) {
       var urlMap = new Map()
@@ -10373,6 +10437,7 @@
    * @param paramA 值 A
    * @param paramB 值 B
    * @returns
+   * @category Tools-工具方法
    */
   function intersection(paramA, paramB) {
       var paramAType = getType(paramA);
@@ -10407,6 +10472,7 @@
    * @param paramA 值 A，若冲突以此值为准。
    * @param paramB 值 B
    * @returns
+   * @category Tools-工具方法
    */
   function union(paramA, paramB) {
       var paramAType = getType(paramA);
@@ -10429,6 +10495,7 @@
    * @param paramA 值 A，若冲突以此值为准。
    * @param paramB 值 B
    * @returns
+   * @category Tools-工具方法
    */
   function difference(paramA, paramB) {
       var paramAType = getType(paramA);
@@ -10459,6 +10526,7 @@
    * jsonClone({a: 1, b: 2}); /// {a: 1, b: 2}
    * @param value 值
    * @returns
+   * @category JSON-相关
    */
   function jsonClone(value) {
       try {
@@ -10479,6 +10547,7 @@
    * @param fn 方法函数
    * @param timeKey 打印时间记录关键 key
    * @returns
+   * @category Extra-日志/调试
    */
   function logRunTime(fn, timeKey) {
       timeKey = timeKey !== null && timeKey !== void 0 ? timeKey : getKey(5, 'log-run-time');
@@ -10514,6 +10583,7 @@
    * showVar({a: 1, b: 2}); /// 显示序列化之后的数据
    * @param value 值
    * @returns
+   * @category Extra-日志/调试
    */
   function showVar(value) {
       var _a;
@@ -10538,6 +10608,7 @@
    * @param value 值
    * @param target 目标值
    * @returns
+   * @category Tools-工具方法
    */
   function contains(value, target) {
       try {
@@ -10567,6 +10638,7 @@
    * @param valueA 值 A
    * @param valueB 值 B
    * @returns
+   * @category Tools-工具方法
    */
   function same(valueA, valueB) {
       try {
@@ -10590,6 +10662,7 @@
    * getSortVar([1, 3, 2]); /// [1, 2, 3]
    * @param value 值
    * @returns
+   * @category Tools-工具方法
    */
   function getSortVar(value) {
       try {
@@ -10618,6 +10691,7 @@
    * inversion(true); /// true
    * @param value 值
    * @returns
+   * @category Tools-工具方法
    */
   function inversion(value) {
       var _a, _b, _c;
@@ -10643,6 +10717,7 @@
    * @param timeout 超时
    * @param interval 执行间隔
    * @returns
+   * @category Tools-工具方法
    */
   function waitUntil(condition, timeout, interval) {
       if (timeout === void 0) { timeout = 0; }
@@ -10689,6 +10764,7 @@
    * ms(60000); /// '1m'
    * @param str 值
    * @returns
+   * @category Tools-工具方法
    */
   function ms(str) {
       // 外部
@@ -10727,6 +10803,7 @@
    * @param contentType 内容类型
    * @param callBack 回调函数
    * @returns
+   * @category Tools-下载/文件相关
    */
   function transferFileToBase64(content, contentType, callBack) {
       var blob = new Blob([content], {
@@ -10752,6 +10829,7 @@
    * checkIdCard('123123123123123222'); /// false
    * @param value 字符串值
    * @returns
+   * @category Tools-工具方法
    */
   function checkIdCard(value) {
       var regIdCard15 = /^[1-9]d{5}d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)d{2}$/;
@@ -10767,6 +10845,7 @@
    * @param birthday 生日
    * @param targetDate 目标日期
    * @returns
+   * @category Tools-工具方法
    */
   function getAge(birthday, targetDate) {
       return new Date(new Date(targetDate !== null && targetDate !== void 0 ? targetDate : Date.now()).getTime() - new Date(birthday).getTime()).getFullYear() - 1970;
@@ -10779,6 +10858,7 @@
    * getAnimal('2023'); /// '兔'
    * @param date 日期
    * @returns
+   * @category Tools-工具方法
    */
   function getAnimal(date) {
       return ANIMALS[new Date(date).getFullYear() % 12];
@@ -10793,6 +10873,7 @@
    * transferIdCard('xxxxx'); /// {}
    * @param idCard 字符串值
    * @returns
+   * @category Tools-工具方法
    */
   function transferIdCard(idCard) {
       if (!checkIdCard(idCard)) {
@@ -10828,6 +10909,7 @@
    * transferMoney(852.5); /// '捌佰伍拾贰元伍角'
    * @param n 数值
    * @returns
+   * @category Tools-工具方法
    */
   function transferMoney(n) {
       var fraction = ['角', '分'];
@@ -10871,6 +10953,7 @@
    * @param pitch 音高 [0, 2]
    * @param rate 速度 [0.1, 10]
    * @returns
+   * @category TTS-文字转语音
    */
   function Speaker(text, lang, volume, pitch, rate) {
       if (lang === void 0) { lang = 'zh-CN'; }
@@ -10921,6 +11004,7 @@
    * @example
    * rip(); /// 页面灰白
    * @returns
+   * @category BXH-自定义动画
    */
   function rip() {
       var html = document.querySelector('html');
@@ -10936,6 +11020,7 @@
    * getConstellation(new Date('2022-11-24')); /// { cn: '射手', en: 'Sagittarius', date: '11.23-12.21' }
    * @param date 日期
    * @returns
+   * @category Tools-工具方法
    */
   function getConstellation(date) {
       var _a;
@@ -11066,6 +11151,7 @@
    * @param once 是否只触发一次
    * @param dom document.querySelector<HTMLDivElement>('.xxx')
    * @returns
+   * @category Tools-工具方法
    */
   function setEventListener(eventKey, foo, once, dom) {
       if (once === void 0) { once = false; }
@@ -11086,6 +11172,7 @@
    * @param downCb 缩回回调
    * @param upCb 弹起回调
    * @returns
+   * @category Tools-工具方法
    */
   function keyBoardResize(downCb, upCb) {
       // 当软件键盘弹起会改变当前 window.innerHeight
@@ -11114,6 +11201,7 @@
    * onResize('resize', () => { console.log('resize'); }); /// cancel 当前 listener 的 function
    * @param foo 函数
    * @returns
+   * @category Tools-工具方法
    */
   function onResize(foo) {
       var func = function () {
@@ -11135,6 +11223,7 @@
    * getFingerprint('test'); /// md5 加密后的指纹-建议增加使用者标识，避免指纹冲突。
    * @param extraString 额外的字符串，可以说用户名等。
    * @returns
+   * @category Tools-工具方法
    */
   function getFingerprint(extraString) {
       var _a, _b, _c;
@@ -11176,6 +11265,7 @@
    * @example
    * banConsole(); /// 返回取消禁用的 function
    * @returns
+   * @category Tools-工具方法
    */
   function banConsole() {
       var _a;
@@ -11205,6 +11295,7 @@
    * getWeekInfo(8); /// WEEKS_INFO
    * @param n 值
    * @returns
+   * @category Tools-工具方法
    */
   function getWeekInfo(n) {
       var _a;
@@ -11229,6 +11320,7 @@
    * getMonthInfo(13); /// MONTH_INFO
    * @param n 值
    * @returns
+   * @category Tools-工具方法
    */
   function getMonthInfo(n) {
       var _a;
@@ -11252,6 +11344,7 @@
    * @param obj1 值 1
    * @param obj2 值 2
    * @returns
+   * @category Tools-工具方法
    */
   function isEqual(obj1, obj2) {
       var e_2, _a;
@@ -11316,6 +11409,7 @@
    * @param callback 回调函数
    * @param hasReturn 是否返回一个新值
    * @returns
+   * @category Tools-工具方法
    */
   function forEach(data, callback, hasReturn) {
       if (hasReturn === void 0) { hasReturn = false; }
@@ -11370,6 +11464,7 @@
    * @param prefix 前缀
    * @param prefix 后缀
    * @returns
+   * @category Crypto-密码学
    */
   function getKey(size, prefix, suffix) {
       if (size === void 0) { size = 21; }
@@ -11395,6 +11490,7 @@
    * getRandStr(5); /// '77192'
    * @param length 指定长度
    * @returns
+   * @category Crypto-密码学
    */
   function getRandStr(length) {
       var result = '';
@@ -11410,6 +11506,7 @@
    * @example
    * uuid(); /// '7b72e264-61fe-426e-b95f-35d4e61c5742'
    * @returns
+   * @category Crypto-密码学
    */
   function uuid() {
       // // 创建临时 URL 对象
@@ -11458,6 +11555,7 @@
    * @example
    * getRandDate(); /// '1923-01-01 01:03:30'
    * @returns
+   * @category Tools-工具方法
    */
   function getRandDate() {
       var year = getRandNum(1970, new Date().getFullYear());
@@ -11478,6 +11576,7 @@
    * @example
    * getRandIp(); /// '89.0.142.86'
    * @returns
+   * @category Tools-工具方法
    */
   function getRandIp() {
       var segment1 = getRandNum(1, 255);
@@ -11497,6 +11596,7 @@
    * @param text 水印内容
    * @param options 样式配置
    * @returns
+   * @category Watermark-水印
    */
   function watermark(dom, text, options) {
       if (options === void 0) { options = {}; }
@@ -11557,6 +11657,7 @@
    * @param [once=false] 是否为一次性定时器，默认为 false 。
    * @param [immediate=false] 是否立即执行回调函数，默认为 false 。
    * @returns
+   * @category xTimer-定时器封装
    */
   function xTimer(callback, time, once, immediate) {
       if (time === void 0) { time = 0; }
@@ -11593,6 +11694,7 @@
    * curryIt(function (a, b, c) {return a + b + c})(1)(2)(3); /// 6
    * @param fn 函数
    * @returns
+   * @category Tools-工具方法
    */
   function curryIt(fn) {
       return function curried() {
@@ -11649,6 +11751,7 @@
    * @param defaultResult 默认值
    * @param args 需要获取的多级 rest 参数或者独立多级 string
    * @returns
+   * @category Object-对象相关
    */
   function getV(defaultResult) {
       var e_1, _a;
@@ -11694,6 +11797,7 @@
    * @param data 对象
    * @param key 需要判断的 key
    * @returns
+   * @category Object-对象相关
    */
   function hasKey(data, key) {
       if (!data) {
@@ -11720,6 +11824,7 @@
    * @param data 源数据
    * @param hash hash 存储，避免循环引用。
    * @returns
+   * @category Object-对象相关
    */
   function deepClone(data, hash) {
       if (hash === void 0) { hash = new WeakMap(); }
@@ -11771,6 +11876,7 @@
    * @param collection 源数据
    * @param callback 回调
    * @returns
+   * @category Object-对象相关
    */
   function every(collection, callback) {
       if (!collection) {
@@ -11802,6 +11908,7 @@
    *  findMaxKey(objects); /// ['id', 'name', 'age', 'city', 'profession']
    * @param objArray 源数据
    * @returns
+   * @category Object-对象相关
    */
   function findMaxKey(objArray) {
       if (!objArray) {
@@ -11839,6 +11946,7 @@
    * @param arr 数组
    * @param options 配置 { label?: 'label', value: 'value', key?: 'key' }
    * @returns
+   * @category Object-对象相关
    */
   function arr2select(arr, options) {
       var e_2, _a;
@@ -11888,6 +11996,7 @@
    * unicode2str("我是老A"); /// '\\u6211\\u662f\\u8001a'
    * @param value 中文字符串
    * @returns
+   * @category Custom-转码
    */
   function unicode2str(value) {
       return escape(value).toLowerCase().replace(/%u/gi, '\\u');
@@ -11899,6 +12008,7 @@
    * str2unicode("\\u6211\\u662f\\u8001a"); /// '我是老a'
    * @param value unicode 字符串
    * @returns
+   * @category Custom-转码
    */
   function str2unicode(value) {
       return unescape(value.replace(/\\u/gi, '%u'));
@@ -11911,6 +12021,7 @@
    * @param str 字符串
    * @param type 类型，默认为 0|ba，错误 type 会返回原字符串。
    * @returns
+   * @category String-字符串
    */
   function trim(str, type) {
       if (type === void 0) { type = 0; }
@@ -11948,6 +12059,7 @@
    * maskString('广东省深圳市福田区福田保税区xxx小区xxx单元x栋x楼xxx号'); /// '广东省深圳市福田区******xx号'
    * @param str 字符串
    * @returns
+   * @category String-字符串
    */
   function maskString(str) {
       str = str ? "".concat(str) : '';
@@ -11987,6 +12099,7 @@
    * @param str 字符串
    * @param type 目标类型
    * @returns
+   * @category String-字符串
    */
   function textTransferCase(str, type) {
       switch (type) {
@@ -12014,6 +12127,7 @@
    * textSplitCase('foo-Bar'); /// ['foo', 'bar']
    * @param str 字符串
    * @returns
+   * @category String-字符串
    */
   function textSplitCase(str) {
       var regUpperCase = /([A-Z])/g;
@@ -12031,6 +12145,7 @@
    * textCamelCase('foo.bar'); /// 'fooBar'
    * @param str 字符串
    * @returns
+   * @category String-字符串
    */
   function textCamelCase(str) {
       var arr = textSplitCase(str);
@@ -12049,6 +12164,7 @@
    * repeat('*', 3); /// '***'
    * @param str 字符串
    * @returns
+   * @category String-字符串
    */
   function repeat(str, n) {
       if (n === void 0) { n = 1; }
@@ -12070,6 +12186,7 @@
    * isUrl(http://www); /// false
    * @param value 字符串值
    * @returns
+   * @category String-字符串
    */
   function isUrl(value) {
       var regUrl = /^(?:\w+:)?\/\/([^\s.]+\.\S{2}|localhost[:?\d]*)\S*$/;
@@ -12082,6 +12199,7 @@
    * isLongitude(179.12); /// true
    * @param value 值
    * @returns
+   * @category String-字符串
    */
   function isLongitude(value) {
       var regUrl = /^(-?(?:1[0-7]\d(\.\d+)?|180(\.0+)?|\d{1,2}(\.\d+)?))$/;
@@ -12094,6 +12212,7 @@
    * isLatitude(90); /// true
    * @param value 值
    * @returns
+   * @category String-字符串
    */
   function isLatitude(value) {
       var regUrl = /^(-?(?:[1-8]?\d(\.\d+)?|90(\.0+)?))$/;
@@ -12106,6 +12225,7 @@
    * isEmail('@qq.com'); /// false
    * @param value 字符串值
    * @returns
+   * @category String-字符串
    */
   function isEmail(value) {
       var regEmail = /.+@.+\..+/;
@@ -12118,6 +12238,7 @@
    * isMobile('12345678910'); /// false
    * @param value 字符串值
    * @returns
+   * @category String-字符串
    */
   function isMobile(value) {
       var regPhoneNum = /^(0|86|17951)?(1[3-9][0-9])[0-9]{8}$/;
@@ -12134,6 +12255,7 @@
    * isAccount('我test123_qq_com', true); /// true
    * @param value 字符串值
    * @returns
+   * @category String-字符串
    */
   function isAccount(value, hasChinese) {
       if (hasChinese === void 0) { hasChinese = false; }
@@ -12152,6 +12274,7 @@
    * isStrongPassWord('test@qq.com123'); /// true
    * @param value 字符串值
    * @returns
+   * @category String-字符串
    */
   function isStrongPassWord(value) {
       var pwChar = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).{8,16}/;
@@ -12169,6 +12292,7 @@
    * isCarCode('广东 B12345'); /// false
    * @param value 字符串值
    * @returns
+   * @category String-字符串
    */
   function isCarCode(value) {
       var regCarCode = /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[\s\-]{0,1}[A-Z]{1}[\.\s]{0,1}[A-Z0-9]{4,5}[A-Z0-9挂学警港澳]{1}$/;
@@ -12183,6 +12307,7 @@
    * isIpv4('255.255.255.2555.255'); /// false
    * @param value 字符串值
    * @returns
+   * @category String-字符串
    */
   function isIpv4(value) {
       var regIpv4 = /^((\d|[1-9]\d|1\d\d|2([0-4]\d|5[0-5]))\.){4}$/;
@@ -12201,6 +12326,7 @@
    * isIpv6('2000:0000:0000:0000:0001:2345:6789:abcd:1'); /// false
    * @param value 字符串值
    * @returns
+   * @category String-字符串
    */
   function isIpv6(value) {
       if (value == '::1')
@@ -12217,6 +12343,7 @@
    * isIpAddress('255.255.255.123.123'); /// false
    * @param value 字符串值
    * @returns
+   * @category String-字符串
    */
   function isIpAddress(value) {
       return isIpv4(value) || isIpv6(value);
@@ -12229,6 +12356,7 @@
    * checkFileExt(['png', 'jpg'], 'test.jpg.txt'); /// false
    * @param value 字符串值
    * @returns
+   * @category String-字符串
    */
   function checkFileExt(arr, value) {
       var regFileExt = arr.map(function (name) { return ".".concat(name); }).join('|');
@@ -12243,6 +12371,7 @@
    * isHttp('12345'); /// 0
    * @param value 字符串值
    * @returns
+   * @category String-字符串
    */
   function isHttp(value) {
       var flag = value.substring(0, 8);
@@ -12256,6 +12385,7 @@
    * @param str 字符串值
    * @param replacement 替换字符串映射
    * @returns
+   * @category String-字符串
    */
   function slugify(str, replacement) {
       var regForbidden = /[^\w\s$*_+~.()'"!\-:@]/g;
@@ -12284,6 +12414,7 @@
    * @param width 指定长度
    * @param options 截取配置
    * @returns
+   * @category String-字符串
    */
   function truncate(txt, width, options) {
       var defOptions = {
@@ -12321,6 +12452,7 @@
    * formatJSON(new Date()); /// '"2023-03-02T10:02:42.019Z"'
    * @param value 值
    * @returns
+   * @category JSON-相关
    */
   function formatJSON(value) {
       var _a;
@@ -12343,6 +12475,7 @@
    * parseJSON('test error'); /// null
    * @param value 需要解析的值
    * @returns
+   * @category JSON-相关
    */
   function parseJSON(value) {
       try {
@@ -12364,6 +12497,7 @@
    * stringifyJSON(Symbol('test')); /// ''
    * @param value 需要序列化的值
    * @returns
+   * @category JSON-相关
    */
   function stringifyJSON(value) {
       try {
@@ -12381,6 +12515,7 @@
    * isQQ('123456789101'); /// false
    * @param value 字符串值
    * @returns
+   * @category String-字符串
    */
   function isQQ(value) {
       var reg = /^[1-9][0-9]{4,10}$/;
@@ -12393,6 +12528,7 @@
    * isEnglish('a1'); /// false
    * @param value 字符串值
    * @returns
+   * @category String-字符串
    */
   function isEnglish(value) {
       var reg = /^[a-zA-Z]+$/;
@@ -12405,6 +12541,7 @@
    * hasSpecialChar('a1'); /// false
    * @param value 字符串值
    * @returns
+   * @category String-字符串
    */
   function hasSpecialChar(value) {
       if (value) {
@@ -12427,6 +12564,7 @@
    * isTel('13579246810'); /// false
    * @param value 字符串值
    * @returns
+   * @category String-字符串
    */
   function isTel(value) {
       if (value.match(/^(([0\+]\d{2,3}-)?(0\d{2,3})-)(\d{7,8})(-(\d{3,}))?$/) == null) {
@@ -12443,6 +12581,7 @@
    * isChinese('我 1'); /// false
    * @param value 字符串值
    * @returns
+   * @category String-字符串
    */
   function isChinese(value) {
       return /^[\u4E00-\u9FA5]*$/.test(value);
@@ -12454,6 +12593,7 @@
    * isCreditCode('12312312312'); /// false
    * @param value 字符串值
    * @returns
+   * @category String-字符串
    */
   function isCreditCode(value) {
       var reg = /^[0-9A-Z]+$/;
@@ -12498,6 +12638,7 @@
    * isBankCard('12312312312'); /// false
    * @param value 字符串值
    * @returns
+   * @category String-字符串
    */
   function isBankCard(value) {
       if ('' == value.trim() || undefined == value) {
@@ -12583,6 +12724,7 @@
    * checkPassWordLevel('123456789654321.H'); /// 5
    * @param passWord 字符串值-密码
    * @returns
+   * @category String-字符串
    */
   function checkPassWordLevel(passWord) {
       var a = /[^ \f\n\r\t\v\da-zA-Z]/, b = /\d/, c = /[a-zA-Z]/;
@@ -12636,6 +12778,7 @@
    * @param str 字符串值
    * @param extractFirst 是否只获取首字母
    * @returns
+   * @category String-字符串
    */
   function getPinYin(str, extractFirst) {
       if (extractFirst === void 0) { extractFirst = false; }
@@ -12674,6 +12817,7 @@
    * @param value 值
    * @param higherReplace 严格替换
    * @returns
+   * @category String-字符串
    */
   function transferScanStr(value, higherReplace) {
       if (higherReplace === void 0) { higherReplace = false; }
@@ -12694,6 +12838,7 @@
    * addSpace('123 45'); /// '1 2 3 4 5'
    * @param str 字符串
    * @returns
+   * @category String-字符串
    */
   function addSpace(str) {
       if (!str) {
@@ -12708,6 +12853,7 @@
    * leftJoin(0, 3, 1); /// '110'
    * @param str 字符串
    * @returns
+   * @category String-字符串
    */
   function leftJoin(str, length, char) {
       if (length === void 0) { length = 2; }
@@ -12721,6 +12867,7 @@
    * rightJoin(0, 3, 1); /// '011'
    * @param str 字符串
    * @returns
+   * @category String-字符串
    */
   function rightJoin(str, length, char) {
       if (length === void 0) { length = 2; }
@@ -12738,6 +12885,7 @@
    * @param params 参数对象，包含占位符的键值对。
    * @param emptyStr 对象不存在键值时的占位符，默认不变。
    * @returns
+   * @category String-字符串
    */
   function loadStr(str, params, emptyStr) {
       return str.replace(/\${([^${}]+)}/g, function (match, key) { return getV(emptyStr !== null && emptyStr !== void 0 ? emptyStr : '${' + trim(key) + '}', params, trim(key)); });
@@ -12755,6 +12903,7 @@
    * @param fmt 格式化模板 'yyyy-mm-dd hh:ii:ss'
    * @param weeks 星期对应数组 [7, 1, 2, 3, 4, 5, 6]
    * @returns
+   * @category Date-日期相关
    */
   function formatDate(date, fmt, weeks) {
       if (fmt === void 0) { fmt = 'yyyy-mm-dd hh:ii:ss'; }
@@ -12805,6 +12954,7 @@
    * @param date 时间
    * @param calcStrOrArr '1 days' or ['-1 day', '3 month']
    * @returns
+   * @category Date-日期相关
    */
   function calcDate(date, calcStrOrArr) {
       // @ts-ignore
@@ -12868,6 +13018,7 @@
    * @param nowDate 近一点的时间，默认当前时间。
    * @param type 计算方式，默认计算差距的精确天数、时分秒。
    * @returns
+   * @category Date-日期相关
    */
   function getDateDifference(oldDate, nowDate, type) {
       if (type === void 0) { type = 'all'; }
@@ -12917,6 +13068,7 @@
    * @param longAgo 是否显示周月甚至更久
    * @param formatter 正常显示时的时间显示格式
    * @returns
+   * @category Date-日期相关
    */
   function timeSince(date, longAgo, formatter) {
       if (longAgo === void 0) { longAgo = false; }
@@ -12967,6 +13119,7 @@
    * isWorkDay(new Date()); /// true
    * @param date 日期
    * @returns
+   * @category Date-日期相关
    */
   function isWeekday(date) {
       // @ts-ignore
@@ -12984,6 +13137,7 @@
    * getDayInYear('2023/06/23'); /// 174
    * @param date 日期
    * @returns
+   * @category Date-日期相关
    */
   function getDayInYear(date) {
       // @ts-ignore
@@ -13008,6 +13162,7 @@
    * @param type 类型
    * @param date 日期
    * @returns
+   * @category Date-日期相关
    */
   function getDateList(n, type, date) {
       var _a;
@@ -13046,6 +13201,7 @@
    * getDateTime(new Date()); /// time stamp
    * @param date 日期
    * @returns
+   * @category Date-日期相关
    */
   function getDateTime(date) {
       // @ts-ignore
@@ -13066,6 +13222,7 @@
    * @param dateA 时间 A
    * @param dateB 时间 B
    * @returns
+   * @category Date-日期相关
    */
   function compareDate(dateA, dateB) {
       // @ts-ignore
@@ -13099,6 +13256,7 @@
    * @param callback 回调函数
    * @param finishCallBack 完成回调函数
    * @returns
+   * @category Date-日期相关
    */
   function countdown(seconds, callback, finishCallBack) {
       var timer = setInterval(function () {
@@ -13125,6 +13283,7 @@
    * @param duration 时间/秒
    * @param returnObj 是否返回对象
    * @returns
+   * @category Date-日期相关
    */
   function transferSeconds(duration, returnObj) {
       if (returnObj === void 0) { returnObj = false; }
@@ -13168,6 +13327,7 @@
    * getMonthDayCount(new Date()); /// 30
    * @param date 日期
    * @returns
+   * @category Date-日期相关
    */
   function getMonthDayCount(date) {
       // @ts-ignore
@@ -13192,6 +13352,7 @@
    * getUTCTime(8); /// 中国标准时间-东八区
    * @param timezone 时区数字，东八区为 8，西八区为 -8 。
    * @returns
+   * @category Date-日期相关
    */
   function getUTCTime(timezone) {
       if (timezone === void 0) { timezone = 0; }
@@ -13218,6 +13379,7 @@
    * // 如果时区为 UTC
    * getTimezone(); // '+0'
    * @returns
+   * @category Date-日期相关
    */
   function getTimezone() {
       var timezoneOffset = -new Date().getTimezoneOffset() / 60;
@@ -13231,6 +13393,7 @@
    * openFullscreen(); /// 开启全屏
    * @param element 元素
    * @returns
+   * @category Dom-工具方法
    */
   function openFullscreen(element) {
       if (element === void 0) { element = document.body; }
@@ -13252,6 +13415,7 @@
    * @example
    * closeFullscreen(); /// 关闭全屏
    * @returns
+   * @category Dom-工具方法
    */
   function closeFullscreen() {
       if (document.exitFullscreen) {
@@ -13280,6 +13444,7 @@
    * str2html('<>&"'); /// '&lt;&gt;&amp;&quot;'
    * @param str 字符串
    * @returns
+   * @category Custom-转码
    */
   function str2html(str) {
       var div = document.createElement('div');
@@ -13293,6 +13458,7 @@
    * html2str('&lt;&gt;&amp;&quot;'); /// '<>&"'
    * @param value 实体字符串
    * @returns
+   * @category Custom-转码
    */
   function html2str(value) {
       var div = document.createElement('div');
@@ -13307,6 +13473,7 @@
    * @param newElement 某元素
    * @param targetElement 指定元素
    * @returns
+   * @category Dom-工具方法
    */
   function insertAfter(newElement, targetElement) {
       var parent = targetElement.parentNode;
@@ -13318,21 +13485,6 @@
       }
   }
   /**
-   * 阻止冒泡事件&阻止默认行为&阻止事件捕获
-   * @example
-   * offDefaultEvent(event); /// 阻止冒泡事件&阻止默认行为&阻止事件捕获
-   * @param event 事件
-   * @returns
-   */
-  function offDefaultEvent(event) {
-      var e = event || window.event;
-      if (e) {
-          e.preventDefault();
-          e.stopPropagation();
-      }
-      return false;
-  }
-  /**
    * Y 轴滚动到指定位置
    * @example
    * scrollYTo(0); /// 滚动到顶部
@@ -13342,6 +13494,7 @@
    * @param callback 回调
    * @param dom 元素对象
    * @returns
+   * @category Scroll-滚动相关
    */
   function scrollYTo(targetVal, callback, dom) {
       var _a, _b;
@@ -13404,6 +13557,7 @@
    * @param callback 回调
    * @param dom 元素对象
    * @returns
+   * @category Scroll-滚动相关
    */
   function scrollXTo(targetVal, callback, dom) {
       var _a, _b;
@@ -13433,6 +13587,7 @@
    * @param dom 元素对象
    * @param targetVal 'start' | 'end' | 'center' | 'nearest'
    * @returns
+   * @category Scroll-滚动相关
    */
   function scrollToView(dom, targetVal) {
       if (dom === void 0) { dom = document.documentElement; }
@@ -13454,6 +13609,7 @@
    * @param direction X/Y 轴的进度条
    * @param dom 元素
    * @returns
+   * @category Scroll-滚动相关
    */
   function getScrollPercent(direction, dom) {
       if (direction === void 0) { direction = 'Y'; }
@@ -13477,12 +13633,107 @@
       // document.documentElement.scrollTop / (document.documentElement.scrollHeight - document.documentElement.clientHeight);
   }
   /**
+   * 获取最近的可滚动父元素。
+   * 支持普通 DOM 、 Shadow DOM 和 iframe 。
+   * @example
+   * getScrollParent(document.querySelector('.form-error')); // Form
+   * getScrollParent(); /// document.documentElement
+   * @param element 目标元素
+   * @returns
+   * @category Scroll-滚动相关
+   */
+  function getScrollParent(element) {
+      var _a;
+      var parent = element === null || element === void 0 ? void 0 : element.parentElement;
+      while (parent) {
+          var style = window.getComputedStyle(parent);
+          var isScrollableY = style.overflowY === 'auto' || style.overflowY === 'scroll';
+          var isScrollableX = style.overflowX === 'auto' || style.overflowX === 'scroll';
+          var canScrollY = parent.scrollHeight > parent.clientHeight;
+          var canScrollX = parent.scrollWidth > parent.clientWidth;
+          if ((isScrollableY && canScrollY) || (isScrollableX && canScrollX)) {
+              return parent;
+          }
+          parent = parent.parentElement;
+      }
+      // 处理 Shadow DOM
+      var rootNode = element === null || element === void 0 ? void 0 : element.getRootNode();
+      if (rootNode instanceof ShadowRoot) {
+          return rootNode.host;
+      }
+      // 处理 iframe
+      if ((element === null || element === void 0 ? void 0 : element.ownerDocument) !== document) {
+          return (_a = element === null || element === void 0 ? void 0 : element.ownerDocument) === null || _a === void 0 ? void 0 : _a.documentElement;
+      }
+      return document.documentElement; // 如果没有找到可滚动的父元素，返回 `document.documentElement`
+  }
+  /**
+   * 滚动到指定元素，并将其显示在可滚动容器的中间。
+   * 适用于表单报错时定位报错元素，支持嵌套滚动容器。
+   * @param options 配置对象，包含以下属性：
+   *   - {string} selector - 目标元素的 CSS 选择器。
+   *   - {number} [delay=0] - 滚动执行的延迟时间（毫秒）。
+   *   - {boolean} [parent=false] - 是否在主应用中查找元素（适用于 Shadow DOM 情况）。
+   * @example
+   * // 立即滚动到指定元素
+   * scrollToElement({
+   *   selector: '#error-element',
+   *   delay: 0,
+   *   parent: true,
+   * });
+   * // 延迟滚动到指定元素
+   * scrollToElement({
+   *   selector: '.form-error',
+   *   delay: 100,
+   * });
+   * @returns
+   * @category Scroll-滚动相关
+   */
+  function scrollToElement(options) {
+      var selector = options.selector, _a = options.delay, delay = _a === void 0 ? 0 : _a, _b = options.parent, parent = _b === void 0 ? false : _b;
+      var performScroll = function () {
+          // 选择合适的文档上下文
+          var root = parent ? document.documentElement : document;
+          var element = root.querySelector(selector);
+          if (!element) {
+              console.warn("Element with selector \"".concat(selector, "\" not found."));
+              return;
+          }
+          // 获取目标元素的可滚动父容器
+          var scrollContainer = getScrollParent(element);
+          if (!scrollContainer) {
+              console.warn("No scroll parent found for element with selector \"".concat(selector, "\"."));
+              return;
+          }
+          // 计算滚动位置
+          var elementRect = element.getBoundingClientRect();
+          var containerRect = scrollContainer.getBoundingClientRect();
+          var scrollTop = scrollContainer.scrollTop +
+              elementRect.top -
+              containerRect.top -
+              containerRect.height / 2 +
+              elementRect.height / 2;
+          // 执行滚动操作
+          scrollContainer.scrollTo({
+              top: scrollTop,
+              behavior: 'smooth',
+          });
+      };
+      if (delay > 0) {
+          setTimeout(performScroll, delay);
+      }
+      else {
+          performScroll();
+      }
+  }
+  /**
    * 找元素的第 n 级父元素
    * @example
    * findParents(document.getElementById('test'), 3); /// #test 的第三个父元素
    * @param element 指定元素
    * @param n 第几个
    * @returns
+   * @category Dom-工具方法
    */
   function findParents(element, n) {
       while (element && n) {
@@ -13497,6 +13748,7 @@
    * findChildren(document.getElementById('test')); /// #test 的所有子元素数组
    * @param element 指定元素
    * @returns
+   * @category Dom-工具方法
    */
   function findChildren(element) {
       var children = element.childNodes, result = [], len = children.length;
@@ -13512,6 +13764,7 @@
    * @example
    * getViewportSize(); /// { width: 1280, height: 649 }
    * @returns
+   * @category Dom-工具方法
    */
   function getViewportSize() {
       if (window.innerWidth) {
@@ -13545,6 +13798,7 @@
    * @param element 指定元素
    * @param name 属性名称
    * @returns
+   * @category Dom-工具方法
    */
   function getStyleByName(element, name) {
       return window.getComputedStyle ? window.getComputedStyle(element, null)[name] : element.currentStyle[name];
@@ -13556,6 +13810,7 @@
    * @param linkUrl 链接地址
    * @param rel 类型
    * @returns
+   * @category Dom-工具方法
    */
   function appendLink(linkUrl, rel) {
       if (rel === void 0) { rel = 'stylesheet'; }
@@ -13573,6 +13828,7 @@
    * @param async 是否异步
    * @param defer 是否延迟加载
    * @returns
+   * @category Dom-工具方法
    */
   function appendScript(scriptUrl, async, defer) {
       if (async === void 0) { async = false; }
@@ -13591,6 +13847,7 @@
    * @param link 链接
    * @param name 文件名称(可选，默认以链接最好一段作为名称，填写时可不带后缀自动识别，写了后缀会以写的后缀为准。)
    * @returns
+   * @category Tools-下载/文件相关
    */
   function download(link, name) {
       if (!name) {
@@ -13612,6 +13869,7 @@
    * @param name 文件名称(需带后缀)，默认 txt 。
    * @param content 内容 BlobPart | any
    * @returns
+   * @category Tools-下载/文件相关
    */
   function downloadContent(name, content) {
       if (!name) {
@@ -13643,6 +13901,7 @@
    * @param selector 选择器字符串
    * @param options 动画配置
    * @returns
+   * @category BXH-自定义动画
    */
   function marquee(selector, options) {
       var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
@@ -13697,6 +13956,7 @@
    * @param selectors 选择器字符串
    * @param direction 堆叠方向
    * @returns
+   * @category Dom-工具方法
    */
   function stackSticky(selectors, direction) {
       if (direction === void 0) { direction = 'top'; }
@@ -13739,6 +13999,7 @@
    * @param contentCenter 内容是否居中
    * @param offsetSelector 偏移元素选择器，默认设置 html 根节点偏移。
    * @returns
+   * @category Dom-工具方法
    */
   function calcFontSize(clientRatio, contentCenter, offsetSelector) {
       if (clientRatio === void 0) { clientRatio = 16 / 9; }
@@ -13771,6 +14032,7 @@
    * px2rem(30); /// 转化后的 rem
    * @param px 像素值
    * @returns
+   * @category Dom-工具方法
    */
   function px2rem(px) {
       var htmlFontSize = parseFloat(window.getComputedStyle(document.documentElement).fontSize);
@@ -13787,6 +14049,7 @@
    * @param key key 值
    * @param value value 值
    * @returns
+   * @category Dom-工具方法
    */
   function dataTo(key, value) {
       var $dom;
@@ -13811,6 +14074,7 @@
    * @param element 元素
    * @param className 类
    * @returns
+   * @category Dom-工具方法
    */
   function toggleClass(element, className) {
       if (Array.isArray(className)) {
@@ -13841,6 +14105,7 @@
    * hideProcess(); /// 隐藏水滴加载动画
    * @param element 元素
    * @returns
+   * @category BXH-自定义动画
    */
   function showProcess(element) {
       // 设置相对定位样式
@@ -13877,6 +14142,7 @@
    * @param delay 点击间隔
    * @param events 事件多击 rest 参数
    * @returns
+   * @category Tools-点击事件相关
    */
   function onClick2MoreClick(delay) {
       if (delay === void 0) { delay = 300; }
@@ -13916,6 +14182,7 @@
    * @param times 几次点击触发
    * @param delay 点击间隔
    * @returns
+   * @category Tools-点击事件相关
    */
   function bindMoreClick(fn, times, delay) {
       if (times === void 0) { times = 3; }
@@ -13944,69 +14211,6 @@
       };
   }
   /**
-   * 设置网页 icon
-   * @example
-   * setIcon('/favicon.ico')
-   * @param iconLink icon 链接
-   * @returns
-   */
-  function setIcon(iconLink) {
-      var _a;
-      var dom = document.querySelector('head [rel="icon"]');
-      if (dom) {
-          dom.setAttribute('href', iconLink);
-          dom.setAttribute('rel', 'icon');
-      }
-      else {
-          var iconDom = document.createElement('link');
-          iconDom.setAttribute('rel', 'icon');
-          iconDom.setAttribute('href', iconLink);
-          (_a = document.querySelector('head')) === null || _a === void 0 ? void 0 : _a.appendChild(iconDom);
-      }
-  }
-  /**
-   * 复制到剪贴板
-   * @example
-   * copyToClipboard('hello world')
-   * @param text 内容文本
-   * @returns
-   */
-  function copyToClipboard(text) {
-      if (navigator.clipboard && window.isSecureContext) {
-          navigator.clipboard.writeText(text);
-      }
-      else {
-          var info = '复制成功！';
-          var tempInput = document.createElement('input');
-          tempInput.style.position = 'absolute';
-          tempInput.style.top = '-5201314px';
-          tempInput.style.left = '-5201314px';
-          tempInput.value = text;
-          document.body.appendChild(tempInput);
-          // 将焦点移动到文档或输入元素上
-          tempInput.focus();
-          tempInput.select();
-          try {
-              document.execCommand('copy');
-          }
-          catch (err) {
-              info = '浏览器不支持此操作，请手动复制。';
-          }
-          document.body.removeChild(tempInput);
-          console.log('js-xxx:copyToClipboard--->', info);
-      }
-  }
-  /**
-   * 获取鼠标选中内容
-   * @example
-   * getSelectText()
-   * @returns
-   */
-  function getSelectText() {
-      var _a;
-      return (_a = window === null || window === void 0 ? void 0 : window.getSelection()) === null || _a === void 0 ? void 0 : _a.toString();
-  }
-  /**
    * 设置长按事件-支持加入单击事件
    * @example
    * addLongPressEvent(document.querySelector('.img-btn'), (event); /// console.log('addLongPressEvent'), 3000); /// 长按会触发事件
@@ -14015,6 +14219,7 @@
    * @param duration 长按时间
    * @param clickCallback 单击事件函数(可选)
    * @returns
+   * @category Tools-点击事件相关
    */
   function addLongPressEvent(element, longPressCallback, duration, clickCallback) {
       var e_1, _a;
@@ -14077,6 +14282,72 @@
       });
   }
   /**
+   * 设置网页 icon
+   * @example
+   * setIcon('/favicon.ico')
+   * @param iconLink icon 链接
+   * @returns
+   * @category Dom-工具方法
+   */
+  function setIcon(iconLink) {
+      var _a;
+      var dom = document.querySelector('head [rel="icon"]');
+      if (dom) {
+          dom.setAttribute('href', iconLink);
+          dom.setAttribute('rel', 'icon');
+      }
+      else {
+          var iconDom = document.createElement('link');
+          iconDom.setAttribute('rel', 'icon');
+          iconDom.setAttribute('href', iconLink);
+          (_a = document.querySelector('head')) === null || _a === void 0 ? void 0 : _a.appendChild(iconDom);
+      }
+  }
+  /**
+   * 复制到剪贴板
+   * @example
+   * copyToClipboard('hello world')
+   * @param text 内容文本
+   * @returns
+   * @category Dom-工具方法
+   */
+  function copyToClipboard(text) {
+      if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(text);
+      }
+      else {
+          var info = '复制成功！';
+          var tempInput = document.createElement('input');
+          tempInput.style.position = 'absolute';
+          tempInput.style.top = '-5201314px';
+          tempInput.style.left = '-5201314px';
+          tempInput.value = text;
+          document.body.appendChild(tempInput);
+          // 将焦点移动到文档或输入元素上
+          tempInput.focus();
+          tempInput.select();
+          try {
+              document.execCommand('copy');
+          }
+          catch (err) {
+              info = '浏览器不支持此操作，请手动复制。';
+          }
+          document.body.removeChild(tempInput);
+          console.log('js-xxx:copyToClipboard--->', info);
+      }
+  }
+  /**
+   * 获取鼠标选中内容
+   * @example
+   * getSelectText()
+   * @returns
+   * @category Dom-工具方法
+   */
+  function getSelectText() {
+      var _a;
+      return (_a = window === null || window === void 0 ? void 0 : window.getSelection()) === null || _a === void 0 ? void 0 : _a.toString();
+  }
+  /**
    * 触发某个键盘按键事件
    * @example
    * emitKeyboardEvent(108, 'keyup'); // 小键盘回车事件
@@ -14086,6 +14357,7 @@
    * @param eventType 事件类型，默认为 'keydown' 。
    * @param element 目标元素，默认为 document.body ，支持传 document 。
    * @returns
+   * @category Tools-事件相关
    */
   function emitKeyboardEvent(keyOrKeyCode, eventType, element) {
       if (keyOrKeyCode === void 0) { keyOrKeyCode = 13; }
@@ -14123,6 +14395,7 @@
    * @param eventDetail 事件自定义参数可以为空。不为空触发 CustomEvent 。
    * @param element 目标元素，默认为 document.body ，支持传 document 。
    * @returns
+   * @category Tools-事件相关
    */
   function emitEvent(eventType, eventDetail, element) {
       if (eventType === void 0) { eventType = 'click'; }
@@ -14155,6 +14428,7 @@
    * document.removeEventListener('keydown', disableConflictEvent); /// 退出页面后关闭监听
    * @param event 触发事件
    * @returns
+   * @category Tools-事件相关
    */
   function disableConflictEvent(event) {
       var keyCode = event.keyCode || event.which || event.charCode;
@@ -14177,6 +14451,22 @@
       return false;
   }
   /**
+   * 阻止冒泡事件&阻止默认行为&阻止事件捕获
+   * @example
+   * offDefaultEvent(event); /// 阻止冒泡事件&阻止默认行为&阻止事件捕获
+   * @param event 事件
+   * @returns
+   * @category Tools-事件相关
+   */
+  function offDefaultEvent(event) {
+      var e = event || window.event;
+      if (e) {
+          e.preventDefault();
+          e.stopPropagation();
+      }
+      return false;
+  }
+  /**
    * 在打印预览中打印指定元素，并设置样式。
    * 需在浏览器打印设置中-更多设置-开启背景与图形打印选项
    * @example
@@ -14192,6 +14482,7 @@
    *   @property {any} bodyStyle - iframe 的 body 样式。
    *   @property {any} htmlStyle - iframe 的 html 样式。
    * @returns
+   * @category Dom-工具方法
    */
   function printDom(selector, styles) {
       // 获取需要打印的元素
@@ -14555,6 +14846,7 @@
    * cx('class1', 'class2', { 'class3': true, 'class4': false }, null, undefined); /// "class1 class2 class3 true"
    * @param classNames 要合并的类名、对象或空值
    * @returns
+   * @category Dom-工具方法
    */
   function cx() {
       var classNames = [];
@@ -14599,6 +14891,7 @@
    * @param hasBrackets 是否带括号
    * @param hasIndex 是否带 index
    * @returns
+   * @category Form-表单相关
    */
   function toFormData(obj, hasBrackets, hasIndex) {
       if (hasBrackets === void 0) { hasBrackets = false; }
@@ -14629,6 +14922,7 @@
    * @param hasBrackets 是否带括号
    * @param hasIndex 是否带 index
    * @returns
+   * @category Form-表单相关
    */
   function toQueryString(obj, hasBrackets, hasIndex) {
       if (hasBrackets === void 0) { hasBrackets = false; }
@@ -14662,6 +14956,7 @@
    * resetData(); /// 'test'
    * @param initialData 初始数据
    * @returns
+   * @category Form-表单相关
    */
   function useStateData(initialData) {
       var data = initialData;
@@ -14705,6 +15000,7 @@
    * @param div1 被除数
    * @param div2 除数
    * @returns
+   * @category Math-数学相关
    */
   function div(div1, div2) {
       var div1FloatLen = 0, div2FloatLen = 0;
@@ -14733,6 +15029,7 @@
    * @param mul1 被乘数
    * @param mul2 乘数
    * @returns
+   * @category Math-数学相关
    */
   function times(mul1, mul2) {
       var mulFloatLen = 0;
@@ -14759,6 +15056,7 @@
    * @param add1 被加数
    * @param add2 加数
    * @returns
+   * @category Math-数学相关
    */
   function add(add1, add2) {
       var add1FloatLen = 0, add2FloatLen = 0, multiple = 1;
@@ -14785,6 +15083,7 @@
    * @param sub1 被减数
    * @param sub2 减数
    * @returns
+   * @category Math-数学相关
    */
   function sub(sub1, sub2) {
       var sub1FloatLen = 0, sub2FloatLen = 0, multiple = 1;
@@ -14810,6 +15109,7 @@
    * average(1, 2, 3, 4.123); /// 2.53075
    * @param args 需要计算的数...
    * @returns
+   * @category Math-数学相关
    */
   function average() {
       var _a;
@@ -14837,6 +15137,7 @@
    * @param operator 操作符
    * @param args 需要计算的数...
    * @returns
+   * @category Math-数学相关
    */
   function calculate(operator) {
       var _a, _b;
@@ -14885,6 +15186,7 @@
    * abs(1); /// 1
    * @param value 数值
    * @returns
+   * @category Math-数学相关
    */
   function abs(value) {
       return Math.abs(value);
@@ -14896,6 +15198,7 @@
    * isEven(1); /// false
    * @param value 数值
    * @returns
+   * @category Math-数学相关
    */
   function isEven(value) {
       return value % 2 === 0;
@@ -14912,6 +15215,7 @@
    * @param d 精度
    * @param isStr 是否返回字符串
    * @returns
+   * @category Math-数学相关
    */
   function float(value, d, isStr) {
       if (d === void 0) { d = 0; }
@@ -14932,6 +15236,7 @@
    * @param min 最小值
    * @param max 最大值
    * @returns
+   * @category Math-数学相关
    */
   function inRange(value, min, max) {
       if (value === null ||
@@ -14960,6 +15265,7 @@
    * @param total 总数
    * @param options 配置
    * @returns
+   * @category Math-数学相关
    */
   function getPercentage(value, total, decimals, options) {
       if (decimals === void 0) { decimals = 0; }
@@ -14993,6 +15299,7 @@
    * markNumber(123); /// '123'
    * @param value 数值
    * @returns
+   * @category Math-数学相关
    */
   function markNumber(value) {
       if (value == undefined) {
@@ -15065,6 +15372,7 @@
    * @param from 原进制
    * @param to 目标进制
    * @returns
+   * @category Math-数学相关
    */
   function transferNumber(number, from, to) {
       if (from === void 0) { from = 10; }
@@ -15103,6 +15411,7 @@
    * @example
    * initNotification(); /// true||false
    * @returns
+   * @category Notify-封装
    */
   function initNotification() {
       // @ts-ignore
@@ -15132,6 +15441,7 @@
    * @example
    * sendNotification('测试通知', '测试标题', {...options}); /// 发送成功/失败
    * @returns
+   * @category Notify-封装
    */
   function sendNotification(msg, title, options) {
       var _a, _b, _c, _d, _e, _f;
@@ -15181,6 +15491,7 @@
    * @param number 浮点数
    * @param d 保留小数位
    * @returns
+   * @category Number-数字相关
    */
   function round(number, d) {
       // example-0.155
@@ -15239,6 +15550,7 @@
    * isInteger('0'); /// true
    * isInteger('-0', '+'); /// false
    * @returns
+   * @category Number-数字相关
    */
   function isInteger(value, type) {
       if (type == '+') {
@@ -15257,6 +15569,7 @@
    * isDecimal('-0.1', '+'); /// false
    * isDecimal('-0.10', '-'); /// true
    * @returns
+   * @category Number-数字相关
    */
   function isDecimal(value, type, noLastZero) {
       if (noLastZero === void 0) { noLastZero = false; }
@@ -15282,6 +15595,7 @@
    * @param value 数值
    * @param n 精度
    * @returns
+   * @category Number-数字相关
    */
   function formatNumber(value, n) {
       var _a;
@@ -15325,6 +15639,7 @@
    * regex.test('12345.6789'); // true
    * @param options 配置选项，options.integer 最大整数位数，options.decimal 最大小数位数。
    * @returns
+   * @category Number-数字相关
    */
   function getNumberReg(options) {
       var integer = options.integer, decimal = options.decimal;
@@ -15357,6 +15672,7 @@
    * @param bytes 文件大小 bytes
    * @param precision 精度
    * @returns
+   * @category Others-业务/其他
    */
   function formatBytes(bytes, precision) {
       var _a;
@@ -15373,6 +15689,7 @@
    * @example
    * getUserAgent(); /// { browserName: 'Chrome', browserVersion: '102.0.0.0', osName: 'Windows', osVersion: '10.0', deviceName: '' }
    * @returns
+   * @category Others-业务/其他
    */
   function getUserAgent() {
       var browserReg = {
@@ -15458,6 +15775,7 @@
    * @example
    * isNode(); /// true
    * @returns
+   * @category Others-业务/其他
    */
   function isNode() {
       return typeof process !== 'undefined' && !!process.versions && !!process.versions.node;
@@ -15467,6 +15785,7 @@
    * @example
    * isBrowser(); /// true
    * @returns
+   * @category Others-业务/其他
    */
   function isBrowser() {
       return typeof window !== 'undefined' && typeof document !== 'undefined';
@@ -15476,6 +15795,7 @@
    * @example
    * isDarkMode(); /// true
    * @returns
+   * @category Others-业务/其他
    */
   function isDarkMode() {
       return (window.matchMedia &&
@@ -15487,6 +15807,7 @@
    * @example
    * isAppleDevice(); /// true
    * @returns
+   * @category Others-业务/其他
    */
   function isAppleDevice() {
       return /Mac|iPod|iPhone|iPad/.test(navigator.platform);
@@ -15496,6 +15817,7 @@
    * @example
    * isCSR(); /// true
    * @returns
+   * @category Others-业务/其他
    */
   function isCSR() {
       return typeof window !== 'undefined' && typeof document !== 'undefined';
@@ -15505,6 +15827,7 @@
    * @example
    * isWin(); /// true
    * @returns
+   * @category Others-业务/其他
    */
   function isWin() {
       return typeof navigator !== 'undefined' && /windows|win32/i.test(navigator.userAgent);
@@ -15514,6 +15837,7 @@
    * @example
    * isMac(); /// true
    * @returns
+   * @category Others-业务/其他
    */
   function isMac() {
       return typeof navigator !== 'undefined' && /Macintosh/i.test(navigator.userAgent);
@@ -15523,6 +15847,7 @@
    * @example
    * isChrome(); /// true
    * @returns
+   * @category Others-业务/其他
    */
   function isChrome() {
       return typeof navigator !== 'undefined' && navigator.userAgent.indexOf('Chrome') > -1;
@@ -15537,6 +15862,7 @@
    * @param currentVersion 当前版本
    * @param testStr 需要替换的字符串 default(-rc)
    * @returns
+   * @category Others-业务/其他
    */
   function checkVersion(targetVersion, currentVersion, testStr) {
       var _a, _b;
@@ -15566,6 +15892,7 @@
    * @param version 版本号
    * @param maxVersionCode 最大版本号
    * @returns
+   * @category Others-业务/其他
    */
   function versionUpgrade(version, maxVersionCode) {
       if (maxVersionCode === void 0) { maxVersionCode = 99; }
@@ -15600,6 +15927,7 @@
    * @param input 输入值
    * @param options 处理配置
    * @returns
+   * @category Others-业务/其他
    */
   function formatRh(input, options) {
       var defaultOptions = {
@@ -15629,6 +15957,7 @@
    * isRhNegative('**d**'); /// true
    * @param input 输入值
    * @returns
+   * @category Others-业务/其他
    */
   function isRhNegative(input) {
       return formatRh(input, { format: [true, false], default: false });
@@ -15639,6 +15968,7 @@
    * getBloodGroup('A'); /// { value: 'A', label: 'A 型', color: '#1890FF', lower: 'a', upper: 'A' }
    * @param bloodGroup 血型
    * @returns
+   * @category Others-业务/其他
    */
   function getBloodGroup(bloodGroup) {
       var keyList = ['A', 'a', 'B', 'b', 'O', 'o', 'AB', 'ab'];
@@ -15661,6 +15991,7 @@
    * calcCron({ day: '1/5' }); /// '* * 1/5 * * '
    * @param options cron 配置
    * @returns
+   * @category Others-业务/其他
    */
   function calcCron(_a) {
       var _b = _a === void 0 ? {} : _a, _c = _b.minute, minute = _c === void 0 ? '*' : _c, _d = _b.hour, hour = _d === void 0 ? '*' : _d, _e = _b.day, day = _e === void 0 ? '*' : _e, _f = _b.month, month = _f === void 0 ? '*' : _f, _g = _b.week, week = _g === void 0 ? '*' : _g;
@@ -15764,6 +16095,7 @@
    * log('danger'); /// 打印数据
    * @param args 打印数据 rest 参数
    * @returns
+   * @category Extra-日志/调试
    */
   function log() {
       var args = [];
@@ -15806,6 +16138,7 @@
    * @param value 值
    * @param defaultValue 默认值
    * @returns
+   * @category Tools-下载/文件相关
    */
   function forceToStr(value, defaultValue) {
       var _a;
@@ -15821,6 +16154,7 @@
    * @param fields 导出的栏位
    * @param data 数据
    * @returns
+   * @category Tools-下载/文件相关
    */
   function transferCSVData(fields, data) {
       var _a;
@@ -15847,6 +16181,7 @@
    * @param fileName 文件名
    * @param fileType 文件类型
    * @returns
+   * @category Tools-下载/文件相关
    */
   function exportFile(data, fileName, fileType) {
       if (fileType === void 0) { fileType = 'txt'; }
@@ -15869,6 +16204,7 @@
    * transferTemperature(30.5); /// '86.9 °F'
    * transferTemperature(86, false, false); /// 30
    * @returns
+   * @category Others-业务/其他
    */
   function transferTemperature(temperature, isCelsius, addSuffix) {
       if (isCelsius === void 0) { isCelsius = true; }
@@ -15910,6 +16246,7 @@
    * @param prefix 前缀
    * @param suffix 后缀
    * @returns
+   * @category Others-业务/其他
    */
   function getDataStr(value, defaultValue, prefix, suffix) {
       if (defaultValue === void 0) { defaultValue = '-'; }
@@ -15933,6 +16270,7 @@
    * @param value2 第二个值
    * @param strict 是否启用严格模式: true 表示严格比较，false 表示忽略大小写和类型比较，默认值为 false 。
    * @returns
+   * @category Others-业务/其他
    */
   function compareTo(value1, value2, strict) {
       if (strict === void 0) { strict = false; }
@@ -15949,6 +16287,7 @@
    * @param treeData 树值
    * @param key key
    * @returns
+   * @category Others-业务/其他
    */
   function getTreeData(treeData, key) {
       if (key === void 0) { key = 'key'; }
@@ -15987,6 +16326,7 @@
    * @param searchKeys 用于过滤的 key
    * @param strictMode 搜索配置 strictMode 时，会强制平铺排列返回符合条件的节点，默认不开启，保持树排列。
    * @returns
+   * @category Others-业务/其他
    */
   function searchTreeData(treeData, searchText, searchKeys, strictMode) {
       if (searchKeys === void 0) { searchKeys = ['key', 'title']; }
@@ -16031,6 +16371,7 @@
    * @param sourceData 源数据
    * @param options 转化选项
    * @returns
+   * @category Others-业务/其他
    */
   function transferTreeData(sourceData, options) {
       if (options === void 0) { options = {
@@ -16084,6 +16425,7 @@
    * @param treeData 树值
    * @param callback 过滤的方法，默认不过滤。
    * @returns
+   * @category Others-业务/其他
    */
   function filterTreeData(treeData, callback) {
       if (!callback || !treeData) {
@@ -16115,6 +16457,7 @@
    * @param checkedKeys 已经全选的节点
    * @param halfCheckedKeys 已经半选的节点
    * @returns
+   * @category Others-业务/其他
    */
   function getTreeCheckNodes(treeData, checkedKeys, halfCheckedKeys) {
       // 将 treeData 转化为一个映射，以便查找节点和其父节点的关系。
@@ -16194,6 +16537,7 @@
    * @param milliseconds 睡眠时间
    * @param returnValue 返回值
    * @returns
+   * @category Promise-相关
    */
   function sleep(milliseconds, returnValue) {
       return new Promise(function (resolve) { return setTimeout(function () { return resolve(returnValue); }, milliseconds); });
@@ -16208,6 +16552,7 @@
    * @param res 成功回调
    * @param rej 失败回调
    * @returns
+   * @category Promise-相关
    */
   function to(promise, res, rej) {
       return promise
@@ -16228,6 +16573,7 @@
    * @param promise 要封装的 Promise 对象
    * @param onFinally finally 回调函数 (可选)
    * @returns
+   * @category Promise-相关
    */
   function customFinally(promise, onFinally) {
       return promise.then(function (value) {
@@ -16248,6 +16594,7 @@
    * @param count 次数
    * @param delay 延迟时间
    * @returns
+   * @category Promise-相关
    */
   function retry(promise, count, delay) {
       var _this = this;
@@ -16288,6 +16635,7 @@
    * @param promises promises
    * @param errorHandler errorHandler
    * @returns
+   * @category Promise-相关
    */
   function all(promises, errorHandler) {
       return Promise.all(promises).catch(function (e) { return errorHandler && errorHandler(e); });
@@ -16299,6 +16647,7 @@
    * @param promises promises
    * @param errorHandler errorHandler
    * @returns
+   * @category Promise-相关
    */
   function any(promises, errorHandler) {
       return Promise.any(promises).catch(function (e) { return errorHandler && errorHandler(e); });
@@ -16310,6 +16659,7 @@
    * @param promiseHandler promiseHandler
    * @param errorHandler errorHandler
    * @returns
+   * @category Promise-相关
    */
   function catchPromise(promiseHandler, errorHandler) {
       return new Promise(promiseHandler).catch(function (e) { return errorHandler && errorHandler(e); });
@@ -16319,7 +16669,7 @@
    * @Author: HxB
    * @Date: 2022-06-04 16:30:04
    * @LastEditors: DoubleAm
-   * @LastEditTime: 2024-05-11 16:33:02
+   * @LastEditTime: 2024-08-23 10:39:50
    * @Description: localStorage 与 sessionStorage
    * @FilePath: \js-xxx\src\Storage\index.ts
    */
@@ -16393,6 +16743,7 @@
    * localStorageGet("key"); /// 处理过后的 value，不需要再 decode 。
    * @param key 存储 key
    * @returns
+   * @category Storage-存储相关
    */
   function localStorageGet(key) {
       return _tempGet(key, 'L');
@@ -16404,6 +16755,7 @@
    * @param key 存储 key
    * @param value 存储 value，value === null|undefined 清除数据。
    * @returns
+   * @category Storage-存储相关
    */
   function localStorageSet(key, value) {
       return _tempSet(key, value, 'L');
@@ -16414,6 +16766,7 @@
    * sessionStorageGet("key"); /// 处理过后的 value，不需要再 decode 。
    * @param key 存储 key
    * @returns
+   * @category Storage-存储相关
    */
   function sessionStorageGet(key) {
       return _tempGet(key, 'S');
@@ -16425,6 +16778,7 @@
    * @param key 存储 key
    * @param value 存储 value，value === null|undefined 清除数据。
    * @returns
+   * @category Storage-存储相关
    */
   function sessionStorageSet(key, value) {
       return _tempSet(key, value, 'S');
@@ -16435,6 +16789,7 @@
    * getLocalObj("key"); /// 处理过后的 value，不需要再 decode，且有默认值 {}。
    * @param key 存储 key
    * @returns
+   * @category Storage-存储相关
    */
   function getLocalObj(key) {
       var _a;
@@ -16446,6 +16801,7 @@
    * getSessionObj("key"); /// 处理过后的 value，不需要再 decode，且有默认值 {}。
    * @param key 存储 key
    * @returns
+   * @category Storage-存储相关
    */
   function getSessionObj(key) {
       var _a;
@@ -16457,6 +16813,7 @@
    * getLocalArr("key"); /// 处理过后的 value，不需要再 decode，且有默认值 []。
    * @param key 存储 key
    * @returns
+   * @category Storage-存储相关
    */
   function getLocalArr(key) {
       var _a;
@@ -16468,6 +16825,7 @@
    * getSessionArr("key"); /// 处理过后的 value，不需要再 decode，且有默认值 []。
    * @param key 存储 key
    * @returns
+   * @category Storage-存储相关
    */
   function getSessionArr(key) {
       var _a;
@@ -16480,6 +16838,7 @@
    * @param key 存储 key
    * @param isLocal 是否 localStorage
    * @returns
+   * @category Storage-存储相关
    */
   function getDecodeStorage(key, isLocal) {
       if (isLocal === void 0) { isLocal = true; }
@@ -16494,6 +16853,7 @@
    * @param value 存储 value 字符串，value === null|undefined 清除数据。
    * @param isLocal 是否 localStorage
    * @returns
+   * @category Storage-存储相关
    */
   function setEncodeStorage(key, value, isLocal) {
       if (isLocal === void 0) { isLocal = true; }
@@ -16816,7 +17176,7 @@
    * @Author: HxB
    * @Date: 2024-05-13 15:08:38
    * @LastEditors: DoubleAm
-   * @LastEditTime: 2024-08-21 11:42:57
+   * @LastEditTime: 2024-08-23 10:48:02
    * @Description: i18n 国际化支持
    * @FilePath: \js-xxx\src\i18n\index.ts
    */
@@ -16844,6 +17204,7 @@
    *   },
    *   defaultLang: 'zh_CN',
    * });
+   * @returns
    * @category i18n-多语言(国际化)
    */
   var i18n = /** @class */ (function () {
@@ -17168,6 +17529,7 @@
   exports.getRandNum = getRandNum;
   exports.getRandStr = getRandStr;
   exports.getRandVar = getRandVar;
+  exports.getScrollParent = getScrollParent;
   exports.getScrollPercent = getScrollPercent;
   exports.getSearchParams = getSearchParams;
   exports.getSelectText = getSelectText;
@@ -17286,6 +17648,7 @@
   exports.safeEncodeURI = safeEncodeURI;
   exports.same = same;
   exports.saveAs = saveAs;
+  exports.scrollToElement = scrollToElement;
   exports.scrollToView = scrollToView;
   exports.scrollXTo = scrollXTo;
   exports.scrollYTo = scrollYTo;

@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2024-05-13 15:08:38
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-08-21 11:42:57
+ * @LastEditTime: 2024-08-23 10:48:02
  * @Description: i18n 国际化支持
  * @FilePath: \js-xxx\src\i18n\index.ts
  */
@@ -55,6 +55,7 @@ export interface i18nOptions {
  *   },
  *   defaultLang: 'zh_CN',
  * });
+ * @returns
  * @category i18n-多语言(国际化)
  */
 export class i18n {

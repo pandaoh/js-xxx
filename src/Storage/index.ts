@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-06-04 16:30:04
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-05-11 16:33:02
+ * @LastEditTime: 2024-08-23 10:39:50
  * @Description: localStorage 与 sessionStorage
  * @FilePath: \js-xxx\src\Storage\index.ts
  */
@@ -82,6 +82,7 @@ function _tempGet(key: string, storeType: 'L' | 'S'): any {
  * localStorageGet("key"); /// 处理过后的 value，不需要再 decode 。
  * @param key 存储 key
  * @returns
+ * @category Storage-存储相关
  */
 export function localStorageGet(key: string): any {
   return _tempGet(key, 'L');
@@ -94,6 +95,7 @@ export function localStorageGet(key: string): any {
  * @param key 存储 key
  * @param value 存储 value，value === null|undefined 清除数据。
  * @returns
+ * @category Storage-存储相关
  */
 export function localStorageSet(key: string, value: any): boolean {
   return _tempSet(key, value, 'L');
@@ -105,6 +107,7 @@ export function localStorageSet(key: string, value: any): boolean {
  * sessionStorageGet("key"); /// 处理过后的 value，不需要再 decode 。
  * @param key 存储 key
  * @returns
+ * @category Storage-存储相关
  */
 export function sessionStorageGet(key: string): any {
   return _tempGet(key, 'S');
@@ -117,6 +120,7 @@ export function sessionStorageGet(key: string): any {
  * @param key 存储 key
  * @param value 存储 value，value === null|undefined 清除数据。
  * @returns
+ * @category Storage-存储相关
  */
 export function sessionStorageSet(key: string, value: any): boolean {
   return _tempSet(key, value, 'S');
@@ -128,6 +132,7 @@ export function sessionStorageSet(key: string, value: any): boolean {
  * getLocalObj("key"); /// 处理过后的 value，不需要再 decode，且有默认值 {}。
  * @param key 存储 key
  * @returns
+ * @category Storage-存储相关
  */
 export function getLocalObj(key: string): any {
   return _tempGet(key, 'L') ?? {};
@@ -139,6 +144,7 @@ export function getLocalObj(key: string): any {
  * getSessionObj("key"); /// 处理过后的 value，不需要再 decode，且有默认值 {}。
  * @param key 存储 key
  * @returns
+ * @category Storage-存储相关
  */
 export function getSessionObj(key: string): any {
   return _tempGet(key, 'S') ?? {};
@@ -150,6 +156,7 @@ export function getSessionObj(key: string): any {
  * getLocalArr("key"); /// 处理过后的 value，不需要再 decode，且有默认值 []。
  * @param key 存储 key
  * @returns
+ * @category Storage-存储相关
  */
 export function getLocalArr(key: string): any[] {
   return _tempGet(key, 'L') ?? [];
@@ -161,6 +168,7 @@ export function getLocalArr(key: string): any[] {
  * getSessionArr("key"); /// 处理过后的 value，不需要再 decode，且有默认值 []。
  * @param key 存储 key
  * @returns
+ * @category Storage-存储相关
  */
 export function getSessionArr(key: string): any[] {
   return _tempGet(key, 'S') ?? [];
@@ -173,6 +181,7 @@ export function getSessionArr(key: string): any[] {
  * @param key 存储 key
  * @param isLocal 是否 localStorage
  * @returns
+ * @category Storage-存储相关
  */
 export function getDecodeStorage(key: string, isLocal = true): any {
   const data = _tempGet(md5(key), isLocal ? 'L' : 'S');
@@ -187,6 +196,7 @@ export function getDecodeStorage(key: string, isLocal = true): any {
  * @param value 存储 value 字符串，value === null|undefined 清除数据。
  * @param isLocal 是否 localStorage
  * @returns
+ * @category Storage-存储相关
  */
 export function setEncodeStorage(key: string, value: string, isLocal = true): boolean {
   return _tempSet(md5(key), value === null || value === undefined ? value : encrypt(value), isLocal ? 'L' : 'S');

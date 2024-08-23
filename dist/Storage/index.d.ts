@@ -4,6 +4,7 @@
  * localStorageGet("key"); /// 处理过后的 value，不需要再 decode 。
  * @param key 存储 key
  * @returns
+ * @category Storage-存储相关
  */
 export declare function localStorageGet(key: string): any;
 /**
@@ -13,6 +14,7 @@ export declare function localStorageGet(key: string): any;
  * @param key 存储 key
  * @param value 存储 value，value === null|undefined 清除数据。
  * @returns
+ * @category Storage-存储相关
  */
 export declare function localStorageSet(key: string, value: any): boolean;
 /**
@@ -21,6 +23,7 @@ export declare function localStorageSet(key: string, value: any): boolean;
  * sessionStorageGet("key"); /// 处理过后的 value，不需要再 decode 。
  * @param key 存储 key
  * @returns
+ * @category Storage-存储相关
  */
 export declare function sessionStorageGet(key: string): any;
 /**
@@ -30,6 +33,7 @@ export declare function sessionStorageGet(key: string): any;
  * @param key 存储 key
  * @param value 存储 value，value === null|undefined 清除数据。
  * @returns
+ * @category Storage-存储相关
  */
 export declare function sessionStorageSet(key: string, value: any): boolean;
 /**
@@ -38,6 +42,7 @@ export declare function sessionStorageSet(key: string, value: any): boolean;
  * getLocalObj("key"); /// 处理过后的 value，不需要再 decode，且有默认值 {}。
  * @param key 存储 key
  * @returns
+ * @category Storage-存储相关
  */
 export declare function getLocalObj(key: string): any;
 /**
@@ -46,6 +51,7 @@ export declare function getLocalObj(key: string): any;
  * getSessionObj("key"); /// 处理过后的 value，不需要再 decode，且有默认值 {}。
  * @param key 存储 key
  * @returns
+ * @category Storage-存储相关
  */
 export declare function getSessionObj(key: string): any;
 /**
@@ -54,6 +60,7 @@ export declare function getSessionObj(key: string): any;
  * getLocalArr("key"); /// 处理过后的 value，不需要再 decode，且有默认值 []。
  * @param key 存储 key
  * @returns
+ * @category Storage-存储相关
  */
 export declare function getLocalArr(key: string): any[];
 /**
@@ -62,6 +69,7 @@ export declare function getLocalArr(key: string): any[];
  * getSessionArr("key"); /// 处理过后的 value，不需要再 decode，且有默认值 []。
  * @param key 存储 key
  * @returns
+ * @category Storage-存储相关
  */
 export declare function getSessionArr(key: string): any[];
 /**
@@ -71,6 +79,7 @@ export declare function getSessionArr(key: string): any[];
  * @param key 存储 key
  * @param isLocal 是否 localStorage
  * @returns
+ * @category Storage-存储相关
  */
 export declare function getDecodeStorage(key: string, isLocal?: boolean): any;
 /**
@@ -81,6 +90,7 @@ export declare function getDecodeStorage(key: string, isLocal?: boolean): any;
  * @param value 存储 value 字符串，value === null|undefined 清除数据。
  * @param isLocal 是否 localStorage
  * @returns
+ * @category Storage-存储相关
  */
 export declare function setEncodeStorage(key: string, value: string, isLocal?: boolean): boolean;
 //# sourceMappingURL=index.d.ts.map

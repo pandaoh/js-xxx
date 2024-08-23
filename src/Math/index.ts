@@ -17,6 +17,7 @@ import { TRANSFER_STR } from '@/Data';
  * @param div1 被除数
  * @param div2 除数
  * @returns
+ * @category Math-数学相关
  */
 export function div(div1: number | string, div2: number | string): number {
   let div1FloatLen = 0,
@@ -49,6 +50,7 @@ export function div(div1: number | string, div2: number | string): number {
  * @param mul1 被乘数
  * @param mul2 乘数
  * @returns
+ * @category Math-数学相关
  */
 export function times(mul1: number | string, mul2: number | string): number {
   let mulFloatLen = 0;
@@ -75,6 +77,7 @@ export function times(mul1: number | string, mul2: number | string): number {
  * @param add1 被加数
  * @param add2 加数
  * @returns
+ * @category Math-数学相关
  */
 export function add(add1: number | string, add2: number | string): number {
   let add1FloatLen = 0,
@@ -102,6 +105,7 @@ export function add(add1: number | string, add2: number | string): number {
  * @param sub1 被减数
  * @param sub2 减数
  * @returns
+ * @category Math-数学相关
  */
 export function sub(sub1: number | string, sub2: number | string): number {
   let sub1FloatLen = 0,
@@ -128,6 +132,7 @@ export function sub(sub1: number | string, sub2: number | string): number {
  * average(1, 2, 3, 4.123); /// 2.53075
  * @param args 需要计算的数...
  * @returns
+ * @category Math-数学相关
  */
 export function average(...args: any[]) {
   let sum = 0;
@@ -153,6 +158,7 @@ export function average(...args: any[]) {
  * @param operator 操作符
  * @param args 需要计算的数...
  * @returns
+ * @category Math-数学相关
  */
 export function calculate(operator: string, ...args: any[]) {
   let res = operator === '*' ? 1 : 0;
@@ -199,6 +205,7 @@ export function calculate(operator: string, ...args: any[]) {
  * abs(1); /// 1
  * @param value 数值
  * @returns
+ * @category Math-数学相关
  */
 export function abs(value: number): number {
   return Math.abs(value);
@@ -211,6 +218,7 @@ export function abs(value: number): number {
  * isEven(1); /// false
  * @param value 数值
  * @returns
+ * @category Math-数学相关
  */
 export function isEven(value: number): boolean {
   return value % 2 === 0;
@@ -228,6 +236,7 @@ export function isEven(value: number): boolean {
  * @param d 精度
  * @param isStr 是否返回字符串
  * @returns
+ * @category Math-数学相关
  */
 export function float(value: number, d = 0, isStr = false): number | string {
   const arr = `${value}`.split('.');
@@ -247,6 +256,7 @@ export function float(value: number, d = 0, isStr = false): number | string {
  * @param min 最小值
  * @param max 最大值
  * @returns
+ * @category Math-数学相关
  */
 export function inRange(value: any, min: number, max: number) {
   if (
@@ -278,6 +288,7 @@ export function inRange(value: any, min: number, max: number) {
  * @param total 总数
  * @param options 配置
  * @returns
+ * @category Math-数学相关
  */
 export function getPercentage(
   value: any,
@@ -314,6 +325,7 @@ export function getPercentage(
  * markNumber(123); /// '123'
  * @param value 数值
  * @returns
+ * @category Math-数学相关
  */
 export function markNumber(value: number): string {
   if (value == undefined) {
@@ -380,6 +392,7 @@ export function markNumber(value: number): string {
  * @param from 原进制
  * @param to 目标进制
  * @returns
+ * @category Math-数学相关
  */
 export function transferNumber(number: number, from = 10, to = 2) {
   let decimal = 0;

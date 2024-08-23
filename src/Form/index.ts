@@ -16,6 +16,7 @@ import { getType } from '@/Types';
  * @param hasBrackets 是否带括号
  * @param hasIndex 是否带 index
  * @returns
+ * @category Form-表单相关
  */
 export function toFormData(obj: any, hasBrackets = false, hasIndex = false): FormData {
   const formData: FormData = new FormData();
@@ -44,6 +45,7 @@ export function toFormData(obj: any, hasBrackets = false, hasIndex = false): For
  * @param hasBrackets 是否带括号
  * @param hasIndex 是否带 index
  * @returns
+ * @category Form-表单相关
  */
 export function toQueryString(obj: any, hasBrackets = false, hasIndex = false): URLSearchParams {
   const queryString: URLSearchParams = new URLSearchParams();
@@ -75,6 +77,7 @@ export function toQueryString(obj: any, hasBrackets = false, hasIndex = false): 
  * resetData(); /// 'test'
  * @param initialData 初始数据
  * @returns
+ * @category Form-表单相关
  */
 export function useStateData(initialData: any) {
   let data = initialData;

@@ -7,6 +7,7 @@
  * @param key 分组的 key
  * @param vKey 值的 key，默认为整个值。
  * @returns
+ * @category Array-数组相关
  */
 export declare function data2Obj(sourceData: {
     [key: string]: any;
@@ -20,6 +21,7 @@ export declare function data2Obj(sourceData: {
  * @param sourceData 源数据
  * @param key 取值的 key
  * @returns
+ * @category Array-数组相关
  */
 export declare function data2Arr(sourceData: {
     [key: string]: any;
@@ -33,6 +35,7 @@ export declare function data2Arr(sourceData: {
  * @param data 源数据
  * @param key 用于转换的 key
  * @returns
+ * @category Array-数组相关
  */
 export declare function arrObj2objArr(data: {
     [key: string]: any;
@@ -47,6 +50,7 @@ export declare function arrObj2objArr(data: {
  * @param arr 数组
  * @param filter 过滤逻辑
  * @returns
+ * @category Array-数组相关
  */
 export declare function unique(arr: any[], filter?: any): any[];
 /**
@@ -59,6 +63,7 @@ export declare function unique(arr: any[], filter?: any): any[];
  * @param key 排序的字段
  * @param isAscend 是否升序
  * @returns
+ * @category Array-数组相关
  */
 export declare function sortCallBack(key: string, isAscend?: boolean): any;
 /**
@@ -67,6 +72,7 @@ export declare function sortCallBack(key: string, isAscend?: boolean): any;
  * arrayShuffle([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]); /// [5, 9, 1, 10, 2, 6, 4, 8, 3, 7]
  * @param arr 数组
  * @returns
+ * @category Array-数组相关
  */
 export declare function arrayShuffle(arr: any[]): any[];
 /**
@@ -84,6 +90,7 @@ export declare function arrayShuffle(arr: any[]): any[];
  * @param type 类型
  * @param keys 关键字/集合
  * @returns
+ * @category Array-数组相关
  */
 export declare function arraySort(arr: any[], type?: 'desc' | 'asc' | 'ASC' | 'DESC' | boolean, keys?: string | string[]): any[];
 /**
@@ -96,6 +103,7 @@ export declare function arraySort(arr: any[], type?: 'desc' | 'asc' | 'ASC' | 'D
  * @param keys 排序的字段/集合
  * @param isAscend 是否升序
  * @returns
+ * @category Array-数组相关
  */
 export declare function sortBy(keys?: string | string[], isAscend?: boolean): any;
 /**
@@ -107,6 +115,7 @@ export declare function sortBy(keys?: string | string[], isAscend?: boolean): an
  * @param arr 数组
  * @param n 保留小数位
  * @returns
+ * @category Array-数组相关
  */
 export declare function arrayFill(arr: any[], n?: number): number[];
 //# sourceMappingURL=index.d.ts.map

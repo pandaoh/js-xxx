@@ -15,6 +15,7 @@
  * @param milliseconds 睡眠时间
  * @param returnValue 返回值
  * @returns
+ * @category Promise-相关
  */
 export function sleep(milliseconds: number | undefined, returnValue?: any): Promise<any> {
   return new Promise((resolve) => setTimeout(() => resolve(returnValue), milliseconds));
@@ -30,6 +31,7 @@ export function sleep(milliseconds: number | undefined, returnValue?: any): Prom
  * @param res 成功回调
  * @param rej 失败回调
  * @returns
+ * @category Promise-相关
  */
 export function to(promise: Promise<any>, res?: any, rej?: any): Promise<any> {
   return promise
@@ -51,6 +53,7 @@ export function to(promise: Promise<any>, res?: any, rej?: any): Promise<any> {
  * @param promise 要封装的 Promise 对象
  * @param onFinally finally 回调函数 (可选)
  * @returns
+ * @category Promise-相关
  */
 export function customFinally(promise: Promise<any>, onFinally?: any): Promise<any> {
   return promise.then(
@@ -75,6 +78,7 @@ export function customFinally(promise: Promise<any>, onFinally?: any): Promise<a
  * @param count 次数
  * @param delay 延迟时间
  * @returns
+ * @category Promise-相关
  */
 export function retry(promise: Promise<any>, count = 0, delay = 0) {
   return new Promise((resolve, reject) => {
@@ -103,6 +107,7 @@ export function retry(promise: Promise<any>, count = 0, delay = 0) {
  * @param promises promises
  * @param errorHandler errorHandler
  * @returns
+ * @category Promise-相关
  */
 export function all(promises: Promise<any>[], errorHandler?: any): Promise<any> {
   return Promise.all(promises).catch((e: any) => errorHandler && errorHandler(e));
@@ -115,6 +120,7 @@ export function all(promises: Promise<any>[], errorHandler?: any): Promise<any> 
  * @param promises promises
  * @param errorHandler errorHandler
  * @returns
+ * @category Promise-相关
  */
 export function any(promises: Promise<any>[], errorHandler?: any): Promise<any> {
   return Promise.any(promises).catch((e: any) => errorHandler && errorHandler(e));
@@ -127,6 +133,7 @@ export function any(promises: Promise<any>[], errorHandler?: any): Promise<any> 
  * @param promiseHandler promiseHandler
  * @param errorHandler errorHandler
  * @returns
+ * @category Promise-相关
  */
 export function catchPromise(promiseHandler: any, errorHandler?: any): Promise<any> {
   return new Promise(promiseHandler).catch((e: any) => errorHandler && errorHandler(e));

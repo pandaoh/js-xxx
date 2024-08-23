@@ -4,6 +4,7 @@
  * unicode2str("我是老A"); /// '\\u6211\\u662f\\u8001a'
  * @param value 中文字符串
  * @returns
+ * @category Custom-转码
  */
 export declare function unicode2str(value: string): string;
 /**
@@ -12,6 +13,7 @@ export declare function unicode2str(value: string): string;
  * str2unicode("\\u6211\\u662f\\u8001a"); /// '我是老a'
  * @param value unicode 字符串
  * @returns
+ * @category Custom-转码
  */
 export declare function str2unicode(value: string): string;
 /**
@@ -22,6 +24,7 @@ export declare function str2unicode(value: string): string;
  * @param str 字符串
  * @param type 类型，默认为 0|ba，错误 type 会返回原字符串。
  * @returns
+ * @category String-字符串
  */
 export declare function trim(str: string, type?: number | string): string;
 /**
@@ -36,6 +39,7 @@ export declare function trim(str: string, type?: number | string): string;
  * maskString('广东省深圳市福田区福田保税区xxx小区xxx单元x栋x楼xxx号'); /// '广东省深圳市福田区******xx号'
  * @param str 字符串
  * @returns
+ * @category String-字符串
  */
 export declare function maskString(str: string): string;
 /**
@@ -47,6 +51,7 @@ export declare function maskString(str: string): string;
  * @param str 字符串
  * @param type 目标类型
  * @returns
+ * @category String-字符串
  */
 export declare function textTransferCase(str: string, type: 1 | 2 | 3 | 'upper' | 'lower' | 'first'): string;
 /**
@@ -60,6 +65,7 @@ export declare function textTransferCase(str: string, type: 1 | 2 | 3 | 'upper' 
  * textSplitCase('foo-Bar'); /// ['foo', 'bar']
  * @param str 字符串
  * @returns
+ * @category String-字符串
  */
 export declare function textSplitCase(str: string): string[];
 /**
@@ -71,6 +77,7 @@ export declare function textSplitCase(str: string): string[];
  * textCamelCase('foo.bar'); /// 'fooBar'
  * @param str 字符串
  * @returns
+ * @category String-字符串
  */
 export declare function textCamelCase(str: string): string;
 /**
@@ -80,6 +87,7 @@ export declare function textCamelCase(str: string): string;
  * repeat('*', 3); /// '***'
  * @param str 字符串
  * @returns
+ * @category String-字符串
  */
 export declare function repeat(str: string, n?: number): string;
 /**
@@ -89,6 +97,7 @@ export declare function repeat(str: string, n?: number): string;
  * isUrl(http://www); /// false
  * @param value 字符串值
  * @returns
+ * @category String-字符串
  */
 export declare function isUrl(value: string): boolean;
 /**
@@ -98,6 +107,7 @@ export declare function isUrl(value: string): boolean;
  * isLongitude(179.12); /// true
  * @param value 值
  * @returns
+ * @category String-字符串
  */
 export declare function isLongitude(value: string): boolean;
 /**
@@ -107,6 +117,7 @@ export declare function isLongitude(value: string): boolean;
  * isLatitude(90); /// true
  * @param value 值
  * @returns
+ * @category String-字符串
  */
 export declare function isLatitude(value: string): boolean;
 /**
@@ -116,6 +127,7 @@ export declare function isLatitude(value: string): boolean;
  * isEmail('@qq.com'); /// false
  * @param value 字符串值
  * @returns
+ * @category String-字符串
  */
 export declare function isEmail(value: string): boolean;
 /**
@@ -125,6 +137,7 @@ export declare function isEmail(value: string): boolean;
  * isMobile('12345678910'); /// false
  * @param value 字符串值
  * @returns
+ * @category String-字符串
  */
 export declare function isMobile(value: string): boolean;
 /**
@@ -137,6 +150,7 @@ export declare function isMobile(value: string): boolean;
  * isAccount('我test123_qq_com', true); /// true
  * @param value 字符串值
  * @returns
+ * @category String-字符串
  */
 export declare function isAccount(value: string, hasChinese?: boolean): boolean;
 /**
@@ -146,6 +160,7 @@ export declare function isAccount(value: string, hasChinese?: boolean): boolean;
  * isStrongPassWord('test@qq.com123'); /// true
  * @param value 字符串值
  * @returns
+ * @category String-字符串
  */
 export declare function isStrongPassWord(value: string): boolean;
 /**
@@ -159,6 +174,7 @@ export declare function isStrongPassWord(value: string): boolean;
  * isCarCode('广东 B12345'); /// false
  * @param value 字符串值
  * @returns
+ * @category String-字符串
  */
 export declare function isCarCode(value: string): boolean;
 /**
@@ -170,6 +186,7 @@ export declare function isCarCode(value: string): boolean;
  * isIpv4('255.255.255.2555.255'); /// false
  * @param value 字符串值
  * @returns
+ * @category String-字符串
  */
 export declare function isIpv4(value: string): boolean;
 /**
@@ -184,6 +201,7 @@ export declare function isIpv4(value: string): boolean;
  * isIpv6('2000:0000:0000:0000:0001:2345:6789:abcd:1'); /// false
  * @param value 字符串值
  * @returns
+ * @category String-字符串
  */
 export declare function isIpv6(value: string): boolean;
 /**
@@ -195,6 +213,7 @@ export declare function isIpv6(value: string): boolean;
  * isIpAddress('255.255.255.123.123'); /// false
  * @param value 字符串值
  * @returns
+ * @category String-字符串
  */
 export declare function isIpAddress(value: string): boolean;
 /**
@@ -204,6 +223,7 @@ export declare function isIpAddress(value: string): boolean;
  * checkFileExt(['png', 'jpg'], 'test.jpg.txt'); /// false
  * @param value 字符串值
  * @returns
+ * @category String-字符串
  */
 export declare function checkFileExt(arr: string[], value: string): boolean;
 /**
@@ -215,6 +235,7 @@ export declare function checkFileExt(arr: string[], value: string): boolean;
  * isHttp('12345'); /// 0
  * @param value 字符串值
  * @returns
+ * @category String-字符串
  */
 export declare function isHttp(value: string): -1 | 1 | 0;
 /**
@@ -225,6 +246,7 @@ export declare function isHttp(value: string): -1 | 1 | 0;
  * @param str 字符串值
  * @param replacement 替换字符串映射
  * @returns
+ * @category String-字符串
  */
 export declare function slugify(str: string, replacement?: {
     [index: string]: string;
@@ -238,6 +260,7 @@ export declare function slugify(str: string, replacement?: {
  * @param width 指定长度
  * @param options 截取配置
  * @returns
+ * @category String-字符串
  */
 export declare function truncate(txt: string, width: number, options?: {
     ellipsis?: string;
@@ -255,6 +278,7 @@ export declare function truncate(txt: string, width: number, options?: {
  * formatJSON(new Date()); /// '"2023-03-02T10:02:42.019Z"'
  * @param value 值
  * @returns
+ * @category JSON-相关
  */
 export declare function formatJSON(value: any): string;
 /**
@@ -267,6 +291,7 @@ export declare function formatJSON(value: any): string;
  * parseJSON('test error'); /// null
  * @param value 需要解析的值
  * @returns
+ * @category JSON-相关
  */
 export declare function parseJSON(value: any): any;
 /**
@@ -280,6 +305,7 @@ export declare function parseJSON(value: any): any;
  * stringifyJSON(Symbol('test')); /// ''
  * @param value 需要序列化的值
  * @returns
+ * @category JSON-相关
  */
 export declare function stringifyJSON(value: any): string;
 /**
@@ -289,6 +315,7 @@ export declare function stringifyJSON(value: any): string;
  * isQQ('123456789101'); /// false
  * @param value 字符串值
  * @returns
+ * @category String-字符串
  */
 export declare function isQQ(value: string): boolean;
 /**
@@ -298,6 +325,7 @@ export declare function isQQ(value: string): boolean;
  * isEnglish('a1'); /// false
  * @param value 字符串值
  * @returns
+ * @category String-字符串
  */
 export declare function isEnglish(value: string): boolean;
 /**
@@ -307,6 +335,7 @@ export declare function isEnglish(value: string): boolean;
  * hasSpecialChar('a1'); /// false
  * @param value 字符串值
  * @returns
+ * @category String-字符串
  */
 export declare function hasSpecialChar(value: string): boolean;
 /**
@@ -316,6 +345,7 @@ export declare function hasSpecialChar(value: string): boolean;
  * isTel('13579246810'); /// false
  * @param value 字符串值
  * @returns
+ * @category String-字符串
  */
 export declare function isTel(value: string): boolean;
 /**
@@ -325,6 +355,7 @@ export declare function isTel(value: string): boolean;
  * isChinese('我 1'); /// false
  * @param value 字符串值
  * @returns
+ * @category String-字符串
  */
 export declare function isChinese(value: string): boolean;
 /**
@@ -334,6 +365,7 @@ export declare function isChinese(value: string): boolean;
  * isCreditCode('12312312312'); /// false
  * @param value 字符串值
  * @returns
+ * @category String-字符串
  */
 export declare function isCreditCode(value: string): boolean;
 /**
@@ -343,6 +375,7 @@ export declare function isCreditCode(value: string): boolean;
  * isBankCard('12312312312'); /// false
  * @param value 字符串值
  * @returns
+ * @category String-字符串
  */
 export declare function isBankCard(value: string): boolean;
 /**
@@ -356,6 +389,7 @@ export declare function isBankCard(value: string): boolean;
  * checkPassWordLevel('123456789654321.H'); /// 5
  * @param passWord 字符串值-密码
  * @returns
+ * @category String-字符串
  */
 export declare function checkPassWordLevel(passWord: string): 1 | 2 | 3 | 4 | 5 | -1;
 /**
@@ -367,6 +401,7 @@ export declare function checkPassWordLevel(passWord: string): 1 | 2 | 3 | 4 | 5 
  * @param str 字符串值
  * @param extractFirst 是否只获取首字母
  * @returns
+ * @category String-字符串
  */
 export declare function getPinYin(str: string, extractFirst?: boolean): string;
 /**
@@ -381,6 +416,7 @@ export declare function getPinYin(str: string, extractFirst?: boolean): string;
  * @param value 值
  * @param higherReplace 严格替换
  * @returns
+ * @category String-字符串
  */
 export declare function transferScanStr(value: string, higherReplace?: boolean): string;
 /**
@@ -391,6 +427,7 @@ export declare function transferScanStr(value: string, higherReplace?: boolean):
  * addSpace('123 45'); /// '1 2 3 4 5'
  * @param str 字符串
  * @returns
+ * @category String-字符串
  */
 export declare function addSpace(str: string | number): string;
 /**
@@ -400,6 +437,7 @@ export declare function addSpace(str: string | number): string;
  * leftJoin(0, 3, 1); /// '110'
  * @param str 字符串
  * @returns
+ * @category String-字符串
  */
 export declare function leftJoin(str: string | number, length?: string | number, char?: string | number): string;
 /**
@@ -409,6 +447,7 @@ export declare function leftJoin(str: string | number, length?: string | number,
  * rightJoin(0, 3, 1); /// '011'
  * @param str 字符串
  * @returns
+ * @category String-字符串
  */
 export declare function rightJoin(str: string | number, length?: string | number, char?: string | number): string;
 /**
@@ -422,6 +461,7 @@ export declare function rightJoin(str: string | number, length?: string | number
  * @param params 参数对象，包含占位符的键值对。
  * @param emptyStr 对象不存在键值时的占位符，默认不变。
  * @returns
+ * @category String-字符串
  */
 export declare function loadStr(str: string, params: any, emptyStr?: string): string;
 //# sourceMappingURL=index.d.ts.map

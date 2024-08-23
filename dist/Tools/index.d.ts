@@ -3,6 +3,7 @@
  * @example
  * getTimeCode(); /// '2036551026042022'
  * @returns
+ * @category Tools-工具方法
  */
 export declare function getTimeCode(): string;
 /**
@@ -21,6 +22,7 @@ export declare function getTimeCode(): string;
  * empty([]); /// true
  * @param variable 变量
  * @returns
+ * @category Tools-工具方法
  */
 export declare function empty(variable: any): boolean;
 /**
@@ -30,6 +32,7 @@ export declare function empty(variable: any): boolean;
  * getFirstVar({a: 2,b: 1}); /// 2
  * @param data 源数据
  * @returns
+ * @category Tools-工具方法
  */
 export declare function getFirstVar(data: any): any;
 /**
@@ -39,6 +42,7 @@ export declare function getFirstVar(data: any): any;
  * getLastVar({a: 2, b: 1}); /// b
  * @param data 源数据
  * @returns
+ * @category Tools-工具方法
  */
 export declare function getLastVar(data: any): any;
 /**
@@ -49,6 +53,7 @@ export declare function getLastVar(data: any): any;
  * @param value 值
  * @param count 获取数据量
  * @returns
+ * @category Tools-工具方法
  */
 export declare function getRandVar(value: any, count?: number): any | any[];
 /**
@@ -58,6 +63,7 @@ export declare function getRandVar(value: any, count?: number): any | any[];
  * @param fn 执行的函数
  * @param delay 延迟时间
  * @returns
+ * @category Tools-工具方法
  */
 export declare function debounce(fn: any, delay?: number): () => void;
 /**
@@ -67,6 +73,7 @@ export declare function debounce(fn: any, delay?: number): () => void;
  * @param fn 执行的函数
  * @param delay 延迟时间
  * @returns
+ * @category Tools-工具方法
  */
 export declare function throttle(fn: any, delay?: number): () => void;
 /**
@@ -76,6 +83,7 @@ export declare function throttle(fn: any, delay?: number): () => void;
  * @param fn (error)
  * @param notShowConsole 是否不回显控制台
  * @returns
+ * @category Tools-工具方法
  */
 export declare function globalError(fn: any, notShowConsole?: boolean): void;
 /**
@@ -85,6 +93,7 @@ export declare function globalError(fn: any, notShowConsole?: boolean): void;
  * observeResource(); /// 找不到资源时刷新页面
  * @param callback
  * @returns
+ * @category Tools-工具方法
  */
 export declare function observeResource(callback?: any): void;
 /**
@@ -97,6 +106,7 @@ export declare function observeResource(callback?: any): void;
  * @param interval 请求文件的时间间隔（毫秒），默认为 15 分钟，最小值 1 分钟。
  * @param url 要检测的文件路径（默认为页面最后一个 JavaScript/CSS 文件）
  * @returns
+ * @category Tools-工具方法
  */
 export declare function checkUpdate(callback: any, interval?: number, url?: string): (() => void) | undefined;
 /**
@@ -106,6 +116,7 @@ export declare function checkUpdate(callback: any, interval?: number, url?: stri
  * @param min 最小值
  * @param max 最大值
  * @returns
+ * @category Tools-工具方法
  */
 export declare function getRandNum(min?: number, max?: number): number;
 /**
@@ -113,6 +124,7 @@ export declare function getRandNum(min?: number, max?: number): number;
  * @example
  * getRandColor(); /// '#xxxxxx'
  * @returns
+ * @category Tools-工具方法
  */
 export declare function getRandColor(): string;
 /**
@@ -123,6 +135,7 @@ export declare function getRandColor(): string;
  * getBSColor('warning'); /// '#ffc107'
  * @param key color name
  * @returns
+ * @category Tools-工具方法
  */
 export declare function getBSColor(key?: string): string;
 /**
@@ -133,6 +146,7 @@ export declare function getBSColor(key?: string): string;
  * getVarSize(null); /// 0
  * @param value 值
  * @returns
+ * @category Tools-工具方法
  */
 export declare function getVarSize(value: any): number;
 /**
@@ -143,6 +157,7 @@ export declare function getVarSize(value: any): number;
  * openFileSelect({ multiple: true, accept: '.txt', resultType: 'base64' }).then(fileDataUrlList => console.log(fileDataUrlList));
  * @param options 打开配置
  * @returns
+ * @category Tools-下载/文件相关
  */
 export declare function openFileSelect(options?: {
     accept?: string;
@@ -159,6 +174,7 @@ export declare function openFileSelect(options?: {
  * @param blob 要保存的 Blob 对象。
  * @param filename 可选。保存的文件名。
  * @returns
+ * @category Tools-下载/文件相关
  */
 export declare function saveAs(blob: Blob, filename?: string): void;
 /**
@@ -175,6 +191,7 @@ export declare function saveAs(blob: Blob, filename?: string): void;
  * @param url 图片的 URL 地址。
  * @param fileName 可选。下载的文件名。
  * @returns
+ * @category Tools-下载/文件相关
  */
 export declare function downloadImg(url: string, fileName?: string): void;
 /**
@@ -191,6 +208,7 @@ export declare function downloadImg(url: string, fileName?: string): void;
  * @param url 文件的 URL 地址。
  * @param fileName 可选。下载的文件名，默认为 URL 中的文件名。
  * @returns
+ * @category Tools-下载/文件相关
  */
 export declare function downloadFile(url: string, fileName?: string): void;
 /**
@@ -213,6 +231,7 @@ export declare function downloadFile(url: string, fileName?: string): void;
  * @param url 要获取文件名的 URL 。
  * @param onlyExt 可选。如果为 true，则仅返回文件扩展名。
  * @returns
+ * @category Tools-下载/文件相关
  */
 export declare function getFileNameFromUrl(url: string, onlyExt?: boolean): string;
 /**
@@ -230,6 +249,7 @@ export declare function getFileNameFromUrl(url: string, onlyExt?: boolean): stri
  * openPreviewFile('https://example.com/path/to/otherfile.zip'); // 将直接打开链接
  * @param url 要预览的 URL 地址。
  * @returns
+ * @category Tools-下载/文件相关
  */
 export declare function openPreviewFile(url: string, serviceUrl: string): void;
 /**
@@ -240,6 +260,7 @@ export declare function openPreviewFile(url: string, serviceUrl: string): void;
  * @param paramA 值 A
  * @param paramB 值 B
  * @returns
+ * @category Tools-工具方法
  */
 export declare function intersection(paramA: any, paramB: any): any;
 /**
@@ -250,6 +271,7 @@ export declare function intersection(paramA: any, paramB: any): any;
  * @param paramA 值 A，若冲突以此值为准。
  * @param paramB 值 B
  * @returns
+ * @category Tools-工具方法
  */
 export declare function union(paramA: any, paramB: any): any;
 /**
@@ -260,6 +282,7 @@ export declare function union(paramA: any, paramB: any): any;
  * @param paramA 值 A，若冲突以此值为准。
  * @param paramB 值 B
  * @returns
+ * @category Tools-工具方法
  */
 export declare function difference(paramA: any, paramB: any): any;
 /**
@@ -269,6 +292,7 @@ export declare function difference(paramA: any, paramB: any): any;
  * jsonClone({a: 1, b: 2}); /// {a: 1, b: 2}
  * @param value 值
  * @returns
+ * @category JSON-相关
  */
 export declare function jsonClone(value: any): any;
 /**
@@ -282,6 +306,7 @@ export declare function jsonClone(value: any): any;
  * @param fn 方法函数
  * @param timeKey 打印时间记录关键 key
  * @returns
+ * @category Extra-日志/调试
  */
 export declare function logRunTime(fn: any, timeKey: string): void;
 /**
@@ -291,6 +316,7 @@ export declare function logRunTime(fn: any, timeKey: string): void;
  * showVar({a: 1, b: 2}); /// 显示序列化之后的数据
  * @param value 值
  * @returns
+ * @category Extra-日志/调试
  */
 export declare function showVar(value: any): any;
 /**
@@ -307,6 +333,7 @@ export declare function showVar(value: any): any;
  * @param value 值
  * @param target 目标值
  * @returns
+ * @category Tools-工具方法
  */
 export declare function contains(value: any[], target: any): boolean;
 /**
@@ -321,6 +348,7 @@ export declare function contains(value: any[], target: any): boolean;
  * @param valueA 值 A
  * @param valueB 值 B
  * @returns
+ * @category Tools-工具方法
  */
 export declare function same(valueA: any[] | string, valueB: any[] | string): boolean;
 /**
@@ -331,6 +359,7 @@ export declare function same(valueA: any[] | string, valueB: any[] | string): bo
  * getSortVar([1, 3, 2]); /// [1, 2, 3]
  * @param value 值
  * @returns
+ * @category Tools-工具方法
  */
 export declare function getSortVar(value: any): any;
 /**
@@ -342,6 +371,7 @@ export declare function getSortVar(value: any): any;
  * inversion(true); /// true
  * @param value 值
  * @returns
+ * @category Tools-工具方法
  */
 export declare function inversion(value: any): any;
 /**
@@ -354,6 +384,7 @@ export declare function inversion(value: any): any;
  * @param timeout 超时
  * @param interval 执行间隔
  * @returns
+ * @category Tools-工具方法
  */
 export declare function waitUntil(condition: any, timeout?: number, interval?: number): Promise<any>;
 /**
@@ -369,6 +400,7 @@ export declare function waitUntil(condition: any, timeout?: number, interval?: n
  * ms(60000); /// '1m'
  * @param str 值
  * @returns
+ * @category Tools-工具方法
  */
 export declare function ms(str: any): string | number;
 /**
@@ -380,6 +412,7 @@ export declare function ms(str: any): string | number;
  * @param contentType 内容类型
  * @param callBack 回调函数
  * @returns
+ * @category Tools-下载/文件相关
  */
 export declare function transferFileToBase64(content: any, contentType: string, callBack: any): void;
 /**
@@ -392,6 +425,7 @@ export declare function transferFileToBase64(content: any, contentType: string, 
  * checkIdCard('123123123123123222'); /// false
  * @param value 字符串值
  * @returns
+ * @category Tools-工具方法
  */
 export declare function checkIdCard(value: string): boolean;
 /**
@@ -403,6 +437,7 @@ export declare function checkIdCard(value: string): boolean;
  * @param birthday 生日
  * @param targetDate 目标日期
  * @returns
+ * @category Tools-工具方法
  */
 export declare function getAge(birthday: any, targetDate?: any): number;
 /**
@@ -413,6 +448,7 @@ export declare function getAge(birthday: any, targetDate?: any): number;
  * getAnimal('2023'); /// '兔'
  * @param date 日期
  * @returns
+ * @category Tools-工具方法
  */
 export declare function getAnimal(date: any): string;
 /**
@@ -425,6 +461,7 @@ export declare function getAnimal(date: any): string;
  * transferIdCard('xxxxx'); /// {}
  * @param idCard 字符串值
  * @returns
+ * @category Tools-工具方法
  */
 export declare function transferIdCard(idCard: string): any;
 /**
@@ -434,6 +471,7 @@ export declare function transferIdCard(idCard: string): any;
  * transferMoney(852.5); /// '捌佰伍拾贰元伍角'
  * @param n 数值
  * @returns
+ * @category Tools-工具方法
  */
 export declare function transferMoney(n: number): string;
 /**
@@ -448,6 +486,7 @@ export declare function transferMoney(n: number): string;
  * @param pitch 音高 [0, 2]
  * @param rate 速度 [0.1, 10]
  * @returns
+ * @category TTS-文字转语音
  */
 export declare function Speaker(text: string, lang?: string, volume?: number, pitch?: number, rate?: number): {
     getInstance: () => SpeechSynthesisUtterance;
@@ -466,6 +505,7 @@ export declare function Speaker(text: string, lang?: string, volume?: number, pi
  * @example
  * rip(); /// 页面灰白
  * @returns
+ * @category BXH-自定义动画
  */
 export declare function rip(): void;
 /**
@@ -476,6 +516,7 @@ export declare function rip(): void;
  * getConstellation(new Date('2022-11-24')); /// { cn: '射手', en: 'Sagittarius', date: '11.23-12.21' }
  * @param date 日期
  * @returns
+ * @category Tools-工具方法
  */
 export declare function getConstellation(date: any): {
     cn: string;
@@ -492,6 +533,7 @@ export declare function getConstellation(date: any): {
  * @param once 是否只触发一次
  * @param dom document.querySelector<HTMLDivElement>('.xxx')
  * @returns
+ * @category Tools-工具方法
  */
 export declare function setEventListener(eventKey: string, foo: any, once?: boolean, dom?: any): any;
 /**
@@ -502,6 +544,7 @@ export declare function setEventListener(eventKey: string, foo: any, once?: bool
  * @param downCb 缩回回调
  * @param upCb 弹起回调
  * @returns
+ * @category Tools-工具方法
  */
 export declare function keyBoardResize(downCb: any, upCb: any): any;
 /**
@@ -512,6 +555,7 @@ export declare function keyBoardResize(downCb: any, upCb: any): any;
  * onResize('resize', () => { console.log('resize'); }); /// cancel 当前 listener 的 function
  * @param foo 函数
  * @returns
+ * @category Tools-工具方法
  */
 export declare function onResize(foo: any): any;
 /**
@@ -521,6 +565,7 @@ export declare function onResize(foo: any): any;
  * getFingerprint('test'); /// md5 加密后的指纹-建议增加使用者标识，避免指纹冲突。
  * @param extraString 额外的字符串，可以说用户名等。
  * @returns
+ * @category Tools-工具方法
  */
 export declare function getFingerprint(extraString: string | number): string;
 /**
@@ -532,6 +577,7 @@ export declare function getFingerprint(extraString: string | number): string;
  * @example
  * banConsole(); /// 返回取消禁用的 function
  * @returns
+ * @category Tools-工具方法
  */
 export declare function banConsole(): any;
 /**
@@ -546,6 +592,7 @@ export declare function banConsole(): any;
  * getWeekInfo(8); /// WEEKS_INFO
  * @param n 值
  * @returns
+ * @category Tools-工具方法
  */
 export declare function getWeekInfo(n: string | number): {
     key: string;
@@ -572,6 +619,7 @@ export declare function getWeekInfo(n: string | number): {
  * getMonthInfo(13); /// MONTH_INFO
  * @param n 值
  * @returns
+ * @category Tools-工具方法
  */
 export declare function getMonthInfo(n: string | number): {
     key: string;
@@ -597,6 +645,7 @@ export declare function getMonthInfo(n: string | number): {
  * @param obj1 值 1
  * @param obj2 值 2
  * @returns
+ * @category Tools-工具方法
  */
 export declare function isEqual(obj1: any, obj2: any): boolean;
 /**
@@ -610,6 +659,7 @@ export declare function isEqual(obj1: any, obj2: any): boolean;
  * @param callback 回调函数
  * @param hasReturn 是否返回一个新值
  * @returns
+ * @category Tools-工具方法
  */
 export declare function forEach(data: any, callback: (value: any, ik: any) => any | '_break' | '_continue', hasReturn?: boolean): any;
 /**
@@ -622,6 +672,7 @@ export declare function forEach(data: any, callback: (value: any, ik: any) => an
  * @param prefix 前缀
  * @param prefix 后缀
  * @returns
+ * @category Crypto-密码学
  */
 export declare function getKey(size?: number, prefix?: string, suffix?: string): string;
 /**
@@ -631,6 +682,7 @@ export declare function getKey(size?: number, prefix?: string, suffix?: string):
  * getRandStr(5); /// '77192'
  * @param length 指定长度
  * @returns
+ * @category Crypto-密码学
  */
 export declare function getRandStr(length: number): string;
 /**
@@ -638,6 +690,7 @@ export declare function getRandStr(length: number): string;
  * @example
  * uuid(); /// '7b72e264-61fe-426e-b95f-35d4e61c5742'
  * @returns
+ * @category Crypto-密码学
  */
 export declare function uuid(): string;
 /**
@@ -645,6 +698,7 @@ export declare function uuid(): string;
  * @example
  * getRandDate(); /// '1923-01-01 01:03:30'
  * @returns
+ * @category Tools-工具方法
  */
 export declare function getRandDate(): string;
 /**
@@ -652,6 +706,7 @@ export declare function getRandDate(): string;
  * @example
  * getRandIp(); /// '89.0.142.86'
  * @returns
+ * @category Tools-工具方法
  */
 export declare function getRandIp(): string;
 /**
@@ -665,6 +720,7 @@ export declare function getRandIp(): string;
  * @param text 水印内容
  * @param options 样式配置
  * @returns
+ * @category Watermark-水印
  */
 export declare function watermark(dom: any, text: string, options?: any): void;
 /**
@@ -683,6 +739,7 @@ export declare function watermark(dom: any, text: string, options?: any): void;
  * @param [once=false] 是否为一次性定时器，默认为 false 。
  * @param [immediate=false] 是否立即执行回调函数，默认为 false 。
  * @returns
+ * @category xTimer-定时器封装
  */
 export declare function xTimer(callback: any, time?: number, once?: boolean, immediate?: boolean): () => void;
 /**
@@ -692,6 +749,7 @@ export declare function xTimer(callback: any, time?: number, once?: boolean, imm
  * curryIt(function (a, b, c) {return a + b + c})(1)(2)(3); /// 6
  * @param fn 函数
  * @returns
+ * @category Tools-工具方法
  */
 export declare function curryIt(fn: any): (...args: any[]) => any;
 //# sourceMappingURL=index.d.ts.map

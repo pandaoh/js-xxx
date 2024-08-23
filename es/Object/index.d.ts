@@ -9,6 +9,7 @@
  * @param defaultResult 默认值
  * @param args 需要获取的多级 rest 参数或者独立多级 string
  * @returns
+ * @category Object-对象相关
  */
 export declare function getV(defaultResult: any, ...args: any): any;
 /**
@@ -24,6 +25,7 @@ export declare function getV(defaultResult: any, ...args: any): any;
  * @param data 对象
  * @param key 需要判断的 key
  * @returns
+ * @category Object-对象相关
  */
 export declare function hasKey(data: any, key: string): boolean;
 /**
@@ -34,6 +36,7 @@ export declare function hasKey(data: any, key: string): boolean;
  * @param data 源数据
  * @param hash hash 存储，避免循环引用。
  * @returns
+ * @category Object-对象相关
  */
 export declare function deepClone(data: any, hash?: WeakMap<object, any>): any;
 /**
@@ -47,6 +50,7 @@ export declare function deepClone(data: any, hash?: WeakMap<object, any>): any;
  * @param collection 源数据
  * @param callback 回调
  * @returns
+ * @category Object-对象相关
  */
 export declare function every(collection: any, callback?: any): boolean;
 /**
@@ -60,6 +64,7 @@ export declare function every(collection: any, callback?: any): boolean;
  *  findMaxKey(objects); /// ['id', 'name', 'age', 'city', 'profession']
  * @param objArray 源数据
  * @returns
+ * @category Object-对象相关
  */
 export declare function findMaxKey(objArray: any[]): never[];
 /**
@@ -74,6 +79,7 @@ export declare function findMaxKey(objArray: any[]): never[];
  * @param arr 数组
  * @param options 配置 { label?: 'label', value: 'value', key?: 'key' }
  * @returns
+ * @category Object-对象相关
  */
 export declare function arr2select(arr: any[], options: {
     label?: string;

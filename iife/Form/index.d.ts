@@ -6,6 +6,7 @@
  * @param hasBrackets 是否带括号
  * @param hasIndex 是否带 index
  * @returns
+ * @category Form-表单相关
  */
 export declare function toFormData(obj: any, hasBrackets?: boolean, hasIndex?: boolean): FormData;
 /**
@@ -18,6 +19,7 @@ export declare function toFormData(obj: any, hasBrackets?: boolean, hasIndex?: b
  * @param hasBrackets 是否带括号
  * @param hasIndex 是否带 index
  * @returns
+ * @category Form-表单相关
  */
 export declare function toQueryString(obj: any, hasBrackets?: boolean, hasIndex?: boolean): URLSearchParams;
 /**
@@ -33,6 +35,7 @@ export declare function toQueryString(obj: any, hasBrackets?: boolean, hasIndex?
  * resetData(); /// 'test'
  * @param initialData 初始数据
  * @returns
+ * @category Form-表单相关
  */
 export declare function useStateData(initialData: any): ((value: any) => any)[];
 //# sourceMappingURL=index.d.ts.map

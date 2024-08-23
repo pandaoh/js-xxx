@@ -4,7 +4,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-08-12 14:09:02
+ * @LastEditTime: 2024-08-23 11:07:57
  * @Description: 工具函数
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
@@ -31,6 +31,7 @@ import { getContentType, safeDecodeURI } from '@/Request';
  * @example
  * getTimeCode(); /// '2036551026042022'
  * @returns
+ * @category Tools-工具方法
  */
 export function getTimeCode(): string {
   const dateObj = new Date();
@@ -59,6 +60,7 @@ export function getTimeCode(): string {
  * empty([]); /// true
  * @param variable 变量
  * @returns
+ * @category Tools-工具方法
  */
 export function empty(variable: any): boolean {
   if (typeof variable === 'boolean') {
@@ -99,6 +101,7 @@ export function empty(variable: any): boolean {
  * getFirstVar({a: 2,b: 1}); /// 2
  * @param data 源数据
  * @returns
+ * @category Tools-工具方法
  */
 export function getFirstVar(data: any): any {
   if (getType(data) !== 'object' && !Array.isArray(data)) {
@@ -117,6 +120,7 @@ export function getFirstVar(data: any): any {
  * getLastVar({a: 2, b: 1}); /// b
  * @param data 源数据
  * @returns
+ * @category Tools-工具方法
  */
 export function getLastVar(data: any): any {
   const isObj = getType(data) == 'object';
@@ -138,6 +142,7 @@ export function getLastVar(data: any): any {
  * @param value 值
  * @param count 获取数据量
  * @returns
+ * @category Tools-工具方法
  */
 export function getRandVar(value: any, count = 1): any | any[] {
   const sample = Array.isArray(value) ? JSON.parse(JSON.stringify(value)) : Object.values(value);
@@ -164,6 +169,7 @@ export function getRandVar(value: any, count = 1): any | any[] {
  * @param fn 执行的函数
  * @param delay 延迟时间
  * @returns
+ * @category Tools-工具方法
  */
 export function debounce(fn: any, delay = 1000) {
   let timer: any = null;
@@ -184,6 +190,7 @@ export function debounce(fn: any, delay = 1000) {
  * @param fn 执行的函数
  * @param delay 延迟时间
  * @returns
+ * @category Tools-工具方法
  */
 export function throttle(fn: any, delay = 2000) {
   let canRun = true;
@@ -206,6 +213,7 @@ export function throttle(fn: any, delay = 2000) {
  * @param fn (error)
  * @param notShowConsole 是否不回显控制台
  * @returns
+ * @category Tools-工具方法
  */
 export function globalError(fn: any, notShowConsole = true) {
   // 监听全局错误
@@ -278,6 +286,7 @@ export function globalError(fn: any, notShowConsole = true) {
  * observeResource(); /// 找不到资源时刷新页面
  * @param callback
  * @returns
+ * @category Tools-工具方法
  */
 export function observeResource(callback?: any) {
   const PERFORMANCE_SUPPORTED = window.performance && typeof window.performance.getEntries === 'function';
@@ -344,6 +353,7 @@ export function observeResource(callback?: any) {
  * @param interval 请求文件的时间间隔（毫秒），默认为 15 分钟，最小值 1 分钟。
  * @param url 要检测的文件路径（默认为页面最后一个 JavaScript/CSS 文件）
  * @returns
+ * @category Tools-工具方法
  */
 export function checkUpdate(callback: any, interval = 15 * 60 * 1000, url?: string) {
   let filePath: any = url;
@@ -427,6 +437,7 @@ export function checkUpdate(callback: any, interval = 15 * 60 * 1000, url?: stri
  * @param min 最小值
  * @param max 最大值
  * @returns
+ * @category Tools-工具方法
  */
 export function getRandNum(min = 0, max = 10): number {
   return Math.floor(min + Math.random() * (max - min + 1));
@@ -437,6 +448,7 @@ export function getRandNum(min = 0, max = 10): number {
  * @example
  * getRandColor(); /// '#xxxxxx'
  * @returns
+ * @category Tools-工具方法
  */
 export function getRandColor(): string {
   return '#' + ('00000' + ((Math.random() * 0x1000000) << 0).toString(16)).slice(-6);
@@ -451,6 +463,7 @@ export function getRandColor(): string {
  * getBSColor('warning'); /// '#ffc107'
  * @param key color name
  * @returns
+ * @category Tools-工具方法
  */
 export function getBSColor(key = 'default'): string {
   key = `${key}`.toLowerCase();
@@ -486,6 +499,7 @@ export function getBSColor(key = 'default'): string {
  * getVarSize(null); /// 0
  * @param value 值
  * @returns
+ * @category Tools-工具方法
  */
 export function getVarSize(value: any): number {
   if (getType(value) === 'object') {
@@ -506,6 +520,7 @@ export function getVarSize(value: any): number {
  * openFileSelect({ multiple: true, accept: '.txt', resultType: 'base64' }).then(fileDataUrlList => console.log(fileDataUrlList));
  * @param options 打开配置
  * @returns
+ * @category Tools-下载/文件相关
  */
 export function openFileSelect(options?: {
   accept?: string;
@@ -618,6 +633,7 @@ export function openFileSelect(options?: {
  * @param blob 要保存的 Blob 对象。
  * @param filename 可选。保存的文件名。
  * @returns
+ * @category Tools-下载/文件相关
  */
 export function saveAs(blob: Blob, filename?: string) {
   const url = window.URL || window.webkitURL;
@@ -644,6 +660,7 @@ export function saveAs(blob: Blob, filename?: string) {
  * @param url 图片的 URL 地址。
  * @param fileName 可选。下载的文件名。
  * @returns
+ * @category Tools-下载/文件相关
  */
 export function downloadImg(url: string, fileName?: string) {
   if (!url || !url.startsWith('http')) {
@@ -697,6 +714,7 @@ export function downloadImg(url: string, fileName?: string) {
  * @param url 文件的 URL 地址。
  * @param fileName 可选。下载的文件名，默认为 URL 中的文件名。
  * @returns
+ * @category Tools-下载/文件相关
  */
 export function downloadFile(url: string, fileName?: string) {
   const ext = fileName?.match(/[^\/]*\.(\w+)(?:\?.*)?$/)?.[1] || url.match(/[^\/]*\.(\w+)(?:\?.*)?$/)?.[1] || 'txt';
@@ -734,6 +752,7 @@ export function downloadFile(url: string, fileName?: string) {
  * @param url 要获取文件名的 URL 。
  * @param onlyExt 可选。如果为 true，则仅返回文件扩展名。
  * @returns
+ * @category Tools-下载/文件相关
  */
 export function getFileNameFromUrl(url: string, onlyExt = false): string {
   const ext = url.match(/[^\/]*\.(\w+)(?:\?.*)?$/)?.[1] || 'txt';
@@ -760,6 +779,7 @@ export function getFileNameFromUrl(url: string, onlyExt = false): string {
  * openPreviewFile('https://example.com/path/to/otherfile.zip'); // 将直接打开链接
  * @param url 要预览的 URL 地址。
  * @returns
+ * @category Tools-下载/文件相关
  */
 export function openPreviewFile(url: string, serviceUrl: string): void {
   const urlMap = new Map<RegExp, (url: string) => void>()
@@ -799,6 +819,7 @@ export function openPreviewFile(url: string, serviceUrl: string): void {
  * @param paramA 值 A
  * @param paramB 值 B
  * @returns
+ * @category Tools-工具方法
  */
 export function intersection(paramA: any, paramB: any): any {
   const paramAType = getType(paramA);
@@ -834,6 +855,7 @@ export function intersection(paramA: any, paramB: any): any {
  * @param paramA 值 A，若冲突以此值为准。
  * @param paramB 值 B
  * @returns
+ * @category Tools-工具方法
  */
 export function union(paramA: any, paramB: any): any {
   const paramAType = getType(paramA);
@@ -859,6 +881,7 @@ export function union(paramA: any, paramB: any): any {
  * @param paramA 值 A，若冲突以此值为准。
  * @param paramB 值 B
  * @returns
+ * @category Tools-工具方法
  */
 export function difference(paramA: any, paramB: any): any {
   const paramAType = getType(paramA);
@@ -888,6 +911,7 @@ export function difference(paramA: any, paramB: any): any {
  * jsonClone({a: 1, b: 2}); /// {a: 1, b: 2}
  * @param value 值
  * @returns
+ * @category JSON-相关
  */
 export function jsonClone(value: any): any {
   try {
@@ -908,6 +932,7 @@ export function jsonClone(value: any): any {
  * @param fn 方法函数
  * @param timeKey 打印时间记录关键 key
  * @returns
+ * @category Extra-日志/调试
  */
 export function logRunTime(fn: any, timeKey: string): void {
   timeKey = timeKey ?? getKey(5, 'log-run-time');
@@ -942,6 +967,7 @@ export function logRunTime(fn: any, timeKey: string): void {
  * showVar({a: 1, b: 2}); /// 显示序列化之后的数据
  * @param value 值
  * @returns
+ * @category Extra-日志/调试
  */
 export function showVar(value: any): any {
   try {
@@ -965,6 +991,7 @@ export function showVar(value: any): any {
  * @param value 值
  * @param target 目标值
  * @returns
+ * @category Tools-工具方法
  */
 export function contains(value: any[], target: any): boolean {
   try {
@@ -993,6 +1020,7 @@ export function contains(value: any[], target: any): boolean {
  * @param valueA 值 A
  * @param valueB 值 B
  * @returns
+ * @category Tools-工具方法
  */
 export function same(valueA: any[] | string, valueB: any[] | string): boolean {
   try {
@@ -1016,6 +1044,7 @@ export function same(valueA: any[] | string, valueB: any[] | string): boolean {
  * getSortVar([1, 3, 2]); /// [1, 2, 3]
  * @param value 值
  * @returns
+ * @category Tools-工具方法
  */
 export function getSortVar(value: any): any {
   try {
@@ -1043,6 +1072,7 @@ export function getSortVar(value: any): any {
  * inversion(true); /// true
  * @param value 值
  * @returns
+ * @category Tools-工具方法
  */
 export function inversion(value: any): any {
   try {
@@ -1066,6 +1096,7 @@ export function inversion(value: any): any {
  * @param timeout 超时
  * @param interval 执行间隔
  * @returns
+ * @category Tools-工具方法
  */
 export function waitUntil(condition: any, timeout = 0, interval = 250): Promise<any> {
   function evalCondition() {
@@ -1109,6 +1140,7 @@ export function waitUntil(condition: any, timeout = 0, interval = 250): Promise<
  * ms(60000); /// '1m'
  * @param str 值
  * @returns
+ * @category Tools-工具方法
  */
 export function ms(str: any): string | number {
   // 外部
@@ -1151,6 +1183,7 @@ export function ms(str: any): string | number {
  * @param contentType 内容类型
  * @param callBack 回调函数
  * @returns
+ * @category Tools-下载/文件相关
  */
 export function transferFileToBase64(content: any, contentType: string, callBack: any): void {
   const blob = new Blob([content], {
@@ -1177,6 +1210,7 @@ export function transferFileToBase64(content: any, contentType: string, callBack
  * checkIdCard('123123123123123222'); /// false
  * @param value 字符串值
  * @returns
+ * @category Tools-工具方法
  */
 export function checkIdCard(value: string): boolean {
   const regIdCard15 = /^[1-9]d{5}d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)d{2}$/;
@@ -1195,6 +1229,7 @@ export function checkIdCard(value: string): boolean {
  * @param birthday 生日
  * @param targetDate 目标日期
  * @returns
+ * @category Tools-工具方法
  */
 export function getAge(birthday: any, targetDate?: any): number {
   return new Date(new Date(targetDate ?? Date.now()).getTime() - new Date(birthday).getTime()).getFullYear() - 1970;
@@ -1208,6 +1243,7 @@ export function getAge(birthday: any, targetDate?: any): number {
  * getAnimal('2023'); /// '兔'
  * @param date 日期
  * @returns
+ * @category Tools-工具方法
  */
 export function getAnimal(date: any): string {
   return ANIMALS[new Date(date).getFullYear() % 12];
@@ -1223,6 +1259,7 @@ export function getAnimal(date: any): string {
  * transferIdCard('xxxxx'); /// {}
  * @param idCard 字符串值
  * @returns
+ * @category Tools-工具方法
  */
 export function transferIdCard(idCard: string): any {
   if (!checkIdCard(idCard)) {
@@ -1261,6 +1298,7 @@ export function transferIdCard(idCard: string): any {
  * transferMoney(852.5); /// '捌佰伍拾贰元伍角'
  * @param n 数值
  * @returns
+ * @category Tools-工具方法
  */
 export function transferMoney(n: number): string {
   const fraction = ['角', '分'];
@@ -1307,6 +1345,7 @@ export function transferMoney(n: number): string {
  * @param pitch 音高 [0, 2]
  * @param rate 速度 [0.1, 10]
  * @returns
+ * @category TTS-文字转语音
  */
 export function Speaker(text: string, lang = 'zh-CN', volume = 1, pitch = 1, rate = 1) {
   const speaker: SpeechSynthesisUtterance = new window.SpeechSynthesisUtterance(text);
@@ -1355,6 +1394,7 @@ export function Speaker(text: string, lang = 'zh-CN', volume = 1, pitch = 1, rat
  * @example
  * rip(); /// 页面灰白
  * @returns
+ * @category BXH-自定义动画
  */
 export function rip(): void {
   const html: any = document.querySelector('html');
@@ -1371,6 +1411,7 @@ export function rip(): void {
  * getConstellation(new Date('2022-11-24')); /// { cn: '射手', en: 'Sagittarius', date: '11.23-12.21' }
  * @param date 日期
  * @returns
+ * @category Tools-工具方法
  */
 export function getConstellation(date: any): { cn: string; en: string; date: any } {
   const defaultV = {
@@ -1488,6 +1529,7 @@ export function getConstellation(date: any): { cn: string; en: string; date: any
  * @param once 是否只触发一次
  * @param dom document.querySelector<HTMLDivElement>('.xxx')
  * @returns
+ * @category Tools-工具方法
  */
 export function setEventListener(eventKey: string, foo: any, once = false, dom: any = window): any {
   dom.addEventListener(eventKey, foo, {
@@ -1507,6 +1549,7 @@ export function setEventListener(eventKey: string, foo: any, once = false, dom: 
  * @param downCb 缩回回调
  * @param upCb 弹起回调
  * @returns
+ * @category Tools-工具方法
  */
 export function keyBoardResize(downCb: any, upCb: any): any {
   // 当软件键盘弹起会改变当前 window.innerHeight
@@ -1536,6 +1579,7 @@ export function keyBoardResize(downCb: any, upCb: any): any {
  * onResize('resize', () => { console.log('resize'); }); /// cancel 当前 listener 的 function
  * @param foo 函数
  * @returns
+ * @category Tools-工具方法
  */
 export function onResize(foo: any): any {
   const func = (...args: any[]) => {
@@ -1554,6 +1598,7 @@ export function onResize(foo: any): any {
  * getFingerprint('test'); /// md5 加密后的指纹-建议增加使用者标识，避免指纹冲突。
  * @param extraString 额外的字符串，可以说用户名等。
  * @returns
+ * @category Tools-工具方法
  */
 export function getFingerprint(extraString: string | number): string {
   let fingerprint = '';
@@ -1605,6 +1650,7 @@ export function getFingerprint(extraString: string | number): string {
  * @example
  * banConsole(); /// 返回取消禁用的 function
  * @returns
+ * @category Tools-工具方法
  */
 export function banConsole(): any {
   document.body.setAttribute('style', 'user-select: none;' + document.body.style ?? '');
@@ -1634,6 +1680,7 @@ export function banConsole(): any {
  * getWeekInfo(8); /// WEEKS_INFO
  * @param n 值
  * @returns
+ * @category Tools-工具方法
  */
 export function getWeekInfo(n: string | number):
   | {
@@ -1672,6 +1719,7 @@ export function getWeekInfo(n: string | number):
  * getMonthInfo(13); /// MONTH_INFO
  * @param n 值
  * @returns
+ * @category Tools-工具方法
  */
 export function getMonthInfo(n: string | number):
   | {
@@ -1709,6 +1757,7 @@ export function getMonthInfo(n: string | number):
  * @param obj1 值 1
  * @param obj2 值 2
  * @returns
+ * @category Tools-工具方法
  */
 export function isEqual(obj1: any, obj2: any): boolean {
   // 判断类型是否相同
@@ -1762,6 +1811,7 @@ export function isEqual(obj1: any, obj2: any): boolean {
  * @param callback 回调函数
  * @param hasReturn 是否返回一个新值
  * @returns
+ * @category Tools-工具方法
  */
 export function forEach(data: any, callback: (value: any, ik: any) => any | '_break' | '_continue', hasReturn = false) {
   const type: string = Object.prototype.toString.call(data);
@@ -1815,6 +1865,7 @@ export function forEach(data: any, callback: (value: any, ik: any) => any | '_br
  * @param prefix 前缀
  * @param prefix 后缀
  * @returns
+ * @category Crypto-密码学
  */
 export function getKey(size = 21, prefix?: string, suffix?: string): string {
   const symbols = `${BASE_NUMBER}${BASE_CHAR_LOW}${BASE_CHAR_UP}`;
@@ -1843,6 +1894,7 @@ export function getKey(size = 21, prefix?: string, suffix?: string): string {
  * getRandStr(5); /// '77192'
  * @param length 指定长度
  * @returns
+ * @category Crypto-密码学
  */
 export function getRandStr(length: number): string {
   let result = '';
@@ -1859,6 +1911,7 @@ export function getRandStr(length: number): string {
  * @example
  * uuid(); /// '7b72e264-61fe-426e-b95f-35d4e61c5742'
  * @returns
+ * @category Crypto-密码学
  */
 export function uuid(): string {
   // // 创建临时 URL 对象
@@ -1914,6 +1967,7 @@ export function uuid(): string {
  * @example
  * getRandDate(); /// '1923-01-01 01:03:30'
  * @returns
+ * @category Tools-工具方法
  */
 export function getRandDate(): string {
   const year = getRandNum(1970, new Date().getFullYear());
@@ -1937,6 +1991,7 @@ export function getRandDate(): string {
  * @example
  * getRandIp(); /// '89.0.142.86'
  * @returns
+ * @category Tools-工具方法
  */
 export function getRandIp(): string {
   const segment1 = getRandNum(1, 255);
@@ -1958,6 +2013,7 @@ export function getRandIp(): string {
  * @param text 水印内容
  * @param options 样式配置
  * @returns
+ * @category Watermark-水印
  */
 export function watermark(dom: any, text: string, options: any = {}) {
   const {
@@ -2037,6 +2093,7 @@ export function watermark(dom: any, text: string, options: any = {}) {
  * @param [once=false] 是否为一次性定时器，默认为 false 。
  * @param [immediate=false] 是否立即执行回调函数，默认为 false 。
  * @returns
+ * @category xTimer-定时器封装
  */
 export function xTimer(callback: any, time = 0, once = false, immediate = false) {
   time = time ?? 0;
@@ -2075,6 +2132,7 @@ export function xTimer(callback: any, time = 0, once = false, immediate = false)
  * curryIt(function (a, b, c) {return a + b + c})(1)(2)(3); /// 6
  * @param fn 函数
  * @returns
+ * @category Tools-工具方法
  */
 export function curryIt(fn: any) {
   return function curried(...args: any[]) {

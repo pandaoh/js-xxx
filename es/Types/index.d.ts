@@ -5,6 +5,7 @@
  * getType(async function(){}); /// 'asyncfunction'
  * @param variable 变量
  * @returns
+ * @category Types-类型相关
  */
 export declare function getType(variable: any): string;
 /**
@@ -15,6 +16,7 @@ export declare function getType(variable: any): string;
  * toStr(null); /// ''
  * @param value 值
  * @returns
+ * @category Types-类型相关
  */
 export declare function toStr(value: any): string;
 /**
@@ -25,6 +27,7 @@ export declare function toStr(value: any): string;
  * toNum('-123'); /// -123
  * @param value 值
  * @returns
+ * @category Types-类型相关
  */
 export declare function toNum(value: any): number;
 /**
@@ -44,6 +47,7 @@ export declare function toNum(value: any): number;
  * @param value 值
  * @param falseList 判断为 false 的值列表
  * @returns
+ * @category Types-类型相关
  */
 export declare function toBool(value: any, falseList?: any[]): boolean;
 /**
@@ -54,6 +58,7 @@ export declare function toBool(value: any, falseList?: any[]): boolean;
  * isJSON(null); /// true
  * @param str 字符串
  * @returns
+ * @category Types-类型相关
  */
 export declare function isJSON(str: any): boolean;
 /**
@@ -63,6 +68,7 @@ export declare function isJSON(str: any): boolean;
  * isBool(null); /// false
  * @param value 值
  * @returns
+ * @category Types-类型相关
  */
 export declare function isBool(value: any): boolean;
 /**
@@ -72,6 +78,7 @@ export declare function isBool(value: any): boolean;
  * isDate(null); /// false
  * @param value 值
  * @returns
+ * @category Types-类型相关
  */
 export declare function isDate(value: any): boolean;
 /**
@@ -83,6 +90,7 @@ export declare function isDate(value: any): boolean;
  * isInvalidDate(new Date('invalid date')); /// true
  * @param date 值
  * @returns
+ * @category Types-类型相关
  */
 export declare function isInvalidDate(date: any): boolean;
 /**
@@ -92,6 +100,7 @@ export declare function isInvalidDate(date: any): boolean;
  * isStr(null); /// false
  * @param value 值
  * @returns
+ * @category Types-类型相关
  */
 export declare function isStr(value: any): boolean;
 /**
@@ -101,6 +110,7 @@ export declare function isStr(value: any): boolean;
  * isUndef(null); /// false
  * @param value 值
  * @returns
+ * @category Types-类型相关
  */
 export declare function isUndef(value: any): boolean;
 /**
@@ -110,6 +120,7 @@ export declare function isUndef(value: any): boolean;
  * isNull(null); /// true
  * @param value 值
  * @returns
+ * @category Types-类型相关
  */
 export declare function isNull(value: any): boolean;
 /**
@@ -119,6 +130,7 @@ export declare function isNull(value: any): boolean;
  * isNum(1); /// true
  * @param value 值
  * @returns
+ * @category Types-类型相关
  */
 export declare function isNum(value: any): boolean;
 /**
@@ -128,6 +140,7 @@ export declare function isNum(value: any): boolean;
  * isArr({}); /// false
  * @param value 值
  * @returns
+ * @category Types-类型相关
  */
 export declare function isArr(value: any): boolean;
 /**
@@ -137,6 +150,7 @@ export declare function isArr(value: any): boolean;
  * isObj(null); /// false
  * @param value 值
  * @returns
+ * @category Types-类型相关
  */
 export declare function isObj(value: any): boolean;
 /**
@@ -147,6 +161,7 @@ export declare function isObj(value: any): boolean;
  * isElement({}); /// false
  * @param value 值
  * @returns
+ * @category Types-类型相关
  */
 export declare function isElement(value: any): boolean;
 /**
@@ -158,6 +173,7 @@ export declare function isElement(value: any): boolean;
  * isFn({}); /// false
  * @param value 值
  * @returns
+ * @category Types-类型相关
  */
 export declare function isFn(value: any): boolean;
 /**
@@ -168,6 +184,7 @@ export declare function isFn(value: any): boolean;
  * isPromise(new Promise((resolve, reject) => resolve())); /// true
  * @param value 值
  * @returns
+ * @category Types-类型相关
  */
 export declare function isPromise(value: any): boolean;
 /**
@@ -177,6 +194,7 @@ export declare function isPromise(value: any): boolean;
  * isNaN(NaN); /// true
  * @param value 值
  * @returns
+ * @category Types-类型相关
  */
 export declare function isNaN(value: any): boolean;
 /**
@@ -186,6 +204,7 @@ export declare function isNaN(value: any): boolean;
  * isBlob(null); /// false
  * @param value 值
  * @returns
+ * @category Types-类型相关
  */
 export declare function isBlob(value: any): boolean;
 /**
@@ -195,6 +214,7 @@ export declare function isBlob(value: any): boolean;
  * isArrayBuffer(null); /// false
  * @param value 值
  * @returns
+ * @category Types-类型相关
  */
 export declare function isArrayBuffer(value: any): boolean;
 //# sourceMappingURL=index.d.ts.map

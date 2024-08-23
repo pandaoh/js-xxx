@@ -6,6 +6,7 @@
  * @param div1 被除数
  * @param div2 除数
  * @returns
+ * @category Math-数学相关
  */
 export declare function div(div1: number | string, div2: number | string): number;
 /**
@@ -16,6 +17,7 @@ export declare function div(div1: number | string, div2: number | string): numbe
  * @param mul1 被乘数
  * @param mul2 乘数
  * @returns
+ * @category Math-数学相关
  */
 export declare function times(mul1: number | string, mul2: number | string): number;
 /**
@@ -26,6 +28,7 @@ export declare function times(mul1: number | string, mul2: number | string): num
  * @param add1 被加数
  * @param add2 加数
  * @returns
+ * @category Math-数学相关
  */
 export declare function add(add1: number | string, add2: number | string): number;
 /**
@@ -36,6 +39,7 @@ export declare function add(add1: number | string, add2: number | string): numbe
  * @param sub1 被减数
  * @param sub2 减数
  * @returns
+ * @category Math-数学相关
  */
 export declare function sub(sub1: number | string, sub2: number | string): number;
 /**
@@ -45,6 +49,7 @@ export declare function sub(sub1: number | string, sub2: number | string): numbe
  * average(1, 2, 3, 4.123); /// 2.53075
  * @param args 需要计算的数...
  * @returns
+ * @category Math-数学相关
  */
 export declare function average(...args: any[]): number;
 /**
@@ -59,6 +64,7 @@ export declare function average(...args: any[]): number;
  * @param operator 操作符
  * @param args 需要计算的数...
  * @returns
+ * @category Math-数学相关
  */
 export declare function calculate(operator: string, ...args: any[]): number;
 /**
@@ -68,6 +74,7 @@ export declare function calculate(operator: string, ...args: any[]): number;
  * abs(1); /// 1
  * @param value 数值
  * @returns
+ * @category Math-数学相关
  */
 export declare function abs(value: number): number;
 /**
@@ -77,6 +84,7 @@ export declare function abs(value: number): number;
  * isEven(1); /// false
  * @param value 数值
  * @returns
+ * @category Math-数学相关
  */
 export declare function isEven(value: number): boolean;
 /**
@@ -91,6 +99,7 @@ export declare function isEven(value: number): boolean;
  * @param d 精度
  * @param isStr 是否返回字符串
  * @returns
+ * @category Math-数学相关
  */
 export declare function float(value: number, d?: number, isStr?: boolean): number | string;
 /**
@@ -104,6 +113,7 @@ export declare function float(value: number, d?: number, isStr?: boolean): numbe
  * @param min 最小值
  * @param max 最大值
  * @returns
+ * @category Math-数学相关
  */
 export declare function inRange(value: any, min: number, max: number): boolean;
 /**
@@ -118,6 +128,7 @@ export declare function inRange(value: any, min: number, max: number): boolean;
  * @param total 总数
  * @param options 配置
  * @returns
+ * @category Math-数学相关
  */
 export declare function getPercentage(value: any, total: any, decimals?: number, options?: {
     float: boolean;
@@ -131,6 +142,7 @@ export declare function getPercentage(value: any, total: any, decimals?: number,
  * markNumber(123); /// '123'
  * @param value 数值
  * @returns
+ * @category Math-数学相关
  */
 export declare function markNumber(value: number): string;
 /**
@@ -142,6 +154,7 @@ export declare function markNumber(value: number): string;
  * @param from 原进制
  * @param to 目标进制
  * @returns
+ * @category Math-数学相关
  */
 export declare function transferNumber(number: number, from?: number, to?: number): string | number;
 //# sourceMappingURL=index.d.ts.map

@@ -3,6 +3,7 @@
  * @example
  * initNotification(); /// true||false
  * @returns
+ * @category Notify-封装
  */
 export declare function initNotification(): boolean;
 /**
@@ -10,6 +11,7 @@ export declare function initNotification(): boolean;
  * @example
  * sendNotification('测试通知', '测试标题', {...options}); /// 发送成功/失败
  * @returns
+ * @category Notify-封装
  */
 export declare function sendNotification(msg: string, title?: string, options?: {
     badge?: string;

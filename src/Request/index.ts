@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:15:37
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-04-28 17:47:45
+ * @LastEditTime: 2024-08-23 11:03:20
  * @Description: 请求相关函数
  * @FilePath: \js-xxx\src\Request\index.ts
  */
@@ -18,6 +18,7 @@ import { getType, isObj, toBool } from '@/Types';
  * qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3], str: '1' }, { hasIndex: true }); /// 'start=0&count=20&obj[a]=1&arr[0]=1&arr[1]=2&arr[2]=3&str=1'
  * @param obj 源数据
  * @returns
+ * @category Request-请求相关
  */
 export function qsStringify(
   obj: any,
@@ -68,6 +69,7 @@ export function qsStringify(
  * @param url query string
  * @param key 参数名
  * @returns
+ * @category Request-请求相关
  */
 export function qsParse(url?: string, key?: string): any {
   // 也可使用 new URL(url) 或者 new URLSearchParams(params) API 获取
@@ -109,6 +111,7 @@ export function qsParse(url?: string, key?: string): any {
  * @param url 地址/链接
  * @param hashRoute 是否为 hash 路由，默认为 false 。
  * @returns
+ * @category Request-请求相关
  */
 export function getBaseURL(url?: string, hashRoute = false): string {
   if (url === null) {
@@ -129,6 +132,7 @@ export function getBaseURL(url?: string, hashRoute = false): string {
  * getQueryString(); /// 当前页面 QueryString 字符串部分
  * @param url 地址/链接
  * @returns
+ * @category Request-请求相关
  */
 export function getQueryString(url?: string): any {
   return toBool(url) ? url?.split('?')?.[1]?.split('#')?.[0] ?? '' : window.location.search?.replace('?', '');
@@ -146,6 +150,7 @@ export function getQueryString(url?: string): any {
  * @param url URL 地址
  * @param replaceHistory 是否替换历史记录，默认为 true 。
  * @returns
+ * @category Request-请求相关
  */
 export function changeURL(url: string, replaceHistory = true) {
   if (replaceHistory) {
@@ -163,6 +168,7 @@ export function changeURL(url: string, replaceHistory = true) {
  * getSearchParams(); /// 当前页面 SearchParams 对象
  * @param url 地址/链接
  * @returns
+ * @category Request-请求相关
  */
 export function getSearchParams(url?: string): any {
   const searchPar = new URLSearchParams(getQueryString(url));
@@ -182,6 +188,7 @@ export function getSearchParams(url?: string): any {
  * @param url 地址/链接
  * @param options 请求配置
  * @returns
+ * @category xAjax-请求封装
  */
 export function xAjax(
   method: string | HttpMethod,
@@ -248,6 +255,7 @@ export function xAjax(
  * @param url 地址/链接
  * @param options 请求配置
  * @returns
+ * @category xFetch-封装
  */
 export function xFetch(
   method: string | HttpMethod,
@@ -330,6 +338,7 @@ export function xFetch(
  * getContentType('unknown'); /// 'application/octet-stream'
  * @param fileType 文件类型
  * @returns
+ * @category Request-请求相关
  */
 export function getContentType(fileType: string): string {
   return CONTENT_TYPES[fileType.toLowerCase()] ?? 'application/octet-stream';
@@ -344,6 +353,7 @@ export function getContentType(fileType: string): string {
  * safeEncodeURI('特殊字符 !@#'); // '%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6%20%21%40%23'
  * @param s 要编码的字符串。
  * @returns
+ * @category Custom-转码
  */
 export function safeEncodeURI(s: string): string {
   try {
@@ -363,6 +373,7 @@ export function safeEncodeURI(s: string): string {
  * safeDecodeURI('%'); // '%' （无效的 URI 片段）
  * @param s 要解码的 URI 。
  * @returns
+ * @category Custom-转码
  */
 export function safeDecodeURI(s: string): string {
   try {

@@ -14,6 +14,7 @@
  * getType(async function(){}); /// 'asyncfunction'
  * @param variable 变量
  * @returns
+ * @category Types-类型相关
  */
 export function getType(variable: any): string {
   return Object.prototype.toString.call(variable).slice(8, -1).toLowerCase();
@@ -27,6 +28,7 @@ export function getType(variable: any): string {
  * toStr(null); /// ''
  * @param value 值
  * @returns
+ * @category Types-类型相关
  */
 export function toStr(value: any): string {
   if (value == null) {
@@ -46,6 +48,7 @@ export function toStr(value: any): string {
  * toNum('-123'); /// -123
  * @param value 值
  * @returns
+ * @category Types-类型相关
  */
 export function toNum(value: any): number {
   value = Number(value);
@@ -69,6 +72,7 @@ export function toNum(value: any): number {
  * @param value 值
  * @param falseList 判断为 false 的值列表
  * @returns
+ * @category Types-类型相关
  */
 export function toBool(value: any, falseList: any[] = []): boolean {
   if (['false', 'null', 'undefined', 'NaN', ...falseList].includes(value)) {
@@ -91,6 +95,7 @@ export function toBool(value: any, falseList: any[] = []): boolean {
  * isJSON(null); /// true
  * @param str 字符串
  * @returns
+ * @category Types-类型相关
  */
 export function isJSON(str: any): boolean {
   try {
@@ -108,6 +113,7 @@ export function isJSON(str: any): boolean {
  * isBool(null); /// false
  * @param value 值
  * @returns
+ * @category Types-类型相关
  */
 export function isBool(value: any): boolean {
   return getType(value) === 'boolean';
@@ -120,6 +126,7 @@ export function isBool(value: any): boolean {
  * isDate(null); /// false
  * @param value 值
  * @returns
+ * @category Types-类型相关
  */
 export function isDate(value: any): boolean {
   return getType(value) === 'date';
@@ -134,6 +141,7 @@ export function isDate(value: any): boolean {
  * isInvalidDate(new Date('invalid date')); /// true
  * @param date 值
  * @returns
+ * @category Types-类型相关
  */
 export function isInvalidDate(date: any) {
   return isNaN(new Date(date).getTime());
@@ -146,6 +154,7 @@ export function isInvalidDate(date: any) {
  * isStr(null); /// false
  * @param value 值
  * @returns
+ * @category Types-类型相关
  */
 export function isStr(value: any): boolean {
   return getType(value) === 'string';
@@ -158,6 +167,7 @@ export function isStr(value: any): boolean {
  * isUndef(null); /// false
  * @param value 值
  * @returns
+ * @category Types-类型相关
  */
 export function isUndef(value: any): boolean {
   return getType(value) === 'undefined';
@@ -170,6 +180,7 @@ export function isUndef(value: any): boolean {
  * isNull(null); /// true
  * @param value 值
  * @returns
+ * @category Types-类型相关
  */
 export function isNull(value: any): boolean {
   return getType(value) === 'null';
@@ -182,6 +193,7 @@ export function isNull(value: any): boolean {
  * isNum(1); /// true
  * @param value 值
  * @returns
+ * @category Types-类型相关
  */
 export function isNum(value: any): boolean {
   return getType(value) === 'number' && !Object.is(NaN, value);
@@ -194,6 +206,7 @@ export function isNum(value: any): boolean {
  * isArr({}); /// false
  * @param value 值
  * @returns
+ * @category Types-类型相关
  */
 export function isArr(value: any): boolean {
   return Array.isArray(value);
@@ -206,6 +219,7 @@ export function isArr(value: any): boolean {
  * isObj(null); /// false
  * @param value 值
  * @returns
+ * @category Types-类型相关
  */
 export function isObj(value: any): boolean {
   return getType(value) === 'object';
@@ -219,6 +233,7 @@ export function isObj(value: any): boolean {
  * isElement({}); /// false
  * @param value 值
  * @returns
+ * @category Types-类型相关
  */
 export function isElement(value: any): boolean {
   return !!(value && value.nodeType === 1);
@@ -233,6 +248,7 @@ export function isElement(value: any): boolean {
  * isFn({}); /// false
  * @param value 值
  * @returns
+ * @category Types-类型相关
  */
 export function isFn(value: any): boolean {
   const type = getType(value);
@@ -247,6 +263,7 @@ export function isFn(value: any): boolean {
  * isPromise(new Promise((resolve, reject) => resolve())); /// true
  * @param value 值
  * @returns
+ * @category Types-类型相关
  */
 export function isPromise(value: any): boolean {
   return getType(value) === 'promise' || (isFn(value?.then) && isFn(value?.catch));
@@ -259,6 +276,7 @@ export function isPromise(value: any): boolean {
  * isNaN(NaN); /// true
  * @param value 值
  * @returns
+ * @category Types-类型相关
  */
 export function isNaN(value: any): boolean {
   return Object.is(NaN, value);
@@ -271,6 +289,7 @@ export function isNaN(value: any): boolean {
  * isBlob(null); /// false
  * @param value 值
  * @returns
+ * @category Types-类型相关
  */
 export function isBlob(value: any): boolean {
   return getType(value) === 'blob';
@@ -283,6 +302,7 @@ export function isBlob(value: any): boolean {
  * isArrayBuffer(null); /// false
  * @param value 值
  * @returns
+ * @category Types-类型相关
  */
 export function isArrayBuffer(value: any): boolean {
   return getType(value) === 'arraybuffer';

@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:54:41
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-08-12 11:27:53
+ * @LastEditTime: 2024-08-23 10:38:00
  * @Description: 时间相关函数
  * @FilePath: \js-xxx\src\Date\index.ts
  */
@@ -21,6 +21,7 @@ import { getType, isInvalidDate } from '@/Types';
  * @param fmt 格式化模板 'yyyy-mm-dd hh:ii:ss'
  * @param weeks 星期对应数组 [7, 1, 2, 3, 4, 5, 6]
  * @returns
+ * @category Date-日期相关
  */
 export function formatDate(date?: any, fmt = 'yyyy-mm-dd hh:ii:ss', weeks: any[] = [7, 1, 2, 3, 4, 5, 6]) {
   // @since 2.2.0
@@ -70,6 +71,7 @@ export function formatDate(date?: any, fmt = 'yyyy-mm-dd hh:ii:ss', weeks: any[]
  * @param date 时间
  * @param calcStrOrArr '1 days' or ['-1 day', '3 month']
  * @returns
+ * @category Date-日期相关
  */
 export function calcDate(date: string | Date, calcStrOrArr: string | string[]): Date {
   // @ts-ignore
@@ -133,6 +135,7 @@ export function calcDate(date: string | Date, calcStrOrArr: string | string[]): 
  * @param nowDate 近一点的时间，默认当前时间。
  * @param type 计算方式，默认计算差距的精确天数、时分秒。
  * @returns
+ * @category Date-日期相关
  */
 export function getDateDifference(
   oldDate: string | Date,
@@ -204,6 +207,7 @@ export function getDateDifference(
  * @param longAgo 是否显示周月甚至更久
  * @param formatter 正常显示时的时间显示格式
  * @returns
+ * @category Date-日期相关
  */
 export function timeSince(date?: string | Date, longAgo = false, formatter = 'yyyy-mm-dd hh:ii:ss') {
   // @ts-ignore
@@ -253,6 +257,7 @@ export function timeSince(date?: string | Date, longAgo = false, formatter = 'yy
  * isWorkDay(new Date()); /// true
  * @param date 日期
  * @returns
+ * @category Date-日期相关
  */
 export function isWeekday(date?: string | Date): boolean {
   // @ts-ignore
@@ -271,6 +276,7 @@ export function isWeekday(date?: string | Date): boolean {
  * getDayInYear('2023/06/23'); /// 174
  * @param date 日期
  * @returns
+ * @category Date-日期相关
  */
 export function getDayInYear(date?: string | Date): number {
   // @ts-ignore
@@ -296,6 +302,7 @@ export function getDayInYear(date?: string | Date): number {
  * @param type 类型
  * @param date 日期
  * @returns
+ * @category Date-日期相关
  */
 export function getDateList(
   n: number,
@@ -336,6 +343,7 @@ export function getDateList(
  * getDateTime(new Date()); /// time stamp
  * @param date 日期
  * @returns
+ * @category Date-日期相关
  */
 export function getDateTime(date?: string | Date): number {
   // @ts-ignore
@@ -357,6 +365,7 @@ export function getDateTime(date?: string | Date): number {
  * @param dateA 时间 A
  * @param dateB 时间 B
  * @returns
+ * @category Date-日期相关
  */
 export function compareDate(dateA: any, dateB?: any): -1 | 1 | 0 {
   // @ts-ignore
@@ -391,6 +400,7 @@ export function compareDate(dateA: any, dateB?: any): -1 | 1 | 0 {
  * @param callback 回调函数
  * @param finishCallBack 完成回调函数
  * @returns
+ * @category Date-日期相关
  */
 export function countdown(seconds: number, callback?: any, finishCallBack?: any): any {
   const timer: any = setInterval(() => {
@@ -417,6 +427,7 @@ export function countdown(seconds: number, callback?: any, finishCallBack?: any)
  * @param duration 时间/秒
  * @param returnObj 是否返回对象
  * @returns
+ * @category Date-日期相关
  */
 export function transferSeconds(duration: number, returnObj = false): string | any {
   // padStart
@@ -458,6 +469,7 @@ export function transferSeconds(duration: number, returnObj = false): string | a
  * getMonthDayCount(new Date()); /// 30
  * @param date 日期
  * @returns
+ * @category Date-日期相关
  */
 export function getMonthDayCount(date?: string | Date): number {
   // @ts-ignore
@@ -485,6 +497,7 @@ export function getMonthDayCount(date?: string | Date): number {
  * getUTCTime(8); /// 中国标准时间-东八区
  * @param timezone 时区数字，东八区为 8，西八区为 -8 。
  * @returns
+ * @category Date-日期相关
  */
 export function getUTCTime(timezone = 0): Date {
   const d = new Date();
@@ -512,6 +525,7 @@ export function getUTCTime(timezone = 0): Date {
  * // 如果时区为 UTC
  * getTimezone(); // '+0'
  * @returns
+ * @category Date-日期相关
  */
 export function getTimezone(): string {
   const timezoneOffset = -new Date().getTimezoneOffset() / 60;

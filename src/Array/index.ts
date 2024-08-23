@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 11:52:01
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-18 10:34:15
+ * @LastEditTime: 2024-08-23 10:44:23
  * @Description: 数组常用函数
  * @FilePath: \js-xxx\src\Array\index.ts
  */
@@ -17,6 +17,7 @@ import { isStr, toStr } from '@/Types';
  * @param key 分组的 key
  * @param vKey 值的 key，默认为整个值。
  * @returns
+ * @category Array-数组相关
  */
 export function data2Obj(sourceData: { [key: string]: any }[], key: string, vKey?: string): { [key: string]: any } {
   const obj: { [key: string]: any } = {};
@@ -36,6 +37,7 @@ export function data2Obj(sourceData: { [key: string]: any }[], key: string, vKey
  * @param sourceData 源数据
  * @param key 取值的 key
  * @returns
+ * @category Array-数组相关
  */
 export function data2Arr(sourceData: { [key: string]: any }[], key: string): any[] {
   const arr: any[] = [];
@@ -57,6 +59,7 @@ export function data2Arr(sourceData: { [key: string]: any }[], key: string): any
  * @param data 源数据
  * @param key 用于转换的 key
  * @returns
+ * @category Array-数组相关
  */
 export function arrObj2objArr(data: { [key: string]: any }[], key: string): { [key: string]: any[] } {
   const result: { [key: string]: any[] } = {};
@@ -90,6 +93,7 @@ export function arrObj2objArr(data: { [key: string]: any }[], key: string): { [k
  * @param arr 数组
  * @param filter 过滤逻辑
  * @returns
+ * @category Array-数组相关
  */
 export function unique(arr: any[], filter?: any): any[] {
   if (arr.length == 1) {
@@ -119,6 +123,7 @@ export function unique(arr: any[], filter?: any): any[] {
  * @param key 排序的字段
  * @param isAscend 是否升序
  * @returns
+ * @category Array-数组相关
  */
 export function sortCallBack(key: string, isAscend = true): any {
   return (a: any, b: any) => (a[key] > b[key] ? (isAscend ? 1 : -1) : isAscend ? -1 : 1);
@@ -130,6 +135,7 @@ export function sortCallBack(key: string, isAscend = true): any {
  * arrayShuffle([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]); /// [5, 9, 1, 10, 2, 6, 4, 8, 3, 7]
  * @param arr 数组
  * @returns
+ * @category Array-数组相关
  */
 export function arrayShuffle(arr: any[]): any[] {
   return arr.sort(() => Math.random() - 0.5);
@@ -150,6 +156,7 @@ export function arrayShuffle(arr: any[]): any[] {
  * @param type 类型
  * @param keys 关键字/集合
  * @returns
+ * @category Array-数组相关
  */
 export function arraySort(
   arr: any[],
@@ -192,6 +199,7 @@ export function arraySort(
  * @param keys 排序的字段/集合
  * @param isAscend 是否升序
  * @returns
+ * @category Array-数组相关
  */
 export function sortBy(keys?: string | string[], isAscend = true): any {
   if (!keys) {
@@ -218,6 +226,7 @@ export function sortBy(keys?: string | string[], isAscend = true): any {
  * @param arr 数组
  * @param n 保留小数位
  * @returns
+ * @category Array-数组相关
  */
 export function arrayFill(arr: any[], n?: number): number[] {
   const result = [];

@@ -9,6 +9,7 @@
  * @param number 浮点数
  * @param d 保留小数位
  * @returns
+ * @category Number-数字相关
  */
 export declare function round(number: any, d: number): number;
 /**
@@ -17,6 +18,7 @@ export declare function round(number: any, d: number): number;
  * isInteger('0'); /// true
  * isInteger('-0', '+'); /// false
  * @returns
+ * @category Number-数字相关
  */
 export declare function isInteger(value: string, type?: '-' | '+'): boolean;
 /**
@@ -27,6 +29,7 @@ export declare function isInteger(value: string, type?: '-' | '+'): boolean;
  * isDecimal('-0.1', '+'); /// false
  * isDecimal('-0.10', '-'); /// true
  * @returns
+ * @category Number-数字相关
  */
 export declare function isDecimal(value: string, type?: '-' | '+', noLastZero?: boolean): boolean;
 /**
@@ -38,6 +41,7 @@ export declare function isDecimal(value: string, type?: '-' | '+', noLastZero?: 
  * @param value 数值
  * @param n 精度
  * @returns
+ * @category Number-数字相关
  */
 export declare function formatNumber(value: string | number, n?: number): string;
 /**
@@ -59,6 +63,7 @@ export declare function formatNumber(value: string | number, n?: number): string
  * regex.test('12345.6789'); // true
  * @param options 配置选项，options.integer 最大整数位数，options.decimal 最大小数位数。
  * @returns
+ * @category Number-数字相关
  */
 export declare function getNumberReg(options: {
     integer?: number;
