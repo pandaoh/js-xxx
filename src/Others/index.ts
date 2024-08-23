@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:53:39
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-08-23 10:56:01
+ * @LastEditTime: 2024-08-23 11:51:04
  * @Description: 因项目需要常用函数，不管任何项目，都放到一起。注意甄别，没有复用意义的函数就不要添加了。
  * @FilePath: \js-xxx\src\Others\index.ts
  */
@@ -759,7 +759,7 @@ export function compareTo(value1: any, value2: any, strict = false): boolean {
  * @param treeData 树值
  * @param key key
  * @returns
- * @category Others-业务/其他
+ * @category Others-Tree
  */
 export function getTreeData(treeData: any[], key = 'key'): { map: any; list: any[] } {
   const result: { map: any; list: any[] } = {
@@ -807,7 +807,7 @@ export function getTreeData(treeData: any[], key = 'key'): { map: any; list: any
  * @param searchKeys 用于过滤的 key
  * @param strictMode 搜索配置 strictMode 时，会强制平铺排列返回符合条件的节点，默认不开启，保持树排列。
  * @returns
- * @category Others-业务/其他
+ * @category Others-Tree
  */
 export function searchTreeData(
   treeData: any[],
@@ -855,7 +855,7 @@ export function searchTreeData(
  * @param sourceData 源数据
  * @param options 转化选项
  * @returns
- * @category Others-业务/其他
+ * @category Others-Tree
  */
 export function transferTreeData(
   sourceData: any[],
@@ -925,7 +925,7 @@ export function transferTreeData(
  * @param treeData 树值
  * @param callback 过滤的方法，默认不过滤。
  * @returns
- * @category Others-业务/其他
+ * @category Others-Tree
  */
 export function filterTreeData(treeData: any[], callback?: (item: any) => boolean): any[] {
   if (!callback || !treeData) {
@@ -962,7 +962,7 @@ export function filterTreeData(treeData: any[], callback?: (item: any) => boolea
  * @param checkedKeys 已经全选的节点
  * @param halfCheckedKeys 已经半选的节点
  * @returns
- * @category Others-业务/其他
+ * @category Others-Tree
  */
 export function getTreeCheckNodes(treeData: any[], checkedKeys: any[], halfCheckedKeys?: any[]) {
   // 将 treeData 转化为一个映射，以便查找节点和其父节点的关系。

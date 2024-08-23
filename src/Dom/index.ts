@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-08-23 11:05:24
+ * @LastEditTime: 2024-08-23 11:50:39
  * @Description: 利用 dom 的一些函数
  * @FilePath: \js-xxx\src\Dom\index.ts
  */
@@ -1518,6 +1518,8 @@ export function createChangeLogListener(callback?: any) {
  * myCustomLog.end({ isLogin: true });
  * // 输出到控制台和执行回调
  * // 输出格式包括：logKey, ms, s, menuCode, user, isLogin
+ * // react
+ * const log = useMemo(() => createTimeEventLog('扫描时长', { menuCode: 'scan' }), []);
  * @category Log-日志埋点
  */
 export function createTimeLogListener(
