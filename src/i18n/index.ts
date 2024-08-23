@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2024-05-13 15:08:38
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-08-23 10:48:02
+ * @LastEditTime: 2024-08-23 11:14:06
  * @Description: i18n 国际化支持
  * @FilePath: \js-xxx\src\i18n\index.ts
  */
@@ -14,7 +14,7 @@ import { loadStr } from '@/String';
 const I18N_KEY = 'js-xxx-lang';
 
 /**
- * 语言资源接口
+ * 语言资源接口选项
  * @category i18n-多语言(国际化)
  */
 export interface i18nLanguageResource {
