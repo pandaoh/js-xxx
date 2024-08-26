@@ -478,16 +478,22 @@ export declare function createChangeLogListener(callback?: any): () => void;
  * // 开始计时
  * myCustomLog.start({ user: 'admin' });
  * // ... 执行一些操作 ...
+ * // ... 中途更新一些参数 ...
+ * myCustomLog.update({ userAgent: 'Chrome' });
+ * myCustomLog.update({ test: 'test' });
  * // 结束计时并记录日志
  * myCustomLog.end({ isLogin: true });
  * // 输出到控制台和执行回调
- * // 输出格式包括：logKey, ms, s, menuCode, user, isLogin
+ * // 输出格式包括：logKey, ms, s, menuCode, user, isLogin, userAgent, test
+ * // react
+ * const log = useMemo(() => createTimeEventLog('扫描时长', { menuCode: 'scan' }), []);
  * @category Log-日志埋点
  */
 export declare function createTimeLogListener(eventName: string, eventParams?: {}, callback?: (logInfo: any, logKey: string) => void): {
     startTime: number | null;
     endTime: number | null;
     start(moreParams?: {}): void;
+    update(moreParams?: {}): void;
     end(moreParams?: {}): void;
 };
 /**

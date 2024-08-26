@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-08-23 11:50:39
+ * @LastEditTime: 2024-08-26 14:03:07
  * @Description: 利用 dom 的一些函数
  * @FilePath: \js-xxx\src\Dom\index.ts
  */
@@ -1514,10 +1514,13 @@ export function createChangeLogListener(callback?: any) {
  * // 开始计时
  * myCustomLog.start({ user: 'admin' });
  * // ... 执行一些操作 ...
+ * // ... 中途更新一些参数 ...
+ * myCustomLog.update({ userAgent: 'Chrome' });
+ * myCustomLog.update({ test: 'test' });
  * // 结束计时并记录日志
  * myCustomLog.end({ isLogin: true });
  * // 输出到控制台和执行回调
- * // 输出格式包括：logKey, ms, s, menuCode, user, isLogin
+ * // 输出格式包括：logKey, ms, s, menuCode, user, isLogin, userAgent, test
  * // react
  * const log = useMemo(() => createTimeEventLog('扫描时长', { menuCode: 'scan' }), []);
  * @category Log-日志埋点
@@ -1527,6 +1530,8 @@ export function createTimeLogListener(
   eventParams = {},
   callback?: (logInfo: any, logKey: string) => void,
 ) {
+  const originEventParams = eventParams;
+
   const log = {
     startTime: null as number | null,
     endTime: null as number | null,
@@ -1537,6 +1542,16 @@ export function createTimeLogListener(
       };
       this.startTime = Date.now();
       this.endTime = null; // 重置 endTime，确保每次使用都是新的计时。
+    },
+    update(moreParams = {}) {
+      if (this.startTime === null) {
+        console.warn(`Cannot update log '${eventName}' eventParams because start was not called.`);
+        return;
+      }
+      eventParams = {
+        ...eventParams,
+        ...moreParams,
+      };
     },
     end(moreParams = {}) {
       if (this.startTime === null) {
@@ -1552,10 +1567,10 @@ export function createTimeLogListener(
       this.endTime = Date.now();
       const durationMs = this.endTime - this.startTime;
       const logInfo = {
+        ...eventParams,
         logKey,
         ms: durationMs,
         s: (durationMs / 1000).toFixed(3),
-        ...eventParams,
       };
 
       console.table(logInfo); // 以表格形式输出日志信息，包括 logKey 。
@@ -1564,6 +1579,8 @@ export function createTimeLogListener(
       // 重置 startTime 和 endTime，以便实例可以重新使用。
       this.startTime = null;
       this.endTime = null;
+
+      eventParams = originEventParams;
     },
   };
 

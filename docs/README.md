@@ -1,8 +1,8 @@
-**js-xxx v2.2.21** • **Docs**
+**js-xxx v2.2.22** • **Docs**
 
 ***
 
-# js-xxx v2.2.21
+# js-xxx v2.2.22
 
 ## Array-数组相关
 
@@ -156,18 +156,23 @@
 - [prettierRules](functions/prettierRules.md)
 - [sortJSON](functions/sortJSON.md)
 
+## Others-Tree
+
+- [filterTreeData](functions/filterTreeData.md)
+- [getTreeCheckNodes](functions/getTreeCheckNodes.md)
+- [getTreeData](functions/getTreeData.md)
+- [searchTreeData](functions/searchTreeData.md)
+- [transferTreeData](functions/transferTreeData.md)
+
 ## Others-业务/其他
 
 - [calcCron](functions/calcCron.md)
 - [checkVersion](functions/checkVersion.md)
 - [compareTo](functions/compareTo.md)
-- [filterTreeData](functions/filterTreeData.md)
 - [formatBytes](functions/formatBytes.md)
 - [formatRh](functions/formatRh.md)
 - [getBloodGroup](functions/getBloodGroup.md)
 - [getDataStr](functions/getDataStr.md)
-- [getTreeCheckNodes](functions/getTreeCheckNodes.md)
-- [getTreeData](functions/getTreeData.md)
 - [getUserAgent](functions/getUserAgent.md)
 - [isAppleDevice](functions/isAppleDevice.md)
 - [isBrowser](functions/isBrowser.md)
@@ -178,9 +183,7 @@
 - [isNode](functions/isNode.md)
 - [isRhNegative](functions/isRhNegative.md)
 - [isWin](functions/isWin.md)
-- [searchTreeData](functions/searchTreeData.md)
 - [transferTemperature](functions/transferTemperature.md)
-- [transferTreeData](functions/transferTreeData.md)
 - [versionUpgrade](functions/versionUpgrade.md)
 
 ## Promise-相关

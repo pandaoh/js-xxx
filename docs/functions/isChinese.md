@@ -1,8 +1,8 @@
-[**js-xxx v2.2.21**](../README.md) • **Docs**
+[**js-xxx v2.2.22**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.21](../README.md) / isChinese
+[js-xxx v2.2.22](../README.md) / isChinese
 
 # Function: isChinese()
 

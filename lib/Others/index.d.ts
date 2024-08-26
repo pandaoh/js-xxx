@@ -278,7 +278,7 @@ export declare function compareTo(value1: any, value2: any, strict?: boolean): b
  * @param treeData 树值
  * @param key key
  * @returns
- * @category Others-业务/其他
+ * @category Others-Tree
  */
 export declare function getTreeData(treeData: any[], key?: string): {
     map: any;
@@ -295,7 +295,7 @@ export declare function getTreeData(treeData: any[], key?: string): {
  * @param searchKeys 用于过滤的 key
  * @param strictMode 搜索配置 strictMode 时，会强制平铺排列返回符合条件的节点，默认不开启，保持树排列。
  * @returns
- * @category Others-业务/其他
+ * @category Others-Tree
  */
 export declare function searchTreeData(treeData: any[], searchText: string, searchKeys?: string | string[], strictMode?: boolean): any[];
 /**
@@ -306,7 +306,7 @@ export declare function searchTreeData(treeData: any[], searchText: string, sear
  * @param sourceData 源数据
  * @param options 转化选项
  * @returns
- * @category Others-业务/其他
+ * @category Others-Tree
  */
 export declare function transferTreeData(sourceData: any[], options?: {
     labelKey: string;
@@ -321,7 +321,7 @@ export declare function transferTreeData(sourceData: any[], options?: {
  * @param treeData 树值
  * @param callback 过滤的方法，默认不过滤。
  * @returns
- * @category Others-业务/其他
+ * @category Others-Tree
  */
 export declare function filterTreeData(treeData: any[], callback?: (item: any) => boolean): any[];
 /**
@@ -333,7 +333,7 @@ export declare function filterTreeData(treeData: any[], callback?: (item: any) =
  * @param checkedKeys 已经全选的节点
  * @param halfCheckedKeys 已经半选的节点
  * @returns
- * @category Others-业务/其他
+ * @category Others-Tree
  */
 export declare function getTreeCheckNodes(treeData: any[], checkedKeys: any[], halfCheckedKeys?: any[]): {
     nodeMap: Map<any, any>;

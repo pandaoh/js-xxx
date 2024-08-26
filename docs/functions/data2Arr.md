@@ -1,8 +1,8 @@
-[**js-xxx v2.2.21**](../README.md) • **Docs**
+[**js-xxx v2.2.22**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.21](../README.md) / data2Arr
+[js-xxx v2.2.22](../README.md) / data2Arr
 
 # Function: data2Arr()
 

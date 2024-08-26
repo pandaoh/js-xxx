@@ -1,8 +1,8 @@
-[**js-xxx v2.2.21**](../README.md) • **Docs**
+[**js-xxx v2.2.22**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.21](../README.md) / getRandVar
+[js-xxx v2.2.22](../README.md) / getRandVar
 
 # Function: getRandVar()
 

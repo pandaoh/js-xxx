@@ -1,8 +1,8 @@
-[**js-xxx v2.2.21**](../README.md) • **Docs**
+[**js-xxx v2.2.22**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.21](../README.md) / decrypt
+[js-xxx v2.2.22](../README.md) / decrypt
 
 # Function: decrypt()
 

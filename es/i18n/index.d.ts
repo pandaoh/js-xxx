@@ -1,5 +1,5 @@
 /**
- * 语言资源接口
+ * 语言资源接口选项
  * @category i18n-多语言(国际化)
  */
 export interface i18nLanguageResource {

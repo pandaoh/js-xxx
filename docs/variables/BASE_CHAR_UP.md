@@ -1,8 +1,8 @@
-[**js-xxx v2.2.21**](../README.md) • **Docs**
+[**js-xxx v2.2.22**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.21](../README.md) / BASE\_CHAR\_UP
+[js-xxx v2.2.22](../README.md) / BASE\_CHAR\_UP
 
 # Variable: BASE\_CHAR\_UP
 
