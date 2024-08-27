@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-08-27 13:45:29
+ * @LastEditTime: 2024-08-27 18:16:53
  * @Description: 利用 dom 的一些函数
  * @FilePath: \js-xxx\src\Dom\index.ts
  */
@@ -1511,14 +1511,19 @@ export function createChangeLogListener(callback?: any) {
  * @example
  * // 创建日志实例
  * const myCustomLog = createTimeLogListener('扫描时长', { menuCode: 'Login' });
- * // 开始计时
+ * // 开始计时，如果短时间多个实例计时，最好增加 key 参数，没有 key 默认 key 为 'undefined' 。
  * myCustomLog.start({ user: 'admin' });
+ * myCustomLog.start({ user: 'admin123', key: 'custom-123' });
+ * myCustomLog.start({ user: 'admin456', key: 'custom-456' });
  * // ... 执行一些操作 ...
  * // ... 中途更新一些参数 ...
  * myCustomLog.update({ userAgent: 'Chrome' });
  * myCustomLog.update({ test: 'test' });
+ * myCustomLog.update({ test: 'test123', key: 'custom-123' });
  * // 结束计时并记录日志
  * myCustomLog.end({ isLogin: true });
+ * myCustomLog.end({ isLogin: false, key: 'custom-123' });
+ * myCustomLog.end({ isLogin: true, key: 'custom-456' });
  * // 输出到控制台和执行回调
  * // 输出格式包括：logKey, ms, s, menuCode, user, isLogin, userAgent, test
  * // react
@@ -1531,43 +1536,59 @@ export function createTimeLogListener(
   callback?: (logInfo: any, logKey: string) => void,
 ) {
   const originEventParams = eventParams;
+  const timeLogBox: any = {};
 
   const log = {
-    startTime: null as number | null,
-    endTime: null as number | null,
     start(moreParams = {}) {
-      eventParams = {
-        ...eventParams,
-        ...moreParams,
+      // @ts-ignore
+      const customKey = moreParams?.key || 'undefined';
+
+      timeLogBox[customKey] = timeLogBox[customKey] || {
+        startTime: null,
+        endTime: null,
+        logParams: {
+          ...originEventParams,
+          ...moreParams,
+        },
       };
-      this.startTime = Date.now();
-      this.endTime = null; // 重置 endTime，确保每次使用都是新的计时。
+
+      timeLogBox[customKey].startTime = Date.now();
+      timeLogBox[customKey].endTime = null; // 重置 endTime，确保每次使用都是新的计时。
     },
     update(moreParams = {}) {
-      if (this.startTime === null) {
+      // @ts-ignore
+      const customKey = moreParams?.key || 'undefined';
+
+      if (!timeLogBox[customKey]?.startTime) {
         console.warn(`Cannot update log '${eventName}' eventParams because start was not called.`);
         return;
       }
-      eventParams = {
-        ...eventParams,
+
+      timeLogBox[customKey].logParams = {
+        ...originEventParams,
         ...moreParams,
       };
     },
     end(moreParams = {}) {
-      if (this.startTime === null) {
+      // @ts-ignore
+      const customKey = moreParams?.key || 'undefined';
+
+      if (!timeLogBox[customKey]?.startTime) {
         console.warn(`Cannot end log for '${eventName}' because start was not called.`);
         return;
       }
-      eventParams = {
-        ...eventParams,
+
+      timeLogBox[customKey].logParams = {
+        ...originEventParams,
         ...moreParams,
       };
+
       const logKey = eventName;
 
-      this.endTime = Date.now();
-      const durationMs = this.endTime - this.startTime;
+      timeLogBox[customKey].endTime = Date.now();
+      const durationMs = timeLogBox[customKey].endTime - timeLogBox[customKey].startTime;
       const logInfo = {
-        ...eventParams,
+        ...timeLogBox[customKey].logParams,
         logKey,
         ms: durationMs,
         s: (durationMs / 1000).toFixed(3),
@@ -1577,8 +1598,7 @@ export function createTimeLogListener(
       callback && callback?.(logInfo, logKey);
 
       // 重置 startTime 和 endTime，以便实例可以重新使用。
-      this.startTime = null;
-      this.endTime = null;
+      delete timeLogBox[customKey];
 
       eventParams = originEventParams;
     },

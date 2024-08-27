@@ -14807,14 +14807,19 @@ function createChangeLogListener(callback) {
  * @example
  * // 创建日志实例
  * const myCustomLog = createTimeLogListener('扫描时长', { menuCode: 'Login' });
- * // 开始计时
+ * // 开始计时，如果短时间多个实例计时，最好增加 key 参数，没有 key 默认 key 为 'undefined' 。
  * myCustomLog.start({ user: 'admin' });
+ * myCustomLog.start({ user: 'admin123', key: 'custom-123' });
+ * myCustomLog.start({ user: 'admin456', key: 'custom-456' });
  * // ... 执行一些操作 ...
  * // ... 中途更新一些参数 ...
  * myCustomLog.update({ userAgent: 'Chrome' });
  * myCustomLog.update({ test: 'test' });
+ * myCustomLog.update({ test: 'test123', key: 'custom-123' });
  * // 结束计时并记录日志
  * myCustomLog.end({ isLogin: true });
+ * myCustomLog.end({ isLogin: false, key: 'custom-123' });
+ * myCustomLog.end({ isLogin: true, key: 'custom-456' });
  * // 输出到控制台和执行回调
  * // 输出格式包括：logKey, ms, s, menuCode, user, isLogin, userAgent, test
  * // react
@@ -14824,39 +14829,49 @@ function createChangeLogListener(callback) {
 function createTimeLogListener(eventName, eventParams, callback) {
     if (eventParams === void 0) { eventParams = {}; }
     var originEventParams = eventParams;
+    var timeLogBox = {};
     var log = {
-        startTime: null,
-        endTime: null,
         start: function (moreParams) {
             if (moreParams === void 0) { moreParams = {}; }
-            eventParams = __assign(__assign({}, eventParams), moreParams);
-            this.startTime = Date.now();
-            this.endTime = null; // 重置 endTime，确保每次使用都是新的计时。
+            // @ts-ignore
+            var customKey = (moreParams === null || moreParams === void 0 ? void 0 : moreParams.key) || 'undefined';
+            timeLogBox[customKey] = timeLogBox[customKey] || {
+                startTime: null,
+                endTime: null,
+                logParams: __assign(__assign({}, originEventParams), moreParams),
+            };
+            timeLogBox[customKey].startTime = Date.now();
+            timeLogBox[customKey].endTime = null; // 重置 endTime，确保每次使用都是新的计时。
         },
         update: function (moreParams) {
+            var _a;
             if (moreParams === void 0) { moreParams = {}; }
-            if (this.startTime === null) {
+            // @ts-ignore
+            var customKey = (moreParams === null || moreParams === void 0 ? void 0 : moreParams.key) || 'undefined';
+            if (!((_a = timeLogBox[customKey]) === null || _a === void 0 ? void 0 : _a.startTime)) {
                 console.warn("Cannot update log '".concat(eventName, "' eventParams because start was not called."));
                 return;
             }
-            eventParams = __assign(__assign({}, eventParams), moreParams);
+            timeLogBox[customKey].logParams = __assign(__assign({}, originEventParams), moreParams);
         },
         end: function (moreParams) {
+            var _a;
             if (moreParams === void 0) { moreParams = {}; }
-            if (this.startTime === null) {
+            // @ts-ignore
+            var customKey = (moreParams === null || moreParams === void 0 ? void 0 : moreParams.key) || 'undefined';
+            if (!((_a = timeLogBox[customKey]) === null || _a === void 0 ? void 0 : _a.startTime)) {
                 console.warn("Cannot end log for '".concat(eventName, "' because start was not called."));
                 return;
             }
-            eventParams = __assign(__assign({}, eventParams), moreParams);
+            timeLogBox[customKey].logParams = __assign(__assign({}, originEventParams), moreParams);
             var logKey = eventName;
-            this.endTime = Date.now();
-            var durationMs = this.endTime - this.startTime;
-            var logInfo = __assign(__assign({}, eventParams), { logKey: logKey, ms: durationMs, s: (durationMs / 1000).toFixed(3) });
+            timeLogBox[customKey].endTime = Date.now();
+            var durationMs = timeLogBox[customKey].endTime - timeLogBox[customKey].startTime;
+            var logInfo = __assign(__assign({}, timeLogBox[customKey].logParams), { logKey: logKey, ms: durationMs, s: (durationMs / 1000).toFixed(3) });
             console.table(logInfo); // 以表格形式输出日志信息，包括 logKey 。
             callback && (callback === null || callback === void 0 ? void 0 : callback(logInfo, logKey));
             // 重置 startTime 和 endTime，以便实例可以重新使用。
-            this.startTime = null;
-            this.endTime = null;
+            delete timeLogBox[customKey];
             eventParams = originEventParams;
         },
     };
