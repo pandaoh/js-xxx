@@ -499,7 +499,7 @@ export declare function createTimeLogListener(eventName: string, eventParams?: {
 /**
  * 合并类名 emotion-js
  * @example
- * cx('class1', 'class2', { 'class3': true, 'class4': false }, null, undefined); /// "class1 class2 class3 true"
+ * cx('class1', 'class2', { 'class3': true, 'class4': false }, null, undefined); /// "class1 class2 class3"
  * @param classNames 要合并的类名、对象或空值
  * @returns
  * @category Dom-工具方法

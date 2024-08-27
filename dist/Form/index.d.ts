@@ -11,7 +11,7 @@
 export declare function toFormData(obj: any, hasBrackets?: boolean, hasIndex?: boolean): FormData;
 /**
  * Converts a FormData object to a plain JavaScript object.
- * @param formData The FormData object to convert.
+ * @param formData The FormData object to convert
  * @example
  * const formData = new FormData();
  * formData.append('name', 'John Doe');

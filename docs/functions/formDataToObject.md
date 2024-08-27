@@ -14,7 +14,7 @@ Converts a FormData object to a plain JavaScript object.
 
 • **formData**: `any`
 
-The FormData object to convert.
+The FormData object to convert
 
 ## Returns
 

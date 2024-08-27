@@ -23,5 +23,5 @@
 ## Example
 
 ```ts
-cx('class1', 'class2', { 'class3': true, 'class4': false }, null, undefined); /// "class1 class2 class3 true"
+cx('class1', 'class2', { 'class3': true, 'class4': false }, null, undefined); /// "class1 class2 class3"
 ```

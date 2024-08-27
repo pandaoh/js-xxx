@@ -14858,7 +14858,7 @@
   /**
    * 合并类名 emotion-js
    * @example
-   * cx('class1', 'class2', { 'class3': true, 'class4': false }, null, undefined); /// "class1 class2 class3 true"
+   * cx('class1', 'class2', { 'class3': true, 'class4': false }, null, undefined); /// "class1 class2 class3"
    * @param classNames 要合并的类名、对象或空值
    * @returns
    * @category Dom-工具方法
@@ -14894,7 +14894,7 @@
    * @Author: HxB
    * @Date: 2022-04-26 15:53:02
    * @LastEditors: DoubleAm
-   * @LastEditTime: 2024-08-27 10:52:09
+   * @LastEditTime: 2024-08-27 12:26:15
    * @Description: 表单相关
    * @FilePath: \js-xxx\src\Form\index.ts
    */
@@ -14929,7 +14929,7 @@
   }
   /**
    * Converts a FormData object to a plain JavaScript object.
-   * @param formData The FormData object to convert.
+   * @param formData The FormData object to convert
    * @example
    * const formData = new FormData();
    * formData.append('name', 'John Doe');
