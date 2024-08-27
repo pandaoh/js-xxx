@@ -4,7 +4,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-08-23 11:07:57
+ * @LastEditTime: 2024-08-27 14:12:02
  * @Description: 工具函数
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
@@ -2004,18 +2004,24 @@ export function getRandIp(): string {
 
 /**
  * 给对应 dom 生成水印
+ * 窗口 resize 的时候最好要重新调用渲染
  * @example
  * watermark(document.body, 'My Watermark', { fontSize: 20, opacity: 0.5, angle: -30, color: 'red', fontFamily: 'Arial', repeat: true, backgroundOpacity: 0.05 });
  * watermark(document.body, 'My Watermark'); /// 在 body 中生成水印
+ * watermark(document.body, 'My Watermark\n2024-07-11'); /// 在 body 中生成水印，支持换行符。
  * watermark(document.body, 'My Watermark', { fontSize: 120, color: 'red', repeat: false, angle: 0 }); /// 在 body 中生成水印
  * watermark(document.body, 'My Watermark', { fontSize: 20, color: 'red', repeat: true, angle: 90 }); /// 在 body 中生成水印
  * @param dom 需要生成水印的 dom
- * @param text 水印内容
+ * @param text 水印文本，支持换行符 `\n` 。
  * @param options 样式配置
  * @returns
  * @category Watermark-水印
  */
 export function watermark(dom: any, text: string, options: any = {}) {
+  if (!dom || !(dom instanceof HTMLElement)) {
+    throw new Error('Invalid DOM element provided.');
+  }
+
   const {
     fontSize = 16,
     opacity = 0.3,
@@ -2028,9 +2034,18 @@ export function watermark(dom: any, text: string, options: any = {}) {
 
   const canvas = document.createElement('canvas');
   const ctx: any = canvas.getContext('2d');
+
+  if (!ctx) {
+    throw new Error('Failed to get Canvas 2D context.');
+  }
+
   ctx.font = `${fontSize}px ${fontFamily}`;
-  const textWidth = ctx.measureText(text).width;
-  const textHeight = fontSize;
+
+  const lines = text.split('\n');
+  const textWidth = Math.max(...lines.map((line) => ctx.measureText(line).width));
+  // const textWidth = ctx.measureText(text).width;
+  const textHeight = fontSize * lines.length;
+
   const canvasWidth =
     angle % 180 == 0
       ? textWidth * 2
@@ -2059,9 +2074,14 @@ export function watermark(dom: any, text: string, options: any = {}) {
 
   const centerX = canvasWidth / 2;
   const centerY = canvasHeight / 2;
+
   ctx.translate(centerX, centerY);
   ctx.rotate((angle * Math.PI) / 180);
-  ctx.fillText(text, 0, 0);
+
+  lines.forEach((line, index) => {
+    ctx.fillText(line, 0, (index - (lines.length - 1) / 2) * fontSize);
+  });
+
   ctx.rotate((-angle * Math.PI) / 180);
   ctx.translate(-centerX, -centerY);
 
@@ -2075,6 +2095,7 @@ export function watermark(dom: any, text: string, options: any = {}) {
   }px`;
   dom.style.backgroundColor = `rgba(0, 0, 0, ${backgroundOpacity})`;
   dom.style.backgroundPosition = 'center';
+  dom.style.zIndex = '999999';
 }
 
 /**
