@@ -94,6 +94,7 @@
 
 ## Form-表单相关
 
+- [formDataToObject](functions/formDataToObject.md)
 - [toFormData](functions/toFormData.md)
 - [toQueryString](functions/toQueryString.md)
 - [useStateData](functions/useStateData.md)
@@ -156,6 +157,16 @@
 - [prettierRules](functions/prettierRules.md)
 - [sortJSON](functions/sortJSON.md)
 
+## Others-Mock&模拟数据
+
+- [MockOptions](interfaces/MockOptions.md)
+- [MockDataType](type-aliases/MockDataType.md)
+- [getMockData](functions/getMockData.md)
+
+## Others-TableColumns
+
+- [getTableColumns](functions/getTableColumns.md)
+
 ## Others-Tree
 
 - [filterTreeData](functions/filterTreeData.md)
@@ -185,6 +196,10 @@
 - [isWin](functions/isWin.md)
 - [transferTemperature](functions/transferTemperature.md)
 - [versionUpgrade](functions/versionUpgrade.md)
+
+## Others-音频
+
+- [playAudio](functions/playAudio.md)
 
 ## Promise-相关
 

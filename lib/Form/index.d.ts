@@ -10,6 +10,22 @@
  */
 export declare function toFormData(obj: any, hasBrackets?: boolean, hasIndex?: boolean): FormData;
 /**
+ * Converts a FormData object to a plain JavaScript object.
+ * @param formData The FormData object to convert.
+ * @example
+ * const formData = new FormData();
+ * formData.append('name', 'John Doe');
+ * formData.append('email', 'john.doe@example.com');
+ * formData.append('hobbies', 'reading');
+ * formData.append('hobbies', 'coding');
+ * const result = formDataToObject(formData);
+ * console.log(result);
+ * /// { name: 'John Doe', email: 'john.doe@example.com', hobbies: ['reading', 'coding'] }
+ * @returns
+ * @category Form-表单相关
+ */
+export declare function formDataToObject(formData: any): any;
+/**
  * 对象转 URLSearchParams 字符串
  * @example
  * toQueryString({a: 1, b: 2, c: [1, 2]}); /// a=1&b=2&c=1&c=2

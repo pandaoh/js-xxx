@@ -14888,7 +14888,7 @@ function cx() {
  * @Author: HxB
  * @Date: 2022-04-26 15:53:02
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-09 14:31:35
+ * @LastEditTime: 2024-08-27 10:52:09
  * @Description: 表单相关
  * @FilePath: \js-xxx\src\Form\index.ts
  */
@@ -14920,6 +14920,52 @@ function toFormData(obj, hasBrackets, hasIndex) {
         }
     });
     return formData;
+}
+/**
+ * Converts a FormData object to a plain JavaScript object.
+ * @param formData The FormData object to convert.
+ * @example
+ * const formData = new FormData();
+ * formData.append('name', 'John Doe');
+ * formData.append('email', 'john.doe@example.com');
+ * formData.append('hobbies', 'reading');
+ * formData.append('hobbies', 'coding');
+ * const result = formDataToObject(formData);
+ * console.log(result);
+ * /// { name: 'John Doe', email: 'john.doe@example.com', hobbies: ['reading', 'coding'] }
+ * @returns
+ * @category Form-表单相关
+ */
+function formDataToObject(formData) {
+    if (!(formData instanceof FormData)) {
+        throw new Error('The provided argument is not an instance of FormData.');
+    }
+    var result = {};
+    try {
+        formData.forEach(function (value, key) {
+            if (!value)
+                return; // Skip empty or null values
+            // eslint-disable-next-line no-prototype-builtins
+            if (result === null || result === void 0 ? void 0 : result.hasOwnProperty(key)) {
+                // If the key already exists and is an array, push the new value
+                if (Array.isArray(result[key])) {
+                    result[key].push(value);
+                }
+                else {
+                    // If the key exists but is not an array, convert it to an array
+                    result[key] = [result[key], value];
+                }
+            }
+            else {
+                // If the key does not exist, set it directly
+                result[key] = value;
+            }
+        });
+    }
+    catch (e) {
+        return {};
+    }
+    return result;
 }
 /**
  * 对象转 URLSearchParams 字符串
@@ -16529,6 +16575,149 @@ function getTreeCheckNodes(treeData, checkedKeys, halfCheckedKeys) {
         halfCheckedKeys: newHalfCheckedKeys.length ? newHalfCheckedKeys : undefined,
     };
 }
+/**
+ * 生成 table columns 数组
+ * @example
+ * const fields = [
+ *   { label: 'Name', value: 'name' },
+ *   { label: 'Email', key: 'email' },
+ *   { label: 'Age' },
+ * ];
+ * const columns = getTableColumns(fields);
+ * console.log(columns);
+ * // Output: [
+ * //   { title: 'Name', dataIndex: 'name', key: 'name', label: 'Name', value: 'name' },
+ * //   { title: 'Email', dataIndex: 'email', key: 'email', label: 'Email' },
+ * //   { title: 'Age', dataIndex: 'Age', key: 'Age', label: 'Age' },
+ * // ]
+ * @param fields 基础数据
+ * @returns
+ * @category Others-TableColumns
+ */
+function getTableColumns(fields) {
+    return fields.map(function (field) {
+        var dataIndex = field.dataIndex, title = field.title, label = field.label, value = field.value, key = field.key;
+        var myKey = dataIndex || value || key || title || label;
+        if (!myKey) {
+            console.warn('Warning: At least one of "dataIndex", "value", "key", "title", or "label" must be provided.');
+        }
+        return __assign(__assign({}, field), { title: title || label || '', dataIndex: myKey, key: myKey });
+    });
+}
+/**
+ * 播放音频
+ * @param input 声音类型或者音频文件路径
+ * @example
+ * playAudio('path/to/custom.mp3');
+ * @returns
+ * @category Others-音频
+ */
+function playAudio(input) {
+    var audioPath = input;
+    if (!audioPath) {
+        console.error('No valid audio file path provided.');
+        return;
+    }
+    var mp3 = new Audio(audioPath);
+    mp3.play().catch(function (error) {
+        console.error('Failed to play audio:', error);
+    });
+}
+/**
+ * 生成 Mock 模拟数据的方法
+ * @param type 要生成的数据类型
+ * @param options 生成数据的选项
+ * @example
+ * getMockData('string', { length: 10 }); /// "aB3dE6gH1j"
+ * getMockData('number', { min: 10, max: 100 }); /// 42
+ * getMockData('boolean'); /// true
+ * getMockData('date', { startDate: new Date(2020, 0, 1), endDate: new Date(2021, 0, 1) }); /// "2020-06-15 12:34:56"
+ * getMockData('date', { format: false }); /// Date object
+ * getMockData('object', { objectKeys: { name: 'string', age: 'number', birthDate: { type: 'date', options: { format: 'yyyy/mm/dd' } } } }); /// { name: "aBc", age: 25, birthDate: "1995/05/17" }
+ * getMockData('array', { length: 5, arrayTypes: ['string', 'number'] }); /// [ "aB3", 42, "xYz", 7, "MN1" ]
+ * getMockData('array', { length: 5, objectKeys: { name: 'string', age: 'number', birthDate: { type: 'date', options: { format: 'yyyy/mm/dd' } } } }); /// [{ name: "aBc", age: 25, birthDate: "1995/05/17" } * 5 ......]
+ * getMockData('array', { length: 5, arrayTypes: [{ type: 'object', objectKeys: { name: 'string', age: 'number', birthDate: { type: 'date', options: { format: 'yyyy/mm/dd' } } } }] }); /// [{ name: "aBc", age: 25, birthDate: "1995/05/17" } * 5 ......]
+ * getMockData('array', { length: 10, arrayTypes: ['string', { type: 'number', options: { min: 10, max: 100 } }, { type: 'date', options: { format: 'yyyy/mm/dd' } }] }); /// [47, 49, 'uCp1bxDo', '2003/05/14', 'MUQSOf0W', '2011/07/01', 'nDYZD4Lu', 'YFSCEQvV', '2021/06/03', '1yaIgwhh']
+ * @returns
+ * @category Others-Mock&模拟数据
+ */
+function getMockData(type, options) {
+    if (options === void 0) { options = {}; }
+    // 内部方法用于生成随机字符串
+    function _randomString(length) {
+        var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var result = '';
+        for (var i = 0; i < length; i++) {
+            result += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return result;
+    }
+    // 内部方法用于生成随机数字
+    function _randomNumber(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+    // 内部方法用于生成随机布尔值
+    function _randomBoolean() {
+        return Math.random() >= 0.5;
+    }
+    // 内部方法用于生成随机日期
+    function _randomDate(startDate, endDate, format) {
+        if (startDate === void 0) { startDate = new Date(2000, 0, 1); }
+        if (endDate === void 0) { endDate = new Date(); }
+        var date = new Date(startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime()));
+        return format === false ? date : formatDate(date, format || 'yyyy-mm-dd hh:ii:ss');
+    }
+    // 内部方法用于生成随机数组
+    function _randomArray(length, types, objectKeys) {
+        return Array.from({ length: length }, function () {
+            var randomType = types[Math.floor(Math.random() * types.length)];
+            if (typeof randomType === 'string') {
+                return getMockData(randomType);
+            }
+            else if (typeof randomType === 'object') {
+                return getMockData(randomType.type, randomType.options);
+            }
+            else if (objectKeys) {
+                return _randomObject(objectKeys);
+            }
+        });
+    }
+    // 内部方法用于生成随机对象
+    function _randomObject(keys) {
+        var obj = {};
+        for (var key in keys) {
+            var valueType = keys[key];
+            if (typeof valueType === 'string') {
+                obj[key] = getMockData(valueType);
+            }
+            else if (typeof valueType === 'object') {
+                obj[key] = getMockData(valueType.type, valueType.options);
+            }
+        }
+        return obj;
+    }
+    // 根据数据类型生成相应的随机数据
+    switch (type) {
+        case 'string':
+            return _randomString(options.length || 8);
+        case 'number':
+            return _randomNumber(options.min || 0, options.max || 100);
+        case 'boolean':
+            return _randomBoolean();
+        case 'date':
+            return _randomDate(options.startDate, options.endDate, options.format);
+        case 'array':
+            return _randomArray(options.length || 5, options.arrayTypes || ['string'], options.objectKeys);
+        case 'object':
+            return _randomObject(options.objectKeys || { key: 'string', id: 'number', active: 'boolean' });
+        case 'null':
+            return null;
+        case 'undefined':
+            return undefined;
+        default:
+            throw new Error("Unsupported data type: ".concat(type));
+    }
+}
 
 /*
  * @Author: HxB
@@ -17402,4 +17591,4 @@ function getDefaultLang(opts) {
     }
 }
 
-export { ANIMALS, BASE_CHAR_LOW, BASE_CHAR_UP, BASE_NUMBER, BLOOD_GROUP, BLOOD_GROUP_INFO, BS_COLORS, CODE_MSG, CONSTELLATION, CONTENT_TYPES, HttpMethod, ICONS, ID_CARD_PROVINCE, KEYBOARD_CODE, Loading, MAN, MONTHS, PY_MAPS, ROLES, Speaker, TRANSFER_STR, Toast, WEEKS, WOMAN, abs, add, addLongPressEvent, addSpace, all, any, appendLink, appendScript, arr2select, arrObj2objArr, arrayFill, arrayShuffle, arraySort, average, banConsole, base64Decode, base64Encode, bindMoreClick, buf2obj, calcCron, calcDate, calcFontSize, calculate, catchPromise, changeURL, checkFileExt, checkIdCard, checkPassWordLevel, checkUpdate, checkVersion, clearCookies, closeFullscreen, closeWebSocket, compareDate, compareTo, contains, copyToClipboard, countdown, createChangeLogListener, createClickLogListener, createScrollLogListener, createTimeLogListener, curryIt, customFinally, cx, data2Arr, data2Obj, dataTo, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, downloadFile, downloadImg, emitEvent, emitKeyboardEvent, empty, encrypt, eslintRules, every, exportFile, filterTreeData, findChildren, findMaxKey, findParents, float, forEach, forceToStr, formatBytes, formatDate, formatJSON, formatNumber, formatRh, getAge, getAnimal, getBSColor, getBaseURL, getBloodGroup, getBrowserLang, getConstellation, getContentType, getCookie, getCryptoJS, getDataStr, getDateDifference, getDateList, getDateTime, getDayInYear, getDecodeStorage, getDefaultLang, getFileNameFromUrl, getFingerprint, getFirstVar, getKey, getLastVar, getLocalArr, getLocalObj, getMonthDayCount, getMonthInfo, getNumberReg, getPercentage, getPinYin, getQueryString, getRandColor, getRandDate, getRandIp, getRandNum, getRandStr, getRandVar, getScrollParent, getScrollPercent, getSearchParams, getSelectText, getSessionArr, getSessionObj, getSortVar, getStyleByName, getTimeCode, getTimezone, getTreeCheckNodes, getTreeData, getType, getUTCTime, getUserAgent, getV, getVarSize, getViewportSize, getWebSocket, getWeekInfo, globalError, hasKey, hasSpecialChar, hideToast, html2str, i18n, inRange, initNotification, initWebSocket, insertAfter, intersection, inversion, isAccount, isAppleDevice, isArr, isArrayBuffer, isBankCard, isBlob, isBool, isBrowser, isCSR, isCarCode, isChinese, isChrome, isCreditCode, isDarkMode, isDate, isDecimal, isElement, isEmail, isEnglish, isEqual, isEven, isFn, isHttp, isInteger, isInvalidDate, isIpAddress, isIpv4, isIpv6, isJSON, isLatitude, isLongitude, isMac, isMobile, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPromise, isQQ, isRhNegative, isStr, isStrongPassWord, isTel, isUndef, isUrl, isWeekday, isWin, javaDecrypt, javaEncrypt, jsonClone, keyBoardResize, leftJoin, loadStr, localStorageGet, localStorageSet, log, logRunTime, markNumber, marquee, maskString, md5, ms, obj2buf, observeResource, offDefaultEvent, onClick2MoreClick, onResize, openFileSelect, openFullscreen, openPreviewFile, parseJSON, prettierRules, printDom, px2rem, qsParse, qsStringify, removeCookie, repeat, retry, rightJoin, rip, round, safeDecodeURI, safeEncodeURI, same, saveAs, scrollToElement, scrollToView, scrollXTo, scrollYTo, searchTreeData, sendNotification, sendWsMsg, sessionStorageGet, sessionStorageSet, setCookie, setEncodeStorage, setEventListener, setIcon, setWsBinaryType, sha1, sha256, showProcess, showToast, showVar, sleep, slugify, sortBy, sortCallBack, sortJSON, stackSticky, str2html, str2unicode, stringifyJSON, sub, textCamelCase, textSplitCase, textTransferCase, throttle, timeSince, times, to, toBool, toFormData, toNum, toQueryString, toStr, toggleClass, transferCSVData, transferFileToBase64, transferIdCard, transferMoney, transferNumber, transferScanStr, transferSeconds, transferTemperature, transferTreeData, trim, truncate, unicode2str, union, unique, useStateData, uuid, versionUpgrade, waitUntil, watermark, xAjax, xFetch, xTimer };
+export { ANIMALS, BASE_CHAR_LOW, BASE_CHAR_UP, BASE_NUMBER, BLOOD_GROUP, BLOOD_GROUP_INFO, BS_COLORS, CODE_MSG, CONSTELLATION, CONTENT_TYPES, HttpMethod, ICONS, ID_CARD_PROVINCE, KEYBOARD_CODE, Loading, MAN, MONTHS, PY_MAPS, ROLES, Speaker, TRANSFER_STR, Toast, WEEKS, WOMAN, abs, add, addLongPressEvent, addSpace, all, any, appendLink, appendScript, arr2select, arrObj2objArr, arrayFill, arrayShuffle, arraySort, average, banConsole, base64Decode, base64Encode, bindMoreClick, buf2obj, calcCron, calcDate, calcFontSize, calculate, catchPromise, changeURL, checkFileExt, checkIdCard, checkPassWordLevel, checkUpdate, checkVersion, clearCookies, closeFullscreen, closeWebSocket, compareDate, compareTo, contains, copyToClipboard, countdown, createChangeLogListener, createClickLogListener, createScrollLogListener, createTimeLogListener, curryIt, customFinally, cx, data2Arr, data2Obj, dataTo, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, downloadFile, downloadImg, emitEvent, emitKeyboardEvent, empty, encrypt, eslintRules, every, exportFile, filterTreeData, findChildren, findMaxKey, findParents, float, forEach, forceToStr, formDataToObject, formatBytes, formatDate, formatJSON, formatNumber, formatRh, getAge, getAnimal, getBSColor, getBaseURL, getBloodGroup, getBrowserLang, getConstellation, getContentType, getCookie, getCryptoJS, getDataStr, getDateDifference, getDateList, getDateTime, getDayInYear, getDecodeStorage, getDefaultLang, getFileNameFromUrl, getFingerprint, getFirstVar, getKey, getLastVar, getLocalArr, getLocalObj, getMockData, getMonthDayCount, getMonthInfo, getNumberReg, getPercentage, getPinYin, getQueryString, getRandColor, getRandDate, getRandIp, getRandNum, getRandStr, getRandVar, getScrollParent, getScrollPercent, getSearchParams, getSelectText, getSessionArr, getSessionObj, getSortVar, getStyleByName, getTableColumns, getTimeCode, getTimezone, getTreeCheckNodes, getTreeData, getType, getUTCTime, getUserAgent, getV, getVarSize, getViewportSize, getWebSocket, getWeekInfo, globalError, hasKey, hasSpecialChar, hideToast, html2str, i18n, inRange, initNotification, initWebSocket, insertAfter, intersection, inversion, isAccount, isAppleDevice, isArr, isArrayBuffer, isBankCard, isBlob, isBool, isBrowser, isCSR, isCarCode, isChinese, isChrome, isCreditCode, isDarkMode, isDate, isDecimal, isElement, isEmail, isEnglish, isEqual, isEven, isFn, isHttp, isInteger, isInvalidDate, isIpAddress, isIpv4, isIpv6, isJSON, isLatitude, isLongitude, isMac, isMobile, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPromise, isQQ, isRhNegative, isStr, isStrongPassWord, isTel, isUndef, isUrl, isWeekday, isWin, javaDecrypt, javaEncrypt, jsonClone, keyBoardResize, leftJoin, loadStr, localStorageGet, localStorageSet, log, logRunTime, markNumber, marquee, maskString, md5, ms, obj2buf, observeResource, offDefaultEvent, onClick2MoreClick, onResize, openFileSelect, openFullscreen, openPreviewFile, parseJSON, playAudio, prettierRules, printDom, px2rem, qsParse, qsStringify, removeCookie, repeat, retry, rightJoin, rip, round, safeDecodeURI, safeEncodeURI, same, saveAs, scrollToElement, scrollToView, scrollXTo, scrollYTo, searchTreeData, sendNotification, sendWsMsg, sessionStorageGet, sessionStorageSet, setCookie, setEncodeStorage, setEventListener, setIcon, setWsBinaryType, sha1, sha256, showProcess, showToast, showVar, sleep, slugify, sortBy, sortCallBack, sortJSON, stackSticky, str2html, str2unicode, stringifyJSON, sub, textCamelCase, textSplitCase, textTransferCase, throttle, timeSince, times, to, toBool, toFormData, toNum, toQueryString, toStr, toggleClass, transferCSVData, transferFileToBase64, transferIdCard, transferMoney, transferNumber, transferScanStr, transferSeconds, transferTemperature, transferTreeData, trim, truncate, unicode2str, union, unique, useStateData, uuid, versionUpgrade, waitUntil, watermark, xAjax, xFetch, xTimer };

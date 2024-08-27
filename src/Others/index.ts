@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:53:39
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-08-23 11:51:04
+ * @LastEditTime: 2024-08-27 12:23:32
  * @Description: 因项目需要常用函数，不管任何项目，都放到一起。注意甄别，没有复用意义的函数就不要添加了。
  * @FilePath: \js-xxx\src\Others\index.ts
  */
@@ -1031,4 +1031,232 @@ export function getTreeCheckNodes(treeData: any[], checkedKeys: any[], halfCheck
     checkedKeys: newCheckedKeys.length ? newCheckedKeys : undefined,
     halfCheckedKeys: newHalfCheckedKeys.length ? newHalfCheckedKeys : undefined,
   };
+}
+
+/**
+ * 生成 table columns 数组
+ * @example
+ * const fields = [
+ *   { label: 'Name', value: 'name' },
+ *   { label: 'Email', key: 'email' },
+ *   { label: 'Age' },
+ * ];
+ * const columns = getTableColumns(fields);
+ * console.log(columns);
+ * // Output: [
+ * //   { title: 'Name', dataIndex: 'name', key: 'name', label: 'Name', value: 'name' },
+ * //   { title: 'Email', dataIndex: 'email', key: 'email', label: 'Email' },
+ * //   { title: 'Age', dataIndex: 'Age', key: 'Age', label: 'Age' },
+ * // ]
+ * @param fields 基础数据
+ * @returns
+ * @category Others-TableColumns
+ */
+export function getTableColumns(
+  fields: Array<{
+    label?: string;
+    title?: string;
+    dataIndex?: string;
+    value?: string;
+    key?: string;
+    width?: number | string;
+    align?: 'left' | 'center' | 'right';
+    fixed?: 'left' | 'right' | false;
+    hidden?: boolean;
+    ellipsis?: boolean | any;
+    defaultSortOrder?: 'ascend' | 'descend' | string;
+    colSpan?: number;
+    className?: string;
+    sorter?: any;
+    search?: any;
+    showSearch?: boolean;
+    render?: (text: any, record: any, index: number) => any;
+    [key: string]: any;
+  }>,
+): Array<{
+  label?: string;
+  title?: string;
+  dataIndex?: string;
+  value?: string;
+  key?: string;
+  width?: number | string;
+  align?: 'left' | 'center' | 'right';
+  fixed?: 'left' | 'right' | false;
+  hidden?: boolean;
+  ellipsis?: boolean | any;
+  defaultSortOrder?: 'ascend' | 'descend' | string;
+  colSpan?: number;
+  className?: string;
+  sorter?: any;
+  search?: any;
+  showSearch?: boolean;
+  render?: (text: any, record: any, index: number) => any;
+  [key: string]: any;
+}> {
+  return fields.map((field) => {
+    const { dataIndex, title, label, value, key } = field;
+
+    const myKey = dataIndex || value || key || title || label;
+
+    if (!myKey) {
+      console.warn('Warning: At least one of "dataIndex", "value", "key", "title", or "label" must be provided.');
+    }
+
+    return {
+      ...field,
+      title: title || label || '',
+      dataIndex: myKey,
+      key: myKey,
+    };
+  });
+}
+
+/**
+ * 播放音频
+ * @param input 声音类型或者音频文件路径
+ * @example
+ * playAudio('path/to/custom.mp3');
+ * @returns
+ * @category Others-音频
+ */
+export function playAudio(input: string) {
+  const audioPath = input;
+
+  if (!audioPath) {
+    console.error('No valid audio file path provided.');
+    return;
+  }
+
+  const mp3 = new Audio(audioPath);
+  mp3.play().catch((error) => {
+    console.error('Failed to play audio:', error);
+  });
+}
+
+/**
+ * Mock 数据类型
+ * @category Others-Mock&模拟数据
+ */
+export type MockDataType = 'string' | 'number' | 'boolean' | 'date' | 'array' | 'object' | 'null' | 'undefined';
+
+/**
+ * Mock 数据选项
+ * @category Others-Mock&模拟数据
+ */
+export interface MockOptions {
+  min?: number; // 用于生成数字的最小值
+  max?: number; // 用于生成数字的最大值
+  length?: number; // 用于生成字符串或数组的长度
+  arrayTypes?: Array<MockDataType | { type: MockDataType; options?: MockOptions }>; // 用于生成数组的元素类型
+  objectKeys?: { [key: string]: MockDataType | { type: MockDataType; options?: MockOptions } }; // 用于生成对象的键和值类型，支持额外的选项
+  startDate?: Date; // 用于生成日期的开始时间
+  endDate?: Date; // 用于生成日期的结束时间
+  format?: string | false; // 用于生成日期的格式，格式化可选 'yyyy-mm-dd hh:ii:ss' 或 false 返回 Date 对象
+}
+
+/**
+ * 生成 Mock 模拟数据的方法
+ * @param type 要生成的数据类型
+ * @param options 生成数据的选项
+ * @example
+ * getMockData('string', { length: 10 }); /// "aB3dE6gH1j"
+ * getMockData('number', { min: 10, max: 100 }); /// 42
+ * getMockData('boolean'); /// true
+ * getMockData('date', { startDate: new Date(2020, 0, 1), endDate: new Date(2021, 0, 1) }); /// "2020-06-15 12:34:56"
+ * getMockData('date', { format: false }); /// Date object
+ * getMockData('object', { objectKeys: { name: 'string', age: 'number', birthDate: { type: 'date', options: { format: 'yyyy/mm/dd' } } } }); /// { name: "aBc", age: 25, birthDate: "1995/05/17" }
+ * getMockData('array', { length: 5, arrayTypes: ['string', 'number'] }); /// [ "aB3", 42, "xYz", 7, "MN1" ]
+ * getMockData('array', { length: 5, objectKeys: { name: 'string', age: 'number', birthDate: { type: 'date', options: { format: 'yyyy/mm/dd' } } } }); /// [{ name: "aBc", age: 25, birthDate: "1995/05/17" } * 5 ......]
+ * getMockData('array', { length: 5, arrayTypes: [{ type: 'object', objectKeys: { name: 'string', age: 'number', birthDate: { type: 'date', options: { format: 'yyyy/mm/dd' } } } }] }); /// [{ name: "aBc", age: 25, birthDate: "1995/05/17" } * 5 ......]
+ * getMockData('array', { length: 10, arrayTypes: ['string', { type: 'number', options: { min: 10, max: 100 } }, { type: 'date', options: { format: 'yyyy/mm/dd' } }] }); /// [47, 49, 'uCp1bxDo', '2003/05/14', 'MUQSOf0W', '2011/07/01', 'nDYZD4Lu', 'YFSCEQvV', '2021/06/03', '1yaIgwhh']
+ * @returns
+ * @category Others-Mock&模拟数据
+ */
+export function getMockData(type: MockDataType, options: MockOptions = {}): any {
+  // 内部方法用于生成随机字符串
+  function _randomString(length: number): string {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result;
+  }
+
+  // 内部方法用于生成随机数字
+  function _randomNumber(min: number, max: number): number {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  // 内部方法用于生成随机布尔值
+  function _randomBoolean(): boolean {
+    return Math.random() >= 0.5;
+  }
+
+  // 内部方法用于生成随机日期
+  function _randomDate(
+    startDate: Date = new Date(2000, 0, 1),
+    endDate: Date = new Date(),
+    format?: string | false,
+  ): Date | string {
+    const date = new Date(startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime()));
+    return format === false ? date : formatDate(date, format || 'yyyy-mm-dd hh:ii:ss');
+  }
+
+  // 内部方法用于生成随机数组
+  function _randomArray(
+    length: number,
+    types: Array<MockDataType | { type: MockDataType; options?: MockOptions }>,
+    objectKeys?: { [key: string]: MockDataType | { type: MockDataType; options?: MockOptions } },
+  ): any[] {
+    return Array.from({ length }, () => {
+      const randomType = types[Math.floor(Math.random() * types.length)];
+
+      if (typeof randomType === 'string') {
+        return getMockData(randomType);
+      } else if (typeof randomType === 'object') {
+        return getMockData(randomType.type, randomType.options);
+      } else if (objectKeys) {
+        return _randomObject(objectKeys);
+      }
+    });
+  }
+
+  // 内部方法用于生成随机对象
+  function _randomObject(keys: {
+    [key: string]: MockDataType | { type: MockDataType; options?: MockOptions };
+  }): object {
+    const obj: any = {};
+    for (const key in keys) {
+      const valueType = keys[key];
+      if (typeof valueType === 'string') {
+        obj[key] = getMockData(valueType);
+      } else if (typeof valueType === 'object') {
+        obj[key] = getMockData(valueType.type, valueType.options);
+      }
+    }
+    return obj;
+  }
+
+  // 根据数据类型生成相应的随机数据
+  switch (type) {
+    case 'string':
+      return _randomString(options.length || 8);
+    case 'number':
+      return _randomNumber(options.min || 0, options.max || 100);
+    case 'boolean':
+      return _randomBoolean();
+    case 'date':
+      return _randomDate(options.startDate, options.endDate, options.format);
+    case 'array':
+      return _randomArray(options.length || 5, options.arrayTypes || ['string'], options.objectKeys);
+    case 'object':
+      return _randomObject(options.objectKeys || { key: 'string', id: 'number', active: 'boolean' });
+    case 'null':
+      return null;
+    case 'undefined':
+      return undefined;
+    default:
+      throw new Error(`Unsupported data type: ${type}`);
+  }
 }

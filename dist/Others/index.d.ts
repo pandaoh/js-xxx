@@ -341,4 +341,117 @@ export declare function getTreeCheckNodes(treeData: any[], checkedKeys: any[], h
     checkedKeys: any[] | undefined;
     halfCheckedKeys: any[] | undefined;
 };
+/**
+ * 生成 table columns 数组
+ * @example
+ * const fields = [
+ *   { label: 'Name', value: 'name' },
+ *   { label: 'Email', key: 'email' },
+ *   { label: 'Age' },
+ * ];
+ * const columns = getTableColumns(fields);
+ * console.log(columns);
+ * // Output: [
+ * //   { title: 'Name', dataIndex: 'name', key: 'name', label: 'Name', value: 'name' },
+ * //   { title: 'Email', dataIndex: 'email', key: 'email', label: 'Email' },
+ * //   { title: 'Age', dataIndex: 'Age', key: 'Age', label: 'Age' },
+ * // ]
+ * @param fields 基础数据
+ * @returns
+ * @category Others-TableColumns
+ */
+export declare function getTableColumns(fields: Array<{
+    label?: string;
+    title?: string;
+    dataIndex?: string;
+    value?: string;
+    key?: string;
+    width?: number | string;
+    align?: 'left' | 'center' | 'right';
+    fixed?: 'left' | 'right' | false;
+    hidden?: boolean;
+    ellipsis?: boolean | any;
+    defaultSortOrder?: 'ascend' | 'descend' | string;
+    colSpan?: number;
+    className?: string;
+    sorter?: any;
+    search?: any;
+    showSearch?: boolean;
+    render?: (text: any, record: any, index: number) => any;
+    [key: string]: any;
+}>): Array<{
+    label?: string;
+    title?: string;
+    dataIndex?: string;
+    value?: string;
+    key?: string;
+    width?: number | string;
+    align?: 'left' | 'center' | 'right';
+    fixed?: 'left' | 'right' | false;
+    hidden?: boolean;
+    ellipsis?: boolean | any;
+    defaultSortOrder?: 'ascend' | 'descend' | string;
+    colSpan?: number;
+    className?: string;
+    sorter?: any;
+    search?: any;
+    showSearch?: boolean;
+    render?: (text: any, record: any, index: number) => any;
+    [key: string]: any;
+}>;
+/**
+ * 播放音频
+ * @param input 声音类型或者音频文件路径
+ * @example
+ * playAudio('path/to/custom.mp3');
+ * @returns
+ * @category Others-音频
+ */
+export declare function playAudio(input: string): void;
+/**
+ * Mock 数据类型
+ * @category Others-Mock&模拟数据
+ */
+export declare type MockDataType = 'string' | 'number' | 'boolean' | 'date' | 'array' | 'object' | 'null' | 'undefined';
+/**
+ * Mock 数据选项
+ * @category Others-Mock&模拟数据
+ */
+export interface MockOptions {
+    min?: number;
+    max?: number;
+    length?: number;
+    arrayTypes?: Array<MockDataType | {
+        type: MockDataType;
+        options?: MockOptions;
+    }>;
+    objectKeys?: {
+        [key: string]: MockDataType | {
+            type: MockDataType;
+            options?: MockOptions;
+        };
+    };
+    startDate?: Date;
+    endDate?: Date;
+    format?: string | false;
+}
+/**
+ * 生成 Mock 模拟数据的方法
+ * @param type 要生成的数据类型
+ * @param options 生成数据的选项
+ * @example
+ * getMockData('string', { length: 10 }); /// "aB3dE6gH1j"
+ * getMockData('number', { min: 10, max: 100 }); /// 42
+ * getMockData('boolean'); /// true
+ * getMockData('date', { startDate: new Date(2020, 0, 1), endDate: new Date(2021, 0, 1) }); /// "2020-06-15 12:34:56"
+ * getMockData('date', { format: false }); /// Date object
+ * getMockData('object', { objectKeys: { name: 'string', age: 'number', birthDate: { type: 'date', options: { format: 'yyyy/mm/dd' } } } }); /// { name: "aBc", age: 25, birthDate: "1995/05/17" }
+ * getMockData('array', { length: 5, arrayTypes: ['string', 'number'] }); /// [ "aB3", 42, "xYz", 7, "MN1" ]
+ * getMockData('array', { length: 5, objectKeys: { name: 'string', age: 'number', birthDate: { type: 'date', options: { format: 'yyyy/mm/dd' } } } }); /// [{ name: "aBc", age: 25, birthDate: "1995/05/17" } * 5 ......]
+ * getMockData('array', { length: 5, arrayTypes: [{ type: 'object', objectKeys: { name: 'string', age: 'number', birthDate: { type: 'date', options: { format: 'yyyy/mm/dd' } } } }] }); /// [{ name: "aBc", age: 25, birthDate: "1995/05/17" } * 5 ......]
+ * getMockData('array', { length: 10, arrayTypes: ['string', { type: 'number', options: { min: 10, max: 100 } }, { type: 'date', options: { format: 'yyyy/mm/dd' } }] }); /// [47, 49, 'uCp1bxDo', '2003/05/14', 'MUQSOf0W', '2011/07/01', 'nDYZD4Lu', 'YFSCEQvV', '2021/06/03', '1yaIgwhh']
+ * @returns
+ * @category Others-Mock&模拟数据
+ */
+export declare function getMockData(type: MockDataType, options?: MockOptions): any;
 //# sourceMappingURL=index.d.ts.map

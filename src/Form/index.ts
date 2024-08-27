@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:53:02
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-01-09 14:31:35
+ * @LastEditTime: 2024-08-27 10:52:09
  * @Description: 表单相关
  * @FilePath: \js-xxx\src\Form\index.ts
  */
@@ -33,6 +33,51 @@ export function toFormData(obj: any, hasBrackets = false, hasIndex = false): For
     }
   });
   return formData;
+}
+
+/**
+ * Converts a FormData object to a plain JavaScript object.
+ * @param formData The FormData object to convert.
+ * @example
+ * const formData = new FormData();
+ * formData.append('name', 'John Doe');
+ * formData.append('email', 'john.doe@example.com');
+ * formData.append('hobbies', 'reading');
+ * formData.append('hobbies', 'coding');
+ * const result = formDataToObject(formData);
+ * console.log(result);
+ * /// { name: 'John Doe', email: 'john.doe@example.com', hobbies: ['reading', 'coding'] }
+ * @returns
+ * @category Form-表单相关
+ */
+export function formDataToObject(formData: any) {
+  if (!(formData instanceof FormData)) {
+    throw new Error('The provided argument is not an instance of FormData.');
+  }
+
+  const result: any = {};
+  try {
+    formData.forEach((value, key) => {
+      if (!value) return; // Skip empty or null values
+
+      // eslint-disable-next-line no-prototype-builtins
+      if (result?.hasOwnProperty(key)) {
+        // If the key already exists and is an array, push the new value
+        if (Array.isArray(result[key])) {
+          result[key].push(value);
+        } else {
+          // If the key exists but is not an array, convert it to an array
+          result[key] = [result[key], value];
+        }
+      } else {
+        // If the key does not exist, set it directly
+        result[key] = value;
+      }
+    });
+  } catch (e) {
+    return {};
+  }
+  return result;
 }
 
 /**
