@@ -14822,6 +14822,7 @@ function createChangeLogListener(callback) {
  * myCustomLog.end({ isLogin: true, key: 'custom-456' });
  * // 输出到控制台和执行回调
  * // 输出格式包括：logKey, ms, s, menuCode, user, isLogin, userAgent, test
+ * myCustomLog.clear(); // 清空所有缓存数据
  * // react
  * const log = useMemo(() => createTimeEventLog('扫描时长', { menuCode: 'scan' }), []);
  * @category Log-日志埋点
@@ -14831,6 +14832,10 @@ function createTimeLogListener(eventName, eventParams, callback) {
     var originEventParams = eventParams;
     var timeLogBox = {};
     var log = {
+        clear: function () {
+            timeLogBox = {};
+            eventParams = originEventParams;
+        },
         start: function (moreParams) {
             if (moreParams === void 0) { moreParams = {}; }
             // @ts-ignore
