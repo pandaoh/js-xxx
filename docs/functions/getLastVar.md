@@ -1,8 +1,8 @@
-[**js-xxx v2.2.22**](../README.md) • **Docs**
+[**js-xxx v2.2.23**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.22](../README.md) / getLastVar
+[js-xxx v2.2.23](../README.md) / getLastVar
 
 # Function: getLastVar()
 

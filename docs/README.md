@@ -1,8 +1,8 @@
-**js-xxx v2.2.22** • **Docs**
+**js-xxx v2.2.23** • **Docs**
 
 ***
 
-# js-xxx v2.2.22
+# js-xxx v2.2.23
 
 ## Array-数组相关
 

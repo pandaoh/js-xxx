@@ -1,8 +1,8 @@
-[**js-xxx v2.2.22**](../README.md) • **Docs**
+[**js-xxx v2.2.23**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.22](../README.md) / calcCron
+[js-xxx v2.2.23](../README.md) / calcCron
 
 # Function: calcCron()
 

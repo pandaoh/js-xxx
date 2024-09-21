@@ -1,8 +1,8 @@
-[**js-xxx v2.2.22**](../README.md) • **Docs**
+[**js-xxx v2.2.23**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.22](../README.md) / base64Encode
+[js-xxx v2.2.23](../README.md) / base64Encode
 
 # Function: base64Encode()
 

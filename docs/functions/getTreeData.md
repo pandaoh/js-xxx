@@ -1,8 +1,8 @@
-[**js-xxx v2.2.22**](../README.md) • **Docs**
+[**js-xxx v2.2.23**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.22](../README.md) / getTreeData
+[js-xxx v2.2.23](../README.md) / getTreeData
 
 # Function: getTreeData()
 
