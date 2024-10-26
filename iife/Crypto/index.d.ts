@@ -155,4 +155,9 @@ export declare function base64Decode(str: string): string;
  * @category Crypto-密码学
  */
 export declare function getCryptoJS(): typeof CryptoJS;
+/**
+ * CryptoOptions
+ * @category Crypto-密码学
+ */
+export declare type CryptoOptions = typeof CryptoJS;
 //# sourceMappingURL=index.d.ts.map

@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:54:41
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-08-21 11:46:17
+ * @LastEditTime: 2024-10-26 10:14:29
  * @Description: 加密相关函数 依赖 crypto-js
  * @FilePath: \js-xxx\src\Crypto\index.ts
  */
@@ -272,3 +272,9 @@ export function base64Decode(str: string): string {
 export function getCryptoJS(): typeof CryptoJS {
   return CryptoJS;
 }
+
+/**
+ * CryptoOptions
+ * @category Crypto-密码学
+ */
+export type CryptoOptions = typeof CryptoJS;

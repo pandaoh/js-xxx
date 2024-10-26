@@ -1,4 +1,4 @@
-import { HttpMethod } from '@/Data';
+import { FileType, HttpMethod } from '@/Data';
 /**
  * 对象转 queryString 暂时只支持两层数据，第二层对象与与数组值不能为引用类型。
  * @example
@@ -129,7 +129,7 @@ export declare function xFetch(method: string | HttpMethod, url: string, options
  * @returns
  * @category Request-请求相关
  */
-export declare function getContentType(fileType: string): string;
+export declare function getContentType(fileType: FileType | string): string;
 /**
  * 安全编码 URI，遇到错误时返回原始字符串。
  * @example

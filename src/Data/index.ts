@@ -3,10 +3,24 @@
  * @Author: HxB
  * @Date: 2022-08-15 15:54:41
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-08-21 11:45:01
+ * @LastEditTime: 2024-10-26 10:30:06
  * @property: 常用共用的一些常量
  * @FilePath: \js-xxx\src\Data\index.ts
  */
+
+/**
+ * CustomKeys
+ * @category 常量
+ */
+export interface CustomKeys {
+  [key: string]: string;
+}
+
+/**
+ * CustomAny
+ * @category 常量
+ */
+export type CustomAny = any;
 
 /**
  * @enum
@@ -59,7 +73,7 @@ export const CODE_MSG: { [status: number]: string } = {
  * @property
  * content types
  */
-export const CONTENT_TYPES: { [propName: string]: string } = {
+export const CONTENT_TYPES = {
   '7z': 'application/octet-stream',
   avi: 'video/x-msvideo',
   bmp: 'image/bmp',
@@ -139,6 +153,12 @@ export const CONTENT_TYPES: { [propName: string]: string } = {
   file: 'multipart/form-data',
   utf8: 'charset=utf-8',
 };
+
+/**
+ * FileType
+ * @category 常量
+ */
+export type FileType = keyof typeof CONTENT_TYPES;
 
 /**
  * @category 常量

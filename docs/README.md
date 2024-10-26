@@ -24,6 +24,7 @@
 
 ## Crypto-密码学
 
+- [CryptoOptions](type-aliases/CryptoOptions.md)
 - [base64Decode](functions/base64Decode.md)
 - [base64Encode](functions/base64Encode.md)
 - [decrypt](functions/decrypt.md)
@@ -429,6 +430,9 @@
 ## 常量
 
 - [HttpMethod](enumerations/HttpMethod.md)
+- [CustomKeys](interfaces/CustomKeys.md)
+- [CustomAny](type-aliases/CustomAny.md)
+- [FileType](type-aliases/FileType.md)
 - [ANIMALS](variables/ANIMALS.md)
 - [BASE\_CHAR\_LOW](variables/BASE_CHAR_LOW.md)
 - [BASE\_CHAR\_UP](variables/BASE_CHAR_UP.md)

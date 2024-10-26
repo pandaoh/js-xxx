@@ -8381,7 +8381,7 @@
    * @Author: HxB
    * @Date: 2022-08-15 15:54:41
    * @LastEditors: DoubleAm
-   * @LastEditTime: 2024-08-21 11:45:01
+   * @LastEditTime: 2024-10-26 10:30:06
    * @property: 常用共用的一些常量
    * @FilePath: \js-xxx\src\Data\index.ts
    */
@@ -9637,7 +9637,8 @@
    */
   function getContentType(fileType) {
       var _a;
-      return (_a = CONTENT_TYPES[fileType.toLowerCase()]) !== null && _a !== void 0 ? _a : 'application/octet-stream';
+      // @ts-ignore
+      return (_a = CONTENT_TYPES["".concat(fileType).toLowerCase()]) !== null && _a !== void 0 ? _a : 'application/octet-stream';
   }
   /**
    * 安全编码 URI，遇到错误时返回原始字符串。

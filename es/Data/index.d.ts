@@ -1,4 +1,16 @@
 /**
+ * CustomKeys
+ * @category 常量
+ */
+export interface CustomKeys {
+    [key: string]: string;
+}
+/**
+ * CustomAny
+ * @category 常量
+ */
+export declare type CustomAny = any;
+/**
  * @enum
  * Http Methods
  * @category 常量
@@ -31,8 +43,90 @@ export declare const CODE_MSG: {
  * content types
  */
 export declare const CONTENT_TYPES: {
-    [propName: string]: string;
+    '7z': string;
+    avi: string;
+    bmp: string;
+    css: string;
+    csv: string;
+    conf: string;
+    class: string;
+    docx: string;
+    doc: string;
+    dv: string;
+    dwg: string;
+    exe: string;
+    fig: string;
+    flac: string;
+    flv: string;
+    gif: string;
+    html: string;
+    ico: string;
+    ini: string;
+    jpeg: string;
+    jpg: string;
+    js: string;
+    jsonp: string;
+    json: string;
+    log: string;
+    lock: string;
+    m4a: string;
+    mkv: string;
+    mp3: string;
+    mp4: string;
+    m4v: string;
+    moov: string;
+    mov: string;
+    movie: string;
+    md: string;
+    ogg: string;
+    oga: string;
+    ppk: string;
+    php: string;
+    py: string;
+    png: string;
+    pptx: string;
+    ppt: string;
+    pdf: string;
+    reg: string;
+    rar: string;
+    so: string;
+    svg: string;
+    sql: string;
+    'tar.gz': string;
+    tgz: string;
+    ttf: string;
+    tif: string;
+    txt: string;
+    ts: string;
+    tsx: string;
+    jsx: string;
+    vue: string;
+    scss: string;
+    less: string;
+    uri: string;
+    url: string;
+    wav: string;
+    wbmp: string;
+    webm: string;
+    wmv: string;
+    xls: string;
+    xlsx: string;
+    xhtml: string;
+    xml: string;
+    xmind: string;
+    yml: string;
+    yaml: string;
+    zip: string;
+    binary: string;
+    form: string;
+    file: string;
+    utf8: string;
 };
+/**
+ * FileType
+ * @category 常量
+ */
+export declare type FileType = keyof typeof CONTENT_TYPES;
 /**
  * @category 常量
  * @property

@@ -3,11 +3,11 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:15:37
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-08-23 11:03:20
+ * @LastEditTime: 2024-10-26 10:30:28
  * @Description: 请求相关函数
  * @FilePath: \js-xxx\src\Request\index.ts
  */
-import { CONTENT_TYPES, HttpMethod } from '@/Data';
+import { CONTENT_TYPES, FileType, HttpMethod } from '@/Data';
 import { getType, isObj, toBool } from '@/Types';
 
 /**
@@ -340,8 +340,9 @@ export function xFetch(
  * @returns
  * @category Request-请求相关
  */
-export function getContentType(fileType: string): string {
-  return CONTENT_TYPES[fileType.toLowerCase()] ?? 'application/octet-stream';
+export function getContentType(fileType: FileType | string): string {
+  // @ts-ignore
+  return CONTENT_TYPES[`${fileType}`.toLowerCase()] ?? 'application/octet-stream';
 }
 
 /**
