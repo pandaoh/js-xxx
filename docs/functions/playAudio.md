@@ -1,8 +1,8 @@
-[**js-xxx v2.2.23**](../README.md) • **Docs**
+[**js-xxx v2.2.25**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.23](../README.md) / playAudio
+[js-xxx v2.2.25](../README.md) / playAudio
 
 # Function: playAudio()
 

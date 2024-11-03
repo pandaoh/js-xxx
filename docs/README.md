@@ -1,8 +1,8 @@
-**js-xxx v2.2.23** • **Docs**
+**js-xxx v2.2.25** • **Docs**
 
 ***
 
-# js-xxx v2.2.23
+# js-xxx v2.2.25
 
 ## Array-数组相关
 
@@ -453,3 +453,7 @@
 - [TRANSFER\_STR](variables/TRANSFER_STR.md)
 - [WEEKS](variables/WEEKS.md)
 - [WOMAN](variables/WOMAN.md)
+
+## 模板渲染
+
+- [renderTemplate](functions/renderTemplate.md)

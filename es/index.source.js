@@ -11743,6 +11743,69 @@ function curryIt(fn) {
     //     }
     //   };
 }
+/**
+ * 使用自定义模板渲染字符串内容
+ * 支持条件渲染、循环、嵌套变量、默认值以及简单占位符替换
+ * @example
+ * /// https://github.com/biugle/js-xcmd/blob/main/utils/template.js
+ * @link https://github.com/biugle/js-xcmd/blob/main/utils/template.js
+ * @param content 原始模板内容
+ * @param replacements 要替换的值-对象
+ * @returns 渲染后的内容
+ * @category 模板渲染
+ */
+function renderTemplate(content, replacements) {
+    replacements = replacements || {};
+    if (!content) {
+        return '';
+    }
+    // 内部路径解析函数
+    var _resolvePath = function (obj, path) {
+        return path.split('.').reduce(function (acc, part) {
+            if (acc && typeof acc === 'object' && part in acc) {
+                return acc[part];
+            }
+            return undefined; // 如果路径不存在，返回 undefined
+        }, obj);
+    };
+    // 内部方法：处理多余空行
+    var _trimTpl = function (str) {
+        // 用正则表达式将多个连续的空行替换为一个空行
+        return str.replace(/(\n\s*\n)+/g, '\n\n'); // 将多个空行替换为一个空行
+    };
+    // 循环渲染 - [[*arrayVarKey $item $index]]
+    content = content.replace(/\[\[\s*\*\s*([\w.]+)\s+(\$\w+)(?:\s+(\$\w+))?\s*\]\]([\s\S]*?)\[\[\s*\/\s*\1\s*\]\]/g, function (match, arrayVarKey, itemVar, indexVar, innerContent) {
+        var array = _resolvePath(replacements, arrayVarKey);
+        if (Array.isArray(array)) {
+            return array
+                .map(function (item, index) {
+                var _a;
+                var context = __assign(__assign({}, replacements), (_a = {}, _a[itemVar.slice(1)] = item, _a));
+                if (indexVar) {
+                    context[indexVar.slice(1)] = index; // 传递索引
+                }
+                return renderTemplate(innerContent, context); // 递归渲染
+            })
+                .join(''); // 使用空字符串连接渲染结果
+        }
+        return ''; // 如果不是数组则返回空字符串
+    });
+    // 存在变量的条件渲染 - [[#key]] ... [[/key]]
+    content = content.replace(/\[\[\s*#\s*([\w.]+)\s*\]\]([\s\S]*?)\[\[\s*\/\s*\1\s*\]\]/g, function (match, key, innerContent) {
+        return _resolvePath(replacements, key) ? innerContent : '';
+    });
+    // 不存在变量的条件渲染 - [[^key]] ... [[/key]]
+    content = content.replace(/\[\[\s*\^\s*([\w.]+)\s*\]\]([\s\S]*?)\[\[\s*\/\s*\1\s*\]\]/g, function (match, key, innerContent) {
+        return !_resolvePath(replacements, key) ? innerContent : '';
+    });
+    // 替换简单的占位符并支持默认值 - [[[key ?? defaultValue]]]
+    content = content.replace(/\[\[\[\s*([\w.]+)\s*(?:\?\?\s*([^\]]+))?\s*\]\]\]/g, function (match, path, defaultValue) {
+        var value = _resolvePath(replacements, path);
+        return "".concat(value !== undefined ? value : defaultValue || '').trim(); // 使用 .trim() 去除前后空白
+    });
+    // 处理空行和首尾空白
+    return _trimTpl(content);
+}
 
 /*
  * @Author: HxB
@@ -17629,4 +17692,4 @@ function getDefaultLang(opts) {
     }
 }
 
-export { ANIMALS, BASE_CHAR_LOW, BASE_CHAR_UP, BASE_NUMBER, BLOOD_GROUP, BLOOD_GROUP_INFO, BS_COLORS, CODE_MSG, CONSTELLATION, CONTENT_TYPES, HttpMethod, ICONS, ID_CARD_PROVINCE, KEYBOARD_CODE, Loading, MAN, MONTHS, PY_MAPS, ROLES, Speaker, TRANSFER_STR, Toast, WEEKS, WOMAN, abs, add, addLongPressEvent, addSpace, all, any, appendLink, appendScript, arr2select, arrObj2objArr, arrayFill, arrayShuffle, arraySort, average, banConsole, base64Decode, base64Encode, bindMoreClick, buf2obj, calcCron, calcDate, calcFontSize, calculate, catchPromise, changeURL, checkFileExt, checkIdCard, checkPassWordLevel, checkUpdate, checkVersion, clearCookies, closeFullscreen, closeWebSocket, compareDate, compareTo, contains, copyToClipboard, countdown, createChangeLogListener, createClickLogListener, createScrollLogListener, createTimeLogListener, curryIt, customFinally, cx, data2Arr, data2Obj, dataTo, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, downloadFile, downloadImg, emitEvent, emitKeyboardEvent, empty, encrypt, eslintRules, every, exportFile, filterTreeData, findChildren, findMaxKey, findParents, float, forEach, forceToStr, formDataToObject, formatBytes, formatDate, formatJSON, formatNumber, formatRh, getAge, getAnimal, getBSColor, getBaseURL, getBloodGroup, getBrowserLang, getConstellation, getContentType, getCookie, getCryptoJS, getDataStr, getDateDifference, getDateList, getDateTime, getDayInYear, getDecodeStorage, getDefaultLang, getFileNameFromUrl, getFingerprint, getFirstVar, getKey, getLastVar, getLocalArr, getLocalObj, getMockData, getMonthDayCount, getMonthInfo, getNumberReg, getPercentage, getPinYin, getQueryString, getRandColor, getRandDate, getRandIp, getRandNum, getRandStr, getRandVar, getScrollParent, getScrollPercent, getSearchParams, getSelectText, getSessionArr, getSessionObj, getSortVar, getStyleByName, getTableColumns, getTimeCode, getTimezone, getTreeCheckNodes, getTreeData, getType, getUTCTime, getUserAgent, getV, getVarSize, getViewportSize, getWebSocket, getWeekInfo, globalError, hasKey, hasSpecialChar, hideToast, html2str, i18n, inRange, initNotification, initWebSocket, insertAfter, intersection, inversion, isAccount, isAppleDevice, isArr, isArrayBuffer, isBankCard, isBlob, isBool, isBrowser, isCSR, isCarCode, isChinese, isChrome, isCreditCode, isDarkMode, isDate, isDecimal, isElement, isEmail, isEnglish, isEqual, isEven, isFn, isHttp, isInteger, isInvalidDate, isIpAddress, isIpv4, isIpv6, isJSON, isLatitude, isLongitude, isMac, isMobile, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPromise, isQQ, isRhNegative, isStr, isStrongPassWord, isTel, isUndef, isUrl, isWeekday, isWin, javaDecrypt, javaEncrypt, jsonClone, keyBoardResize, leftJoin, loadStr, localStorageGet, localStorageSet, log, logRunTime, markNumber, marquee, maskString, md5, ms, obj2buf, observeResource, offDefaultEvent, onClick2MoreClick, onResize, openFileSelect, openFullscreen, openPreviewFile, parseJSON, playAudio, prettierRules, printDom, px2rem, qsParse, qsStringify, removeCookie, repeat, retry, rightJoin, rip, round, safeDecodeURI, safeEncodeURI, same, saveAs, scrollToElement, scrollToView, scrollXTo, scrollYTo, searchTreeData, sendNotification, sendWsMsg, sessionStorageGet, sessionStorageSet, setCookie, setEncodeStorage, setEventListener, setIcon, setWsBinaryType, sha1, sha256, showProcess, showToast, showVar, sleep, slugify, sortBy, sortCallBack, sortJSON, stackSticky, str2html, str2unicode, stringifyJSON, sub, textCamelCase, textSplitCase, textTransferCase, throttle, timeSince, times, to, toBool, toFormData, toNum, toQueryString, toStr, toggleClass, transferCSVData, transferFileToBase64, transferIdCard, transferMoney, transferNumber, transferScanStr, transferSeconds, transferTemperature, transferTreeData, trim, truncate, unicode2str, union, unique, useStateData, uuid, versionUpgrade, waitUntil, watermark, xAjax, xFetch, xTimer };
+export { ANIMALS, BASE_CHAR_LOW, BASE_CHAR_UP, BASE_NUMBER, BLOOD_GROUP, BLOOD_GROUP_INFO, BS_COLORS, CODE_MSG, CONSTELLATION, CONTENT_TYPES, HttpMethod, ICONS, ID_CARD_PROVINCE, KEYBOARD_CODE, Loading, MAN, MONTHS, PY_MAPS, ROLES, Speaker, TRANSFER_STR, Toast, WEEKS, WOMAN, abs, add, addLongPressEvent, addSpace, all, any, appendLink, appendScript, arr2select, arrObj2objArr, arrayFill, arrayShuffle, arraySort, average, banConsole, base64Decode, base64Encode, bindMoreClick, buf2obj, calcCron, calcDate, calcFontSize, calculate, catchPromise, changeURL, checkFileExt, checkIdCard, checkPassWordLevel, checkUpdate, checkVersion, clearCookies, closeFullscreen, closeWebSocket, compareDate, compareTo, contains, copyToClipboard, countdown, createChangeLogListener, createClickLogListener, createScrollLogListener, createTimeLogListener, curryIt, customFinally, cx, data2Arr, data2Obj, dataTo, debounce, decrypt, deepClone, difference, disableConflictEvent, div, download, downloadContent, downloadFile, downloadImg, emitEvent, emitKeyboardEvent, empty, encrypt, eslintRules, every, exportFile, filterTreeData, findChildren, findMaxKey, findParents, float, forEach, forceToStr, formDataToObject, formatBytes, formatDate, formatJSON, formatNumber, formatRh, getAge, getAnimal, getBSColor, getBaseURL, getBloodGroup, getBrowserLang, getConstellation, getContentType, getCookie, getCryptoJS, getDataStr, getDateDifference, getDateList, getDateTime, getDayInYear, getDecodeStorage, getDefaultLang, getFileNameFromUrl, getFingerprint, getFirstVar, getKey, getLastVar, getLocalArr, getLocalObj, getMockData, getMonthDayCount, getMonthInfo, getNumberReg, getPercentage, getPinYin, getQueryString, getRandColor, getRandDate, getRandIp, getRandNum, getRandStr, getRandVar, getScrollParent, getScrollPercent, getSearchParams, getSelectText, getSessionArr, getSessionObj, getSortVar, getStyleByName, getTableColumns, getTimeCode, getTimezone, getTreeCheckNodes, getTreeData, getType, getUTCTime, getUserAgent, getV, getVarSize, getViewportSize, getWebSocket, getWeekInfo, globalError, hasKey, hasSpecialChar, hideToast, html2str, i18n, inRange, initNotification, initWebSocket, insertAfter, intersection, inversion, isAccount, isAppleDevice, isArr, isArrayBuffer, isBankCard, isBlob, isBool, isBrowser, isCSR, isCarCode, isChinese, isChrome, isCreditCode, isDarkMode, isDate, isDecimal, isElement, isEmail, isEnglish, isEqual, isEven, isFn, isHttp, isInteger, isInvalidDate, isIpAddress, isIpv4, isIpv6, isJSON, isLatitude, isLongitude, isMac, isMobile, isNaN$1 as isNaN, isNode, isNull, isNum, isObj, isPromise, isQQ, isRhNegative, isStr, isStrongPassWord, isTel, isUndef, isUrl, isWeekday, isWin, javaDecrypt, javaEncrypt, jsonClone, keyBoardResize, leftJoin, loadStr, localStorageGet, localStorageSet, log, logRunTime, markNumber, marquee, maskString, md5, ms, obj2buf, observeResource, offDefaultEvent, onClick2MoreClick, onResize, openFileSelect, openFullscreen, openPreviewFile, parseJSON, playAudio, prettierRules, printDom, px2rem, qsParse, qsStringify, removeCookie, renderTemplate, repeat, retry, rightJoin, rip, round, safeDecodeURI, safeEncodeURI, same, saveAs, scrollToElement, scrollToView, scrollXTo, scrollYTo, searchTreeData, sendNotification, sendWsMsg, sessionStorageGet, sessionStorageSet, setCookie, setEncodeStorage, setEventListener, setIcon, setWsBinaryType, sha1, sha256, showProcess, showToast, showVar, sleep, slugify, sortBy, sortCallBack, sortJSON, stackSticky, str2html, str2unicode, stringifyJSON, sub, textCamelCase, textSplitCase, textTransferCase, throttle, timeSince, times, to, toBool, toFormData, toNum, toQueryString, toStr, toggleClass, transferCSVData, transferFileToBase64, transferIdCard, transferMoney, transferNumber, transferScanStr, transferSeconds, transferTemperature, transferTreeData, trim, truncate, unicode2str, union, unique, useStateData, uuid, versionUpgrade, waitUntil, watermark, xAjax, xFetch, xTimer };

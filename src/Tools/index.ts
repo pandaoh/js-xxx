@@ -4,7 +4,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-08-27 14:12:02
+ * @LastEditTime: 2024-11-03 17:57:29
  * @Description: 工具函数
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
@@ -2180,4 +2180,83 @@ export function curryIt(fn: any) {
   //       return arguments.callee;
   //     }
   //   };
+}
+
+/**
+ * 使用自定义模板渲染字符串内容
+ * 支持条件渲染、循环、嵌套变量、默认值以及简单占位符替换
+ * @example
+ * /// https://github.com/biugle/js-xcmd/blob/main/utils/template.js
+ * @link https://github.com/biugle/js-xcmd/blob/main/utils/template.js
+ * @param content 原始模板内容
+ * @param replacements 要替换的值-对象
+ * @returns 渲染后的内容
+ * @category 模板渲染
+ */
+export function renderTemplate(content: string, replacements: any) {
+  replacements = replacements || {};
+  if (!content) {
+    return '';
+  }
+
+  // 内部路径解析函数
+  const _resolvePath = (obj: any, path: string) => {
+    return path.split('.').reduce((acc: any, part: string) => {
+      if (acc && typeof acc === 'object' && part in acc) {
+        return acc[part];
+      }
+      return undefined; // 如果路径不存在，返回 undefined
+    }, obj);
+  };
+
+  // 内部方法：处理多余空行
+  const _trimTpl = (str: string) => {
+    // 用正则表达式将多个连续的空行替换为一个空行
+    return str.replace(/(\n\s*\n)+/g, '\n\n'); // 将多个空行替换为一个空行
+  };
+
+  // 循环渲染 - [[*arrayVarKey $item $index]]
+  content = content.replace(
+    /\[\[\s*\*\s*([\w.]+)\s+(\$\w+)(?:\s+(\$\w+))?\s*\]\]([\s\S]*?)\[\[\s*\/\s*\1\s*\]\]/g,
+    (match, arrayVarKey, itemVar, indexVar, innerContent) => {
+      const array = _resolvePath(replacements, arrayVarKey);
+      if (Array.isArray(array)) {
+        return array
+          .map((item, index) => {
+            const context = { ...replacements, [itemVar.slice(1)]: item };
+            if (indexVar) {
+              context[indexVar.slice(1)] = index; // 传递索引
+            }
+            return renderTemplate(innerContent, context); // 递归渲染
+          })
+          .join(''); // 使用空字符串连接渲染结果
+      }
+      return ''; // 如果不是数组则返回空字符串
+    },
+  );
+
+  // 存在变量的条件渲染 - [[#key]] ... [[/key]]
+  content = content.replace(
+    /\[\[\s*#\s*([\w.]+)\s*\]\]([\s\S]*?)\[\[\s*\/\s*\1\s*\]\]/g,
+    (match, key, innerContent) => {
+      return _resolvePath(replacements, key) ? innerContent : '';
+    },
+  );
+
+  // 不存在变量的条件渲染 - [[^key]] ... [[/key]]
+  content = content.replace(
+    /\[\[\s*\^\s*([\w.]+)\s*\]\]([\s\S]*?)\[\[\s*\/\s*\1\s*\]\]/g,
+    (match, key, innerContent) => {
+      return !_resolvePath(replacements, key) ? innerContent : '';
+    },
+  );
+
+  // 替换简单的占位符并支持默认值 - [[[key ?? defaultValue]]]
+  content = content.replace(/\[\[\[\s*([\w.]+)\s*(?:\?\?\s*([^\]]+))?\s*\]\]\]/g, (match, path, defaultValue) => {
+    const value = _resolvePath(replacements, path);
+    return `${value !== undefined ? value : defaultValue || ''}`.trim(); // 使用 .trim() 去除前后空白
+  });
+
+  // 处理空行和首尾空白
+  return _trimTpl(content);
 }

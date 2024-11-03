@@ -1,8 +1,8 @@
-[**js-xxx v2.2.23**](../README.md) • **Docs**
+[**js-xxx v2.2.25**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.23](../README.md) / getRandColor
+[js-xxx v2.2.25](../README.md) / getRandColor
 
 # Function: getRandColor()
 

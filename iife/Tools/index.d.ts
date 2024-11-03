@@ -754,4 +754,16 @@ export declare function xTimer(callback: any, time?: number, once?: boolean, imm
  * @category Tools-工具方法
  */
 export declare function curryIt(fn: any): (...args: any[]) => any;
+/**
+ * 使用自定义模板渲染字符串内容
+ * 支持条件渲染、循环、嵌套变量、默认值以及简单占位符替换
+ * @example
+ * /// https://github.com/biugle/js-xcmd/blob/main/utils/template.js
+ * @link https://github.com/biugle/js-xcmd/blob/main/utils/template.js
+ * @param content 原始模板内容
+ * @param replacements 要替换的值-对象
+ * @returns 渲染后的内容
+ * @category 模板渲染
+ */
+export declare function renderTemplate(content: string, replacements: any): string;
 //# sourceMappingURL=index.d.ts.map
