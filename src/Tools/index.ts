@@ -4,7 +4,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-11-03 17:57:29
+ * @LastEditTime: 2024-11-03 18:06:45
  * @Description: 工具函数
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
@@ -2183,6 +2183,7 @@ export function curryIt(fn: any) {
 }
 
 /**
+ * 简单的模板渲染引擎
  * 使用自定义模板渲染字符串内容
  * 支持条件渲染、循环、嵌套变量、默认值以及简单占位符替换
  * @example
