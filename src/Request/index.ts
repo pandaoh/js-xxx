@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:15:37
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-10-26 10:30:28
+ * @LastEditTime: 2024-11-04 17:47:04
  * @Description: 请求相关函数
  * @FilePath: \js-xxx\src\Request\index.ts
  */
@@ -383,4 +383,39 @@ export function safeDecodeURI(s: string): string {
     console.warn(`Failed to decode URI component: ${s}`, e);
     return s;
   }
+}
+
+/**
+ * 转换常用的查询参数，确保请求参数的一致性。
+ * - 将值为 `ALL`（不区分大小写）转为空字符串或自定义空值。
+ * - 去除字符串值的多余空格。
+ * - 如果 `emptyValue` 参数存在，则将 `null` 或 `undefined` 值转换为 `emptyValue`，否则保留原值。
+ * - 支持嵌套对象的递归转换。
+ * @example
+ * transferQueryParams({ status: 'ALL', user: '  John  ', id: null }, 'N/A');
+ * /// { status: 'N/A', user: 'John', id: 'N/A' }
+ * transferQueryParams({ status: 'ALL', user: '  John  ', id: null });
+ * /// { status: '', user: 'John', id: null }
+ * transferQueryParams({ status: 'ALL', user: '  John  ', id: null, dep: { a: 'all', id: undefined } }, '');
+ * /// { status: '', user: 'John', id: '', dep: { a: '', id: '' } }
+ * @param obj 查询参数对象
+ * @param emptyValue 可选的空值填充值，若提供则将 `null` 和 `undefined` 替换为该值
+ * @returns 转换后的查询参数对象
+ * @category Request-请求相关
+ */
+export function transferQueryParams(obj: Record<string, any>, emptyValue?: any): Record<string, any> {
+  obj = obj || {};
+  for (const key in obj) {
+    if (typeof obj[key] === 'object' && obj[key] !== null) {
+      // 递归处理嵌套对象
+      obj[key] = transferQueryParams(obj[key], emptyValue);
+    } else if (`${obj[key]}`.toUpperCase() === 'ALL') {
+      obj[key] = emptyValue !== undefined ? emptyValue : '';
+    } else if (obj[key] === null || obj[key] === undefined) {
+      obj[key] = emptyValue !== undefined ? emptyValue : obj[key];
+    } else if (typeof obj[key] === 'string') {
+      obj[key] = obj[key].trim();
+    }
+  }
+  return obj;
 }

@@ -1,8 +1,8 @@
-[**js-xxx v2.2.25**](../README.md) • **Docs**
+[**js-xxx v2.2.26**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.25](../README.md) / getAge
+[js-xxx v2.2.26](../README.md) / getAge
 
 # Function: getAge()
 

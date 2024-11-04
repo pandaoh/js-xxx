@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:45:48
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-08-23 11:00:58
+ * @LastEditTime: 2024-11-04 17:31:11
  * @Description: 字符串常用函数
  * @FilePath: \js-xxx\src\String\index.ts
  */
@@ -390,21 +390,6 @@ export function isIpv6(value: string): boolean {
  */
 export function isIpAddress(value: string): boolean {
   return isIpv4(value) || isIpv6(value);
-}
-
-// eslint-disable-next-line spellcheck/spell-checker
-/**
- * 检查是否为 file.ext string 文件扩展名
- * @example
- * checkFileExt(['png', 'jpg'], 'test.jpg'); /// true
- * checkFileExt(['png', 'jpg'], 'test.jpg.txt'); /// false
- * @param value 字符串值
- * @returns
- * @category String-字符串
- */
-export function checkFileExt(arr: string[], value: string): boolean {
-  const regFileExt = arr.map((name) => `.${name}`).join('|');
-  return new RegExp(`(${regFileExt})$`).test(value);
 }
 
 /**

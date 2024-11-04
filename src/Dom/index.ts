@@ -484,56 +484,6 @@ export function appendScript(scriptUrl: string, async = false, defer = false): H
 }
 
 /**
- * 下载一个链接文档
- * @example
- * download('https://xxx.com/xxx', 'xxx'); /// 下载后端返回的流
- * @param link 链接
- * @param name 文件名称(可选，默认以链接最好一段作为名称，填写时可不带后缀自动识别，写了后缀会以写的后缀为准。)
- * @returns
- * @category Tools-下载/文件相关
- */
-export function download(link: string, name: string) {
-  if (!name) {
-    name = link.slice(link.lastIndexOf('/') + 1);
-  }
-  const eleLink = document.createElement('a');
-  eleLink.download = name;
-  eleLink.style.display = 'none';
-  eleLink.href = link;
-  document.body.appendChild(eleLink);
-  eleLink.click();
-  document.body.removeChild(eleLink);
-}
-
-/**
- * 在浏览器中自定义下载一些内容，与 download 不同的是，downloadContent 采用 Blob 可能会有长度限制。
- * @example
- * downloadContent('test.txt', 'test txt content'); /// 下载返回的流
- * downloadContent('test.json', JSON.stringify({content: 'test json'})); /// 下载返回的流
- * @param name 文件名称(需带后缀)，默认 txt 。
- * @param content 内容 BlobPart | any
- * @returns
- * @category Tools-下载/文件相关
- */
-export function downloadContent(name: string, content: any) {
-  if (!name) {
-    name = 'unknown';
-  }
-  try {
-    if (!(content instanceof Blob)) {
-      content = new Blob([content]);
-    }
-    const link = URL.createObjectURL(content);
-    download(link, name);
-    setTimeout(() => {
-      URL.revokeObjectURL(link);
-    }, 0);
-  } catch (e) {
-    console.log('js-xxx:downloadContentError--->', e);
-  }
-}
-
-/**
  * 给元素设置 marquee 内容滚动效果，支持来回滚动，正常跑马灯，无限无缝滚动。
  * 一般来说设置两层，滚动的区间就是父元素的大小。
  * 若 #demo 高度小于 container，除非 loopType 设置 infinite，否则不会有动画。

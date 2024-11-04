@@ -217,16 +217,6 @@ export declare function isIpv6(value: string): boolean;
  */
 export declare function isIpAddress(value: string): boolean;
 /**
- * 检查是否为 file.ext string 文件扩展名
- * @example
- * checkFileExt(['png', 'jpg'], 'test.jpg'); /// true
- * checkFileExt(['png', 'jpg'], 'test.jpg.txt'); /// false
- * @param value 字符串值
- * @returns
- * @category String-字符串
- */
-export declare function checkFileExt(arr: string[], value: string): boolean;
-/**
  * 检查是否为 http 协议，1 是，-1 为 https，0 啥也不是。
  * @example
  * isHttp('http://test.com'); /// 1

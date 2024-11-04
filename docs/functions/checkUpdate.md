@@ -1,8 +1,8 @@
-[**js-xxx v2.2.25**](../README.md) • **Docs**
+[**js-xxx v2.2.26**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.25](../README.md) / checkUpdate
+[js-xxx v2.2.26](../README.md) / checkUpdate
 
 # Function: checkUpdate()
 

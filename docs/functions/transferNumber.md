@@ -1,8 +1,8 @@
-[**js-xxx v2.2.25**](../README.md) • **Docs**
+[**js-xxx v2.2.26**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.25](../README.md) / transferNumber
+[js-xxx v2.2.26](../README.md) / transferNumber
 
 # Function: transferNumber()
 

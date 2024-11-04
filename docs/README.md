@@ -1,8 +1,8 @@
-**js-xxx v2.2.25** • **Docs**
+**js-xxx v2.2.26** • **Docs**
 
 ***
 
-# js-xxx v2.2.25
+# js-xxx v2.2.26
 
 ## Array-数组相关
 
@@ -221,6 +221,7 @@
 - [getSearchParams](functions/getSearchParams.md)
 - [qsParse](functions/qsParse.md)
 - [qsStringify](functions/qsStringify.md)
+- [transferQueryParams](functions/transferQueryParams.md)
 
 ## Scroll-滚动相关
 
@@ -305,8 +306,8 @@
 - [downloadFile](functions/downloadFile.md)
 - [downloadImg](functions/downloadImg.md)
 - [exportFile](functions/exportFile.md)
-- [forceToStr](functions/forceToStr.md)
-- [getFileNameFromUrl](functions/getFileNameFromUrl.md)
+- [getFileNameFromStr](functions/getFileNameFromStr.md)
+- [getFileType](functions/getFileType.md)
 - [openFileSelect](functions/openFileSelect.md)
 - [openPreviewFile](functions/openPreviewFile.md)
 - [saveAs](functions/saveAs.md)
@@ -319,6 +320,10 @@
 - [emitEvent](functions/emitEvent.md)
 - [emitKeyboardEvent](functions/emitKeyboardEvent.md)
 - [offDefaultEvent](functions/offDefaultEvent.md)
+
+## Tools-字符串相关
+
+- [forceToStr](functions/forceToStr.md)
 
 ## Tools-工具方法
 

@@ -154,4 +154,23 @@ export declare function safeEncodeURI(s: string): string;
  * @category Custom-转码
  */
 export declare function safeDecodeURI(s: string): string;
+/**
+ * 转换常用的查询参数，确保请求参数的一致性。
+ * - 将值为 `ALL`（不区分大小写）转为空字符串或自定义空值。
+ * - 去除字符串值的多余空格。
+ * - 如果 `emptyValue` 参数存在，则将 `null` 或 `undefined` 值转换为 `emptyValue`，否则保留原值。
+ * - 支持嵌套对象的递归转换。
+ * @example
+ * transferQueryParams({ status: 'ALL', user: '  John  ', id: null }, 'N/A');
+ * /// { status: 'N/A', user: 'John', id: 'N/A' }
+ * transferQueryParams({ status: 'ALL', user: '  John  ', id: null });
+ * /// { status: '', user: 'John', id: null }
+ * transferQueryParams({ status: 'ALL', user: '  John  ', id: null, dep: { a: 'all', id: undefined } }, '');
+ * /// { status: '', user: 'John', id: '', dep: { a: '', id: '' } }
+ * @param obj 查询参数对象
+ * @param emptyValue 可选的空值填充值，若提供则将 `null` 和 `undefined` 替换为该值
+ * @returns 转换后的查询参数对象
+ * @category Request-请求相关
+ */
+export declare function transferQueryParams(obj: Record<string, any>, emptyValue?: any): Record<string, any>;
 //# sourceMappingURL=index.d.ts.map

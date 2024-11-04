@@ -1,13 +1,14 @@
-[**js-xxx v2.2.25**](../README.md) • **Docs**
+[**js-xxx v2.2.26**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.25](../README.md) / renderTemplate
+[js-xxx v2.2.26](../README.md) / renderTemplate
 
 # Function: renderTemplate()
 
 > **renderTemplate**(`content`, `replacements`): `string`
 
+简单的模板渲染引擎
 使用自定义模板渲染字符串内容
 支持条件渲染、循环、嵌套变量、默认值以及简单占位符替换
 

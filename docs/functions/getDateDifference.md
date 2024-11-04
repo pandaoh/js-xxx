@@ -1,8 +1,8 @@
-[**js-xxx v2.2.25**](../README.md) • **Docs**
+[**js-xxx v2.2.26**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.25](../README.md) / getDateDifference
+[js-xxx v2.2.26](../README.md) / getDateDifference
 
 # Function: getDateDifference()
 
@@ -20,7 +20,7 @@
 
 近一点的时间，默认当前时间。
 
-• **type?**: `"all"` \| `"ALL"` \| `"day"` \| `"days"` \| `"hour"` \| `"hours"` \| `"minute"` \| `"minutes"` \| `"second"` \| `"seconds"` \| `"DAY"` \| `"DAYS"` \| `"HOUR"` \| `"HOURS"` \| `"MINUTE"` \| `"MINUTES"` \| `"SECOND"` \| `"SECONDS"` = `'all'`
+• **type?**: `"ALL"` \| `"all"` \| `"day"` \| `"days"` \| `"hour"` \| `"hours"` \| `"minute"` \| `"minutes"` \| `"second"` \| `"seconds"` \| `"DAY"` \| `"DAYS"` \| `"HOUR"` \| `"HOURS"` \| `"MINUTE"` \| `"MINUTES"` \| `"SECOND"` \| `"SECONDS"` = `'all'`
 
 计算方式，默认计算差距的精确天数、时分秒。
 

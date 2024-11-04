@@ -9327,358 +9327,6 @@ var $xxx = (function (exports) {
   };
 
   /**
-   * 对象转 queryString 暂时只支持两层数据，第二层对象与与数组值不能为引用类型。
-   * @example
-   * qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3] }); /// 'start=0&count=20&obj[a]=1&arr[]=1&arr[]=2&arr[]=3'
-   * qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3] }, { arr2str: true }); /// 'start=0&count=20&obj[a]=1&arr=1,2,3'
-   * qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3], str: '1' }, { hasIndex: true }); /// 'start=0&count=20&obj[a]=1&arr[0]=1&arr[1]=2&arr[2]=3&str=1'
-   * @param obj 源数据
-   * @returns
-   * @category Request-请求相关
-   */
-  function qsStringify(obj, options) {
-      if (!obj) {
-          return '';
-      }
-      var queryString = new URLSearchParams();
-      // 不用 for...in，避免污染原对象，且数组遍历效率高。
-      Object.keys(obj).forEach(function (key) {
-          var val = obj[key];
-          switch (getType(val)) {
-              case 'object':
-                  Object.keys(val).forEach(function (objKey) {
-                      queryString.append("".concat(key, "[").concat(objKey, "]"), getType(val[objKey]) == 'object' ? JSON.stringify(val[objKey]) : val[objKey]);
-                  });
-                  break;
-              case 'array':
-                  if (options === null || options === void 0 ? void 0 : options.arr2str) {
-                      queryString.append(key, val.join(','));
-                  }
-                  else {
-                      // val.filter(Boolean)
-                      val.filter(toBool).forEach(function (arrVal, arrIndex) {
-                          var newArrVal = getType(arrVal) == 'object' ? JSON.stringify(arrVal) : arrVal;
-                          (options === null || options === void 0 ? void 0 : options.hasBrackets)
-                              ? queryString.append((options === null || options === void 0 ? void 0 : options.hasIndex) ? "".concat(key, "[").concat(arrIndex, "]") : "".concat(key, "[]"), newArrVal)
-                              : queryString.append(key, newArrVal);
-                      });
-                  }
-                  break;
-              default:
-                  queryString.append(key, val);
-                  break;
-          }
-      });
-      return (options === null || options === void 0 ? void 0 : options.urlEncode) ? queryString.toString() : safeDecodeURI(queryString.toString());
-  }
-  /**
-   * 获取 query string 参数转对象
-   * @example
-   * qsParse('start=0&count=20&x=1&x=2&x=3', 'x'); /// [1, 2, 3]
-   * qsParse('http://a.cn/123/test?start=0&count=20&x=1&x=2&x=3#123'); /// { start: '0', count: '20', x: [1, 2, 3], '#': 123, '_': 'test', '/': 'test?start=0&count=20&x=1&x=2&x=3#123' }
-   * @param url query string
-   * @param key 参数名
-   * @returns
-   * @category Request-请求相关
-   */
-  function qsParse(url, key) {
-      var _a, _b, _c, _d, _e;
-      // 也可使用 new URL(url) 或者 new URLSearchParams(params) API 获取
-      var pathname = (_a = url !== null && url !== void 0 ? url : window.location.pathname) !== null && _a !== void 0 ? _a : '';
-      url = (_b = url !== null && url !== void 0 ? url : window.location.search) !== null && _b !== void 0 ? _b : '';
-      var filename = pathname.substring(pathname.lastIndexOf('/') + 1);
-      var paramMap = {
-          '/': filename,
-          _: (_d = (_c = filename === null || filename === void 0 ? void 0 : filename.split('?')) === null || _c === void 0 ? void 0 : _c[0]) !== null && _d !== void 0 ? _d : '',
-      };
-      var queryString = url.includes('?') ? url.split('?')[1] : url;
-      var queryStringList = queryString.split('#');
-      paramMap['#'] = (_e = queryStringList === null || queryStringList === void 0 ? void 0 : queryStringList[1]) !== null && _e !== void 0 ? _e : '';
-      if (queryString.length !== 0) {
-          var parts = queryStringList[0].split('&');
-          for (var i = 0; i < parts.length; i++) {
-              var component = parts[i].split('=');
-              var paramKey = safeDecodeURI(component[0]);
-              var paramVal = safeDecodeURI(component[1]);
-              if (!paramMap[paramKey]) {
-                  paramMap[paramKey] = paramVal;
-                  continue;
-              }
-              !Array.isArray(paramMap[paramKey]) && (paramMap[paramKey] = Array(paramMap[paramKey]));
-              paramMap[paramKey].push(paramVal);
-          }
-      }
-      return key ? paramMap === null || paramMap === void 0 ? void 0 : paramMap[key] : paramMap;
-  }
-  /**
-   * 获取不带任何参数或片段标识符的当前 URL
-   * @example
-   * getBaseURL('https://test.com/index?name=leo&org=biugle#test'); /// 'https://test.com/index'
-   * getBaseURL(''); /// ''
-   * getBaseURL(); /// 当前页面 BaseURL
-   * getBaseURL('https://test.com/#/test?name=leo&org=biugle', true); /// 'https://test.com/#/test'
-   * getBaseURL(null); /// 相当于 window.location.origin
-   * @param url 地址/链接
-   * @param hashRoute 是否为 hash 路由，默认为 false 。
-   * @returns
-   * @category Request-请求相关
-   */
-  function getBaseURL(url, hashRoute) {
-      if (hashRoute === void 0) { hashRoute = false; }
-      if (url === null) {
-          return window.location.origin;
-      }
-      url = url !== null && url !== void 0 ? url : window.location.href;
-      if (hashRoute) {
-          return url.split('?')[0];
-      }
-      return url.replace(/[?#].*$/, '');
-  }
-  /**
-   * 获取 url 查询参数字符串
-   * @example
-   * getQueryString('https://test.com/index?name=leo&org=biugle#test'); /// 'name=leo&org=biugle'
-   * getQueryString(''); /// ''
-   * getQueryString(); /// 当前页面 QueryString 字符串部分
-   * @param url 地址/链接
-   * @returns
-   * @category Request-请求相关
-   */
-  function getQueryString(url) {
-      var _a, _b, _c, _d, _e;
-      return toBool(url) ? (_d = (_c = (_b = (_a = url === null || url === void 0 ? void 0 : url.split('?')) === null || _a === void 0 ? void 0 : _a[1]) === null || _b === void 0 ? void 0 : _b.split('#')) === null || _c === void 0 ? void 0 : _c[0]) !== null && _d !== void 0 ? _d : '' : (_e = window.location.search) === null || _e === void 0 ? void 0 : _e.replace('?', '');
-  }
-  /**
-   * 改变 URL 地址而不刷新页面，并且支持保留或替换历史记录
-   * @example
-   * 假如当前地址为：https://test.com/user
-   * changeURL('leo'); /// url 变为 'https://test.com/user/leo'
-   * changeURL('./leo'); /// url 变为 'https://test.com/user/leo'
-   * changeURL('/users'); /// url 变为 'https://test.com/users'
-   * changeURL('https://test.com/test'); /// url 变为 'https://test.com/test' (若域名不同，会报错中断。)
-   * changeURL('/users', false); /// url 变为 'https://test.com/users' (不覆盖历史记录，返回时会再显示 'https://test.com/user'，而上面的例子返回时是直接显示 'https://test.com/user' 的上一条。)
-   * @param url URL 地址
-   * @param replaceHistory 是否替换历史记录，默认为 true 。
-   * @returns
-   * @category Request-请求相关
-   */
-  function changeURL(url, replaceHistory) {
-      if (replaceHistory === void 0) { replaceHistory = true; }
-      if (replaceHistory) {
-          window.history.replaceState({}, '', url);
-      }
-      else {
-          window.history.pushState({}, '', url);
-      }
-  }
-  /**
-   * 获取查询地址/链接中的参数对象
-   * @example
-   * getSearchParams('https://test.com/index?name=leo&org=biugle#test'); /// {name: 'leo', org: 'biugle'}
-   * getSearchParams(''); /// {}
-   * getSearchParams(); /// 当前页面 SearchParams 对象
-   * @param url 地址/链接
-   * @returns
-   * @category Request-请求相关
-   */
-  function getSearchParams(url) {
-      var e_1, _a;
-      var searchPar = new URLSearchParams(getQueryString(url));
-      var paramsObj = {};
-      try {
-          for (var _b = __values(searchPar.entries()), _c = _b.next(); !_c.done; _c = _b.next()) {
-              var _d = __read(_c.value, 2), key = _d[0], value = _d[1];
-              paramsObj[key] = value;
-          }
-      }
-      catch (e_1_1) { e_1 = { error: e_1_1 }; }
-      finally {
-          try {
-              if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
-          }
-          finally { if (e_1) throw e_1.error; }
-      }
-      return paramsObj;
-  }
-  /**
-   * ajax 简单封装
-   * @example
-   * xAjax('get', 'https://test.cn', { params: { test: 123, hello: 456 }, success: (data) => console.log('success', data), fail: (error) => console.log('fail', error) }); /// ajax
-   * xAjax('POST', 'https://test.cn', { contentType: 'application/json', data: { test: 123 }, success: (data) => console.log('success', data), fail: (error) => console.log('fail', error) }); /// ajax
-   * @param method Http Method
-   * @param url 地址/链接
-   * @param options 请求配置
-   * @returns
-   * @category xAjax-请求封装
-   */
-  function xAjax(method, url, options) {
-      var _a, _b, _c, _d;
-      var xhr;
-      method = method.toUpperCase();
-      if (window.XMLHttpRequest) {
-          xhr = new XMLHttpRequest();
-      }
-      else {
-          // @ts-ignore
-          // eslint-disable-next-line no-undef
-          xhr = new ActiveXObject('Microsoft.XMLHttp');
-      }
-      // eslint-disable-next-line spellcheck/spell-checker
-      xhr.onreadystatechange = function () {
-          var _a, _b;
-          if (xhr.readyState === 4) {
-              if (xhr.status < 400) {
-                  (_a = options === null || options === void 0 ? void 0 : options.success) === null || _a === void 0 ? void 0 : _a.call(options, xhr.response);
-              }
-              else if (xhr.status >= 400) {
-                  (_b = options === null || options === void 0 ? void 0 : options.fail) === null || _b === void 0 ? void 0 : _b.call(options, xhr.response);
-              }
-          }
-      };
-      var async = (_a = options === null || options === void 0 ? void 0 : options.async) !== null && _a !== void 0 ? _a : true;
-      // setting after open for compatibility with IE versions <=10
-      xhr.withCredentials = (_b = options === null || options === void 0 ? void 0 : options.withCredentials) !== null && _b !== void 0 ? _b : false;
-      if (options === null || options === void 0 ? void 0 : options.data) {
-          options.data = !(options === null || options === void 0 ? void 0 : options.raw) && isObj(options.data) ? JSON.stringify(options.data) : options.data;
-      }
-      if (method == 'GET') {
-          xhr.open('GET', !(options === null || options === void 0 ? void 0 : options.params)
-              ? url
-              : "".concat(url).concat(url.includes('?') ? '&' : '?').concat(new URLSearchParams(options.params).toString()), async);
-          xhr.send();
-      }
-      else {
-          xhr.open(method, url, async);
-          xhr.setRequestHeader('Content-Type', (_c = options === null || options === void 0 ? void 0 : options.contentType) !== null && _c !== void 0 ? _c : 'application/x-www-form-urlencoded;charset=UTF-8');
-          xhr.send((_d = options === null || options === void 0 ? void 0 : options.data) !== null && _d !== void 0 ? _d : null);
-      }
-      return xhr;
-  }
-  /**
-   * fetch 简单封装
-   * @example
-   * xFetch('get', 'https://api.uomg.com/api/rand.qinghua?x=1', { params: { format: 'json', hello: 456 } }).then(data => console.log(data)); /// fetchXPromise
-   * xFetch('POST', 'https://test.cn', { headers: { contentType: 'application/json' }, data: { test: 123 } }).catch(error => console.log(error)); /// fetchXPromise
-   * @param method Http Method
-   * @param url 地址/链接
-   * @param options 请求配置
-   * @returns
-   * @category xFetch-封装
-   */
-  function xFetch(method, url, options) {
-      var _a, _b, _c, _d, _e, _f, _g, _h;
-      if (options === null || options === void 0 ? void 0 : options.params) {
-          url = "".concat(url).concat(url.includes('?') ? '&' : '?').concat(new URLSearchParams(options.params).toString());
-      }
-      if (options === null || options === void 0 ? void 0 : options.data) {
-          options.data = !(options === null || options === void 0 ? void 0 : options.raw) && isObj(options.data) ? JSON.stringify(options.data) : options.data;
-      }
-      var headers = (_a = options === null || options === void 0 ? void 0 : options.headers) !== null && _a !== void 0 ? _a : {};
-      var contentType = (_h = (_g = (_f = (_e = (_d = (_c = (_b = headers.contenttype) !== null && _b !== void 0 ? _b : headers.contentType) !== null && _c !== void 0 ? _c : headers.ContentType) !== null && _d !== void 0 ? _d : headers.Contenttype) !== null && _e !== void 0 ? _e : headers['content-type']) !== null && _f !== void 0 ? _f : headers['content-Type']) !== null && _g !== void 0 ? _g : headers === null || headers === void 0 ? void 0 : headers['Content-Type']) !== null && _h !== void 0 ? _h : headers === null || headers === void 0 ? void 0 : headers['Content-type'];
-      return fetch(url, {
-          // 文件请求相关处理时需注意别写 content-type
-          headers: __assign(__assign({}, headers), (!contentType || (options === null || options === void 0 ? void 0 : options.isFile)
-              ? {}
-              : {
-                  'content-type': contentType !== null && contentType !== void 0 ? contentType : 'application/x-www-form-urlencoded;charset=UTF-8',
-                  // ?? 'application/json;charset=UTF-8',
-              })),
-          method: method,
-          body: options === null || options === void 0 ? void 0 : options.data,
-      })
-          .then(function (res) {
-          var type = res.headers.get('content-type');
-          if (type === null || type === void 0 ? void 0 : type.includes('json')) {
-              return res.json();
-          }
-          else if (type === null || type === void 0 ? void 0 : type.includes('text')) {
-              return res.text();
-          }
-          else if (type === null || type === void 0 ? void 0 : type.includes('form')) {
-              return res.formData();
-          }
-          else if ((type === null || type === void 0 ? void 0 : type.includes('video')) || (type === null || type === void 0 ? void 0 : type.includes('image'))) {
-              return res.blob();
-          }
-          else if (type === null || type === void 0 ? void 0 : type.includes('arrayBuffer')) {
-              return res.arrayBuffer();
-          }
-          else {
-              try {
-                  if (options === null || options === void 0 ? void 0 : options.callback) {
-                      return options === null || options === void 0 ? void 0 : options.callback(res);
-                  }
-                  return res;
-              }
-              catch (e) {
-                  return res;
-              }
-          }
-      })
-          .catch(function (error) {
-          return Promise.reject(error);
-      });
-  }
-  // eslint-disable-next-line spellcheck/spell-checker
-  /**
-   * 获取常见的 content-type
-   * @example
-   * getContentType('form'); /// 'application/x-www-form-urlencoded'
-   * getContentType('file'); /// 'multipart/form-data'
-   * getContentType('pdf'); /// 'application/pdf'
-   * getContentType('PDF'); /// 'application/pdf'
-   * getContentType('unknown'); /// 'application/octet-stream'
-   * @param fileType 文件类型
-   * @returns
-   * @category Request-请求相关
-   */
-  function getContentType(fileType) {
-      var _a;
-      // @ts-ignore
-      return (_a = CONTENT_TYPES["".concat(fileType).toLowerCase()]) !== null && _a !== void 0 ? _a : 'application/octet-stream';
-  }
-  /**
-   * 安全编码 URI，遇到错误时返回原始字符串。
-   * @example
-   * safeEncodeURI('Hello World'); // 'Hello%20World'
-   * safeEncodeURI('你好'); // '%E4%BD%A0%E5%A5%BD'
-   * safeEncodeURI('https://example.com?param=1&param=2'); // 'https%3A%2F%2Fexample.com%3Fparam%3D1%26param%3D2'
-   * safeEncodeURI('特殊字符 !@#'); // '%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6%20%21%40%23'
-   * @param s 要编码的字符串。
-   * @returns
-   * @category Custom-转码
-   */
-  function safeEncodeURI(s) {
-      try {
-          return encodeURIComponent(s);
-      }
-      catch (e) {
-          console.warn("Failed to encode URI component: ".concat(s), e);
-          return s;
-      }
-  }
-  /**
-   * 安全解码 URI，遇到错误时返回原始字符串。
-   * @example
-   * safeDecodeURI('Hello%20World'); // 'Hello World'
-   * safeDecodeURI('%E4%BD%A0%E5%A5%BD'); // '你好'
-   * safeDecodeURI('%E4%BD%A0%E5%A5'); // '%E4%BD%A0%E5%A5' （无效的 URI 片段）
-   * safeDecodeURI('%'); // '%' （无效的 URI 片段）
-   * @param s 要解码的 URI 。
-   * @returns
-   * @category Custom-转码
-   */
-  function safeDecodeURI(s) {
-      try {
-          return decodeURIComponent(s);
-      }
-      catch (e) {
-          console.warn("Failed to decode URI component: ".concat(s), e);
-          return s;
-      }
-  }
-
-  /**
    * 获取 16 位可读时间戳
    * @example
    * getTimeCode(); /// '2036551026042022'
@@ -10150,288 +9798,6 @@ var $xxx = (function (exports) {
       }
   }
   /**
-   * 在浏览器中打开文件选择框
-   * @example
-   * openFileSelect({ multiple: true }).then(fileList => console.log(fileList));
-   * openFileSelect({ multiple: true, accept: 'image/*', resultType: 'blob' }).then(fileBlobList => console.log(fileBlobList));
-   * openFileSelect({ multiple: true, accept: '.txt', resultType: 'base64' }).then(fileDataUrlList => console.log(fileDataUrlList));
-   * @param options 打开配置
-   * @returns
-   * @category Tools-下载/文件相关
-   */
-  function openFileSelect(options) {
-      var _this = this;
-      return new Promise(function (resolve, reject) {
-          var $input = document.createElement('input');
-          $input.style.position = 'fixed';
-          $input.style.bottom = '0';
-          $input.style.left = '0';
-          $input.style.visibility = 'hidden';
-          $input.setAttribute('type', 'file');
-          if (options === null || options === void 0 ? void 0 : options.accept) {
-              // accept = '*/*' 'image/*' 'audio/*' 'video/*' '.txt,.png,.pdf' 'image/png,.jpg'
-              $input.setAttribute('accept', options.accept);
-          }
-          if (options === null || options === void 0 ? void 0 : options.multiple) {
-              $input.setAttribute('multiple', 'true');
-          }
-          document.body.appendChild($input);
-          // 判断用户是否点击取消，原生没有提供专门事件，用 hack 的方法实现。
-          $input.addEventListener('click', function () {
-              $input.value = '';
-              document.body.addEventListener('focus', function () {
-                  setTimeout(function () {
-                      if (!$input.value) {
-                          resolve(null);
-                      }
-                  }, 500);
-              });
-          });
-          $input.addEventListener('change', function (e) { return __awaiter(_this, void 0, void 0, function () {
-              var files, results, err_1;
-              var _this = this;
-              return __generator(this, function (_a) {
-                  switch (_a.label) {
-                      case 0:
-                          document.body.removeChild($input);
-                          if (!(options === null || options === void 0 ? void 0 : options.resultType)) {
-                              resolve($input.files);
-                              return [2 /*return*/];
-                          }
-                          files = (e.target.files || []);
-                          _a.label = 1;
-                      case 1:
-                          _a.trys.push([1, 3, , 4]);
-                          return [4 /*yield*/, Promise.all(__spreadArray([], __read(files), false).map(function (file) { return __awaiter(_this, void 0, void 0, function () {
-                                  return __generator(this, function (_a) {
-                                      return [2 /*return*/, new Promise(function (resolve, reject) {
-                                              var reader = new FileReader();
-                                              reader.onloadend = function () {
-                                                  var _a, _b, _c;
-                                                  resolve({
-                                                      filename: file.name,
-                                                      ext: (_a = file.name.split('.').pop()) === null || _a === void 0 ? void 0 : _a.toLowerCase(),
-                                                      type: file.type,
-                                                      result: this.result && options.resultType === 'blob'
-                                                          ? new Blob([new Uint8Array(this.result)], {
-                                                              type: file.type,
-                                                          })
-                                                          : this.result,
-                                                      length: options.resultType === 'blob'
-                                                          ? (_b = this.result) === null || _b === void 0 ? void 0 : _b.byteLength
-                                                          : (_c = this.result) === null || _c === void 0 ? void 0 : _c.length,
-                                                  });
-                                              };
-                                              reader.onerror = function (err) {
-                                                  reject(err);
-                                              };
-                                              switch (options.resultType) {
-                                                  case 'blob': {
-                                                      reader.readAsArrayBuffer(file);
-                                                      break;
-                                                  }
-                                                  case 'base64': {
-                                                      reader.readAsDataURL(file);
-                                                      break;
-                                                  }
-                                                  default: {
-                                                      reader.readAsArrayBuffer(file);
-                                                  }
-                                              }
-                                          })];
-                                  });
-                              }); }))];
-                      case 2:
-                          results = _a.sent();
-                          resolve(results);
-                          return [3 /*break*/, 4];
-                      case 3:
-                          err_1 = _a.sent();
-                          reject(err_1);
-                          return [3 /*break*/, 4];
-                      case 4: return [2 /*return*/];
-                  }
-              });
-          }); });
-          $input.click();
-      });
-  }
-  /**
-   * 将 Blob 对象保存为文件并下载。
-   * @example
-   * const blob = new Blob(['Hello, World!'], { type: 'text/plain' });
-   * saveAs(blob, 'hello.txt'); // 下载文件名为 'hello.txt'
-   * const jsonBlob = new Blob([JSON.stringify({ a: 1, b: 2 }, null, 2)], { type: 'application/json' });
-   * saveAs(jsonBlob, 'data.json'); // 下载文件名为 'data.json'
-   * @param blob 要保存的 Blob 对象。
-   * @param filename 可选。保存的文件名。
-   * @returns
-   * @category Tools-下载/文件相关
-   */
-  function saveAs(blob, filename) {
-      var url = window.URL || window.webkitURL;
-      var link = document.createElement('a');
-      link.download = filename || '';
-      link.href = url.createObjectURL(blob);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      url.revokeObjectURL(link.href);
-  }
-  /**
-   * 根据 Blob 下载图片。
-   * @example
-   * // 下载远程图片，并保存为 'image.jpg'
-   * downloadImgByBlob('https://example.com/path/to/image.jpg', 'image.jpg');
-   * // 下载远程图片，并保存为默认文件名（通常是图片的原始文件名）
-   * downloadImgByBlob('https://example.com/path/to/image.jpg');
-   * // 尝试下载一个无效的 URL，不会进行下载操作
-   * downloadImgByBlob('invalid-url');
-   * // 下载一张跨域图片（需要支持跨域下载）
-   * downloadImgByBlob('https://a.example.com/path/to/cross-origin-image.jpg', 'cross-origin-image.jpg');
-   * @param url 图片的 URL 地址。
-   * @param fileName 可选。下载的文件名。
-   * @returns
-   * @category Tools-下载/文件相关
-   */
-  function downloadImg(url, fileName) {
-      if (!url || !url.startsWith('http')) {
-          console.warn('Invalid URL provided:', url);
-          return;
-      }
-      var img = new Image();
-      img.onload = function () {
-          var canvas = document.createElement('canvas');
-          canvas.width = img.width;
-          canvas.height = img.height;
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          var ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-          canvas.toBlob(function (blob) {
-              if (blob) {
-                  var blobUrl = window.URL.createObjectURL(blob);
-                  var a = document.createElement('a');
-                  a.href = blobUrl;
-                  a.download = fileName || 'download';
-                  a.click();
-                  window.URL.revokeObjectURL(blobUrl);
-              }
-              else {
-                  console.warn('Failed to create Blob from canvas');
-              }
-          }, 'image/png'); // 默认保存为 PNG 格式
-      };
-      img.onerror = function () {
-          console.error('Failed to load image from URL:', url);
-      };
-      img.setAttribute('crossOrigin', 'Anonymous');
-      img.src = url;
-  }
-  /**
-   * 下载文件
-   * @example
-   * // 下载并保存为 'xxx'
-   * downloadFile('https://example.com/path/to/file.jpg', 'xxx'); // 将文件保存为 'xxx.jpg'
-   * // 下载并保存为链接中的文件名
-   * downloadFile('https://example.com/path/to/file.jpg'); // 将文件保存为 'file.jpg'
-   * // 下载并保存为指定的文件名（没有扩展名）
-   * downloadFile('https://example.com/path/to/file.jpg', 'customFileName'); // 将文件保存为 'customFileName.jpg'
-   * // 下载并保存为带有扩展名的自定义文件名
-   * downloadFile('https://example.com/path/to/file.jpg', 'customFileName.png'); // 将文件保存为 'customFileName.png'
-   * @param url 文件的 URL 地址。
-   * @param fileName 可选。下载的文件名，默认为 URL 中的文件名。
-   * @returns
-   * @category Tools-下载/文件相关
-   */
-  function downloadFile(url, fileName) {
-      var _a, _b, _c;
-      var ext = ((_a = fileName === null || fileName === void 0 ? void 0 : fileName.match(/[^\/]*\.(\w+)(?:\?.*)?$/)) === null || _a === void 0 ? void 0 : _a[1]) || ((_b = url.match(/[^\/]*\.(\w+)(?:\?.*)?$/)) === null || _b === void 0 ? void 0 : _b[1]) || 'txt';
-      var finalFileName = safeDecodeURI(fileName || ((_c = url.match(/([^/]*?)\.\w+(\?.*?)?$/)) === null || _c === void 0 ? void 0 : _c[1]) || String(Date.now()));
-      var oReq = new XMLHttpRequest();
-      oReq.open('GET', url, true);
-      oReq.responseType = 'blob';
-      oReq.onload = function () {
-          var type = getContentType(ext) || 'application/octet-stream';
-          var file = new Blob([oReq.response], { type: type });
-          saveAs(file, /\.\w+$/.test(finalFileName) ? finalFileName : "".concat(finalFileName, ".").concat(ext));
-      };
-      oReq.send();
-  }
-  /**
-   * 根据 URL 获取文件名。
-   * @example
-   * // 获取一个简单 URL 的文件名
-   * getFileNameFromUrl('https://example.com/path/to/file.jpg'); // 'file.jpg'
-   * // 获取带有查询参数的 URL 的文件名
-   * getFileNameFromUrl('https://example.com/path/to/file.jpg?version=1.2'); // 'file.jpg'
-   * // 获取没有文件扩展名的 URL 的文件名
-   * getFileNameFromUrl('https://example.com/path/to/file'); // 'file.txt'
-   * // 获取根路径 URL 的文件名
-   * getFileNameFromUrl('https://example.com/'); // '1691830390281.txt' (假设当前时间为 1691830390281)
-   * // 获取一个复杂编码的 URL 的文件名
-   * getFileNameFromUrl('https://example.com/path/to/%E4%BD%A0%E5%A5%BD.jpg'); // '你好.jpg'
-   * // 获取包含多个查询参数的 URL 的文件名
-   * getFileNameFromUrl('https://example.com/path/to/file.jpg?param1=value1&param2=value2'); // 'file.jpg'
-   * // 仅获取文件扩展名
-   * getFileNameFromUrl('https://example.com/path/to/file.jpg', true); // 'jpg'
-   * @param url 要获取文件名的 URL 。
-   * @param onlyExt 可选。如果为 true，则仅返回文件扩展名。
-   * @returns
-   * @category Tools-下载/文件相关
-   */
-  function getFileNameFromUrl(url, onlyExt) {
-      var _a, _b;
-      if (onlyExt === void 0) { onlyExt = false; }
-      var ext = ((_a = url.match(/[^\/]*\.(\w+)(?:\?.*)?$/)) === null || _a === void 0 ? void 0 : _a[1]) || 'txt';
-      if (onlyExt) {
-          return ext;
-      }
-      var filenameOfUrl = (_b = url.match(/([^/]*?)\.\w+(\?.*?)?$/)) === null || _b === void 0 ? void 0 : _b[1];
-      var filename = filenameOfUrl ? safeDecodeURI(filenameOfUrl) : String(Date.now());
-      return "".concat(filename, ".").concat(ext);
-  }
-  /**
-   * 新开页面预览文件。
-   * @example
-   * // 预览 Word 文档
-   * openPreviewFile('https://example.com/path/to/document.docx');
-   * // 预览 Excel 表格
-   * openPreviewFile('https://example.com/path/to/spreadsheet.xlsx');
-   * // 预览 PDF 文件
-   * openPreviewFile('https://example.com/path/to/document.pdf');
-   * // 预览图片
-   * openPreviewFile('https://example.com/path/to/image.png');
-   * // 预览其他文件或未匹配的文件类型
-   * openPreviewFile('https://example.com/path/to/otherfile.zip'); // 将直接打开链接
-   * @param url 要预览的 URL 地址。
-   * @returns
-   * @category Tools-下载/文件相关
-   */
-  function openPreviewFile(url, serviceUrl) {
-      var urlMap = new Map()
-          .set(/\.(docx|doc|xls|xlsx)(\?.*)?$/, function (url) {
-          return window.open("".concat(serviceUrl, "?url=") + encodeURIComponent(window.btoa(url)));
-      })
-          .set(/\.pdf(\?.*)?$/, function (url) {
-          return window
-              .open('')
-              .document.write("<!DOCTYPE html><html><head><style>body{margin:0;}embed{height:100vh;}</style></head><body><embed src=\"".concat(url, "\" width=\"100%\" height=\"100%\"/></body></html>"));
-      })
-          .set(/\.(png|jpg|jpeg|gif)(\?.*)?$/, function (url) {
-          return window
-              .open('')
-              .document.write("<!DOCTYPE html><html><head><style>body{margin:0;}img{width:unset;height:unset;max-width:100%;}</style></head><body><img src=\"".concat(url, "\" /></body></html>"));
-      });
-      var regex = __spreadArray([], __read(urlMap.keys()), false).find(function (regex) { return regex.test(url); });
-      var previewFunction = regex ? urlMap.get(regex) : undefined;
-      if (previewFunction) {
-          previewFunction(url);
-      }
-      else {
-          window.open(url);
-      }
-  }
-  /**
    * 获取数组或对象交集
    * @example
    * intersection([1, 2, 2, 3, 3], [1, 2, 4, 5]); /// [1, 2]
@@ -10795,31 +10161,6 @@ var $xxx = (function (exports) {
           }
       }
       return +(num / factor[suffix]).toFixed(2) + suffix;
-  }
-  /**
-   * 文件流或内容转 Base64
-   * @example
-   * transferFileToBase64(file, 'application/pdf;charset=utf-8', (res) => console.log({ res })); /// result object
-   * transferFileToBase64('test', 'text/plain', (res) => console.log({ res })); /// result object
-   * @param content BlobPart | any 内容
-   * @param contentType 内容类型
-   * @param callBack 回调函数
-   * @returns
-   * @category Tools-下载/文件相关
-   */
-  function transferFileToBase64(content, contentType, callBack) {
-      var blob = new Blob([content], {
-          type: contentType, // ;charset=utf-8
-      });
-      var reader = new FileReader();
-      reader.readAsDataURL(blob);
-      reader.addEventListener('loadend', function () {
-          callBack === null || callBack === void 0 ? void 0 : callBack({
-              result: reader === null || reader === void 0 ? void 0 : reader.result,
-              // // @ts-ignore
-              // baseCode: Buffer?.from(reader?.result?.split('base64,')[1], 'base64')
-          });
-      });
   }
   /**
    * 检查是否为 idCard string 身份证
@@ -11747,6 +11088,7 @@ var $xxx = (function (exports) {
       //   };
   }
   /**
+   * 简单的模板渲染引擎
    * 使用自定义模板渲染字符串内容
    * 支持条件渲染、循环、嵌套变量、默认值以及简单占位符替换
    * @example
@@ -12425,20 +11767,6 @@ var $xxx = (function (exports) {
    */
   function isIpAddress(value) {
       return isIpv4(value) || isIpv6(value);
-  }
-  // eslint-disable-next-line spellcheck/spell-checker
-  /**
-   * 检查是否为 file.ext string 文件扩展名
-   * @example
-   * checkFileExt(['png', 'jpg'], 'test.jpg'); /// true
-   * checkFileExt(['png', 'jpg'], 'test.jpg.txt'); /// false
-   * @param value 字符串值
-   * @returns
-   * @category String-字符串
-   */
-  function checkFileExt(arr, value) {
-      var regFileExt = arr.map(function (name) { return ".".concat(name); }).join('|');
-      return new RegExp("(".concat(regFileExt, ")$")).test(value);
   }
   /**
    * 检查是否为 http 协议，1 是，-1 为 https，0 啥也不是。
@@ -13919,55 +13247,6 @@ var $xxx = (function (exports) {
       return script;
   }
   /**
-   * 下载一个链接文档
-   * @example
-   * download('https://xxx.com/xxx', 'xxx'); /// 下载后端返回的流
-   * @param link 链接
-   * @param name 文件名称(可选，默认以链接最好一段作为名称，填写时可不带后缀自动识别，写了后缀会以写的后缀为准。)
-   * @returns
-   * @category Tools-下载/文件相关
-   */
-  function download(link, name) {
-      if (!name) {
-          name = link.slice(link.lastIndexOf('/') + 1);
-      }
-      var eleLink = document.createElement('a');
-      eleLink.download = name;
-      eleLink.style.display = 'none';
-      eleLink.href = link;
-      document.body.appendChild(eleLink);
-      eleLink.click();
-      document.body.removeChild(eleLink);
-  }
-  /**
-   * 在浏览器中自定义下载一些内容，与 download 不同的是，downloadContent 采用 Blob 可能会有长度限制。
-   * @example
-   * downloadContent('test.txt', 'test txt content'); /// 下载返回的流
-   * downloadContent('test.json', JSON.stringify({content: 'test json'})); /// 下载返回的流
-   * @param name 文件名称(需带后缀)，默认 txt 。
-   * @param content 内容 BlobPart | any
-   * @returns
-   * @category Tools-下载/文件相关
-   */
-  function downloadContent(name, content) {
-      if (!name) {
-          name = 'unknown';
-      }
-      try {
-          if (!(content instanceof Blob)) {
-              content = new Blob([content]);
-          }
-          var link_1 = URL.createObjectURL(content);
-          download(link_1, name);
-          setTimeout(function () {
-              URL.revokeObjectURL(link_1);
-          }, 0);
-      }
-      catch (e) {
-          console.log('js-xxx:downloadContentError--->', e);
-      }
-  }
-  /**
    * 给元素设置 marquee 内容滚动效果，支持来回滚动，正常跑马灯，无限无缝滚动。
    * 一般来说设置两层，滚动的区间就是父元素的大小。
    * 若 #demo 高度小于 container，除非 loopType 设置 infinite，否则不会有动画。
@@ -14988,6 +14267,1792 @@ var $xxx = (function (exports) {
       return processedClassNames.join(' ');
   }
 
+  /* eslint-disable max-lines */
+  function _isValidCronField(field, min, max) {
+      var regex = new RegExp('^\\d+|\\*/\\d+|[\\d,-]+/[\\d,-]+$');
+      if (!regex.test(field)) {
+          return false;
+      }
+      if (field.includes('/')) {
+          var _a = __read(field.split('/'), 2), start = _a[0], step = _a[1];
+          return _isValidCronField(start, min, max) && parseInt(step) > 0 && parseInt(step) <= max;
+      }
+      if (field.includes('-')) {
+          var _b = __read(field.split('-'), 2), start = _b[0], end = _b[1];
+          return parseInt(start) >= min && parseInt(end) <= max && parseInt(start) <= parseInt(end);
+      }
+      return parseInt(field) >= min && parseInt(field) <= max;
+  }
+  /**
+   * 获取浏览器信息
+   * @example
+   * getUserAgent(); /// { browserName: 'Chrome', browserVersion: '102.0.0.0', osName: 'Windows', osVersion: '10.0', deviceName: '' }
+   * @returns
+   * @category Others-业务/其他
+   */
+  function getUserAgent() {
+      var browserReg = {
+          Chrome: /Chrome/,
+          IE: /MSIE/,
+          Firefox: /Firefox/,
+          Opera: /Presto/,
+          Safari: /Version\/([\d.]+).*Safari/,
+          '360': /360SE/,
+          QQBrowser: /QQ/,
+      };
+      var deviceReg = {
+          iPhone: /iPhone/,
+          iPad: /iPad/,
+          Android: /Android/,
+          Windows: /Windows/,
+          Mac: /Macintosh/,
+      };
+      var userAgentStr = navigator.userAgent;
+      var userAgentObj = {
+          // 浏览器名称
+          browserName: '',
+          // 浏览器版本
+          browserVersion: '',
+          // 操作系统名称
+          osName: '',
+          // 操作系统版本
+          osVersion: '',
+          // 设备名称
+          deviceName: '',
+      };
+      for (var key in browserReg) {
+          if (browserReg[key].test(userAgentStr)) {
+              userAgentObj.browserName = key;
+              if (key === 'Chrome') {
+                  userAgentObj.browserVersion = userAgentStr.split('Chrome/')[1].split(' ')[0];
+              }
+              else if (key === 'IE') {
+                  userAgentObj.browserVersion = userAgentStr.split('MSIE ')[1].split(' ')[1];
+              }
+              else if (key === 'Firefox') {
+                  userAgentObj.browserVersion = userAgentStr.split('Firefox/')[1];
+              }
+              else if (key === 'Opera') {
+                  userAgentObj.browserVersion = userAgentStr.split('Version/')[1];
+              }
+              else if (key === 'Safari') {
+                  userAgentObj.browserVersion = userAgentStr.split('Version/')[1].split(' ')[0];
+              }
+              else if (key === '360') {
+                  userAgentObj.browserVersion = '';
+              }
+              else if (key === 'QQBrowser') {
+                  userAgentObj.browserVersion = userAgentStr.split('Version/')[1].split(' ')[0];
+              }
+          }
+      }
+      for (var key in deviceReg) {
+          if (deviceReg[key].test(userAgentStr)) {
+              userAgentObj.osName = key;
+              if (key === 'Windows') {
+                  userAgentObj.osVersion = userAgentStr.split('Windows NT ')[1].split(';')[0];
+              }
+              else if (key === 'Mac') {
+                  userAgentObj.osVersion = userAgentStr.split('Mac OS X ')[1].split(')')[0];
+              }
+              else if (key === 'iPhone') {
+                  userAgentObj.osVersion = userAgentStr.split('iPhone OS ')[1].split(' ')[0];
+              }
+              else if (key === 'iPad') {
+                  userAgentObj.osVersion = userAgentStr.split('iPad; CPU OS ')[1].split(' ')[0];
+              }
+              else if (key === 'Android') {
+                  userAgentObj.osVersion = userAgentStr.split('Android ')[1].split(';')[0];
+                  userAgentObj.deviceName = userAgentStr.split('(Linux; Android ')[1].split('; ')[1].split(' Build')[0];
+              }
+          }
+      }
+      return userAgentObj;
+  }
+  /**
+   * 判断当前运行环境是否为 Node.js
+   * @example
+   * isNode(); /// true
+   * @returns
+   * @category Others-业务/其他
+   */
+  function isNode() {
+      return typeof process !== 'undefined' && !!process.versions && !!process.versions.node;
+  }
+  /**
+   * 判断当前运行环境是否为浏览器
+   * @example
+   * isBrowser(); /// true
+   * @returns
+   * @category Others-业务/其他
+   */
+  function isBrowser() {
+      return typeof window !== 'undefined' && typeof document !== 'undefined';
+  }
+  /**
+   * 检测黑暗模式
+   * @example
+   * isDarkMode(); /// true
+   * @returns
+   * @category Others-业务/其他
+   */
+  function isDarkMode() {
+      return (window.matchMedia &&
+          (window.matchMedia('(prefers-color-scheme:dark)').matches ||
+              window.matchMedia('(prefers-color-scheme: dark)').matches));
+  }
+  /**
+   * 是否苹果设备
+   * @example
+   * isAppleDevice(); /// true
+   * @returns
+   * @category Others-业务/其他
+   */
+  function isAppleDevice() {
+      return /Mac|iPod|iPhone|iPad/.test(navigator.platform);
+  }
+  /**
+   * 判断是否客户端渲染
+   * @example
+   * isCSR(); /// true
+   * @returns
+   * @category Others-业务/其他
+   */
+  function isCSR() {
+      return typeof window !== 'undefined' && typeof document !== 'undefined';
+  }
+  /**
+   * 判断是否 Windows
+   * @example
+   * isWin(); /// true
+   * @returns
+   * @category Others-业务/其他
+   */
+  function isWin() {
+      return typeof navigator !== 'undefined' && /windows|win32/i.test(navigator.userAgent);
+  }
+  /**
+   * 判断是否 MacOS
+   * @example
+   * isMac(); /// true
+   * @returns
+   * @category Others-业务/其他
+   */
+  function isMac() {
+      return typeof navigator !== 'undefined' && /Macintosh/i.test(navigator.userAgent);
+  }
+  /**
+   * 判断是否 Chrome 内核
+   * @example
+   * isChrome(); /// true
+   * @returns
+   * @category Others-业务/其他
+   */
+  function isChrome() {
+      return typeof navigator !== 'undefined' && navigator.userAgent.indexOf('Chrome') > -1;
+  }
+  /**
+   * 版本号比对算法
+   * @example
+   * checkVersion('1.0.1-rc', '1.0.0', '-rc'); /// 1
+   * checkVersion('1.0.0', '1.0.1'); /// -1
+   * checkVersion('1.0.0', '1.0.0'); /// 0
+   * @param targetVersion 目标版本
+   * @param currentVersion 当前版本
+   * @param testStr 需要替换的字符串 default(-rc)
+   * @returns
+   * @category Others-业务/其他
+   */
+  function checkVersion(targetVersion, currentVersion, testStr) {
+      var _a, _b;
+      if (testStr === void 0) { testStr = '-rc'; }
+      var targetVersionList = targetVersion.replace(testStr, '').split('.');
+      var currentVersionList = currentVersion.replace(testStr, '').split('.');
+      var length = targetVersionList.length > currentVersionList.length ? targetVersionList.length : currentVersionList.length;
+      for (var i = 0; i < length; i++) {
+          var targetVersionValue = i < targetVersionList.length ? parseInt((_a = targetVersionList[i]) !== null && _a !== void 0 ? _a : 0) : 0;
+          var currentVersionValue = i < currentVersionList.length ? parseInt((_b = currentVersionList[i]) !== null && _b !== void 0 ? _b : 0) : 0;
+          if (targetVersionValue > currentVersionValue) {
+              return 1;
+          }
+          if (targetVersionValue < currentVersionValue) {
+              return -1;
+          }
+      }
+      return 0;
+  }
+  /**
+   * 版本号升级算法
+   * @example
+   * versionUpgrade('0.0.1'); /// '0.0.2'
+   * versionUpgrade('0.0.0.9'); /// '0.0.0.10'
+   * versionUpgrade('0.0.0.9', 9); /// '0.0.1.0'
+   * versionUpgrade('0.0.9.9', 9); /// '0.1.0.0'
+   * @param version 版本号
+   * @param maxVersionCode 最大版本号
+   * @returns
+   * @category Others-业务/其他
+   */
+  function versionUpgrade(version, maxVersionCode) {
+      if (maxVersionCode === void 0) { maxVersionCode = 99; }
+      if (maxVersionCode == 0) {
+          maxVersionCode = 99;
+      }
+      var tempVersionArr = version.split('.').map(function (v) { return Number(v); });
+      var nan = tempVersionArr.some(function (v) { return isNaN(v); });
+      if (nan) {
+          return version;
+      }
+      tempVersionArr = tempVersionArr.reverse();
+      var check = true;
+      tempVersionArr.forEach(function (v, i) {
+          if (check) {
+              if (v >= maxVersionCode) {
+                  tempVersionArr[i] = 0;
+              }
+              else {
+                  check = false;
+                  tempVersionArr[i] = tempVersionArr[i] + 1;
+              }
+          }
+      });
+      return tempVersionArr.reverse().join('.');
+  }
+  /**
+   * 处理 rh 血型
+   * @example
+   * formatRh('**d**'); /// '阴性'
+   * formatRh('**d**', { format: [true, false], default: false }); /// true
+   * @param input 输入值
+   * @param options 处理配置
+   * @returns
+   * @category Others-业务/其他
+   */
+  function formatRh(input, options) {
+      var defaultOptions = {
+          format: ['阴性', '阳性'],
+          default: '-',
+          negative: ['阴性', '-', '**d**'],
+          positive: ['阳性', '+', '**D**'],
+      };
+      var _a = __assign(__assign({}, defaultOptions), options), negative = _a.negative, positive = _a.positive, format = _a.format, def = _a.default;
+      if (negative.includes(input)) {
+          return format[0];
+      }
+      if (positive.includes(input)) {
+          return format[1];
+      }
+      if (input.includes('d')) {
+          return format[0];
+      }
+      if (input.includes('D')) {
+          return format[1];
+      }
+      return def;
+  }
+  /**
+   * 是否阴性血
+   * @example
+   * isRhNegative('**d**'); /// true
+   * @param input 输入值
+   * @returns
+   * @category Others-业务/其他
+   */
+  function isRhNegative(input) {
+      return formatRh(input, { format: [true, false], default: false });
+  }
+  /**
+   * 获取血型枚举信息
+   * @example
+   * getBloodGroup('A'); /// { value: 'A', label: 'A 型', color: '#1890FF', lower: 'a', upper: 'A' }
+   * @param bloodGroup 血型
+   * @returns
+   * @category Others-业务/其他
+   */
+  function getBloodGroup(bloodGroup) {
+      var keyList = ['A', 'a', 'B', 'b', 'O', 'o', 'AB', 'ab'];
+      bloodGroup = keyList.includes(bloodGroup) ? bloodGroup.toUpperCase() : 'unknown';
+      return BLOOD_GROUP_INFO[bloodGroup];
+  }
+  /**
+   * 生成 cron 表达式
+   * @example
+   * calcCron(); /// '* * * * *'
+   * calcCron({ minute: '30', hour: '1', day: '10'}); /// '30 1 10 * *'
+   * calcCron({  week: '?' }); /// '* * * * ?'
+   * calcCron({ week: '*' }); /// '* * * * *'
+   * calcCron({ week: 0 }); /// '* * * * 0'
+   * calcCron({ week: '0' }); /// '* * * * 0'
+   * calcCron({ week: '7' }); /// '* * * * 0'
+   * calcCron({ week: 'SUN,天,日,六,6,5' }); /// '* * * * 0,5,6'
+   * calcCron({ day: '1-5' }); /// '* * 1-5 * * '
+   * calcCron({ day: '1,5' }); /// '* * 1,5 * * '
+   * calcCron({ day: '1/5' }); /// '* * 1/5 * * '
+   * @param options cron 配置
+   * @returns
+   * @category Others-业务/其他
+   */
+  function calcCron(_a) {
+      var _b = _a === void 0 ? {} : _a, _c = _b.minute, minute = _c === void 0 ? '*' : _c, _d = _b.hour, hour = _d === void 0 ? '*' : _d, _e = _b.day, day = _e === void 0 ? '*' : _e, _f = _b.month, month = _f === void 0 ? '*' : _f, _g = _b.week, week = _g === void 0 ? '*' : _g;
+      var limits = [
+          // 分钟 (0-59)
+          [0, 59],
+          // 小时 (0-23)
+          [0, 23],
+          // 日期 (1-31)
+          [1, 31],
+          // 月份 (1-12)
+          [1, 12],
+          // 星期 (0-7 或 SUN-SAT)
+          [0, 7],
+      ];
+      var weekField = week;
+      // 将星期转换为 0-7 格式
+      if (typeof weekField === 'number') {
+          if (weekField < 0 || weekField > 7) {
+              throw new Error('Invalid Week Field!');
+          }
+          weekField = weekField.toString();
+      }
+      else if (typeof weekField === 'string' && weekField !== '*' && weekField !== '?') {
+          var weekMap_1 = {
+              SUN: 0,
+              MON: 1,
+              TUE: 2,
+              WED: 3,
+              THU: 4,
+              FRI: 5,
+              SAT: 6,
+              日: 0,
+              一: 1,
+              二: 2,
+              三: 3,
+              四: 4,
+              五: 5,
+              六: 6,
+              天: 0,
+              '0': 0,
+              '1': 1,
+              '2': 2,
+              '3': 3,
+              '4': 4,
+              '5': 5,
+              '6': 6,
+              '7': 0,
+          };
+          var weekList = weekField.split(',').map(function (weekItem) {
+              var weekUpper = weekItem.toUpperCase();
+              var mappedWeek = weekMap_1[weekUpper];
+              if (mappedWeek === undefined) {
+                  throw new Error('Invalid Week Field!');
+              }
+              return mappedWeek;
+          });
+          weekField = __spreadArray([], __read(new Set(weekList)), false).sort().join(',');
+      }
+      var fields = [minute, hour, day, month, weekField];
+      var _loop_1 = function (i) {
+          var field = fields[i];
+          var _h = __read(limits[i], 2), min = _h[0], max = _h[1];
+          if (typeof field === 'string') {
+              if (field === '*' || field === '?' || field === '*/1') {
+                  return "continue";
+              }
+              if (field.startsWith('*/')) {
+                  var step = parseInt(field.slice(2));
+                  if (step > 0 && step <= max) {
+                      return "continue";
+                  }
+              }
+              var parts = field.split(',');
+              if (parts.length > 1) {
+                  if (parts.every(function (part) { return _isValidCronField(part, min, max); })) {
+                      return "continue";
+                  }
+              }
+              var _j = __read(field.split('-'), 2), field1 = _j[0], field2 = _j[1];
+              if (field1 && field2 && _isValidCronField(field1, min, max) && _isValidCronField(field2, min, max)) {
+                  return "continue";
+              }
+              if (_isValidCronField(field, min, max)) {
+                  return "continue";
+              }
+          }
+          throw new Error("Invalid Field: ".concat(field));
+      };
+      // 验证输入
+      for (var i = 0; i < fields.length; i++) {
+          _loop_1(i);
+      }
+      // 输出 cron 表达式
+      return "".concat(fields.join(' '));
+  }
+  /**
+   * 在页面上打印数据，我们打包通常会设置清除 console，使用此函数打印关键信息就不会被清除啦。
+   * @example
+   * log([1, 2, 2, 3, 3], {a: 1, b: 2}, 'test', true); /// 打印数据
+   * log('danger'); /// 打印数据
+   * @param args 打印数据 rest 参数
+   * @returns
+   * @category Extra-日志/调试
+   */
+  function log() {
+      var args = [];
+      for (var _i = 0; _i < arguments.length; _i++) {
+          args[_i] = arguments[_i];
+      }
+      try {
+          // eval(
+          //   `console.log('%c 日志[${formatDate(
+          //     new Date(),
+          //   )}]----->', 'color:#1890FF;font-size:10px;margin-right:5px', ...JSON.parse('${JSON.stringify(args)}'));`,
+          // );
+          // 确保对象中的 JSON 字符串不会干扰 JavaScript 解析器。
+          var formattedArgs = args.map(function (arg) {
+              // eslint-disable-next-line no-prototype-builtins
+              if (typeof arg === 'object' && arg !== null && arg.hasOwnProperty('toJSON')) {
+                  return arg.toJSON();
+              }
+              else {
+                  return arg;
+              }
+          });
+          var code = "console.log('%c\u65E5\u5FD7[".concat(formatDate(new Date()), "]----->\\n', 'color:#1890FF;font-size:10px;margin-right:5px', ...").concat(JSON.stringify(formattedArgs).replace(/</g, 
+          // 防止 xss
+          '\\u003c'), ");");
+          var fn = new Function(code);
+          fn();
+      }
+      catch (e) {
+          console.log.apply(console, __spreadArray(__spreadArray([], __read(args), false), [e], false));
+      }
+      return "\n[".concat(formatDate(new Date()), "] =====>\n (---").concat(JSON.stringify(args), "---)\n");
+  }
+  /**
+   * 强制转化为字符串，避免导出表格显示科学计数法。
+   * @example
+   * forceToStr(123123123); /// '123123123'
+   * forceToStr(undefined); /// '-'
+   * forceToStr(undefined, 0); /// '0'
+   * @param value 值
+   * @param defaultValue 默认值
+   * @returns
+   * @category Tools-字符串相关
+   */
+  function forceToStr(value, defaultValue) {
+      var _a;
+      if (defaultValue === void 0) { defaultValue = '-'; }
+      // \t \u200c u200d 也可以
+      return "\u200B".concat((_a = value !== null && value !== void 0 ? value : defaultValue) !== null && _a !== void 0 ? _a : '-');
+  }
+  /**
+   * 华氏/摄氏度互转
+   * @example
+   * transferTemperature(30.5); /// '86.9 °F'
+   * transferTemperature(86, false, false); /// 30
+   * @returns
+   * @category Others-业务/其他
+   */
+  function transferTemperature(temperature, isCelsius, addSuffix) {
+      if (isCelsius === void 0) { isCelsius = true; }
+      if (addSuffix === void 0) { addSuffix = true; }
+      temperature = Number(temperature);
+      var convertedTemperature;
+      if (isCelsius) {
+          // 将摄氏度转换为华氏度
+          convertedTemperature = (temperature * 9) / 5 + 32;
+          if (addSuffix) {
+              return parseFloat(convertedTemperature.toFixed(2)) + ' °F';
+          }
+          else {
+              return parseFloat(convertedTemperature.toFixed(2));
+          }
+      }
+      else {
+          // 将华氏度转换为摄氏度
+          convertedTemperature = ((temperature - 32) * 5) / 9;
+          if (addSuffix) {
+              return parseFloat(convertedTemperature.toFixed(2)) + ' °C';
+          }
+          else {
+              return parseFloat(convertedTemperature.toFixed(2));
+          }
+      }
+  }
+  /**
+   * 获取数据，支持格式化，默认值。
+   * @example
+   * getDataStr(123123123); /// '123123123'
+   * getDataStr(undefined); /// '-'
+   * getDataStr(undefined, 0); /// '0'
+   * getDataStr('test', '', '(', ')'); /// '(test)'
+   * getDataStr(undefined, '', '(', ')'); /// ''
+   * getDataStr(false); /// 'false'
+   * @param value 值
+   * @param defaultValue 默认值
+   * @param prefix 前缀
+   * @param suffix 后缀
+   * @returns
+   * @category Others-业务/其他
+   */
+  function getDataStr(value, defaultValue, prefix, suffix) {
+      if (defaultValue === void 0) { defaultValue = '-'; }
+      if (prefix === void 0) { prefix = ''; }
+      if (suffix === void 0) { suffix = ''; }
+      value = value !== undefined ? value : defaultValue !== undefined ? defaultValue : '-';
+      return value !== defaultValue ? "".concat(prefix).concat(value).concat(suffix) : "".concat(value);
+  }
+  /**
+   * 比较两个值是否相等，支持严格模式和忽略大小写的比较。
+   * @example
+   * compareTo(1, 2); /// false
+   * compareTo('a', 'A'); /// true
+   * compareTo('a', 'A', true); /// false
+   * compareTo(3, 3); /// true
+   * compareTo(2, '2'); /// true
+   * compareTo('apple', 'banana'); /// false
+   * compareTo('2', 2, true); /// false
+   * compareTo('2', 2); /// true
+   * @param value1 第一个值
+   * @param value2 第二个值
+   * @param strict 是否启用严格模式: true 表示严格比较，false 表示忽略大小写和类型比较，默认值为 false 。
+   * @returns
+   * @category Others-业务/其他
+   */
+  function compareTo(value1, value2, strict) {
+      if (strict === void 0) { strict = false; }
+      if (strict) {
+          return value1 === value2;
+      }
+      return "".concat(value1).toLowerCase() === "".concat(value2).toLowerCase();
+  }
+  /**
+   * 获取转换后树的映射对象、数组 `{ map: any, list: any[] }`
+   * @example
+   * getTreeData(treeData, 'id'); /// { map: any, list: any[] }
+   * getTreeData(treeData, 'data.id'); /// { map: any, list: any[] }
+   * @param treeData 树值
+   * @param key key
+   * @returns
+   * @category Others-Tree
+   */
+  function getTreeData(treeData, key) {
+      if (key === void 0) { key = 'key'; }
+      var result = {
+          map: {},
+          list: [],
+      };
+      if (!treeData) {
+          return result;
+      }
+      function traverse(node, parent) {
+          if (!node) {
+              return;
+          }
+          var data = getV(null, node, key);
+          if (data) {
+              var newNode = __assign(__assign({}, node), { parent: parent });
+              result.list.push(newNode);
+              result.map[data] = newNode;
+          }
+          if (node.children && Array.isArray(node.children)) {
+              node.children.forEach(function (i) { return traverse(i, data); });
+          }
+      }
+      treeData.forEach(traverse);
+      return result;
+  }
+  /**
+   * 过滤树级数据，并支持显示完整结构。
+   * @example
+   * searchTreeData(treeData, '测试搜索关键字', 'id'); /// ...
+   * searchTreeData(treeData, '测试搜索关键字', ['key', 'title']); /// ...
+   * searchTreeData(treeData, '测试搜索关键字', ['data.key', 'title'], true); /// ...
+   * @param treeData 树值
+   * @param searchText 过滤的值
+   * @param searchKeys 用于过滤的 key
+   * @param strictMode 搜索配置 strictMode 时，会强制平铺排列返回符合条件的节点，默认不开启，保持树排列。
+   * @returns
+   * @category Others-Tree
+   */
+  function searchTreeData(treeData, searchText, searchKeys, strictMode) {
+      if (searchKeys === void 0) { searchKeys = ['key', 'title']; }
+      if (strictMode === void 0) { strictMode = false; }
+      if (!searchText || !treeData) {
+          return treeData;
+      }
+      // treeData = JSON.parse(JSON.stringify(treeData));
+      searchText = trim(searchText).toLowerCase();
+      // @ts-ignore
+      var newSearchKeys = [].concat(searchKeys);
+      return treeData.reduce(function (filteredTree, node) {
+          var _a;
+          if (newSearchKeys.some(function (i) { return "".concat(getV('', node, i)).toLowerCase().includes(searchText); })) {
+              var filteredNode = node;
+              filteredTree.push(filteredNode);
+              if (strictMode && ((_a = filteredNode === null || filteredNode === void 0 ? void 0 : filteredNode.children) === null || _a === void 0 ? void 0 : _a.length)) {
+                  filteredTree.push.apply(filteredTree, __spreadArray([], __read(searchTreeData(node.children, searchText, searchKeys, strictMode)), false));
+                  filteredNode.children = undefined;
+              }
+          }
+          else if (node.children) {
+              if (strictMode) {
+                  filteredTree.push.apply(filteredTree, __spreadArray([], __read(searchTreeData(node.children, searchText, searchKeys, strictMode)), false));
+              }
+              else {
+                  var filteredChildren = searchTreeData(node.children, searchText, searchKeys, strictMode);
+                  if (filteredChildren === null || filteredChildren === void 0 ? void 0 : filteredChildren.length) {
+                      var filteredNode = __assign(__assign({}, node), { children: filteredChildren });
+                      filteredTree.push(filteredNode);
+                  }
+              }
+          }
+          return filteredTree;
+      }, []);
+  }
+  /**
+   * 转换数组数据为树状数据
+   * @example
+   * transferTreeData(treeData); /// ...
+   * transferTreeData(treeData, { labelKey: 'title', valueKey: 'key', parentKey: 'parent' }); /// ...
+   * @param sourceData 源数据
+   * @param options 转化选项
+   * @returns
+   * @category Others-Tree
+   */
+  function transferTreeData(sourceData, options) {
+      if (options === void 0) { options = {
+          labelKey: 'title',
+          valueKey: 'key',
+          parentKey: 'parent',
+      }; }
+      if (!sourceData) {
+          return sourceData;
+      }
+      var labelKey = options.labelKey, valueKey = options.valueKey, parentKey = options.parentKey;
+      // 构建节点映射表
+      var nodeMap = new Map();
+      var allKeys = [];
+      sourceData.forEach(function (item) {
+          var label = item[labelKey];
+          var value = item[valueKey];
+          var parent = item[parentKey];
+          var treeNode = __assign(__assign({ label: label, value: value, title: label, key: value, parent: parent }, item), { children: undefined });
+          allKeys.push(value);
+          nodeMap.set(value, treeNode);
+      });
+      // 关联父子节点
+      sourceData.forEach(function (item) {
+          var value = item[valueKey];
+          var parentNode = nodeMap.get(item[parentKey]);
+          if (parentNode) {
+              if (!parentNode.children) {
+                  parentNode.children = [];
+              }
+              parentNode.children.push(nodeMap.get(value));
+          }
+      });
+      // 查找根节点
+      var rootNodes = [];
+      sourceData.forEach(function (item) {
+          var value = item[valueKey];
+          var treeNode = nodeMap.get(value);
+          var parent = item[parentKey];
+          if (!allKeys.includes(parent)) {
+              rootNodes.push(treeNode);
+          }
+      });
+      return rootNodes;
+  }
+  /**
+   * 获取筛选后的树数据，自定义方法。
+   * @example
+   * filterTreeData(treeData, (item) => item); /// ...
+   * filterTreeData(treeData, (item) => filterIds.includes(item.id)); /// ...
+   * @param treeData 树值
+   * @param callback 过滤的方法，默认不过滤。
+   * @returns
+   * @category Others-Tree
+   */
+  function filterTreeData(treeData, callback) {
+      if (!callback || !treeData) {
+          return treeData;
+      }
+      // treeData = JSON.parse(JSON.stringify(treeData));
+      var results = [];
+      treeData.forEach(function (item) {
+          var _a;
+          var clonedItem = __assign({}, item); // 使用浅拷贝避免修改原始数据
+          if (!clonedItem.children && !callback(clonedItem)) {
+              return;
+          }
+          if (clonedItem.children) {
+              clonedItem.children = filterTreeData(clonedItem.children, callback);
+          }
+          if (callback(clonedItem) || ((_a = clonedItem.children) === null || _a === void 0 ? void 0 : _a.length)) {
+              results.push(clonedItem);
+          }
+      });
+      return results;
+  }
+  /**
+   * 主动获取树的半选/全选节点
+   * @example
+   * getTreeCheckNodes(treeData, ['0-0', '0-1']); /// ...
+   * getTreeCheckNodes(treeData, ['0-0', '0-1'], ['0']); /// ...
+   * @param treeData 树值
+   * @param checkedKeys 已经全选的节点
+   * @param halfCheckedKeys 已经半选的节点
+   * @returns
+   * @category Others-Tree
+   */
+  function getTreeCheckNodes(treeData, checkedKeys, halfCheckedKeys) {
+      // 将 treeData 转化为一个映射，以便查找节点和其父节点的关系。
+      var nodeMap = new Map();
+      var parentMap = new Map();
+      var checkedSet = new Set(checkedKeys !== null && checkedKeys !== void 0 ? checkedKeys : []);
+      var halfCheckedSet = new Set(halfCheckedKeys !== null && halfCheckedKeys !== void 0 ? halfCheckedKeys : []);
+      // 构建节点映射和父节点映射
+      var buildNodeMaps = function (data, parentKey) {
+          if (parentKey === void 0) { parentKey = null; }
+          data.forEach(function (node) {
+              var key = node.key, children = node.children;
+              nodeMap.set(key, node);
+              parentMap.set(key, parentKey);
+              if (children) {
+                  buildNodeMaps(children, key);
+              }
+          });
+      };
+      buildNodeMaps(treeData);
+      // 处理 checkedKeys 和 halfCheckedKeys
+      var processCheckedKeys = function (node, key) {
+          if (!node || !(node === null || node === void 0 ? void 0 : node.children)) {
+              return;
+          }
+          var children = (node === null || node === void 0 ? void 0 : node.children) || [];
+          var allSiblingsChecked = children.every(function (child) { return checkedSet.has(child.key); });
+          var allSiblingsUnchecked = children.every(function (child) { return !checkedSet.has(child.key); });
+          var allSiblingsUncheckedHalf = children.every(function (child) { return !halfCheckedSet.has(child.key); });
+          if (allSiblingsChecked) {
+              // 若节点的子节点全部选中，则节点添加到 checkedSet 中，从 halfCheckedSet 中剔除。
+              checkedSet.add(key);
+              halfCheckedSet.delete(key);
+          }
+          else if (allSiblingsUnchecked && allSiblingsUncheckedHalf) {
+              // 若节点的子节点都没有选中，则节点从 checkedSet 和 halfCheckedSet 中剔除。
+              checkedSet.delete(key);
+              halfCheckedSet.delete(key);
+          }
+          else {
+              // 若节点的子节点部分选中，则节点从 checkedSet 中剔除，添加到 halfCheckedSet 中。
+              checkedSet.delete(key);
+              halfCheckedSet.add(key);
+          }
+          var parentKey = parentMap.get(key);
+          if (parentKey) {
+              processCheckedKeys(nodeMap.get(parentKey), parentKey);
+          }
+      };
+      // 遍历所有的节点，检查并处理。
+      nodeMap.forEach(function (node, key) {
+          processCheckedKeys(node, key);
+      });
+      var newCheckedKeys = Array.from(checkedSet);
+      var newHalfCheckedKeys = Array.from(halfCheckedSet);
+      return {
+          nodeMap: nodeMap,
+          parentMap: parentMap,
+          checkedKeys: newCheckedKeys.length ? newCheckedKeys : undefined,
+          halfCheckedKeys: newHalfCheckedKeys.length ? newHalfCheckedKeys : undefined,
+      };
+  }
+  /**
+   * 生成 table columns 数组
+   * @example
+   * const fields = [
+   *   { label: 'Name', value: 'name' },
+   *   { label: 'Email', key: 'email' },
+   *   { label: 'Age' },
+   * ];
+   * const columns = getTableColumns(fields);
+   * console.log(columns);
+   * // Output: [
+   * //   { title: 'Name', dataIndex: 'name', key: 'name', label: 'Name', value: 'name' },
+   * //   { title: 'Email', dataIndex: 'email', key: 'email', label: 'Email' },
+   * //   { title: 'Age', dataIndex: 'Age', key: 'Age', label: 'Age' },
+   * // ]
+   * @param fields 基础数据
+   * @returns
+   * @category Others-TableColumns
+   */
+  function getTableColumns(fields) {
+      return fields.map(function (field) {
+          var dataIndex = field.dataIndex, title = field.title, label = field.label, value = field.value, key = field.key;
+          var myKey = dataIndex || value || key || title || label;
+          if (!myKey) {
+              console.warn('Warning: At least one of "dataIndex", "value", "key", "title", or "label" must be provided.');
+          }
+          return __assign(__assign({}, field), { title: title || label || '', dataIndex: myKey, key: myKey });
+      });
+  }
+  /**
+   * 播放音频
+   * @param input 声音类型或者音频文件路径
+   * @example
+   * playAudio('path/to/custom.mp3');
+   * @returns
+   * @category Others-音频
+   */
+  function playAudio(input) {
+      var audioPath = input;
+      if (!audioPath) {
+          console.error('No valid audio file path provided.');
+          return;
+      }
+      var mp3 = new Audio(audioPath);
+      mp3.play().catch(function (error) {
+          console.error('Failed to play audio:', error);
+      });
+  }
+  /**
+   * 生成 Mock 模拟数据的方法
+   * @param type 要生成的数据类型
+   * @param options 生成数据的选项
+   * @example
+   * getMockData('string', { length: 10 }); /// "aB3dE6gH1j"
+   * getMockData('number', { min: 10, max: 100 }); /// 42
+   * getMockData('boolean'); /// true
+   * getMockData('date', { startDate: new Date(2020, 0, 1), endDate: new Date(2021, 0, 1) }); /// "2020-06-15 12:34:56"
+   * getMockData('date', { format: false }); /// Date object
+   * getMockData('object', { objectKeys: { name: 'string', age: 'number', birthDate: { type: 'date', options: { format: 'yyyy/mm/dd' } } } }); /// { name: "aBc", age: 25, birthDate: "1995/05/17" }
+   * getMockData('array', { length: 5, arrayTypes: ['string', 'number'] }); /// [ "aB3", 42, "xYz", 7, "MN1" ]
+   * getMockData('array', { length: 5, objectKeys: { name: 'string', age: 'number', birthDate: { type: 'date', options: { format: 'yyyy/mm/dd' } } } }); /// [{ name: "aBc", age: 25, birthDate: "1995/05/17" } * 5 ......]
+   * getMockData('array', { length: 5, arrayTypes: [{ type: 'object', objectKeys: { name: 'string', age: 'number', birthDate: { type: 'date', options: { format: 'yyyy/mm/dd' } } } }] }); /// [{ name: "aBc", age: 25, birthDate: "1995/05/17" } * 5 ......]
+   * getMockData('array', { length: 10, arrayTypes: ['string', { type: 'number', options: { min: 10, max: 100 } }, { type: 'date', options: { format: 'yyyy/mm/dd' } }] }); /// [47, 49, 'uCp1bxDo', '2003/05/14', 'MUQSOf0W', '2011/07/01', 'nDYZD4Lu', 'YFSCEQvV', '2021/06/03', '1yaIgwhh']
+   * @returns
+   * @category Others-Mock&模拟数据
+   */
+  function getMockData(type, options) {
+      if (options === void 0) { options = {}; }
+      // 内部方法用于生成随机字符串
+      function _randomString(length) {
+          var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+          var result = '';
+          for (var i = 0; i < length; i++) {
+              result += chars.charAt(Math.floor(Math.random() * chars.length));
+          }
+          return result;
+      }
+      // 内部方法用于生成随机数字
+      function _randomNumber(min, max) {
+          return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+      // 内部方法用于生成随机布尔值
+      function _randomBoolean() {
+          return Math.random() >= 0.5;
+      }
+      // 内部方法用于生成随机日期
+      function _randomDate(startDate, endDate, format) {
+          if (startDate === void 0) { startDate = new Date(2000, 0, 1); }
+          if (endDate === void 0) { endDate = new Date(); }
+          var date = new Date(startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime()));
+          return format === false ? date : formatDate(date, format || 'yyyy-mm-dd hh:ii:ss');
+      }
+      // 内部方法用于生成随机数组
+      function _randomArray(length, types, objectKeys) {
+          return Array.from({ length: length }, function () {
+              var randomType = types[Math.floor(Math.random() * types.length)];
+              if (typeof randomType === 'string') {
+                  return getMockData(randomType);
+              }
+              else if (typeof randomType === 'object') {
+                  return getMockData(randomType.type, randomType.options);
+              }
+              else if (objectKeys) {
+                  return _randomObject(objectKeys);
+              }
+          });
+      }
+      // 内部方法用于生成随机对象
+      function _randomObject(keys) {
+          var obj = {};
+          for (var key in keys) {
+              var valueType = keys[key];
+              if (typeof valueType === 'string') {
+                  obj[key] = getMockData(valueType);
+              }
+              else if (typeof valueType === 'object') {
+                  obj[key] = getMockData(valueType.type, valueType.options);
+              }
+          }
+          return obj;
+      }
+      // 根据数据类型生成相应的随机数据
+      switch (type) {
+          case 'string':
+              return _randomString(options.length || 8);
+          case 'number':
+              return _randomNumber(options.min || 0, options.max || 100);
+          case 'boolean':
+              return _randomBoolean();
+          case 'date':
+              return _randomDate(options.startDate, options.endDate, options.format);
+          case 'array':
+              return _randomArray(options.length || 5, options.arrayTypes || ['string'], options.objectKeys);
+          case 'object':
+              return _randomObject(options.objectKeys || { key: 'string', id: 'number', active: 'boolean' });
+          case 'null':
+              return null;
+          case 'undefined':
+              return undefined;
+          default:
+              throw new Error("Unsupported data type: ".concat(type));
+      }
+  }
+
+  /**
+   * 对象转 queryString 暂时只支持两层数据，第二层对象与与数组值不能为引用类型。
+   * @example
+   * qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3] }); /// 'start=0&count=20&obj[a]=1&arr[]=1&arr[]=2&arr[]=3'
+   * qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3] }, { arr2str: true }); /// 'start=0&count=20&obj[a]=1&arr=1,2,3'
+   * qsStringify({ start: 0, count: 20, obj: { a: 1 }, arr: [1, 2, 3], str: '1' }, { hasIndex: true }); /// 'start=0&count=20&obj[a]=1&arr[0]=1&arr[1]=2&arr[2]=3&str=1'
+   * @param obj 源数据
+   * @returns
+   * @category Request-请求相关
+   */
+  function qsStringify(obj, options) {
+      if (!obj) {
+          return '';
+      }
+      var queryString = new URLSearchParams();
+      // 不用 for...in，避免污染原对象，且数组遍历效率高。
+      Object.keys(obj).forEach(function (key) {
+          var val = obj[key];
+          switch (getType(val)) {
+              case 'object':
+                  Object.keys(val).forEach(function (objKey) {
+                      queryString.append("".concat(key, "[").concat(objKey, "]"), getType(val[objKey]) == 'object' ? JSON.stringify(val[objKey]) : val[objKey]);
+                  });
+                  break;
+              case 'array':
+                  if (options === null || options === void 0 ? void 0 : options.arr2str) {
+                      queryString.append(key, val.join(','));
+                  }
+                  else {
+                      // val.filter(Boolean)
+                      val.filter(toBool).forEach(function (arrVal, arrIndex) {
+                          var newArrVal = getType(arrVal) == 'object' ? JSON.stringify(arrVal) : arrVal;
+                          (options === null || options === void 0 ? void 0 : options.hasBrackets)
+                              ? queryString.append((options === null || options === void 0 ? void 0 : options.hasIndex) ? "".concat(key, "[").concat(arrIndex, "]") : "".concat(key, "[]"), newArrVal)
+                              : queryString.append(key, newArrVal);
+                      });
+                  }
+                  break;
+              default:
+                  queryString.append(key, val);
+                  break;
+          }
+      });
+      return (options === null || options === void 0 ? void 0 : options.urlEncode) ? queryString.toString() : safeDecodeURI(queryString.toString());
+  }
+  /**
+   * 获取 query string 参数转对象
+   * @example
+   * qsParse('start=0&count=20&x=1&x=2&x=3', 'x'); /// [1, 2, 3]
+   * qsParse('http://a.cn/123/test?start=0&count=20&x=1&x=2&x=3#123'); /// { start: '0', count: '20', x: [1, 2, 3], '#': 123, '_': 'test', '/': 'test?start=0&count=20&x=1&x=2&x=3#123' }
+   * @param url query string
+   * @param key 参数名
+   * @returns
+   * @category Request-请求相关
+   */
+  function qsParse(url, key) {
+      var _a, _b, _c, _d, _e;
+      // 也可使用 new URL(url) 或者 new URLSearchParams(params) API 获取
+      var pathname = (_a = url !== null && url !== void 0 ? url : window.location.pathname) !== null && _a !== void 0 ? _a : '';
+      url = (_b = url !== null && url !== void 0 ? url : window.location.search) !== null && _b !== void 0 ? _b : '';
+      var filename = pathname.substring(pathname.lastIndexOf('/') + 1);
+      var paramMap = {
+          '/': filename,
+          _: (_d = (_c = filename === null || filename === void 0 ? void 0 : filename.split('?')) === null || _c === void 0 ? void 0 : _c[0]) !== null && _d !== void 0 ? _d : '',
+      };
+      var queryString = url.includes('?') ? url.split('?')[1] : url;
+      var queryStringList = queryString.split('#');
+      paramMap['#'] = (_e = queryStringList === null || queryStringList === void 0 ? void 0 : queryStringList[1]) !== null && _e !== void 0 ? _e : '';
+      if (queryString.length !== 0) {
+          var parts = queryStringList[0].split('&');
+          for (var i = 0; i < parts.length; i++) {
+              var component = parts[i].split('=');
+              var paramKey = safeDecodeURI(component[0]);
+              var paramVal = safeDecodeURI(component[1]);
+              if (!paramMap[paramKey]) {
+                  paramMap[paramKey] = paramVal;
+                  continue;
+              }
+              !Array.isArray(paramMap[paramKey]) && (paramMap[paramKey] = Array(paramMap[paramKey]));
+              paramMap[paramKey].push(paramVal);
+          }
+      }
+      return key ? paramMap === null || paramMap === void 0 ? void 0 : paramMap[key] : paramMap;
+  }
+  /**
+   * 获取不带任何参数或片段标识符的当前 URL
+   * @example
+   * getBaseURL('https://test.com/index?name=leo&org=biugle#test'); /// 'https://test.com/index'
+   * getBaseURL(''); /// ''
+   * getBaseURL(); /// 当前页面 BaseURL
+   * getBaseURL('https://test.com/#/test?name=leo&org=biugle', true); /// 'https://test.com/#/test'
+   * getBaseURL(null); /// 相当于 window.location.origin
+   * @param url 地址/链接
+   * @param hashRoute 是否为 hash 路由，默认为 false 。
+   * @returns
+   * @category Request-请求相关
+   */
+  function getBaseURL(url, hashRoute) {
+      if (hashRoute === void 0) { hashRoute = false; }
+      if (url === null) {
+          return window.location.origin;
+      }
+      url = url !== null && url !== void 0 ? url : window.location.href;
+      if (hashRoute) {
+          return url.split('?')[0];
+      }
+      return url.replace(/[?#].*$/, '');
+  }
+  /**
+   * 获取 url 查询参数字符串
+   * @example
+   * getQueryString('https://test.com/index?name=leo&org=biugle#test'); /// 'name=leo&org=biugle'
+   * getQueryString(''); /// ''
+   * getQueryString(); /// 当前页面 QueryString 字符串部分
+   * @param url 地址/链接
+   * @returns
+   * @category Request-请求相关
+   */
+  function getQueryString(url) {
+      var _a, _b, _c, _d, _e;
+      return toBool(url) ? (_d = (_c = (_b = (_a = url === null || url === void 0 ? void 0 : url.split('?')) === null || _a === void 0 ? void 0 : _a[1]) === null || _b === void 0 ? void 0 : _b.split('#')) === null || _c === void 0 ? void 0 : _c[0]) !== null && _d !== void 0 ? _d : '' : (_e = window.location.search) === null || _e === void 0 ? void 0 : _e.replace('?', '');
+  }
+  /**
+   * 改变 URL 地址而不刷新页面，并且支持保留或替换历史记录
+   * @example
+   * 假如当前地址为：https://test.com/user
+   * changeURL('leo'); /// url 变为 'https://test.com/user/leo'
+   * changeURL('./leo'); /// url 变为 'https://test.com/user/leo'
+   * changeURL('/users'); /// url 变为 'https://test.com/users'
+   * changeURL('https://test.com/test'); /// url 变为 'https://test.com/test' (若域名不同，会报错中断。)
+   * changeURL('/users', false); /// url 变为 'https://test.com/users' (不覆盖历史记录，返回时会再显示 'https://test.com/user'，而上面的例子返回时是直接显示 'https://test.com/user' 的上一条。)
+   * @param url URL 地址
+   * @param replaceHistory 是否替换历史记录，默认为 true 。
+   * @returns
+   * @category Request-请求相关
+   */
+  function changeURL(url, replaceHistory) {
+      if (replaceHistory === void 0) { replaceHistory = true; }
+      if (replaceHistory) {
+          window.history.replaceState({}, '', url);
+      }
+      else {
+          window.history.pushState({}, '', url);
+      }
+  }
+  /**
+   * 获取查询地址/链接中的参数对象
+   * @example
+   * getSearchParams('https://test.com/index?name=leo&org=biugle#test'); /// {name: 'leo', org: 'biugle'}
+   * getSearchParams(''); /// {}
+   * getSearchParams(); /// 当前页面 SearchParams 对象
+   * @param url 地址/链接
+   * @returns
+   * @category Request-请求相关
+   */
+  function getSearchParams(url) {
+      var e_1, _a;
+      var searchPar = new URLSearchParams(getQueryString(url));
+      var paramsObj = {};
+      try {
+          for (var _b = __values(searchPar.entries()), _c = _b.next(); !_c.done; _c = _b.next()) {
+              var _d = __read(_c.value, 2), key = _d[0], value = _d[1];
+              paramsObj[key] = value;
+          }
+      }
+      catch (e_1_1) { e_1 = { error: e_1_1 }; }
+      finally {
+          try {
+              if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+          }
+          finally { if (e_1) throw e_1.error; }
+      }
+      return paramsObj;
+  }
+  /**
+   * ajax 简单封装
+   * @example
+   * xAjax('get', 'https://test.cn', { params: { test: 123, hello: 456 }, success: (data) => console.log('success', data), fail: (error) => console.log('fail', error) }); /// ajax
+   * xAjax('POST', 'https://test.cn', { contentType: 'application/json', data: { test: 123 }, success: (data) => console.log('success', data), fail: (error) => console.log('fail', error) }); /// ajax
+   * @param method Http Method
+   * @param url 地址/链接
+   * @param options 请求配置
+   * @returns
+   * @category xAjax-请求封装
+   */
+  function xAjax(method, url, options) {
+      var _a, _b, _c, _d;
+      var xhr;
+      method = method.toUpperCase();
+      if (window.XMLHttpRequest) {
+          xhr = new XMLHttpRequest();
+      }
+      else {
+          // @ts-ignore
+          // eslint-disable-next-line no-undef
+          xhr = new ActiveXObject('Microsoft.XMLHttp');
+      }
+      // eslint-disable-next-line spellcheck/spell-checker
+      xhr.onreadystatechange = function () {
+          var _a, _b;
+          if (xhr.readyState === 4) {
+              if (xhr.status < 400) {
+                  (_a = options === null || options === void 0 ? void 0 : options.success) === null || _a === void 0 ? void 0 : _a.call(options, xhr.response);
+              }
+              else if (xhr.status >= 400) {
+                  (_b = options === null || options === void 0 ? void 0 : options.fail) === null || _b === void 0 ? void 0 : _b.call(options, xhr.response);
+              }
+          }
+      };
+      var async = (_a = options === null || options === void 0 ? void 0 : options.async) !== null && _a !== void 0 ? _a : true;
+      // setting after open for compatibility with IE versions <=10
+      xhr.withCredentials = (_b = options === null || options === void 0 ? void 0 : options.withCredentials) !== null && _b !== void 0 ? _b : false;
+      if (options === null || options === void 0 ? void 0 : options.data) {
+          options.data = !(options === null || options === void 0 ? void 0 : options.raw) && isObj(options.data) ? JSON.stringify(options.data) : options.data;
+      }
+      if (method == 'GET') {
+          xhr.open('GET', !(options === null || options === void 0 ? void 0 : options.params)
+              ? url
+              : "".concat(url).concat(url.includes('?') ? '&' : '?').concat(new URLSearchParams(options.params).toString()), async);
+          xhr.send();
+      }
+      else {
+          xhr.open(method, url, async);
+          xhr.setRequestHeader('Content-Type', (_c = options === null || options === void 0 ? void 0 : options.contentType) !== null && _c !== void 0 ? _c : 'application/x-www-form-urlencoded;charset=UTF-8');
+          xhr.send((_d = options === null || options === void 0 ? void 0 : options.data) !== null && _d !== void 0 ? _d : null);
+      }
+      return xhr;
+  }
+  /**
+   * fetch 简单封装
+   * @example
+   * xFetch('get', 'https://api.uomg.com/api/rand.qinghua?x=1', { params: { format: 'json', hello: 456 } }).then(data => console.log(data)); /// fetchXPromise
+   * xFetch('POST', 'https://test.cn', { headers: { contentType: 'application/json' }, data: { test: 123 } }).catch(error => console.log(error)); /// fetchXPromise
+   * @param method Http Method
+   * @param url 地址/链接
+   * @param options 请求配置
+   * @returns
+   * @category xFetch-封装
+   */
+  function xFetch(method, url, options) {
+      var _a, _b, _c, _d, _e, _f, _g, _h;
+      if (options === null || options === void 0 ? void 0 : options.params) {
+          url = "".concat(url).concat(url.includes('?') ? '&' : '?').concat(new URLSearchParams(options.params).toString());
+      }
+      if (options === null || options === void 0 ? void 0 : options.data) {
+          options.data = !(options === null || options === void 0 ? void 0 : options.raw) && isObj(options.data) ? JSON.stringify(options.data) : options.data;
+      }
+      var headers = (_a = options === null || options === void 0 ? void 0 : options.headers) !== null && _a !== void 0 ? _a : {};
+      var contentType = (_h = (_g = (_f = (_e = (_d = (_c = (_b = headers.contenttype) !== null && _b !== void 0 ? _b : headers.contentType) !== null && _c !== void 0 ? _c : headers.ContentType) !== null && _d !== void 0 ? _d : headers.Contenttype) !== null && _e !== void 0 ? _e : headers['content-type']) !== null && _f !== void 0 ? _f : headers['content-Type']) !== null && _g !== void 0 ? _g : headers === null || headers === void 0 ? void 0 : headers['Content-Type']) !== null && _h !== void 0 ? _h : headers === null || headers === void 0 ? void 0 : headers['Content-type'];
+      return fetch(url, {
+          // 文件请求相关处理时需注意别写 content-type
+          headers: __assign(__assign({}, headers), (!contentType || (options === null || options === void 0 ? void 0 : options.isFile)
+              ? {}
+              : {
+                  'content-type': contentType !== null && contentType !== void 0 ? contentType : 'application/x-www-form-urlencoded;charset=UTF-8',
+                  // ?? 'application/json;charset=UTF-8',
+              })),
+          method: method,
+          body: options === null || options === void 0 ? void 0 : options.data,
+      })
+          .then(function (res) {
+          var type = res.headers.get('content-type');
+          if (type === null || type === void 0 ? void 0 : type.includes('json')) {
+              return res.json();
+          }
+          else if (type === null || type === void 0 ? void 0 : type.includes('text')) {
+              return res.text();
+          }
+          else if (type === null || type === void 0 ? void 0 : type.includes('form')) {
+              return res.formData();
+          }
+          else if ((type === null || type === void 0 ? void 0 : type.includes('video')) || (type === null || type === void 0 ? void 0 : type.includes('image'))) {
+              return res.blob();
+          }
+          else if (type === null || type === void 0 ? void 0 : type.includes('arrayBuffer')) {
+              return res.arrayBuffer();
+          }
+          else {
+              try {
+                  if (options === null || options === void 0 ? void 0 : options.callback) {
+                      return options === null || options === void 0 ? void 0 : options.callback(res);
+                  }
+                  return res;
+              }
+              catch (e) {
+                  return res;
+              }
+          }
+      })
+          .catch(function (error) {
+          return Promise.reject(error);
+      });
+  }
+  // eslint-disable-next-line spellcheck/spell-checker
+  /**
+   * 获取常见的 content-type
+   * @example
+   * getContentType('form'); /// 'application/x-www-form-urlencoded'
+   * getContentType('file'); /// 'multipart/form-data'
+   * getContentType('pdf'); /// 'application/pdf'
+   * getContentType('PDF'); /// 'application/pdf'
+   * getContentType('unknown'); /// 'application/octet-stream'
+   * @param fileType 文件类型
+   * @returns
+   * @category Request-请求相关
+   */
+  function getContentType(fileType) {
+      var _a;
+      // @ts-ignore
+      return (_a = CONTENT_TYPES["".concat(fileType).toLowerCase()]) !== null && _a !== void 0 ? _a : 'application/octet-stream';
+  }
+  /**
+   * 安全编码 URI，遇到错误时返回原始字符串。
+   * @example
+   * safeEncodeURI('Hello World'); // 'Hello%20World'
+   * safeEncodeURI('你好'); // '%E4%BD%A0%E5%A5%BD'
+   * safeEncodeURI('https://example.com?param=1&param=2'); // 'https%3A%2F%2Fexample.com%3Fparam%3D1%26param%3D2'
+   * safeEncodeURI('特殊字符 !@#'); // '%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6%20%21%40%23'
+   * @param s 要编码的字符串。
+   * @returns
+   * @category Custom-转码
+   */
+  function safeEncodeURI(s) {
+      try {
+          return encodeURIComponent(s);
+      }
+      catch (e) {
+          console.warn("Failed to encode URI component: ".concat(s), e);
+          return s;
+      }
+  }
+  /**
+   * 安全解码 URI，遇到错误时返回原始字符串。
+   * @example
+   * safeDecodeURI('Hello%20World'); // 'Hello World'
+   * safeDecodeURI('%E4%BD%A0%E5%A5%BD'); // '你好'
+   * safeDecodeURI('%E4%BD%A0%E5%A5'); // '%E4%BD%A0%E5%A5' （无效的 URI 片段）
+   * safeDecodeURI('%'); // '%' （无效的 URI 片段）
+   * @param s 要解码的 URI 。
+   * @returns
+   * @category Custom-转码
+   */
+  function safeDecodeURI(s) {
+      try {
+          return decodeURIComponent(s);
+      }
+      catch (e) {
+          console.warn("Failed to decode URI component: ".concat(s), e);
+          return s;
+      }
+  }
+  /**
+   * 转换常用的查询参数，确保请求参数的一致性。
+   * - 将值为 `ALL`（不区分大小写）转为空字符串或自定义空值。
+   * - 去除字符串值的多余空格。
+   * - 如果 `emptyValue` 参数存在，则将 `null` 或 `undefined` 值转换为 `emptyValue`，否则保留原值。
+   * - 支持嵌套对象的递归转换。
+   * @example
+   * transferQueryParams({ status: 'ALL', user: '  John  ', id: null }, 'N/A');
+   * /// { status: 'N/A', user: 'John', id: 'N/A' }
+   * transferQueryParams({ status: 'ALL', user: '  John  ', id: null });
+   * /// { status: '', user: 'John', id: null }
+   * transferQueryParams({ status: 'ALL', user: '  John  ', id: null, dep: { a: 'all', id: undefined } }, '');
+   * /// { status: '', user: 'John', id: '', dep: { a: '', id: '' } }
+   * @param obj 查询参数对象
+   * @param emptyValue 可选的空值填充值，若提供则将 `null` 和 `undefined` 替换为该值
+   * @returns 转换后的查询参数对象
+   * @category Request-请求相关
+   */
+  function transferQueryParams(obj, emptyValue) {
+      obj = obj || {};
+      for (var key in obj) {
+          if (typeof obj[key] === 'object' && obj[key] !== null) {
+              // 递归处理嵌套对象
+              obj[key] = transferQueryParams(obj[key], emptyValue);
+          }
+          else if ("".concat(obj[key]).toUpperCase() === 'ALL') {
+              obj[key] = emptyValue !== undefined ? emptyValue : '';
+          }
+          else if (obj[key] === null || obj[key] === undefined) {
+              obj[key] = emptyValue !== undefined ? emptyValue : obj[key];
+          }
+          else if (typeof obj[key] === 'string') {
+              obj[key] = obj[key].trim();
+          }
+      }
+      return obj;
+  }
+
+  /* eslint-disable indent */
+  /**
+   * 获取文件类型（扩展名）的小写格式。
+   * - 支持处理带有查询参数的路径。
+   * - 若无扩展名，返回 `unknown`。
+   * @example
+   * getFileType('https://example.com/path/to/file.pdf'); // 'pdf'
+   * getFileType('file.JPG'); // 'jpg'
+   * getFileType('document'); // 'unknown'
+   * @param str 字符串（URL 、路径或文件名）。
+   * @returns 文件类型（小写格式）
+   * @category Tools-下载/文件相关
+   */
+  function getFileType(str) {
+      var _a, _b;
+      return ((_b = (_a = str.match(/[^\/]*\.(\w+)(?:\?.*)?$/i)) === null || _a === void 0 ? void 0 : _a[1]) === null || _b === void 0 ? void 0 : _b.toLowerCase()) || 'unknown';
+  }
+  /**
+   * 根据字符串获取文件名（支持 URL 或其他路径字符串）。
+   * - 支持处理带有查询参数的路径。
+   * - 若无扩展名且 `keepExt` 为 `true`，默认使用 `.unknown`。
+   * - 对于根路径或无文件名的情况，使用当前时间戳作为文件名。
+   * @example
+   * getFileNameFromStr('https://example.com/path/to/file.jpg'); // 'file'
+   * getFileNameFromStr('https://example.com/path/to/file.jpg', true); // 'file.jpg'
+   * getFileNameFromStr('https://example.com/path/to/file'); // 'file'
+   * getFileNameFromStr('https://example.com/path/to/file', true); // 'file.unknown'
+   * getFileNameFromStr('/path/to/file.jpg'); // 'file'
+   * getFileNameFromStr('simple-file.png'); // 'simple-file'
+   * getFileNameFromStr('https://example.com/'); // '1691830390281' (假设当前时间为 1691830390281)
+   * @param str 字符串（URL 、路径或文件名）。
+   * @param keepExt 可选。如果为 true，则返回包含文件扩展名的完整文件名，若无扩展名则使用 `.unknown`。
+   * @returns 文件名（带或不带扩展名）
+   * @category Tools-下载/文件相关
+   */
+  function getFileNameFromStr(str, keepExt) {
+      var _a;
+      if (keepExt === void 0) { keepExt = false; }
+      var ext = getFileType(str);
+      var filenameOfStr = (_a = str.match(/([^/]*?)\.\w+(\?.*?)?$/)) === null || _a === void 0 ? void 0 : _a[1];
+      var filename = filenameOfStr ? decodeURIComponent(filenameOfStr) : String(Date.now());
+      return keepExt ? "".concat(filename).concat(ext ? ".".concat(ext) : '.unknown') : filename;
+  }
+  // eslint-disable-next-line spellcheck/spell-checker
+  /**
+   * 检查是否为 file.ext string 文件扩展名
+   * @example
+   * checkFileExt(['png', 'jpg'], 'test.jpg'); /// true
+   * checkFileExt(['png', 'jpg'], 'test.JPG'); /// true
+   * checkFileExt(['png', 'jpg'], 'test.jpg.txt'); /// false
+   * @param value 字符串值
+   * @returns
+   * @category String-字符串
+   */
+  function checkFileExt(arr, value) {
+      var regFileExt = arr.map(function (name) { return ".".concat(name); }).join('|');
+      return new RegExp("(".concat(regFileExt, ")$"), 'i').test(value);
+  }
+  /**
+   * 在浏览器中打开文件选择框
+   * @example
+   * openFileSelect({ multiple: true }).then(fileList => console.log(fileList));
+   * openFileSelect({ multiple: true, accept: 'image/*', resultType: 'blob' }).then(fileBlobList => console.log(fileBlobList));
+   * openFileSelect({ multiple: true, accept: '.txt', resultType: 'base64' }).then(fileDataUrlList => console.log(fileDataUrlList));
+   * @param options 打开配置
+   * @returns
+   * @category Tools-下载/文件相关
+   */
+  function openFileSelect(options) {
+      var _this = this;
+      return new Promise(function (resolve, reject) {
+          var $input = document.createElement('input');
+          $input.style.position = 'fixed';
+          $input.style.bottom = '0';
+          $input.style.left = '0';
+          $input.style.visibility = 'hidden';
+          $input.setAttribute('type', 'file');
+          if (options === null || options === void 0 ? void 0 : options.accept) {
+              // accept = '*/*' 'image/*' 'audio/*' 'video/*' '.txt,.png,.pdf' 'image/png,.jpg'
+              $input.setAttribute('accept', options.accept);
+          }
+          if (options === null || options === void 0 ? void 0 : options.multiple) {
+              $input.setAttribute('multiple', 'true');
+          }
+          document.body.appendChild($input);
+          // 判断用户是否点击取消，原生没有提供专门事件，用 hack 的方法实现。
+          $input.addEventListener('click', function () {
+              $input.value = '';
+              document.body.addEventListener('focus', function () {
+                  setTimeout(function () {
+                      if (!$input.value) {
+                          resolve(null);
+                      }
+                  }, 500);
+              });
+          });
+          $input.addEventListener('change', function (e) { return __awaiter(_this, void 0, void 0, function () {
+              var files, results, err_1;
+              var _this = this;
+              return __generator(this, function (_a) {
+                  switch (_a.label) {
+                      case 0:
+                          document.body.removeChild($input);
+                          if (!(options === null || options === void 0 ? void 0 : options.resultType)) {
+                              resolve($input.files);
+                              return [2 /*return*/];
+                          }
+                          files = (e.target.files || []);
+                          _a.label = 1;
+                      case 1:
+                          _a.trys.push([1, 3, , 4]);
+                          return [4 /*yield*/, Promise.all(__spreadArray([], __read(files), false).map(function (file) { return __awaiter(_this, void 0, void 0, function () {
+                                  return __generator(this, function (_a) {
+                                      return [2 /*return*/, new Promise(function (resolve, reject) {
+                                              var reader = new FileReader();
+                                              reader.onloadend = function () {
+                                                  var _a, _b, _c;
+                                                  resolve({
+                                                      filename: file.name,
+                                                      ext: (_a = file.name.split('.').pop()) === null || _a === void 0 ? void 0 : _a.toLowerCase(),
+                                                      type: file.type,
+                                                      result: this.result && options.resultType === 'blob'
+                                                          ? new Blob([new Uint8Array(this.result)], {
+                                                              type: file.type,
+                                                          })
+                                                          : this.result,
+                                                      length: options.resultType === 'blob'
+                                                          ? (_b = this.result) === null || _b === void 0 ? void 0 : _b.byteLength
+                                                          : (_c = this.result) === null || _c === void 0 ? void 0 : _c.length,
+                                                  });
+                                              };
+                                              reader.onerror = function (err) {
+                                                  reject(err);
+                                              };
+                                              switch (options.resultType) {
+                                                  case 'blob': {
+                                                      reader.readAsArrayBuffer(file);
+                                                      break;
+                                                  }
+                                                  case 'base64': {
+                                                      reader.readAsDataURL(file);
+                                                      break;
+                                                  }
+                                                  default: {
+                                                      reader.readAsArrayBuffer(file);
+                                                  }
+                                              }
+                                          })];
+                                  });
+                              }); }))];
+                      case 2:
+                          results = _a.sent();
+                          resolve(results);
+                          return [3 /*break*/, 4];
+                      case 3:
+                          err_1 = _a.sent();
+                          reject(err_1);
+                          return [3 /*break*/, 4];
+                      case 4: return [2 /*return*/];
+                  }
+              });
+          }); });
+          $input.click();
+      });
+  }
+  /**
+   * 将 Blob 对象保存为文件并下载。
+   * @example
+   * const blob = new Blob(['Hello, World!'], { type: 'text/plain' });
+   * saveAs(blob, 'hello.txt'); // 下载文件名为 'hello.txt'
+   * const jsonBlob = new Blob([JSON.stringify({ a: 1, b: 2 }, null, 2)], { type: 'application/json' });
+   * saveAs(jsonBlob, 'data.json'); // 下载文件名为 'data.json'
+   * @param blob 要保存的 Blob 对象。
+   * @param filename 可选。保存的文件名。
+   * @returns
+   * @category Tools-下载/文件相关
+   */
+  function saveAs(blob, filename) {
+      var url = window.URL || window.webkitURL;
+      var link = document.createElement('a');
+      link.download = filename || '';
+      link.href = url.createObjectURL(blob);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      url.revokeObjectURL(link.href);
+  }
+  /**
+   * 根据 Blob 下载图片。
+   * @example
+   * // 下载远程图片，并保存为 'image.jpg'
+   * downloadImgByBlob('https://example.com/path/to/image.jpg', 'image.jpg');
+   * // 下载远程图片，并保存为默认文件名（通常是图片的原始文件名）
+   * downloadImgByBlob('https://example.com/path/to/image.jpg');
+   * // 尝试下载一个无效的 URL，不会进行下载操作
+   * downloadImgByBlob('invalid-url');
+   * // 下载一张跨域图片（需要支持跨域下载）
+   * downloadImgByBlob('https://a.example.com/path/to/cross-origin-image.jpg', 'cross-origin-image.jpg');
+   * @param url 图片的 URL 地址。
+   * @param fileName 可选。下载的文件名。
+   * @returns
+   * @category Tools-下载/文件相关
+   */
+  function downloadImg(url, fileName) {
+      if (!url || !url.startsWith('http')) {
+          console.warn('Invalid URL provided:', url);
+          return;
+      }
+      var img = new Image();
+      img.onload = function () {
+          var canvas = document.createElement('canvas');
+          canvas.width = img.width;
+          canvas.height = img.height;
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          var ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          canvas.toBlob(function (blob) {
+              if (blob) {
+                  var blobUrl = window.URL.createObjectURL(blob);
+                  var a = document.createElement('a');
+                  a.href = blobUrl;
+                  a.download = fileName || 'download';
+                  a.click();
+                  window.URL.revokeObjectURL(blobUrl);
+              }
+              else {
+                  console.warn('Failed to create Blob from canvas');
+              }
+          }, 'image/png'); // 默认保存为 PNG 格式
+      };
+      img.onerror = function () {
+          console.error('Failed to load image from URL:', url);
+      };
+      img.setAttribute('crossOrigin', 'Anonymous');
+      img.src = url;
+  }
+  /**
+   * 下载文件
+   * @example
+   * // 下载并保存为 'xxx'
+   * downloadFile('https://example.com/path/to/file.jpg', 'xxx'); // 将文件保存为 'xxx.jpg'
+   * // 下载并保存为链接中的文件名
+   * downloadFile('https://example.com/path/to/file.jpg'); // 将文件保存为 'file.jpg'
+   * // 下载并保存为指定的文件名（没有扩展名）
+   * downloadFile('https://example.com/path/to/file.jpg', 'customFileName'); // 将文件保存为 'customFileName.jpg'
+   * // 下载并保存为带有扩展名的自定义文件名
+   * downloadFile('https://example.com/path/to/file.jpg', 'customFileName.png'); // 将文件保存为 'customFileName.png'
+   * @param url 文件的 URL 地址。
+   * @param fileName 可选。下载的文件名，默认为 URL 中的文件名。
+   * @returns
+   * @category Tools-下载/文件相关
+   */
+  function downloadFile(url, fileName) {
+      var _a, _b, _c;
+      var ext = ((_a = fileName === null || fileName === void 0 ? void 0 : fileName.match(/[^\/]*\.(\w+)(?:\?.*)?$/)) === null || _a === void 0 ? void 0 : _a[1]) || ((_b = url.match(/[^\/]*\.(\w+)(?:\?.*)?$/)) === null || _b === void 0 ? void 0 : _b[1]) || 'txt';
+      var finalFileName = safeDecodeURI(fileName || ((_c = url.match(/([^/]*?)\.\w+(\?.*?)?$/)) === null || _c === void 0 ? void 0 : _c[1]) || String(Date.now()));
+      var oReq = new XMLHttpRequest();
+      oReq.open('GET', url, true);
+      oReq.responseType = 'blob';
+      oReq.onload = function () {
+          var type = getContentType(ext) || 'application/octet-stream';
+          var file = new Blob([oReq.response], { type: type });
+          saveAs(file, /\.\w+$/.test(finalFileName) ? finalFileName : "".concat(finalFileName, ".").concat(ext));
+      };
+      oReq.send();
+  }
+  /**
+   * 新开页面预览文件。
+   * @example
+   * // 预览 Word 文档
+   * openPreviewFile('https://example.com/path/to/document.docx');
+   * // 预览 Excel 表格
+   * openPreviewFile('https://example.com/path/to/spreadsheet.xlsx');
+   * // 预览 PDF 文件
+   * openPreviewFile('https://example.com/path/to/document.pdf');
+   * // 预览图片
+   * openPreviewFile('https://example.com/path/to/image.png');
+   * // 预览其他文件或未匹配的文件类型
+   * openPreviewFile('https://example.com/path/to/otherfile.zip'); // 将直接打开链接
+   * @param url 要预览的 URL 地址。
+   * @returns
+   * @category Tools-下载/文件相关
+   */
+  function openPreviewFile(url, serviceUrl) {
+      var urlMap = new Map()
+          .set(/\.(docx|doc|xls|xlsx)(\?.*)?$/, function (url) {
+          return window.open("".concat(serviceUrl, "?url=") + encodeURIComponent(window.btoa(url)));
+      })
+          .set(/\.pdf(\?.*)?$/, function (url) {
+          return window
+              .open('')
+              .document.write("<!DOCTYPE html><html><head><style>body{margin:0;}embed{height:100vh;}</style></head><body><embed src=\"".concat(url, "\" width=\"100%\" height=\"100%\"/></body></html>"));
+      })
+          .set(/\.(png|jpg|jpeg|gif)(\?.*)?$/, function (url) {
+          return window
+              .open('')
+              .document.write("<!DOCTYPE html><html><head><style>body{margin:0;}img{width:unset;height:unset;max-width:100%;}</style></head><body><img src=\"".concat(url, "\" /></body></html>"));
+      });
+      var regex = __spreadArray([], __read(urlMap.keys()), false).find(function (regex) { return regex.test(url); });
+      var previewFunction = regex ? urlMap.get(regex) : undefined;
+      if (previewFunction) {
+          previewFunction(url);
+      }
+      else {
+          window.open(url);
+      }
+  }
+  /**
+   * 文件流或内容转 Base64
+   * @example
+   * transferFileToBase64(file, 'application/pdf;charset=utf-8', (res) => console.log({ res })); /// result object
+   * transferFileToBase64('test', 'text/plain', (res) => console.log({ res })); /// result object
+   * @param content BlobPart | any 内容
+   * @param contentType 内容类型
+   * @param callBack 回调函数
+   * @returns
+   * @category Tools-下载/文件相关
+   */
+  function transferFileToBase64(content, contentType, callBack) {
+      var blob = new Blob([content], {
+          type: contentType, // ;charset=utf-8
+      });
+      var reader = new FileReader();
+      reader.readAsDataURL(blob);
+      reader.addEventListener('loadend', function () {
+          callBack === null || callBack === void 0 ? void 0 : callBack({
+              result: reader === null || reader === void 0 ? void 0 : reader.result,
+              // // @ts-ignore
+              // baseCode: Buffer?.from(reader?.result?.split('base64,')[1], 'base64')
+          });
+      });
+  }
+  /**
+   * 下载一个链接文档
+   * @example
+   * download('https://xxx.com/xxx', 'xxx'); /// 下载后端返回的流
+   * @param link 链接
+   * @param name 文件名称(可选，默认以链接最好一段作为名称，填写时可不带后缀自动识别，写了后缀会以写的后缀为准。)
+   * @returns
+   * @category Tools-下载/文件相关
+   */
+  function download(link, name) {
+      if (!name) {
+          name = link.slice(link.lastIndexOf('/') + 1);
+      }
+      var eleLink = document.createElement('a');
+      eleLink.download = name;
+      eleLink.style.display = 'none';
+      eleLink.href = link;
+      document.body.appendChild(eleLink);
+      eleLink.click();
+      document.body.removeChild(eleLink);
+  }
+  /**
+   * 在浏览器中自定义下载一些内容，与 download 不同的是，downloadContent 采用 Blob 可能会有长度限制。
+   * @example
+   * downloadContent('test.txt', 'test txt content'); /// 下载返回的流
+   * downloadContent('test.json', JSON.stringify({content: 'test json'})); /// 下载返回的流
+   * @param name 文件名称(需带后缀)，默认 txt 。
+   * @param content 内容 BlobPart | any
+   * @returns
+   * @category Tools-下载/文件相关
+   */
+  function downloadContent(name, content) {
+      if (!name) {
+          name = 'unknown';
+      }
+      try {
+          if (!(content instanceof Blob)) {
+              content = new Blob([content]);
+          }
+          var link_1 = URL.createObjectURL(content);
+          download(link_1, name);
+          setTimeout(function () {
+              URL.revokeObjectURL(link_1);
+          }, 0);
+      }
+      catch (e) {
+          console.log('js-xxx:downloadContentError--->', e);
+      }
+  }
+  /**
+   * 转换 data 为可导出的 csv 数据
+   * @example
+   * transferCSVData([{ prop: 'name' }, { prop: 'age' }], [{ name: '张三', age: 15 }]); /// 可以导出的字符数据
+   * transferCSVData([{ label: '姓名', prop: 'name' }, { label: '年龄', prop: 'age' }], [{ name: '张三', age: 15 }]); /// 可以导出的字符数据
+   * @param fields 导出的栏位
+   * @param data 数据
+   * @returns
+   * @category Tools-下载/文件相关
+   */
+  function transferCSVData(fields, data) {
+      var _a;
+      var keys = fields.map(function (field) { return field.prop; });
+      var result = "".concat(fields.map(function (field) { var _a, _b; return forceToStr((_b = (_a = field.label) !== null && _a !== void 0 ? _a : field.prop) !== null && _b !== void 0 ? _b : 'unknown'); }).join(','), "\n");
+      var _loop_1 = function (i) {
+          var item = (_a = data[i]) !== null && _a !== void 0 ? _a : {};
+          result += keys.map(function (key) { return forceToStr(item[key]); }).join(',') + '\n';
+      };
+      for (var i = 0; i < data.length; i++) {
+          _loop_1(i);
+      }
+      return result;
+  }
+  // eslint-disable-next-line spellcheck/spell-checker
+  /**
+   * 导出数据为文件
+   * @example
+   * exportFile(data); /// 导出 txt 文件
+   * exportFile(data, 'csv-导出文件测试', 'csv'); /// 导出 csv 文件
+   * exportFile(document.getElementById('table_to_xls').outerHTML, 'excelWithStyle', 'xls'); /// 导出表格为带样式的 excel xls 文件
+   * exportFile('http://a.biugle.cn/img/cdn/dev/avatar/1.png', 'test', 'png'); /// 导出 png 文件
+   * @param data 数据
+   * @param fileName 文件名
+   * @param fileType 文件类型
+   * @returns
+   * @category Tools-下载/文件相关
+   */
+  function exportFile(data, fileName, fileType) {
+      if (fileType === void 0) { fileType = 'txt'; }
+      if (isUrl(data)) {
+          // eslint-disable-next-line spellcheck/spell-checker
+          download(data, "".concat(fileName !== null && fileName !== void 0 ? fileName : formatDate(new Date(), 'yyyy-mm-dd-hhiiss'), ".").concat(fileType));
+          return;
+      }
+      // 加入特殊字符确保 utf-8
+      // eslint-disable-next-line spellcheck/spell-checker
+      var uri = "data:".concat(getContentType(fileType), ";charset=utf-8,\uFEFF").concat(safeEncodeURI(data));
+      // U+FEFF 是一个零宽度非断字符（Zero Width No-Break Space），也称为“字节顺序标记（Byte Order Mark，BOM）”。
+      // eslint-disable-next-line spellcheck/spell-checker
+      download(uri, "".concat(fileName !== null && fileName !== void 0 ? fileName : formatDate(new Date(), 'yyyy-mm-dd-hhiiss'), ".").concat(fileType));
+      // downloadContent 可以兼容落后浏览器的情况
+  }
+  /**
+   * 文件大小格式化
+   * @example
+   * formatBytes(1024); /// '1.00 KB'
+   * @param bytes 文件大小 bytes
+   * @param precision 精度
+   * @returns
+   * @category Others-业务/其他
+   */
+  function formatBytes(bytes, precision) {
+      var _a;
+      if (precision === void 0) { precision = 2; }
+      var units = ['B', 'KB', 'MB', 'GB', 'TB'];
+      var pow = Math.floor((bytes ? Math.log(bytes) : 0) / Math.log(1024));
+      pow = Math.min(pow, units.length - 1);
+      bytes /= 1 << (10 * pow);
+      var unit = (_a = units === null || units === void 0 ? void 0 : units[pow]) !== null && _a !== void 0 ? _a : units[0];
+      return bytes.toFixed(precision) + ' ' + unit;
+  }
+
   /*
    * @Author: HxB
    * @Date: 2022-04-26 15:53:02
@@ -15807,1021 +16872,6 @@ var $xxx = (function (exports) {
       return new RegExp(String.raw(templateObject_1 || (templateObject_1 = __makeTemplateObject(["^(0|[1-9]d", ")(?:.d", ")?$"], ["^(0|[1-9]\\d", ")(?:\\.\\d", ")?$"])), integerPart, decimalPart));
   }
   var templateObject_1;
-
-  /* eslint-disable max-lines */
-  function _isValidCronField(field, min, max) {
-      var regex = new RegExp('^\\d+|\\*/\\d+|[\\d,-]+/[\\d,-]+$');
-      if (!regex.test(field)) {
-          return false;
-      }
-      if (field.includes('/')) {
-          var _a = __read(field.split('/'), 2), start = _a[0], step = _a[1];
-          return _isValidCronField(start, min, max) && parseInt(step) > 0 && parseInt(step) <= max;
-      }
-      if (field.includes('-')) {
-          var _b = __read(field.split('-'), 2), start = _b[0], end = _b[1];
-          return parseInt(start) >= min && parseInt(end) <= max && parseInt(start) <= parseInt(end);
-      }
-      return parseInt(field) >= min && parseInt(field) <= max;
-  }
-  /**
-   * 文件大小格式化
-   * @example
-   * formatBytes(1024); /// '1.00 KB'
-   * @param bytes 文件大小 bytes
-   * @param precision 精度
-   * @returns
-   * @category Others-业务/其他
-   */
-  function formatBytes(bytes, precision) {
-      var _a;
-      if (precision === void 0) { precision = 2; }
-      var units = ['B', 'KB', 'MB', 'GB', 'TB'];
-      var pow = Math.floor((bytes ? Math.log(bytes) : 0) / Math.log(1024));
-      pow = Math.min(pow, units.length - 1);
-      bytes /= 1 << (10 * pow);
-      var unit = (_a = units === null || units === void 0 ? void 0 : units[pow]) !== null && _a !== void 0 ? _a : units[0];
-      return bytes.toFixed(precision) + ' ' + unit;
-  }
-  /**
-   * 获取浏览器信息
-   * @example
-   * getUserAgent(); /// { browserName: 'Chrome', browserVersion: '102.0.0.0', osName: 'Windows', osVersion: '10.0', deviceName: '' }
-   * @returns
-   * @category Others-业务/其他
-   */
-  function getUserAgent() {
-      var browserReg = {
-          Chrome: /Chrome/,
-          IE: /MSIE/,
-          Firefox: /Firefox/,
-          Opera: /Presto/,
-          Safari: /Version\/([\d.]+).*Safari/,
-          '360': /360SE/,
-          QQBrowser: /QQ/,
-      };
-      var deviceReg = {
-          iPhone: /iPhone/,
-          iPad: /iPad/,
-          Android: /Android/,
-          Windows: /Windows/,
-          Mac: /Macintosh/,
-      };
-      var userAgentStr = navigator.userAgent;
-      var userAgentObj = {
-          // 浏览器名称
-          browserName: '',
-          // 浏览器版本
-          browserVersion: '',
-          // 操作系统名称
-          osName: '',
-          // 操作系统版本
-          osVersion: '',
-          // 设备名称
-          deviceName: '',
-      };
-      for (var key in browserReg) {
-          if (browserReg[key].test(userAgentStr)) {
-              userAgentObj.browserName = key;
-              if (key === 'Chrome') {
-                  userAgentObj.browserVersion = userAgentStr.split('Chrome/')[1].split(' ')[0];
-              }
-              else if (key === 'IE') {
-                  userAgentObj.browserVersion = userAgentStr.split('MSIE ')[1].split(' ')[1];
-              }
-              else if (key === 'Firefox') {
-                  userAgentObj.browserVersion = userAgentStr.split('Firefox/')[1];
-              }
-              else if (key === 'Opera') {
-                  userAgentObj.browserVersion = userAgentStr.split('Version/')[1];
-              }
-              else if (key === 'Safari') {
-                  userAgentObj.browserVersion = userAgentStr.split('Version/')[1].split(' ')[0];
-              }
-              else if (key === '360') {
-                  userAgentObj.browserVersion = '';
-              }
-              else if (key === 'QQBrowser') {
-                  userAgentObj.browserVersion = userAgentStr.split('Version/')[1].split(' ')[0];
-              }
-          }
-      }
-      for (var key in deviceReg) {
-          if (deviceReg[key].test(userAgentStr)) {
-              userAgentObj.osName = key;
-              if (key === 'Windows') {
-                  userAgentObj.osVersion = userAgentStr.split('Windows NT ')[1].split(';')[0];
-              }
-              else if (key === 'Mac') {
-                  userAgentObj.osVersion = userAgentStr.split('Mac OS X ')[1].split(')')[0];
-              }
-              else if (key === 'iPhone') {
-                  userAgentObj.osVersion = userAgentStr.split('iPhone OS ')[1].split(' ')[0];
-              }
-              else if (key === 'iPad') {
-                  userAgentObj.osVersion = userAgentStr.split('iPad; CPU OS ')[1].split(' ')[0];
-              }
-              else if (key === 'Android') {
-                  userAgentObj.osVersion = userAgentStr.split('Android ')[1].split(';')[0];
-                  userAgentObj.deviceName = userAgentStr.split('(Linux; Android ')[1].split('; ')[1].split(' Build')[0];
-              }
-          }
-      }
-      return userAgentObj;
-  }
-  /**
-   * 判断当前运行环境是否为 Node.js
-   * @example
-   * isNode(); /// true
-   * @returns
-   * @category Others-业务/其他
-   */
-  function isNode() {
-      return typeof process !== 'undefined' && !!process.versions && !!process.versions.node;
-  }
-  /**
-   * 判断当前运行环境是否为浏览器
-   * @example
-   * isBrowser(); /// true
-   * @returns
-   * @category Others-业务/其他
-   */
-  function isBrowser() {
-      return typeof window !== 'undefined' && typeof document !== 'undefined';
-  }
-  /**
-   * 检测黑暗模式
-   * @example
-   * isDarkMode(); /// true
-   * @returns
-   * @category Others-业务/其他
-   */
-  function isDarkMode() {
-      return (window.matchMedia &&
-          (window.matchMedia('(prefers-color-scheme:dark)').matches ||
-              window.matchMedia('(prefers-color-scheme: dark)').matches));
-  }
-  /**
-   * 是否苹果设备
-   * @example
-   * isAppleDevice(); /// true
-   * @returns
-   * @category Others-业务/其他
-   */
-  function isAppleDevice() {
-      return /Mac|iPod|iPhone|iPad/.test(navigator.platform);
-  }
-  /**
-   * 判断是否客户端渲染
-   * @example
-   * isCSR(); /// true
-   * @returns
-   * @category Others-业务/其他
-   */
-  function isCSR() {
-      return typeof window !== 'undefined' && typeof document !== 'undefined';
-  }
-  /**
-   * 判断是否 Windows
-   * @example
-   * isWin(); /// true
-   * @returns
-   * @category Others-业务/其他
-   */
-  function isWin() {
-      return typeof navigator !== 'undefined' && /windows|win32/i.test(navigator.userAgent);
-  }
-  /**
-   * 判断是否 MacOS
-   * @example
-   * isMac(); /// true
-   * @returns
-   * @category Others-业务/其他
-   */
-  function isMac() {
-      return typeof navigator !== 'undefined' && /Macintosh/i.test(navigator.userAgent);
-  }
-  /**
-   * 判断是否 Chrome 内核
-   * @example
-   * isChrome(); /// true
-   * @returns
-   * @category Others-业务/其他
-   */
-  function isChrome() {
-      return typeof navigator !== 'undefined' && navigator.userAgent.indexOf('Chrome') > -1;
-  }
-  /**
-   * 版本号比对算法
-   * @example
-   * checkVersion('1.0.1-rc', '1.0.0', '-rc'); /// 1
-   * checkVersion('1.0.0', '1.0.1'); /// -1
-   * checkVersion('1.0.0', '1.0.0'); /// 0
-   * @param targetVersion 目标版本
-   * @param currentVersion 当前版本
-   * @param testStr 需要替换的字符串 default(-rc)
-   * @returns
-   * @category Others-业务/其他
-   */
-  function checkVersion(targetVersion, currentVersion, testStr) {
-      var _a, _b;
-      if (testStr === void 0) { testStr = '-rc'; }
-      var targetVersionList = targetVersion.replace(testStr, '').split('.');
-      var currentVersionList = currentVersion.replace(testStr, '').split('.');
-      var length = targetVersionList.length > currentVersionList.length ? targetVersionList.length : currentVersionList.length;
-      for (var i = 0; i < length; i++) {
-          var targetVersionValue = i < targetVersionList.length ? parseInt((_a = targetVersionList[i]) !== null && _a !== void 0 ? _a : 0) : 0;
-          var currentVersionValue = i < currentVersionList.length ? parseInt((_b = currentVersionList[i]) !== null && _b !== void 0 ? _b : 0) : 0;
-          if (targetVersionValue > currentVersionValue) {
-              return 1;
-          }
-          if (targetVersionValue < currentVersionValue) {
-              return -1;
-          }
-      }
-      return 0;
-  }
-  /**
-   * 版本号升级算法
-   * @example
-   * versionUpgrade('0.0.1'); /// '0.0.2'
-   * versionUpgrade('0.0.0.9'); /// '0.0.0.10'
-   * versionUpgrade('0.0.0.9', 9); /// '0.0.1.0'
-   * versionUpgrade('0.0.9.9', 9); /// '0.1.0.0'
-   * @param version 版本号
-   * @param maxVersionCode 最大版本号
-   * @returns
-   * @category Others-业务/其他
-   */
-  function versionUpgrade(version, maxVersionCode) {
-      if (maxVersionCode === void 0) { maxVersionCode = 99; }
-      if (maxVersionCode == 0) {
-          maxVersionCode = 99;
-      }
-      var tempVersionArr = version.split('.').map(function (v) { return Number(v); });
-      var nan = tempVersionArr.some(function (v) { return isNaN(v); });
-      if (nan) {
-          return version;
-      }
-      tempVersionArr = tempVersionArr.reverse();
-      var check = true;
-      tempVersionArr.forEach(function (v, i) {
-          if (check) {
-              if (v >= maxVersionCode) {
-                  tempVersionArr[i] = 0;
-              }
-              else {
-                  check = false;
-                  tempVersionArr[i] = tempVersionArr[i] + 1;
-              }
-          }
-      });
-      return tempVersionArr.reverse().join('.');
-  }
-  /**
-   * 处理 rh 血型
-   * @example
-   * formatRh('**d**'); /// '阴性'
-   * formatRh('**d**', { format: [true, false], default: false }); /// true
-   * @param input 输入值
-   * @param options 处理配置
-   * @returns
-   * @category Others-业务/其他
-   */
-  function formatRh(input, options) {
-      var defaultOptions = {
-          format: ['阴性', '阳性'],
-          default: '-',
-          negative: ['阴性', '-', '**d**'],
-          positive: ['阳性', '+', '**D**'],
-      };
-      var _a = __assign(__assign({}, defaultOptions), options), negative = _a.negative, positive = _a.positive, format = _a.format, def = _a.default;
-      if (negative.includes(input)) {
-          return format[0];
-      }
-      if (positive.includes(input)) {
-          return format[1];
-      }
-      if (input.includes('d')) {
-          return format[0];
-      }
-      if (input.includes('D')) {
-          return format[1];
-      }
-      return def;
-  }
-  /**
-   * 是否阴性血
-   * @example
-   * isRhNegative('**d**'); /// true
-   * @param input 输入值
-   * @returns
-   * @category Others-业务/其他
-   */
-  function isRhNegative(input) {
-      return formatRh(input, { format: [true, false], default: false });
-  }
-  /**
-   * 获取血型枚举信息
-   * @example
-   * getBloodGroup('A'); /// { value: 'A', label: 'A 型', color: '#1890FF', lower: 'a', upper: 'A' }
-   * @param bloodGroup 血型
-   * @returns
-   * @category Others-业务/其他
-   */
-  function getBloodGroup(bloodGroup) {
-      var keyList = ['A', 'a', 'B', 'b', 'O', 'o', 'AB', 'ab'];
-      bloodGroup = keyList.includes(bloodGroup) ? bloodGroup.toUpperCase() : 'unknown';
-      return BLOOD_GROUP_INFO[bloodGroup];
-  }
-  /**
-   * 生成 cron 表达式
-   * @example
-   * calcCron(); /// '* * * * *'
-   * calcCron({ minute: '30', hour: '1', day: '10'}); /// '30 1 10 * *'
-   * calcCron({  week: '?' }); /// '* * * * ?'
-   * calcCron({ week: '*' }); /// '* * * * *'
-   * calcCron({ week: 0 }); /// '* * * * 0'
-   * calcCron({ week: '0' }); /// '* * * * 0'
-   * calcCron({ week: '7' }); /// '* * * * 0'
-   * calcCron({ week: 'SUN,天,日,六,6,5' }); /// '* * * * 0,5,6'
-   * calcCron({ day: '1-5' }); /// '* * 1-5 * * '
-   * calcCron({ day: '1,5' }); /// '* * 1,5 * * '
-   * calcCron({ day: '1/5' }); /// '* * 1/5 * * '
-   * @param options cron 配置
-   * @returns
-   * @category Others-业务/其他
-   */
-  function calcCron(_a) {
-      var _b = _a === void 0 ? {} : _a, _c = _b.minute, minute = _c === void 0 ? '*' : _c, _d = _b.hour, hour = _d === void 0 ? '*' : _d, _e = _b.day, day = _e === void 0 ? '*' : _e, _f = _b.month, month = _f === void 0 ? '*' : _f, _g = _b.week, week = _g === void 0 ? '*' : _g;
-      var limits = [
-          // 分钟 (0-59)
-          [0, 59],
-          // 小时 (0-23)
-          [0, 23],
-          // 日期 (1-31)
-          [1, 31],
-          // 月份 (1-12)
-          [1, 12],
-          // 星期 (0-7 或 SUN-SAT)
-          [0, 7],
-      ];
-      var weekField = week;
-      // 将星期转换为 0-7 格式
-      if (typeof weekField === 'number') {
-          if (weekField < 0 || weekField > 7) {
-              throw new Error('Invalid Week Field!');
-          }
-          weekField = weekField.toString();
-      }
-      else if (typeof weekField === 'string' && weekField !== '*' && weekField !== '?') {
-          var weekMap_1 = {
-              SUN: 0,
-              MON: 1,
-              TUE: 2,
-              WED: 3,
-              THU: 4,
-              FRI: 5,
-              SAT: 6,
-              日: 0,
-              一: 1,
-              二: 2,
-              三: 3,
-              四: 4,
-              五: 5,
-              六: 6,
-              天: 0,
-              '0': 0,
-              '1': 1,
-              '2': 2,
-              '3': 3,
-              '4': 4,
-              '5': 5,
-              '6': 6,
-              '7': 0,
-          };
-          var weekList = weekField.split(',').map(function (weekItem) {
-              var weekUpper = weekItem.toUpperCase();
-              var mappedWeek = weekMap_1[weekUpper];
-              if (mappedWeek === undefined) {
-                  throw new Error('Invalid Week Field!');
-              }
-              return mappedWeek;
-          });
-          weekField = __spreadArray([], __read(new Set(weekList)), false).sort().join(',');
-      }
-      var fields = [minute, hour, day, month, weekField];
-      var _loop_1 = function (i) {
-          var field = fields[i];
-          var _h = __read(limits[i], 2), min = _h[0], max = _h[1];
-          if (typeof field === 'string') {
-              if (field === '*' || field === '?' || field === '*/1') {
-                  return "continue";
-              }
-              if (field.startsWith('*/')) {
-                  var step = parseInt(field.slice(2));
-                  if (step > 0 && step <= max) {
-                      return "continue";
-                  }
-              }
-              var parts = field.split(',');
-              if (parts.length > 1) {
-                  if (parts.every(function (part) { return _isValidCronField(part, min, max); })) {
-                      return "continue";
-                  }
-              }
-              var _j = __read(field.split('-'), 2), field1 = _j[0], field2 = _j[1];
-              if (field1 && field2 && _isValidCronField(field1, min, max) && _isValidCronField(field2, min, max)) {
-                  return "continue";
-              }
-              if (_isValidCronField(field, min, max)) {
-                  return "continue";
-              }
-          }
-          throw new Error("Invalid Field: ".concat(field));
-      };
-      // 验证输入
-      for (var i = 0; i < fields.length; i++) {
-          _loop_1(i);
-      }
-      // 输出 cron 表达式
-      return "".concat(fields.join(' '));
-  }
-  /**
-   * 在页面上打印数据，我们打包通常会设置清除 console，使用此函数打印关键信息就不会被清除啦。
-   * @example
-   * log([1, 2, 2, 3, 3], {a: 1, b: 2}, 'test', true); /// 打印数据
-   * log('danger'); /// 打印数据
-   * @param args 打印数据 rest 参数
-   * @returns
-   * @category Extra-日志/调试
-   */
-  function log() {
-      var args = [];
-      for (var _i = 0; _i < arguments.length; _i++) {
-          args[_i] = arguments[_i];
-      }
-      try {
-          // eval(
-          //   `console.log('%c 日志[${formatDate(
-          //     new Date(),
-          //   )}]----->', 'color:#1890FF;font-size:10px;margin-right:5px', ...JSON.parse('${JSON.stringify(args)}'));`,
-          // );
-          // 确保对象中的 JSON 字符串不会干扰 JavaScript 解析器。
-          var formattedArgs = args.map(function (arg) {
-              // eslint-disable-next-line no-prototype-builtins
-              if (typeof arg === 'object' && arg !== null && arg.hasOwnProperty('toJSON')) {
-                  return arg.toJSON();
-              }
-              else {
-                  return arg;
-              }
-          });
-          var code = "console.log('%c\u65E5\u5FD7[".concat(formatDate(new Date()), "]----->\\n', 'color:#1890FF;font-size:10px;margin-right:5px', ...").concat(JSON.stringify(formattedArgs).replace(/</g, 
-          // 防止 xss
-          '\\u003c'), ");");
-          var fn = new Function(code);
-          fn();
-      }
-      catch (e) {
-          console.log.apply(console, __spreadArray(__spreadArray([], __read(args), false), [e], false));
-      }
-      return "\n[".concat(formatDate(new Date()), "] =====>\n (---").concat(JSON.stringify(args), "---)\n");
-  }
-  /**
-   * 强制转化为字符串，避免导出表格显示科学计数法。
-   * @example
-   * forceToStr(123123123); /// '123123123'
-   * forceToStr(undefined); /// '-'
-   * forceToStr(undefined, 0); /// '0'
-   * @param value 值
-   * @param defaultValue 默认值
-   * @returns
-   * @category Tools-下载/文件相关
-   */
-  function forceToStr(value, defaultValue) {
-      var _a;
-      if (defaultValue === void 0) { defaultValue = '-'; }
-      // \t \u200c u200d 也可以
-      return "\u200B".concat((_a = value !== null && value !== void 0 ? value : defaultValue) !== null && _a !== void 0 ? _a : '-');
-  }
-  /**
-   * 转换 data 为可导出的 csv 数据
-   * @example
-   * transferCSVData([{ prop: 'name' }, { prop: 'age' }], [{ name: '张三', age: 15 }]); /// 可以导出的字符数据
-   * transferCSVData([{ label: '姓名', prop: 'name' }, { label: '年龄', prop: 'age' }], [{ name: '张三', age: 15 }]); /// 可以导出的字符数据
-   * @param fields 导出的栏位
-   * @param data 数据
-   * @returns
-   * @category Tools-下载/文件相关
-   */
-  function transferCSVData(fields, data) {
-      var _a;
-      var keys = fields.map(function (field) { return field.prop; });
-      var result = "".concat(fields.map(function (field) { var _a, _b; return forceToStr((_b = (_a = field.label) !== null && _a !== void 0 ? _a : field.prop) !== null && _b !== void 0 ? _b : 'unknown'); }).join(','), "\n");
-      var _loop_2 = function (i) {
-          var item = (_a = data[i]) !== null && _a !== void 0 ? _a : {};
-          result += keys.map(function (key) { return forceToStr(item[key]); }).join(',') + '\n';
-      };
-      for (var i = 0; i < data.length; i++) {
-          _loop_2(i);
-      }
-      return result;
-  }
-  // eslint-disable-next-line spellcheck/spell-checker
-  /**
-   * 导出数据为文件
-   * @example
-   * exportFile(data); /// 导出 txt 文件
-   * exportFile(data, 'csv-导出文件测试', 'csv'); /// 导出 csv 文件
-   * exportFile(document.getElementById('table_to_xls').outerHTML, 'excelWithStyle', 'xls'); /// 导出表格为带样式的 excel xls 文件
-   * exportFile('http://a.biugle.cn/img/cdn/dev/avatar/1.png', 'test', 'png'); /// 导出 png 文件
-   * @param data 数据
-   * @param fileName 文件名
-   * @param fileType 文件类型
-   * @returns
-   * @category Tools-下载/文件相关
-   */
-  function exportFile(data, fileName, fileType) {
-      if (fileType === void 0) { fileType = 'txt'; }
-      if (isUrl(data)) {
-          // eslint-disable-next-line spellcheck/spell-checker
-          download(data, "".concat(fileName !== null && fileName !== void 0 ? fileName : formatDate(new Date(), 'yyyy-mm-dd-hhiiss'), ".").concat(fileType));
-          return;
-      }
-      // 加入特殊字符确保 utf-8
-      // eslint-disable-next-line spellcheck/spell-checker
-      var uri = "data:".concat(getContentType(fileType), ";charset=utf-8,\uFEFF").concat(safeEncodeURI(data));
-      // U+FEFF 是一个零宽度非断字符（Zero Width No-Break Space），也称为“字节顺序标记（Byte Order Mark，BOM）”。
-      // eslint-disable-next-line spellcheck/spell-checker
-      download(uri, "".concat(fileName !== null && fileName !== void 0 ? fileName : formatDate(new Date(), 'yyyy-mm-dd-hhiiss'), ".").concat(fileType));
-      // downloadContent 可以兼容落后浏览器的情况
-  }
-  /**
-   * 华氏/摄氏度互转
-   * @example
-   * transferTemperature(30.5); /// '86.9 °F'
-   * transferTemperature(86, false, false); /// 30
-   * @returns
-   * @category Others-业务/其他
-   */
-  function transferTemperature(temperature, isCelsius, addSuffix) {
-      if (isCelsius === void 0) { isCelsius = true; }
-      if (addSuffix === void 0) { addSuffix = true; }
-      temperature = Number(temperature);
-      var convertedTemperature;
-      if (isCelsius) {
-          // 将摄氏度转换为华氏度
-          convertedTemperature = (temperature * 9) / 5 + 32;
-          if (addSuffix) {
-              return parseFloat(convertedTemperature.toFixed(2)) + ' °F';
-          }
-          else {
-              return parseFloat(convertedTemperature.toFixed(2));
-          }
-      }
-      else {
-          // 将华氏度转换为摄氏度
-          convertedTemperature = ((temperature - 32) * 5) / 9;
-          if (addSuffix) {
-              return parseFloat(convertedTemperature.toFixed(2)) + ' °C';
-          }
-          else {
-              return parseFloat(convertedTemperature.toFixed(2));
-          }
-      }
-  }
-  /**
-   * 获取数据，支持格式化，默认值。
-   * @example
-   * getDataStr(123123123); /// '123123123'
-   * getDataStr(undefined); /// '-'
-   * getDataStr(undefined, 0); /// '0'
-   * getDataStr('test', '', '(', ')'); /// '(test)'
-   * getDataStr(undefined, '', '(', ')'); /// ''
-   * getDataStr(false); /// 'false'
-   * @param value 值
-   * @param defaultValue 默认值
-   * @param prefix 前缀
-   * @param suffix 后缀
-   * @returns
-   * @category Others-业务/其他
-   */
-  function getDataStr(value, defaultValue, prefix, suffix) {
-      if (defaultValue === void 0) { defaultValue = '-'; }
-      if (prefix === void 0) { prefix = ''; }
-      if (suffix === void 0) { suffix = ''; }
-      value = value !== undefined ? value : defaultValue !== undefined ? defaultValue : '-';
-      return value !== defaultValue ? "".concat(prefix).concat(value).concat(suffix) : "".concat(value);
-  }
-  /**
-   * 比较两个值是否相等，支持严格模式和忽略大小写的比较。
-   * @example
-   * compareTo(1, 2); /// false
-   * compareTo('a', 'A'); /// true
-   * compareTo('a', 'A', true); /// false
-   * compareTo(3, 3); /// true
-   * compareTo(2, '2'); /// true
-   * compareTo('apple', 'banana'); /// false
-   * compareTo('2', 2, true); /// false
-   * compareTo('2', 2); /// true
-   * @param value1 第一个值
-   * @param value2 第二个值
-   * @param strict 是否启用严格模式: true 表示严格比较，false 表示忽略大小写和类型比较，默认值为 false 。
-   * @returns
-   * @category Others-业务/其他
-   */
-  function compareTo(value1, value2, strict) {
-      if (strict === void 0) { strict = false; }
-      if (strict) {
-          return value1 === value2;
-      }
-      return "".concat(value1).toLowerCase() === "".concat(value2).toLowerCase();
-  }
-  /**
-   * 获取转换后树的映射对象、数组 `{ map: any, list: any[] }`
-   * @example
-   * getTreeData(treeData, 'id'); /// { map: any, list: any[] }
-   * getTreeData(treeData, 'data.id'); /// { map: any, list: any[] }
-   * @param treeData 树值
-   * @param key key
-   * @returns
-   * @category Others-Tree
-   */
-  function getTreeData(treeData, key) {
-      if (key === void 0) { key = 'key'; }
-      var result = {
-          map: {},
-          list: [],
-      };
-      if (!treeData) {
-          return result;
-      }
-      function traverse(node, parent) {
-          if (!node) {
-              return;
-          }
-          var data = getV(null, node, key);
-          if (data) {
-              var newNode = __assign(__assign({}, node), { parent: parent });
-              result.list.push(newNode);
-              result.map[data] = newNode;
-          }
-          if (node.children && Array.isArray(node.children)) {
-              node.children.forEach(function (i) { return traverse(i, data); });
-          }
-      }
-      treeData.forEach(traverse);
-      return result;
-  }
-  /**
-   * 过滤树级数据，并支持显示完整结构。
-   * @example
-   * searchTreeData(treeData, '测试搜索关键字', 'id'); /// ...
-   * searchTreeData(treeData, '测试搜索关键字', ['key', 'title']); /// ...
-   * searchTreeData(treeData, '测试搜索关键字', ['data.key', 'title'], true); /// ...
-   * @param treeData 树值
-   * @param searchText 过滤的值
-   * @param searchKeys 用于过滤的 key
-   * @param strictMode 搜索配置 strictMode 时，会强制平铺排列返回符合条件的节点，默认不开启，保持树排列。
-   * @returns
-   * @category Others-Tree
-   */
-  function searchTreeData(treeData, searchText, searchKeys, strictMode) {
-      if (searchKeys === void 0) { searchKeys = ['key', 'title']; }
-      if (strictMode === void 0) { strictMode = false; }
-      if (!searchText || !treeData) {
-          return treeData;
-      }
-      // treeData = JSON.parse(JSON.stringify(treeData));
-      searchText = trim(searchText).toLowerCase();
-      // @ts-ignore
-      var newSearchKeys = [].concat(searchKeys);
-      return treeData.reduce(function (filteredTree, node) {
-          var _a;
-          if (newSearchKeys.some(function (i) { return "".concat(getV('', node, i)).toLowerCase().includes(searchText); })) {
-              var filteredNode = node;
-              filteredTree.push(filteredNode);
-              if (strictMode && ((_a = filteredNode === null || filteredNode === void 0 ? void 0 : filteredNode.children) === null || _a === void 0 ? void 0 : _a.length)) {
-                  filteredTree.push.apply(filteredTree, __spreadArray([], __read(searchTreeData(node.children, searchText, searchKeys, strictMode)), false));
-                  filteredNode.children = undefined;
-              }
-          }
-          else if (node.children) {
-              if (strictMode) {
-                  filteredTree.push.apply(filteredTree, __spreadArray([], __read(searchTreeData(node.children, searchText, searchKeys, strictMode)), false));
-              }
-              else {
-                  var filteredChildren = searchTreeData(node.children, searchText, searchKeys, strictMode);
-                  if (filteredChildren === null || filteredChildren === void 0 ? void 0 : filteredChildren.length) {
-                      var filteredNode = __assign(__assign({}, node), { children: filteredChildren });
-                      filteredTree.push(filteredNode);
-                  }
-              }
-          }
-          return filteredTree;
-      }, []);
-  }
-  /**
-   * 转换数组数据为树状数据
-   * @example
-   * transferTreeData(treeData); /// ...
-   * transferTreeData(treeData, { labelKey: 'title', valueKey: 'key', parentKey: 'parent' }); /// ...
-   * @param sourceData 源数据
-   * @param options 转化选项
-   * @returns
-   * @category Others-Tree
-   */
-  function transferTreeData(sourceData, options) {
-      if (options === void 0) { options = {
-          labelKey: 'title',
-          valueKey: 'key',
-          parentKey: 'parent',
-      }; }
-      if (!sourceData) {
-          return sourceData;
-      }
-      var labelKey = options.labelKey, valueKey = options.valueKey, parentKey = options.parentKey;
-      // 构建节点映射表
-      var nodeMap = new Map();
-      var allKeys = [];
-      sourceData.forEach(function (item) {
-          var label = item[labelKey];
-          var value = item[valueKey];
-          var parent = item[parentKey];
-          var treeNode = __assign(__assign({ label: label, value: value, title: label, key: value, parent: parent }, item), { children: undefined });
-          allKeys.push(value);
-          nodeMap.set(value, treeNode);
-      });
-      // 关联父子节点
-      sourceData.forEach(function (item) {
-          var value = item[valueKey];
-          var parentNode = nodeMap.get(item[parentKey]);
-          if (parentNode) {
-              if (!parentNode.children) {
-                  parentNode.children = [];
-              }
-              parentNode.children.push(nodeMap.get(value));
-          }
-      });
-      // 查找根节点
-      var rootNodes = [];
-      sourceData.forEach(function (item) {
-          var value = item[valueKey];
-          var treeNode = nodeMap.get(value);
-          var parent = item[parentKey];
-          if (!allKeys.includes(parent)) {
-              rootNodes.push(treeNode);
-          }
-      });
-      return rootNodes;
-  }
-  /**
-   * 获取筛选后的树数据，自定义方法。
-   * @example
-   * filterTreeData(treeData, (item) => item); /// ...
-   * filterTreeData(treeData, (item) => filterIds.includes(item.id)); /// ...
-   * @param treeData 树值
-   * @param callback 过滤的方法，默认不过滤。
-   * @returns
-   * @category Others-Tree
-   */
-  function filterTreeData(treeData, callback) {
-      if (!callback || !treeData) {
-          return treeData;
-      }
-      // treeData = JSON.parse(JSON.stringify(treeData));
-      var results = [];
-      treeData.forEach(function (item) {
-          var _a;
-          var clonedItem = __assign({}, item); // 使用浅拷贝避免修改原始数据
-          if (!clonedItem.children && !callback(clonedItem)) {
-              return;
-          }
-          if (clonedItem.children) {
-              clonedItem.children = filterTreeData(clonedItem.children, callback);
-          }
-          if (callback(clonedItem) || ((_a = clonedItem.children) === null || _a === void 0 ? void 0 : _a.length)) {
-              results.push(clonedItem);
-          }
-      });
-      return results;
-  }
-  /**
-   * 主动获取树的半选/全选节点
-   * @example
-   * getTreeCheckNodes(treeData, ['0-0', '0-1']); /// ...
-   * getTreeCheckNodes(treeData, ['0-0', '0-1'], ['0']); /// ...
-   * @param treeData 树值
-   * @param checkedKeys 已经全选的节点
-   * @param halfCheckedKeys 已经半选的节点
-   * @returns
-   * @category Others-Tree
-   */
-  function getTreeCheckNodes(treeData, checkedKeys, halfCheckedKeys) {
-      // 将 treeData 转化为一个映射，以便查找节点和其父节点的关系。
-      var nodeMap = new Map();
-      var parentMap = new Map();
-      var checkedSet = new Set(checkedKeys !== null && checkedKeys !== void 0 ? checkedKeys : []);
-      var halfCheckedSet = new Set(halfCheckedKeys !== null && halfCheckedKeys !== void 0 ? halfCheckedKeys : []);
-      // 构建节点映射和父节点映射
-      var buildNodeMaps = function (data, parentKey) {
-          if (parentKey === void 0) { parentKey = null; }
-          data.forEach(function (node) {
-              var key = node.key, children = node.children;
-              nodeMap.set(key, node);
-              parentMap.set(key, parentKey);
-              if (children) {
-                  buildNodeMaps(children, key);
-              }
-          });
-      };
-      buildNodeMaps(treeData);
-      // 处理 checkedKeys 和 halfCheckedKeys
-      var processCheckedKeys = function (node, key) {
-          if (!node || !(node === null || node === void 0 ? void 0 : node.children)) {
-              return;
-          }
-          var children = (node === null || node === void 0 ? void 0 : node.children) || [];
-          var allSiblingsChecked = children.every(function (child) { return checkedSet.has(child.key); });
-          var allSiblingsUnchecked = children.every(function (child) { return !checkedSet.has(child.key); });
-          var allSiblingsUncheckedHalf = children.every(function (child) { return !halfCheckedSet.has(child.key); });
-          if (allSiblingsChecked) {
-              // 若节点的子节点全部选中，则节点添加到 checkedSet 中，从 halfCheckedSet 中剔除。
-              checkedSet.add(key);
-              halfCheckedSet.delete(key);
-          }
-          else if (allSiblingsUnchecked && allSiblingsUncheckedHalf) {
-              // 若节点的子节点都没有选中，则节点从 checkedSet 和 halfCheckedSet 中剔除。
-              checkedSet.delete(key);
-              halfCheckedSet.delete(key);
-          }
-          else {
-              // 若节点的子节点部分选中，则节点从 checkedSet 中剔除，添加到 halfCheckedSet 中。
-              checkedSet.delete(key);
-              halfCheckedSet.add(key);
-          }
-          var parentKey = parentMap.get(key);
-          if (parentKey) {
-              processCheckedKeys(nodeMap.get(parentKey), parentKey);
-          }
-      };
-      // 遍历所有的节点，检查并处理。
-      nodeMap.forEach(function (node, key) {
-          processCheckedKeys(node, key);
-      });
-      var newCheckedKeys = Array.from(checkedSet);
-      var newHalfCheckedKeys = Array.from(halfCheckedSet);
-      return {
-          nodeMap: nodeMap,
-          parentMap: parentMap,
-          checkedKeys: newCheckedKeys.length ? newCheckedKeys : undefined,
-          halfCheckedKeys: newHalfCheckedKeys.length ? newHalfCheckedKeys : undefined,
-      };
-  }
-  /**
-   * 生成 table columns 数组
-   * @example
-   * const fields = [
-   *   { label: 'Name', value: 'name' },
-   *   { label: 'Email', key: 'email' },
-   *   { label: 'Age' },
-   * ];
-   * const columns = getTableColumns(fields);
-   * console.log(columns);
-   * // Output: [
-   * //   { title: 'Name', dataIndex: 'name', key: 'name', label: 'Name', value: 'name' },
-   * //   { title: 'Email', dataIndex: 'email', key: 'email', label: 'Email' },
-   * //   { title: 'Age', dataIndex: 'Age', key: 'Age', label: 'Age' },
-   * // ]
-   * @param fields 基础数据
-   * @returns
-   * @category Others-TableColumns
-   */
-  function getTableColumns(fields) {
-      return fields.map(function (field) {
-          var dataIndex = field.dataIndex, title = field.title, label = field.label, value = field.value, key = field.key;
-          var myKey = dataIndex || value || key || title || label;
-          if (!myKey) {
-              console.warn('Warning: At least one of "dataIndex", "value", "key", "title", or "label" must be provided.');
-          }
-          return __assign(__assign({}, field), { title: title || label || '', dataIndex: myKey, key: myKey });
-      });
-  }
-  /**
-   * 播放音频
-   * @param input 声音类型或者音频文件路径
-   * @example
-   * playAudio('path/to/custom.mp3');
-   * @returns
-   * @category Others-音频
-   */
-  function playAudio(input) {
-      var audioPath = input;
-      if (!audioPath) {
-          console.error('No valid audio file path provided.');
-          return;
-      }
-      var mp3 = new Audio(audioPath);
-      mp3.play().catch(function (error) {
-          console.error('Failed to play audio:', error);
-      });
-  }
-  /**
-   * 生成 Mock 模拟数据的方法
-   * @param type 要生成的数据类型
-   * @param options 生成数据的选项
-   * @example
-   * getMockData('string', { length: 10 }); /// "aB3dE6gH1j"
-   * getMockData('number', { min: 10, max: 100 }); /// 42
-   * getMockData('boolean'); /// true
-   * getMockData('date', { startDate: new Date(2020, 0, 1), endDate: new Date(2021, 0, 1) }); /// "2020-06-15 12:34:56"
-   * getMockData('date', { format: false }); /// Date object
-   * getMockData('object', { objectKeys: { name: 'string', age: 'number', birthDate: { type: 'date', options: { format: 'yyyy/mm/dd' } } } }); /// { name: "aBc", age: 25, birthDate: "1995/05/17" }
-   * getMockData('array', { length: 5, arrayTypes: ['string', 'number'] }); /// [ "aB3", 42, "xYz", 7, "MN1" ]
-   * getMockData('array', { length: 5, objectKeys: { name: 'string', age: 'number', birthDate: { type: 'date', options: { format: 'yyyy/mm/dd' } } } }); /// [{ name: "aBc", age: 25, birthDate: "1995/05/17" } * 5 ......]
-   * getMockData('array', { length: 5, arrayTypes: [{ type: 'object', objectKeys: { name: 'string', age: 'number', birthDate: { type: 'date', options: { format: 'yyyy/mm/dd' } } } }] }); /// [{ name: "aBc", age: 25, birthDate: "1995/05/17" } * 5 ......]
-   * getMockData('array', { length: 10, arrayTypes: ['string', { type: 'number', options: { min: 10, max: 100 } }, { type: 'date', options: { format: 'yyyy/mm/dd' } }] }); /// [47, 49, 'uCp1bxDo', '2003/05/14', 'MUQSOf0W', '2011/07/01', 'nDYZD4Lu', 'YFSCEQvV', '2021/06/03', '1yaIgwhh']
-   * @returns
-   * @category Others-Mock&模拟数据
-   */
-  function getMockData(type, options) {
-      if (options === void 0) { options = {}; }
-      // 内部方法用于生成随机字符串
-      function _randomString(length) {
-          var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-          var result = '';
-          for (var i = 0; i < length; i++) {
-              result += chars.charAt(Math.floor(Math.random() * chars.length));
-          }
-          return result;
-      }
-      // 内部方法用于生成随机数字
-      function _randomNumber(min, max) {
-          return Math.floor(Math.random() * (max - min + 1)) + min;
-      }
-      // 内部方法用于生成随机布尔值
-      function _randomBoolean() {
-          return Math.random() >= 0.5;
-      }
-      // 内部方法用于生成随机日期
-      function _randomDate(startDate, endDate, format) {
-          if (startDate === void 0) { startDate = new Date(2000, 0, 1); }
-          if (endDate === void 0) { endDate = new Date(); }
-          var date = new Date(startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime()));
-          return format === false ? date : formatDate(date, format || 'yyyy-mm-dd hh:ii:ss');
-      }
-      // 内部方法用于生成随机数组
-      function _randomArray(length, types, objectKeys) {
-          return Array.from({ length: length }, function () {
-              var randomType = types[Math.floor(Math.random() * types.length)];
-              if (typeof randomType === 'string') {
-                  return getMockData(randomType);
-              }
-              else if (typeof randomType === 'object') {
-                  return getMockData(randomType.type, randomType.options);
-              }
-              else if (objectKeys) {
-                  return _randomObject(objectKeys);
-              }
-          });
-      }
-      // 内部方法用于生成随机对象
-      function _randomObject(keys) {
-          var obj = {};
-          for (var key in keys) {
-              var valueType = keys[key];
-              if (typeof valueType === 'string') {
-                  obj[key] = getMockData(valueType);
-              }
-              else if (typeof valueType === 'object') {
-                  obj[key] = getMockData(valueType.type, valueType.options);
-              }
-          }
-          return obj;
-      }
-      // 根据数据类型生成相应的随机数据
-      switch (type) {
-          case 'string':
-              return _randomString(options.length || 8);
-          case 'number':
-              return _randomNumber(options.min || 0, options.max || 100);
-          case 'boolean':
-              return _randomBoolean();
-          case 'date':
-              return _randomDate(options.startDate, options.endDate, options.format);
-          case 'array':
-              return _randomArray(options.length || 5, options.arrayTypes || ['string'], options.objectKeys);
-          case 'object':
-              return _randomObject(options.objectKeys || { key: 'string', id: 'number', active: 'boolean' });
-          case 'null':
-              return null;
-          case 'undefined':
-              return undefined;
-          default:
-              throw new Error("Unsupported data type: ".concat(type));
-      }
-  }
 
   /*
    * @Author: HxB
@@ -17813,7 +17863,8 @@ var $xxx = (function (exports) {
   exports.getDayInYear = getDayInYear;
   exports.getDecodeStorage = getDecodeStorage;
   exports.getDefaultLang = getDefaultLang;
-  exports.getFileNameFromUrl = getFileNameFromUrl;
+  exports.getFileNameFromStr = getFileNameFromStr;
+  exports.getFileType = getFileType;
   exports.getFingerprint = getFingerprint;
   exports.getFirstVar = getFirstVar;
   exports.getKey = getKey;
@@ -18002,6 +18053,7 @@ var $xxx = (function (exports) {
   exports.transferIdCard = transferIdCard;
   exports.transferMoney = transferMoney;
   exports.transferNumber = transferNumber;
+  exports.transferQueryParams = transferQueryParams;
   exports.transferScanStr = transferScanStr;
   exports.transferSeconds = transferSeconds;
   exports.transferTemperature = transferTemperature;

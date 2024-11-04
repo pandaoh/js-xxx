@@ -1,8 +1,8 @@
-[**js-xxx v2.2.25**](../README.md) • **Docs**
+[**js-xxx v2.2.26**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.25](../README.md) / BLOOD\_GROUP
+[js-xxx v2.2.26](../README.md) / BLOOD\_GROUP
 
 # Variable: BLOOD\_GROUP
 

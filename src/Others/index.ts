@@ -3,14 +3,13 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:53:39
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-08-27 12:23:32
+ * @LastEditTime: 2024-11-04 17:54:21
  * @Description: 因项目需要常用函数，不管任何项目，都放到一起。注意甄别，没有复用意义的函数就不要添加了。
  * @FilePath: \js-xxx\src\Others\index.ts
  */
 
 import { formatDate } from '@/Date';
 import { isUrl, trim } from '@/String';
-import { download } from '@/Dom';
 import { getContentType, safeEncodeURI } from '@/Request';
 import { BLOOD_GROUP_INFO } from '@/Data';
 import { getV } from '@/Object';
@@ -83,24 +82,6 @@ function _isValidCronField(field: any, min: any, max: any): boolean {
   }
 
   return parseInt(field) >= min && parseInt(field) <= max;
-}
-
-/**
- * 文件大小格式化
- * @example
- * formatBytes(1024); /// '1.00 KB'
- * @param bytes 文件大小 bytes
- * @param precision 精度
- * @returns
- * @category Others-业务/其他
- */
-export function formatBytes(bytes: number, precision = 2): string {
-  const units: string[] = ['B', 'KB', 'MB', 'GB', 'TB'];
-  let pow = Math.floor((bytes ? Math.log(bytes) : 0) / Math.log(1024));
-  pow = Math.min(pow, units.length - 1);
-  bytes /= 1 << (10 * pow);
-  const unit = units?.[pow] ?? units[0];
-  return bytes.toFixed(precision) + ' ' + unit;
 }
 
 /**
@@ -618,60 +599,11 @@ export function log(...args: any[]): string {
  * @param value 值
  * @param defaultValue 默认值
  * @returns
- * @category Tools-下载/文件相关
+ * @category Tools-字符串相关
  */
 export function forceToStr(value: any, defaultValue = '-'): string {
   // \t \u200c u200d 也可以
   return `\u200b${value ?? defaultValue ?? '-'}`;
-}
-
-/**
- * 转换 data 为可导出的 csv 数据
- * @example
- * transferCSVData([{ prop: 'name' }, { prop: 'age' }], [{ name: '张三', age: 15 }]); /// 可以导出的字符数据
- * transferCSVData([{ label: '姓名', prop: 'name' }, { label: '年龄', prop: 'age' }], [{ name: '张三', age: 15 }]); /// 可以导出的字符数据
- * @param fields 导出的栏位
- * @param data 数据
- * @returns
- * @category Tools-下载/文件相关
- */
-export function transferCSVData(fields: { label?: string; prop: string }[], data: any[]): string {
-  const keys = fields.map((field) => field.prop);
-  let result = `${fields.map((field) => forceToStr(field.label ?? field.prop ?? 'unknown')).join(',')}\n`;
-  for (let i = 0; i < data.length; i++) {
-    const item = data[i] ?? {};
-    result += keys.map((key) => forceToStr(item[key])).join(',') + '\n';
-  }
-  return result;
-}
-
-// eslint-disable-next-line spellcheck/spell-checker
-/**
- * 导出数据为文件
- * @example
- * exportFile(data); /// 导出 txt 文件
- * exportFile(data, 'csv-导出文件测试', 'csv'); /// 导出 csv 文件
- * exportFile(document.getElementById('table_to_xls').outerHTML, 'excelWithStyle', 'xls'); /// 导出表格为带样式的 excel xls 文件
- * exportFile('http://a.biugle.cn/img/cdn/dev/avatar/1.png', 'test', 'png'); /// 导出 png 文件
- * @param data 数据
- * @param fileName 文件名
- * @param fileType 文件类型
- * @returns
- * @category Tools-下载/文件相关
- */
-export function exportFile(data: string, fileName?: string, fileType = 'txt'): void {
-  if (isUrl(data)) {
-    // eslint-disable-next-line spellcheck/spell-checker
-    download(data, `${fileName ?? formatDate(new Date(), 'yyyy-mm-dd-hhiiss')}.${fileType}`);
-    return;
-  }
-  // 加入特殊字符确保 utf-8
-  // eslint-disable-next-line spellcheck/spell-checker
-  const uri = `data:${getContentType(fileType)};charset=utf-8,\ufeff${safeEncodeURI(data)}`;
-  // U+FEFF 是一个零宽度非断字符（Zero Width No-Break Space），也称为“字节顺序标记（Byte Order Mark，BOM）”。
-  // eslint-disable-next-line spellcheck/spell-checker
-  download(uri, `${fileName ?? formatDate(new Date(), 'yyyy-mm-dd-hhiiss')}.${fileType}`);
-  // downloadContent 可以兼容落后浏览器的情况
 }
 
 /**

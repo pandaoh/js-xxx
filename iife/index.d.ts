@@ -5,6 +5,7 @@ export * from './Crypto';
 export * from './Data';
 export * from './Date';
 export * from './Dom';
+export * from './File';
 export * from './Form';
 export * from './Math';
 export * from './Notify';

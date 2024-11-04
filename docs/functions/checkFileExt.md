@@ -1,8 +1,8 @@
-[**js-xxx v2.2.25**](../README.md) • **Docs**
+[**js-xxx v2.2.26**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.25](../README.md) / checkFileExt
+[js-xxx v2.2.26](../README.md) / checkFileExt
 
 # Function: checkFileExt()
 
@@ -26,5 +26,6 @@
 
 ```ts
 checkFileExt(['png', 'jpg'], 'test.jpg'); /// true
+checkFileExt(['png', 'jpg'], 'test.JPG'); /// true
 checkFileExt(['png', 'jpg'], 'test.jpg.txt'); /// false
 ```

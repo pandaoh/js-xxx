@@ -1,14 +1,4 @@
 /**
- * 文件大小格式化
- * @example
- * formatBytes(1024); /// '1.00 KB'
- * @param bytes 文件大小 bytes
- * @param precision 精度
- * @returns
- * @category Others-业务/其他
- */
-export declare function formatBytes(bytes: number, precision?: number): string;
-/**
  * 获取浏览器信息
  * @example
  * getUserAgent(); /// { browserName: 'Chrome', browserVersion: '102.0.0.0', osName: 'Windows', osVersion: '10.0', deviceName: '' }
@@ -195,37 +185,9 @@ export declare function log(...args: any[]): string;
  * @param value 值
  * @param defaultValue 默认值
  * @returns
- * @category Tools-下载/文件相关
+ * @category Tools-字符串相关
  */
 export declare function forceToStr(value: any, defaultValue?: string): string;
-/**
- * 转换 data 为可导出的 csv 数据
- * @example
- * transferCSVData([{ prop: 'name' }, { prop: 'age' }], [{ name: '张三', age: 15 }]); /// 可以导出的字符数据
- * transferCSVData([{ label: '姓名', prop: 'name' }, { label: '年龄', prop: 'age' }], [{ name: '张三', age: 15 }]); /// 可以导出的字符数据
- * @param fields 导出的栏位
- * @param data 数据
- * @returns
- * @category Tools-下载/文件相关
- */
-export declare function transferCSVData(fields: {
-    label?: string;
-    prop: string;
-}[], data: any[]): string;
-/**
- * 导出数据为文件
- * @example
- * exportFile(data); /// 导出 txt 文件
- * exportFile(data, 'csv-导出文件测试', 'csv'); /// 导出 csv 文件
- * exportFile(document.getElementById('table_to_xls').outerHTML, 'excelWithStyle', 'xls'); /// 导出表格为带样式的 excel xls 文件
- * exportFile('http://a.biugle.cn/img/cdn/dev/avatar/1.png', 'test', 'png'); /// 导出 png 文件
- * @param data 数据
- * @param fileName 文件名
- * @param fileType 文件类型
- * @returns
- * @category Tools-下载/文件相关
- */
-export declare function exportFile(data: string, fileName?: string, fileType?: string): void;
 /**
  * 华氏/摄氏度互转
  * @example
