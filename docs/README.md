@@ -93,6 +93,23 @@
 - [logRunTime](functions/logRunTime.md)
 - [showVar](functions/showVar.md)
 
+## File-文件相关
+
+- [checkFileExt](functions/checkFileExt.md)
+- [download](functions/download.md)
+- [downloadContent](functions/downloadContent.md)
+- [downloadFile](functions/downloadFile.md)
+- [downloadImg](functions/downloadImg.md)
+- [exportFile](functions/exportFile.md)
+- [formatBytes](functions/formatBytes.md)
+- [getFileNameFromStr](functions/getFileNameFromStr.md)
+- [getFileType](functions/getFileType.md)
+- [openFileSelect](functions/openFileSelect.md)
+- [openPreviewFile](functions/openPreviewFile.md)
+- [saveAs](functions/saveAs.md)
+- [transferCSVData](functions/transferCSVData.md)
+- [transferFileToBase64](functions/transferFileToBase64.md)
+
 ## Form-表单相关
 
 - [formDataToObject](functions/formDataToObject.md)
@@ -181,7 +198,6 @@
 - [calcCron](functions/calcCron.md)
 - [checkVersion](functions/checkVersion.md)
 - [compareTo](functions/compareTo.md)
-- [formatBytes](functions/formatBytes.md)
 - [formatRh](functions/formatRh.md)
 - [getBloodGroup](functions/getBloodGroup.md)
 - [getDataStr](functions/getDataStr.md)
@@ -252,7 +268,6 @@
 ## String-字符串
 
 - [addSpace](functions/addSpace.md)
-- [checkFileExt](functions/checkFileExt.md)
 - [checkPassWordLevel](functions/checkPassWordLevel.md)
 - [getPinYin](functions/getPinYin.md)
 - [hasSpecialChar](functions/hasSpecialChar.md)
@@ -298,21 +313,6 @@
 - [Toast](functions/Toast.md)
 - [hideToast](functions/hideToast.md)
 - [showToast](functions/showToast.md)
-
-## Tools-下载/文件相关
-
-- [download](functions/download.md)
-- [downloadContent](functions/downloadContent.md)
-- [downloadFile](functions/downloadFile.md)
-- [downloadImg](functions/downloadImg.md)
-- [exportFile](functions/exportFile.md)
-- [getFileNameFromStr](functions/getFileNameFromStr.md)
-- [getFileType](functions/getFileType.md)
-- [openFileSelect](functions/openFileSelect.md)
-- [openPreviewFile](functions/openPreviewFile.md)
-- [saveAs](functions/saveAs.md)
-- [transferCSVData](functions/transferCSVData.md)
-- [transferFileToBase64](functions/transferFileToBase64.md)
 
 ## Tools-事件相关
 

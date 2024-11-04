@@ -23,7 +23,7 @@ import { isUrl } from '@/String';
  * getFileType('document'); // 'unknown'
  * @param str 字符串（URL 、路径或文件名）。
  * @returns 文件类型（小写格式）
- * @category Tools-下载/文件相关
+ * @category File-文件相关
  */
 export function getFileType(str: string): string {
   return str.match(/[^\/]*\.(\w+)(?:\?.*)?$/i)?.[1]?.toLowerCase() || 'unknown';
@@ -45,7 +45,7 @@ export function getFileType(str: string): string {
  * @param str 字符串（URL 、路径或文件名）。
  * @param keepExt 可选。如果为 true，则返回包含文件扩展名的完整文件名，若无扩展名则使用 `.unknown`。
  * @returns 文件名（带或不带扩展名）
- * @category Tools-下载/文件相关
+ * @category File-文件相关
  */
 export function getFileNameFromStr(str: string, keepExt = false): string {
   const ext = getFileType(str);
@@ -63,7 +63,7 @@ export function getFileNameFromStr(str: string, keepExt = false): string {
  * checkFileExt(['png', 'jpg'], 'test.jpg.txt'); /// false
  * @param value 字符串值
  * @returns
- * @category String-字符串
+ * @category File-文件相关
  */
 export function checkFileExt(arr: string[], value: string): boolean {
   const regFileExt = arr.map((name) => `.${name}`).join('|');
@@ -78,7 +78,7 @@ export function checkFileExt(arr: string[], value: string): boolean {
  * openFileSelect({ multiple: true, accept: '.txt', resultType: 'base64' }).then(fileDataUrlList => console.log(fileDataUrlList));
  * @param options 打开配置
  * @returns
- * @category Tools-下载/文件相关
+ * @category File-文件相关
  */
 export function openFileSelect(options?: {
   accept?: string;
@@ -191,7 +191,7 @@ export function openFileSelect(options?: {
  * @param blob 要保存的 Blob 对象。
  * @param filename 可选。保存的文件名。
  * @returns
- * @category Tools-下载/文件相关
+ * @category File-文件相关
  */
 export function saveAs(blob: Blob, filename?: string) {
   const url = window.URL || window.webkitURL;
@@ -218,7 +218,7 @@ export function saveAs(blob: Blob, filename?: string) {
  * @param url 图片的 URL 地址。
  * @param fileName 可选。下载的文件名。
  * @returns
- * @category Tools-下载/文件相关
+ * @category File-文件相关
  */
 export function downloadImg(url: string, fileName?: string) {
   if (!url || !url.startsWith('http')) {
@@ -272,7 +272,7 @@ export function downloadImg(url: string, fileName?: string) {
  * @param url 文件的 URL 地址。
  * @param fileName 可选。下载的文件名，默认为 URL 中的文件名。
  * @returns
- * @category Tools-下载/文件相关
+ * @category File-文件相关
  */
 export function downloadFile(url: string, fileName?: string) {
   const ext = fileName?.match(/[^\/]*\.(\w+)(?:\?.*)?$/)?.[1] || url.match(/[^\/]*\.(\w+)(?:\?.*)?$/)?.[1] || 'txt';
@@ -305,7 +305,7 @@ export function downloadFile(url: string, fileName?: string) {
  * openPreviewFile('https://example.com/path/to/otherfile.zip'); // 将直接打开链接
  * @param url 要预览的 URL 地址。
  * @returns
- * @category Tools-下载/文件相关
+ * @category File-文件相关
  */
 export function openPreviewFile(url: string, serviceUrl: string): void {
   const urlMap = new Map<RegExp, (url: string) => void>()
@@ -346,7 +346,7 @@ export function openPreviewFile(url: string, serviceUrl: string): void {
  * @param contentType 内容类型
  * @param callBack 回调函数
  * @returns
- * @category Tools-下载/文件相关
+ * @category File-文件相关
  */
 export function transferFileToBase64(content: any, contentType: string, callBack: any): void {
   const blob = new Blob([content], {
@@ -370,7 +370,7 @@ export function transferFileToBase64(content: any, contentType: string, callBack
  * @param link 链接
  * @param name 文件名称(可选，默认以链接最好一段作为名称，填写时可不带后缀自动识别，写了后缀会以写的后缀为准。)
  * @returns
- * @category Tools-下载/文件相关
+ * @category File-文件相关
  */
 export function download(link: string, name: string) {
   if (!name) {
@@ -393,7 +393,7 @@ export function download(link: string, name: string) {
  * @param name 文件名称(需带后缀)，默认 txt 。
  * @param content 内容 BlobPart | any
  * @returns
- * @category Tools-下载/文件相关
+ * @category File-文件相关
  */
 export function downloadContent(name: string, content: any) {
   if (!name) {
@@ -421,7 +421,7 @@ export function downloadContent(name: string, content: any) {
  * @param fields 导出的栏位
  * @param data 数据
  * @returns
- * @category Tools-下载/文件相关
+ * @category File-文件相关
  */
 export function transferCSVData(fields: { label?: string; prop: string }[], data: any[]): string {
   const keys = fields.map((field) => field.prop);
@@ -445,7 +445,7 @@ export function transferCSVData(fields: { label?: string; prop: string }[], data
  * @param fileName 文件名
  * @param fileType 文件类型
  * @returns
- * @category Tools-下载/文件相关
+ * @category File-文件相关
  */
 export function exportFile(data: string, fileName?: string, fileType = 'txt'): void {
   if (isUrl(data)) {
@@ -468,7 +468,7 @@ export function exportFile(data: string, fileName?: string, fileType = 'txt'): v
  * @param bytes 文件大小 bytes
  * @param precision 精度
  * @returns
- * @category Others-业务/其他
+ * @category File-文件相关
  */
 export function formatBytes(bytes: number, precision = 2): string {
   const units: string[] = ['B', 'KB', 'MB', 'GB', 'TB'];

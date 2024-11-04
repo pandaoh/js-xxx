@@ -15608,7 +15608,7 @@ function transferQueryParams(obj, emptyValue) {
  * getFileType('document'); // 'unknown'
  * @param str 字符串（URL 、路径或文件名）。
  * @returns 文件类型（小写格式）
- * @category Tools-下载/文件相关
+ * @category File-文件相关
  */
 function getFileType(str) {
     var _a, _b;
@@ -15630,7 +15630,7 @@ function getFileType(str) {
  * @param str 字符串（URL 、路径或文件名）。
  * @param keepExt 可选。如果为 true，则返回包含文件扩展名的完整文件名，若无扩展名则使用 `.unknown`。
  * @returns 文件名（带或不带扩展名）
- * @category Tools-下载/文件相关
+ * @category File-文件相关
  */
 function getFileNameFromStr(str, keepExt) {
     var _a;
@@ -15649,7 +15649,7 @@ function getFileNameFromStr(str, keepExt) {
  * checkFileExt(['png', 'jpg'], 'test.jpg.txt'); /// false
  * @param value 字符串值
  * @returns
- * @category String-字符串
+ * @category File-文件相关
  */
 function checkFileExt(arr, value) {
     var regFileExt = arr.map(function (name) { return ".".concat(name); }).join('|');
@@ -15663,7 +15663,7 @@ function checkFileExt(arr, value) {
  * openFileSelect({ multiple: true, accept: '.txt', resultType: 'base64' }).then(fileDataUrlList => console.log(fileDataUrlList));
  * @param options 打开配置
  * @returns
- * @category Tools-下载/文件相关
+ * @category File-文件相关
  */
 function openFileSelect(options) {
     var _this = this;
@@ -15772,7 +15772,7 @@ function openFileSelect(options) {
  * @param blob 要保存的 Blob 对象。
  * @param filename 可选。保存的文件名。
  * @returns
- * @category Tools-下载/文件相关
+ * @category File-文件相关
  */
 function saveAs(blob, filename) {
     var url = window.URL || window.webkitURL;
@@ -15798,7 +15798,7 @@ function saveAs(blob, filename) {
  * @param url 图片的 URL 地址。
  * @param fileName 可选。下载的文件名。
  * @returns
- * @category Tools-下载/文件相关
+ * @category File-文件相关
  */
 function downloadImg(url, fileName) {
     if (!url || !url.startsWith('http')) {
@@ -15847,7 +15847,7 @@ function downloadImg(url, fileName) {
  * @param url 文件的 URL 地址。
  * @param fileName 可选。下载的文件名，默认为 URL 中的文件名。
  * @returns
- * @category Tools-下载/文件相关
+ * @category File-文件相关
  */
 function downloadFile(url, fileName) {
     var _a, _b, _c;
@@ -15878,7 +15878,7 @@ function downloadFile(url, fileName) {
  * openPreviewFile('https://example.com/path/to/otherfile.zip'); // 将直接打开链接
  * @param url 要预览的 URL 地址。
  * @returns
- * @category Tools-下载/文件相关
+ * @category File-文件相关
  */
 function openPreviewFile(url, serviceUrl) {
     var urlMap = new Map()
@@ -15913,7 +15913,7 @@ function openPreviewFile(url, serviceUrl) {
  * @param contentType 内容类型
  * @param callBack 回调函数
  * @returns
- * @category Tools-下载/文件相关
+ * @category File-文件相关
  */
 function transferFileToBase64(content, contentType, callBack) {
     var blob = new Blob([content], {
@@ -15936,7 +15936,7 @@ function transferFileToBase64(content, contentType, callBack) {
  * @param link 链接
  * @param name 文件名称(可选，默认以链接最好一段作为名称，填写时可不带后缀自动识别，写了后缀会以写的后缀为准。)
  * @returns
- * @category Tools-下载/文件相关
+ * @category File-文件相关
  */
 function download(link, name) {
     if (!name) {
@@ -15958,7 +15958,7 @@ function download(link, name) {
  * @param name 文件名称(需带后缀)，默认 txt 。
  * @param content 内容 BlobPart | any
  * @returns
- * @category Tools-下载/文件相关
+ * @category File-文件相关
  */
 function downloadContent(name, content) {
     if (!name) {
@@ -15986,7 +15986,7 @@ function downloadContent(name, content) {
  * @param fields 导出的栏位
  * @param data 数据
  * @returns
- * @category Tools-下载/文件相关
+ * @category File-文件相关
  */
 function transferCSVData(fields, data) {
     var _a;
@@ -16013,7 +16013,7 @@ function transferCSVData(fields, data) {
  * @param fileName 文件名
  * @param fileType 文件类型
  * @returns
- * @category Tools-下载/文件相关
+ * @category File-文件相关
  */
 function exportFile(data, fileName, fileType) {
     if (fileType === void 0) { fileType = 'txt'; }
@@ -16037,7 +16037,7 @@ function exportFile(data, fileName, fileType) {
  * @param bytes 文件大小 bytes
  * @param precision 精度
  * @returns
- * @category Others-业务/其他
+ * @category File-文件相关
  */
 function formatBytes(bytes, precision) {
     var _a;
