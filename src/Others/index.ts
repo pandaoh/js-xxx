@@ -1045,7 +1045,7 @@ export function getTableColumns(
 
 /**
  * 播放音频
- * @param input 声音类型或者音频文件路径
+ * @param input 声音类型或者音频路径
  * @example
  * playAudio('path/to/custom.mp3');
  * @returns
