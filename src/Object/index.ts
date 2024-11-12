@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:05:14
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-05-30 15:00:39
+ * @LastEditTime: 2024-11-12 17:00:25
  * @Description: 对象相关函数
  * @FilePath: \js-xxx\src\Object\index.ts
  */
@@ -242,3 +242,33 @@ export function arr2select(arr: any[], options: { label?: string; value: string;
 
   return selectData;
 }
+
+/**
+ * 获取对象中的多个值，支持为空时使用默认值。
+ * @param obj 需要获取值的对象
+ * @param keys 要获取的键数组，支持多级别。
+ * @param defaultValue 默认值，当对象中不存在某个键时，使用该值替换。
+ * @returns 返回包含键值对的结果对象
+ * @example
+ * getObjectValue({ a: 1, b: null, c: undefined, d: '' }, ['a', 'b', 'c', 'd', 'e']);
+ * // 返回: { a: 1, b: null, c: 0, d: undefined, e: undefined }
+
+ * getObjectValue({ a: 1, b: null, c: undefined, d: '' }, ['a', 'b', 'c', 'd', 'e'], 0);
+ * // 返回: { a: 1, b: null, c: 0, d: '', e: 0 }
+ *
+ * getObjectValue({ a: 1, b: undefined, c: { d: 'test' } }, ['a', 'b', 'c.d'], 'default');
+ * // 返回: { a: 1, b: 'default', d: 'test' }
+
+ * getObjectValue({ a: 1, b: undefined, c: { d: 'test', e: [0] } }, ['a', 'b', 'c.d', 'c.e.0'], 'default');
+ * // 返回: { a: 1, b: 'default', c.d: 'test', 'c.e.0': 0 }
+ * @category Others-业务/其他
+ */
+export const getObjectValue = (obj: any = {}, keys: string[], defaultValue?: any) => {
+  const results: any = {};
+
+  keys?.forEach((key) => {
+    results[key] = getV(defaultValue, obj, key);
+  });
+
+  return results;
+};

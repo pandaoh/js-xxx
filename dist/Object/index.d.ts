@@ -86,4 +86,25 @@ export declare function arr2select(arr: any[], options: {
     value: string;
     key?: string;
 }): any[];
+/**
+ * 获取对象中的多个值，支持为空时使用默认值。
+ * @param obj 需要获取值的对象
+ * @param keys 要获取的键数组，支持多级别。
+ * @param defaultValue 默认值，当对象中不存在某个键时，使用该值替换。
+ * @returns 返回包含键值对的结果对象
+ * @example
+ * getObjectValue({ a: 1, b: null, c: undefined, d: '' }, ['a', 'b', 'c', 'd', 'e']);
+ * // 返回: { a: 1, b: null, c: 0, d: undefined, e: undefined }
+
+ * getObjectValue({ a: 1, b: null, c: undefined, d: '' }, ['a', 'b', 'c', 'd', 'e'], 0);
+ * // 返回: { a: 1, b: null, c: 0, d: '', e: 0 }
+ *
+ * getObjectValue({ a: 1, b: undefined, c: { d: 'test' } }, ['a', 'b', 'c.d'], 'default');
+ * // 返回: { a: 1, b: 'default', d: 'test' }
+
+ * getObjectValue({ a: 1, b: undefined, c: { d: 'test', e: [0] } }, ['a', 'b', 'c.d', 'c.e.0'], 'default');
+ * // 返回: { a: 1, b: 'default', c.d: 'test', 'c.e.0': 0 }
+ * @category Others-业务/其他
+ */
+export declare const getObjectValue: (obj: any, keys: string[], defaultValue?: any) => any;
 //# sourceMappingURL=index.d.ts.map

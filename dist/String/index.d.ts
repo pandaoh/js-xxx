@@ -455,7 +455,7 @@ export declare function rightJoin(str: string | number, length?: string | number
  */
 export declare function loadStr(str: string, params: any, emptyStr?: string): string;
 /**
- * 将输入字符串分割为字符串列表，基于换行符、回车符和可选的空格
+ * 将输入字符串分割为字符串列表，基于换行符、回车符和可选的空格。
  * @param str 要处理的输入字符串
  * @param separatorIncludesSpace 默认 false，是否将空格作为分隔符之一
  * @example
