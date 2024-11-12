@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:53:39
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-11-12 16:36:39
+ * @LastEditTime: 2024-11-12 17:08:29
  * @Description: 因项目需要常用函数，不管任何项目，都放到一起。注意甄别，没有复用意义的函数就不要添加了。
  * @FilePath: \js-xxx\src\Others\index.ts
  */
@@ -664,11 +664,8 @@ export function getDataStr(value: any, defaultValue = '-', prefix = '', suffix =
  * @param replacement 替换值，默认为 `undefined`，如果传入值则替换为该值。
  * @returns
  * @example
- * clearObject({ a: 1, b: null, c: undefined, d: '', e: '   ' });
- * // 返回: { a: 1 }
- *
- * clearObject({ a: 1, b: null, c: undefined, d: '', e: '   ' }, '');
- * // 返回: { a: 1, b: '', c: '', d: '', e: '' }
+ * clearObject({ a: 1, b: null, c: undefined, d: '', e: '   ' }); /// 返回: { a: 1 }
+ * clearObject({ a: 1, b: null, c: undefined, d: '', e: '   ' }, ''); /// 返回: { a: 1, b: '', c: '', d: '', e: '' }
  * @category Others-业务/其他
  */
 export function clearObject(obj: any, replacement?: any) {

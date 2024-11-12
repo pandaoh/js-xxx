@@ -977,19 +977,15 @@ export function loadStr(str: string, params: any, emptyStr?: string): string {
  * @param separatorIncludesSpace 默认 false，是否将空格作为分隔符之一
  * @example
  * splitString("Hello world\nThis is a test\nGood luck!");
- * // 返回: ["Hello world", "This is a test", "Good luck!"]
- *
+ * /// 返回: ["Hello world", "This is a test", "Good luck!"]
  * splitString("Hello   world\nThis  is  a\ntest\nGood  luck!", true);
- * // 返回: ["Hello", "world", "This", "is", "a", "test", "Good", "luck!"]
- *
+ * /// 返回: ["Hello", "world", "This", "is", "a", "test", "Good", "luck!"]
  * splitString("Hello\n\n\nworld\n\n", false);
- * // 返回: ["Hello", "world"]
- *
+ * /// 返回: ["Hello", "world"]
  * splitString("", true);
- * // 返回: []
- *
+ * /// 返回: []
  * splitString("  ", false);
- * // 返回: []
+ * /// 返回: []
  * @returns
  * @category String-字符串
  */
