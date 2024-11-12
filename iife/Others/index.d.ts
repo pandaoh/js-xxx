@@ -215,6 +215,22 @@ export declare function transferTemperature(temperature: number | string, isCels
  */
 export declare function getDataStr(value: any, defaultValue?: string, prefix?: string, suffix?: string): string;
 /**
+ * 清理对象中的空值，将 `null` 和 `undefined` 删除或替换
+ * @param obj 需要清理的对象
+ * @param replacement 替换值，默认为 `undefined`，如果传入值则替换为该值
+ * @returns
+ * @example
+ * clearObject({ a: 1, b: null, c: undefined, d: '', e: '   ' });
+ * // 返回: { a: 1 }
+ *
+ * clearObject({ a: 1, b: null, c: undefined, d: '', e: '   ' }, '');
+ * // 返回: { a: 1, b: '', c: '', d: '', e: '' }
+ * @category Others-业务/其他
+ */
+export declare function clearObject(obj: any, replacement?: any): {
+    [k: string]: any;
+};
+/**
  * 比较两个值是否相等，支持严格模式和忽略大小写的比较。
  * @example
  * compareTo(1, 2); /// false
@@ -363,7 +379,7 @@ export declare function getTableColumns(fields: Array<{
 }>;
 /**
  * 播放音频
- * @param input 声音类型或者音频文件路径
+ * @param input 声音类型或者音频路径
  * @example
  * playAudio('path/to/custom.mp3');
  * @returns

@@ -1,8 +1,8 @@
-[**js-xxx v2.2.26**](../README.md) • **Docs**
+[**js-xxx v2.2.27**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.26](../README.md) / buf2obj
+[js-xxx v2.2.27](../README.md) / buf2obj
 
 # Function: buf2obj()
 

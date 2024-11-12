@@ -1,8 +1,8 @@
-[**js-xxx v2.2.26**](../README.md) • **Docs**
+[**js-xxx v2.2.27**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.26](../README.md) / renderTemplate
+[js-xxx v2.2.27](../README.md) / renderTemplate
 
 # Function: renderTemplate()
 
@@ -25,8 +25,6 @@
 ## Returns
 
 `string`
-
-渲染后的内容
 
 ## Example
 

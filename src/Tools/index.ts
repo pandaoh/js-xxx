@@ -4,7 +4,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-11-04 17:51:34
+ * @LastEditTime: 2024-11-12 16:27:19
  * @Description: 工具函数
  * @FilePath: \js-xxx\src\Tools\index.ts
  */
@@ -1866,7 +1866,7 @@ export function curryIt(fn: any) {
  * @link https://github.com/biugle/js-xcmd/blob/main/utils/template.js
  * @param content 原始模板内容
  * @param replacements 要替换的值-对象
- * @returns 渲染后的内容
+ * @returns
  * @category 模板渲染
  */
 export function renderTemplate(content: string, replacements: any) {

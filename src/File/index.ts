@@ -22,7 +22,7 @@ import { isUrl } from '@/String';
  * getFileType('file.JPG'); // 'jpg'
  * getFileType('document'); // 'unknown'
  * @param str 字符串（URL 、路径或文件名）。
- * @returns 文件类型（小写格式）
+ * @returns
  * @category File-文件相关
  */
 export function getFileType(str: string): string {
@@ -44,7 +44,7 @@ export function getFileType(str: string): string {
  * getFileNameFromStr('https://example.com/'); // '1691830390281' (假设当前时间为 1691830390281)
  * @param str 字符串（URL 、路径或文件名）。
  * @param keepExt 可选。如果为 true，则返回包含文件扩展名的完整文件名，若无扩展名则使用 `.unknown`。
- * @returns 文件名（带或不带扩展名）
+ * @returns
  * @category File-文件相关
  */
 export function getFileNameFromStr(str: string, keepExt = false): string {

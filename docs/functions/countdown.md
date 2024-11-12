@@ -1,8 +1,8 @@
-[**js-xxx v2.2.26**](../README.md) • **Docs**
+[**js-xxx v2.2.27**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.26](../README.md) / countdown
+[js-xxx v2.2.27](../README.md) / countdown
 
 # Function: countdown()
 

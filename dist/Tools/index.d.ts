@@ -648,7 +648,7 @@ export declare function curryIt(fn: any): (...args: any[]) => any;
  * @link https://github.com/biugle/js-xcmd/blob/main/utils/template.js
  * @param content 原始模板内容
  * @param replacements 要替换的值-对象
- * @returns 渲染后的内容
+ * @returns
  * @category 模板渲染
  */
 export declare function renderTemplate(content: string, replacements: any): string;

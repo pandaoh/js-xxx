@@ -169,7 +169,7 @@ export declare function safeDecodeURI(s: string): string;
  * /// { status: '', user: 'John', id: '', dep: { a: '', id: '' } }
  * @param obj 查询参数对象
  * @param emptyValue 可选的空值填充值，若提供则将 `null` 和 `undefined` 替换为该值
- * @returns 转换后的查询参数对象
+ * @returns
  * @category Request-请求相关
  */
 export declare function transferQueryParams(obj: Record<string, any>, emptyValue?: any): Record<string, any>;

@@ -1,8 +1,8 @@
-**js-xxx v2.2.26** • **Docs**
+**js-xxx v2.2.27** • **Docs**
 
 ***
 
-# js-xxx v2.2.26
+# js-xxx v2.2.27
 
 ## Array-数组相关
 
@@ -197,6 +197,7 @@
 
 - [calcCron](functions/calcCron.md)
 - [checkVersion](functions/checkVersion.md)
+- [clearObject](functions/clearObject.md)
 - [compareTo](functions/compareTo.md)
 - [formatRh](functions/formatRh.md)
 - [getBloodGroup](functions/getBloodGroup.md)
@@ -295,6 +296,7 @@
 - [repeat](functions/repeat.md)
 - [rightJoin](functions/rightJoin.md)
 - [slugify](functions/slugify.md)
+- [splitString](functions/splitString.md)
 - [textCamelCase](functions/textCamelCase.md)
 - [textSplitCase](functions/textSplitCase.md)
 - [textTransferCase](functions/textTransferCase.md)

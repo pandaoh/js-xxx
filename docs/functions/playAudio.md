@@ -1,8 +1,8 @@
-[**js-xxx v2.2.26**](../README.md) • **Docs**
+[**js-xxx v2.2.27**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.26](../README.md) / playAudio
+[js-xxx v2.2.27](../README.md) / playAudio
 
 # Function: playAudio()
 
@@ -14,7 +14,7 @@
 
 • **input**: `string`
 
-声音类型或者音频文件路径
+声音类型或者音频路径
 
 ## Returns
 

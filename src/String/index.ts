@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:45:48
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-11-04 17:31:11
+ * @LastEditTime: 2024-11-12 16:17:40
  * @Description: 字符串常用函数
  * @FilePath: \js-xxx\src\String\index.ts
  */
@@ -969,4 +969,39 @@ export function rightJoin(str: string | number, length: string | number = 2, cha
  */
 export function loadStr(str: string, params: any, emptyStr?: string): string {
   return str.replace(/\${([^${}]+)}/g, (match, key) => getV(emptyStr ?? '${' + trim(key) + '}', params, trim(key)));
+}
+
+/**
+ * 将输入字符串分割为字符串列表，基于换行符、回车符和可选的空格
+ * @param str 要处理的输入字符串
+ * @param separatorIncludesSpace 默认 false，是否将空格作为分隔符之一
+ * @example
+ * splitString("Hello world\nThis is a test\nGood luck!");
+ * // 返回: ["Hello world", "This is a test", "Good luck!"]
+ *
+ * splitString("Hello   world\nThis  is  a\ntest\nGood  luck!", true);
+ * // 返回: ["Hello", "world", "This", "is", "a", "test", "Good", "luck!"]
+ *
+ * splitString("Hello\n\n\nworld\n\n", false);
+ * // 返回: ["Hello", "world"]
+ *
+ * splitString("", true);
+ * // 返回: []
+ *
+ * splitString("  ", false);
+ * // 返回: []
+ * @returns
+ * @category String-字符串
+ */
+export function splitString(str: string, separatorIncludesSpace = false) {
+  // 空值检查
+  if (typeof str !== 'string' || !str || !str.trim()) return [];
+
+  // 分隔符正则表达式
+  const separators = separatorIncludesSpace ? /[\s\r\n]+/ : /[\r\n]+/;
+
+  return str
+    .split(separators)
+    .map((s) => s.trim())
+    .filter(Boolean);
 }

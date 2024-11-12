@@ -1,8 +1,8 @@
-[**js-xxx v2.2.26**](../README.md) • **Docs**
+[**js-xxx v2.2.27**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.26](../README.md) / str2unicode
+[js-xxx v2.2.27](../README.md) / str2unicode
 
 # Function: str2unicode()
 

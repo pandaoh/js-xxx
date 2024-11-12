@@ -1,8 +1,8 @@
-[**js-xxx v2.2.26**](../README.md) • **Docs**
+[**js-xxx v2.2.27**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.26](../README.md) / checkFileExt
+[js-xxx v2.2.27](../README.md) / checkFileExt
 
 # Function: checkFileExt()
 

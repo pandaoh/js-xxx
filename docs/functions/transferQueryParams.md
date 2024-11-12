@@ -1,8 +1,8 @@
-[**js-xxx v2.2.26**](../README.md) • **Docs**
+[**js-xxx v2.2.27**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.26](../README.md) / transferQueryParams
+[js-xxx v2.2.27](../README.md) / transferQueryParams
 
 # Function: transferQueryParams()
 
@@ -27,8 +27,6 @@
 ## Returns
 
 `Record`\<`string`, `any`\>
-
-转换后的查询参数对象
 
 ## Example
 

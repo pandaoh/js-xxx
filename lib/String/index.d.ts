@@ -454,4 +454,27 @@ export declare function rightJoin(str: string | number, length?: string | number
  * @category String-字符串
  */
 export declare function loadStr(str: string, params: any, emptyStr?: string): string;
+/**
+ * 将输入字符串分割为字符串列表，基于换行符、回车符和可选的空格
+ * @param str 要处理的输入字符串
+ * @param separatorIncludesSpace 默认 false，是否将空格作为分隔符之一
+ * @example
+ * splitString("Hello world\nThis is a test\nGood luck!");
+ * // 返回: ["Hello world", "This is a test", "Good luck!"]
+ *
+ * splitString("Hello   world\nThis  is  a\ntest\nGood  luck!", true);
+ * // 返回: ["Hello", "world", "This", "is", "a", "test", "Good", "luck!"]
+ *
+ * splitString("Hello\n\n\nworld\n\n", false);
+ * // 返回: ["Hello", "world"]
+ *
+ * splitString("", true);
+ * // 返回: []
+ *
+ * splitString("  ", false);
+ * // 返回: []
+ * @returns
+ * @category String-字符串
+ */
+export declare function splitString(str: string, separatorIncludesSpace?: boolean): string[];
 //# sourceMappingURL=index.d.ts.map

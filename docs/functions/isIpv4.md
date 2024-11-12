@@ -1,8 +1,8 @@
-[**js-xxx v2.2.26**](../README.md) • **Docs**
+[**js-xxx v2.2.27**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.26](../README.md) / isIpv4
+[js-xxx v2.2.27](../README.md) / isIpv4
 
 # Function: isIpv4()
 

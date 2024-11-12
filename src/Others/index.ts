@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:53:39
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-11-04 17:54:21
+ * @LastEditTime: 2024-11-12 16:36:39
  * @Description: 因项目需要常用函数，不管任何项目，都放到一起。注意甄别，没有复用意义的函数就不要添加了。
  * @FilePath: \js-xxx\src\Others\index.ts
  */
@@ -656,6 +656,39 @@ export function transferTemperature(temperature: number | string, isCelsius = tr
 export function getDataStr(value: any, defaultValue = '-', prefix = '', suffix = ''): string {
   value = value !== undefined ? value : defaultValue !== undefined ? defaultValue : '-';
   return value !== defaultValue ? `${prefix}${value}${suffix}` : `${value}`;
+}
+
+/**
+ * 清理对象中的空值，将 `null` 和 `undefined` 删除或替换
+ * @param obj 需要清理的对象
+ * @param replacement 替换值，默认为 `undefined`，如果传入值则替换为该值
+ * @returns
+ * @example
+ * clearObject({ a: 1, b: null, c: undefined, d: '', e: '   ' });
+ * // 返回: { a: 1 }
+ *
+ * clearObject({ a: 1, b: null, c: undefined, d: '', e: '   ' }, '');
+ * // 返回: { a: 1, b: '', c: '', d: '', e: '' }
+ * @category Others-业务/其他
+ */
+export function clearObject(obj: any, replacement?: any) {
+  if (typeof obj !== 'object' || obj === null || !obj) return {};
+  const delKeys: any = [];
+  const res = Object.fromEntries(
+    Object.entries(obj).map(([key, value]) => {
+      // 替换空值为指定的 replacement 值
+      // @ts-ignore
+      if ([null, undefined, '']?.includes(typeof value !== 'string' ? value : value.trim())) {
+        if (replacement === undefined) {
+          delKeys.push(key);
+        }
+        return [key, replacement !== undefined ? replacement : undefined];
+      }
+      return [key, value];
+    }),
+  );
+  delKeys.forEach((key: string) => delete res[key]);
+  return res;
 }
 
 /**
