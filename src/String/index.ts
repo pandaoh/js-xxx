@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:45:48
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-11-12 16:17:40
+ * @LastEditTime: 2024-11-12 16:48:02
  * @Description: 字符串常用函数
  * @FilePath: \js-xxx\src\String\index.ts
  */
@@ -972,7 +972,7 @@ export function loadStr(str: string, params: any, emptyStr?: string): string {
 }
 
 /**
- * 将输入字符串分割为字符串列表，基于换行符、回车符和可选的空格
+ * 将输入字符串分割为字符串列表，基于换行符、回车符和可选的空格。
  * @param str 要处理的输入字符串
  * @param separatorIncludesSpace 默认 false，是否将空格作为分隔符之一
  * @example
