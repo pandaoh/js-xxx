@@ -3,9 +3,9 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:53:39
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-11-12 17:08:29
+ * @LastEditTime: 2024-12-05 17:34:07
  * @Description: 因项目需要常用函数，不管任何项目，都放到一起。注意甄别，没有复用意义的函数就不要添加了。
- * @FilePath: \js-xxx\src\Others\index.ts
+ * @FilePath: /js-xxx/src/Others/index.ts
  */
 
 import { formatDate } from '@/Date';
@@ -920,79 +920,200 @@ export function filterTreeData(treeData: any[], callback?: (item: any) => boolea
  * @example
  * getTreeCheckNodes(treeData, ['0-0', '0-1']); /// ...
  * getTreeCheckNodes(treeData, ['0-0', '0-1'], ['0']); /// ...
+ * getTreeCheckNodes(treeData, ['0-0', '0-1'], ['0'], { key: 'id' }); /// 使用 id 作为唯一标识
  * @param treeData 树值
  * @param checkedKeys 已经全选的节点
  * @param halfCheckedKeys 已经半选的节点
- * @returns
+ * @param fieldNames 自定义字段名
+ * @returns { nodeMap, parentMap, nodeObj, checkedKeys, halfCheckedKeys }
  * @category Others-Tree
  */
-export function getTreeCheckNodes(treeData: any[], checkedKeys: any[], halfCheckedKeys?: any[]) {
-  // 将 treeData 转化为一个映射，以便查找节点和其父节点的关系。
-  const nodeMap = new Map();
-  const parentMap = new Map();
-  const checkedSet = new Set(checkedKeys ?? []);
-  const halfCheckedSet = new Set(halfCheckedKeys ?? []);
+export function getTreeCheckNodes(
+  treeData: any[],
+  checkedKeys: string[],
+  halfCheckedKeys: string[] = [],
+  fieldNames: { key?: string; children?: string } = { key: 'key', children: 'children' },
+) {
+  if (!Array.isArray(treeData) || !Array.isArray(checkedKeys)) {
+    return {
+      nodeMap: new Map(),
+      parentMap: new Map(),
+      nodeObj: {},
+      nodeArr: [],
+      checkedNodes: [],
+      halfCheckedNodes: [],
+    };
+  }
 
-  // 构建节点映射和父节点映射
-  const buildNodeMaps = (data: any, parentKey = null) => {
-    data.forEach((node: any) => {
-      const { key, children } = node;
-      nodeMap.set(key, node);
-      parentMap.set(key, parentKey);
-      if (children) {
-        buildNodeMaps(children, key);
+  const keyField = fieldNames.key || 'key';
+  const childrenField = fieldNames.children || 'children';
+
+  // 使用 Map 存储节点关系和状态
+  const nodeMap = new Map<string, any>();
+  const parentMap = new Map<string, string>();
+  const nodeObj: Record<string, any> = {};
+  const statusCache = new Map<string, boolean | 'half'>();
+
+  // 使用 Set 提高查找效率
+  const checkedSet = new Set(checkedKeys.filter(Boolean));
+  const halfCheckedSet = new Set(halfCheckedKeys.filter(Boolean));
+
+  // 单次遍历构建所有映射关系
+  const buildMaps = (nodes: any[], parentId: string | null = null) => {
+    if (!Array.isArray(nodes)) return;
+
+    for (const node of nodes) {
+      const nodeId = node?.[keyField];
+
+      if (!nodeId) continue;
+
+      // 同时更新所有映射
+      nodeMap.set(nodeId, node);
+      nodeObj[nodeId] = node;
+      if (parentId) parentMap.set(nodeId, parentId);
+
+      // 递归处理子节点
+      if (Array.isArray(node[childrenField])) {
+        buildMaps(node[childrenField], nodeId);
       }
-    });
+    }
   };
 
-  buildNodeMaps(treeData);
-
-  // 处理 checkedKeys 和 halfCheckedKeys
-  const processCheckedKeys = (node: any, key: any) => {
-    if (!node || !node?.children) {
-      return;
+  // 优化的节点状态检查
+  const checkNodeStatus = (nodeId: string): boolean | 'half' => {
+    // 使用缓存避免重复计算
+    if (statusCache.has(nodeId)) {
+      return statusCache.get(nodeId)!;
     }
 
-    const children = node?.children || [];
+    const node = nodeMap.get(nodeId);
 
-    const allSiblingsChecked = children.every((child: any) => checkedSet.has(child.key));
-    const allSiblingsUnchecked = children.every((child: any) => !checkedSet.has(child.key));
-    const allSiblingsUncheckedHalf = children.every((child: any) => !halfCheckedSet.has(child.key));
+    if (!node) return false;
 
-    if (allSiblingsChecked) {
-      // 若节点的子节点全部选中，则节点添加到 checkedSet 中，从 halfCheckedSet 中剔除。
-      checkedSet.add(key);
-      halfCheckedSet.delete(key);
-    } else if (allSiblingsUnchecked && allSiblingsUncheckedHalf) {
-      // 若节点的子节点都没有选中，则节点从 checkedSet 和 halfCheckedSet 中剔除。
-      checkedSet.delete(key);
-      halfCheckedSet.delete(key);
+    const children = node[childrenField] || [];
+
+    // 叶子节点快速返回
+    if (children.length === 0) {
+      const status = checkedSet.has(nodeId);
+
+      statusCache.set(nodeId, status);
+      return status;
+    }
+
+    // 收集有效子节点状态
+    const childStatuses: Array<boolean | 'half'> = [];
+    let hasFullChecked = false;
+    let hasUnchecked = false;
+    let hasHalfChecked = false;
+
+    // 优化子节点状态收集
+    for (const child of children) {
+      if (!child?.[keyField]) continue;
+
+      const childStatus = checkNodeStatus(child[keyField]);
+
+      childStatuses.push(childStatus);
+
+      switch (childStatus) {
+        case true: {
+          hasFullChecked = true;
+          break;
+        }
+
+        case false: {
+          hasUnchecked = true;
+          break;
+        }
+
+        case 'half': {
+          {
+            hasHalfChecked = true;
+            // No default
+          }
+          break;
+        }
+      }
+
+      // 提前退出条件
+      if (hasFullChecked && hasUnchecked) break;
+    }
+
+    if (childStatuses.length === 0) {
+      statusCache.set(nodeId, false);
+      return false;
+    }
+
+    let status: boolean | 'half';
+
+    // 优化状态判断逻辑
+    if (!hasFullChecked && !hasHalfChecked) {
+      checkedSet.delete(nodeId);
+      halfCheckedSet.delete(nodeId);
+      status = false;
+    } else if (!hasUnchecked && !hasHalfChecked) {
+      checkedSet.add(nodeId);
+      halfCheckedSet.delete(nodeId);
+      status = true;
     } else {
-      // 若节点的子节点部分选中，则节点从 checkedSet 中剔除，添加到 halfCheckedSet 中。
-      checkedSet.delete(key);
-      halfCheckedSet.add(key);
+      checkedSet.delete(nodeId);
+      halfCheckedSet.add(nodeId);
+      status = 'half';
     }
 
-    const parentKey = parentMap.get(key);
-    if (parentKey) {
-      processCheckedKeys(nodeMap.get(parentKey), parentKey);
-    }
+    statusCache.set(nodeId, status);
+    return status;
   };
 
-  // 遍历所有的节点，检查并处理。
-  nodeMap.forEach((node, key) => {
-    processCheckedKeys(node, key);
-  });
+  try {
+    // 构建节点映射
+    buildMaps(treeData);
 
-  const newCheckedKeys = Array.from(checkedSet);
-  const newHalfCheckedKeys = Array.from(halfCheckedSet);
+    // 优化的节点处理流程
+    const processNodes = () => {
+      // 处理选中节点的父节点链
+      const processedParents = new Set<string>();
 
-  return {
-    nodeMap,
-    parentMap,
-    checkedKeys: newCheckedKeys.length ? newCheckedKeys : undefined,
-    halfCheckedKeys: newHalfCheckedKeys.length ? newHalfCheckedKeys : undefined,
-  };
+      for (const nodeId of checkedSet) {
+        let parentId = parentMap.get(nodeId);
+
+        while (parentId && !processedParents.has(parentId)) {
+          processedParents.add(parentId);
+          checkNodeStatus(parentId);
+          parentId = parentMap.get(parentId);
+        }
+      }
+
+      // 确保根节点都被处理
+      for (const node of treeData) {
+        const nodeId = node?.[keyField];
+
+        if (nodeId && !statusCache.has(nodeId)) {
+          checkNodeStatus(nodeId);
+        }
+      }
+    };
+
+    processNodes();
+
+    return {
+      nodeMap,
+      parentMap,
+      nodeObj,
+      nodeArr: Object.values(nodeObj),
+      checkedNodes: [...checkedSet],
+      halfCheckedNodes: [...halfCheckedSet],
+    };
+  } catch (error) {
+    console.error('js-xxx Error in getTreeCheckNodes:', error);
+    return {
+      nodeMap: new Map(),
+      parentMap: new Map(),
+      nodeObj: {},
+      nodeArr: [],
+      checkedNodes: [],
+      halfCheckedNodes: [],
+    };
+  }
 }
 
 /**

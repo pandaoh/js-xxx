@@ -35,8 +35,8 @@ function __awaiter(thisArg, _arguments, P, generator) {
 }
 
 function __generator(thisArg, body) {
-  var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-  return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+  var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g = Object.create((typeof Iterator === "function" ? Iterator : Object).prototype);
+  return g.next = verb(0), g["throw"] = verb(1), g["return"] = verb(2), typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
   function verb(n) { return function (v) { return step([n, v]); }; }
   function step(op) {
       if (f) throw new TypeError("Generator is already executing.");
@@ -12327,19 +12327,15 @@ function loadStr(str, params, emptyStr) {
  * @param separatorIncludesSpace 默认 false，是否将空格作为分隔符之一
  * @example
  * splitString("Hello world\nThis is a test\nGood luck!");
- * // 返回: ["Hello world", "This is a test", "Good luck!"]
- *
+ * /// 返回: ["Hello world", "This is a test", "Good luck!"]
  * splitString("Hello   world\nThis  is  a\ntest\nGood  luck!", true);
- * // 返回: ["Hello", "world", "This", "is", "a", "test", "Good", "luck!"]
- *
+ * /// 返回: ["Hello", "world", "This", "is", "a", "test", "Good", "luck!"]
  * splitString("Hello\n\n\nworld\n\n", false);
- * // 返回: ["Hello", "world"]
- *
+ * /// 返回: ["Hello", "world"]
  * splitString("", true);
- * // 返回: []
- *
+ * /// 返回: []
  * splitString("  ", false);
- * // 返回: []
+ * /// 返回: []
  * @returns
  * @category String-字符串
  */
@@ -14867,11 +14863,8 @@ function getDataStr(value, defaultValue, prefix, suffix) {
  * @param replacement 替换值，默认为 `undefined`，如果传入值则替换为该值。
  * @returns
  * @example
- * clearObject({ a: 1, b: null, c: undefined, d: '', e: '   ' });
- * // 返回: { a: 1 }
- *
- * clearObject({ a: 1, b: null, c: undefined, d: '', e: '   ' }, '');
- * // 返回: { a: 1, b: '', c: '', d: '', e: '' }
+ * clearObject({ a: 1, b: null, c: undefined, d: '', e: '   ' }); /// 返回: { a: 1 }
+ * clearObject({ a: 1, b: null, c: undefined, d: '', e: '   ' }, ''); /// 返回: { a: 1, b: '', c: '', d: '', e: '' }
  * @category Others-业务/其他
  */
 function clearObject(obj, replacement) {
@@ -15092,72 +15085,216 @@ function filterTreeData(treeData, callback) {
  * @example
  * getTreeCheckNodes(treeData, ['0-0', '0-1']); /// ...
  * getTreeCheckNodes(treeData, ['0-0', '0-1'], ['0']); /// ...
+ * getTreeCheckNodes(treeData, ['0-0', '0-1'], ['0'], { key: 'id' }); /// 使用 id 作为唯一标识
  * @param treeData 树值
  * @param checkedKeys 已经全选的节点
  * @param halfCheckedKeys 已经半选的节点
- * @returns
+ * @param fieldNames 自定义字段名
+ * @returns { nodeMap, parentMap, nodeObj, checkedKeys, halfCheckedKeys }
  * @category Others-Tree
  */
-function getTreeCheckNodes(treeData, checkedKeys, halfCheckedKeys) {
-    // 将 treeData 转化为一个映射，以便查找节点和其父节点的关系。
+function getTreeCheckNodes(treeData, checkedKeys, halfCheckedKeys, fieldNames) {
+    if (halfCheckedKeys === void 0) { halfCheckedKeys = []; }
+    if (fieldNames === void 0) { fieldNames = { key: 'key', children: 'children' }; }
+    if (!Array.isArray(treeData) || !Array.isArray(checkedKeys)) {
+        return {
+            nodeMap: new Map(),
+            parentMap: new Map(),
+            nodeObj: {},
+            nodeArr: [],
+            checkedNodes: [],
+            halfCheckedNodes: [],
+        };
+    }
+    var keyField = fieldNames.key || 'key';
+    var childrenField = fieldNames.children || 'children';
+    // 使用 Map 存储节点关系和状态
     var nodeMap = new Map();
     var parentMap = new Map();
-    var checkedSet = new Set(checkedKeys !== null && checkedKeys !== void 0 ? checkedKeys : []);
-    var halfCheckedSet = new Set(halfCheckedKeys !== null && halfCheckedKeys !== void 0 ? halfCheckedKeys : []);
-    // 构建节点映射和父节点映射
-    var buildNodeMaps = function (data, parentKey) {
-        if (parentKey === void 0) { parentKey = null; }
-        data.forEach(function (node) {
-            var key = node.key, children = node.children;
-            nodeMap.set(key, node);
-            parentMap.set(key, parentKey);
-            if (children) {
-                buildNodeMaps(children, key);
-            }
-        });
-    };
-    buildNodeMaps(treeData);
-    // 处理 checkedKeys 和 halfCheckedKeys
-    var processCheckedKeys = function (node, key) {
-        if (!node || !(node === null || node === void 0 ? void 0 : node.children)) {
+    var nodeObj = {};
+    var statusCache = new Map();
+    // 使用 Set 提高查找效率
+    var checkedSet = new Set(checkedKeys.filter(Boolean));
+    var halfCheckedSet = new Set(halfCheckedKeys.filter(Boolean));
+    // 单次遍历构建所有映射关系
+    var buildMaps = function (nodes, parentId) {
+        var e_1, _a;
+        if (parentId === void 0) { parentId = null; }
+        if (!Array.isArray(nodes))
             return;
+        try {
+            for (var nodes_1 = __values(nodes), nodes_1_1 = nodes_1.next(); !nodes_1_1.done; nodes_1_1 = nodes_1.next()) {
+                var node = nodes_1_1.value;
+                var nodeId = node === null || node === void 0 ? void 0 : node[keyField];
+                if (!nodeId)
+                    continue;
+                // 同时更新所有映射
+                nodeMap.set(nodeId, node);
+                nodeObj[nodeId] = node;
+                if (parentId)
+                    parentMap.set(nodeId, parentId);
+                // 递归处理子节点
+                if (Array.isArray(node[childrenField])) {
+                    buildMaps(node[childrenField], nodeId);
+                }
+            }
         }
-        var children = (node === null || node === void 0 ? void 0 : node.children) || [];
-        var allSiblingsChecked = children.every(function (child) { return checkedSet.has(child.key); });
-        var allSiblingsUnchecked = children.every(function (child) { return !checkedSet.has(child.key); });
-        var allSiblingsUncheckedHalf = children.every(function (child) { return !halfCheckedSet.has(child.key); });
-        if (allSiblingsChecked) {
-            // 若节点的子节点全部选中，则节点添加到 checkedSet 中，从 halfCheckedSet 中剔除。
-            checkedSet.add(key);
-            halfCheckedSet.delete(key);
+        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+        finally {
+            try {
+                if (nodes_1_1 && !nodes_1_1.done && (_a = nodes_1.return)) _a.call(nodes_1);
+            }
+            finally { if (e_1) throw e_1.error; }
         }
-        else if (allSiblingsUnchecked && allSiblingsUncheckedHalf) {
-            // 若节点的子节点都没有选中，则节点从 checkedSet 和 halfCheckedSet 中剔除。
-            checkedSet.delete(key);
-            halfCheckedSet.delete(key);
+    };
+    // 优化的节点状态检查
+    var checkNodeStatus = function (nodeId) {
+        var e_2, _a;
+        // 使用缓存避免重复计算
+        if (statusCache.has(nodeId)) {
+            return statusCache.get(nodeId);
+        }
+        var node = nodeMap.get(nodeId);
+        if (!node)
+            return false;
+        var children = node[childrenField] || [];
+        // 叶子节点快速返回
+        if (children.length === 0) {
+            var status_1 = checkedSet.has(nodeId);
+            statusCache.set(nodeId, status_1);
+            return status_1;
+        }
+        // 收集有效子节点状态
+        var childStatuses = [];
+        var hasFullChecked = false;
+        var hasUnchecked = false;
+        var hasHalfChecked = false;
+        try {
+            // 优化子节点状态收集
+            for (var children_1 = __values(children), children_1_1 = children_1.next(); !children_1_1.done; children_1_1 = children_1.next()) {
+                var child = children_1_1.value;
+                if (!(child === null || child === void 0 ? void 0 : child[keyField]))
+                    continue;
+                var childStatus = checkNodeStatus(child[keyField]);
+                childStatuses.push(childStatus);
+                switch (childStatus) {
+                    case true: {
+                        hasFullChecked = true;
+                        break;
+                    }
+                    case false: {
+                        hasUnchecked = true;
+                        break;
+                    }
+                    case 'half': {
+                        {
+                            hasHalfChecked = true;
+                            // No default
+                        }
+                        break;
+                    }
+                }
+                // 提前退出条件
+                if (hasFullChecked && hasUnchecked)
+                    break;
+            }
+        }
+        catch (e_2_1) { e_2 = { error: e_2_1 }; }
+        finally {
+            try {
+                if (children_1_1 && !children_1_1.done && (_a = children_1.return)) _a.call(children_1);
+            }
+            finally { if (e_2) throw e_2.error; }
+        }
+        if (childStatuses.length === 0) {
+            statusCache.set(nodeId, false);
+            return false;
+        }
+        var status;
+        // 优化状态判断逻辑
+        if (!hasFullChecked && !hasHalfChecked) {
+            checkedSet.delete(nodeId);
+            halfCheckedSet.delete(nodeId);
+            status = false;
+        }
+        else if (!hasUnchecked && !hasHalfChecked) {
+            checkedSet.add(nodeId);
+            halfCheckedSet.delete(nodeId);
+            status = true;
         }
         else {
-            // 若节点的子节点部分选中，则节点从 checkedSet 中剔除，添加到 halfCheckedSet 中。
-            checkedSet.delete(key);
-            halfCheckedSet.add(key);
+            checkedSet.delete(nodeId);
+            halfCheckedSet.add(nodeId);
+            status = 'half';
         }
-        var parentKey = parentMap.get(key);
-        if (parentKey) {
-            processCheckedKeys(nodeMap.get(parentKey), parentKey);
-        }
+        statusCache.set(nodeId, status);
+        return status;
     };
-    // 遍历所有的节点，检查并处理。
-    nodeMap.forEach(function (node, key) {
-        processCheckedKeys(node, key);
-    });
-    var newCheckedKeys = Array.from(checkedSet);
-    var newHalfCheckedKeys = Array.from(halfCheckedSet);
-    return {
-        nodeMap: nodeMap,
-        parentMap: parentMap,
-        checkedKeys: newCheckedKeys.length ? newCheckedKeys : undefined,
-        halfCheckedKeys: newHalfCheckedKeys.length ? newHalfCheckedKeys : undefined,
-    };
+    try {
+        // 构建节点映射
+        buildMaps(treeData);
+        // 优化的节点处理流程
+        var processNodes = function () {
+            var e_3, _a, e_4, _b;
+            // 处理选中节点的父节点链
+            var processedParents = new Set();
+            try {
+                for (var checkedSet_1 = __values(checkedSet), checkedSet_1_1 = checkedSet_1.next(); !checkedSet_1_1.done; checkedSet_1_1 = checkedSet_1.next()) {
+                    var nodeId = checkedSet_1_1.value;
+                    var parentId = parentMap.get(nodeId);
+                    while (parentId && !processedParents.has(parentId)) {
+                        processedParents.add(parentId);
+                        checkNodeStatus(parentId);
+                        parentId = parentMap.get(parentId);
+                    }
+                }
+            }
+            catch (e_3_1) { e_3 = { error: e_3_1 }; }
+            finally {
+                try {
+                    if (checkedSet_1_1 && !checkedSet_1_1.done && (_a = checkedSet_1.return)) _a.call(checkedSet_1);
+                }
+                finally { if (e_3) throw e_3.error; }
+            }
+            try {
+                // 确保根节点都被处理
+                for (var treeData_1 = __values(treeData), treeData_1_1 = treeData_1.next(); !treeData_1_1.done; treeData_1_1 = treeData_1.next()) {
+                    var node = treeData_1_1.value;
+                    var nodeId = node === null || node === void 0 ? void 0 : node[keyField];
+                    if (nodeId && !statusCache.has(nodeId)) {
+                        checkNodeStatus(nodeId);
+                    }
+                }
+            }
+            catch (e_4_1) { e_4 = { error: e_4_1 }; }
+            finally {
+                try {
+                    if (treeData_1_1 && !treeData_1_1.done && (_b = treeData_1.return)) _b.call(treeData_1);
+                }
+                finally { if (e_4) throw e_4.error; }
+            }
+        };
+        processNodes();
+        return {
+            nodeMap: nodeMap,
+            parentMap: parentMap,
+            nodeObj: nodeObj,
+            nodeArr: Object.values(nodeObj),
+            checkedNodes: __spreadArray([], __read(checkedSet), false),
+            halfCheckedNodes: __spreadArray([], __read(halfCheckedSet), false),
+        };
+    }
+    catch (error) {
+        console.error('js-xxx Error in getTreeCheckNodes:', error);
+        return {
+            nodeMap: new Map(),
+            parentMap: new Map(),
+            nodeObj: {},
+            nodeArr: [],
+            checkedNodes: [],
+            halfCheckedNodes: [],
+        };
+    }
 }
 /**
  * 生成 table columns 数组

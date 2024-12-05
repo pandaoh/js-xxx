@@ -220,11 +220,8 @@ export declare function getDataStr(value: any, defaultValue?: string, prefix?: s
  * @param replacement 替换值，默认为 `undefined`，如果传入值则替换为该值。
  * @returns
  * @example
- * clearObject({ a: 1, b: null, c: undefined, d: '', e: '   ' });
- * // 返回: { a: 1 }
- *
- * clearObject({ a: 1, b: null, c: undefined, d: '', e: '   ' }, '');
- * // 返回: { a: 1, b: '', c: '', d: '', e: '' }
+ * clearObject({ a: 1, b: null, c: undefined, d: '', e: '   ' }); /// 返回: { a: 1 }
+ * clearObject({ a: 1, b: null, c: undefined, d: '', e: '   ' }, ''); /// 返回: { a: 1, b: '', c: '', d: '', e: '' }
  * @category Others-业务/其他
  */
 export declare function clearObject(obj: any, replacement?: any): {
@@ -307,17 +304,31 @@ export declare function filterTreeData(treeData: any[], callback?: (item: any) =
  * @example
  * getTreeCheckNodes(treeData, ['0-0', '0-1']); /// ...
  * getTreeCheckNodes(treeData, ['0-0', '0-1'], ['0']); /// ...
+ * getTreeCheckNodes(treeData, ['0-0', '0-1'], ['0'], { key: 'id' }); /// 使用 id 作为唯一标识
  * @param treeData 树值
  * @param checkedKeys 已经全选的节点
  * @param halfCheckedKeys 已经半选的节点
- * @returns
+ * @param fieldNames 自定义字段名
+ * @returns { nodeMap, parentMap, nodeObj, checkedKeys, halfCheckedKeys }
  * @category Others-Tree
  */
-export declare function getTreeCheckNodes(treeData: any[], checkedKeys: any[], halfCheckedKeys?: any[]): {
+export declare function getTreeCheckNodes(treeData: any[], checkedKeys: string[], halfCheckedKeys?: string[], fieldNames?: {
+    key?: string;
+    children?: string;
+}): {
     nodeMap: Map<any, any>;
     parentMap: Map<any, any>;
-    checkedKeys: any[] | undefined;
-    halfCheckedKeys: any[] | undefined;
+    nodeObj: {};
+    nodeArr: never[];
+    checkedNodes: never[];
+    halfCheckedNodes: never[];
+} | {
+    nodeMap: Map<string, any>;
+    parentMap: Map<string, string>;
+    nodeObj: Record<string, any>;
+    nodeArr: any[];
+    checkedNodes: string[];
+    halfCheckedNodes: string[];
 };
 /**
  * 生成 table columns 数组
