@@ -1,8 +1,8 @@
-[**js-xxx v2.2.28**](../README.md) • **Docs**
+[**js-xxx v2.2.29**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.28](../README.md) / MockOptions
+[js-xxx v2.2.29](../README.md) / MockOptions
 
 # Interface: MockOptions
 

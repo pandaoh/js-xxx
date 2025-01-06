@@ -652,4 +652,25 @@ export declare function curryIt(fn: any): (...args: any[]) => any;
  * @category 模板渲染
  */
 export declare function renderTemplate(content: string, replacements: any): string;
+/**
+ * 创建一个空闲监听器，监测用户的活动状态。
+ * @example
+ * const idleListener = createIdleListener(() => console.log('用户空闲了'), 15, true); // 15 秒超时
+ * console.log(`可见状态次数: ${idleListener.getVisibleCount()}`);
+ * console.log(`空闲状态次数: ${idleListener.getIdleCount()}`);
+ * idleListener.stopDetection(); // 停止监听
+ * idleListener.startDetection(); // 重新开始监听
+ * @param callback 用户空闲时执行的回调函数。
+ * @param [timeout=60] 空闲时间，单位为秒，默认值为 60 秒。
+ * @param [immediate=true] 是否立即开始监测，默认为 true 。
+ * @returns
+ * @category 空闲监听
+ */
+export declare function createIdleListener(callback: any, timeout?: number, immediate?: boolean): {
+    startDetection: () => void;
+    stopDetection: () => void;
+    restartDetection: () => void;
+    getVisibleCount: () => number;
+    getIdleCount: () => number;
+};
 //# sourceMappingURL=index.d.ts.map

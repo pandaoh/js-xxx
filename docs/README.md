@@ -1,8 +1,8 @@
-**js-xxx v2.2.28** • **Docs**
+**js-xxx v2.2.29** • **Docs**
 
 ***
 
-# js-xxx v2.2.28
+# js-xxx v2.2.29
 
 ## Array-数组相关
 
@@ -465,3 +465,7 @@
 ## 模板渲染
 
 - [renderTemplate](functions/renderTemplate.md)
+
+## 空闲监听
+
+- [createIdleListener](functions/createIdleListener.md)

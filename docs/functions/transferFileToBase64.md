@@ -1,8 +1,8 @@
-[**js-xxx v2.2.28**](../README.md) • **Docs**
+[**js-xxx v2.2.29**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.28](../README.md) / transferFileToBase64
+[js-xxx v2.2.29](../README.md) / transferFileToBase64
 
 # Function: transferFileToBase64()
 

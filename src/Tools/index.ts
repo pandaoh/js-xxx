@@ -4,9 +4,9 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:10:35
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-11-12 16:27:19
+ * @LastEditTime: 2025-01-06 10:10:45
  * @Description: 工具函数
- * @FilePath: \js-xxx\src\Tools\index.ts
+ * @FilePath: /js-xxx/src/Tools/index.ts
  */
 import { md5 } from '@/Crypto';
 import { unique, arraySort } from '@/Array';
@@ -1328,7 +1328,7 @@ export function getFingerprint(extraString: string | number): string {
  * @category Tools-工具方法
  */
 export function banConsole(): any {
-  document.body.setAttribute('style', 'user-select: none;' + document.body.style ?? '');
+  document.body.setAttribute('style', 'user-select: none;' + document.body.style);
   const cancelContextMenu = setEventListener('contextmenu', function (e: any) {
     return e.preventDefault();
   });
@@ -1935,4 +1935,119 @@ export function renderTemplate(content: string, replacements: any) {
 
   // 处理空行和首尾空白
   return _trimTpl(content);
+}
+
+/**
+ * 创建一个空闲监听器，监测用户的活动状态。
+ * @example
+ * const idleListener = createIdleListener(() => console.log('用户空闲了'), 15, true); // 15 秒超时
+ * console.log(`可见状态次数: ${idleListener.getVisibleCount()}`);
+ * console.log(`空闲状态次数: ${idleListener.getIdleCount()}`);
+ * idleListener.stopDetection(); // 停止监听
+ * idleListener.startDetection(); // 重新开始监听
+ * @param callback 用户空闲时执行的回调函数。
+ * @param [timeout=60] 空闲时间，单位为秒，默认值为 60 秒。
+ * @param [immediate=true] 是否立即开始监测，默认为 true 。
+ * @returns
+ * @category 空闲监听
+ */
+export function createIdleListener(callback: any, timeout = 60, immediate = true) {
+  let pageTimer: any;
+  let beginTime = 0;
+  let visibleCount = 0; // 可见状态计数
+  let idleCount = 0; // 空闲状态计数
+
+  const onClearTimer = () => {
+    if (pageTimer) {
+      clearTimeout(pageTimer);
+      pageTimer = undefined;
+    }
+  };
+
+  const onStartTimer = () => {
+    const currentTime = Date.now();
+    if (pageTimer && currentTime - beginTime < 100) {
+      return;
+    }
+
+    onClearTimer();
+    beginTime = currentTime;
+    pageTimer = setTimeout(() => {
+      idleCount++; // 增加空闲计数
+      callback();
+    }, timeout * 1000);
+  };
+
+  const onPageVisibility = () => {
+    onClearTimer();
+    visibleCount++; // 增加可见状态计数
+
+    if (document.visibilityState === 'visible') {
+      const currentTime = Date.now();
+      if (currentTime - beginTime >= timeout * 1000) {
+        idleCount++; // 增加空闲计数
+        callback();
+        return;
+      }
+      pageTimer = setTimeout(() => {
+        idleCount++; // 增加空闲计数
+        callback();
+      }, timeout * 1000 - (currentTime - beginTime));
+    }
+  };
+
+  const startDetection = () => {
+    onStartTimer();
+    document.addEventListener('keydown', onStartTimer);
+    document.addEventListener('mousemove', onStartTimer);
+    document.addEventListener('mousedown', onStartTimer);
+    document.addEventListener('resize', onStartTimer);
+    document.addEventListener('touchstart', onStartTimer);
+    document.addEventListener('wheel', onStartTimer);
+    document.addEventListener('scroll', onStartTimer);
+    document.addEventListener('visibilitychange', onPageVisibility);
+  };
+
+  const stopDetection = () => {
+    onClearTimer();
+    // 移除所有事件监听
+    document.removeEventListener('keydown', onStartTimer);
+    document.removeEventListener('mousemove', onStartTimer);
+    document.removeEventListener('mousedown', onStartTimer);
+    document.removeEventListener('resize', onStartTimer);
+    document.removeEventListener('touchstart', onStartTimer);
+    document.removeEventListener('wheel', onStartTimer);
+    document.removeEventListener('scroll', onStartTimer);
+    document.removeEventListener('visibilitychange', onPageVisibility);
+
+    // 重新计数
+    visibleCount = 0;
+    idleCount = 0;
+  };
+
+  const restartDetection = () => {
+    onClearTimer();
+    onStartTimer();
+    // 重新计数
+    visibleCount = 0;
+    idleCount = 0;
+  };
+
+  // 获取可见状态计数
+  const getVisibleCount = () => visibleCount;
+
+  // 获取空闲状态计数
+  const getIdleCount = () => idleCount;
+
+  if (immediate) {
+    startDetection();
+  }
+
+  return {
+    startDetection,
+    stopDetection,
+    restartDetection,
+    getVisibleCount,
+    getIdleCount,
+  };
 }

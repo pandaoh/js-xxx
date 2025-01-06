@@ -1,8 +1,8 @@
-[**js-xxx v2.2.28**](../README.md) • **Docs**
+[**js-xxx v2.2.29**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.28](../README.md) / formDataToObject
+[js-xxx v2.2.29](../README.md) / formDataToObject
 
 # Function: formDataToObject()
 
