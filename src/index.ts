@@ -2,9 +2,9 @@
  * @Author: HxB
  * @Date: 2022-04-26 11:33:53
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-11-04 17:49:48
+ * @LastEditTime: 2025-01-06 10:36:52
  * @Description: 主项目文件汇总（请勿使用路径别名，否则会导致声明文件失效。）
- * @FilePath: \js-xxx\src\index.ts
+ * @FilePath: /js-xxx/src/index.ts
  */
 
 // import * as Array from './Array';
@@ -12,7 +12,7 @@
 //   ...Array
 // };
 
-// 禁止使用路径别名，Dev 根据 dev.config.js 自动生成禁止手动修改。
+// 禁止使用路径别名，Dev 根据 dev.config.js 自动生成，禁止手动修改。
 export * from './Dev';
 
 export * from './Array';
