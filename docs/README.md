@@ -1,8 +1,8 @@
-**js-xxx v2.2.29** • **Docs**
+**js-xxx v2.2.30** • **Docs**
 
 ***
 
-# js-xxx v2.2.29
+# js-xxx v2.2.30
 
 ## Array-数组相关
 
@@ -83,6 +83,7 @@
 - [openFullscreen](functions/openFullscreen.md)
 - [printDom](functions/printDom.md)
 - [px2rem](functions/px2rem.md)
+- [removeTag](functions/removeTag.md)
 - [setIcon](functions/setIcon.md)
 - [stackSticky](functions/stackSticky.md)
 - [toggleClass](functions/toggleClass.md)
@@ -285,6 +286,7 @@
 - [isIpv4](functions/isIpv4.md)
 - [isIpv6](functions/isIpv6.md)
 - [isLatitude](functions/isLatitude.md)
+- [isLocalHost](functions/isLocalHost.md)
 - [isLongitude](functions/isLongitude.md)
 - [isMobile](functions/isMobile.md)
 - [isQQ](functions/isQQ.md)
@@ -420,6 +422,7 @@
 - [i18n](classes/i18n.md)
 - [i18nLanguageResource](interfaces/i18nLanguageResource.md)
 - [i18nOptions](interfaces/i18nOptions.md)
+- [$t](functions/$t.md)
 - [getBrowserLang](functions/getBrowserLang.md)
 - [getDefaultLang](functions/getDefaultLang.md)
 

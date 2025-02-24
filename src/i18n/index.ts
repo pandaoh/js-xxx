@@ -2,9 +2,9 @@
  * @Author: HxB
  * @Date: 2024-05-13 15:08:38
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-08-23 11:14:06
+ * @LastEditTime: 2025-02-24 14:48:47
  * @Description: i18n 国际化支持
- * @FilePath: \js-xxx\src\i18n\index.ts
+ * @FilePath: /js-xxx/src/i18n/index.ts
  */
 
 import { getCookie } from '@/Cookies';
@@ -254,3 +254,13 @@ export function getDefaultLang(opts?: { supportLangs: string[]; key?: string }):
     return lang;
   }
 }
+
+/**
+ * 用于插件扫描自定义多语言 key
+ * @example
+ * $t('aaa'); /// 'aaa'
+ * @param s
+ * @returns
+ * @category i18n-多语言(国际化)
+ */
+export const $t = (s: any) => `${s}`;

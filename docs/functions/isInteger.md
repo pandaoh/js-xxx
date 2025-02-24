@@ -1,8 +1,8 @@
-[**js-xxx v2.2.29**](../README.md) • **Docs**
+[**js-xxx v2.2.30**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.29](../README.md) / isInteger
+[js-xxx v2.2.30](../README.md) / isInteger
 
 # Function: isInteger()
 

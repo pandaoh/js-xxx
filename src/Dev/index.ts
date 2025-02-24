@@ -183,6 +183,10 @@ export const eslintRules = (skipWords = [], rules = {}) => ({
         'unmaximize',
         'unminimize',
         'minimize',
+        'localhost',
+        'uninstall',
+        'unhandled',
+        'unhandledrejection',
         ...(skipWords ?? []),
       ],
       skipIfMatch: [

@@ -1,8 +1,8 @@
-[**js-xxx v2.2.29**](../README.md) • **Docs**
+[**js-xxx v2.2.30**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.29](../README.md) / sortBy
+[js-xxx v2.2.30](../README.md) / sortBy
 
 # Function: sortBy()
 

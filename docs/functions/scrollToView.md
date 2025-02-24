@@ -1,8 +1,8 @@
-[**js-xxx v2.2.29**](../README.md) • **Docs**
+[**js-xxx v2.2.30**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.29](../README.md) / scrollToView
+[js-xxx v2.2.30](../README.md) / scrollToView
 
 # Function: scrollToView()
 

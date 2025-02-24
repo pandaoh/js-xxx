@@ -1,8 +1,8 @@
-[**js-xxx v2.2.29**](../README.md) • **Docs**
+[**js-xxx v2.2.30**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.29](../README.md) / localStorageSet
+[js-xxx v2.2.30](../README.md) / localStorageSet
 
 # Function: localStorageSet()
 

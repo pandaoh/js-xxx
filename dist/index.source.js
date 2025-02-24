@@ -261,7 +261,11 @@
                       'maximize',
                       'unmaximize',
                       'unminimize',
-                      'minimize'
+                      'minimize',
+                      'localhost',
+                      'uninstall',
+                      'unhandled',
+                      'unhandledrejection'
                   ], __read((skipWords !== null && skipWords !== void 0 ? skipWords : [])), false),
                   skipIfMatch: [
                       // http url
@@ -12459,6 +12463,19 @@
           .map(function (s) { return s.trim(); })
           .filter(Boolean);
   }
+  /**
+   * 检查是否为本地启动
+   * @example
+   * isLocalHost(); /// true
+   * isLocalHost('https://a.biugle.cn/xxx'); /// false
+   * @param str 字符串值
+   * @returns
+   * @category String-字符串
+   */
+  function isLocalHost(str) {
+      str = str || location.href;
+      return (str === null || str === void 0 ? void 0 : str.includes('localhost')) || (str === null || str === void 0 ? void 0 : str.includes('127.0.0.1')) || (str === null || str === void 0 ? void 0 : str.includes('::1'));
+  }
 
   /**
    * 时间格式化
@@ -14146,13 +14163,15 @@
               orderMap = clickInfo;
               var newLogKey = "".concat(logKey, "-").concat(orderKey, "-").concat(clickInfo.clickOrder);
               console.log(event, '区域非固定顺序记录埋点分析:', newLogKey, { trigger: trigger !== null && trigger !== void 0 ? trigger : 'click', params: params, logKey: logKey });
-              callback && callback(event, newLogKey, { trigger: trigger !== null && trigger !== void 0 ? trigger : 'click', params: params, logKey: logKey });
+              callback &&
+                  callback(event, newLogKey, { trigger: trigger !== null && trigger !== void 0 ? trigger : 'click', params: params, logKey: logKey, userAgent: navigator === null || navigator === void 0 ? void 0 : navigator.userAgent });
               return;
           }
           // 无 sequence 或 maxSequence 则认为是普通埋点
           if (maxSequence === undefined) {
               console.log(event, '普通埋点分析:', logKey, { trigger: trigger !== null && trigger !== void 0 ? trigger : 'click', params: params, logKey: logKey });
-              callback && callback(event, logKey, { trigger: trigger !== null && trigger !== void 0 ? trigger : 'click', params: params, logKey: logKey });
+              callback &&
+                  callback(event, logKey, { trigger: trigger !== null && trigger !== void 0 ? trigger : 'click', params: params, logKey: logKey, userAgent: navigator === null || navigator === void 0 ? void 0 : navigator.userAgent });
               return;
           }
           // 存在 sequence 或 maxSequence 则认为是固定顺序埋点
@@ -14164,7 +14183,8 @@
                   // 达到 maxSequence 触发埋点
                   if (sequence === maxSequence) {
                       console.log(event, '固定顺序埋点分析:', logKey, { trigger: trigger !== null && trigger !== void 0 ? trigger : 'click', params: params, logKey: logKey });
-                      callback && callback(event, logKey, { trigger: trigger !== null && trigger !== void 0 ? trigger : 'click', params: params, logKey: logKey });
+                      callback &&
+                          callback(event, logKey, { trigger: trigger !== null && trigger !== void 0 ? trigger : 'click', params: params, logKey: logKey, userAgent: navigator === null || navigator === void 0 ? void 0 : navigator.userAgent });
                       delete sequenceMap[logKey];
                   }
               }
@@ -14240,6 +14260,7 @@
                       trigger: trigger !== null && trigger !== void 0 ? trigger : 'scroll',
                       params: __assign(__assign({}, (params !== null && params !== void 0 ? params : {})), { X: scrollX, Y: scrollY }),
                       logKey: logKey,
+                      userAgent: navigator === null || navigator === void 0 ? void 0 : navigator.userAgent,
                   });
           }
           lastScrollPos = currentScrollPos;
@@ -14304,7 +14325,13 @@
               params: __assign(__assign({}, (params !== null && params !== void 0 ? params : {})), { value: value }),
               logKey: logKey,
           });
-          callback && callback(event, logKey, { trigger: trigger !== null && trigger !== void 0 ? trigger : 'change', params: __assign(__assign({}, (params !== null && params !== void 0 ? params : {})), { value: value }), logKey: logKey });
+          callback &&
+              callback(event, logKey, {
+                  trigger: trigger !== null && trigger !== void 0 ? trigger : 'change',
+                  params: __assign(__assign({}, (params !== null && params !== void 0 ? params : {})), { value: value }),
+                  logKey: logKey,
+                  userAgent: navigator === null || navigator === void 0 ? void 0 : navigator.userAgent,
+              });
       }
       document.addEventListener('change', handleChange);
       return function () {
@@ -14385,7 +14412,7 @@
               var logKey = eventName;
               timeLogBox[customKey].endTime = Date.now();
               var durationMs = timeLogBox[customKey].endTime - timeLogBox[customKey].startTime;
-              var logInfo = __assign(__assign({}, timeLogBox[customKey].logParams), { logKey: logKey, ms: durationMs, s: (durationMs / 1000).toFixed(3) });
+              var logInfo = __assign(__assign({}, timeLogBox[customKey].logParams), { logKey: logKey, ms: durationMs, s: (durationMs / 1000).toFixed(3), userAgent: navigator === null || navigator === void 0 ? void 0 : navigator.userAgent });
               console.table(logInfo); // 以表格形式输出日志信息，包括 logKey 。
               callback && (callback === null || callback === void 0 ? void 0 : callback(logInfo, logKey));
               // 重置 startTime 和 endTime，以便实例可以重新使用。
@@ -14428,6 +14455,18 @@
           }
       }
       return processedClassNames.join(' ');
+  }
+  /**
+   * 去除字符串中的元素标记
+   * @example
+   * removeTag('<div>Hello Wife</div>'); /// 'Hello Wife'
+   * @param str 字符串
+   * @returns
+   * @category Dom-工具方法
+   */
+  function removeTag(str) {
+      var _a, _b;
+      return ((_b = (_a = new DOMParser().parseFromString(str, 'text/html')) === null || _a === void 0 ? void 0 : _a.body) === null || _b === void 0 ? void 0 : _b.textContent) || '';
   }
 
   /* eslint-disable max-lines */
@@ -17865,9 +17904,9 @@
    * @Author: HxB
    * @Date: 2024-05-13 15:08:38
    * @LastEditors: DoubleAm
-   * @LastEditTime: 2024-08-23 11:14:06
+   * @LastEditTime: 2025-02-24 14:48:47
    * @Description: i18n 国际化支持
-   * @FilePath: \js-xxx\src\i18n\index.ts
+   * @FilePath: /js-xxx/src/i18n/index.ts
    */
   var I18N_KEY = 'js-xxx-lang';
   /**
@@ -18081,7 +18120,17 @@
           return lang;
       }
   }
+  /**
+   * 用于插件扫描自定义多语言 key
+   * @example
+   * $t('aaa'); /// 'aaa'
+   * @param s
+   * @returns
+   * @category i18n-多语言(国际化)
+   */
+  var $t = function (s) { return "".concat(s); };
 
+  exports.$t = $t;
   exports.ANIMALS = ANIMALS;
   exports.BASE_CHAR_LOW = BASE_CHAR_LOW;
   exports.BASE_CHAR_UP = BASE_CHAR_UP;
@@ -18287,6 +18336,7 @@
   exports.isIpv6 = isIpv6;
   exports.isJSON = isJSON;
   exports.isLatitude = isLatitude;
+  exports.isLocalHost = isLocalHost;
   exports.isLongitude = isLongitude;
   exports.isMac = isMac;
   exports.isMobile = isMobile;
@@ -18336,6 +18386,7 @@
   exports.qsParse = qsParse;
   exports.qsStringify = qsStringify;
   exports.removeCookie = removeCookie;
+  exports.removeTag = removeTag;
   exports.renderTemplate = renderTemplate;
   exports.repeat = repeat;
   exports.retry = retry;

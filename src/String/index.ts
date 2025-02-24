@@ -3,9 +3,9 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:45:48
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-11-12 16:48:02
+ * @LastEditTime: 2025-02-24 14:44:55
  * @Description: 字符串常用函数
- * @FilePath: \js-xxx\src\String\index.ts
+ * @FilePath: /js-xxx/src/String/index.ts
  */
 import { BASE_NUMBER, PY_MAPS } from '@/Data';
 import { getV } from '@/Object';
@@ -1000,4 +1000,18 @@ export function splitString(str: string, separatorIncludesSpace = false) {
     .split(separators)
     .map((s) => s.trim())
     .filter(Boolean);
+}
+
+/**
+ * 检查是否为本地启动
+ * @example
+ * isLocalHost(); /// true
+ * isLocalHost('https://a.biugle.cn/xxx'); /// false
+ * @param str 字符串值
+ * @returns
+ * @category String-字符串
+ */
+export function isLocalHost(str?: string): boolean {
+  str = str || location.href;
+  return str?.includes('localhost') || str?.includes('127.0.0.1') || str?.includes('::1');
 }

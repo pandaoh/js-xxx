@@ -1,8 +1,8 @@
-[**js-xxx v2.2.29**](../README.md) • **Docs**
+[**js-xxx v2.2.30**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.29](../README.md) / setEncodeStorage
+[js-xxx v2.2.30](../README.md) / setEncodeStorage
 
 # Function: setEncodeStorage()
 

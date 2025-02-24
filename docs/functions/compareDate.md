@@ -1,8 +1,8 @@
-[**js-xxx v2.2.29**](../README.md) • **Docs**
+[**js-xxx v2.2.30**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.29](../README.md) / compareDate
+[js-xxx v2.2.30](../README.md) / compareDate
 
 # Function: compareDate()
 

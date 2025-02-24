@@ -1,8 +1,8 @@
-[**js-xxx v2.2.29**](../README.md) • **Docs**
+[**js-xxx v2.2.30**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.29](../README.md) / CODE\_MSG
+[js-xxx v2.2.30](../README.md) / CODE\_MSG
 
 # Variable: CODE\_MSG
 

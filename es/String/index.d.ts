@@ -473,4 +473,14 @@ export declare function loadStr(str: string, params: any, emptyStr?: string): st
  * @category String-字符串
  */
 export declare function splitString(str: string, separatorIncludesSpace?: boolean): string[];
+/**
+ * 检查是否为本地启动
+ * @example
+ * isLocalHost(); /// true
+ * isLocalHost('https://a.biugle.cn/xxx'); /// false
+ * @param str 字符串值
+ * @returns
+ * @category String-字符串
+ */
+export declare function isLocalHost(str?: string): boolean;
 //# sourceMappingURL=index.d.ts.map

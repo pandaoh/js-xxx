@@ -1,8 +1,8 @@
-[**js-xxx v2.2.29**](../README.md) • **Docs**
+[**js-xxx v2.2.30**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.29](../README.md) / getStyleByName
+[js-xxx v2.2.30](../README.md) / getStyleByName
 
 # Function: getStyleByName()
 

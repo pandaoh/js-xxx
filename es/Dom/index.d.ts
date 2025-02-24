@@ -489,4 +489,13 @@ export declare function createTimeLogListener(eventName: string, eventParams?: {
  * @category Dom-工具方法
  */
 export declare function cx(...classNames: any[]): string;
+/**
+ * 去除字符串中的元素标记
+ * @example
+ * removeTag('<div>Hello Wife</div>'); /// 'Hello Wife'
+ * @param str 字符串
+ * @returns
+ * @category Dom-工具方法
+ */
+export declare function removeTag(str: string): string;
 //# sourceMappingURL=index.d.ts.map

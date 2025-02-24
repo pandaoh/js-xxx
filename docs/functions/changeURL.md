@@ -1,8 +1,8 @@
-[**js-xxx v2.2.29**](../README.md) • **Docs**
+[**js-xxx v2.2.30**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.29](../README.md) / changeURL
+[js-xxx v2.2.30](../README.md) / changeURL
 
 # Function: changeURL()
 
