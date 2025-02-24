@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2024-05-13 15:08:38
  * @LastEditors: DoubleAm
- * @LastEditTime: 2025-02-24 14:48:47
+ * @LastEditTime: 2025-02-24 14:53:59
  * @Description: i18n 国际化支持
  * @FilePath: /js-xxx/src/i18n/index.ts
  */
@@ -256,7 +256,7 @@ export function getDefaultLang(opts?: { supportLangs: string[]; key?: string }):
 }
 
 /**
- * 用于插件扫描自定义多语言 key
+ * 用于插件扫描自定义多语言 key，方便 excel 或者 json 生成。
  * @example
  * $t('aaa'); /// 'aaa'
  * @param s
