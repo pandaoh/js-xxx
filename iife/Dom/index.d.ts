@@ -498,4 +498,56 @@ export declare function cx(...classNames: any[]): string;
  * @category Dom-工具方法
  */
 export declare function removeTag(str: string): string;
+/**
+ * 创建 BroadcastChannel 实例
+ * @example
+ * const channel = createBroadcastChannel('my-channel');
+ * const removeListener = channel.listen((event) => {
+ *   console.log({ type: event.type, data: event.message });
+ * });
+ * channel.send('message', { message: 'Hello' });
+ * channel.getChannel(); // BroadcastChannel 实例
+ * removeListener(); // 移除监听器
+ * channel.close(); // 关闭通道
+ * @param channelName 通道名称
+ * @returns
+ * @category Dom-工具方法
+ */
+export declare function createBroadcastChannel(channelName: string): {
+    send: (type: string, message: unknown) => void;
+    listen: (callback: (event: {
+        type: string;
+        message: unknown;
+    }) => void) => () => void;
+    getChannel: () => BroadcastChannel;
+    close: () => void;
+};
+/**
+ * 为指定元素创建自定义滚动条
+ * @example
+ * // 创建一个垂直样式的滚动条，控制横向滚动
+ * const destroy = createCustomScroll('#my-element', {
+ *   scrollCssDirection: 'vertical', // 滚动条样式方向
+ *   scrollCtrlDirection: 'x', // 控制滚动方向
+ *   scrollContainer: '.custom-container', // 滚动条插入位置
+ *   scrollClassName: 'my-scroll', // 自定义类名
+ * });
+ *
+ * // 销毁滚动条
+ * destroy();
+ * @param selector 目标元素选择器
+ * @param options 配置选项
+ * @param {('horizontal'|'vertical')} [options.scrollCssDirection='vertical'] 滚动条样式方向
+ * @param {('x'|'y')} [options.scrollCtrlDirection='y'] 控制滚动方向
+ * @param {string} [options.scrollContainer] 滚动条插入的容器选择器,默认插入到目标元素顶部
+ * @param {string} [options.scrollClassName='custom-scroll'] 滚动条容器类名
+ * @returns
+ * @category Dom-工具方法
+ */
+export declare function createCustomScroll(selector: string, options?: {
+    scrollCssDirection?: 'horizontal' | 'vertical';
+    scrollCtrlDirection?: 'x' | 'y';
+    scrollContainer?: string;
+    scrollClassName?: string;
+}): () => void;
 //# sourceMappingURL=index.d.ts.map

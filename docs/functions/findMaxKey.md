@@ -1,8 +1,8 @@
-[**js-xxx v2.2.30**](../README.md) • **Docs**
+[**js-xxx v2.2.31**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.30](../README.md) / findMaxKey
+[js-xxx v2.2.31](../README.md) / findMaxKey
 
 # Function: findMaxKey()
 

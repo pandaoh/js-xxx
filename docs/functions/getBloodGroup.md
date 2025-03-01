@@ -1,8 +1,8 @@
-[**js-xxx v2.2.30**](../README.md) • **Docs**
+[**js-xxx v2.2.31**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.30](../README.md) / getBloodGroup
+[js-xxx v2.2.31](../README.md) / getBloodGroup
 
 # Function: getBloodGroup()
 

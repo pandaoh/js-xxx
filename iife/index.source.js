@@ -626,9 +626,9 @@ var $xxx = (function (exports) {
    * @Author: HxB
    * @Date: 2022-04-26 11:52:01
    * @LastEditors: DoubleAm
-   * @LastEditTime: 2024-08-23 10:44:23
+   * @LastEditTime: 2025-02-24 15:09:01
    * @Description: 数组常用函数
-   * @FilePath: \js-xxx\src\Array\index.ts
+   * @FilePath: /js-xxx/src/Array/index.ts
    */
   /**
    * 数组对象转对象，按照指定的 key 分组。
@@ -14465,6 +14465,253 @@ var $xxx = (function (exports) {
       var _a, _b;
       return ((_b = (_a = new DOMParser().parseFromString(str, 'text/html')) === null || _a === void 0 ? void 0 : _a.body) === null || _b === void 0 ? void 0 : _b.textContent) || '';
   }
+  /**
+   * 创建 BroadcastChannel 实例
+   * @example
+   * const channel = createBroadcastChannel('my-channel');
+   * const removeListener = channel.listen((event) => {
+   *   console.log({ type: event.type, data: event.message });
+   * });
+   * channel.send('message', { message: 'Hello' });
+   * channel.getChannel(); // BroadcastChannel 实例
+   * removeListener(); // 移除监听器
+   * channel.close(); // 关闭通道
+   * @param channelName 通道名称
+   * @returns
+   * @category Dom-工具方法
+   */
+  function createBroadcastChannel(channelName) {
+      var channel;
+      try {
+          channel = new BroadcastChannel(channelName);
+      }
+      catch (error) {
+          console.error('创建 BroadcastChannel 失败:', error);
+          throw error;
+      }
+      return {
+          send: function (type, message) {
+              try {
+                  channel.postMessage({ type: type, message: message });
+              }
+              catch (error) {
+                  console.error('发送消息失败:', error);
+                  throw error;
+              }
+          },
+          listen: function (callback) {
+              var handler = function (event) {
+                  callback === null || callback === void 0 ? void 0 : callback(event.data);
+              };
+              channel.addEventListener('message', handler);
+              // 返回移除监听器的函数
+              return function () { return channel.removeEventListener('message', handler); };
+          },
+          getChannel: function () { return channel; },
+          close: function () { return channel.close(); },
+      };
+  }
+  /**
+   * 为指定元素创建自定义滚动条
+   * @example
+   * // 创建一个垂直样式的滚动条，控制横向滚动
+   * const destroy = createCustomScroll('#my-element', {
+   *   scrollCssDirection: 'vertical', // 滚动条样式方向
+   *   scrollCtrlDirection: 'x', // 控制滚动方向
+   *   scrollContainer: '.custom-container', // 滚动条插入位置
+   *   scrollClassName: 'my-scroll', // 自定义类名
+   * });
+   *
+   * // 销毁滚动条
+   * destroy();
+   * @param selector 目标元素选择器
+   * @param options 配置选项
+   * @param {('horizontal'|'vertical')} [options.scrollCssDirection='vertical'] 滚动条样式方向
+   * @param {('x'|'y')} [options.scrollCtrlDirection='y'] 控制滚动方向
+   * @param {string} [options.scrollContainer] 滚动条插入的容器选择器,默认插入到目标元素顶部
+   * @param {string} [options.scrollClassName='custom-scroll'] 滚动条容器类名
+   * @returns
+   * @category Dom-工具方法
+   */
+  function createCustomScroll(selector, options) {
+      if (options === void 0) { options = {}; }
+      var defaults = {
+          scrollCssDirection: 'vertical',
+          scrollCtrlDirection: 'y',
+          scrollClassName: 'custom-scroll',
+      };
+      var config = __assign(__assign({}, defaults), options);
+      var target = document.querySelector(selector);
+      var container = config.scrollContainer
+          ? document.querySelector(config.scrollContainer)
+          : target === null || target === void 0 ? void 0 : target.parentElement;
+      if (!target) {
+          console.warn('Element with selector "${selector}" not found.');
+          return function () { return undefined; };
+      }
+      if (!container) {
+          console.warn('Container element not found.');
+          return function () { return undefined; };
+      }
+      // 设置目标元素样式
+      var originalStyle = target.style.cssText;
+      target.style.overflow = 'auto';
+      // @ts-ignore
+      target.style.scrollbarWidth = 'none';
+      // @ts-ignore
+      target.style.msOverflowStyle = 'none';
+      // 添加样式
+      var styleSheet = document.createElement('style');
+      styleSheet.textContent = "\n    ".concat(selector, "::-webkit-scrollbar {\n      overflow: auto;\n      display: none;\n    }\n    .").concat(config.scrollClassName, " {\n      position: relative;\n      background: rgba(0, 0, 0, 0.1);\n      border-radius: 4px;\n      z-index: 1000;\n    }\n    .").concat(config.scrollClassName, "-thumb {\n      position: absolute;\n      background: rgba(0, 0, 0, 0.4);\n      border-radius: 4px;\n      transition: background 0.2s;\n      cursor: pointer;\n    }\n    .").concat(config.scrollClassName, "-thumb:hover {\n      background: rgba(0, 0, 0, 0.6);\n    }\n  ");
+      document.head.appendChild(styleSheet);
+      // 创建滚动条
+      var scrollbar = document.createElement('div');
+      var thumb = document.createElement('div');
+      scrollbar.className = "".concat(config.scrollClassName, " ").concat(config.scrollCssDirection);
+      thumb.className = "".concat(config.scrollClassName, "-thumb");
+      // 设置滚动条样式
+      if (config.scrollCssDirection === 'horizontal') {
+          scrollbar.style.height = '8px';
+          scrollbar.style.width = '100%';
+          scrollbar.style.left = '0';
+          scrollbar.style.bottom = '0';
+          thumb.style.height = '100%';
+          thumb.style.minWidth = '20px';
+      }
+      else {
+          scrollbar.style.width = '8px';
+          scrollbar.style.height = '100%';
+          scrollbar.style.top = '0';
+          scrollbar.style.right = '0';
+          thumb.style.width = '100%';
+          thumb.style.minHeight = '20px';
+      }
+      scrollbar.appendChild(thumb);
+      container.appendChild(scrollbar);
+      // 滚动状态
+      var isDragging = false;
+      var startPos = 0;
+      var startScroll = 0;
+      // 计算滚动块尺寸 - 根据受控方向计算比例
+      function calculateThumbSize(total, visible, containerSize) {
+          var ratio = visible / total;
+          // 确保滚动块最小尺寸为 20px
+          return Math.max(ratio * containerSize, 20);
+      }
+      // 计算滚动块位置
+      function calculateThumbPosition(scroll, maxScroll, maxThumbPosition) {
+          return maxScroll <= 0 ? '0' : "".concat((scroll / maxScroll) * maxThumbPosition, "px");
+      }
+      // 更新滚动条
+      function updateScrollbar() {
+          if (!target || !thumb || !container)
+              return;
+          var clientWidth = target.clientWidth, clientHeight = target.clientHeight, scrollWidth = target.scrollWidth, scrollHeight = target.scrollHeight, scrollLeft = target.scrollLeft, scrollTop = target.scrollTop;
+          var containerRect = container.getBoundingClientRect();
+          // 根据受控方向计算滚动比例
+          var total = config.scrollCtrlDirection === 'x' ? scrollWidth : scrollHeight;
+          var visible = config.scrollCtrlDirection === 'x' ? clientWidth : clientHeight;
+          if (config.scrollCssDirection === 'horizontal') {
+              // 水平滚动条
+              scrollbar.style.width = "".concat(containerRect.width, "px");
+              // 使用受控方向的比例计算滚动块尺寸
+              var thumbWidth = calculateThumbSize(total, visible, containerRect.width);
+              thumb.style.width = "".concat(thumbWidth, "px");
+              var maxThumbPosition = containerRect.width - thumbWidth;
+              if (config.scrollCtrlDirection === 'x') {
+                  thumb.style.left = calculateThumbPosition(scrollLeft, scrollWidth - clientWidth, maxThumbPosition);
+              }
+              else {
+                  thumb.style.left = calculateThumbPosition(scrollTop, scrollHeight - clientHeight, maxThumbPosition);
+              }
+          }
+          else {
+              // 垂直滚动条
+              scrollbar.style.height = "".concat(containerRect.height, "px");
+              // 使用受控方向的比例计算滚动块尺寸
+              var thumbHeight = calculateThumbSize(total, visible, containerRect.height);
+              thumb.style.height = "".concat(thumbHeight, "px");
+              var maxThumbPosition = containerRect.height - thumbHeight;
+              if (config.scrollCtrlDirection === 'x') {
+                  thumb.style.top = calculateThumbPosition(scrollLeft, scrollWidth - clientWidth, maxThumbPosition);
+              }
+              else {
+                  thumb.style.top = calculateThumbPosition(scrollTop, scrollHeight - clientHeight, maxThumbPosition);
+              }
+          }
+      }
+      // 事件处理函数
+      function handleScroll() {
+          requestAnimationFrame(updateScrollbar);
+      }
+      // 滚动条拖动处理
+      function handleMouseMove(e) {
+          try {
+              if (!isDragging || !target)
+                  return;
+              var currentPos = config.scrollCssDirection === 'horizontal' ? e.clientX : e.clientY;
+              var delta = currentPos - startPos;
+              var clientWidth = target.clientWidth, clientHeight = target.clientHeight, scrollWidth = target.scrollWidth, scrollHeight = target.scrollHeight;
+              var scrollRatio = config.scrollCtrlDirection === 'x' ? scrollWidth / clientWidth : scrollHeight / clientHeight;
+              if (config.scrollCtrlDirection === 'x') {
+                  target.scrollLeft = Math.max(0, Math.min(startScroll + delta * scrollRatio, scrollWidth - clientWidth));
+              }
+              else {
+                  target.scrollTop = Math.max(0, Math.min(startScroll + delta * scrollRatio, scrollHeight - clientHeight));
+              }
+          }
+          catch (error) {
+              console.error('滚动条拖动失败:', error);
+              handleMouseUp(); // 出错时释放拖动状态
+          }
+      }
+      // 事件处理 - 鼠标位置根据 scrollCssDirection 判断,滚动方向根据 scrollCtrlDirection 判断
+      function handleMouseDown(e) {
+          if (!target)
+              return;
+          e.preventDefault();
+          isDragging = true;
+          // 鼠标位置跟随滚动条方向
+          startPos = config.scrollCssDirection === 'horizontal' ? e.clientX : e.clientY;
+          // 滚动位置跟随控制方向
+          startScroll = config.scrollCtrlDirection === 'x' ? target.scrollLeft : target.scrollTop;
+          document.addEventListener('mousemove', handleMouseMove);
+          document.addEventListener('mouseup', handleMouseUp);
+      }
+      function handleMouseUp() {
+          isDragging = false;
+          document.removeEventListener('mousemove', handleMouseMove);
+          document.removeEventListener('mouseup', handleMouseUp);
+      }
+      // 绑定事件
+      target.addEventListener('scroll', handleScroll);
+      thumb.addEventListener('mousedown', handleMouseDown);
+      // 监听内容变化
+      var observer = new MutationObserver(function () { return requestAnimationFrame(updateScrollbar); });
+      observer.observe(target, { childList: true, subtree: true });
+      // 监听窗口大小变化 - resize 可以保留 requestAnimationFrame
+      window.addEventListener('resize', function () { return requestAnimationFrame(updateScrollbar); });
+      // 初始化
+      updateScrollbar();
+      // 返回销毁函数
+      return function () {
+          try {
+              if (scrollbar === null || scrollbar === void 0 ? void 0 : scrollbar.parentNode)
+                  scrollbar.remove();
+              if (styleSheet === null || styleSheet === void 0 ? void 0 : styleSheet.parentNode)
+                  styleSheet.remove();
+              if (target) {
+                  target.removeEventListener('scroll', handleScroll);
+                  target.style.cssText = originalStyle;
+              }
+              observer === null || observer === void 0 ? void 0 : observer.disconnect();
+              window.removeEventListener('resize', function () { return requestAnimationFrame(updateScrollbar); });
+          }
+          catch (error) {
+              console.error('销毁滚动条失败:', error);
+          }
+      };
+  }
 
   /* eslint-disable max-lines */
   function _isValidCronField(field, min, max) {
@@ -16401,7 +16648,7 @@ var $xxx = (function (exports) {
       // 加入特殊字符确保 utf-8
       // eslint-disable-next-line spellcheck/spell-checker
       var uri = "data:".concat(getContentType(fileType), ";charset=utf-8,\uFEFF").concat(safeEncodeURI(data));
-      // U+FEFF 是一个零宽度非断字符（Zero Width No-Break Space），也称为“字节顺序标记（Byte Order Mark，BOM）”。
+      // U+FEFF 是一个零宽度非断字符（Zero Width No-Break Space），也称为"字节顺序标记（Byte Order Mark，BOM）"。
       // eslint-disable-next-line spellcheck/spell-checker
       download(uri, "".concat(fileName !== null && fileName !== void 0 ? fileName : formatDate(new Date(), 'yyyy-mm-dd-hhiiss'), ".").concat(fileType));
       // downloadContent 可以兼容落后浏览器的情况
@@ -16424,6 +16671,59 @@ var $xxx = (function (exports) {
       bytes /= 1 << (10 * pow);
       var unit = (_a = units === null || units === void 0 ? void 0 : units[pow]) !== null && _a !== void 0 ? _a : units[0];
       return bytes.toFixed(precision) + ' ' + unit;
+  }
+  /**
+   * 解析或者读取文件内容
+   * @example
+   * readFileContent('test.txt', 'text').then(res => console.log(res)); /// 读取文件内容
+   * readFileContent('test.txt').then(res => console.log(res)); /// 读取文件内容
+   * readFileContent('test.csv').then(res => console.log(res)); /// 读取文件内容
+   * readFileContent('test.txt', 'base64').then(res => console.log(res)); /// 读取文件内容为 base64
+   * readFileContent('test.txt', 'blob').then(res => console.log(res)); /// 读取文件内容为 blob
+   * readFileContent('test.txt', 'arrayBuffer').then(res => console.log(res)); /// 读取文件内容为 arrayBuffer
+   * @param file 文件
+   * @param type 类型
+   * @returns
+   * @category File-文件相关
+   */
+  function readFileContent(file, type) {
+      type = type !== null && type !== void 0 ? type : 'text';
+      return new Promise(function (resolve, reject) {
+          try {
+              var reader_1 = new FileReader();
+              reader_1.onload = function (e) {
+                  var _a;
+                  // 优先使用 reader.result，如果不存在则使用 e.target.result
+                  var result = (_a = reader_1.result) !== null && _a !== void 0 ? _a : e.target.result;
+                  if (type === 'blob' && result instanceof ArrayBuffer) {
+                      // 如果是 blob 类型，将 ArrayBuffer 转换为 Blob
+                      resolve(new Blob([result], { type: file.type }));
+                  }
+                  else {
+                      resolve(result);
+                  }
+              };
+              reader_1.onerror = reject;
+              switch (type) {
+                  case 'text':
+                      reader_1.readAsText(file);
+                      break;
+                  case 'base64':
+                      reader_1.readAsDataURL(file);
+                      break;
+                  case 'blob':
+                  case 'arrayBuffer':
+                      reader_1.readAsArrayBuffer(file);
+                      break;
+                  default:
+                      reader_1.readAsText(file);
+                      break;
+              }
+          }
+          catch (e) {
+              reject(e);
+          }
+      });
   }
 
   /*
@@ -17901,7 +18201,7 @@ var $xxx = (function (exports) {
    * @Author: HxB
    * @Date: 2024-05-13 15:08:38
    * @LastEditors: DoubleAm
-   * @LastEditTime: 2025-02-24 14:48:47
+   * @LastEditTime: 2025-02-24 14:53:59
    * @Description: i18n 国际化支持
    * @FilePath: /js-xxx/src/i18n/index.ts
    */
@@ -18118,7 +18418,7 @@ var $xxx = (function (exports) {
       }
   }
   /**
-   * 用于插件扫描自定义多语言 key
+   * 用于插件扫描自定义多语言 key，方便 excel 或者 json 生成。
    * @example
    * $t('aaa'); /// 'aaa'
    * @param s
@@ -18190,8 +18490,10 @@ var $xxx = (function (exports) {
   exports.contains = contains;
   exports.copyToClipboard = copyToClipboard;
   exports.countdown = countdown;
+  exports.createBroadcastChannel = createBroadcastChannel;
   exports.createChangeLogListener = createChangeLogListener;
   exports.createClickLogListener = createClickLogListener;
+  exports.createCustomScroll = createCustomScroll;
   exports.createIdleListener = createIdleListener;
   exports.createScrollLogListener = createScrollLogListener;
   exports.createTimeLogListener = createTimeLogListener;
@@ -18382,6 +18684,7 @@ var $xxx = (function (exports) {
   exports.px2rem = px2rem;
   exports.qsParse = qsParse;
   exports.qsStringify = qsStringify;
+  exports.readFileContent = readFileContent;
   exports.removeCookie = removeCookie;
   exports.removeTag = removeTag;
   exports.renderTemplate = renderTemplate;

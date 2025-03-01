@@ -1,8 +1,8 @@
-[**js-xxx v2.2.30**](../README.md) • **Docs**
+[**js-xxx v2.2.31**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.30](../README.md) / prettierRules
+[js-xxx v2.2.31](../README.md) / prettierRules
 
 # Function: prettierRules()
 

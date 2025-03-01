@@ -1,8 +1,8 @@
-**js-xxx v2.2.30** • **Docs**
+**js-xxx v2.2.31** • **Docs**
 
 ***
 
-# js-xxx v2.2.30
+# js-xxx v2.2.31
 
 ## Array-数组相关
 
@@ -72,6 +72,8 @@
 - [calcFontSize](functions/calcFontSize.md)
 - [closeFullscreen](functions/closeFullscreen.md)
 - [copyToClipboard](functions/copyToClipboard.md)
+- [createBroadcastChannel](functions/createBroadcastChannel.md)
+- [createCustomScroll](functions/createCustomScroll.md)
 - [cx](functions/cx.md)
 - [dataTo](functions/dataTo.md)
 - [findChildren](functions/findChildren.md)
@@ -107,6 +109,7 @@
 - [getFileType](functions/getFileType.md)
 - [openFileSelect](functions/openFileSelect.md)
 - [openPreviewFile](functions/openPreviewFile.md)
+- [readFileContent](functions/readFileContent.md)
 - [saveAs](functions/saveAs.md)
 - [transferCSVData](functions/transferCSVData.md)
 - [transferFileToBase64](functions/transferFileToBase64.md)

@@ -1,8 +1,8 @@
-[**js-xxx v2.2.30**](../README.md) • **Docs**
+[**js-xxx v2.2.31**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.30](../README.md) / initWebSocket
+[js-xxx v2.2.31](../README.md) / initWebSocket
 
 # Function: initWebSocket()
 

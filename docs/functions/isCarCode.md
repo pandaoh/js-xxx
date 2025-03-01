@@ -1,8 +1,8 @@
-[**js-xxx v2.2.30**](../README.md) • **Docs**
+[**js-xxx v2.2.31**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.30](../README.md) / isCarCode
+[js-xxx v2.2.31](../README.md) / isCarCode
 
 # Function: isCarCode()
 
