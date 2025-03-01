@@ -1618,3 +1618,299 @@ export function cx(...classNames: any[]): string {
 export function removeTag(str: string): string {
   return new DOMParser().parseFromString(str, 'text/html')?.body?.textContent || '';
 }
+
+/**
+ * 创建 BroadcastChannel 实例
+ * @example
+ * const channel = createBroadcastChannel('my-channel');
+ * const removeListener = channel.listen((event) => {
+ *   console.log({ type: event.type, data: event.message });
+ * });
+ * channel.send('message', { message: 'Hello' });
+ * channel.getChannel(); // BroadcastChannel 实例
+ * removeListener(); // 移除监听器
+ * channel.close(); // 关闭通道
+ * @param channelName 通道名称
+ * @returns
+ * @category Dom-工具方法
+ */
+export function createBroadcastChannel(channelName: string) {
+  let channel: BroadcastChannel;
+
+  try {
+    channel = new BroadcastChannel(channelName);
+  } catch (error) {
+    console.error('创建 BroadcastChannel 失败:', error);
+    throw error;
+  }
+
+  return {
+    send: (type: string, message: unknown) => {
+      try {
+        channel.postMessage({ type, message });
+      } catch (error) {
+        console.error('发送消息失败:', error);
+        throw error;
+      }
+    },
+    listen: (callback: (event: { type: string; message: unknown }) => void) => {
+      const handler = (event: MessageEvent) => {
+        callback?.(event.data);
+      };
+      channel.addEventListener('message', handler);
+      // 返回移除监听器的函数
+      return () => channel.removeEventListener('message', handler);
+    },
+    getChannel: () => channel,
+    close: () => channel.close(),
+  };
+}
+
+/**
+ * 为指定元素创建自定义滚动条
+ * @example
+ * // 创建一个垂直样式的滚动条，控制横向滚动
+ * const destroy = createCustomScroll('#my-element', {
+ *   scrollCssDirection: 'vertical', // 滚动条样式方向
+ *   scrollCtrlDirection: 'x', // 控制滚动方向
+ *   scrollContainer: '.custom-container', // 滚动条插入位置
+ *   scrollClassName: 'my-scroll', // 自定义类名
+ * });
+ *
+ * // 销毁滚动条
+ * destroy();
+ * @param selector 目标元素选择器
+ * @param options 配置选项
+ * @param {('horizontal'|'vertical')} [options.scrollCssDirection='vertical'] 滚动条样式方向
+ * @param {('x'|'y')} [options.scrollCtrlDirection='y'] 控制滚动方向
+ * @param {string} [options.scrollContainer] 滚动条插入的容器选择器,默认插入到目标元素顶部
+ * @param {string} [options.scrollClassName='custom-scroll'] 滚动条容器类名
+ * @returns
+ * @category Dom-工具方法
+ */
+export function createCustomScroll(
+  selector: string,
+  options: {
+    scrollCssDirection?: 'horizontal' | 'vertical';
+    scrollCtrlDirection?: 'x' | 'y';
+    scrollContainer?: string;
+    scrollClassName?: string;
+  } = {},
+) {
+  const defaults = {
+    scrollCssDirection: 'vertical',
+    scrollCtrlDirection: 'y',
+    scrollClassName: 'custom-scroll',
+  };
+
+  const config = { ...defaults, ...options };
+  const target = document.querySelector<HTMLElement>(selector);
+  const container = config.scrollContainer
+    ? document.querySelector<HTMLElement>(config.scrollContainer)
+    : target?.parentElement;
+
+  if (!target) {
+    console.warn('Element with selector "${selector}" not found.');
+    return () => undefined;
+  }
+
+  if (!container) {
+    console.warn('Container element not found.');
+    return () => undefined;
+  }
+
+  // 设置目标元素样式
+  const originalStyle = target.style.cssText;
+  target.style.overflow = 'auto';
+  // @ts-ignore
+  target.style.scrollbarWidth = 'none';
+  // @ts-ignore
+  target.style.msOverflowStyle = 'none';
+
+  // 添加样式
+  const styleSheet = document.createElement('style');
+  styleSheet.textContent = `
+    ${selector}::-webkit-scrollbar {
+      overflow: auto;
+      display: none;
+    }
+    .${config.scrollClassName} {
+      position: relative;
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 4px;
+      z-index: 1000;
+    }
+    .${config.scrollClassName}-thumb {
+      position: absolute;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 4px;
+      transition: background 0.2s;
+      cursor: pointer;
+    }
+    .${config.scrollClassName}-thumb:hover {
+      background: rgba(0, 0, 0, 0.6);
+    }
+  `;
+  document.head.appendChild(styleSheet);
+
+  // 创建滚动条
+  const scrollbar = document.createElement('div');
+  const thumb = document.createElement('div');
+
+  scrollbar.className = `${config.scrollClassName} ${config.scrollCssDirection}`;
+  thumb.className = `${config.scrollClassName}-thumb`;
+
+  // 设置滚动条样式
+  if (config.scrollCssDirection === 'horizontal') {
+    scrollbar.style.height = '8px';
+    scrollbar.style.width = '100%';
+    scrollbar.style.left = '0';
+    scrollbar.style.bottom = '0';
+    thumb.style.height = '100%';
+    thumb.style.minWidth = '20px';
+  } else {
+    scrollbar.style.width = '8px';
+    scrollbar.style.height = '100%';
+    scrollbar.style.top = '0';
+    scrollbar.style.right = '0';
+    thumb.style.width = '100%';
+    thumb.style.minHeight = '20px';
+  }
+
+  scrollbar.appendChild(thumb);
+  container.appendChild(scrollbar);
+
+  // 滚动状态
+  let isDragging = false;
+  let startPos = 0;
+  let startScroll = 0;
+
+  // 计算滚动块尺寸 - 根据受控方向计算比例
+  function calculateThumbSize(total: number, visible: number, containerSize: number) {
+    const ratio = visible / total;
+    // 确保滚动块最小尺寸为 20px
+    return Math.max(ratio * containerSize, 20);
+  }
+
+  // 计算滚动块位置
+  function calculateThumbPosition(scroll: number, maxScroll: number, maxThumbPosition: number) {
+    return maxScroll <= 0 ? '0' : `${(scroll / maxScroll) * maxThumbPosition}px`;
+  }
+
+  // 更新滚动条
+  function updateScrollbar() {
+    if (!target || !thumb || !container) return;
+
+    const { clientWidth, clientHeight, scrollWidth, scrollHeight, scrollLeft, scrollTop } = target;
+    const containerRect = container.getBoundingClientRect();
+
+    // 根据受控方向计算滚动比例
+    const total = config.scrollCtrlDirection === 'x' ? scrollWidth : scrollHeight;
+    const visible = config.scrollCtrlDirection === 'x' ? clientWidth : clientHeight;
+
+    if (config.scrollCssDirection === 'horizontal') {
+      // 水平滚动条
+      scrollbar.style.width = `${containerRect.width}px`;
+      // 使用受控方向的比例计算滚动块尺寸
+      const thumbWidth = calculateThumbSize(total, visible, containerRect.width);
+      thumb.style.width = `${thumbWidth}px`;
+
+      const maxThumbPosition = containerRect.width - thumbWidth;
+      if (config.scrollCtrlDirection === 'x') {
+        thumb.style.left = calculateThumbPosition(scrollLeft, scrollWidth - clientWidth, maxThumbPosition);
+      } else {
+        thumb.style.left = calculateThumbPosition(scrollTop, scrollHeight - clientHeight, maxThumbPosition);
+      }
+    } else {
+      // 垂直滚动条
+      scrollbar.style.height = `${containerRect.height}px`;
+      // 使用受控方向的比例计算滚动块尺寸
+      const thumbHeight = calculateThumbSize(total, visible, containerRect.height);
+      thumb.style.height = `${thumbHeight}px`;
+
+      const maxThumbPosition = containerRect.height - thumbHeight;
+      if (config.scrollCtrlDirection === 'x') {
+        thumb.style.top = calculateThumbPosition(scrollLeft, scrollWidth - clientWidth, maxThumbPosition);
+      } else {
+        thumb.style.top = calculateThumbPosition(scrollTop, scrollHeight - clientHeight, maxThumbPosition);
+      }
+    }
+  }
+
+  // 事件处理函数
+  function handleScroll() {
+    requestAnimationFrame(updateScrollbar);
+  }
+
+  // 滚动条拖动处理
+  function handleMouseMove(e: MouseEvent) {
+    try {
+      if (!isDragging || !target) return;
+
+      const currentPos = config.scrollCssDirection === 'horizontal' ? e.clientX : e.clientY;
+      const delta = currentPos - startPos;
+      const { clientWidth, clientHeight, scrollWidth, scrollHeight } = target;
+
+      const scrollRatio = config.scrollCtrlDirection === 'x' ? scrollWidth / clientWidth : scrollHeight / clientHeight;
+
+      if (config.scrollCtrlDirection === 'x') {
+        target.scrollLeft = Math.max(0, Math.min(startScroll + delta * scrollRatio, scrollWidth - clientWidth));
+      } else {
+        target.scrollTop = Math.max(0, Math.min(startScroll + delta * scrollRatio, scrollHeight - clientHeight));
+      }
+    } catch (error) {
+      console.error('滚动条拖动失败:', error);
+      handleMouseUp(); // 出错时释放拖动状态
+    }
+  }
+
+  // 事件处理 - 鼠标位置根据 scrollCssDirection 判断,滚动方向根据 scrollCtrlDirection 判断
+  function handleMouseDown(e: MouseEvent) {
+    if (!target) return;
+    e.preventDefault();
+    isDragging = true;
+    // 鼠标位置跟随滚动条方向
+    startPos = config.scrollCssDirection === 'horizontal' ? e.clientX : e.clientY;
+    // 滚动位置跟随控制方向
+    startScroll = config.scrollCtrlDirection === 'x' ? target.scrollLeft : target.scrollTop;
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+  }
+
+  function handleMouseUp() {
+    isDragging = false;
+    document.removeEventListener('mousemove', handleMouseMove);
+    document.removeEventListener('mouseup', handleMouseUp);
+  }
+
+  // 绑定事件
+  target.addEventListener('scroll', handleScroll);
+  thumb.addEventListener('mousedown', handleMouseDown);
+
+  // 监听内容变化
+  const observer = new MutationObserver(() => requestAnimationFrame(updateScrollbar));
+  observer.observe(target, { childList: true, subtree: true });
+
+  // 监听窗口大小变化 - resize 可以保留 requestAnimationFrame
+  window.addEventListener('resize', () => requestAnimationFrame(updateScrollbar));
+
+  // 初始化
+  updateScrollbar();
+
+  // 返回销毁函数
+  return () => {
+    try {
+      if (scrollbar?.parentNode) scrollbar.remove();
+      if (styleSheet?.parentNode) styleSheet.remove();
+      if (target) {
+        target.removeEventListener('scroll', handleScroll);
+        target.style.cssText = originalStyle;
+      }
+      observer?.disconnect();
+      window.removeEventListener('resize', () => requestAnimationFrame(updateScrollbar));
+    } catch (error) {
+      console.error('销毁滚动条失败:', error);
+    }
+  };
+}

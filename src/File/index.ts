@@ -3,9 +3,9 @@
  * @Author: HxB
  * @Date: 2024-11-01 11:52:01
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-11-04 17:55:17
+ * @LastEditTime: 2025-03-01 10:19:17
  * @Description: 文件常用函数
- * @FilePath: \js-xxx\src\File\index.ts
+ * @FilePath: /js-xxx/src/File/index.ts
  */
 
 import { formatDate } from '@/Date';
@@ -456,7 +456,7 @@ export function exportFile(data: string, fileName?: string, fileType = 'txt'): v
   // 加入特殊字符确保 utf-8
   // eslint-disable-next-line spellcheck/spell-checker
   const uri = `data:${getContentType(fileType)};charset=utf-8,\ufeff${safeEncodeURI(data)}`;
-  // U+FEFF 是一个零宽度非断字符（Zero Width No-Break Space），也称为“字节顺序标记（Byte Order Mark，BOM）”。
+  // U+FEFF 是一个零宽度非断字符（Zero Width No-Break Space），也称为"字节顺序标记（Byte Order Mark，BOM）"。
   // eslint-disable-next-line spellcheck/spell-checker
   download(uri, `${fileName ?? formatDate(new Date(), 'yyyy-mm-dd-hhiiss')}.${fileType}`);
   // downloadContent 可以兼容落后浏览器的情况
@@ -477,4 +477,56 @@ export function formatBytes(bytes: number, precision = 2): string {
   bytes /= 1 << (10 * pow);
   const unit = units?.[pow] ?? units[0];
   return bytes.toFixed(precision) + ' ' + unit;
+}
+
+/**
+ * 解析或者读取文件内容
+ * @example
+ * readFileContent('test.txt', 'text').then(res => console.log(res)); /// 读取文件内容
+ * readFileContent('test.txt').then(res => console.log(res)); /// 读取文件内容
+ * readFileContent('test.csv').then(res => console.log(res)); /// 读取文件内容
+ * readFileContent('test.txt', 'base64').then(res => console.log(res)); /// 读取文件内容为 base64
+ * readFileContent('test.txt', 'blob').then(res => console.log(res)); /// 读取文件内容为 blob
+ * readFileContent('test.txt', 'arrayBuffer').then(res => console.log(res)); /// 读取文件内容为 arrayBuffer
+ * @param file 文件
+ * @param type 类型
+ * @returns
+ * @category File-文件相关
+ */
+export function readFileContent(file: any, type?: 'text' | 'base64' | 'blob' | 'arrayBuffer'): Promise<any> {
+  type = type ?? 'text';
+  return new Promise((resolve, reject) => {
+    try {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        // 优先使用 reader.result，如果不存在则使用 e.target.result
+        const result = reader.result ?? (e.target as FileReader).result;
+        if (type === 'blob' && result instanceof ArrayBuffer) {
+          // 如果是 blob 类型，将 ArrayBuffer 转换为 Blob
+          resolve(new Blob([result], { type: file.type }));
+        } else {
+          resolve(result);
+        }
+      };
+      reader.onerror = reject;
+
+      switch (type) {
+        case 'text':
+          reader.readAsText(file);
+          break;
+        case 'base64':
+          reader.readAsDataURL(file);
+          break;
+        case 'blob':
+        case 'arrayBuffer':
+          reader.readAsArrayBuffer(file);
+          break;
+        default:
+          reader.readAsText(file);
+          break;
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
 }
