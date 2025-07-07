@@ -1,8 +1,8 @@
-[**js-xxx v2.2.31**](../README.md) • **Docs**
+[**js-xxx v2.2.32**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.31](../README.md) / sortCallBack
+[js-xxx v2.2.32](../README.md) / sortCallBack
 
 # Function: sortCallBack()
 

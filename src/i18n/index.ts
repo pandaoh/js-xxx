@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2024-05-13 15:08:38
  * @LastEditors: DoubleAm
- * @LastEditTime: 2025-02-24 14:53:59
+ * @LastEditTime: 2025-07-07 15:10:27
  * @Description: i18n 国际化支持
  * @FilePath: /js-xxx/src/i18n/index.ts
  */
@@ -263,4 +263,6 @@ export function getDefaultLang(opts?: { supportLangs: string[]; key?: string }):
  * @returns
  * @category i18n-多语言(国际化)
  */
-export const $t = (s: any) => `${s}`;
+export function $t(s: any): string {
+  return `${s}`;
+}

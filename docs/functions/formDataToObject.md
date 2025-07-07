@@ -1,8 +1,8 @@
-[**js-xxx v2.2.31**](../README.md) • **Docs**
+[**js-xxx v2.2.32**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.31](../README.md) / formDataToObject
+[js-xxx v2.2.32](../README.md) / formDataToObject
 
 # Function: formDataToObject()
 
@@ -25,10 +25,10 @@ The FormData object to convert
 ```ts
 const formData = new FormData();
 formData.append('name', 'John Doe');
-formData.append('email', 'john.doe@example.com');
+formData.append('email', 'john.doe@demo.com');
 formData.append('hobbies', 'reading');
 formData.append('hobbies', 'coding');
 const result = formDataToObject(formData);
 console.log(result);
-/// { name: 'John Doe', email: 'john.doe@example.com', hobbies: ['reading', 'coding'] }
+/// { name: 'John Doe', email: 'john.doe@demo.com', hobbies: ['reading', 'coding'] }
 ```

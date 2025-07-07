@@ -1,8 +1,8 @@
-[**js-xxx v2.2.31**](../README.md) • **Docs**
+[**js-xxx v2.2.32**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.31](../README.md) / getBrowserLang
+[js-xxx v2.2.32](../README.md) / getBrowserLang
 
 # Function: getBrowserLang()
 

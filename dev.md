@@ -11,7 +11,7 @@
 * 统一使用 `export function functionName() {}` 导出函数，不要使用 `export const functionName = function() {}` 或者`箭头函数`。
 * 函数范例结果统一使用 ` /// `，前后都需**空格**，函数内注释统一**放在代码上一行**，`禁止放在代码行末尾`。
 * 确保每次提交时 `src` 目录下的 `export function` 的数目与 `@example`/`@returns` 的数目一致。
-* 提交前在 `package.json` 中修改[版本号](https://docs-1257794070.cos-website.ap-nanjing.myqcloud.com/#/git/?id=tags)，并执行 `npm run build && npm run doc` or `npm run push:before`
+* 提交前在 `package.json` 中修改[版本号](https://web-docs.biugle.cn/#/git/?id=tags)，并执行 `npm run build && npm run doc` or `npm run push:before`
 * 开发时使用 `npm run lint` 可进行代码检查
 * `push` 到 `publish` 分支即可发布新版本。
 
@@ -37,7 +37,7 @@ export function demo(a: string, b: number = 0): string {
 * 创建分类文件夹后，请添加文件头说明此分类主要内容。
 * 根目录 `src/index.ts` 批量导出时请勿使用**路径别名**，否则会导致声明文件路径失效。
 * 在 `src/index.ts` 中 `export * ...` 新分类的文件。
-* 提交前在 `package.json` 中修改[版本号](https://docs-1257794070.cos-website.ap-nanjing.myqcloud.com/#/git/?id=tags)，并执行 `npm run build && npm run doc` or `npm run push:before`
+* 提交前在 `package.json` 中修改[版本号](https://web-docs.biugle.cn/#/git/?id=tags)，并执行 `npm run build && npm run doc` or `npm run push:before`
 * `push` 到 `publish` 分支即可发布新版本。
 
 ## 测试函数

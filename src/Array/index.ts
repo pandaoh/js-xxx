@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 11:52:01
  * @LastEditors: DoubleAm
- * @LastEditTime: 2025-02-24 15:09:01
+ * @LastEditTime: 2025-07-07 11:47:39
  * @Description: 数组常用函数
  * @FilePath: /js-xxx/src/Array/index.ts
  */
@@ -254,6 +254,33 @@ export function arrayFill(arr: any[], n?: number): number[] {
     } else {
       result.push(arr[i]);
     }
+  }
+
+  return result;
+}
+
+/**
+ * 将数组拆分为多个子数组（每组 n 个元素）
+ * @example
+ * const arr = [1, 2, 3, 4, 5, 6, 7];
+ * console.log(arrayChunk(arr, 3)); ///[ [1, 2, 3], [4, 5, 6], [7] ]
+ * console.log(arrayChunk(arr, 8)); ///[ [1, 2, 3, 4, 5, 6, 7] ]
+ * @param arrayData 原始数组
+ * @param n 每组元素个数
+ * @returns
+ * @category Array-数组相关
+ */
+export function arrayChunk(arrayData: any[], n: number): any[][] {
+  // 处理边界情况
+  if (!Array.isArray(arrayData)) return [];
+  if (typeof n !== 'number' || n < 1) return [];
+
+  const result = [];
+  const len = arrayData.length;
+
+  // 使用循环切片法
+  for (let i = 0; i < len; i += n) {
+    result.push(arrayData.slice(i, i + n));
   }
 
   return result;

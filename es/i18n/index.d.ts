@@ -107,5 +107,5 @@ export declare function getDefaultLang(opts?: {
  * @returns
  * @category i18n-多语言(国际化)
  */
-export declare const $t: (s: any) => string;
+export declare function $t(s: any): string;
 //# sourceMappingURL=index.d.ts.map

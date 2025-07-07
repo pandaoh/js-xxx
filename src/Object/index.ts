@@ -2,9 +2,9 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:05:14
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-11-12 17:00:25
+ * @LastEditTime: 2025-07-07 15:11:18
  * @Description: 对象相关函数
- * @FilePath: \js-xxx\src\Object\index.ts
+ * @FilePath: /js-xxx/src/Object/index.ts
  */
 
 import { getKey } from '@/Tools';
@@ -263,7 +263,7 @@ export function arr2select(arr: any[], options: { label?: string; value: string;
  * // 返回: { a: 1, b: 'default', c.d: 'test', 'c.e.0': 0 }
  * @category Others-业务/其他
  */
-export const getObjectValue = (obj: any = {}, keys: string[], defaultValue?: any) => {
+export function getObjectValue(obj: any = {}, keys: string[], defaultValue?: any) {
   const results: any = {};
 
   keys?.forEach((key) => {
@@ -271,4 +271,4 @@ export const getObjectValue = (obj: any = {}, keys: string[], defaultValue?: any
   });
 
   return results;
-};
+}

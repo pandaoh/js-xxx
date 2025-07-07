@@ -1,8 +1,8 @@
-[**js-xxx v2.2.31**](../README.md) • **Docs**
+[**js-xxx v2.2.32**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.31](../README.md) / isDecimal
+[js-xxx v2.2.32](../README.md) / isDecimal
 
 # Function: isDecimal()
 

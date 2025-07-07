@@ -626,7 +626,7 @@ var $xxx = (function (exports) {
    * @Author: HxB
    * @Date: 2022-04-26 11:52:01
    * @LastEditors: DoubleAm
-   * @LastEditTime: 2025-02-24 15:09:01
+   * @LastEditTime: 2025-07-07 11:47:39
    * @Description: 数组常用函数
    * @FilePath: /js-xxx/src/Array/index.ts
    */
@@ -866,6 +866,31 @@ var $xxx = (function (exports) {
           else {
               result.push(arr[i]);
           }
+      }
+      return result;
+  }
+  /**
+   * 将数组拆分为多个子数组（每组 n 个元素）
+   * @example
+   * const arr = [1, 2, 3, 4, 5, 6, 7];
+   * console.log(arrayChunk(arr, 3)); ///[ [1, 2, 3], [4, 5, 6], [7] ]
+   * console.log(arrayChunk(arr, 8)); ///[ [1, 2, 3, 4, 5, 6, 7] ]
+   * @param arrayData 原始数组
+   * @param n 每组元素个数
+   * @returns
+   * @category Array-数组相关
+   */
+  function arrayChunk(arrayData, n) {
+      // 处理边界情况
+      if (!Array.isArray(arrayData))
+          return [];
+      if (typeof n !== 'number' || n < 1)
+          return [];
+      var result = [];
+      var len = arrayData.length;
+      // 使用循环切片法
+      for (var i = 0; i < len; i += n) {
+          result.push(arrayData.slice(i, i + n));
       }
       return result;
   }
@@ -11262,9 +11287,9 @@ var $xxx = (function (exports) {
    * @Author: HxB
    * @Date: 2022-04-26 15:05:14
    * @LastEditors: DoubleAm
-   * @LastEditTime: 2024-11-12 17:00:25
+   * @LastEditTime: 2025-07-07 15:11:18
    * @Description: 对象相关函数
-   * @FilePath: \js-xxx\src\Object\index.ts
+   * @FilePath: /js-xxx/src/Object/index.ts
    */
   /**
    * 获取多级对象值
@@ -11533,14 +11558,14 @@ var $xxx = (function (exports) {
    * // 返回: { a: 1, b: 'default', c.d: 'test', 'c.e.0': 0 }
    * @category Others-业务/其他
    */
-  var getObjectValue = function (obj, keys, defaultValue) {
+  function getObjectValue(obj, keys, defaultValue) {
       if (obj === void 0) { obj = {}; }
       var results = {};
       keys === null || keys === void 0 ? void 0 : keys.forEach(function (key) {
           results[key] = getV(defaultValue, obj, key);
       });
       return results;
-  };
+  }
 
   /* eslint-disable max-lines */
   // eslint-disable-next-line spellcheck/spell-checker, zob/comment
@@ -16726,14 +16751,6 @@ var $xxx = (function (exports) {
       });
   }
 
-  /*
-   * @Author: HxB
-   * @Date: 2022-04-26 15:53:02
-   * @LastEditors: DoubleAm
-   * @LastEditTime: 2024-08-27 12:26:15
-   * @Description: 表单相关
-   * @FilePath: \js-xxx\src\Form\index.ts
-   */
   /**
    * 对象转 FormData 格式
    * @example
@@ -16769,12 +16786,12 @@ var $xxx = (function (exports) {
    * @example
    * const formData = new FormData();
    * formData.append('name', 'John Doe');
-   * formData.append('email', 'john.doe@example.com');
+   * formData.append('email', 'john.doe@demo.com');
    * formData.append('hobbies', 'reading');
    * formData.append('hobbies', 'coding');
    * const result = formDataToObject(formData);
    * console.log(result);
-   * /// { name: 'John Doe', email: 'john.doe@example.com', hobbies: ['reading', 'coding'] }
+   * /// { name: 'John Doe', email: 'john.doe@demo.com', hobbies: ['reading', 'coding'] }
    * @returns
    * @category Form-表单相关
    */
@@ -16879,6 +16896,214 @@ var $xxx = (function (exports) {
           return data;
       }
       return [getData, setData, resetData];
+  }
+  /**
+   * URL 参数管理
+   * @example
+   * const { resetParams, setParams, getParams, deleteParams, setArrayParams, subscribe, searchParams, controlledKeys } = useURLParams({
+   *   defaultParams: { a: '1', b: '2' },
+   *   location: window.location,
+   * });
+   * // 设置参数
+   * setParams('a', '3'); // 设置单个参数
+   * setParams({ b: '4', c: '5' }); // 设置多个参数
+   * // 获取参数
+   * console.log(searchParams.toString()); // 获取当前查询参数字符串
+   * const a = getParams('a'); // 获取单个参数
+   * const allParams = getParams(); // 获取所有参数
+   * // 删除参数
+   * deleteParams('all'); // 删除所有参数
+   * deleteParams(); // 删除所有受控参数
+   * deleteParams('b'); // 删除单个参数
+   * // 设置数组参数
+   * setArrayParams('tags', ['tag1', 'tag2', 'tag3']); // 设置数组参数
+   * // 订阅参数变化
+   * const unsubscribe = subscribe((params, url) => {
+   *   console.log('参数变化:', params.toString(), '新 URL:', url);
+   * });
+   * // 重置参数
+   * resetParams('all'); // 重置为默认参数，包括非受控参数
+   * resetParams(); // 重置为默认参数
+   * // 获取受控参数键名集合
+   * console.log(controlledKeys); // 获取受控参数键名集合
+   * @param options 配置选项
+   * @returns
+   * @category URLParams-URL 参数管理
+   */
+  function useURLParams(_a) {
+      var _b = _a === void 0 ? {} : _a, _c = _b.defaultParams, defaultParams = _c === void 0 ? {} : _c, _d = _b.location, location = _d === void 0 ? typeof window !== 'undefined' && window.location ? window.location : new URL('http://localhost') : _d;
+      // 受控参数键名集合
+      var controlledKeys = new Set(Object.keys(defaultParams));
+      // 单例状态：当前查询参数
+      var searchParams = new URLSearchParams(location.search);
+      // 订阅者列表
+      var subscribers = new Set();
+      /**
+       * 通知订阅者
+       * @param params 新查询参数
+       */
+      var notifySubscribers = function (params) {
+          var newUrl = "".concat(location.pathname, "?").concat(params.toString()).concat(location.hash || '');
+          subscribers.forEach(function (callback) { return callback(params, newUrl); });
+      };
+      /**
+       * 订阅参数变化
+       * @param callback 回调函数
+       */
+      var subscribe = function (callback) {
+          if (typeof callback !== 'function')
+              throw new Error('callback must be a function!');
+          subscribers.add(callback);
+          return function () { return subscribers.delete(callback); };
+      };
+      /**
+       * 内部更新参数
+       * @param changes 参数变更对象
+       * @param scope 操作范围
+       */
+      var updateParams = function (changes, scope) {
+          var e_1, _a;
+          if (scope === void 0) { scope = 'controlled'; }
+          if (typeof changes !== 'object' || changes === null)
+              throw new Error('changes must be an object!');
+          var newParams = new URLSearchParams(searchParams);
+          Object.entries(changes).forEach(function (_a) {
+              var _b = __read(_a, 2), key = _b[0], value = _b[1];
+              if (typeof key !== 'string' || key === '')
+                  return;
+              if (value == null) {
+                  newParams.delete(key);
+              }
+              else {
+                  newParams.set(key, String(value));
+              }
+          });
+          if (scope === 'all') {
+              try {
+                  for (var _b = __values(newParams.keys()), _c = _b.next(); !_c.done; _c = _b.next()) {
+                      var key = _c.value;
+                      if (!controlledKeys.has(key) && !(key in changes))
+                          newParams.delete(key);
+                  }
+              }
+              catch (e_1_1) { e_1 = { error: e_1_1 }; }
+              finally {
+                  try {
+                      if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+                  }
+                  finally { if (e_1) throw e_1.error; }
+              }
+          }
+          return newParams;
+      };
+      /**
+       * 重置参数为默认值
+       * @param scope 重置范围
+       */
+      var resetParams = function (scope) {
+          if (scope === void 0) { scope = 'controlled'; }
+          var newParams = updateParams(defaultParams, scope);
+          searchParams = newParams;
+          notifySubscribers(newParams);
+          return newParams;
+      };
+      /**
+       * 设置参数
+       * @param key 参数键名或参数对象
+       * @param value 参数值（当 key 为字符串时需要）
+       */
+      var setParams = function (key, value) {
+          var _a;
+          var changes = typeof key === 'object' ? key : (_a = {}, _a[key] = value, _a);
+          var newParams = updateParams(changes);
+          searchParams = newParams;
+          notifySubscribers(newParams);
+          return newParams;
+      };
+      /**
+       * 获取参数值
+       * @param key 参数键名
+       */
+      var getParams = function (key) {
+          var _a;
+          if (key) {
+              if (typeof key !== 'string')
+                  throw new Error('key must be a string!');
+              return searchParams.has(key) ? searchParams.get(key) : (_a = defaultParams[key]) !== null && _a !== void 0 ? _a : null;
+          }
+          return Array.from(controlledKeys).reduce(function (result, k) {
+              var _a;
+              result[k] = searchParams.has(k) ? searchParams.get(k) : (_a = defaultParams[k]) !== null && _a !== void 0 ? _a : null;
+              return result;
+          }, {});
+      };
+      /**
+       * 删除参数
+       * @param key 要删除的参数键名或 'all'
+       */
+      var deleteParams = function (key) {
+          var _a;
+          if (key === 'all') {
+              searchParams = new URLSearchParams();
+              notifySubscribers(searchParams);
+              return searchParams;
+          }
+          if (typeof key === 'string') {
+              var newParams_1 = updateParams((_a = {}, _a[key] = undefined, _a));
+              searchParams = newParams_1;
+              notifySubscribers(newParams_1);
+              return newParams_1;
+          }
+          var resetValues = Array.from(controlledKeys).reduce(function (obj, k) {
+              var _a;
+              return (__assign(__assign({}, obj), (_a = {}, _a[k] = undefined, _a)));
+          }, {});
+          var newParams = updateParams(resetValues);
+          searchParams = newParams;
+          notifySubscribers(newParams);
+          return newParams;
+      };
+      /**
+       * 设置数组参数
+       * @param key 参数键
+       * @param values 参数值数组
+       */
+      var setArrayParams = function (key, values) {
+          if (typeof key !== 'string' || key === '')
+              throw new Error('key must be a non-empty string!');
+          if (!Array.isArray(values))
+              throw new Error('values must be an array!');
+          var newParams = new URLSearchParams(searchParams);
+          newParams.delete(key);
+          values.forEach(function (value) { return newParams.append(key, String(value)); });
+          searchParams = newParams;
+          notifySubscribers(newParams);
+          return newParams;
+      };
+      // 初始化：仅更新受控参数，保留其他参数
+      var hasChanges = false;
+      Object.entries(defaultParams).forEach(function (_a) {
+          var _b = __read(_a, 2), key = _b[0], value = _b[1];
+          if (!searchParams.has(key)) {
+              searchParams.set(key, String(value));
+              hasChanges = true;
+          }
+      });
+      if (hasChanges) {
+          notifySubscribers(searchParams);
+      }
+      return {
+          resetParams: resetParams,
+          setParams: setParams,
+          getParams: getParams,
+          deleteParams: deleteParams,
+          setArrayParams: setArrayParams,
+          subscribe: subscribe,
+          get searchParams() {
+              return new URLSearchParams(searchParams);
+          },
+          controlledKeys: Array.from(controlledKeys),
+      };
   }
 
   /*
@@ -18201,7 +18426,7 @@ var $xxx = (function (exports) {
    * @Author: HxB
    * @Date: 2024-05-13 15:08:38
    * @LastEditors: DoubleAm
-   * @LastEditTime: 2025-02-24 14:53:59
+   * @LastEditTime: 2025-07-07 15:10:27
    * @Description: i18n 国际化支持
    * @FilePath: /js-xxx/src/i18n/index.ts
    */
@@ -18425,7 +18650,9 @@ var $xxx = (function (exports) {
    * @returns
    * @category i18n-多语言(国际化)
    */
-  var $t = function (s) { return "".concat(s); };
+  function $t(s) {
+      return "".concat(s);
+  }
 
   exports.$t = $t;
   exports.ANIMALS = ANIMALS;
@@ -18461,6 +18688,7 @@ var $xxx = (function (exports) {
   exports.appendScript = appendScript;
   exports.arr2select = arr2select;
   exports.arrObj2objArr = arrObj2objArr;
+  exports.arrayChunk = arrayChunk;
   exports.arrayFill = arrayFill;
   exports.arrayShuffle = arrayShuffle;
   exports.arraySort = arraySort;
@@ -18756,6 +18984,7 @@ var $xxx = (function (exports) {
   exports.union = union;
   exports.unique = unique;
   exports.useStateData = useStateData;
+  exports.useURLParams = useURLParams;
   exports.uuid = uuid;
   exports.versionUpgrade = versionUpgrade;
   exports.waitUntil = waitUntil;

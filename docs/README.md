@@ -1,11 +1,12 @@
-**js-xxx v2.2.31** • **Docs**
+**js-xxx v2.2.32** • **Docs**
 
 ***
 
-# js-xxx v2.2.31
+# js-xxx v2.2.32
 
 ## Array-数组相关
 
+- [arrayChunk](functions/arrayChunk.md)
 - [arrayFill](functions/arrayFill.md)
 - [arrayShuffle](functions/arrayShuffle.md)
 - [arraySort](functions/arraySort.md)
@@ -175,6 +176,8 @@
 
 ## Other
 
+- [URLParamsOptions](interfaces/URLParamsOptions.md)
+- [URLParamsReturn](interfaces/URLParamsReturn.md)
 - [eslintRules](functions/eslintRules.md)
 - [prettierRules](functions/prettierRules.md)
 - [sortJSON](functions/sortJSON.md)
@@ -405,6 +408,10 @@
 - [toBool](functions/toBool.md)
 - [toNum](functions/toNum.md)
 - [toStr](functions/toStr.md)
+
+## URLParams-URL 参数管理
+
+- [useURLParams](functions/useURLParams.md)
 
 ## Watermark-水印
 

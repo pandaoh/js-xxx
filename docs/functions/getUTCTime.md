@@ -1,8 +1,8 @@
-[**js-xxx v2.2.31**](../README.md) • **Docs**
+[**js-xxx v2.2.32**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.31](../README.md) / getUTCTime
+[js-xxx v2.2.32](../README.md) / getUTCTime
 
 # Function: getUTCTime()
 

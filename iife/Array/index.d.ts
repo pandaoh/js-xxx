@@ -118,4 +118,16 @@ export declare function sortBy(keys?: string | string[], isAscend?: boolean): an
  * @category Array-数组相关
  */
 export declare function arrayFill(arr: any[], n?: number): number[];
+/**
+ * 将数组拆分为多个子数组（每组 n 个元素）
+ * @example
+ * const arr = [1, 2, 3, 4, 5, 6, 7];
+ * console.log(arrayChunk(arr, 3)); ///[ [1, 2, 3], [4, 5, 6], [7] ]
+ * console.log(arrayChunk(arr, 8)); ///[ [1, 2, 3, 4, 5, 6, 7] ]
+ * @param arrayData 原始数组
+ * @param n 每组元素个数
+ * @returns
+ * @category Array-数组相关
+ */
+export declare function arrayChunk(arrayData: any[], n: number): any[][];
 //# sourceMappingURL=index.d.ts.map

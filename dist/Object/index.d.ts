@@ -106,5 +106,5 @@ export declare function arr2select(arr: any[], options: {
  * // 返回: { a: 1, b: 'default', c.d: 'test', 'c.e.0': 0 }
  * @category Others-业务/其他
  */
-export declare const getObjectValue: (obj: any, keys: string[], defaultValue?: any) => any;
+export declare function getObjectValue(obj: any, keys: string[], defaultValue?: any): any;
 //# sourceMappingURL=index.d.ts.map
