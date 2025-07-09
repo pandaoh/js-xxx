@@ -1,8 +1,8 @@
-[**js-xxx v2.2.32**](../README.md) • **Docs**
+[**js-xxx v2.2.33**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.32](../README.md) / transferQueryParams
+[js-xxx v2.2.33](../README.md) / transferQueryParams
 
 # Function: transferQueryParams()
 
@@ -33,8 +33,8 @@
 ```ts
 transferQueryParams({ status: 'ALL', user: '  John  ', id: null }, 'N/A');
 /// { status: 'N/A', user: 'John', id: 'N/A' }
-transferQueryParams({ status: 'ALL', user: '  John  ', id: null });
-/// { status: '', user: 'John', id: null }
+transferQueryParams({ status: 'ALL', user: '  John  ', id: null, list: [1, 2, 'All', null] });
+/// { status: '', user: 'John', id: null, list: [1, 2] }
 transferQueryParams({ status: 'ALL', user: '  John  ', id: null, dep: { a: 'all', id: undefined } }, '');
 /// { status: '', user: 'John', id: '', dep: { a: '', id: '' } }
 ```

@@ -1,8 +1,8 @@
-**js-xxx v2.2.32** • **Docs**
+**js-xxx v2.2.33** • **Docs**
 
 ***
 
-# js-xxx v2.2.32
+# js-xxx v2.2.33
 
 ## Array-数组相关
 
@@ -435,6 +435,7 @@
 - [$t](functions/$t.md)
 - [getBrowserLang](functions/getBrowserLang.md)
 - [getDefaultLang](functions/getDefaultLang.md)
+- [i18nTransfer](functions/i18nTransfer.md)
 
 ## xAjax-请求封装
 

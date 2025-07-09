@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2024-05-13 15:08:38
  * @LastEditors: DoubleAm
- * @LastEditTime: 2025-07-07 15:10:27
+ * @LastEditTime: 2025-07-09 17:37:10
  * @Description: i18n 国际化支持
  * @FilePath: /js-xxx/src/i18n/index.ts
  */
@@ -265,4 +265,85 @@ export function getDefaultLang(opts?: { supportLangs: string[]; key?: string }):
  */
 export function $t(s: any): string {
   return `${s}`;
+}
+
+/**
+ * 用于将列表或对象转换为国际化文本
+ * 如果传入的是数组，则返回一个对象数组，每个对象包含 label 和 value
+ * 如果传入的是对象，则递归转换每个值
+ * @example
+ * /// 如果传入的是数组，则返回一个对象数组，每个对象包含 label 和 value
+ * const list = [
+ *   { label: 'Hello', value: 1 },
+ *   { label: 'World', value: 2 },
+ * ];
+ * const i18nTransferFunc = (text) => `Translated: ${text}`;
+ * const result = i18nTransfer(list, i18nTransferFunc);
+ * console.log(result);
+ * // 输出: [
+ * //   { label: 'Translated: Hello', value: 1 },
+ * //   { label: 'Translated: World', value: 2 },
+ * // ]
+ * /// 如果传入的是对象，则递归转换每个值
+ * const obj = {
+ *   key1: { label: 'Hello', value: 1 },
+ *   key2: { label: 'World', value: 2 },
+ *   key3: list,
+ * };
+ * const resultObj = i18nTransfer(obj, i18nTransferFunc);
+ * console.log(resultObj);
+ * // 输出: {
+ * //   key1: { label: 'Translated: Hello', value: 1 },
+ * //   key2: { label: 'Translated: World', value: 2 },
+ * //   key3: [
+ * //     { label: 'Translated: Hello', value: 1 },
+ * //     { label: 'Translated: World', value: 2 },
+ * //   ],
+ * // }
+ * /// 如果传入的是 null 或 undefined，则返回原值
+ * const nullValue = i18nTransfer(null, i18nTransferFunc);
+ * console.log(nullValue); // 输出: null
+ * /// 如果传入的是单个对象且有 label 属性，直接转换
+ * const singleObj = { label: 'Hello', value: 1 };
+ * const resultSingle = i18nTransfer(singleObj, i18nTransferFunc);
+ * console.log(resultSingle); // 输出: { label: 'Translated: Hello', value: 1 }
+ * @param listOrMap 列表或对象
+ * @param i18nTransferFunc 国际化转换函数
+ * @returns
+ * @category i18n-多语言(国际化)
+ */
+export function i18nTransfer(listOrMap: any | any[], i18nTransferFunc: any): any | any[] {
+  try {
+    if (!listOrMap) {
+      return listOrMap;
+    }
+
+    if (Array.isArray(listOrMap)) {
+      return listOrMap.map((item) => {
+        if (typeof item === 'object' && item !== null) {
+          return {
+            ...item,
+            label: item.label ? i18nTransferFunc(item.label) : item.label,
+          };
+        }
+        return item;
+      });
+    }
+
+    if (typeof listOrMap === 'object') {
+      return Object.entries(listOrMap).reduce((acc, [key, value]) => {
+        if (key === 'label' && typeof value === 'string') {
+          acc[key] = i18nTransferFunc(value);
+        } else {
+          acc[key] = i18nTransfer(value, i18nTransferFunc);
+        }
+        return acc;
+      }, {} as Record<string, any>);
+    }
+
+    return listOrMap;
+  } catch (error) {
+    console.error('js-xxx:i18nTransferError--->', error);
+    return listOrMap;
+  }
 }

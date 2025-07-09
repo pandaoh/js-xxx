@@ -3,9 +3,9 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:15:37
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-11-04 17:47:04
+ * @LastEditTime: 2025-07-09 17:36:32
  * @Description: 请求相关函数
- * @FilePath: \js-xxx\src\Request\index.ts
+ * @FilePath: /js-xxx/src/Request/index.ts
  */
 import { CONTENT_TYPES, FileType, HttpMethod } from '@/Data';
 import { getType, isObj, toBool } from '@/Types';
@@ -394,8 +394,8 @@ export function safeDecodeURI(s: string): string {
  * @example
  * transferQueryParams({ status: 'ALL', user: '  John  ', id: null }, 'N/A');
  * /// { status: 'N/A', user: 'John', id: 'N/A' }
- * transferQueryParams({ status: 'ALL', user: '  John  ', id: null });
- * /// { status: '', user: 'John', id: null }
+ * transferQueryParams({ status: 'ALL', user: '  John  ', id: null, list: [1, 2, 'All', null] });
+ * /// { status: '', user: 'John', id: null, list: [1, 2] }
  * transferQueryParams({ status: 'ALL', user: '  John  ', id: null, dep: { a: 'all', id: undefined } }, '');
  * /// { status: '', user: 'John', id: '', dep: { a: '', id: '' } }
  * @param obj 查询参数对象
@@ -404,18 +404,25 @@ export function safeDecodeURI(s: string): string {
  * @category Request-请求相关
  */
 export function transferQueryParams(obj: Record<string, any>, emptyValue?: any): Record<string, any> {
-  obj = obj || {};
+  const result: Record<string, any> = {};
+
   for (const key in obj) {
-    if (typeof obj[key] === 'object' && obj[key] !== null) {
-      // 递归处理嵌套对象
-      obj[key] = transferQueryParams(obj[key], emptyValue);
-    } else if (`${obj[key]}`.toUpperCase() === 'ALL') {
-      obj[key] = emptyValue !== undefined ? emptyValue : '';
-    } else if (obj[key] === null || obj[key] === undefined) {
-      obj[key] = emptyValue !== undefined ? emptyValue : obj[key];
-    } else if (typeof obj[key] === 'string') {
-      obj[key] = obj[key].trim();
+    const value = obj[key];
+
+    if (Array.isArray(value)) {
+      result[key] = value.filter((i) => i != null && `${i}`.toUpperCase() !== 'ALL');
+    } else if (typeof value === 'object' && value !== null) {
+      result[key] = transferQueryParams(value, emptyValue);
+    } else if (`${value}`.toUpperCase() === 'ALL') {
+      result[key] = emptyValue !== undefined ? emptyValue : '';
+    } else if (value === null || value === undefined) {
+      result[key] = emptyValue !== undefined ? emptyValue : value;
+    } else if (typeof value === 'string') {
+      result[key] = value.trim();
+    } else {
+      result[key] = value;
     }
   }
-  return obj;
+
+  return result;
 }

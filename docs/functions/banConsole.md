@@ -1,8 +1,8 @@
-[**js-xxx v2.2.32**](../README.md) • **Docs**
+[**js-xxx v2.2.33**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.32](../README.md) / banConsole
+[js-xxx v2.2.33](../README.md) / banConsole
 
 # Function: banConsole()
 
