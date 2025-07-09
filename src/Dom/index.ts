@@ -1,9 +1,9 @@
 /* eslint-disable max-lines */
 /*
  * @Author: HxB
- * @Date: 2022-04-26 15:37:27
+ * @Date: 2021-04-26 15:37:27
  * @LastEditors: DoubleAm
- * @LastEditTime: 2025-07-07 15:20:39
+ * @LastEditTime: 2025-07-09 17:40:58
  * @Description: 利用 dom 的一些函数
  * @FilePath: /js-xxx/src/Dom/index.ts
  */
