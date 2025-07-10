@@ -1,8 +1,8 @@
-[**js-xxx v2.2.33**](../README.md) • **Docs**
+[**js-xxx v2.2.34**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.33](../README.md) / findChildren
+[js-xxx v2.2.34](../README.md) / findChildren
 
 # Function: findChildren()
 

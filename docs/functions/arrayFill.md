@@ -1,8 +1,8 @@
-[**js-xxx v2.2.33**](../README.md) • **Docs**
+[**js-xxx v2.2.34**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.33](../README.md) / arrayFill
+[js-xxx v2.2.34](../README.md) / arrayFill
 
 # Function: arrayFill()
 

@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:15:37
  * @LastEditors: DoubleAm
- * @LastEditTime: 2025-07-09 17:36:32
+ * @LastEditTime: 2025-07-10 11:17:21
  * @Description: 请求相关函数
  * @FilePath: /js-xxx/src/Request/index.ts
  */
@@ -410,8 +410,8 @@ export function transferQueryParams(obj: Record<string, any>, emptyValue?: any):
     const value = obj[key];
 
     if (Array.isArray(value)) {
-      result[key] = value.filter((i) => i != null && `${i}`.toUpperCase() !== 'ALL');
-    } else if (typeof value === 'object' && value !== null) {
+      result[key] = value.filter((i) => i !== null && i !== undefined && `${i}`.toUpperCase() !== 'ALL');
+    } else if (Object.prototype.toString.call(value) === '[object Object]' && value !== null) {
       result[key] = transferQueryParams(value, emptyValue);
     } else if (`${value}`.toUpperCase() === 'ALL') {
       result[key] = emptyValue !== undefined ? emptyValue : '';

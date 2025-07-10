@@ -1,8 +1,8 @@
-[**js-xxx v2.2.33**](../README.md) • **Docs**
+[**js-xxx v2.2.34**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.33](../README.md) / getLocalObj
+[js-xxx v2.2.34](../README.md) / getLocalObj
 
 # Function: getLocalObj()
 

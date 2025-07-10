@@ -1,8 +1,8 @@
-[**js-xxx v2.2.33**](../README.md) • **Docs**
+[**js-xxx v2.2.34**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.33](../README.md) / onClick2MoreClick
+[js-xxx v2.2.34](../README.md) / onClick2MoreClick
 
 # Function: onClick2MoreClick()
 
