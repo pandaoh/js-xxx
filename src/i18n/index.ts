@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2024-05-13 15:08:38
  * @LastEditors: DoubleAm
- * @LastEditTime: 2025-07-09 17:37:10
+ * @LastEditTime: 2025-07-10 11:21:06
  * @Description: i18n 国际化支持
  * @FilePath: /js-xxx/src/i18n/index.ts
  */
@@ -284,7 +284,7 @@ export function $t(s: any): string {
  * //   { label: 'Translated: Hello', value: 1 },
  * //   { label: 'Translated: World', value: 2 },
  * // ]
- * /// 如果传入的是对象，则递归转换每个值
+ * /// 如果传入的是对象，则递归转换每个值处理
  * const obj = {
  *   key1: { label: 'Hello', value: 1 },
  *   key2: { label: 'World', value: 2 },
