@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 11:33:53
  * @LastEditors: DoubleAm
- * @LastEditTime: 2025-01-06 10:36:52
+ * @LastEditTime: 2025-12-19 17:23:24
  * @Description: 主项目文件汇总（请勿使用路径别名，否则会导致声明文件失效。）
  * @FilePath: /js-xxx/src/index.ts
  */
@@ -23,6 +23,8 @@ export * from './Date';
 export * from './Dom';
 export * from './File';
 export * from './Form';
+export * from './i18n';
+export * from './JSEncrypt';
 export * from './Math';
 export * from './Notify';
 export * from './Number';
@@ -36,4 +38,3 @@ export * from './Toast';
 export * from './Tools';
 export * from './Types';
 export * from './WebSocket';
-export * from './i18n';

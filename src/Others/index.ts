@@ -3,7 +3,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 14:53:39
  * @LastEditors: DoubleAm
- * @LastEditTime: 2024-12-05 17:34:07
+ * @LastEditTime: 2025-12-19 17:22:19
  * @Description: 因项目需要常用函数，不管任何项目，都放到一起。注意甄别，没有复用意义的函数就不要添加了。
  * @FilePath: /js-xxx/src/Others/index.ts
  */
@@ -1342,4 +1342,115 @@ export function getMockData(type: MockDataType, options: MockOptions = {}): any 
     default:
       throw new Error(`Unsupported data type: ${type}`);
   }
+}
+
+/**
+ * 根据 value 获取 options 中对应的 label
+ * @param value value 值
+ * @param options options 数组
+ * @param defaultText 未找到时的默认文本
+ * @example
+ * const options = [ { label: '选项一', value: '1' }, { label: '选项二', value: '2' } ];
+ * getLabelByValue('1', options); /// '选项一'
+ * getLabelByValue('3', options, '默认文本'); /// '默认文本'
+ * @category Others-业务/其他
+ * @returns
+ */
+export function getLabelByValue(
+  value: string,
+  options: Array<{ label: string; value: string; [key: string]: any }>,
+  defaultText = '',
+): string {
+  const found = options.find((item) => item.value === value);
+  return found ? found.label : value || defaultText;
+}
+
+/**
+ * 判断是否为 all
+ * @param v 字符串、字符串数组或其他
+ * @example
+ * isAll('all'); /// true
+ * isAll(['a', 'b', 'all']); /// true
+ * isAll('test'); /// false
+ * @category Others-业务/其他
+ * @returns
+ */
+export function isAll(v: string | string[] | unknown): boolean {
+  if (!v) {
+    return false;
+  }
+  if (Array.isArray(v)) {
+    return v.some((i) => String(i).toLowerCase() === 'all');
+  }
+  return String(v).toLowerCase() === 'all';
+}
+
+/**
+ * 判断是否为 yes
+ * @param v 字符串、字符串数组或其他
+ * @param checkMap 比较映射表
+ * @example
+ * isYes('yes'); /// true
+ * isYes(['no', 'true']); /// true
+ * isYes('test'); /// false
+ * isYes(1); /// true
+ * @category Others-业务/其他
+ * @returns
+ */
+export function isYes(v: string | string[] | unknown, checkMap: string[] = ['yes', 'true', '1']): boolean {
+  if (!v) {
+    return false;
+  }
+  if (Array.isArray(v)) {
+    return v.some((i) => checkMap.includes(String(i).toLowerCase()));
+  }
+  return checkMap.includes(String(v).toLowerCase());
+}
+
+/**
+ * 判断是否为 no
+ * @param v 字符串、字符串数组或其他
+ * @param checkMap 比较映射表
+ * @example
+ * isNo('no'); /// true
+ * isNo(['yes', 'false']); /// true
+ * isNo('test'); /// false
+ * isNo(0); /// true
+ * @category Others-业务/其他
+ * @returns
+ */
+export function isNo(v: string | string[] | any, checkMap: string[] = ['no', 'false', '0']): boolean {
+  if (Array.isArray(v)) {
+    return v.some((i) => checkMap.includes(String(i).toLowerCase()));
+  }
+
+  const _otherWise = [undefined, null, ''];
+  if (!Array.isArray(v) && !checkMap?.includes(v) && _otherWise.includes(v)) {
+    return false;
+  }
+
+  return checkMap.includes(String(v).toLowerCase());
+}
+
+/**
+ * 处理多选时全选选项的变更逻辑
+ * @example
+ * handleMultipleSelectAll(['All', 'Option1'], { value: 'Option1' }); /// ['Option1']
+ * handleMultipleSelectAll(['Option1'], { value: 'All' }); /// ['All']
+ * handleMultipleSelectAll([], { value: 'Option1' }); /// ['All']
+ * onChange={(v, option) => {
+ *   const newValue = handleMultipleSelectAll(v, option, 'All');
+ *   setValue({ selectedOptions: newValue });
+ * }}
+ * @param value 当前选中的值数组
+ * @param option 当前变更的选项对象
+ * @param allValue 全选的值，默认为 'All'
+ * @category Others-业务/其他
+ * @returns
+ */
+export function handleMultipleSelectAll(value: string[], option: { value: string }, allValue = 'All'): string[] {
+  if (option?.value === allValue || value?.length === 0) {
+    return [allValue].filter(Boolean);
+  }
+  return value?.filter((item) => item !== allValue) || [];
 }

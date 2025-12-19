@@ -7,6 +7,8 @@ export * from './Date';
 export * from './Dom';
 export * from './File';
 export * from './Form';
+export * from './i18n';
+export * from './JSEncrypt';
 export * from './Math';
 export * from './Notify';
 export * from './Number';
@@ -20,5 +22,4 @@ export * from './Toast';
 export * from './Tools';
 export * from './Types';
 export * from './WebSocket';
-export * from './i18n';
 //# sourceMappingURL=index.d.ts.map

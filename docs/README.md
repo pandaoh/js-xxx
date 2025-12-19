@@ -1,8 +1,8 @@
-**js-xxx v2.2.34** • **Docs**
+**js-xxx v2.2.35** • **Docs**
 
 ***
 
-# js-xxx v2.2.34
+# js-xxx v2.2.35
 
 ## Array-数组相关
 
@@ -122,6 +122,12 @@
 - [toQueryString](functions/toQueryString.md)
 - [useStateData](functions/useStateData.md)
 
+## JSEncrypt-密码学-RSA
+
+- [decryptStringRSA](functions/decryptStringRSA.md)
+- [encryptStringRSA](functions/encryptStringRSA.md)
+- [getJSEncrypt](functions/getJSEncrypt.md)
+
 ## JSON-相关
 
 - [formatJSON](functions/formatJSON.md)
@@ -169,6 +175,7 @@
 
 - [arr2select](functions/arr2select.md)
 - [deepClone](functions/deepClone.md)
+- [defaultObj](functions/defaultObj.md)
 - [every](functions/every.md)
 - [findMaxKey](functions/findMaxKey.md)
 - [getV](functions/getV.md)
@@ -209,17 +216,22 @@
 - [formatRh](functions/formatRh.md)
 - [getBloodGroup](functions/getBloodGroup.md)
 - [getDataStr](functions/getDataStr.md)
+- [getLabelByValue](functions/getLabelByValue.md)
 - [getObjectValue](functions/getObjectValue.md)
 - [getUserAgent](functions/getUserAgent.md)
+- [handleMultipleSelectAll](functions/handleMultipleSelectAll.md)
+- [isAll](functions/isAll.md)
 - [isAppleDevice](functions/isAppleDevice.md)
 - [isBrowser](functions/isBrowser.md)
 - [isChrome](functions/isChrome.md)
 - [isCSR](functions/isCSR.md)
 - [isDarkMode](functions/isDarkMode.md)
 - [isMac](functions/isMac.md)
+- [isNo](functions/isNo.md)
 - [isNode](functions/isNode.md)
 - [isRhNegative](functions/isRhNegative.md)
 - [isWin](functions/isWin.md)
+- [isYes](functions/isYes.md)
 - [transferTemperature](functions/transferTemperature.md)
 - [versionUpgrade](functions/versionUpgrade.md)
 

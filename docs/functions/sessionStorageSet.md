@@ -1,8 +1,8 @@
-[**js-xxx v2.2.34**](../README.md) • **Docs**
+[**js-xxx v2.2.35**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.34](../README.md) / sessionStorageSet
+[js-xxx v2.2.35](../README.md) / sessionStorageSet
 
 # Function: sessionStorageSet()
 

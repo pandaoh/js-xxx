@@ -1,8 +1,8 @@
-[**js-xxx v2.2.34**](../README.md) • **Docs**
+[**js-xxx v2.2.35**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.34](../README.md) / TRANSFER\_STR
+[js-xxx v2.2.35](../README.md) / TRANSFER\_STR
 
 # Variable: TRANSFER\_STR
 

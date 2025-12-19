@@ -1,8 +1,8 @@
-[**js-xxx v2.2.34**](../README.md) • **Docs**
+[**js-xxx v2.2.35**](../README.md) • **Docs**
 
 ***
 
-[js-xxx v2.2.34](../README.md) / i18nTransfer
+[js-xxx v2.2.35](../README.md) / i18nTransfer
 
 # Function: i18nTransfer()
 
@@ -41,7 +41,7 @@ console.log(result);
 //   { label: 'Translated: Hello', value: 1 },
 //   { label: 'Translated: World', value: 2 },
 // ]
-/// 如果传入的是对象，则递归转换每个值
+/// 如果传入的是对象，则递归转换每个值处理
 const obj = {
   key1: { label: 'Hello', value: 1 },
   key2: { label: 'World', value: 2 },

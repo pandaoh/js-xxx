@@ -91,6 +91,7 @@ export declare function arr2select(arr: any[], options: {
  * @param obj 需要获取值的对象
  * @param keys 要获取的键数组，支持多级别。
  * @param defaultValue 默认值，当对象中不存在某个键时，使用该值替换。
+ * @param isLastKeyOnly 是否只使用最后一级键作为结果对象的键名，默认为 true 。
  * @returns 返回包含键值对的结果对象
  * @example
  * getObjectValue({ a: 1, b: null, c: undefined, d: '' }, ['a', 'b', 'c', 'd', 'e']);
@@ -104,7 +105,20 @@ export declare function arr2select(arr: any[], options: {
 
  * getObjectValue({ a: 1, b: undefined, c: { d: 'test', e: [0] } }, ['a', 'b', 'c.d', 'c.e.0'], 'default');
  * // 返回: { a: 1, b: 'default', c.d: 'test', 'c.e.0': 0 }
+
+ * getObjectValue({ a: { b: { c: 3 } } }, ['a.b.c', 'a.b.d'], '-', false);
+ * // 返回: { c: 3, d: '-' }
  * @category Others-业务/其他
  */
-export declare function getObjectValue(obj: any, keys: string[], defaultValue?: any): any;
+export declare function getObjectValue(obj: any, keys: string[], defaultValue?: any, isLastKeyOnly?: boolean): any;
+/**
+ * 扁平化对象（简单浅拷贝）
+ * @param obj 任意对象
+ * @example
+ * defaultObj({ a: 1, b: 2 }); /// { a: 1, b: 2 }
+ * defaultObj(null); /// {}
+ * @category Object-对象相关
+ * @returns
+ */
+export declare function defaultObj<T extends object>(obj: T): T;
 //# sourceMappingURL=index.d.ts.map
