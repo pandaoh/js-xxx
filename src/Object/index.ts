@@ -2,7 +2,7 @@
  * @Author: HxB
  * @Date: 2022-04-26 15:05:14
  * @LastEditors: DoubleAm
- * @LastEditTime: 2025-07-07 15:11:18
+ * @LastEditTime: 2025-12-19 17:04:20
  * @Description: 对象相关函数
  * @FilePath: /js-xxx/src/Object/index.ts
  */
@@ -248,6 +248,7 @@ export function arr2select(arr: any[], options: { label?: string; value: string;
  * @param obj 需要获取值的对象
  * @param keys 要获取的键数组，支持多级别。
  * @param defaultValue 默认值，当对象中不存在某个键时，使用该值替换。
+ * @param isLastKeyOnly 是否只使用最后一级键作为结果对象的键名，默认为 true 。
  * @returns 返回包含键值对的结果对象
  * @example
  * getObjectValue({ a: 1, b: null, c: undefined, d: '' }, ['a', 'b', 'c', 'd', 'e']);
@@ -261,14 +262,36 @@ export function arr2select(arr: any[], options: { label?: string; value: string;
 
  * getObjectValue({ a: 1, b: undefined, c: { d: 'test', e: [0] } }, ['a', 'b', 'c.d', 'c.e.0'], 'default');
  * // 返回: { a: 1, b: 'default', c.d: 'test', 'c.e.0': 0 }
+
+ * getObjectValue({ a: { b: { c: 3 } } }, ['a.b.c', 'a.b.d'], '-', false);
+ * // 返回: { c: 3, d: '-' }
  * @category Others-业务/其他
  */
-export function getObjectValue(obj: any = {}, keys: string[], defaultValue?: any) {
+export function getObjectValue(obj: any = {}, keys: string[], defaultValue?: any, isLastKeyOnly = true): any {
   const results: any = {};
 
   keys?.forEach((key) => {
+    if (isLastKeyOnly && key.includes('.')) {
+      const keyParts = key.split('.');
+      const lastKey = keyParts[keyParts.length - 1];
+      results[lastKey] = getV(defaultValue, obj, ...keyParts);
+      return;
+    }
     results[key] = getV(defaultValue, obj, key);
   });
 
   return results;
+}
+
+/**
+ * 扁平化对象（简单浅拷贝）
+ * @param obj 任意对象
+ * @example
+ * defaultObj({ a: 1, b: 2 }); /// { a: 1, b: 2 }
+ * defaultObj(null); /// {}
+ * @category Object-对象相关
+ * @returns
+ */
+export function defaultObj<T extends object>(obj: T): T {
+  return { ...(obj || {}) };
 }
