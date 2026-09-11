@@ -2,7 +2,7 @@
 
 ## [文档(x.biugle.cn)](http://x.biugle.cn)
 
-## 建议使用 [biao](https://github.com/biugle/biao) 现代化企业级前端应用基座****
+## 建议使用 [biao](https://github.com/biugle/biao) 现代化企业级前端应用基座
 
 [![OSCS Status](https://www.oscs1024.com/platform/badge/pandaoh/js-xxx.svg?size=small)](https://www.oscs1024.com/project/pandaoh/js-xxx?ref=badge_small)
 
